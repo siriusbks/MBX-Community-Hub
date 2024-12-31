@@ -5,11 +5,15 @@
  */
 
 import { Layout } from "@components/Layout";
-import { ProfilePage } from "@routes/ProfilePage";
+import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-export function AppRoutes() {
-    return (
+const ProfilePage = lazy(() => import("@routes/ProfilePage"));
+
+export const AppRoutes: FC = () => (
+    <Suspense
+        fallback={<div className="text-center text-white">Loading...</div>}
+    >
         <Routes>
             <Route
                 path="/"
@@ -19,11 +23,6 @@ export function AppRoutes() {
                     </Layout>
                 }
             />
-            {/*<Route path="/map" element={
-        <Layout>
-          <MapPage />
-        </Layout>
-      } /> - feature route map */}
         </Routes>
-    );
-}
+    </Suspense>
+);

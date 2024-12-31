@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { FC } from "react";
+
 import { Profession } from "../../types";
 import { ProfessionCard } from "./ProfessionCard";
 
@@ -11,45 +13,25 @@ interface ProfessionsGridProps {
     professions: Profession[];
 }
 
-export function ProfessionsGrid({ professions }: ProfessionsGridProps) {
+export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
     const columns = Math.min(4, Math.ceil(Math.sqrt(professions.length)));
 
     return (
-        <div
-            style={{
-                flex: 1,
-                backgroundColor: "rgba(0, 0, 0, 0.4)",
-                padding: "1rem",
-                borderRadius: "0.5rem",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                display: "flex",
-                flexDirection: "column",
-            }}
-        >
-            <h3
-                style={{
-                    fontSize: "1.125rem",
-                    fontWeight: "600",
-                    color: "#ffffff",
-                    marginBottom: "0.75rem",
-                }}
-            >
+        <section className="flex-1 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col">
+            <h3 className="text-lg font-semibold text-white mb-3">
                 Professions
             </h3>
             <div
-                style={{
-                    flex: 1,
-                    display: "grid",
-                    gridTemplateColumns: `repeat(${columns}, 1fr)`,
-                    gap: "0.75rem",
-                    minHeight: 0,
-                    height: "100%",
-                }}
+                className="grid gap-3 flex-1 min-h-0 h-full"
+                style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
             >
-                {professions.map((prof) => (
-                    <ProfessionCard key={prof.id} profession={prof} />
+                {professions.map((profession) => (
+                    <ProfessionCard
+                        key={profession.id}
+                        profession={profession}
+                    />
                 ))}
             </div>
-        </div>
+        </section>
     );
-}
+};
