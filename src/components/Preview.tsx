@@ -97,10 +97,19 @@ export const Preview: FC = () => {
 
             <div
                 ref={previewRef}
-                className="relative w-full aspect-video bg-black rounded-md overflow-hidden bg-cover bg-center"
-                style={{ backgroundImage: `url(${background})` }}
+                className="relative w-full aspect-video rounded-md overflow-hidden bg-cover bg-center"
             >
-                <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60 flex flex-col justify-between p-6">
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{
+                        backgroundImage: `url(${background})`,
+                        filter: "blur(2.5px)",
+                        transform: "scale(1.02)",
+                        transition: "filter 0.3s ease",
+                    }}
+                ></div>
+
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-between p-6">
                     <div className="flex gap-4 flex-1">
                         <SkinDisplay
                             username={username}
