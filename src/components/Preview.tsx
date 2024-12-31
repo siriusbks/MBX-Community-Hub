@@ -12,14 +12,14 @@ import { useProfileStore } from "@store/profileStore";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
-import React from "react";
+import { FC, useMemo, useRef, useState } from "react";
 
-export function Preview() {
+export const Preview: FC = () => {
     const { username, uuid, level, background, professions } =
         useProfileStore();
-    const previewRef = React.useRef<HTMLDivElement>(null);
-    const [isDownloading, setIsDownloading] = React.useState(false);
-    const [error, setError] = React.useState<string | null>(null);
+    const previewRef = useRef<HTMLDivElement>(null);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleDownload = async () => {
         if (!previewRef.current) return;
@@ -46,14 +46,16 @@ export function Preview() {
                 },
             });
 
-            canvas.toBlob((blob) => {
-                if (blob) {
-                    const fileName = `${username || "minecraft"}-profile.png`;
-                    saveAs(blob, fileName);
-                } else {
-                    throw new Error("Canvas is empty");
-                }
-            }, "image/png");
+            const blob = await new Promise<Blob | null>((resolve) => {
+                canvas.toBlob((b) => resolve(b), "image/png");
+            });
+
+            if (blob) {
+                const fileName = `${username || "minecraft"}-profile.png`;
+                saveAs(blob, fileName);
+            } else {
+                throw new Error("Canvas is empty");
+            }
         } catch (err) {
             console.error("Error capturing image:", err);
             setError("Failed to download the image. Please try again.");
@@ -62,7 +64,7 @@ export function Preview() {
         }
     };
 
-    const enabledProfessions = React.useMemo(
+    const enabledProfessions = useMemo(
         () => professions.filter((p) => p.enabled),
         [professions]
     );
@@ -70,13 +72,13 @@ export function Preview() {
     return (
         <div className="h-full flex flex-col">
             <BrowserWarning />
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 px-4">
                 <h2 className="text-2xl font-semibold text-white">Preview</h2>
                 <button
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-500 rounded-md transition-colors duration-200 text-white cursor-pointer border-none focus:outline-none ${
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-500 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
                         isDownloading
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:bg-green-700"
@@ -88,7 +90,7 @@ export function Preview() {
             </div>
 
             {error && (
-                <div role="alert" className="text-red-500 mb-4">
+                <div role="alert" className="text-red-500 mb-4 px-4">
                     {error}
                 </div>
             )}
@@ -112,4 +114,4 @@ export function Preview() {
             </div>
         </div>
     );
-}
+};
