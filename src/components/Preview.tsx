@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 import React from "react";
@@ -18,15 +19,23 @@ export function Preview() {
     const { username, uuid, level, background, professions } =
         useProfileStore();
     const previewRef = React.useRef<HTMLDivElement>(null);
+    const [isDownloading, setIsDownloading] = React.useState(false);
+    const [error, setError] = React.useState<string | null>(null);
 
     const handleDownload = async () => {
         if (!previewRef.current) return;
 
+        setIsDownloading(true);
+        setError(null);
+
         try {
+            await document.fonts.ready;
+
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
-                scale: 4,
+                scale: window.devicePixelRatio || 1,
                 backgroundColor: null,
+                logging: true,
                 onclone: (clonedDoc) => {
                     const head = document.head.cloneNode(true);
                     clonedDoc.head.innerHTML = "";
@@ -38,114 +47,68 @@ export function Preview() {
                 },
             });
 
-            const link = document.createElement("a");
-            link.download = `${username || "minecraft"}-profile.png`;
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-        } catch (error) {
-            console.error("Error capturing image:", error);
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    const fileName = `${username || "minecraft"}-profile.png`;
+                    saveAs(blob, fileName);
+                } else {
+                    throw new Error("Canvas is empty");
+                }
+            }, "image/png");
+        } catch (err) {
+            console.error("Error capturing image:", err);
+            setError("Failed to download the image. Please try again.");
+        } finally {
+            setIsDownloading(false);
         }
     };
 
-    const enabledProfessions = professions.filter((p) => p.enabled);
+    const enabledProfessions = React.useMemo(
+        () => professions.filter((p) => p.enabled),
+        [professions]
+    );
 
     return (
-        <div
-            style={{ height: "100%", display: "flex", flexDirection: "column" }}
-        >
+        <div className="h-full flex flex-col">
             <BrowserWarning />
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "1rem",
-                }}
-            >
-                <h2
-                    style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "600",
-                        color: "#ffffff",
-                    }}
-                >
-                    Preview
-                </h2>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-semibold text-white">Preview</h2>
                 <button
                     onClick={handleDownload}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        padding: "0.75rem 1.5rem",
-                        backgroundColor: "#22c55e",
-                        borderRadius: "0.5rem",
-                        transition: "background-color 0.2s",
-                        fontSize: "1.125rem",
-                        color: "#ffffff",
-                        cursor: "pointer",
-                        border: "none",
-                        outline: "none",
-                    }}
-                    onMouseOver={(e) =>
-                        (e.currentTarget.style.backgroundColor = "#16a34a")
-                    }
-                    onMouseOut={(e) =>
-                        (e.currentTarget.style.backgroundColor = "#22c55e")
-                    }
+                    disabled={isDownloading}
+                    aria-label="Download Profile Image"
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-500 rounded-md transition-colors duration-200 text-white cursor-pointer border-none focus:outline-none ${
+                        isDownloading
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-green-700"
+                    }`}
                 >
                     <Download size={24} />
-                    Download Image
+                    {isDownloading ? "Downloading..." : "Download Image"}
                 </button>
             </div>
 
+            {error && (
+                <div role="alert" className="text-red-500 mb-4">
+                    {error}
+                </div>
+            )}
+
             <div
                 ref={previewRef}
-                style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "16/9",
-                    backgroundColor: "#000000",
-                    borderRadius: "0.5rem",
-                    overflow: "hidden",
-                    backgroundImage: `url(${background})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
+                className="relative w-full aspect-video bg-black rounded-md overflow-hidden bg-cover bg-center"
+                style={{ backgroundImage: `url(${background})` }}
             >
-                <div
-                    style={{
-                        position: "absolute",
-                        inset: 0,
-                        background:
-                            "linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)",
-                    }}
-                >
-                    <div
-                        style={{
-                            position: "relative",
-                            height: "100%",
-                            padding: "1.5rem",
-                            display: "flex",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                gap: "1rem",
-                                height: "100%",
-                            }}
-                        >
-                            <SkinDisplay
-                                username={username}
-                                uuid={uuid}
-                                level={level}
-                            />
-                            <ProfessionsGrid professions={enabledProfessions} />
-                        </div>
-                        <Watermark />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60 flex flex-col justify-between p-6">
+                    <div className="flex gap-4 flex-1">
+                        <SkinDisplay
+                            username={username}
+                            uuid={uuid}
+                            level={level}
+                        />
+                        <ProfessionsGrid professions={enabledProfessions} />
                     </div>
+                    <Watermark />
                 </div>
             </div>
         </div>
