@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+import background_default from "@assets/dftvvfnv.bmp";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import background_default from "../assets/media/dftvvfnv.bmp";
 import { Profession, ProfileState } from "../types";
 
 const DEFAULT_PROFESSIONS: Profession[] = [
@@ -121,16 +121,9 @@ const DEFAULT_PROFESSIONS: Profession[] = [
     },
 ];
 
-const defaultProfileState: Omit<
-    ProfileState,
-    | "setUsername"
-    | "setUUID"
-    | "setLevel"
-    | "setBackground"
-    | "updateProfession"
-> = {
-    username: "",
-    uuid: "",
+const defaultProfileState = {
+    username: "SiriusB_",
+    uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
     level: 1,
     background: background_default,
     professions: DEFAULT_PROFESSIONS,
@@ -149,8 +142,13 @@ export const useProfileStore = create<ProfileState>()(
                 set({ uuid });
             },
 
-            setLevel: (level) => {
-                set({ level });
+            setLevel: (value) => {
+                set((state) => {
+                    if (typeof value === "function") {
+                        return { ...state, level: value(state.level) };
+                    }
+                    return { ...state, level: value };
+                });
             },
 
             setBackground: (background) => {

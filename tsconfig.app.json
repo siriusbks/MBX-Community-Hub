@@ -21,7 +21,16 @@
         "noFallthroughCasesInSwitch": true,
 
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+
+        "baseUrl": "./src",
+        "paths": {
+            "@store/*": ["store/*"],
+            "@components/*": ["components/*"],
+            "@types/*": ["types/*"],
+            "@assets/*": ["assets/*"],
+            "@routes/*": ["routes/*"]
+        }
     },
     "include": ["src"]
 }

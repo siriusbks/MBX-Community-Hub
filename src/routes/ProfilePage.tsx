@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Preview } from "../components/Preview";
-import { ProfileEditor } from "../components/ProfileEditor";
+import { Preview } from "@components/Preview";
+import { ProfileEditor } from "@components/ProfileEditor";
 
 export function ProfilePage() {
     return (

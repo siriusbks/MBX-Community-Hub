@@ -22,7 +22,7 @@ export interface ProfileState {
     professions: Profession[];
     setUsername: (username: string) => void;
     setUUID: (uuid: string) => void;
-    setLevel: (level: number) => void;
+    setLevel: (value: number | ((prevLevel: number) => number)) => void;
     setBackground: (url: string) => void;
     updateProfession: (id: string, updates: Partial<Profession>) => void;
 }

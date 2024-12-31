@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Layout } from "@components/Layout";
+import { ProfilePage } from "@routes/ProfilePage";
 import { Route, Routes } from "react-router-dom";
-
-import { Layout } from "../components/Layout";
-import { ProfilePage } from "./ProfilePage";
 
 export function AppRoutes() {
     return (
