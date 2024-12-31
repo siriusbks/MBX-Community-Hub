@@ -53,7 +53,7 @@ export function Layout({ children }: LayoutProps) {
                             </nav>
                         </div>
                         <a
-                            href="https://github.com/siriusbks"
+                            href="https://github.com/siriusbks/MBX-Community-Hub"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-gray-400 hover:text-white transition-colors"
