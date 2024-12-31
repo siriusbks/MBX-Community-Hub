@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-// src/index.tsx
-
 import "./index.css";
 
 import ErrorBoundary from "@components/preview/ErrorBoundary";
