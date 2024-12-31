@@ -1,47 +1,22 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "lib": [
-            "ESNext",
-            "DOM",
-            "DOM.Iterable",
-            "esnext.array",
-            "esnext.asynciterable",
-            "esnext.symbol"
-        ],
+        "target": "ES2022",
+        "lib": ["ES2023"],
         "module": "ESNext",
-        "moduleDetection": "force",
-        "jsx": "react-jsx",
-        "allowJs": true,
+        "skipLibCheck": true,
 
         /* Bundler mode */
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
-        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "moduleDetection": "force",
         "noEmit": true,
 
-        "plugins": [
-            {
-                "transform": "typescript-transform-paths",
-                "afterDeclarations": true
-            }
-        ],
-
-        /* Best practices */
+        /* Linting */
         "strict": true,
-        "skipLibCheck": true,
-        "noFallthroughCasesInSwitch": true,
-
-        /* Some stricter flags (disabled by default) */
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "noPropertyAccessFromIndexSignature": false,
-
-        /* Interop options for better compatibility */
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
     },
-    "include": ["src/**/*", "vite.config.ts"],
-    "exclude": ["node_modules"]
+    "include": ["vite.config.ts"]
 }
