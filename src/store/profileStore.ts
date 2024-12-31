@@ -5,10 +5,12 @@
  */
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import background_default from "../assets/media/dftvvfnv.bmp";
-import { ProfileState } from "../types";
-const DEFAULT_PROFESSIONS = [
+import { Profession, ProfileState } from "../types";
+
+const DEFAULT_PROFESSIONS: Profession[] = [
     {
         id: "alchemy",
         name: "Alchemist",
@@ -119,37 +121,14 @@ const DEFAULT_PROFESSIONS = [
     },
 ];
 
-// Load saved data from localStorage or use defaults
-const loadFromStorage = () => {
-    try {
-        const savedData = localStorage.getItem("profileData");
-        if (savedData) {
-            const parsed = JSON.parse(savedData);
-            return {
-                username: parsed.username || "",
-                uuid: parsed.uuid || "",
-                level: parsed.level || 1,
-                background: parsed.background || background_default,
-                professions: parsed.professions || DEFAULT_PROFESSIONS,
-            };
-        }
-    } catch (error) {
-        console.error("Error loading from localStorage:", error);
-    }
-    return null;
-};
-
-// Save state to localStorage
-const saveToStorage = (state: Partial<ProfileState>) => {
-    try {
-        localStorage.setItem("profileData", JSON.stringify(state));
-    } catch (error) {
-        console.error("Error saving to localStorage:", error);
-    }
-};
-
-// Initialize state with saved data or defaults
-const initialState = loadFromStorage() || {
+const defaultProfileState: Omit<
+    ProfileState,
+    | "setUsername"
+    | "setUUID"
+    | "setLevel"
+    | "setBackground"
+    | "updateProfession"
+> = {
     username: "",
     uuid: "",
     level: 1,
@@ -157,46 +136,37 @@ const initialState = loadFromStorage() || {
     professions: DEFAULT_PROFESSIONS,
 };
 
-export const useProfileStore = create<ProfileState>((set) => ({
-    ...initialState,
+export const useProfileStore = create<ProfileState>()(
+    persist(
+        (set, get) => ({
+            ...defaultProfileState,
 
-    setUsername: (username) =>
-        set((state) => {
-            const newState = { ...state, username };
-            saveToStorage(newState);
-            return newState;
-        }),
+            setUsername: (username) => {
+                set({ username });
+            },
 
-    setUUID: (uuid) =>
-        set((state) => {
-            const newState = { ...state, uuid };
-            saveToStorage(newState);
-            return newState;
-        }),
+            setUUID: (uuid) => {
+                set({ uuid });
+            },
 
-    setLevel: (level) =>
-        set((state) => {
-            const newState = { ...state, level };
-            saveToStorage(newState);
-            return newState;
-        }),
+            setLevel: (level) => {
+                set({ level });
+            },
 
-    setBackground: (background) =>
-        set((state) => {
-            const newState = { ...state, background };
-            saveToStorage(newState);
-            return newState;
-        }),
+            setBackground: (background) => {
+                set({ background });
+            },
 
-    updateProfession: (id, updates) =>
-        set((state) => {
-            const newState = {
-                ...state,
-                professions: state.professions.map((prof) =>
+            updateProfession: (id, updates) => {
+                const { professions } = get();
+                const newProfessions = professions.map((prof) =>
                     prof.id === id ? { ...prof, ...updates } : prof
-                ),
-            };
-            saveToStorage(newState);
-            return newState;
+                );
+                set({ professions: newProfessions });
+            },
         }),
-}));
+        {
+            name: "profileData",
+        }
+    )
+);
