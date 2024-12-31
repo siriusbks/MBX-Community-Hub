@@ -1,3 +1,9 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
 export function Watermark() {
   return (
     <div style={{

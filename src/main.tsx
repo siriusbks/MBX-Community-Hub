@@ -1,10 +1,18 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+import "./index.css";
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+import App from "./App.tsx";
+
+createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+        <App />
+    </StrictMode>
 );
