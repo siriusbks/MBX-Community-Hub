@@ -122,8 +122,8 @@ const DEFAULT_PROFESSIONS: Profession[] = [
 ];
 
 const defaultProfileState = {
-    username: "",
-    uuid: "",
+    username: "SiriusB_",
+    uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
     level: 1,
     background: background_default,
     professions: DEFAULT_PROFESSIONS,
