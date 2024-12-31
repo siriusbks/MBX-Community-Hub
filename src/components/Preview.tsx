@@ -4,16 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { BrowserWarning } from "@components/preview/BrowserWarning";
+import { ProfessionsGrid } from "@components/preview/ProfessionsGrid";
+import { SkinDisplay } from "@components/preview/SkinDisplay";
+import { Watermark } from "@components/preview/Watermark";
+import { useProfileStore } from "@store/profileStore";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 import React from "react";
-
-import { useProfileStore } from "../store/profileStore";
-import { BrowserWarning } from "./preview/BrowserWarning";
-import { ProfessionsGrid } from "./preview/ProfessionsGrid";
-import { SkinDisplay } from "./preview/SkinDisplay";
-import { Watermark } from "./preview/Watermark";
 
 export function Preview() {
     const { username, uuid, level, background, professions } =

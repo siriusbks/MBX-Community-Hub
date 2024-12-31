@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@types/file-saver": "^2.0.7",
+        "@types/node": "^22.10.2",
         "file-saver": "^2.0.5",
         "html2canvas": "^1.4.1",
         "lucide-react": "^0.344.0",

@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 
+import Background1 from "@assets/dftvvfnv.bmp";
+import Background2 from "@assets/r8wm0kbl.bmp";
+import Background3 from "@assets/tbsj844z.bmp";
+import { useProfileStore } from "@store/profileStore";
 import { UploadIcon } from "lucide-react";
-
-import Background1 from "../../assets/media/dftvvfnv.bmp";
-import Background2 from "../../assets/media/r8wm0kbl.bmp";
-import Background3 from "../../assets/media/tbsj844z.bmp";
-import { useProfileStore } from "../../store/profileStore";
 
 const ACCEPTED_FILE_TYPES = [
     "image/png",

@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { useProfileStore } from "@store/profileStore";
 import { AlertCircle, User } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { useProfileStore } from "../../store/profileStore";
 
 function useDebounce<T>(value: T, delay: number): T {
     const [debouncedValue, setDebouncedValue] = useState<T>(value);

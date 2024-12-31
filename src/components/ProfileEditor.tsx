@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { BackgroundSelector } from "./editor/BackgroundSelector";
-import { LevelInput } from "./editor/LevelInput";
-import { ProfessionInput } from "./editor/ProfessionInput";
-import { SkinDisplay } from "./editor/SkinDisplay";
+import { BackgroundSelector } from "@components/editor/BackgroundSelector";
+import { LevelInput } from "@components/editor/LevelInput";
+import { ProfessionInput } from "@components/editor/ProfessionInput";
+import { SkinDisplay } from "@components/editor/SkinDisplay";
 
 export function ProfileEditor() {
     return (

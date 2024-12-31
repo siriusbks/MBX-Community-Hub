@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+[type="number"] {
+    appearance: none; /* standard property (Chrome, Edge, Safari) */
+    -webkit-appearance: none; /* for older webkit browsers */
+    -moz-appearance: textfield; /* Firefox */
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .custom-scrollbar {
-    scrollbar-width: thin;
+    scrollbar-width: thin; /* Firefox */
     scrollbar-color: rgba(74, 222, 128, 0.5) rgba(17, 24, 39, 0.3);
 }
 
