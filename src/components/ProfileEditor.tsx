@@ -8,8 +8,9 @@ import { BackgroundSelector } from "@components/editor/BackgroundSelector";
 import { LevelInput } from "@components/editor/LevelInput";
 import { ProfessionInput } from "@components/editor/ProfessionInput";
 import { SkinDisplay } from "@components/editor/SkinDisplay";
+import { FC } from "react";
 
-export function ProfileEditor() {
+export const ProfileEditor: FC = () => {
     return (
         <div className="space-y-6">
             <div className="space-y-6">
@@ -34,4 +35,4 @@ export function ProfileEditor() {
             </div>
         </div>
     );
-}
+};

@@ -4,111 +4,54 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { FC } from "react";
+
 import { Profession } from "../../types";
 
 interface ProfessionCardProps {
     profession: Profession;
 }
 
-export function ProfessionCard({ profession }: ProfessionCardProps) {
-    const xpPercentage = (profession.currentXP / profession.maxXP) * 100;
+export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
+    const xpPercentage = Math.min(
+        (profession.currentXP / profession.maxXP) * 100,
+        100
+    );
 
     return (
-        <div
-            style={{
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                border: "1px solid rgba(255, 255, 255, 0.05)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%",
-                minHeight: "100px",
-            }}
-        >
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    width: "100%",
-                    marginBottom: "0.5rem",
-                }}
-            >
-                <span style={{ fontSize: "1.5rem" }}>{profession.icon}</span>
-                <div style={{ flex: 1 }}>
-                    <h4
-                        style={{
-                            fontSize: "0.875rem",
-                            fontWeight: "500",
-                            color: "#ffffff",
-                            marginBottom: "0.25rem",
-                        }}
-                    >
+        <div className="bg-black bg-opacity-30 p-3 rounded-md border border-white border-opacity-5 flex flex-col justify-between h-full min-h-[100px]">
+            <div className="flex items-center gap-2 w-full mb-2">
+                <span className="text-2xl">{profession.icon}</span>
+                <div className="flex-1">
+                    <h4 className="text-sm font-medium text-white mb-1">
                         {profession.name}
                     </h4>
-                    <span
-                        style={{
-                            fontSize: "0.75rem",
-                            color: "#4ade80",
-                        }}
-                    >
+                    <span className="text-xs text-green-400">
                         Level {profession.level}
                     </span>
                 </div>
             </div>
-
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                }}
-            >
-                <div
-                    style={{
-                        width: "100%",
-                        height: "4px",
-                        backgroundColor: "rgba(0, 0, 0, 0.3)",
-                        borderRadius: "2px",
-                        overflow: "hidden",
-                        marginBottom: "0.5rem",
-                    }}
-                >
+            <div className="flex flex-col w-full">
+                <div className="w-full h-1 bg-black bg-opacity-30 rounded overflow-hidden mb-2">
                     <div
-                        style={{
-                            width: `${xpPercentage}%`,
-                            height: "100%",
-                            background:
-                                "linear-gradient(90deg, #4ade80 0%, #22c55e 100%)",
-                            borderRadius: "2px",
-                            transition: "width 0.3s ease",
-                        }}
+                        className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded transition-width duration-300"
+                        style={{ width: `${xpPercentage}%` }}
+                        role="progressbar"
+                        aria-valuenow={profession.currentXP}
+                        aria-valuemin={0}
+                        aria-valuemax={profession.maxXP}
                     />
                 </div>
-                <div
-                    style={{
-                        fontSize: "clamp(10px, 1.2vw, 12px)",
-                        lineHeight: "1.2",
-                        textAlign: "center",
-                    }}
-                >
-                    <span style={{ color: "#ffffff" }}>
+                <div className="text-[clamp(10px,1.2vw,12px)] leading-tight text-center">
+                    <span className="text-white">
                         {profession.currentXP.toLocaleString()} /{" "}
                         {profession.maxXP.toLocaleString()}
                     </span>
-                    <span
-                        style={{
-                            display: "block",
-                            color: "#d1d5db",
-                            fontWeight: "600",
-                        }}
-                    >
+                    <span className="block text-gray-300 font-semibold">
                         XP
                     </span>
                 </div>
             </div>
         </div>
     );
-}
+};
