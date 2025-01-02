@@ -33,7 +33,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     <p className="text-xl font-semibold text-white">
                         {username}
                     </p>
-                    <span className="text-sm font-semibold text-green-400">
+                    <span className="text-xs font-semibold text-green-400">
                         Level {level}
                     </span>
                 </div>

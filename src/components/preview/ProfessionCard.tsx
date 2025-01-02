@@ -42,14 +42,12 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
                         aria-valuemax={profession.maxXP}
                     />
                 </div>
-                <div className="text-[clamp(10px,1.2vw,12px)] leading-tight text-center">
+                <div className="text-[clamp(8px,1vw,10px)] leading-tight text-center">
                     <span className="text-white">
-                        {profession.currentXP.toLocaleString()} /{" "}
-                        {profession.maxXP.toLocaleString()}
+                        ({profession.currentXP.toLocaleString()} /{" "}
+                        {profession.maxXP.toLocaleString()})
                     </span>
-                    <span className="block text-gray-300 font-semibold">
-                        XP
-                    </span>
+                    <span className="block text-gray-300 font-bold">XP</span>
                 </div>
             </div>
         </div>
