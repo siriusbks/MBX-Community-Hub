@@ -32,6 +32,7 @@ export const Preview: FC = () => {
 
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
+                allowTaint: false,
                 scale: window.devicePixelRatio || 1,
                 backgroundColor: null,
                 logging: true,
@@ -54,11 +55,19 @@ export const Preview: FC = () => {
                 const fileName = `${username || "minecraft"}-profile.png`;
                 saveAs(blob, fileName);
             } else {
-                throw new Error("Canvas is empty");
+                throw new Error(
+                    "Canvas is empty. Possible CORS issues with images."
+                );
             }
         } catch (err) {
-            console.error("Error capturing image:", err);
-            setError("Failed to download the image. Please try again.");
+            console.error("Error capturing image with html2canvas:", err);
+            if (err instanceof DOMException && err.name === "SecurityError") {
+                setError(
+                    "CORS error: Unable to load images from external sources. Please ensure all external images have appropriate CORS headers."
+                );
+            } else {
+                setError("Failed to download the image. Please try again.");
+            }
         } finally {
             setIsDownloading(false);
         }

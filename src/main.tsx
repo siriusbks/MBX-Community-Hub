@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import "@babel/polyfill";
 import "./index.css";
 
 import ErrorBoundary from "@components/preview/ErrorBoundary";
