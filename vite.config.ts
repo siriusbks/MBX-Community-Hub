@@ -21,6 +21,15 @@ export default defineConfig({
         },
     },
     optimizeDeps: {
-        exclude: ["lucide-react"],
+        exclude: [],
+    },
+    build: {
+        target: "es2017",
+        sourcemap: true,
+    },
+    server: {
+        fs: {
+            strict: false,
+        },
     },
 });

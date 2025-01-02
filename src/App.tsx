@@ -11,15 +11,13 @@ import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
     useEffect(() => {
-        const handleError = (error: Error) => {
-            console.error("Logging error to external service:", error);
+        const handleError = (event: ErrorEvent) => {
+            console.error("Logging error to external service:", event.error);
         };
 
-        window.addEventListener("error", (event) => handleError(event.error));
+        window.addEventListener("error", handleError);
         return () => {
-            window.removeEventListener("error", (event) =>
-                handleError(event.error)
-            );
+            window.removeEventListener("error", handleError);
         };
     }, []);
 
