@@ -9,6 +9,7 @@ import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
+const MapPage = lazy(() => import("@routes/MapPage"));
 
 export const AppRoutes: FC = () => (
     <Suspense
@@ -20,6 +21,14 @@ export const AppRoutes: FC = () => (
                 element={
                     <Layout>
                         <ProfilePage />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/map"
+                element={
+                    <Layout>
+                        <MapPage />
                     </Layout>
                 }
             />
