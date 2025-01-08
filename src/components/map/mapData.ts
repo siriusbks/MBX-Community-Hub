@@ -1,3 +1,9 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2025 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
 export interface MapProperties {
     minZoom: number;
     maxZoom: number;
@@ -22,7 +28,7 @@ export const mapData: Record<string, MapDataConfig> = {
             maxZoom: 2,
         },
         referencePoint: { x: 0, y: 0 },
-        markerRefs: ["lily", "clover"], // add other markers here
+        markerRefs: ["lily", "clover"],
     },
     quadra_plains: {
         imageUrl: "src/assets/maps/quadra_plains.png",
