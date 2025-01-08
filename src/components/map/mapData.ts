@@ -13,6 +13,7 @@ export interface MapDataConfig {
     imageUrl: string;
     width: number;
     height: number;
+    name?: string;
     mapProperties: MapProperties;
     referencePoint: { x: number; y: number };
     markerRefs: string[];
@@ -23,6 +24,7 @@ export const mapData: Record<string, MapDataConfig> = {
         imageUrl: "src/assets/maps/kokoko.png",
         width: 528,
         height: 528,
+        name: "Kokoko Island",
         mapProperties: {
             minZoom: 0.75,
             maxZoom: 2,
@@ -34,6 +36,7 @@ export const mapData: Record<string, MapDataConfig> = {
         imageUrl: "src/assets/maps/quadra_plains.png",
         width: 608,
         height: 608,
+        name: "Quadra Plains",
         mapProperties: {
             minZoom: 0.5,
             maxZoom: 2,
