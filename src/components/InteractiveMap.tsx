@@ -1,16 +1,39 @@
-import React, { useEffect, useState } from "react";
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2025 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
+import "leaflet/dist/leaflet.css";
+
+import L, { LatLngExpression } from "leaflet";
+import React from "react";
 import {
-    MapContainer,
     ImageOverlay,
+    MapContainer,
     Marker,
     Tooltip,
     useMap,
+    useMapEvents,
 } from "react-leaflet";
-import L, { LatLngExpression } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { mapData } from "./map/mapData";
+
 import kokokoMarkers from "./map/kokokoMarkers";
+import { MapDataConfig } from "./map/mapData";
 import quadraMarkers from "./map/quadraMarkers";
+
+interface GeoJSONFeature {
+    type: "Feature";
+    id?: string | number;
+    geometry: {
+        type: string;
+        coordinates: number[];
+    };
+    properties?: Record<string, unknown>;
+}
+
+interface ExtendedFeature extends GeoJSONFeature {
+    key: string;
+}
 
 const allMarkers = { ...kokokoMarkers, ...quadraMarkers };
 
@@ -30,116 +53,94 @@ const SetCRS: React.FC = () => {
     return null;
 };
 
-const InteractiveMap: React.FC = () => {
-    const [selectedMapKey, setSelectedMapKey] = useState<string>("kokoko");
-    const [markers, setMarkers] = useState<any[]>([]);
-
-    const mapConfig = mapData[selectedMapKey];
-
-    useEffect(() => {
-        const loadAllMarkers = async () => {
-            try {
-                const allMarkersForMap: any[] = [];
-                const markerRefs = mapConfig.markerRefs;
-
-                for (const markerKey of markerRefs) {
-                    const markerConfig = allMarkers[markerKey];
-                    if (markerConfig) {
-                        const response = await fetch(markerConfig.geoJsonFile);
-                        const data = await response.json();
-
-                        const featuresWithKey = data.features.map(
-                            (feature: any) => ({
-                                ...feature,
-                                key: markerKey,
-                            })
-                        );
-                        allMarkersForMap.push(...featuresWithKey);
-                    }
+const FixTooltips: React.FC = () => {
+    const map = useMapEvents({
+        dragstart() {
+            map.eachLayer((layer) => {
+                if (layer instanceof L.Marker && layer.isTooltipOpen()) {
+                    layer.closeTooltip();
                 }
+            });
+        },
+        zoomstart() {
+            map.eachLayer((layer) => {
+                if (layer instanceof L.Marker && layer.isTooltipOpen()) {
+                    layer.closeTooltip();
+                }
+            });
+        },
+    });
 
-                setMarkers(allMarkersForMap);
-            } catch (error) {
-                console.error("Error loading markers:", error);
-            }
-        };
+    return null;
+};
 
-        loadAllMarkers();
-    }, [selectedMapKey]);
+interface InteractiveMapProps {
+    mapConfig: MapDataConfig;
+    markers: ExtendedFeature[];
+}
 
+const InteractiveMap: React.FC<InteractiveMapProps> = ({
+    mapConfig,
+    markers,
+}) => {
     return (
-        <div className="interactive-map-container">
-            <div className="map-selector">
-                <label htmlFor="mapSelect">Select a map :</label>
-                <select
-                    id="mapSelect"
-                    value={selectedMapKey}
-                    onChange={(e) => setSelectedMapKey(e.target.value)}
-                >
-                    {Object.keys(mapData).map((key) => (
-                        <option key={key} value={key}>
-                            {key.replace("_", " ")}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <MapContainer
-                crs={L.CRS.Simple}
+        <MapContainer
+            crs={L.CRS.Simple}
+            center={[mapConfig.height / 2, mapConfig.width / 2]}
+            zoom={1}
+            minZoom={0.3}
+            maxZoom={4}
+            scrollWheelZoom
+            dragging
+            zoomControl
+            style={{
+                height: "100%",
+                width: "100%",
+                backgroundColor: "#151d2c",
+            }}
+        >
+            <SetCRS />
+            <FixTooltips />
+            <ImageOverlay
+                url={mapConfig.imageUrl}
                 bounds={[
                     [0, 0],
                     [mapConfig.height, mapConfig.width],
                 ]}
-                style={{ height: "100vh", width: "100%" }}
-                zoom={0}
-                minZoom={mapConfig.mapProperties.minZoom}
-                maxZoom={mapConfig.mapProperties.maxZoom}
-            >
-                <SetCRS />
-                <ImageOverlay
-                    url={mapConfig.imageUrl}
-                    bounds={[
-                        [0, 0],
-                        [mapConfig.height, mapConfig.width],
-                    ]}
-                />
+                className="smooth-image"
+            />
+            {markers.map((marker, index) => {
+                const [x, , y] = marker.geometry.coordinates;
+                const position = toLeafletCoords(
+                    x,
+                    y,
+                    mapConfig.referencePoint
+                );
+                const config = allMarkers[marker.key];
+                if (!config) return null;
 
-                {markers.map((marker, index) => {
-                    const { coordinates } = marker.geometry;
-                    const [x, , y] = coordinates;
-                    const position = toLeafletCoords(
-                        x,
-                        y,
-                        mapConfig.referencePoint
-                    );
-
-                    const markerConfig = allMarkers[marker.key];
-
-                    if (!markerConfig) return null;
-
-                    return (
-                        <Marker
-                            key={`${marker.id}-${index}`}
-                            position={position}
-                            icon={L.icon({
-                                iconUrl: markerConfig.iconUrl,
-                                iconSize: [32, 32],
-                                iconAnchor: [16, 16],
-                            })}
-                        >
-                            <Tooltip
-                                direction="top"
-                                offset={[0, -16]}
-                                opacity={1}
-                                permanent
-                            >
-                                {`${markerConfig.displayName} #${marker.id}`}
-                            </Tooltip>
-                        </Marker>
-                    );
-                })}
-            </MapContainer>
-        </div>
+                return (
+                    <Marker
+                        key={`${marker.id ?? index}-${marker.key}`}
+                        position={position}
+                        icon={L.icon({
+                            iconUrl: config.iconUrl,
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 16],
+                        })}
+                        eventHandlers={{
+                            click: (e) => {
+                                e.target.openTooltip();
+                            },
+                        }}
+                    >
+                        <Tooltip direction="top" offset={[0, -16]} opacity={1}>
+                            {config.displayName}
+                        </Tooltip>
+                    </Marker>
+                );
+            })}
+        </MapContainer>
     );
 };
 
