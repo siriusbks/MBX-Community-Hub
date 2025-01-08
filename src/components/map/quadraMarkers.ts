@@ -11,7 +11,7 @@ const quadraMarkers: Record<string, MarkerConfig> = {
         displayName: "Log Chestnut",
         iconUrl: "src/assets/media/tree/log_chestnut.png",
         geoJsonFile: "src/assets/geo/log_chestnut.geojson",
-        category: "Picking",
+        category: "Woodcutting",
         defaultChecked: true,
         properties: {
             level: "1",
