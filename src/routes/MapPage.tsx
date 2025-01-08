@@ -91,7 +91,7 @@ const MapPage: React.FC = () => {
     }, [rawMarkers, searchTerm, selectedCategory]);
 
     return (
-        <div className="flex h-screen w-screen bg-gray-900 text-white">
+        <div className="flex h-screen w-screen max-w-full bg-gray-900 text-white">
             <aside className="w-72 h-full border-r border-gray-700 flex flex-col">
                 <div className="p-4 border-b border-gray-700">
                     <h2 className="text-xl font-bold mb-2">Map Selection</h2>
@@ -102,7 +102,7 @@ const MapPage: React.FC = () => {
                     >
                         {Object.keys(mapData).map((key) => (
                             <option key={key} value={key}>
-                                {key.replace("_", " ")}
+                                {mapData[key].name}
                             </option>
                         ))}
                     </select>
