@@ -10,6 +10,7 @@ import InteractiveMap from "../components/InteractiveMap";
 import kokokoMarkers from "../components/map/kokokoMarkers";
 import { mapData } from "../components/map/mapData";
 import quadraMarkers from "../components/map/quadraMarkers";
+import spawnMarkers from "../components/map/spawnMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -30,10 +31,10 @@ interface ExtendedFeature extends GeoJSONFeature {
     key: string;
 }
 
-const allMarkers = { ...kokokoMarkers, ...quadraMarkers };
+const allMarkers = { ...spawnMarkers, ...kokokoMarkers, ...quadraMarkers };
 
 const MapPage: React.FC = () => {
-    const [selectedMapKey, setSelectedMapKey] = useState("kokoko");
+    const [selectedMapKey, setSelectedMapKey] = useState("spawn");
     const [rawMarkers, setRawMarkers] = useState<ExtendedFeature[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
