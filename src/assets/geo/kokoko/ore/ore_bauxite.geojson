@@ -1,0 +1,203 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [318, 75, -61]
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [325, 75, -61],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [335, 76, -51]
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [334, 71, -35]
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [425, 68, -107],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [426, 68, -112]
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [434, 69, -81],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [440, 69, -83],
+                "type": "Point"
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [449, 68, -93]
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [452, 68, -107]
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [447, 72, -120]
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [437, 73, -124],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [439, 73, -134],
+                "type": "Point"
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [451, 73, -154]
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [441, 71, -155]
+            },
+            "id": 15,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [432, 72, -160],
+                "type": "Point"
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [416, 71, -163]
+            },
+            "id": 17,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [419, 69, -149],
+                "type": "Point"
+            },
+            "id": 18,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        }
+    ]
+}

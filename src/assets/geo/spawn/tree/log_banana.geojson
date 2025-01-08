@@ -3,244 +3,288 @@
     "features": [
         {
             "geometry": {
-                "coordinates": [339, 60, -58],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-31, 86, -172]
             },
             "id": 1,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [376, 58, -65],
+                "coordinates": [50, 91, -70],
                 "type": "Point"
             },
             "id": 2,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [397, 59, -89]
+                "coordinates": [6, 90, -66],
+                "type": "Point"
             },
             "id": 3,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [410, 59, -143],
+                "coordinates": [256, 88, -206],
                 "type": "Point"
             },
             "id": 4,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [349, 59, -115]
+                "coordinates": [437, 87, -108],
+                "type": "Point"
             },
             "id": 5,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [318, 60, -95],
+                "coordinates": [286, 88, -46],
                 "type": "Point"
             },
             "id": 6,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [289, 63, -60],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [273, 88, -48]
             },
             "id": 7,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [296, 60, -171],
+                "coordinates": [65, 94, 3],
                 "type": "Point"
             },
             "id": 8,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [305, 60, -179],
+                "coordinates": [-38, 77, 87],
                 "type": "Point"
             },
             "id": 9,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [350, 59, -179],
-                "type": "Point"
-            },
-            "id": 10,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [358, 58, -183]
+                "coordinates": [-1, 75, 218]
             },
-            "id": 11,
+            "id": 10,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [410, 59, -143],
+                "coordinates": [170, 78, 232],
+                "type": "Point"
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [220, 78, 233],
                 "type": "Point"
             },
             "id": 12,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [419, 59, -176],
+                "coordinates": [309, 80, 207],
                 "type": "Point"
             },
             "id": 13,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [435, 63, -170],
+                "coordinates": [317, 83, 185],
                 "type": "Point"
             },
             "id": 14,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [455, 60, -185]
+                "coordinates": [285, 96, 131]
             },
             "id": 15,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [471, 60, -189]
+                "coordinates": [299, 96, 134],
+                "type": "Point"
             },
             "id": 16,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [435, 59, -213]
+                "coordinates": [169, 103, 178],
+                "type": "Point"
             },
             "id": 17,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [412, 58, -233],
+                "coordinates": [121, 112, 177],
                 "type": "Point"
             },
             "id": 18,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [371, 59, -223],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [126, 113, 148]
             },
             "id": 19,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "coordinates": [453, 63, -37],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [76, 105, 29]
             },
             "id": 20,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [472, 63, -47]
+                "coordinates": [65, 94, 3],
+                "type": "Point"
             },
             "id": 21,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
             }
         },
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [474, 63, -69]
+                "coordinates": [142, 101, -12]
             },
             "id": 22,
             "type": "Feature",
             "properties": {
-                "map": "quadra_plains"
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [156, 97, -8],
+                "type": "Point"
+            },
+            "id": 23,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [189, 89, -37]
+            },
+            "id": 24,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [174, 126, 58],
+                "type": "Point"
+            },
+            "id": 25,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [201, 123, 52],
+                "type": "Point"
+            },
+            "id": 26,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
             }
         }
     ]

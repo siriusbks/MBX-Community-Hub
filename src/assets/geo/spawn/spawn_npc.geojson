@@ -1,0 +1,607 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [175, 78, -178],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "name": "Captain",
+                "description": "Navigation",
+                "iconUrl": "captain",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [165, 77, -170]
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "name": "Piggo",
+                "description": "Bloon",
+                "iconUrl": "piggo",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [203, 77, -188]
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "name": "Captain Icebeard",
+                "description": "Ship shop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [177, 75, -124],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "name": "Plunderjack",
+                "description": "Daily market",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [147, 77, -140]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "name": "Lily",
+                "description": "Shop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [163, 75, -114],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "name": "Whiskerwise",
+                "description": "Skull infos",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [191, 75, -101],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "name": "Captain bonny",
+                "description": "Bank infos",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [198, 77, -80],
+                "type": "Point"
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "name": "Banker",
+                "description": "Bank",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [152, 84, -85]
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "name": "Squawk",
+                "description": "Weather station",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [267, 83, -127],
+                "type": "Point"
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "name": "Forgehoof",
+                "description": "Blacksmith workshop",
+                "iconUrl": "forgehoof",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [259, 81, -109],
+                "type": "Point"
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "name": "Smithy Slick",
+                "description": "Workshops infos",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [283, 85, -64],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "name": "Scarecrow Joe",
+                "description": "Farming workshop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [302, 85, -76]
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "name": "Hoonter",
+                "description": "Hunter",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [310, 85, -131],
+                "type": "Point"
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "name": "Chef Tentacook",
+                "description": "Cook workshop",
+                "iconUrl": "chef_tentacook",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [332, 92, -127]
+            },
+            "id": 15,
+            "type": "Feature",
+            "properties": {
+                "name": "Hammerhand",
+                "description": "Repair workshop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [320, 91, -156]
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "name": "Bling Whiskers",
+                "description": "Jeweler workshop",
+                "iconUrl": "bling_whiskers",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [328, 91, -173]
+            },
+            "id": 17,
+            "type": "Feature",
+            "properties": {
+                "name": "Slowpaw",
+                "description": "Shoemaker workshop",
+                "iconUrl": "slowpaw",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [372, 91, -170],
+                "type": "Point"
+            },
+            "id": 18,
+            "type": "Feature",
+            "properties": {
+                "name": "Croissant the Frog",
+                "description": "Bakery",
+                "iconUrl": "croissant_the_frog",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [364, 92, -135],
+                "type": "Point"
+            },
+            "id": 19,
+            "type": "Feature",
+            "properties": {
+                "name": "Tinkerella",
+                "description": "Tinkerer workshop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [405, 95, -138],
+                "type": "Point"
+            },
+            "id": 20,
+            "type": "Feature",
+            "properties": {
+                "name": "Runatic",
+                "description": "Forgemagy workshop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [373, 91, -127]
+            },
+            "id": 21,
+            "type": "Feature",
+            "properties": {
+                "name": "Sir Purrington",
+                "description": "Tailor workshop",
+                "iconUrl": "sir_purrington",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [353, 86, -105]
+            },
+            "id": 22,
+            "type": "Feature",
+            "properties": {
+                "name": "Deafbeard",
+                "description": "Miner workshop",
+                "iconUrl": "deafbeard",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [403, 92, -87],
+                "type": "Point"
+            },
+            "id": 23,
+            "type": "Feature",
+            "properties": {
+                "name": "Chamelephial",
+                "description": "Alchemist workshop",
+                "iconUrl": "chamelephial",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [480, 79, -38]
+            },
+            "id": 24,
+            "type": "Feature",
+            "properties": {
+                "name": "Pelipish",
+                "description": "Fisherman workshop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [318, 88, -59],
+                "type": "Point"
+            },
+            "id": 25,
+            "type": "Feature",
+            "properties": {
+                "name": "Chopchop",
+                "description": "Lumberjack workshop",
+                "iconUrl": "chopchop",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [107, 114, 161],
+                "type": "Point"
+            },
+            "id": 26,
+            "type": "Feature",
+            "properties": {
+                "name": "Cuco",
+                "description": "Church",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [92, 79, -108]
+            },
+            "id": 27,
+            "type": "Feature",
+            "properties": {
+                "name": "Shellara",
+                "description": "Trade infos",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [92, 82, -190],
+                "type": "Point"
+            },
+            "id": 28,
+            "type": "Feature",
+            "properties": {
+                "name": "Eagle buck",
+                "description": "Buckstar",
+                "iconUrl": "eagle_buck",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [81, 81, -85],
+                "type": "Point"
+            },
+            "id": 29,
+            "type": "Feature",
+            "properties": {
+                "name": "Barter Bandit",
+                "description": "Bazaar",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [89, 81, -83]
+            },
+            "id": 30,
+            "type": "Feature",
+            "properties": {
+                "name": "Cowida",
+                "description": "Farm seller",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [73, 81, -83],
+                "type": "Point"
+            },
+            "id": 31,
+            "type": "Feature",
+            "properties": {
+                "name": "Racketeer Raccoon",
+                "description": "Auction House",
+                "iconUrl": "racketeer_raccoon",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [52, 77, -103],
+                "type": "Point"
+            },
+            "id": 32,
+            "type": "Feature",
+            "properties": {
+                "name": "Mineral Mike",
+                "description": "Miner seller",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-40, 77, -90]
+            },
+            "id": 33,
+            "type": "Feature",
+            "properties": {
+                "name": "Sharkette",
+                "description": "Sharkoffe",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [98, 81, -145]
+            },
+            "id": 34,
+            "type": "Feature",
+            "properties": {
+                "name": "Shylo the Cow",
+                "description": "Loot seller",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [58, 82, -150],
+                "type": "Point"
+            },
+            "id": 35,
+            "type": "Feature",
+            "properties": {
+                "name": "Beeatrice",
+                "description": "Florist",
+                "iconUrl": "beeatrice",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [39, 83, -138]
+            },
+            "id": 36,
+            "type": "Feature",
+            "properties": {
+                "name": "Brick Barry",
+                "description": "Block seller",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [27, 84, -179],
+                "type": "Point"
+            },
+            "id": 37,
+            "type": "Feature",
+            "properties": {
+                "name": "The Mayor",
+                "description": "City Hall",
+                "iconUrl": "the_mayor",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [75, 82, -208],
+                "type": "Point"
+            },
+            "id": 38,
+            "type": "Feature",
+            "properties": {
+                "name": "Reggo",
+                "description": "Musician",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [20, 86, -237]
+            },
+            "id": 39,
+            "type": "Feature",
+            "properties": {
+                "name": "Karateka Red Panda",
+                "description": "Dojo",
+                "iconUrl": "karateka_red_panda",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [172, 76, -56],
+                "type": "Point"
+            },
+            "id": 40,
+            "type": "Feature",
+            "properties": {
+                "name": "Questbound",
+                "description": "Exploration infos",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [249, 80, 212]
+            },
+            "id": 41,
+            "type": "Feature",
+            "properties": {
+                "name": "Remycel",
+                "description": "Cheese shop",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [294, 74, 15],
+                "type": "Point"
+            },
+            "id": 42,
+            "type": "Feature",
+            "properties": {
+                "name": "Mermaida",
+                "description": "Treasures/Artifacts",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [201, 116, 2]
+            },
+            "id": 43,
+            "type": "Feature",
+            "properties": {
+                "name": "Picassonkey",
+                "description": "Painter",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        }
+    ]
+}
