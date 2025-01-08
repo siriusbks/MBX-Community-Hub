@@ -12,7 +12,7 @@ import {
     ImageOverlay,
     MapContainer,
     Marker,
-    Tooltip,
+    Popup,
     useMap,
     useMapEvents,
 } from "react-leaflet";
@@ -47,25 +47,32 @@ const toLeafletCoords = (
     return [lat, lng];
 };
 
-const SetCRS: React.FC = () => {
+const SetCRS: React.FC<{ mapConfig: MapDataConfig }> = ({ mapConfig }) => {
     const map = useMap();
-    map.options.crs = L.CRS.Simple;
+    React.useEffect(() => {
+        const bounds: L.LatLngBoundsExpression = [
+            [0, 0],
+            [mapConfig.height, mapConfig.width],
+        ];
+        map.fitBounds(bounds);
+        map.setMaxBounds(bounds);
+    }, [map, mapConfig]);
     return null;
 };
 
-const FixTooltips: React.FC = () => {
+const FixPopup: React.FC = () => {
     const map = useMapEvents({
         dragstart() {
             map.eachLayer((layer) => {
-                if (layer instanceof L.Marker && layer.isTooltipOpen()) {
-                    layer.closeTooltip();
+                if (layer instanceof L.Marker && layer.isPopupOpen()) {
+                    layer.closePopup();
                 }
             });
         },
         zoomstart() {
             map.eachLayer((layer) => {
-                if (layer instanceof L.Marker && layer.isTooltipOpen()) {
-                    layer.closeTooltip();
+                if (layer instanceof L.Marker && layer.isPopupOpen()) {
+                    layer.closePopup();
                 }
             });
         },
@@ -88,19 +95,20 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
             crs={L.CRS.Simple}
             center={[mapConfig.height / 2, mapConfig.width / 2]}
             zoom={1}
-            minZoom={0.3}
-            maxZoom={4}
-            scrollWheelZoom
-            dragging
-            zoomControl
+            minZoom={mapConfig.mapProperties.minZoom}
+            maxZoom={mapConfig.mapProperties.maxZoom}
+            scrollWheelZoom={true}
+            dragging={true}
+            zoomControl={true}
+            attributionControl={false}
             style={{
                 height: "100%",
                 width: "100%",
                 backgroundColor: "#151d2c",
             }}
         >
-            <SetCRS />
-            <FixTooltips />
+            <SetCRS mapConfig={mapConfig} />
+            <FixPopup />
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
@@ -134,9 +142,14 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                             },
                         }}
                     >
-                        <Tooltip direction="top" offset={[0, -16]} opacity={1}>
-                            {config.displayName}
-                        </Tooltip>
+                        <Popup>
+                            <strong>
+                                {config.displayName}
+                                {config.properties?.level
+                                    ? ` (lvl ${config.properties.level})`
+                                    : ""}
+                            </strong>
+                        </Popup>
                     </Marker>
                 );
             })}
