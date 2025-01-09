@@ -26,7 +26,6 @@ interface GeoJSONFeature {
     type: "Feature";
     id?: string | number;
     geometry: {
-        type: string;
         coordinates: number[];
     };
     properties?: Record<string, unknown>;
@@ -119,7 +118,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                 className="smooth-image"
             />
             {markers.map((marker, index) => {
-                const [x, , y] = marker.geometry.coordinates;
+                const [x, z, y] = marker.geometry.coordinates;
                 const position = toLeafletCoords(
                     x,
                     y,
@@ -150,6 +149,10 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                                     ? ` (lvl ${config.properties.level})`
                                     : ""}
                             </strong>
+                            <br />
+                            <span>
+                                {x}, {z}, {y}
+                            </span>
                         </Popup>
                     </Marker>
                 );
