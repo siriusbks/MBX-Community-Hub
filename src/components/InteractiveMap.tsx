@@ -21,6 +21,7 @@ import kokokoMarkers from "./map/kokokoMarkers";
 import { MapDataConfig } from "./map/mapData";
 import quadraMarkers from "./map/quadraMarkers";
 import spawnMarkers from "./map/spawnMarkers";
+import homeIslandMarkers from "./map/homeIslandMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -35,7 +36,12 @@ interface ExtendedFeature extends GeoJSONFeature {
     key: string;
 }
 
-const allMarkers = { ...spawnMarkers, ...kokokoMarkers, ...quadraMarkers };
+const allMarkers = {
+    ...spawnMarkers,
+    ...kokokoMarkers,
+    ...quadraMarkers,
+    ...homeIslandMarkers,
+};
 
 const toLeafletCoords = (
     x: number,

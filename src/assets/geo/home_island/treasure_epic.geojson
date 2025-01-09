@@ -1,0 +1,60 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [40, 106, 171]
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [50, 53, 180],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [31, 122, 179],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [53, 73, 124],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [20, 78, 47]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        }
+    ]
+}

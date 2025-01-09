@@ -46,6 +46,25 @@ export const mapData: Record<string, MapDataConfig> = {
             "spawn_npc",
         ],
     },
+    home_island: {
+        imageUrl: "src/assets/maps/home_island.png",
+        width: 320,
+        height: 320,
+        name: "Home Island",
+        mapProperties: {
+            minZoom: 1.5,
+            maxZoom: 0,
+        },
+        referencePoint: { x: 34, y: 284 },
+        markerRefs: [
+            "treasure_common",
+            "treasure_uncommon",
+            "treasure_rare",
+            "treasure_epic",
+            "treasure_legendary",
+            "treasure_mythic",
+        ],
+    },
     kokoko: {
         imageUrl: "src/assets/maps/kokoko.png",
         width: 528,

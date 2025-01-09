@@ -12,6 +12,7 @@ import kokokoMarkers from "../components/map/kokokoMarkers";
 import spawnMarkers from "../components/map/spawnMarkers";
 import quadraMarkers from "../components/map/quadraMarkers";
 import { MarkerConfig } from "../types/markerTypes";
+import homeIslandMarkers from "@components/map/homeIslandMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -36,6 +37,7 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
     spawn: spawnMarkers,
     kokoko: kokokoMarkers,
     quadra_plains: quadraMarkers,
+    home_island: homeIslandMarkers,
 };
 
 const MapPage: React.FC = () => {
