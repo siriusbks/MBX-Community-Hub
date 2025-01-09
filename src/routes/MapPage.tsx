@@ -7,10 +7,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import InteractiveMap from "../components/InteractiveMap";
-import kokokoMarkers from "../components/map/kokokoMarkers";
 import { mapData } from "../components/map/mapData";
-import quadraMarkers from "../components/map/quadraMarkers";
+import kokokoMarkers from "../components/map/kokokoMarkers";
 import spawnMarkers from "../components/map/spawnMarkers";
+import quadraMarkers from "../components/map/quadraMarkers";
+import { MarkerConfig } from "../types/markerTypes";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -31,13 +32,17 @@ interface ExtendedFeature extends GeoJSONFeature {
     key: string;
 }
 
-const allMarkers = { ...spawnMarkers, ...kokokoMarkers, ...quadraMarkers };
+const allMarkers: Record<string, Record<string, MarkerConfig>> = {
+    spawn: spawnMarkers,
+    kokoko: kokokoMarkers,
+    quadra_plains: quadraMarkers,
+};
 
 const MapPage: React.FC = () => {
-    const [selectedMapKey, setSelectedMapKey] = useState("spawn");
+    const [selectedMapKey, setSelectedMapKey] = useState<string>("spawn");
     const [rawMarkers, setRawMarkers] = useState<ExtendedFeature[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
     const mapConfig = mapData[selectedMapKey];
 
@@ -45,8 +50,10 @@ const MapPage: React.FC = () => {
         const loadMarkers = async () => {
             try {
                 const markersForMap: ExtendedFeature[] = [];
+                const markersForSelectedMap = allMarkers[selectedMapKey];
+
                 for (const markerKey of mapConfig.markerRefs) {
-                    const markerConfig = allMarkers[markerKey];
+                    const markerConfig = markersForSelectedMap[markerKey];
                     if (!markerConfig) continue;
 
                     const response = await fetch(markerConfig.geoJsonFile);
@@ -66,30 +73,39 @@ const MapPage: React.FC = () => {
             }
         };
         loadMarkers();
-    }, [mapConfig]);
+    }, [mapConfig, selectedMapKey]);
 
     const uniqueCategories = useMemo(() => {
-        const cats = new Set(
-            rawMarkers.map((m) => allMarkers[m.key]?.category).filter(Boolean)
+        const categories = new Set(
+            rawMarkers
+                .map(
+                    (marker) =>
+                        allMarkers[selectedMapKey]?.[marker.key]?.category
+                )
+                .filter(Boolean)
         );
-        return Array.from(cats) as string[];
-    }, [rawMarkers]);
+        return Array.from(categories) as string[];
+    }, [rawMarkers, selectedMapKey]);
 
     const filteredMarkers = useMemo(() => {
         return rawMarkers.filter((marker) => {
-            const config = allMarkers[marker.key];
+            const config = allMarkers[selectedMapKey]?.[marker.key];
             if (!config) return false;
+
             const matchesCategory =
                 selectedCategory === "all" ||
                 config.category === selectedCategory;
+
             const matchesSearch =
                 searchTerm.trim() === "" ||
-                config.displayName
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase());
+                (typeof config.displayName === "string" &&
+                    config.displayName
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()));
+
             return matchesCategory && matchesSearch;
         });
-    }, [rawMarkers, searchTerm, selectedCategory]);
+    }, [rawMarkers, searchTerm, selectedCategory, selectedMapKey]);
 
     return (
         <div className="flex h-screen w-screen max-w-full bg-gray-900 text-white">
@@ -121,14 +137,18 @@ const MapPage: React.FC = () => {
                     {searchTerm && (
                         <div className="mt-2 max-h-32 overflow-y-auto bg-gray-800 border border-gray-700 rounded p-2">
                             {rawMarkers
-                                .map((m) => allMarkers[m.key].displayName)
-                                .filter(
-                                    (name, idx, arr) =>
-                                        arr.indexOf(name) === idx
+                                .map(
+                                    (marker) =>
+                                        allMarkers[selectedMapKey]?.[marker.key]
+                                            ?.displayName
                                 )
-                                .filter((n) =>
-                                    n
-                                        .toLowerCase()
+                                .filter(
+                                    (name, index, arr) =>
+                                        arr.indexOf(name) === index
+                                )
+                                .filter((name) =>
+                                    name
+                                        ?.toLowerCase()
                                         .includes(searchTerm.toLowerCase())
                                 )
                                 .map((suggestion) => (
@@ -136,7 +156,7 @@ const MapPage: React.FC = () => {
                                         key={suggestion}
                                         className="py-1 px-2 hover:bg-gray-700 rounded cursor-pointer"
                                         onClick={() =>
-                                            setSearchTerm(suggestion)
+                                            setSearchTerm(suggestion || "")
                                         }
                                     >
                                         {suggestion}
@@ -156,9 +176,9 @@ const MapPage: React.FC = () => {
                         onChange={(e) => setSelectedCategory(e.target.value)}
                     >
                         <option value="all">All Categories</option>
-                        {uniqueCategories.map((cat) => (
-                            <option key={cat} value={cat}>
-                                {cat}
+                        {uniqueCategories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
                             </option>
                         ))}
                     </select>
