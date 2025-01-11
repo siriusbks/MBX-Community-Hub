@@ -22,6 +22,9 @@ import { MapDataConfig } from "./map/mapData";
 import quadraMarkers from "./map/quadraMarkers";
 import spawnMarkers from "./map/spawnMarkers";
 import homeIslandMarkers from "./map/homeIslandMarkers";
+import bambooMarkers from "./map/bambooMarkers";
+import frostbiteMarkers from "./map/frostbiteMarkers";
+import sandwhisperMarkers from "./map/sandwhisperMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -41,6 +44,9 @@ const allMarkers = {
     ...kokokoMarkers,
     ...quadraMarkers,
     ...homeIslandMarkers,
+    ...bambooMarkers,
+    ...frostbiteMarkers,
+    ...sandwhisperMarkers,
 };
 
 const toLeafletCoords = (

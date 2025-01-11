@@ -13,6 +13,9 @@ import spawnMarkers from "../components/map/spawnMarkers";
 import quadraMarkers from "../components/map/quadraMarkers";
 import { MarkerConfig } from "../types/markerTypes";
 import homeIslandMarkers from "@components/map/homeIslandMarkers";
+import bambooMarkers from "@components/map/bambooMarkers";
+import frostbiteMarkers from "@components/map/frostbiteMarkers";
+import sandwhisperMarkers from "@components/map/sandwhisperMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -38,6 +41,9 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
     kokoko: kokokoMarkers,
     quadra_plains: quadraMarkers,
     home_island: homeIslandMarkers,
+    bamboo_peak: bambooMarkers,
+    frostbite_fortress: frostbiteMarkers,
+    sandwhisper_dunes: sandwhisperMarkers,
 };
 
 const MapPage: React.FC = () => {
