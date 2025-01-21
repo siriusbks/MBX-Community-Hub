@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
 const MapPage = lazy(() => import("@routes/MapPage"));
+const HomePage = lazy(() => import("@routes/homePage"));
 
 export const AppRoutes: FC = () => (
     <Suspense
@@ -18,6 +19,14 @@ export const AppRoutes: FC = () => (
         <Routes>
             <Route
                 path="/"
+                element={
+                    <Layout>
+                        <HomePage />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/profile"
                 element={
                     <Layout>
                         <ProfilePage />

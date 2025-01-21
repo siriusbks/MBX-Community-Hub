@@ -19,12 +19,15 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
                 <div className="container mx-auto px-4 py-6">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-8">
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+                            <NavLink
+                                to="/"
+                                className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent hover:underline"
+                            >
                                 MBX Community Hub
-                            </h1>
+                            </NavLink>
                             <nav className="flex items-center gap-4">
                                 <NavLink
-                                    to="/"
+                                    to="/profile"
                                     end
                                     className={({ isActive }) =>
                                         `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
@@ -38,11 +41,20 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
                                     Profile
                                 </NavLink>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-500 cursor-not-allowed">
-                                    <Map size={18} />
-                                    Map
-                                    <span className="text-xs bg-gray-700 px-2 py-0.5 rounded">
-                                        Soon
-                                    </span>
+                                    <NavLink
+                                        to="/map"
+                                        end
+                                        className={({ isActive }) =>
+                                            `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                                                isActive
+                                                    ? "bg-green-500/20 text-green-400"
+                                                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                                            }`
+                                        }
+                                    >
+                                        <Map size={18} />
+                                        Map
+                                    </NavLink>
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-500 cursor-not-allowed">
                                     <Shield size={18} />
