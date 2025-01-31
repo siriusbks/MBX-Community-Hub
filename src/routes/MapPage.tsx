@@ -120,16 +120,16 @@ const MapPage: React.FC = () => {
     return (
         <div className="flex h-screen w-screen max-w-full bg-gray-900 text-white">
             {/* Sidebar */}
-            <aside className="w-80 h-full border-r border-gray-700 flex flex-col bg-gray-800 shadow-lg">
+            <aside className="w-80 h-full border-r border-gray-700 flex flex-col bg-gray-800 shadow-lg p-4 space-y-6">
                 {/* Map Selection */}
-                <div className="p-6 border-b border-gray-700">
-                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🌍 Select a Map
                     </h2>
                     <div className="relative">
                         <select
                             className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                        focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                             value={selectedMapKey}
                             onChange={(e) => setSelectedMapKey(e.target.value)}
                         >
@@ -143,7 +143,7 @@ const MapPage: React.FC = () => {
                 </div>
 
                 {/* Search Items */}
-                <div className="p-6 border-b border-gray-700 relative z-50">
+                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 relative z-50">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🔍 Search Items
                     </h2>
@@ -152,7 +152,7 @@ const MapPage: React.FC = () => {
                     <div className="relative w-full">
                         <input
                             className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                             type="text"
                             placeholder="Type to search..."
                             value={searchTerm}
@@ -179,7 +179,7 @@ const MapPage: React.FC = () => {
                     {searchTerm && dropdownVisible && (
                         <div
                             className="absolute z-50 left-0 right-0 top-full mt-1 w-full bg-gray-900 border border-gray-700 
-            rounded-lg shadow-lg p-2 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
+                        rounded-lg shadow-lg p-3 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
                         >
                             {rawMarkers
                                 .map(
@@ -204,7 +204,7 @@ const MapPage: React.FC = () => {
                                     <div
                                         key={config?.displayName}
                                         className="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer text-sm transition 
-                        flex justify-between items-center border-b border-gray-800 last:border-0"
+                                        flex justify-between items-center border-b border-gray-800 last:border-0"
                                         onClick={() => {
                                             setSearchTerm(
                                                 config?.displayName || ""
@@ -217,7 +217,7 @@ const MapPage: React.FC = () => {
                                             {config?.displayName}
                                         </span>
 
-                                        {/* Lvl */}
+                                        {/* Level badge */}
                                         {config?.properties?.level && (
                                             <span className="flex items-center text-green-400 bg-green-800 text-xs font-semibold px-2 py-1 rounded-lg">
                                                 lvl {config.properties.level}
@@ -235,14 +235,14 @@ const MapPage: React.FC = () => {
                 </div>
 
                 {/* Filter by Category */}
-                <div className="p-6">
-                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🏷️ Filter by Category
                     </h2>
                     <div className="relative">
                         <select
                             className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                        focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                             value={selectedCategory}
                             onChange={(e) =>
                                 setSelectedCategory(e.target.value)
