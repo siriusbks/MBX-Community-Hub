@@ -141,9 +141,10 @@ const MapPage: React.FC = () => {
                         </select>
                     </div>
                 </div>
+
                 {/* Search Items */}
                 <div className="p-6 border-b border-gray-700 relative z-50">
-                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🔍 Search Items
                     </h2>
 
@@ -177,34 +178,51 @@ const MapPage: React.FC = () => {
                     {/* List of suggestions */}
                     {searchTerm && dropdownVisible && (
                         <div
-                            className="absolute z-50 left-0 right-0 top-full mt-1 w-full max-w-full bg-gray-800 border border-gray-600 
-            rounded-lg shadow-lg p-3 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
+                            className="absolute z-50 left-0 right-0 top-full mt-1 w-full bg-gray-900 border border-gray-700 
+            rounded-lg shadow-lg p-2 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
                         >
                             {rawMarkers
                                 .map(
                                     (marker) =>
                                         allMarkers[selectedMapKey]?.[marker.key]
-                                            ?.displayName
                                 )
+                                .filter((config) => config?.displayName)
                                 .filter(
-                                    (name, index, arr) =>
-                                        arr.indexOf(name) === index
+                                    (config, index, arr) =>
+                                        arr.findIndex(
+                                            (c) =>
+                                                c?.displayName ===
+                                                config?.displayName
+                                        ) === index
                                 )
-                                .filter((name) =>
-                                    name
+                                .filter((config) =>
+                                    config?.displayName
                                         ?.toLowerCase()
                                         .includes(searchTerm.toLowerCase())
                                 )
-                                .map((suggestion) => (
+                                .map((config) => (
                                     <div
-                                        key={suggestion}
-                                        className="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer text-sm transition"
+                                        key={config?.displayName}
+                                        className="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer text-sm transition 
+                        flex justify-between items-center border-b border-gray-800 last:border-0"
                                         onClick={() => {
-                                            setSearchTerm(suggestion || "");
+                                            setSearchTerm(
+                                                config?.displayName || ""
+                                            );
                                             setDropdownVisible(false);
                                         }}
                                     >
-                                        {suggestion}
+                                        {/* displayName */}
+                                        <span className="flex items-center gap-2 text-gray-200 font-medium">
+                                            {config?.displayName}
+                                        </span>
+
+                                        {/* Lvl */}
+                                        {config?.properties?.level && (
+                                            <span className="flex items-center text-green-400 bg-green-800 text-xs font-semibold px-2 py-1 rounded-lg">
+                                                lvl {config.properties.level}
+                                            </span>
+                                        )}
                                     </div>
                                 ))}
                             {filteredMarkers.length === 0 && (
