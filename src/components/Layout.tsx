@@ -57,11 +57,20 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
                                     </NavLink>
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-500 cursor-not-allowed">
-                                    <Shield size={18} />
-                                    Equipment
-                                    <span className="text-xs bg-gray-700 px-2 py-0.5 rounded">
-                                        Soon
-                                    </span>
+                                    <NavLink
+                                        to="/equipment"
+                                        end
+                                        className={({ isActive }) =>
+                                            `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                                                isActive
+                                                    ? "bg-green-500/20 text-green-400"
+                                                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                                            }`
+                                        }
+                                    >
+                                        <Shield size={18} />
+                                        Equipment
+                                    </NavLink>
                                 </div>
                             </nav>
                         </div>
