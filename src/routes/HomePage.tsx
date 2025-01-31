@@ -1,3 +1,9 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2025 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
 import { Link } from "react-router-dom";
 import { User, Map, Shield } from "lucide-react";
 
