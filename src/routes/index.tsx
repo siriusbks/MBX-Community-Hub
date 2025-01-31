@@ -7,10 +7,11 @@
 import { Layout } from "@components/Layout";
 import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import { EquipPage } from "./EquipPage";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
 const MapPage = lazy(() => import("@routes/MapPage"));
-const HomePage = lazy(() => import("@routes/homePage"));
+const HomePage = lazy(() => import("@routes/HomePage"));
 
 export const AppRoutes: FC = () => (
     <Suspense
@@ -38,6 +39,14 @@ export const AppRoutes: FC = () => (
                 element={
                     <Layout>
                         <MapPage />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/equipment"
+                element={
+                    <Layout>
+                        <EquipPage />
                     </Layout>
                 }
             />
