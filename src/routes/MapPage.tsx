@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from "react";
+import { X } from "lucide-react";
 
 import InteractiveMap from "../components/InteractiveMap";
 import { mapData } from "../components/map/mapData";
@@ -51,6 +52,7 @@ const MapPage: React.FC = () => {
     const [rawMarkers, setRawMarkers] = useState<ExtendedFeature[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
+    const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const mapConfig = mapData[selectedMapKey];
 
@@ -117,33 +119,67 @@ const MapPage: React.FC = () => {
 
     return (
         <div className="flex h-screen w-screen max-w-full bg-gray-900 text-white">
-            <aside className="w-72 h-full border-r border-gray-700 flex flex-col">
-                <div className="p-4 border-b border-gray-700">
-                    <h2 className="text-xl font-bold mb-2">Map Selection</h2>
-                    <select
-                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1 focus:outline-none"
-                        value={selectedMapKey}
-                        onChange={(e) => setSelectedMapKey(e.target.value)}
-                    >
-                        {Object.keys(mapData).map((key) => (
-                            <option key={key} value={key}>
-                                {mapData[key].name}
-                            </option>
-                        ))}
-                    </select>
+            {/* Sidebar */}
+            <aside className="w-80 h-full border-r border-gray-700 flex flex-col bg-gray-800 shadow-lg">
+                {/* Map Selection */}
+                <div className="p-6 border-b border-gray-700">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                        🌍 Select a Map
+                    </h2>
+                    <div className="relative">
+                        <select
+                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
+                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                            value={selectedMapKey}
+                            onChange={(e) => setSelectedMapKey(e.target.value)}
+                        >
+                            {Object.keys(mapData).map((key) => (
+                                <option key={key} value={key}>
+                                    {mapData[key].name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
+                {/* Search Items */}
+                <div className="p-6 border-b border-gray-700 relative z-50">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                        🔍 Search Items
+                    </h2>
 
-                <div className="p-4 border-b border-gray-700">
-                    <h2 className="text-xl font-bold mb-2">Search Items</h2>
-                    <input
-                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1 focus:outline-none"
-                        type="text"
-                        placeholder="Search item..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    {searchTerm && (
-                        <div className="mt-2 max-h-32 overflow-y-auto bg-gray-800 border border-gray-700 rounded p-2">
+                    {/* Input with reset button */}
+                    <div className="relative w-full">
+                        <input
+                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
+            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                            type="text"
+                            placeholder="Type to search..."
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                                setDropdownVisible(true);
+                            }}
+                            onFocus={() => setDropdownVisible(true)}
+                        />
+                        {searchTerm && (
+                            <button
+                                onClick={() => {
+                                    setSearchTerm("");
+                                    setDropdownVisible(false);
+                                }}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition"
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
+                    </div>
+
+                    {/* List of suggestions */}
+                    {searchTerm && dropdownVisible && (
+                        <div
+                            className="absolute z-50 left-0 right-0 top-full mt-1 w-full max-w-full bg-gray-800 border border-gray-600 
+            rounded-lg shadow-lg p-3 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
+                        >
                             {rawMarkers
                                 .map(
                                     (marker) =>
@@ -162,37 +198,50 @@ const MapPage: React.FC = () => {
                                 .map((suggestion) => (
                                     <div
                                         key={suggestion}
-                                        className="py-1 px-2 hover:bg-gray-700 rounded cursor-pointer"
-                                        onClick={() =>
-                                            setSearchTerm(suggestion || "")
-                                        }
+                                        className="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer text-sm transition"
+                                        onClick={() => {
+                                            setSearchTerm(suggestion || "");
+                                            setDropdownVisible(false);
+                                        }}
                                     >
                                         {suggestion}
                                     </div>
                                 ))}
+                            {filteredMarkers.length === 0 && (
+                                <div className="py-2 px-3 text-gray-400 text-sm text-center">
+                                    No results found
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
 
-                <div className="p-4">
-                    <h2 className="text-xl font-bold mb-2">
-                        Filter by Category
+                {/* Filter by Category */}
+                <div className="p-6">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2">
+                        🏷️ Filter by Category
                     </h2>
-                    <select
-                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1 focus:outline-none"
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                        <option value="all">All Categories</option>
-                        {uniqueCategories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="relative">
+                        <select
+                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
+                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                            value={selectedCategory}
+                            onChange={(e) =>
+                                setSelectedCategory(e.target.value)
+                            }
+                        >
+                            <option value="all">All Categories</option>
+                            {uniqueCategories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             </aside>
 
+            {/* Map View */}
             <div className="flex-1 h-full">
                 <InteractiveMap
                     mapConfig={mapConfig}
