@@ -14,6 +14,10 @@ import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 import { FC, useMemo, useRef, useState } from "react";
 
+const BACKGROUND_FILTER = "blur(2.5px)";
+const BACKGROUND_SCALE = "scale(1.02)";
+const BACKGROUND_TRANSITION = "filter 0.3s ease";
+
 export const Preview: FC = () => {
     const { username, uuid, level, background, professions } =
         useProfileStore();
@@ -21,14 +25,44 @@ export const Preview: FC = () => {
     const [isDownloading, setIsDownloading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleDownload = async () => {
-        if (!previewRef.current) return;
+    const ensureImageLoaded = (src: string): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => resolve();
+            img.onerror = (e) =>
+                reject(new Error(`Failed to load image: ${src}`));
+            img.src = src;
+        });
+    };
 
+    const handleDownload = async () => {
+        if (!previewRef.current) {
+            setError("Preview element not found");
+            return;
+        }
         setIsDownloading(true);
         setError(null);
 
         try {
             await document.fonts.ready;
+
+            if (background) {
+                await ensureImageLoaded(background);
+            }
+
+            const rect = previewRef.current.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) {
+                console.warn(
+                    "Preview element dimensions are zero. Check your CSS/layout."
+                );
+            } else {
+                console.log(
+                    "Preview element dimensions:",
+                    rect.width,
+                    rect.height
+                );
+            }
 
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
@@ -37,13 +71,17 @@ export const Preview: FC = () => {
                 backgroundColor: null,
                 logging: true,
                 onclone: (clonedDoc) => {
-                    const head = document.head.cloneNode(true);
-                    clonedDoc.head.innerHTML = "";
-                    clonedDoc.head.appendChild(head);
                     clonedDoc.body.className = document.body.className;
                     clonedDoc.body.style.fontFamily = getComputedStyle(
                         document.body
                     ).fontFamily;
+                    const bgElement = clonedDoc.querySelector(
+                        ".downloadable-bg"
+                    ) as HTMLElement;
+                    if (bgElement) {
+                        bgElement.style.filter = BACKGROUND_FILTER;
+                        bgElement.style.transform = BACKGROUND_SCALE;
+                    }
                 },
             });
 
@@ -56,17 +94,20 @@ export const Preview: FC = () => {
                 saveAs(blob, fileName);
             } else {
                 throw new Error(
-                    "Canvas is empty. Possible CORS issues with images."
+                    "Canvas is empty. Possible issues with image loading or CORS."
                 );
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error("Error capturing image with html2canvas:", err);
             if (err instanceof DOMException && err.name === "SecurityError") {
                 setError(
                     "CORS error: Unable to load images from external sources. Please ensure all external images have appropriate CORS headers."
                 );
             } else {
-                setError("Failed to download the image. Please try again.");
+                setError(
+                    err.message ||
+                        "Failed to download the image. Please try again."
+                );
             }
         } finally {
             setIsDownloading(false);
@@ -109,12 +150,12 @@ export const Preview: FC = () => {
                 className="relative w-full aspect-video rounded-md overflow-hidden bg-cover bg-center"
             >
                 <div
-                    className="absolute inset-0 bg-cover bg-center"
+                    className="absolute inset-0 bg-cover bg-center downloadable-bg"
                     style={{
                         backgroundImage: `url(${background})`,
-                        filter: "blur(2.5px)",
-                        transform: "scale(1.02)",
-                        transition: "filter 0.3s ease",
+                        filter: BACKGROUND_FILTER,
+                        transform: BACKGROUND_SCALE,
+                        transition: BACKGROUND_TRANSITION,
                     }}
                 ></div>
 
