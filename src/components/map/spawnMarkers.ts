@@ -84,6 +84,39 @@ const spawnMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    ore_lapis_lazuli: {
+        displayName: "Lapis lazuli",
+        iconUrl: "src/assets/media/ore/ore_lapis_lazuli.png",
+        geoJsonFile: "src/assets/geo/spawn/ore/ore_lapis_lazuli.geojson",
+        category: "Mining",
+        defaultChecked: true,
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
+    ore_redstone: {
+        displayName: "Redstone",
+        iconUrl: "src/assets/media/ore/ore_redstone.png",
+        geoJsonFile: "src/assets/geo/spawn/ore/ore_redstone.geojson",
+        category: "Mining",
+        defaultChecked: true,
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
+    ore_diamond: {
+        displayName: "Diamond",
+        iconUrl: "src/assets/media/ore/ore_diamond.png",
+        geoJsonFile: "src/assets/geo/spawn/ore/ore_diamond.geojson",
+        category: "Mining",
+        defaultChecked: true,
+        properties: {
+            level: "8",
+            showCount: true,
+        },
+    },
     ore_silver: {
         displayName: "Silver",
         iconUrl: "src/assets/media/ore/ore_silver.png",
@@ -96,12 +129,13 @@ const spawnMarkers: Record<string, MarkerConfig> = {
         },
     },
     spawn_fish: {
-        displayName: "Small shoal of fishes",
+        displayName: "Tropical Shoal",
         iconUrl: "src/assets/media/fish/fishing_rod.png",
-        geoJsonFile: "src/assets/geo/spawn/spawn_fish.geojson",
+        geoJsonFile: "src/assets/geo/spawn/tropical_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "1",
             showCount: true,
         },
     },

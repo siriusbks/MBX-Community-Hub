@@ -1,0 +1,82 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [252, 75, 50]
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [248, 75, 45],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [251, 75, 39]
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [255, 75, 33]
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [263, 75, 41]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [272, 75, 28]
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [276, 75, 22],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [84, 80, 209],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [59, 82, 197]
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [79, 83, 191],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        }
+    ]
+}
