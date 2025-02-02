@@ -3,8 +3,8 @@
     "features": [
         {
             "geometry": {
-                "coordinates": [131, -52, 110],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [131, -52, 110]
             },
             "id": 1,
             "type": "Feature",
@@ -14,7 +14,7 @@
         },
         {
             "geometry": {
-                "coordinates": [166, 0, 25],
+                "coordinates": [188, 63, 48],
                 "type": "Point"
             },
             "id": 2,
@@ -26,7 +26,7 @@
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [188, 63, 48]
+                "coordinates": [108, -7, 108]
             },
             "id": 3,
             "type": "Feature",
@@ -37,7 +37,7 @@
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [108, -7, 108]
+                "coordinates": [138, 54, 167]
             },
             "id": 4,
             "type": "Feature",
@@ -47,10 +47,21 @@
         },
         {
             "geometry": {
-                "coordinates": [138, 54, 167],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [91, -32, 156]
             },
             "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [114, 7, 19]
+            },
+            "id": 6,
             "type": "Feature",
             "properties": {
                 "map": "home_island"

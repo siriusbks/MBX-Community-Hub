@@ -22,6 +22,17 @@
             "properties": {
                 "map": "home_island"
             }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [61, 62, 28]
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
         }
     ]
 }

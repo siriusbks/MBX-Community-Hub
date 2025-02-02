@@ -25,8 +25,8 @@
         },
         {
             "geometry": {
-                "coordinates": [77, 66, 56],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [77, 66, 56]
             },
             "id": 3,
             "type": "Feature",
@@ -36,8 +36,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [64, 84, 57]
+                "coordinates": [64, 84, 57],
+                "type": "Point"
             },
             "id": 4,
             "type": "Feature",
@@ -58,8 +58,8 @@
         },
         {
             "geometry": {
-                "coordinates": [42, 79, 118],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [42, 79, 118]
             },
             "id": 6,
             "type": "Feature",
@@ -91,8 +91,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [206, 13, 48]
+                "coordinates": [206, 13, 48],
+                "type": "Point"
             },
             "id": 9,
             "type": "Feature",
@@ -124,10 +124,65 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [26, 17, 57]
+                "coordinates": [26, 17, 57],
+                "type": "Point"
             },
             "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [166, 0, 25],
+                "type": "Point"
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [205, -17, 14]
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [121, 36, 27],
+                "type": "Point"
+            },
+            "id": 15,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [111, 41, 16],
+                "type": "Point"
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [142, 69, 39]
+            },
+            "id": 17,
             "type": "Feature",
             "properties": {
                 "map": "home_island"
