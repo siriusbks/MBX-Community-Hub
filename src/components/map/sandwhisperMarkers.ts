@@ -53,13 +53,13 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
         },
     },
     sandwhisper_dunes_fish: {
-        displayName: "Shoal of fishes",
-        iconUrl: "src/assets/media/fishing_rod.png",
-        geoJsonFile:
-            "src/assets/geo/sandwhisper_dunes/sandwhisper_dunes_fish.geojson",
+        displayName: "Desert Shoal",
+        iconUrl: "src/assets/media/fish/fishing_rod_5.png",
+        geoJsonFile: "src/assets/geo/sandwhisper_dunes/desert_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "40",
             showCount: true,
         },
     },

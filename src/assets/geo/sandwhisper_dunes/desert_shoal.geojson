@@ -1,0 +1,346 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [80, 69, 98]
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [92, 69, 80]
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [205, 69, 113],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [112, 69, 204],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [103, 69, 191]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [110, 69, 212],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [96, 71, 360]
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-23, 70, 255]
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [1, 69, 233],
+                "type": "Point"
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [4, 76, 479]
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-25, 76, 505]
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-20, 76, 553]
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [52, 78, 655]
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [84, 78, 666],
+                "type": "Point"
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [451, 59, 612]
+            },
+            "id": 15,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [506, 57, 514]
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [477, 58, 501],
+                "type": "Point"
+            },
+            "id": 17,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [348, 57, 527],
+                "type": "Point"
+            },
+            "id": 18,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [340, 57, 575]
+            },
+            "id": 19,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [358, 67, 372],
+                "type": "Point"
+            },
+            "id": 20,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [283, 67, 344]
+            },
+            "id": 21,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [446, 67, 336],
+                "type": "Point"
+            },
+            "id": 22,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [506, 67, 341]
+            },
+            "id": 23,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [582, 67, 211],
+                "type": "Point"
+            },
+            "id": 24,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [582, 67, 196],
+                "type": "Point"
+            },
+            "id": 25,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [537, 67, 44],
+                "type": "Point"
+            },
+            "id": 26,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [503, 67, 29]
+            },
+            "id": 27,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [440, 67, 0],
+                "type": "Point"
+            },
+            "id": 28,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [376, 68, -10],
+                "type": "Point"
+            },
+            "id": 29,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [313, 66, -14],
+                "type": "Point"
+            },
+            "id": 30,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [267, 66, -14]
+            },
+            "id": 31,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        }
+    ]
+}
