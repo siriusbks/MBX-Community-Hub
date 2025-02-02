@@ -3,8 +3,8 @@
     "features": [
         {
             "geometry": {
-                "coordinates": [234, 64, -274],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [234, 64, -274]
             },
             "id": 1,
             "type": "Feature",
@@ -14,8 +14,8 @@
         },
         {
             "geometry": {
-                "coordinates": [241, 64, -243],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [241, 64, -243]
             },
             "id": 2,
             "type": "Feature",
@@ -36,8 +36,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [245, 64, -171]
+                "coordinates": [245, 64, -171],
+                "type": "Point"
             },
             "id": 4,
             "type": "Feature",
@@ -47,8 +47,8 @@
         },
         {
             "geometry": {
-                "coordinates": [219, 64, -136],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [219, 64, -136]
             },
             "id": 5,
             "type": "Feature",
@@ -58,8 +58,8 @@
         },
         {
             "geometry": {
-                "coordinates": [230, 64, -91],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [230, 64, -91]
             },
             "id": 6,
             "type": "Feature",
@@ -69,8 +69,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [237, 64, -59]
+                "coordinates": [237, 64, -59],
+                "type": "Point"
             },
             "id": 7,
             "type": "Feature",
@@ -80,8 +80,8 @@
         },
         {
             "geometry": {
-                "coordinates": [264, 64, -16],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [264, 64, -16]
             },
             "id": 8,
             "type": "Feature",
@@ -91,8 +91,8 @@
         },
         {
             "geometry": {
-                "coordinates": [221, 64, -9],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [221, 64, -9]
             },
             "id": 9,
             "type": "Feature",
@@ -113,8 +113,8 @@
         },
         {
             "geometry": {
-                "coordinates": [116, 64, -26],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [116, 64, -26]
             },
             "id": 11,
             "type": "Feature",

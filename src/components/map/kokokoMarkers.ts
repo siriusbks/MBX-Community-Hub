@@ -151,12 +151,13 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
         },
     },
     kokoko_fish: {
-        displayName: "Small shoal of fishes",
-        iconUrl: "src/assets/media/fish/fishing_rod.png",
-        geoJsonFile: "src/assets/geo/kokoko/kokoko_fish.geojson",
+        displayName: "Deep Shoal",
+        iconUrl: "src/assets/media/fish/fishing_rod_2.png",
+        geoJsonFile: "src/assets/geo/kokoko/deep_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "10",
             showCount: true,
         },
     },
