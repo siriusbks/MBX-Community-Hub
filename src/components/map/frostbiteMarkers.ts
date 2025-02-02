@@ -121,13 +121,13 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     frostbite_fortress_fish: {
-        displayName: "Shoal of fishes",
-        iconUrl: "src/assets/media/fishing_rod.png",
-        geoJsonFile:
-            "src/assets/geo/frostbite_fortress/frostbite_fortress_fish.geojson",
+        displayName: "Cold Shoal",
+        iconUrl: "src/assets/media/fish/fishing_rod_6.png",
+        geoJsonFile: "src/assets/geo/frostbite_fortress/cold_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "60",
             showCount: true,
         },
     },

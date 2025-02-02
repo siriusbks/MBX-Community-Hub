@@ -1,0 +1,368 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [504, 51, 19]
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [540, 51, -5]
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [548, 51, -67],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [556, 51, -105],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [549, 51, -189]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [548, 51, -219],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [408, 55, -216],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [390, 55, -176],
+                "type": "Point"
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [414, 53, -117]
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [422, 52, -94],
+                "type": "Point"
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [430, 51, -47],
+                "type": "Point"
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [456, 51, 5],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [403, 51, 19]
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [370, 51, 57]
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [344, 51, 72]
+            },
+            "id": 15,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [290, 51, 43],
+                "type": "Point"
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [232, 50, 5]
+            },
+            "id": 17,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [357, 65, -164],
+                "type": "Point"
+            },
+            "id": 18,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [103, 54, -96],
+                "type": "Point"
+            },
+            "id": 19,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [82, 54, -152],
+                "type": "Point"
+            },
+            "id": 20,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [136, 54, -157],
+                "type": "Point"
+            },
+            "id": 21,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [138, 51, -26],
+                "type": "Point"
+            },
+            "id": 22,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [81, 51, -49],
+                "type": "Point"
+            },
+            "id": 23,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [87, 51, -11],
+                "type": "Point"
+            },
+            "id": 24,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [38, 51, 23]
+            },
+            "id": 25,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-6, 51, 8],
+                "type": "Point"
+            },
+            "id": 26,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-44, 51, -9]
+            },
+            "id": 27,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-90, 51, -74],
+                "type": "Point"
+            },
+            "id": 28,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-88, 51, -107]
+            },
+            "id": 29,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-89, 51, -219]
+            },
+            "id": 30,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [3, 51, -205],
+                "type": "Point"
+            },
+            "id": 31,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [5, 51, -132]
+            },
+            "id": 33,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [45, 50, -90],
+                "type": "Point"
+            },
+            "id": 34,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        }
+    ]
+}

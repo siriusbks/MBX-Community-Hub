@@ -203,6 +203,10 @@ export const mapData: Record<string, MapDataConfig> = {
             "frostbite_fortress_bloon",
             "frostbite_fortress_viewPoint",
             "frostbite_fortress_coin",
+            "frozehound",
+            "froztail",
+            "froztail_magus",
+            "chillolith",
         ],
     },
     sandwhisper_dunes: {
