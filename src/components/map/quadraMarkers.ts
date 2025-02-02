@@ -131,12 +131,13 @@ const quadraMarkers: Record<string, MarkerConfig> = {
         },
     },
     quadra_plains_fish: {
-        displayName: "Medium shoal of fishes",
-        iconUrl: "src/assets/media/fish/mid_fishing_rod.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/quadra_plains_fish.geojson",
+        displayName: "Plain Shoal",
+        iconUrl: "src/assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "src/assets/geo/quadra_plains/plain_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "20",
             showCount: true,
         },
     },
