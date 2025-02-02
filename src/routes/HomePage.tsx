@@ -9,78 +9,83 @@ import { User, Map, Shield } from "lucide-react";
 
 export function HomePage() {
     return (
-        <div className="py-16 px-4">
+        <div className="py-20 px-6">
             {/* Hero Section */}
-            <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+            <div className="text-center mb-20">
+                <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
                     Welcome to MBX Community
                 </h1>
                 <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                    For the Minebox server community, allowing players to create
-                    their profiles, explore the interactive map, and much more.
+                    Join the Minebox community and enhance your experience with
+                    personalized profiles, an interactive map, and powerful
+                    equipment management.
                 </p>
+                <div className="mt-4 h-1 w-20 mx-auto bg-green-500/50 rounded-full animate-pulse"></div>
             </div>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {/* Profile Feature */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {/* Player Profile */}
                 <Link
                     to="/profile"
-                    className="group bg-gray-800/50 hover:bg-gray-800/70 border border-gray-700 rounded-xl p-6 transition-all hover:scale-[1.02]"
+                    className="group bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-green-400 rounded-xl p-6 
+                    shadow-lg transition-all hover:scale-105"
                 >
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-green-500/10 text-green-400">
-                            <User size={24} />
+                        <div className="p-3 rounded-lg bg-green-500/10 text-green-400 group-hover:bg-green-400/20 transition">
+                            <User size={28} />
                         </div>
-                        <h2 className="text-xl font-semibold">
+                        <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
                             Player Profile
                         </h2>
                     </div>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                        Create a personalized profile with your stats,
-                        professions, and achievements.
+                    <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        Customize your profile with stats, achievements, and
+                        more to showcase your Minebox journey.
                     </p>
                 </Link>
 
-                {/* Map Feature */}
+                {/* Interactive Map */}
                 <Link
                     to="/map"
-                    className="group bg-gray-800/50 hover:bg-gray-800/70 border border-gray-700 rounded-xl p-6 transition-all hover:scale-[1.02]"
+                    className="group bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-blue-400 rounded-xl p-6 
+                    shadow-lg transition-all hover:scale-105"
                 >
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-blue-500/10 text-blue-400">
-                            <Map size={24} />
+                        <div className="p-3 rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition">
+                            <Map size={28} />
                         </div>
-                        <h2 className="text-xl font-semibold">
+                        <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
                             Interactive Map
                         </h2>
                     </div>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                        Explore the world of Minebox with our detailed
-                        interactive map.
+                    <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        Explore the Minebox world with detailed interactive maps
+                        showing locations and resources.
                     </p>
                 </Link>
 
-                {/* Equipment Feature */}
+                {/* Equipment System */}
                 <Link
                     to="/equipment"
-                    className="group bg-gray-800/50 hover:bg-gray-800/70 border border-gray-700 rounded-xl p-6 transition-all hover:scale-[1.02]"
+                    className="group bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-red-400 rounded-xl p-6 
+                    shadow-lg transition-all hover:scale-105"
                 >
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-red-500/10 text-red-400">
-                            <Shield size={24} />
+                        <div className="p-3 rounded-lg bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition">
+                            <Shield size={28} />
                         </div>
-                        <h2 className="text-xl font-semibold">
+                        <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
                             Equipment System
                         </h2>
                     </div>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                        Manage your gear and improve your equipment to take on
-                        new challenges.
+                    <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        Manage and upgrade your gear to face greater challenges.
                     </p>
                 </Link>
             </div>
         </div>
     );
 }
+
 export default HomePage;
