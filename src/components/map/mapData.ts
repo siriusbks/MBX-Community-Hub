@@ -151,7 +151,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     bamboo_peak: {
         imageUrl: "src/assets/maps/bamboo_peak.png",
-        width: 696,
+        width: 1256,
         height: 608,
         name: "Bamboo Peak",
         mapProperties: {

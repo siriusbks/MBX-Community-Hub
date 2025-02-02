@@ -97,12 +97,13 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     bamboo_peak_fish: {
-        displayName: "Small shoal of fishes",
-        iconUrl: "src/assets/media/fish/fishing_rod.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_peak_fish.geojson",
+        displayName: "Bamboo Shoal",
+        iconUrl: "src/assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
+            level: "30",
             showCount: true,
         },
     },
