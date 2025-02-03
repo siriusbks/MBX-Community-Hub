@@ -9,8 +9,8 @@ import { MarkerConfig } from "../../types/markerTypes";
 const sandwhisperMarkers: Record<string, MarkerConfig> = {
     log_olive: {
         displayName: "Olive",
-        iconUrl: "src/assets/media/tree/log_olive.png",
-        geoJsonFile: "src/assets/geo/sandwhisper_dunes/tree/log_olive.geojson",
+        iconUrl: "assets/media/tree/log_olive.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/tree/log_olive.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -20,8 +20,8 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     ore_seafoam: {
         displayName: "Seafoam",
-        iconUrl: "src/assets/media/ore/ore_seafoam.png",
-        geoJsonFile: "src/assets/geo/sandwhisper_dunes/ore/ore_seafoam.geojson",
+        iconUrl: "assets/media/ore/ore_seafoam.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_seafoam.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -31,9 +31,8 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     ore_silicate: {
         displayName: "Silicate",
-        iconUrl: "src/assets/media/ore/ore_silicate.png",
-        geoJsonFile:
-            "src/assets/geo/sandwhisper_dunes/ore/ore_silicate.geojson",
+        iconUrl: "assets/media/ore/ore_silicate.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_silicate.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -43,8 +42,8 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     ore_topaz: {
         displayName: "Topaz",
-        iconUrl: "src/assets/media/ore/ore_topaz.png",
-        geoJsonFile: "src/assets/geo/sandwhisper_dunes/ore/ore_topaz.geojson",
+        iconUrl: "assets/media/ore/ore_topaz.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_topaz.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -54,8 +53,8 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     sandwhisper_dunes_fish: {
         displayName: "Desert Shoal",
-        iconUrl: "src/assets/media/fish/fishing_rod_5.png",
-        geoJsonFile: "src/assets/geo/sandwhisper_dunes/desert_shoal.geojson",
+        iconUrl: "assets/media/fish/fishing_rod_5.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/desert_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
@@ -65,9 +64,9 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     sandwhisper_dunes_bloon: {
         displayName: "Bloon",
-        iconUrl: "src/assets/media/exploration/bloon.png",
+        iconUrl: "assets/media/exploration/bloon.png",
         geoJsonFile:
-            "src/assets/geo/sandwhisper_dunes/sandwhisper_dunes_bloon.geojson",
+            "assets/geo/sandwhisper_dunes/sandwhisper_dunes_bloon.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -76,9 +75,9 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     sandwhisper_dunes_viewPoint: {
         displayName: "View point",
-        iconUrl: "src/assets/media/exploration/viewPoint.png",
+        iconUrl: "assets/media/exploration/viewPoint.png",
         geoJsonFile:
-            "src/assets/geo/sandwhisper_dunes/sandwhisper_dunes_viewPoint.geojson",
+            "assets/geo/sandwhisper_dunes/sandwhisper_dunes_viewPoint.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -87,9 +86,9 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     },
     sandwhisper_dunes_coin: {
         displayName: "Coin",
-        iconUrl: "src/assets/media/exploration/coin.png",
+        iconUrl: "assets/media/exploration/coin.png",
         geoJsonFile:
-            "src/assets/geo/sandwhisper_dunes/sandwhisper_dunes_coin.geojson",
+            "assets/geo/sandwhisper_dunes/sandwhisper_dunes_coin.geojson",
         defaultChecked: false,
         category: "Exploration",
         properties: {

@@ -9,8 +9,8 @@ import { MarkerConfig } from "../../types/markerTypes";
 const bambooMarkers: Record<string, MarkerConfig> = {
     log_ecalyptus: {
         displayName: "Ecalyptus",
-        iconUrl: "src/assets/media/tree/log_ecalyptus.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/tree/log_ecalyptus.geojson",
+        iconUrl: "assets/media/tree/log_ecalyptus.png",
+        geoJsonFile: "assets/geo/bamboo_peak/tree/log_ecalyptus.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -20,8 +20,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     log_laughing: {
         displayName: "Laughing",
-        iconUrl: "src/assets/media/tree/log_laughing.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/tree/log_laughing.geojson",
+        iconUrl: "assets/media/tree/log_laughing.png",
+        geoJsonFile: "assets/geo/bamboo_peak/tree/log_laughing.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -31,8 +31,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     log_elm: {
         displayName: "Elm",
-        iconUrl: "src/assets/media/tree/log_elm.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/tree/log_elm.geojson",
+        iconUrl: "assets/media/tree/log_elm.png",
+        geoJsonFile: "assets/geo/bamboo_peak/tree/log_elm.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -42,8 +42,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     ore_manganese: {
         displayName: "Manganese",
-        iconUrl: "src/assets/media/ore/ore_manganese.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/ore/ore_manganese.geojson",
+        iconUrl: "assets/media/ore/ore_manganese.png",
+        geoJsonFile: "assets/geo/bamboo_peak/ore/ore_manganese.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -53,9 +53,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     ore_liquid_diamond: {
         displayName: "Liquid Diamond",
-        iconUrl: "src/assets/media/ore/ore_liquid_diamond.png",
-        geoJsonFile:
-            "src/assets/geo/bamboo_peak/ore/ore_liquid_diamond.geojson",
+        iconUrl: "assets/media/ore/ore_liquid_diamond.png",
+        geoJsonFile: "assets/geo/bamboo_peak/ore/ore_liquid_diamond.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -65,8 +64,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     st_john_wort: {
         displayName: "St John's Wort",
-        iconUrl: "src/assets/media/flower/st_john_wort.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/flower/st_john_wort.geojson",
+        iconUrl: "assets/media/flower/st_john_wort.png",
+        geoJsonFile: "assets/geo/bamboo_peak/flower/st_john_wort.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -76,8 +75,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     ginger_root: {
         displayName: "Ginger Root",
-        iconUrl: "src/assets/media/flower/ginger_root.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/flower/ginger_root.geojson",
+        iconUrl: "assets/media/flower/ginger_root.png",
+        geoJsonFile: "assets/geo/bamboo_peak/flower/ginger_root.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -87,8 +86,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     origami: {
         displayName: "Origami",
-        iconUrl: "src/assets/media/flower/origami.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/flower/origami.geojson",
+        iconUrl: "assets/media/flower/origami.png",
+        geoJsonFile: "assets/geo/bamboo_peak/flower/origami.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -98,8 +97,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     bamboo_peak_fish: {
         displayName: "Bamboo Shoal",
-        iconUrl: "src/assets/media/fish/fishing_rod_3.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_shoal.geojson",
+        iconUrl: "assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "assets/geo/bamboo_peak/bamboo_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
@@ -109,8 +108,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     bamboo_peak_bloon: {
         displayName: "Bloon",
-        iconUrl: "src/assets/media/exploration/bloon.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_peak_bloon.geojson",
+        iconUrl: "assets/media/exploration/bloon.png",
+        geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_bloon.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -119,8 +118,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     bamboo_peak_viewPoint: {
         displayName: "View point",
-        iconUrl: "src/assets/media/exploration/viewPoint.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_peak_viewPoint.geojson",
+        iconUrl: "assets/media/exploration/viewPoint.png",
+        geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_viewPoint.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -129,8 +128,8 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     },
     bamboo_peak_coin: {
         displayName: "Coin",
-        iconUrl: "src/assets/media/exploration/coin.png",
-        geoJsonFile: "src/assets/geo/bamboo_peak/bamboo_peak_coin.geojson",
+        iconUrl: "assets/media/exploration/coin.png",
+        geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_coin.geojson",
         defaultChecked: false,
         category: "Exploration",
         properties: {

@@ -9,8 +9,8 @@ import { MarkerConfig } from "../../types/markerTypes";
 const quadraMarkers: Record<string, MarkerConfig> = {
     log_chestnut: {
         displayName: "Chestnut",
-        iconUrl: "src/assets/media/tree/log_chestnut.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/tree/log_chestnut.geojson",
+        iconUrl: "assets/media/tree/log_chestnut.png",
+        geoJsonFile: "assets/geo/quadra_plains/tree/log_chestnut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -20,8 +20,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     log_walnut: {
         displayName: "Walnut",
-        iconUrl: "src/assets/media/tree/log_walnut.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/tree/log_walnut.geojson",
+        iconUrl: "assets/media/tree/log_walnut.png",
+        geoJsonFile: "assets/geo/quadra_plains/tree/log_walnut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -31,9 +31,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     log_mystic_horbeam: {
         displayName: "Mystic Horbeam",
-        iconUrl: "src/assets/media/tree/log_mystic_horbeam.png",
-        geoJsonFile:
-            "src/assets/geo/quadra_plains/tree/log_mystic_horbeam.geojson",
+        iconUrl: "assets/media/tree/log_mystic_horbeam.png",
+        geoJsonFile: "assets/geo/quadra_plains/tree/log_mystic_horbeam.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -43,8 +42,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     chamomille: {
         displayName: "Chamomille",
-        iconUrl: "src/assets/media/flower/chamomille.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/flower/chamomille.geojson",
+        iconUrl: "assets/media/flower/chamomille.png",
+        geoJsonFile: "assets/geo/quadra_plains/flower/chamomille.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -54,8 +53,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     henbane: {
         displayName: "Henbane",
-        iconUrl: "src/assets/media/flower/henbane.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/flower/henbane.geojson",
+        iconUrl: "assets/media/flower/henbane.png",
+        geoJsonFile: "assets/geo/quadra_plains/flower/henbane.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -65,8 +64,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     peppermint: {
         displayName: "Peppermint",
-        iconUrl: "src/assets/media/flower/peppermint.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/flower/peppermint.geojson",
+        iconUrl: "assets/media/flower/peppermint.png",
+        geoJsonFile: "assets/geo/quadra_plains/flower/peppermint.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -76,8 +75,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     echinacea: {
         displayName: "Echinacea",
-        iconUrl: "src/assets/media/flower/echinacea.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/flower/echinacea.geojson",
+        iconUrl: "assets/media/flower/echinacea.png",
+        geoJsonFile: "assets/geo/quadra_plains/flower/echinacea.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -87,8 +86,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     ore_dolomite: {
         displayName: "Dolomite",
-        iconUrl: "src/assets/media/ore/ore_dolomite.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/ore/ore_dolomite.geojson",
+        iconUrl: "assets/media/ore/ore_dolomite.png",
+        geoJsonFile: "assets/geo/quadra_plains/ore/ore_dolomite.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -98,8 +97,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     ore_cobalt: {
         displayName: "Cobalt",
-        iconUrl: "src/assets/media/ore/ore_cobalt.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/ore/ore_cobalt.geojson",
+        iconUrl: "assets/media/ore/ore_cobalt.png",
+        geoJsonFile: "assets/geo/quadra_plains/ore/ore_cobalt.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -109,9 +108,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     ore_raw_obsidian: {
         displayName: "Raw Obsidian",
-        iconUrl: "src/assets/media/ore/ore_raw_obsidian.png",
-        geoJsonFile:
-            "src/assets/geo/quadra_plains/ore/ore_raw_obsidian.geojson",
+        iconUrl: "assets/media/ore/ore_raw_obsidian.png",
+        geoJsonFile: "assets/geo/quadra_plains/ore/ore_raw_obsidian.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -121,8 +119,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     ore_rainbow: {
         displayName: "Rainbow",
-        iconUrl: "src/assets/media/ore/ore_rainbow.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/ore/ore_rainbow.geojson",
+        iconUrl: "assets/media/ore/ore_rainbow.png",
+        geoJsonFile: "assets/geo/quadra_plains/ore/ore_rainbow.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -132,8 +130,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     quadra_plains_fish: {
         displayName: "Plain Shoal",
-        iconUrl: "src/assets/media/fish/fishing_rod_3.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/plain_shoal.geojson",
+        iconUrl: "assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "assets/geo/quadra_plains/plain_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
@@ -143,8 +141,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     quadra_plains_bloon: {
         displayName: "Bloon",
-        iconUrl: "src/assets/media/exploration/bloon.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/quadra_plains_bloon.geojson",
+        iconUrl: "assets/media/exploration/bloon.png",
+        geoJsonFile: "assets/geo/quadra_plains/quadra_plains_bloon.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -153,9 +151,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     quadra_plains_viewPoint: {
         displayName: "View point",
-        iconUrl: "src/assets/media/exploration/viewPoint.png",
-        geoJsonFile:
-            "src/assets/geo/quadra_plains/quadra_plains_viewPoint.geojson",
+        iconUrl: "assets/media/exploration/viewPoint.png",
+        geoJsonFile: "assets/geo/quadra_plains/quadra_plains_viewPoint.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -164,8 +161,8 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     },
     quadra_plains_coin: {
         displayName: "Coin",
-        iconUrl: "src/assets/media/exploration/coin.png",
-        geoJsonFile: "src/assets/geo/quadra_plains/quadra_plains_coin.geojson",
+        iconUrl: "assets/media/exploration/coin.png",
+        geoJsonFile: "assets/geo/quadra_plains/quadra_plains_coin.geojson",
         defaultChecked: false,
         category: "Exploration",
         properties: {

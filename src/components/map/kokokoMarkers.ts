@@ -9,8 +9,8 @@ import { MarkerConfig } from "../../types/markerTypes";
 const kokokoMarkers: Record<string, MarkerConfig> = {
     log_banana: {
         displayName: "Banana",
-        iconUrl: "src/assets/media/tree/log_banana.png",
-        geoJsonFile: "src/assets/geo/kokoko/tree/log_banana.geojson",
+        iconUrl: "assets/media/tree/log_banana.png",
+        geoJsonFile: "assets/geo/kokoko/tree/log_banana.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -20,8 +20,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     log_coconuts: {
         displayName: "Coconut",
-        iconUrl: "src/assets/media/tree/log_coconut.png",
-        geoJsonFile: "src/assets/geo/kokoko/tree/log_coconut.geojson",
+        iconUrl: "assets/media/tree/log_coconut.png",
+        geoJsonFile: "assets/geo/kokoko/tree/log_coconut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -31,8 +31,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     lily: {
         displayName: "Lily",
-        iconUrl: "src/assets/media/flower/lily.png",
-        geoJsonFile: "src/assets/geo/kokoko/flower/lily.geojson",
+        iconUrl: "assets/media/flower/lily.png",
+        geoJsonFile: "assets/geo/kokoko/flower/lily.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -42,8 +42,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     clover: {
         displayName: "Clover",
-        iconUrl: "src/assets/media/flower/clover.png",
-        geoJsonFile: "src/assets/geo/kokoko/flower/clover.geojson",
+        iconUrl: "assets/media/flower/clover.png",
+        geoJsonFile: "assets/geo/kokoko/flower/clover.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -53,8 +53,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     ore_silver: {
         displayName: "Silver",
-        iconUrl: "src/assets/media/ore/ore_silver.png",
-        geoJsonFile: "src/assets/geo/kokoko/ore/ore_silver.geojson",
+        iconUrl: "assets/media/ore/ore_silver.png",
+        geoJsonFile: "assets/geo/kokoko/ore/ore_silver.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -64,8 +64,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     ore_ashstone: {
         displayName: "Ashstone",
-        iconUrl: "src/assets/media/ore/ore_ashstone.png",
-        geoJsonFile: "src/assets/geo/kokoko/ore/ore_ashstone.geojson",
+        iconUrl: "assets/media/ore/ore_ashstone.png",
+        geoJsonFile: "assets/geo/kokoko/ore/ore_ashstone.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -75,8 +75,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     belladonna: {
         displayName: "Belladonna",
-        iconUrl: "src/assets/media/flower/belladonna.png",
-        geoJsonFile: "src/assets/geo/kokoko/flower/belladonna.geojson",
+        iconUrl: "assets/media/flower/belladonna.png",
+        geoJsonFile: "assets/geo/kokoko/flower/belladonna.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -86,8 +86,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     log_mahogany: {
         displayName: "Mahogany",
-        iconUrl: "src/assets/media/tree/log_mahogany.png",
-        geoJsonFile: "src/assets/geo/kokoko/tree/log_mahogany.geojson",
+        iconUrl: "assets/media/tree/log_mahogany.png",
+        geoJsonFile: "assets/geo/kokoko/tree/log_mahogany.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -97,8 +97,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     ore_bauxite: {
         displayName: "Bauxite",
-        iconUrl: "src/assets/media/ore/ore_bauxite.png",
-        geoJsonFile: "src/assets/geo/kokoko/ore/ore_bauxite.geojson",
+        iconUrl: "assets/media/ore/ore_bauxite.png",
+        geoJsonFile: "assets/geo/kokoko/ore/ore_bauxite.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -108,8 +108,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     log_dark_coconut: {
         displayName: "Dark coconut",
-        iconUrl: "src/assets/media/tree/log_dark_coconut.png",
-        geoJsonFile: "src/assets/geo/kokoko/tree/log_dark_coconut.geojson",
+        iconUrl: "assets/media/tree/log_dark_coconut.png",
+        geoJsonFile: "assets/geo/kokoko/tree/log_dark_coconut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -119,8 +119,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     hemlock: {
         displayName: "Hemlock",
-        iconUrl: "src/assets/media/flower/hemlock.png",
-        geoJsonFile: "src/assets/geo/kokoko/flower/hemlock.geojson",
+        iconUrl: "assets/media/flower/hemlock.png",
+        geoJsonFile: "assets/geo/kokoko/flower/hemlock.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -130,8 +130,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     mandrake: {
         displayName: "Mandrake",
-        iconUrl: "src/assets/media/flower/mandrake.png",
-        geoJsonFile: "src/assets/geo/kokoko/flower/mandrake.geojson",
+        iconUrl: "assets/media/flower/mandrake.png",
+        geoJsonFile: "assets/geo/kokoko/flower/mandrake.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -141,8 +141,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     log_sacred_coconut: {
         displayName: "Sacred coconut",
-        iconUrl: "src/assets/media/tree/log_sacred_coconut.png",
-        geoJsonFile: "src/assets/geo/kokoko/tree/log_sacred_coconut.geojson",
+        iconUrl: "assets/media/tree/log_sacred_coconut.png",
+        geoJsonFile: "assets/geo/kokoko/tree/log_sacred_coconut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -152,8 +152,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     kokoko_fish: {
         displayName: "Deep Shoal",
-        iconUrl: "src/assets/media/fish/fishing_rod_2.png",
-        geoJsonFile: "src/assets/geo/kokoko/deep_shoal.geojson",
+        iconUrl: "assets/media/fish/fishing_rod_2.png",
+        geoJsonFile: "assets/geo/kokoko/deep_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
@@ -163,8 +163,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     kokoko_bloon: {
         displayName: "Bloon",
-        iconUrl: "src/assets/media/exploration/bloon.png",
-        geoJsonFile: "src/assets/geo/kokoko/kokoko_bloon.geojson",
+        iconUrl: "assets/media/exploration/bloon.png",
+        geoJsonFile: "assets/geo/kokoko/kokoko_bloon.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -173,8 +173,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     kokoko_viewPoint: {
         displayName: "View point",
-        iconUrl: "src/assets/media/exploration/viewPoint.png",
-        geoJsonFile: "src/assets/geo/kokoko/kokoko_viewPoint.geojson",
+        iconUrl: "assets/media/exploration/viewPoint.png",
+        geoJsonFile: "assets/geo/kokoko/kokoko_viewPoint.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -183,8 +183,8 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     },
     kokoko_coin: {
         displayName: "Coin",
-        iconUrl: "src/assets/media/exploration/coin.png",
-        geoJsonFile: "src/assets/geo/kokoko/kokoko_coin.geojson",
+        iconUrl: "assets/media/exploration/coin.png",
+        geoJsonFile: "assets/geo/kokoko/kokoko_coin.geojson",
         defaultChecked: false,
         category: "Exploration",
         properties: {
