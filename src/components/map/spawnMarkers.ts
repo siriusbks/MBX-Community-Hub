@@ -9,8 +9,8 @@ import { MarkerConfig } from "../../types/markerTypes";
 const spawnMarkers: Record<string, MarkerConfig> = {
     log_banana: {
         displayName: "Banana",
-        iconUrl: "src/assets/media/tree/log_banana.png",
-        geoJsonFile: "src/assets/geo/spawn/tree/log_banana.geojson",
+        iconUrl: "assets/media/tree/log_banana.png",
+        geoJsonFile: "assets/geo/spawn/tree/log_banana.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -20,8 +20,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     log_coconuts: {
         displayName: "Coconut",
-        iconUrl: "src/assets/media/tree/log_coconut.png",
-        geoJsonFile: "src/assets/geo/spawn/tree/log_coconut.geojson",
+        iconUrl: "assets/media/tree/log_coconut.png",
+        geoJsonFile: "assets/geo/spawn/tree/log_coconut.geojson",
         category: "Woodcutting",
         defaultChecked: true,
         properties: {
@@ -31,8 +31,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     lily: {
         displayName: "Lily",
-        iconUrl: "src/assets/media/flower/lily.png",
-        geoJsonFile: "src/assets/geo/spawn/flower/lily.geojson",
+        iconUrl: "assets/media/flower/lily.png",
+        geoJsonFile: "assets/geo/spawn/flower/lily.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -42,8 +42,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     clover: {
         displayName: "Clover",
-        iconUrl: "src/assets/media/flower/clover.png",
-        geoJsonFile: "src/assets/geo/spawn/flower/clover.geojson",
+        iconUrl: "assets/media/flower/clover.png",
+        geoJsonFile: "assets/geo/spawn/flower/clover.geojson",
         category: "Picking",
         defaultChecked: true,
         properties: {
@@ -53,8 +53,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_coal: {
         displayName: "Coal",
-        iconUrl: "src/assets/media/ore/ore_coal.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_coal.geojson",
+        iconUrl: "assets/media/ore/ore_coal.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_coal.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -64,8 +64,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_copper: {
         displayName: "Copper",
-        iconUrl: "src/assets/media/ore/ore_copper.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_copper.geojson",
+        iconUrl: "assets/media/ore/ore_copper.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_copper.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -75,8 +75,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_iron: {
         displayName: "Iron",
-        iconUrl: "src/assets/media/ore/ore_iron.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_iron.geojson",
+        iconUrl: "assets/media/ore/ore_iron.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_iron.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -86,8 +86,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_lapis_lazuli: {
         displayName: "Lapis lazuli",
-        iconUrl: "src/assets/media/ore/ore_lapis_lazuli.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_lapis_lazuli.geojson",
+        iconUrl: "assets/media/ore/ore_lapis_lazuli.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_lapis_lazuli.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -97,8 +97,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_redstone: {
         displayName: "Redstone",
-        iconUrl: "src/assets/media/ore/ore_redstone.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_redstone.geojson",
+        iconUrl: "assets/media/ore/ore_redstone.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_redstone.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -108,8 +108,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_diamond: {
         displayName: "Diamond",
-        iconUrl: "src/assets/media/ore/ore_diamond.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_diamond.geojson",
+        iconUrl: "assets/media/ore/ore_diamond.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_diamond.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -119,8 +119,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     ore_silver: {
         displayName: "Silver",
-        iconUrl: "src/assets/media/ore/ore_silver.png",
-        geoJsonFile: "src/assets/geo/spawn/ore/ore_silver.geojson",
+        iconUrl: "assets/media/ore/ore_silver.png",
+        geoJsonFile: "assets/geo/spawn/ore/ore_silver.geojson",
         category: "Mining",
         defaultChecked: true,
         properties: {
@@ -130,8 +130,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     spawn_fish: {
         displayName: "Tropical Shoal",
-        iconUrl: "src/assets/media/fish/fishing_rod.png",
-        geoJsonFile: "src/assets/geo/spawn/tropical_shoal.geojson",
+        iconUrl: "assets/media/fish/fishing_rod.png",
+        geoJsonFile: "assets/geo/spawn/tropical_shoal.geojson",
         defaultChecked: true,
         category: "Fishing",
         properties: {
@@ -141,8 +141,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     spawn_bloon: {
         displayName: "Bloon",
-        iconUrl: "src/assets/media/exploration/bloon.png",
-        geoJsonFile: "src/assets/geo/spawn/spawn_bloon.geojson",
+        iconUrl: "assets/media/exploration/bloon.png",
+        geoJsonFile: "assets/geo/spawn/spawn_bloon.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -151,8 +151,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     spawn_viewPoint: {
         displayName: "View point",
-        iconUrl: "src/assets/media/exploration/viewPoint.png",
-        geoJsonFile: "src/assets/geo/spawn/spawn_viewPoint.geojson",
+        iconUrl: "assets/media/exploration/viewPoint.png",
+        geoJsonFile: "assets/geo/spawn/spawn_viewPoint.geojson",
         defaultChecked: true,
         category: "Exploration",
         properties: {
@@ -161,8 +161,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     spawn_coin: {
         displayName: "Coin",
-        iconUrl: "src/assets/media/exploration/coin.png",
-        geoJsonFile: "src/assets/geo/spawn/spawn_coin.geojson",
+        iconUrl: "assets/media/exploration/coin.png",
+        geoJsonFile: "assets/geo/spawn/spawn_coin.geojson",
         defaultChecked: false,
         category: "Exploration",
         properties: {
@@ -171,8 +171,8 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     },
     spawn_npc: {
         displayName: "NPC",
-        iconUrl: "src/assets/media/npc/default.png",
-        geoJsonFile: "src/assets/geo/spawn/spawn_npc.geojson",
+        iconUrl: "assets/media/npc/default.png",
+        geoJsonFile: "assets/geo/spawn/spawn_npc.geojson",
         defaultChecked: false,
         category: "Villager",
         properties: {

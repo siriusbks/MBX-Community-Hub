@@ -21,7 +21,7 @@ export interface MapDataConfig {
 
 export const mapData: Record<string, MapDataConfig> = {
     spawn: {
-        imageUrl: "src/assets/maps/spawn.png",
+        imageUrl: "assets/maps/spawn.png",
         width: 626,
         height: 626,
         name: "Spawn Island",
@@ -50,7 +50,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     home_island: {
-        imageUrl: "src/assets/maps/home_island.png",
+        imageUrl: "assets/maps/home_island.png",
         width: 320,
         height: 320,
         name: "Home Island",
@@ -69,7 +69,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     kokoko: {
-        imageUrl: "src/assets/maps/kokoko.png",
+        imageUrl: "assets/maps/kokoko.png",
         width: 528,
         height: 528,
         name: "Kokoko Island",
@@ -117,7 +117,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     quadra_plains: {
-        imageUrl: "src/assets/maps/quadra_plains.png",
+        imageUrl: "assets/maps/quadra_plains.png",
         width: 608,
         height: 608,
         name: "Quadra Plains",
@@ -150,7 +150,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     bamboo_peak: {
-        imageUrl: "src/assets/maps/bamboo_peak.png",
+        imageUrl: "assets/maps/bamboo_peak.png",
         width: 1256,
         height: 608,
         name: "Bamboo Peak",
@@ -179,7 +179,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     frostbite_fortress: {
-        imageUrl: "src/assets/maps/frostbite_fortress.png",
+        imageUrl: "assets/maps/frostbite_fortress.png",
         width: 720,
         height: 720,
         name: "Frostbite Fortress",
@@ -210,7 +210,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     sandwhisper_dunes: {
-        imageUrl: "src/assets/maps/sandwhisper_dunes.png",
+        imageUrl: "assets/maps/sandwhisper_dunes.png",
         width: 752,
         height: 752,
         name: "Sandwhisper Dunes",
