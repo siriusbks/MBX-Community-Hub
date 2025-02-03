@@ -5,17 +5,11 @@
  */
 
 import { Link } from "react-router-dom";
-import { User, Map, Shield, AlertCircle } from "lucide-react";
+import { User, Map, Shield } from "lucide-react";
 
 export function HomePage() {
     return (
         <div className="py-20 px-6">
-            {/* 🔴 Temporary Announcement */}
-            <div className="bg-red-600/90 text-white text-center p-3 rounded-lg mb-6 shadow-lg animate-pulse">
-                <AlertCircle className="inline-block mr-2" size={20} />
-                The interactive map is temporarily unavailable. We are working
-                to fix this issue as soon as possible. 🚧
-            </div>
             {/* Hero Section */}
             <div className="text-center mb-20">
                 <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
