@@ -148,6 +148,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                             iconUrl: config.iconUrl,
                             iconSize: [32, 32],
                             iconAnchor: [16, 16],
+                            popupAnchor: [0, -16],
                         })}
                         eventHandlers={{
                             click: (e) => {
