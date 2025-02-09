@@ -5,7 +5,6 @@
  */
 
 import "leaflet/dist/leaflet.css";
-
 import L, { LatLngExpression } from "leaflet";
 import React from "react";
 import {
@@ -32,7 +31,13 @@ interface GeoJSONFeature {
     geometry: {
         coordinates: number[];
     };
-    properties?: Record<string, unknown>;
+    properties?: {
+        name?: string;
+        description?: string;
+        iconUrl?: string;
+        category?: string;
+        [key: string]: unknown;
+    };
 }
 
 interface ExtendedFeature extends GeoJSONFeature {
@@ -130,6 +135,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                 ]}
                 className="smooth-image"
             />
+
             {markers.map((marker, index) => {
                 const [x, z, y] = marker.geometry.coordinates;
                 const position = toLeafletCoords(
@@ -137,15 +143,32 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                     y,
                     mapConfig.referencePoint
                 );
-                const config = allMarkers[marker.key];
-                if (!config) return null;
+
+                const config = allMarkers[marker.key] || {};
+                const properties = marker.properties || {};
+
+                const isNpc =
+                    config.category === "Villager" ||
+                    properties.category === "Villager";
+
+                let markerIconUrl =
+                    config.iconUrl || "/assets/media/npc/default.png";
+                if (isNpc) {
+                    markerIconUrl = properties.iconUrl
+                        ? `/assets/media/npc/${properties.iconUrl}.png`
+                        : "/assets/media/npc/default.png";
+                }
+
+                const displayName = isNpc
+                    ? properties.name || "NPC"
+                    : config.displayName || "Unknown Marker";
 
                 return (
                     <Marker
                         key={`${marker.id ?? index}-${marker.key}`}
                         position={position}
                         icon={L.icon({
-                            iconUrl: config.iconUrl,
+                            iconUrl: markerIconUrl,
                             iconSize: [32, 32],
                             iconAnchor: [16, 16],
                             popupAnchor: [0, -16],
@@ -158,10 +181,21 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                     >
                         <Popup>
                             <strong>
-                                {config.displayName}
+                                {displayName}
                                 {config.properties?.level
                                     ? ` (lvl ${config.properties.level})`
                                     : ""}
+                                {isNpc && properties.description && (
+                                    <span
+                                        style={{
+                                            fontWeight: "normal",
+                                            color: "#666",
+                                        }}
+                                    >
+                                        {" "}
+                                        ({properties.description})
+                                    </span>
+                                )}
                             </strong>
                             <br />
                             <span>
