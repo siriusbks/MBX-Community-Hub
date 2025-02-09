@@ -107,6 +107,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
             crs={L.CRS.Simple}
             center={[mapConfig.height / 2, mapConfig.width / 2]}
             zoom={1}
+            zoomSnap={0.25}
             minZoom={mapConfig.mapProperties.minZoom}
             maxZoom={mapConfig.mapProperties.maxZoom}
             scrollWheelZoom={true}
