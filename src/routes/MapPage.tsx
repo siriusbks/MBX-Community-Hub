@@ -142,10 +142,10 @@ const MapPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Search Items */}
+                {/* Search Resources */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 relative z-50">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🔍 Search Items
+                        🔍 Search Resources
                     </h2>
 
                     {/* Input with reset button */}
