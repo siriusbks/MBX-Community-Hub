@@ -1,0 +1,29 @@
+[
+    {
+        "id": "notra",
+        "name": "Notra",
+        "creator": "imjustprism",
+        "description": "Notra is a simple utility mod built with fabric specifically for Minebox.",
+        "website": "https://modrinth.com/mod/notra",
+        "logo": "https://cdn.modrinth.com/data/2ZCi35uw/63d8c1bb82de88d78a0c1cb5d4cd1d7004d47804_96.webp",
+        "type": "Minecraft Mod"
+    },
+    {
+        "id": "mineboxadditions",
+        "name": "MineboxAdditions",
+        "creator": "Dampen59",
+        "description": "MineboxAdditions is a mod that adds blatant features to your average Minebox gameplay !",
+        "website": "https://modrinth.com/mod/mineboxadditions",
+        "logo": "https://cdn.modrinth.com/data/HFGMc58X/b23b00e294318cd70f7f44263d49eecf7134e624_96.webp",
+        "type": "Minecraft Mod"
+    },
+    {
+        "id": "mineboxmaps",
+        "name": "MineboxMaps",
+        "creator": "AerWyn81",
+        "description": "Minebox interactive map",
+        "website": "https://mineboxmaps.com/",
+        "logo": "https://i.imgur.com/fCj9OLj.png",
+        "type": "Website"
+    }
+]
