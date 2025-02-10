@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Github, Map, Shield, User } from "lucide-react";
+import { Github, Map, Users, User } from "lucide-react";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -55,7 +55,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
                             Map
                         </NavLink>
                         <NavLink
-                            to="/equipment"
+                            to="/community"
                             className={({ isActive }) =>
                                 `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                                     isActive
@@ -64,8 +64,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
                                 }`
                             }
                         >
-                            <Shield size={18} />
-                            Equipment
+                            <Users size={18} />
+                            Community
                         </NavLink>
                     </nav>
 
