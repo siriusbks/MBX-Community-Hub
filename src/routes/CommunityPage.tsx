@@ -15,9 +15,7 @@ const CommunityPage: React.FC = () => {
     useEffect(() => {
         const loadProjects = async () => {
             try {
-                const response = await fetch(
-                    "/src/components/community/data/projects.json"
-                );
+                const response = await fetch("/assets/data/projects.json");
                 if (!response.ok) {
                     throw new Error("Failed to load projects.");
                 }
