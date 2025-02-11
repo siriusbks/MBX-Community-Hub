@@ -5,7 +5,7 @@
  */
 
 import { Link } from "react-router-dom";
-import { User, Map, Shield } from "lucide-react";
+import { User, Map, Users } from "lucide-react";
 
 export function HomePage() {
     return (
@@ -65,22 +65,23 @@ export function HomePage() {
                     </p>
                 </Link>
 
-                {/* Equipment System */}
+                {/* Community Projects */}
                 <Link
-                    to="/equipment"
+                    to="/community"
                     className="group bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-red-400 rounded-xl p-6 
-                    shadow-lg transition-all hover:scale-105"
+    shadow-lg transition-all hover:scale-105"
                 >
                     <div className="flex items-center gap-4 mb-4">
                         <div className="p-3 rounded-lg bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition">
-                            <Shield size={28} />
+                            <Users size={28} />
                         </div>
                         <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
-                            Equipment System
+                            Community Projects
                         </h2>
                     </div>
                     <p className="text-gray-400 group-hover:text-gray-300 transition">
-                        Manage and upgrade your gear to face greater challenges.
+                        Discover and explore community-driven mods, tools, and
+                        websites for Minebox.
                     </p>
                 </Link>
             </div>
