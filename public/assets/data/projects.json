@@ -34,5 +34,14 @@
         "website": "https://mineboxmaps.com/",
         "logo": "https://i.imgur.com/fCj9OLj.png",
         "type": "Website"
+    },
+    {
+        "id": "mineboxjourneymap",
+        "name": "Minebox Journeymap",
+        "creator": "ThirtyTwelveNor",
+        "description": "A highly customizable JourneyMap addon that makes waypoints for MineBox.",
+        "website": "https://github.com/ThirtyTwelveNor/mineboxjourneymap-1.21.3",
+        "logo": "https://i.imgur.com/t1mXmUW.png",
+        "type": "Minecraft Mod"
     }
 ]
