@@ -53,6 +53,7 @@ const MapPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [mapOpacity, setMapOpacity] = useState(1);
 
     const mapConfig = mapData[selectedMapKey];
 
@@ -257,6 +258,27 @@ const MapPage: React.FC = () => {
                         </select>
                     </div>
                 </div>
+
+                {/* Map Visibility*/}
+                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
+                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                        🌗 Adjust Map Visibility
+                    </h2>
+                    <input
+                        type="range"
+                        min="0.2"
+                        max="1"
+                        step="0.05"
+                        value={mapOpacity}
+                        onChange={(e) =>
+                            setMapOpacity(parseFloat(e.target.value))
+                        }
+                        className="w-full cursor-pointer"
+                    />
+                    <p className="text-gray-400 text-sm mt-1 text-center">
+                        {Math.round(mapOpacity * 100)}% visibility
+                    </p>
+                </div>
             </aside>
 
             {/* Map View */}
@@ -264,6 +286,7 @@ const MapPage: React.FC = () => {
                 <InteractiveMap
                     mapConfig={mapConfig}
                     markers={filteredMarkers}
+                    opacity={mapOpacity}
                 />
             </div>
         </div>

@@ -24,6 +24,7 @@ import homeIslandMarkers from "./map/homeIslandMarkers";
 import bambooMarkers from "./map/bambooMarkers";
 import frostbiteMarkers from "./map/frostbiteMarkers";
 import sandwhisperMarkers from "./map/sandwhisperMarkers";
+import { useEffect } from "react";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -39,6 +40,20 @@ interface GeoJSONFeature {
         [key: string]: unknown;
     };
 }
+
+const SetMapOpacity = ({ opacity }: { opacity: number }) => {
+    const map = useMap();
+
+    useEffect(() => {
+        map.eachLayer((layer) => {
+            if (layer instanceof L.ImageOverlay) {
+                layer.setOpacity(opacity);
+            }
+        });
+    }, [map, opacity]);
+
+    return null;
+};
 
 interface ExtendedFeature extends GeoJSONFeature {
     key: string;
@@ -103,10 +118,18 @@ interface InteractiveMapProps {
     markers: ExtendedFeature[];
 }
 
-const InteractiveMap: React.FC<InteractiveMapProps> = ({
+const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
     mapConfig,
     markers,
+    opacity,
 }) => {
+    const imageRef = React.useRef<L.ImageOverlay | null>(null);
+
+    React.useEffect(() => {
+        if (imageRef.current) {
+            imageRef.current.setOpacity(opacity);
+        }
+    }, [opacity]);
     return (
         <MapContainer
             crs={L.CRS.Simple}
@@ -127,15 +150,14 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         >
             <SetCRS mapConfig={mapConfig} />
             <FixPopup />
+            <SetMapOpacity opacity={opacity} />{" "}
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
                     [0, 0],
                     [mapConfig.height, mapConfig.width],
                 ]}
-                className="smooth-image"
             />
-
             {markers.map((marker, index) => {
                 const [x, z, y] = marker.geometry.coordinates;
                 const position = toLeafletCoords(
