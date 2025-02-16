@@ -2,40 +2,125 @@
     "type": "FeatureCollection",
     "features": [
         {
-            "geometry": { "coordinates": [135.5, 77, -127.5], "type": "Point" },
+            "type": "Feature",
             "id": 1,
-            "type": "Feature",
-            "properties": { "map": "spawn" }
+            "geometry": {
+                "type": "Point",
+                "coordinates": [135.5, 77, -127.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         },
         {
-            "geometry": { "coordinates": [367.5, 88, -24.5], "type": "Point" },
+            "type": "Feature",
             "id": 2,
-            "type": "Feature",
-            "properties": { "map": "spawn" }
+            "geometry": {
+                "type": "Point",
+                "coordinates": [367.5, 88, -24.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         },
         {
-            "geometry": { "coordinates": [182.5, 105, 4.5], "type": "Point" },
+            "type": "Feature",
             "id": 3,
-            "type": "Feature",
-            "properties": { "map": "spawn" }
+            "geometry": {
+                "type": "Point",
+                "coordinates": [182.5, 105, 4.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         },
         {
-            "geometry": { "coordinates": [124.5, 113, 6.5], "type": "Point" },
+            "type": "Feature",
             "id": 4,
-            "type": "Feature",
-            "properties": { "map": "spawn" }
+            "geometry": {
+                "type": "Point",
+                "coordinates": [124.5, 113, 6.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         },
         {
-            "geometry": { "coordinates": [57.5, 98, 9.5], "type": "Point" },
+            "type": "Feature",
             "id": 5,
-            "type": "Feature",
-            "properties": { "map": "spawn" }
+            "geometry": {
+                "type": "Point",
+                "coordinates": [57.5, 98, 9.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         },
         {
-            "geometry": { "coordinates": [48.5, 122, 139.5], "type": "Point" },
-            "id": 6,
             "type": "Feature",
-            "properties": { "map": "spawn" }
+            "id": 6,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [48.5, 122, 139.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 7,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [140.5, 113, 165.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 8,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [172.5, 105, 176.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 9,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-17.5, 78, -46.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 10,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-30.5, 88, -185.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 11,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [64.5, 85, -188.5]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         }
     ]
 }
