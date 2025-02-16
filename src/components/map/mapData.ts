@@ -47,6 +47,9 @@ export const mapData: Record<string, MapDataConfig> = {
             "spawn_viewPoint",
             "spawn_coin",
             "spawn_npc",
+            "blue_heartvine",
+            "red_heartvine",
+            "yellow_heartvine",
         ],
     },
     home_island: {
