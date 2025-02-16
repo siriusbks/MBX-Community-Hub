@@ -179,6 +179,39 @@ const spawnMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    blue_heartvine: {
+        displayName: "Blue Heartvine",
+        iconUrl: "assets/media/valentiny/blue_heartvine.png",
+        geoJsonFile: "assets/geo/spawn/valentiny/blue_heartvine.geojson",
+        defaultChecked: false,
+        category: "Event Valentiny",
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
+    red_heartvine: {
+        displayName: "Red Heartvine",
+        iconUrl: "assets/media/valentiny/red_heartvine.png",
+        geoJsonFile: "assets/geo/spawn/valentiny/red_heartvine.geojson",
+        defaultChecked: false,
+        category: "Event Valentiny",
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
+    yellow_heartvine: {
+        displayName: "Yellow Heartvine",
+        iconUrl: "assets/media/valentiny/yellow_heartvine.png",
+        geoJsonFile: "assets/geo/spawn/valentiny/yellow_heartvine.geojson",
+        defaultChecked: false,
+        category: "Event Valentiny",
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
 };
 
 export default spawnMarkers;
