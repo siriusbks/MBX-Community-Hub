@@ -84,6 +84,28 @@ const spawnMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    ore_emerald: {
+        displayName: "Emerald",
+        iconUrl: "assets/media/ore/ore_emerald.png",
+        geoJsonFile: "/assets/geo/spawn/ore/ore_emerald.geojson",
+        category: "Mining",
+        defaultChecked: true,
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
+    ore_gold: {
+        displayName: "Gold",
+        iconUrl: "/assets/media/ore/ore_gold.png",
+        geoJsonFile: "/assets/geo/spawn/ore/ore_gold.geojson",
+        category: "Mining",
+        defaultChecked: true,
+        properties: {
+            level: "5",
+            showCount: true,
+        },
+    },
     ore_lapis_lazuli: {
         displayName: "Lapis lazuli",
         iconUrl: "assets/media/ore/ore_lapis_lazuli.png",

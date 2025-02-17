@@ -39,6 +39,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "ore_copper",
             "ore_iron",
             "ore_lapis_lazuli",
+            "ore_gold",
+            "ore_emerald",
             "ore_redstone",
             "ore_diamond",
             "ore_silver",
