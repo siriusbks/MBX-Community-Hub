@@ -278,7 +278,7 @@ const MapPage: React.FC = () => {
                         onChange={(e) =>
                             setMapOpacity(parseFloat(e.target.value))
                         }
-                        className="w-full cursor-pointer"
+                        className="w-full cursor-pointer range-custom"
                     />
                     <p className="text-gray-400 text-sm mt-1 text-center">
                         {Math.round(mapOpacity * 100)}% visibility
