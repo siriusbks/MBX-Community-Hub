@@ -1,10 +1,11 @@
 /*
  * MBX, Community Based Project
- * Copyright (c) 2025 SiriusB_
+ * Copyright (c) 2024 SiriusB_
  * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 
 import InteractiveMap from "../components/InteractiveMap";
@@ -48,7 +49,11 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
 };
 
 const MapPage: React.FC = () => {
-    const [selectedMapKey, setSelectedMapKey] = useState<string>("spawn");
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const selectedMapFromUrl = queryParams.get("selectedMap") || "spawn";
+    const [selectedMapKey, setSelectedMapKey] =
+        useState<string>(selectedMapFromUrl);
     const [rawMarkers, setRawMarkers] = useState<ExtendedFeature[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -130,7 +135,7 @@ const MapPage: React.FC = () => {
                     <div className="relative">
                         <select
                             className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-                        focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+    focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                             value={selectedMapKey}
                             onChange={(e) => setSelectedMapKey(e.target.value)}
                         >
