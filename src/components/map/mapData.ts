@@ -1,6 +1,6 @@
 /*
  * MBX, Community Based Project
- * Copyright (c) 2025 SiriusB_
+ * Copyright (c) 2024 SiriusB_
  * SPDX-License-Identifier: MIT
  */
 
@@ -15,6 +15,9 @@ export interface MapDataConfig {
     height: number;
     name?: string;
     mapProperties: MapProperties;
+    requiredLevel?: number;
+    description?: string;
+    previewUrl?: string;
     referencePoint: { x: number; y: number };
     markerRefs: string[];
 }
@@ -22,6 +25,7 @@ export interface MapDataConfig {
 export const mapData: Record<string, MapDataConfig> = {
     spawn: {
         imageUrl: "assets/maps/spawn.png",
+        previewUrl: "assets/media/preview_map/spawn.png",
         width: 626,
         height: 626,
         name: "Spawn Island",
@@ -29,6 +33,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.5,
             maxZoom: 2,
         },
+        requiredLevel: 0,
+        description: "",
         referencePoint: { x: 98, y: 313 },
         markerRefs: [
             "log_coconuts",
@@ -56,6 +62,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     home_island: {
         imageUrl: "assets/maps/home_island.png",
+        previewUrl: "assets/media/preview_map/island_home.png",
         width: 320,
         height: 320,
         name: "Home Island",
@@ -63,6 +70,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 1.5,
             maxZoom: 0,
         },
+        requiredLevel: 0,
+        description: "",
         referencePoint: { x: 34, y: 284 },
         markerRefs: [
             "treasure_common",
@@ -75,6 +84,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     kokoko: {
         imageUrl: "assets/maps/kokoko.png",
+        previewUrl: "assets/media/preview_map/kokoko.png",
         width: 528,
         height: 528,
         name: "Kokoko Island",
@@ -82,6 +92,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.75,
             maxZoom: 2,
         },
+        requiredLevel: 1,
+        description: "",
         referencePoint: { x: 0, y: 0 },
         markerRefs: [
             "log_coconuts",
@@ -123,6 +135,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     quadra_plains: {
         imageUrl: "assets/maps/quadra_plains.png",
+        previewUrl: "assets/media/preview_map/quadra_plains.png",
         width: 608,
         height: 608,
         name: "Quadra Plains",
@@ -130,6 +143,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.5,
             maxZoom: 2,
         },
+        requiredLevel: 10,
+        description: "",
         referencePoint: { x: 80.5, y: 51 },
         markerRefs: [
             "log_chestnut",
@@ -156,6 +171,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     bamboo_peak: {
         imageUrl: "assets/maps/bamboo_peak.png",
+        previewUrl: "assets/media/preview_map/bamboo_peak.png",
         width: 1256,
         height: 608,
         name: "Bamboo Peak",
@@ -163,6 +179,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.5,
             maxZoom: 2,
         },
+        requiredLevel: 20,
+        description: "",
         referencePoint: { x: 633, y: 611 },
         markerRefs: [
             "log_ecalyptus",
@@ -185,6 +203,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     frostbite_fortress: {
         imageUrl: "assets/maps/frostbite_fortress.png",
+        previewUrl: "assets/media/preview_map/frostbite_fortress.png",
         width: 720,
         height: 720,
         name: "Frostbite Fortress",
@@ -192,6 +211,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.25,
             maxZoom: 2,
         },
+        requiredLevel: 30,
+        description: "",
         referencePoint: { x: 129, y: 64 },
         markerRefs: [
             "log_hazel",
@@ -216,6 +237,7 @@ export const mapData: Record<string, MapDataConfig> = {
     },
     sandwhisper_dunes: {
         imageUrl: "assets/maps/sandwhisper_dunes.png",
+        previewUrl: "assets/media/preview_map/sandwhisper_dunes.png",
         width: 752,
         height: 752,
         name: "Sandwhisper Dunes",
@@ -223,6 +245,8 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 0.25,
             maxZoom: 2,
         },
+        requiredLevel: 40,
+        description: "",
         referencePoint: { x: 128, y: 720 },
         markerRefs: [
             "log_olive",
