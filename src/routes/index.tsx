@@ -1,14 +1,9 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- */
-
 import { Layout } from "@components/Layout";
 import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
+const InfoMapPage = lazy(() => import("@routes/InfoMapPage"));
 const MapPage = lazy(() => import("@routes/MapPage"));
 const HomePage = lazy(() => import("@routes/HomePage"));
 const CommunityPage = lazy(() => import("@routes/CommunityPage"));
@@ -36,6 +31,14 @@ export const AppRoutes: FC = () => (
             />
             <Route
                 path="/map"
+                element={
+                    <Layout>
+                        <InfoMapPage />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/mappage"
                 element={
                     <Layout>
                         <MapPage />
