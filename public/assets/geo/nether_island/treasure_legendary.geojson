@@ -1,0 +1,38 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [35, 56, 38],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [98, 112, 40],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [60, 8, 86]
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        }
+    ]
+}

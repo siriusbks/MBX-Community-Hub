@@ -82,6 +82,28 @@ export const mapData: Record<string, MapDataConfig> = {
             "treasure_mythic",
         ],
     },
+    nether_island: {
+        imageUrl: "/assets/maps/nether_island.png",
+        previewUrl: "/assets/media/preview_map/island_nether.png",
+        width: 160,
+        height: 176,
+        name: "Nether Island",
+        mapProperties: {
+            minZoom: 2,
+            maxZoom: 0,
+        },
+        requiredLevel: 0,
+        description: "",
+        referencePoint: { x: 17, y: 143 },
+        markerRefs: [
+            "treasure_common",
+            "treasure_uncommon",
+            "treasure_rare",
+            "treasure_epic",
+            "treasure_legendary",
+            "treasure_mythic",
+        ],
+    },
     kokoko: {
         imageUrl: "assets/maps/kokoko.png",
         previewUrl: "assets/media/preview_map/kokoko.png",

@@ -1,0 +1,60 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [23, 86, 9],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [8, 68, 13],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [74, 89, 33],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [36, 74, 54]
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [38, 22, 82],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
+        }
+    ]
+}
