@@ -72,8 +72,15 @@ const InfoMapPage: React.FC = () => {
                                 {mapConfig.description}
                             </p>
                             <p className="text-gray-300 text-sm mt-2">
-                                <strong>Required Level:</strong>{" "}
-                                {mapConfig.requiredLevel || "Any"}
+                                <strong>
+                                    {mapConfig.requiredLevel === 0
+                                        ? "No required level"
+                                        : "Required Level:"}
+                                </strong>{" "}
+                                {mapConfig.requiredLevel &&
+                                mapConfig.requiredLevel !== 0
+                                    ? mapConfig.requiredLevel
+                                    : ""}
                             </p>
 
                             {/* 'Tooltip' */}
