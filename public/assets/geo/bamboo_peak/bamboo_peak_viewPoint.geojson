@@ -25,8 +25,8 @@
         },
         {
             "geometry": {
-                "coordinates": [-57, 103, 59],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-57, 103, 59]
             },
             "id": 3,
             "type": "Feature",
@@ -36,8 +36,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [-386, 89, 210]
+                "coordinates": [-386, 89, 210],
+                "type": "Point"
             },
             "id": 4,
             "type": "Feature",
@@ -91,8 +91,8 @@
         },
         {
             "geometry": {
-                "coordinates": [-310, 76, 416],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-310, 76, 416]
             },
             "id": 9,
             "type": "Feature",
@@ -102,8 +102,8 @@
         },
         {
             "geometry": {
-                "coordinates": [-300, 89, 338],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-300, 89, 338]
             },
             "id": 10,
             "type": "Feature",
@@ -113,8 +113,8 @@
         },
         {
             "geometry": {
-                "coordinates": [-368, 102, 308],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-368, 102, 308]
             },
             "id": 11,
             "type": "Feature",
@@ -124,10 +124,43 @@
         },
         {
             "geometry": {
-                "coordinates": [-421, 109, 87],
-                "type": "Point"
+                "type": "Point",
+                "coordinates": [-421, 109, 87]
             },
             "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [185, 245, 270],
+                "type": "Point"
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [62, 296, 210],
+                "type": "Point"
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [336, 257, 125]
+            },
+            "id": 15,
             "type": "Feature",
             "properties": {
                 "map": "bamboo_peak"
