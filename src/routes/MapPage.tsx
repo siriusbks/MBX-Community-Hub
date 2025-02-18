@@ -91,6 +91,10 @@ const MapPage: React.FC = () => {
         loadMarkers();
     }, [mapConfig, selectedMapKey]);
 
+    useEffect(() => {
+        setSelectedCategory("all");
+    }, [selectedMapKey]);
+
     const uniqueCategories = useMemo(() => {
         const categories = new Set(
             rawMarkers
@@ -135,9 +139,17 @@ const MapPage: React.FC = () => {
                     <div className="relative">
                         <select
                             className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-    focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                             value={selectedMapKey}
-                            onChange={(e) => setSelectedMapKey(e.target.value)}
+                            onChange={(e) => {
+                                const newSelectedMap = e.target.value;
+                                setSelectedMapKey(newSelectedMap);
+                                window.history.replaceState(
+                                    null,
+                                    "",
+                                    `?selectedMap=${newSelectedMap}`
+                                );
+                            }}
                         >
                             {Object.keys(mapData).map((key) => (
                                 <option key={key} value={key}>
