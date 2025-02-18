@@ -96,7 +96,7 @@ const InfoMapPage: React.FC = () => {
                                     <h3 className="text-green-400 font-semibold mb-2 text-center">
                                         Available Resources
                                     </h3>
-                                    <div className="grid grid-cols-1 gap-2">
+                                    <div className="grid grid-cols-1 gap-2 pb-6">
                                         {mapConfig.markerRefs.map(
                                             (ref, index) => {
                                                 const resource =
