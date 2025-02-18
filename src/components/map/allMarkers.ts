@@ -7,6 +7,7 @@
 import spawnMarkers from "./spawnMarkers";
 import homeIslandMarkers from "./homeIslandMarkers";
 import netherIslandMarkers from "./netherIslandMarkers";
+import endIslandMarkers from "./endIslandMarkers";
 import kokokoMarkers from "./kokokoMarkers";
 import quadraMarkers from "./quadraMarkers";
 import bambooMarkers from "./bambooMarkers";
@@ -17,6 +18,7 @@ const allMarkers: Record<string, Record<string, any>> = {
     spawn: spawnMarkers,
     home_island: homeIslandMarkers,
     nether_island: netherIslandMarkers,
+    end_island: endIslandMarkers,
     kokoko: kokokoMarkers,
     quadra_plains: quadraMarkers,
     bamboo_peak: bambooMarkers,

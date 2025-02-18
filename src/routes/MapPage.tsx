@@ -19,6 +19,7 @@ import bambooMarkers from "@components/map/bambooMarkers";
 import frostbiteMarkers from "@components/map/frostbiteMarkers";
 import sandwhisperMarkers from "@components/map/sandwhisperMarkers";
 import netherIslandMarkers from "@components/map/netherIslandMarkers";
+import endIslandMarkers from "@components/map/endIslandMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -45,6 +46,7 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
     quadra_plains: quadraMarkers,
     home_island: homeIslandMarkers,
     nether_island: netherIslandMarkers,
+    end_island: endIslandMarkers,
     bamboo_peak: bambooMarkers,
     frostbite_fortress: frostbiteMarkers,
     sandwhisper_dunes: sandwhisperMarkers,

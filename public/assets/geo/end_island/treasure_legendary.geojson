@@ -1,0 +1,93 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [66, 123, 14],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [22, 159, 28],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [93, 88, 34],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [47, 152, 78],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [86, 162, 89]
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [15, 87, 88]
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [19, 105, 107],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [100, 185, 100],
+                "type": "Point"
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        }
+    ]
+}

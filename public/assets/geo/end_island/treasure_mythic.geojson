@@ -1,0 +1,38 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [107, 149, 31],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [100, 185, 100],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [61, 96, 99],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
+        }
+    ]
+}

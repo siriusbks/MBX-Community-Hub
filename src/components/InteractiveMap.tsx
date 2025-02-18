@@ -26,6 +26,7 @@ import frostbiteMarkers from "./map/frostbiteMarkers";
 import sandwhisperMarkers from "./map/sandwhisperMarkers";
 import { useEffect } from "react";
 import netherIslandMarkers from "./map/netherIslandMarkers";
+import endIslandMarkers from "./map/endIslandMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -66,6 +67,7 @@ const allMarkers = {
     ...quadraMarkers,
     ...homeIslandMarkers,
     ...netherIslandMarkers,
+    ...endIslandMarkers,
     ...bambooMarkers,
     ...frostbiteMarkers,
     ...sandwhisperMarkers,
