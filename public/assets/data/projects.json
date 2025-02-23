@@ -43,5 +43,14 @@
         "website": "https://github.com/ThirtyTwelveNor/mineboxjourneymap-1.21.3",
         "logo": "https://i.imgur.com/t1mXmUW.png",
         "type": "Minecraft Mod"
+    },
+    {
+        "id": "mineboxplus",
+        "name": "Minebox+",
+        "creator": "tinyslimestudio",
+        "description": "Add some missing cave textures",
+        "website": "https://discord.com/channels/318496737067270146/1343006187649499156/1343006187649499156",
+        "logo": "https://cdn.discordapp.com/attachments/1343006187649499156/1343006187897229353/pack.png?ex=67bc5c3b&is=67bb0abb&hm=3fe6a33067a5e0263c484df93485ac8e653b8516aedaac94d7b7815ac31437d8&",
+        "type": "Resource Pack"
     }
 ]
