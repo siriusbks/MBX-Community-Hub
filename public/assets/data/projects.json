@@ -45,12 +45,30 @@
         "type": "Minecraft Mod"
     },
     {
-        "id": "mineboxplus",
-        "name": "Minebox+",
+        "id": "mineboxplusretextured",
+        "name": "Minebox Plus | Retextured Vanilla Textures",
         "creator": "tinyslimestudio",
-        "description": "Add some missing cave textures",
-        "website": "https://discord.com/channels/318496737067270146/1343006187649499156/1343006187649499156",
-        "logo": "https://cdn.discordapp.com/attachments/1343006187649499156/1343006187897229353/pack.png?ex=67bc5c3b&is=67bb0abb&hm=3fe6a33067a5e0263c484df93485ac8e653b8516aedaac94d7b7815ac31437d8&",
+        "description": "The Minebox Plus pack fills in the missing textures for the Server Resource Pack available at minebox.co, providing a more complete and cohesive visual experience.",
+        "website": "https://modrinth.com/resourcepack/minebox-plus",
+        "logo": "https://cdn.modrinth.com/data/SiyJSGns/7352eb4713d9da6bf026026b27a1112f932741df_96.webp",
+        "type": "Resource Pack"
+    },
+    {
+        "id": "mineboxplusgraycropsaddon",
+        "name": "Minebox Plus | Gray Crops Addon",
+        "creator": "tinyslimestudio",
+        "description": "An add-on for Minebox Plus that changes the appearance of immature crops to grayscale, making it easier to distinguish them on farms and improving crop growth visibility",
+        "website": "https://modrinth.com/resourcepack/minebox-plus-gray-crops",
+        "logo": "https://cdn.modrinth.com/data/3NQofyGp/8f91bbf5cef3cff67fa847abff15ecab93f526bd_96.webp",
+        "type": "Resource Pack"
+    },
+    {
+        "id": "mineboxplusremovebushleavesaddon",
+        "name": "Minebox Plus | Remove Bush Leaves Addon",
+        "creator": "tinyslimestudio",
+        "description": "An add-on for Minebox Plus that removes the default Bushy Leaves effect from Minebox, restoring the classic leaf appearance in the game.",
+        "website": "https://modrinth.com/resourcepack/minebox-plus-remove-bushy-leaves",
+        "logo": "https://cdn.modrinth.com/data/Kb8wWhwz/0cb0b10ccd5e1a9a335ff0cf865ae0a6d209c41c_96.webp",
         "type": "Resource Pack"
     }
 ]
