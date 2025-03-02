@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                     </h2>
                     <p className="text-gray-400 text-sm">
                         by{" "}
-                        <span className="text-blue-400 hover:underline">
+                        <span className="text-green-400 hover:underline">
                             {project.creator}
                         </span>
                     </p>
@@ -57,7 +57,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                 href={project.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block mt-4 text-blue-400 hover:text-blue-300 font-semibold text-sm flex items-center gap-1"
+                className="block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm flex items-center gap-1"
             >
                 <Globe size={14} /> Visit Website →
             </a>
