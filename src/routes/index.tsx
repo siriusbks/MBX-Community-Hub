@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Layout } from "@components/Layout";
 import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Navbar } from "@components/Navbar";
+import { Footer } from "@components/Footer";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
 const InfoMapPage = lazy(() => import("@routes/InfoMapPage"));
@@ -15,50 +16,28 @@ const HomePage = lazy(() => import("@routes/HomePage"));
 const CommunityPage = lazy(() => import("@routes/CommunityPage"));
 
 export const AppRoutes: FC = () => (
-    <Suspense
-        fallback={<div className="text-center text-white">Loading...</div>}
-    >
-        <Routes>
-            <Route
-                path="/"
-                element={
-                    <Layout>
-                        <HomePage />
-                    </Layout>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white flex flex-col">
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Main Content */}
+        <main className="flex-1 container mx-auto px-6 py-8">
+            <Suspense
+                fallback={
+                    <div className="text-center text-white">Loading...</div>
                 }
-            />
-            <Route
-                path="/profile"
-                element={
-                    <Layout>
-                        <ProfilePage />
-                    </Layout>
-                }
-            />
-            <Route
-                path="/map"
-                element={
-                    <Layout>
-                        <InfoMapPage />
-                    </Layout>
-                }
-            />
-            <Route
-                path="/mappage"
-                element={
-                    <Layout>
-                        <MapPage />
-                    </Layout>
-                }
-            />
-            <Route
-                path="/community"
-                element={
-                    <Layout>
-                        <CommunityPage />
-                    </Layout>
-                }
-            />
-        </Routes>
-    </Suspense>
+            >
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/map" element={<InfoMapPage />} />
+                    <Route path="/mappage" element={<MapPage />} />
+                    <Route path="/community" element={<CommunityPage />} />
+                </Routes>
+            </Suspense>
+        </main>
+
+        {/* Footer */}
+        <Footer />
+    </div>
 );
