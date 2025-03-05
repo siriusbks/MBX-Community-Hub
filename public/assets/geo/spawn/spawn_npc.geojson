@@ -444,7 +444,7 @@
             "type": "Feature",
             "properties": {
                 "name": "Mineral Mike",
-                "description": "Miner seller",
+                "description": "Minerals seller",
                 "iconUrl": "",
                 "map": "spawn"
             }
