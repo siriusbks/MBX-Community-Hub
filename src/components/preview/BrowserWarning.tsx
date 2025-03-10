@@ -24,7 +24,7 @@ export const BrowserWarning: FC = () => (
                     For best results when downloading:
                 </p>
                 <ul className="list-disc list-inside space-y-1 text-yellow-200/70">
-                    <li>Use Mozilla Firefox</li>
+                    <li>Use Mozilla Firefox and Google Chrome</li>
                     <li>Go full screen or maximize your window</li>
                     <li>
                         Alternative: Take a manual screenshot of the preview
