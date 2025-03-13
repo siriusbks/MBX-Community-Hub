@@ -70,5 +70,14 @@
         "website": "https://modrinth.com/resourcepack/minebox-plus-remove-bushy-leaves",
         "logo": "https://cdn.modrinth.com/data/Kb8wWhwz/0cb0b10ccd5e1a9a335ff0cf865ae0a6d209c41c_96.webp",
         "type": "Resource Pack"
+    },
+    {
+        "id": "mineboxmodpack",
+        "name": "Minebox ModPack",
+        "creator": "lupusarctos9747",
+        "description": "Modpack compiling the mods permitted by the rules on Minebox; any additional mods are beyond my responsibility if you face sanctions.",
+        "website": "https://modrinth.com/modpack/mineboxmodpack",
+        "logo": "https://cdn.modrinth.com/data/6mE2lByQ/14b0259c03b1d0aa919a283d891fcb2f5108e7f0_96.webp",
+        "type": "Modpack"
     }
 ]
