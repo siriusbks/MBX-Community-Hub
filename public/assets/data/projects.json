@@ -1,14 +1,5 @@
 [
     {
-        "id": "mineboxaddons",
-        "name": "MineboxAddons",
-        "creator": "amianthus",
-        "description": "A small utilities mod for the Minebox server. ",
-        "website": "https://github.com/SirTenzin/mineboxaddons",
-        "logo": "https://github.com/SirTenzin/mineboxaddons/raw/master/src/main/resources/assets/mineboxaddons/icon.png?raw=true",
-        "type": "Minecraft Mod"
-    },
-    {
         "id": "notra",
         "name": "Notra",
         "creator": "imjustprism",
