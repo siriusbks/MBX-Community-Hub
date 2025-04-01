@@ -27,7 +27,7 @@
         "paths": {
             "@store/*": ["store/*"],
             "@components/*": ["components/*"],
-            "@types/*": ["types/*"],
+            "@t/*": ["types/*"],
             "@assets/*": ["assets/*"],
             "@routes/*": ["routes/*"]
         }
