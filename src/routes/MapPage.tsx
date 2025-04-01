@@ -6,20 +6,21 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { X } from "lucide-react";
+import { X, ArrowRightLeft } from "lucide-react";
 
 import InteractiveMap from "../components/InteractiveMap";
 import { mapData } from "../components/map/mapData";
 import kokokoMarkers from "../components/map/kokokoMarkers";
 import spawnMarkers from "../components/map/spawnMarkers";
 import quadraMarkers from "../components/map/quadraMarkers";
-import { MarkerConfig } from "../types/markerTypes";
+import { MarkerConfig } from "@t/markerTypes";
 import homeIslandMarkers from "@components/map/homeIslandMarkers";
 import bambooMarkers from "@components/map/bambooMarkers";
 import frostbiteMarkers from "@components/map/frostbiteMarkers";
 import sandwhisperMarkers from "@components/map/sandwhisperMarkers";
 import netherIslandMarkers from "@components/map/netherIslandMarkers";
 import endIslandMarkers from "@components/map/endIslandMarkers";
+import { fishData } from "@components/map/fishData";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -65,6 +66,16 @@ const MapPage: React.FC = () => {
     const [mapOpacity, setMapOpacity] = useState(1);
 
     const mapConfig = mapData[selectedMapKey];
+
+    const [fishingVisible, setFishingVisible] = useState(true);
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    useEffect(() => {
+        if (fishData[selectedMapKey]) {
+            setFishingVisible(true);
+        }
+    }, [selectedMapKey]);
 
     useEffect(() => {
         const loadMarkers = async () => {
@@ -302,13 +313,172 @@ const MapPage: React.FC = () => {
                 </div>
             </aside>
 
-            {/* Map View */}
-            <div className="flex-1 h-full">
-                <InteractiveMap
-                    mapConfig={mapConfig}
-                    markers={filteredMarkers}
-                    opacity={mapOpacity}
-                />
+            {/* Center = Map + Sidebar Right */}
+            <div className="flex h-full w-full">
+                {/* Map View */}
+                <div className="flex-1 h-full">
+                    <InteractiveMap
+                        mapConfig={mapConfig}
+                        markers={filteredMarkers}
+                        opacity={mapOpacity}
+                    />
+                </div>
+
+                {/* Sidebar Right = Fish Info */}
+                {fishData[selectedMapKey] && fishingVisible && (
+                    <div
+                        className={`transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
+                            isSidebarOpen ? "w-80" : "w-12"
+                        }`}
+                    >
+                        {/* Header retract */}
+                        <div className="flex items-center justify-between p-2 border-b border-gray-700">
+                            <button
+                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                className="text-green-400 hover:text-white transition text-sm"
+                                title={isSidebarOpen ? "Close" : "Open"}
+                            >
+                                {isSidebarOpen ? (
+                                    <ArrowRightLeft size={20} />
+                                ) : (
+                                    <ArrowRightLeft size={20} />
+                                )}
+                            </button>
+                            {isSidebarOpen && (
+                                <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
+                                    🎣 Fishing Info -{" "}
+                                    {mapData[selectedMapKey].name}
+                                </h2>
+                            )}
+                        </div>
+
+                        {isSidebarOpen && (
+                            <div className="p-4 overflow-y-auto custom-scrollbar">
+                                {(() => {
+                                    const rarityOrder = [
+                                        "Common",
+                                        "Uncommon",
+                                        "Rare",
+                                        "Epic",
+                                        "Legendary",
+                                    ];
+                                    const sortedFish = [
+                                        ...(fishData[selectedMapKey] || []),
+                                    ].sort(
+                                        (a, b) =>
+                                            rarityOrder.indexOf(a.rarity) -
+                                            rarityOrder.indexOf(b.rarity)
+                                    );
+
+                                    return sortedFish.map((fish, index) => {
+                                        const rarityColor =
+                                            fish.rarity === "Vanilla"
+                                                ? "text-gray-400"
+                                                : fish.rarity === "Common"
+                                                ? "text-gray-400"
+                                                : fish.rarity === "Uncommon"
+                                                ? "text-green-400"
+                                                : fish.rarity === "Rare"
+                                                ? "text-blue-400"
+                                                : fish.rarity === "Epic"
+                                                ? "text-pink-400"
+                                                : "text-yellow-400";
+
+                                        const timeLabel =
+                                            fish.time.includes("Day") &&
+                                            fish.time.includes("Night")
+                                                ? "Day/Night"
+                                                : fish.time
+                                                      .map((t) =>
+                                                          t === "Day"
+                                                              ? "Day"
+                                                              : "Night"
+                                                      )
+                                                      .join("/");
+
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="bg-gray-700 rounded-lg p-3 mb-2 flex gap-3 items-center"
+                                            >
+                                                {/* Image */}
+                                                {fish.image ? (
+                                                    <img
+                                                        src={fish.image}
+                                                        alt={fish.name}
+                                                        className="w-8 h-8 items-center justify-center"
+                                                    />
+                                                ) : (
+                                                    <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
+                                                        🎣
+                                                    </div>
+                                                )}
+
+                                                {/* Infos */}
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-center">
+                                                        {/* Left */}
+                                                        <div className="flex flex-col">
+                                                            <span className="font-semibold text-white">
+                                                                {fish.name}
+                                                            </span>
+                                                            <div className="flex gap-2 text-xs">
+                                                                <span
+                                                                    className={
+                                                                        rarityColor
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        fish.rarity
+                                                                    }
+                                                                </span>
+                                                                <span className="text-gray-300">
+                                                                    {timeLabel}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Conditions */}
+                                                        <div className="flex gap-1">
+                                                            {fish.condition?.includes(
+                                                                "rain"
+                                                            ) && (
+                                                                <span title="Only when it rains">
+                                                                    🌧️
+                                                                </span>
+                                                            )}
+                                                            {fish.condition?.includes(
+                                                                "fullmoon"
+                                                            ) && (
+                                                                <span title="Only during full moon">
+                                                                    🌕
+                                                                </span>
+                                                            )}
+                                                            {fish.condition?.includes(
+                                                                "storm"
+                                                            ) && (
+                                                                <span title="Only at storm">
+                                                                    🌩️
+                                                                </span>
+                                                            )}
+                                                            {fish.condition?.includes(
+                                                                "special"
+                                                            ) && (
+                                                                <span title="Special condition">
+                                                                    ✨
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    });
+                                })()}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
