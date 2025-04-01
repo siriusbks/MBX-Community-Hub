@@ -16,6 +16,22 @@ export interface FishInfo {
 export const fishData: Record<string, FishInfo[]> = {
     spawn: [
         {
+            name: "Bone",
+            level: 10,
+            time: ["Day", "Night"],
+            rarity: "Common",
+            condition: "",
+            image: "assets/media/item/fishing/bone.png",
+        },
+        {
+            name: "Common Key",
+            level: 10,
+            time: ["Day", "Night"],
+            rarity: "Common",
+            condition: "storm",
+            image: "assets/media/item/fishing/common_key.png",
+        },
+        {
             name: "Kraken",
             level: 10,
             time: ["Day", "Night"],
@@ -222,9 +238,9 @@ export const fishData: Record<string, FishInfo[]> = {
         {
             name: "Bone",
             level: 0,
-            time: ["Night"],
+            time: ["Day", "Night"],
             rarity: "Vanilla",
-            condition: "",
+            condition: "niceweather",
             image: "assets/media/item/fishing/bone.png",
         },
         {
