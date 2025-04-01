@@ -462,10 +462,10 @@ const MapPage: React.FC = () => {
                                                                 </span>
                                                             )}
                                                             {fish.condition?.includes(
-                                                                "special"
+                                                                "niceweather"
                                                             ) && (
-                                                                <span title="Special condition">
-                                                                    ✨
+                                                                <span title="Nice weather">
+                                                                    🌤️
                                                                 </span>
                                                             )}
                                                         </div>
