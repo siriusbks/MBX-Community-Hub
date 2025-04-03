@@ -46,6 +46,11 @@
     background: rgba(74, 222, 128, 0.7);
 }
 
+::selection {
+    background: rgba(74, 222, 128, 0.7);
+    color: white;
+}
+
 .range-custom {
     -webkit-appearance: none;
     appearance: none;
