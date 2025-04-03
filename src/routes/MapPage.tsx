@@ -20,7 +20,7 @@ import frostbiteMarkers from "@components/map/frostbiteMarkers";
 import sandwhisperMarkers from "@components/map/sandwhisperMarkers";
 import netherIslandMarkers from "@components/map/netherIslandMarkers";
 import endIslandMarkers from "@components/map/endIslandMarkers";
-import { fishData } from "@components/map/fishData";
+import { fishData, spotByMap } from "@components/map/fishData";
 
 interface GeoJSONFeature {
     type: "Feature";
@@ -281,7 +281,7 @@ const MapPage: React.FC = () => {
                                 setSelectedCategory(e.target.value)
                             }
                         >
-                            <option value="all">All Categories</option>
+                            <option value="all">All categories</option>
                             {uniqueCategories.map((category) => (
                                 <option key={category} value={category}>
                                     {category}
@@ -347,7 +347,7 @@ const MapPage: React.FC = () => {
                             {isSidebarOpen && (
                                 <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
                                     🎣 Fishing Info -{" "}
-                                    {mapData[selectedMapKey].name}
+                                    {spotByMap[selectedMapKey]}
                                 </h2>
                             )}
                         </div>
@@ -406,7 +406,7 @@ const MapPage: React.FC = () => {
                                                     <img
                                                         src={fish.image}
                                                         alt={fish.name}
-                                                        className="w-8 h-8 items-center justify-center"
+                                                        className="w-8 h-8 items-center justify-center pointer-events-none"
                                                     />
                                                 ) : (
                                                     <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">

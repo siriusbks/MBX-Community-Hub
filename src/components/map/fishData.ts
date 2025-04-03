@@ -13,6 +13,15 @@ export interface FishInfo {
     condition?: string;
 }
 
+export const spotByMap: Record<string, string> = {
+    spawn: "Tropical Shoal (Lvl 1)",
+    kokoko: "Deep Shoal (Lvl 10)",
+    quadra_plains: "Plain Shoal (Lvl 20)",
+    bamboo_peak: "Bamboo Shoal (Lvl 30)",
+    frostbite_fortress: "Cold Shoal (Lvl 60)",
+    sandwhisper_dunes: "Desert Shoal (Lvl 40)",
+};
+
 export const fishData: Record<string, FishInfo[]> = {
     spawn: [
         {
