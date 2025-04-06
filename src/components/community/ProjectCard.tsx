@@ -59,7 +59,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                 rel="noopener noreferrer"
                 className="block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm flex items-center gap-1"
             >
-                <Globe size={14} /> Visit Website →
+                <Globe size={14} /> Visit Website
             </a>
         </div>
     );
