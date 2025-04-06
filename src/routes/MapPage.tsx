@@ -5,23 +5,24 @@
  */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { X, ArrowRightLeft } from "lucide-react";
-
+import { useLocation, Link } from "react-router-dom";
+import { ArrowRightLeft, Undo2 } from "lucide-react";
 import InteractiveMap from "../components/InteractiveMap";
 import { mapData } from "../components/map/mapData";
+import { fishData, spotByMap } from "@components/map/fishData";
+import { MarkerConfig } from "@t/markerTypes";
+
 import kokokoMarkers from "../components/map/kokokoMarkers";
 import spawnMarkers from "../components/map/spawnMarkers";
 import quadraMarkers from "../components/map/quadraMarkers";
-import { MarkerConfig } from "@t/markerTypes";
-import homeIslandMarkers from "@components/map/homeIslandMarkers";
-import bambooMarkers from "@components/map/bambooMarkers";
-import frostbiteMarkers from "@components/map/frostbiteMarkers";
-import sandwhisperMarkers from "@components/map/sandwhisperMarkers";
-import netherIslandMarkers from "@components/map/netherIslandMarkers";
-import endIslandMarkers from "@components/map/endIslandMarkers";
-import { fishData, spotByMap } from "@components/map/fishData";
+import homeIslandMarkers from "../components/map/homeIslandMarkers";
+import bambooMarkers from "../components/map/bambooMarkers";
+import frostbiteMarkers from "../components/map/frostbiteMarkers";
+import sandwhisperMarkers from "../components/map/sandwhisperMarkers";
+import netherIslandMarkers from "../components/map/netherIslandMarkers";
+import endIslandMarkers from "../components/map/endIslandMarkers";
 
+// Interfaces
 interface GeoJSONFeature {
     type: "Feature";
     id?: string | number;
@@ -57,19 +58,38 @@ const MapPage: React.FC = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const selectedMapFromUrl = queryParams.get("selectedMap") || "spawn";
+
     const [selectedMapKey, setSelectedMapKey] =
         useState<string>(selectedMapFromUrl);
     const [rawMarkers, setRawMarkers] = useState<ExtendedFeature[]>([]);
-    const [searchTerm, setSearchTerm] = useState<string>("");
-    const [selectedCategory, setSelectedCategory] = useState<string>("all");
-    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [selectedMarkers, setSelectedMarkers] = useState<string[]>([]);
+
     const [mapOpacity, setMapOpacity] = useState(1);
+    const [fishingVisible, setFishingVisible] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     const mapConfig = mapData[selectedMapKey];
+    const markers = allMarkers[selectedMapKey] || {};
 
-    const [fishingVisible, setFishingVisible] = useState(true);
-
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    // Load markers
+    useEffect(() => {
+        const loadMarkers = async () => {
+            try {
+                const features: ExtendedFeature[] = [];
+                for (const key of mapConfig.markerRefs) {
+                    const config = markers[key];
+                    if (!config) continue;
+                    const res = await fetch(config.geoJsonFile);
+                    const json = (await res.json()) as GeoJSONFeatureCollection;
+                    json.features.forEach((f) => features.push({ ...f, key }));
+                }
+                setRawMarkers(features);
+            } catch (err) {
+                console.error("Marker load error:", err);
+            }
+        };
+        loadMarkers();
+    }, [mapConfig, selectedMapKey]);
 
     useEffect(() => {
         if (fishData[selectedMapKey]) {
@@ -78,223 +98,147 @@ const MapPage: React.FC = () => {
     }, [selectedMapKey]);
 
     useEffect(() => {
-        const loadMarkers = async () => {
-            try {
-                const markersForMap: ExtendedFeature[] = [];
-                const markersForSelectedMap = allMarkers[selectedMapKey];
-
-                for (const markerKey of mapConfig.markerRefs) {
-                    const markerConfig = markersForSelectedMap[markerKey];
-                    if (!markerConfig) continue;
-
-                    const response = await fetch(markerConfig.geoJsonFile);
-                    const data =
-                        (await response.json()) as GeoJSONFeatureCollection;
-
-                    const featuresWithKey: ExtendedFeature[] =
-                        data.features.map((feature) => ({
-                            ...feature,
-                            key: markerKey,
-                        }));
-                    markersForMap.push(...featuresWithKey);
-                }
-                setRawMarkers(markersForMap);
-            } catch (error) {
-                console.error("Error loading markers:", error);
-            }
-        };
-        loadMarkers();
-    }, [mapConfig, selectedMapKey]);
-
-    useEffect(() => {
-        setSelectedCategory("all");
+        // Check all markers on the current map when loading
+        setSelectedMarkers(mapConfig.markerRefs);
     }, [selectedMapKey]);
 
-    const uniqueCategories = useMemo(() => {
-        const categories = new Set(
-            rawMarkers
-                .map(
-                    (marker) =>
-                        allMarkers[selectedMapKey]?.[marker.key]?.category
-                )
-                .filter(Boolean)
+    const toggleMarker = (key: string) => {
+        setSelectedMarkers((prev) =>
+            prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
         );
-        return Array.from(categories) as string[];
-    }, [rawMarkers, selectedMapKey]);
+    };
 
     const filteredMarkers = useMemo(() => {
         return rawMarkers.filter((marker) => {
-            const config = allMarkers[selectedMapKey]?.[marker.key];
+            const config = markers[marker.key];
             if (!config) return false;
 
-            const matchesCategory =
-                selectedCategory === "all" ||
-                config.category === selectedCategory;
+            const isSelected = selectedMarkers.includes(marker.key);
 
-            const matchesSearch =
-                searchTerm.trim() === "" ||
-                (typeof config.displayName === "string" &&
-                    config.displayName
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()));
-
-            return matchesCategory && matchesSearch;
+            return isSelected;
         });
-    }, [rawMarkers, searchTerm, selectedCategory, selectedMapKey]);
+    }, [rawMarkers, selectedMapKey, selectedMarkers]);
 
     return (
         <div className="flex h-screen w-screen max-w-full bg-gray-900 text-white">
-            {/* Sidebar */}
+            {/* Sidebar Left */}
             <aside className="w-80 h-full border-r border-gray-700 flex flex-col bg-gray-800 shadow-lg p-4 space-y-6">
+                {/* Back to map */}
+                <Link
+                    to="/map"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 transition px-4 py-2 rounded-lg shadow"
+                >
+                    <Undo2 size={20} />
+                    Exploration map
+                </Link>
+
                 {/* Map Selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🌍 Select a Map
                     </h2>
-                    <div className="relative">
-                        <select
-                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-                            value={selectedMapKey}
-                            onChange={(e) => {
-                                const newSelectedMap = e.target.value;
-                                setSelectedMapKey(newSelectedMap);
-                                window.history.replaceState(
-                                    null,
-                                    "",
-                                    `?selectedMap=${newSelectedMap}`
-                                );
-                            }}
-                        >
-                            {Object.keys(mapData).map((key) => (
-                                <option key={key} value={key}>
-                                    {mapData[key].name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    <select
+                        className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+                        value={selectedMapKey}
+                        onChange={(e) => {
+                            const newMap = e.target.value;
+                            setSelectedMapKey(newMap);
+                            window.history.replaceState(
+                                null,
+                                "",
+                                `?selectedMap=${newMap}`
+                            );
+                        }}
+                    >
+                        {Object.entries(mapData).map(([key, map]) => (
+                            <option key={key} value={key}>
+                                {map.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
-                {/* Search Resources */}
-                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 relative z-50">
-                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🔍 Search Resources
+                {/* Markers selection */}
+                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 space-y-2">
+                    <h2 className="text-lg font-semibold text-gray-300 flex items-center">
+                        📍 Resources Pins
                     </h2>
 
-                    {/* Input with reset button */}
-                    <div className="relative w-full">
+                    <label className="flex items-center gap-2 text-sm text-gray-300 font-medium">
+                        Select/Unselect all:
                         <input
-                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-                            focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-                            type="text"
-                            placeholder="Type to search..."
-                            value={searchTerm}
-                            onChange={(e) => {
-                                setSearchTerm(e.target.value);
-                                setDropdownVisible(true);
-                            }}
-                            onFocus={() => setDropdownVisible(true)}
-                        />
-                        {searchTerm && (
-                            <button
-                                onClick={() => {
-                                    setSearchTerm("");
-                                    setDropdownVisible(false);
-                                }}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition"
-                            >
-                                <X size={18} />
-                            </button>
-                        )}
-                    </div>
-
-                    {/* List of suggestions */}
-                    {searchTerm && dropdownVisible && (
-                        <div
-                            className="absolute z-50 left-0 right-0 top-full mt-1 w-full bg-gray-900 border border-gray-700 
-                        rounded-lg shadow-lg p-3 custom-scrollbar animate-fadeIn max-h-40 overflow-y-auto"
-                        >
-                            {rawMarkers
-                                .map(
-                                    (marker) =>
-                                        allMarkers[selectedMapKey]?.[marker.key]
-                                )
-                                .filter((config) => config?.displayName)
-                                .filter(
-                                    (config, index, arr) =>
-                                        arr.findIndex(
-                                            (c) =>
-                                                c?.displayName ===
-                                                config?.displayName
-                                        ) === index
-                                )
-                                .filter((config) =>
-                                    config?.displayName
-                                        ?.toLowerCase()
-                                        .includes(searchTerm.toLowerCase())
-                                )
-                                .map((config) => (
-                                    <div
-                                        key={config?.displayName}
-                                        className="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer text-sm transition 
-                                        flex justify-between items-center border-b border-gray-800 last:border-0"
-                                        onClick={() => {
-                                            setSearchTerm(
-                                                config?.displayName || ""
-                                            );
-                                            setDropdownVisible(false);
-                                        }}
-                                    >
-                                        {/* displayName */}
-                                        <span className="flex items-center gap-2 text-gray-200 font-medium">
-                                            {config?.displayName}
-                                        </span>
-
-                                        {/* Level badge */}
-                                        {config?.properties?.level && (
-                                            <span className="flex items-center text-green-400 bg-green-800 text-xs font-semibold px-2 py-1 rounded-lg">
-                                                lvl {config.properties.level}
-                                            </span>
-                                        )}
-                                    </div>
-                                ))}
-                            {filteredMarkers.length === 0 && (
-                                <div className="py-2 px-3 text-gray-400 text-sm text-center">
-                                    No results found
-                                </div>
+                            type="checkbox"
+                            className="form-checkbox accent-green-500 cursor-pointer"
+                            checked={mapConfig.markerRefs.every((ref) =>
+                                selectedMarkers.includes(ref)
                             )}
-                        </div>
-                    )}
-                </div>
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setSelectedMarkers(mapConfig.markerRefs);
+                                } else {
+                                    setSelectedMarkers([]);
+                                }
+                            }}
+                        />
+                    </label>
 
-                {/* Filter by Category */}
-                <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
-                    <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🏷️ Filter by Category
-                    </h2>
-                    <div className="relative">
-                        <select
-                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm 
-                        focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-                            value={selectedCategory}
-                            onChange={(e) =>
-                                setSelectedCategory(e.target.value)
+                    <div className="overflow-y-auto max-h-56 custom-scrollbar">
+                        {mapConfig.markerRefs.map((ref) => {
+                            const config = allMarkers[selectedMapKey]?.[ref];
+                            if (!config) return null;
+
+                            {
+                                /* feature temporarily disabled
+                            // Count the number of markers for this config
+                                /* const markerCount = rawMarkers.filter(
+                                (m) => m.key === ref
+                            ).length; */
                             }
-                        >
-                            <option value="all">All categories</option>
-                            {uniqueCategories.map((category) => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
+
+                            return (
+                                <label
+                                    key={ref}
+                                    className="flex items-center gap-1 text-sm text-gray-200"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        className="form-checkbox accent-green-500 cursor-pointer"
+                                        checked={selectedMarkers.includes(ref)}
+                                        onChange={() => toggleMarker(ref)}
+                                    />
+                                    {config.iconUrl && (
+                                        <img
+                                            src={config.iconUrl}
+                                            alt={config.displayName}
+                                            className="w-5 h-5"
+                                        />
+                                    )}
+                                    <span className="flex-1 flex justify-between items-center">
+                                        <span className="flex items-center gap-1 truncate">
+                                            {config.displayName}
+                                            {config.properties?.level !==
+                                                undefined && (
+                                                <span className="text-xs text-gray-400 whitespace-nowrap">
+                                                    (lv.{" "}
+                                                    {config.properties.level})
+                                                </span>
+                                            )}
+                                        </span>
+                                        {/* feature temporarily disabled 
+                                        <span className="text-xs text-green-600 whitespace-nowrap">
+                                            ({markerCount})
+                                        </span> */}
+                                    </span>
+                                </label>
+                            );
+                        })}
                     </div>
                 </div>
 
-                {/* Map Visibility*/}
+                {/* Map visibility */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🌗 Adjust Map Visibility
+                        🌗 Adjust Visibility
                     </h2>
                     <input
                         type="range"
