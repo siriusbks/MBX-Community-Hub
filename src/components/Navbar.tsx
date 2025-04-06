@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
     return (
-        <header className="w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-700 shadow-md">
+        <header className="w-full bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
             <div className="container mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <NavLink

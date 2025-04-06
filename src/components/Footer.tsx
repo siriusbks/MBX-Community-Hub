@@ -6,22 +6,17 @@
 
 export const Footer = () => {
     return (
-        <footer className="bg-gray-900 border-t border-gray-700 py-6 text-center">
-            <div className="container mx-auto">
-                <p className="text-gray-400">
-                    Made with ❤️ for the Minebox community
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                    If you have any problems, go{" "}
+        <footer className="bg-gray-900 border-t border-gray-800 py-6">
+            <div className="container mx-auto px-4 text-center">
+                <p className="text-sm text-gray-400 tracking-wide">
+                    Made with <span className="text-red-500">❤️</span> for the{" "}
                     <a
-                        className="font-bold text-green-400 hover:underline"
-                        href="https://github.com/siriusbks/MBX-Community-Hub/issues"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        className="text-green-400 font-medium"
+                        href="https://minebox.co/"
                     >
-                        here
+                        Minebox
                     </a>{" "}
-                    to report them.
+                    community
                 </p>
             </div>
         </footer>
