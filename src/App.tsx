@@ -24,7 +24,9 @@ export default function App() {
     return (
         <BrowserRouter>
             <ErrorBoundary>
-                <AppRoutes />
+                <div className="max-w-screen w-full overflow-x-hidden">
+                    <AppRoutes />
+                </div>
             </ErrorBoundary>
         </BrowserRouter>
     );
