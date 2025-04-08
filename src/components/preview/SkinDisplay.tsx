@@ -40,7 +40,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
             )}
             {uuid && !imgError ? (
                 <img
-                    src={`https://vzge.me/full/832/${uuid}.png`}
+                    src={`https://vzge.me/full/832/${uuid}.png?no=cape`}
                     alt={`${username}'s Minecraft Skin`}
                     className="w-40 h-auto image-pixelated"
                     crossOrigin="anonymous"
