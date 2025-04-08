@@ -8,9 +8,15 @@ import { useProfileStore } from "@store/profileStore";
 import { UploadIcon } from "lucide-react";
 
 const BACKGROUND_OPTIONS = [
-    { id: "bg1", url: "/assets/media/profile/background/dftvvfnv.bmp" },
-    { id: "bg2", url: "/assets/media/profile/background/r8wm0kbl.bmp" },
-    { id: "bg3", url: "/assets/media/profile/background/tbsj844z.bmp" },
+    { id: "bg1", url: "/assets/media/profile/background/mineboxcover.webp" },
+    {
+        id: "bg2",
+        url: "/assets/media/profile/background/lilycover.webp",
+    },
+    {
+        id: "bg3",
+        url: "/assets/media/profile/background/captaincover.webp",
+    },
 ];
 
 const ACCEPTED_FILE_TYPES = [
