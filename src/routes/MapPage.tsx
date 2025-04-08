@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowRightLeft, Undo2 } from "lucide-react";
 import InteractiveMap from "../components/InteractiveMap";
@@ -54,7 +54,7 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
     sandwhisper_dunes: sandwhisperMarkers,
 };
 
-const MapPage: React.FC = () => {
+const MapPage: FC = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const selectedMapFromUrl = queryParams.get("selectedMap") || "spawn";

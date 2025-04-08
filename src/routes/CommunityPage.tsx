@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ProjectCard from "@components/community/ProjectCard";
 
-const CommunityPage: React.FC = () => {
+const CommunityPage: FC = () => {
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

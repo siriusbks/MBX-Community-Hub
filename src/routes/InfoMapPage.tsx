@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { useState, useRef } from "react";
+import { FC, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { mapData } from "../components/map/mapData";
 import allMarkers from "../components/map/allMarkers";
 import { Info } from "lucide-react";
 
-const InfoMapPage: React.FC = () => {
+const InfoMapPage: FC = () => {
     const navigate = useNavigate();
     const [tooltipMap, setTooltipMap] = useState<string | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
