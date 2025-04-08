@@ -4,11 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import Background1 from "@assets/dftvvfnv.bmp";
-import Background2 from "@assets/r8wm0kbl.bmp";
-import Background3 from "@assets/tbsj844z.bmp";
 import { useProfileStore } from "@store/profileStore";
 import { UploadIcon } from "lucide-react";
+
+const BACKGROUND_OPTIONS = [
+    { id: "bg1", url: "/assets/media/profile/background/dftvvfnv.bmp" },
+    { id: "bg2", url: "/assets/media/profile/background/r8wm0kbl.bmp" },
+    { id: "bg3", url: "/assets/media/profile/background/tbsj844z.bmp" },
+];
 
 const ACCEPTED_FILE_TYPES = [
     "image/png",
@@ -67,12 +70,6 @@ async function convertToJpeg(
         };
     });
 }
-
-const BACKGROUND_OPTIONS = [
-    { id: "bg1", url: Background1 },
-    { id: "bg2", url: Background2 },
-    { id: "bg3", url: Background3 },
-];
 
 export function BackgroundSelector() {
     const { background, setBackground } = useProfileStore();

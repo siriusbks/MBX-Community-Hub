@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import background_default from "@assets/dftvvfnv.bmp";
+import background_default from "/assets/media/profile/background/dftvvfnv.bmp";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

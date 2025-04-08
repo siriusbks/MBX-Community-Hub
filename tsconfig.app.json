@@ -28,7 +28,6 @@
             "@store/*": ["store/*"],
             "@components/*": ["components/*"],
             "@t/*": ["types/*"],
-            "@assets/*": ["assets/*"],
             "@routes/*": ["routes/*"]
         }
     },
