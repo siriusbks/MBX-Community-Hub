@@ -24,7 +24,7 @@ export interface MapDataConfig {
 
 export const mapData: Record<string, MapDataConfig> = {
     spawn: {
-        imageUrl: "assets/maps/spawn.png",
+        imageUrl: "assets/media/maps/spawn.png",
         previewUrl: "assets/media/preview_map/spawn.png",
         width: 626,
         height: 626,
@@ -61,7 +61,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     home_island: {
-        imageUrl: "assets/maps/home_island.png",
+        imageUrl: "assets/media/maps/home_island.png",
         previewUrl: "assets/media/preview_map/island_home.png",
         width: 320,
         height: 320,
@@ -83,7 +83,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     nether_island: {
-        imageUrl: "/assets/maps/nether_island.png",
+        imageUrl: "/assets/media/maps/nether_island.png",
         previewUrl: "/assets/media/preview_map/island_nether.png",
         width: 160,
         height: 176,
@@ -105,7 +105,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     end_island: {
-        imageUrl: "/assets/maps/end_island.png",
+        imageUrl: "/assets/media/maps/end_island.png",
         previewUrl: "/assets/media/preview_map/island_end.png",
         width: 160,
         height: 176,
@@ -127,7 +127,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     kokoko: {
-        imageUrl: "assets/maps/kokoko.png",
+        imageUrl: "assets/media/maps/kokoko.png",
         previewUrl: "assets/media/preview_map/kokoko.png",
         width: 528,
         height: 528,
@@ -178,7 +178,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     quadra_plains: {
-        imageUrl: "assets/maps/quadra_plains.png",
+        imageUrl: "assets/media/maps/quadra_plains.png",
         previewUrl: "assets/media/preview_map/quadra_plains.png",
         width: 608,
         height: 608,
@@ -214,7 +214,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     bamboo_peak: {
-        imageUrl: "assets/maps/bamboo_peak.png",
+        imageUrl: "assets/media/maps/bamboo_peak.png",
         previewUrl: "assets/media/preview_map/bamboo_peak.png",
         width: 1256,
         height: 608,
@@ -246,7 +246,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     frostbite_fortress: {
-        imageUrl: "assets/maps/frostbite_fortress.png",
+        imageUrl: "assets/media/maps/frostbite_fortress.png",
         previewUrl: "assets/media/preview_map/frostbite_fortress.png",
         width: 720,
         height: 720,
@@ -280,7 +280,7 @@ export const mapData: Record<string, MapDataConfig> = {
         ],
     },
     sandwhisper_dunes: {
-        imageUrl: "assets/maps/sandwhisper_dunes.png",
+        imageUrl: "assets/media/maps/sandwhisper_dunes.png",
         previewUrl: "assets/media/preview_map/sandwhisper_dunes.png",
         width: 752,
         height: 752,
