@@ -55,6 +55,17 @@
             "properties": {
                 "map": "nether_island"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [59, 107, 64],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "nether_island"
+            }
         }
     ]
 }
