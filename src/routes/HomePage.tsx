@@ -16,7 +16,10 @@ export function HomePage() {
                 MBX is a community-driven project — and we need your help to
                 make it even better!
                 <span className="ml-1 underline hover:text-white transition">
-                    <Link to="https://github.com/siriusbks/MBX-Community-Hub?tab=readme-ov-file#-how-to-contribute">
+                    <Link
+                        to="https://github.com/siriusbks/MBX-Community-Hub?tab=readme-ov-file#-how-to-contribute"
+                        target="_blank"
+                    >
                         Start contributing
                     </Link>
                 </span>

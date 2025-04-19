@@ -13,6 +13,7 @@ export const Footer = () => {
                     <a
                         className="text-green-400 font-medium"
                         href="https://minebox.co/"
+                        target="_blank"
                     >
                         Minebox
                     </a>{" "}
