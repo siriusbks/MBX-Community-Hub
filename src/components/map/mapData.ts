@@ -26,8 +26,8 @@ export const mapData: Record<string, MapDataConfig> = {
     spawn: {
         imageUrl: "assets/media/maps/spawn.png",
         previewUrl: "assets/media/preview_map/spawn.png",
-        width: 626,
-        height: 626,
+        width: 640,
+        height: 592,
         name: "Spawn Island",
         mapProperties: {
             minZoom: 0.5,
@@ -35,7 +35,7 @@ export const mapData: Record<string, MapDataConfig> = {
         },
         requiredLevel: 0,
         description: "",
-        referencePoint: { x: 98, y: 313 },
+        referencePoint: { x: 113, y: 290 },
         markerRefs: [
             "log_coconuts",
             "log_banana",
@@ -181,7 +181,7 @@ export const mapData: Record<string, MapDataConfig> = {
         imageUrl: "assets/media/maps/quadra_plains.png",
         previewUrl: "assets/media/preview_map/quadra_plains.png",
         width: 608,
-        height: 608,
+        height: 560,
         name: "Quadra Plains",
         mapProperties: {
             minZoom: 0.5,
@@ -189,7 +189,7 @@ export const mapData: Record<string, MapDataConfig> = {
         },
         requiredLevel: 10,
         description: "",
-        referencePoint: { x: 80.5, y: 51 },
+        referencePoint: { x: 81, y: 16 },
         markerRefs: [
             "log_chestnut",
             "log_walnut",
@@ -248,8 +248,8 @@ export const mapData: Record<string, MapDataConfig> = {
     frostbite_fortress: {
         imageUrl: "assets/media/maps/frostbite_fortress.png",
         previewUrl: "assets/media/preview_map/frostbite_fortress.png",
-        width: 720,
-        height: 720,
+        width: 752,
+        height: 752,
         name: "Frostbite Fortress",
         mapProperties: {
             minZoom: 0.25,

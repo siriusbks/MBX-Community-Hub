@@ -2,10 +2,7 @@
     "type": "FeatureCollection",
     "features": [
         {
-            "geometry": {
-                "coordinates": [175, 78, -178],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [175, 78, -178], "type": "Point" },
             "id": 1,
             "type": "Feature",
             "properties": {
@@ -16,10 +13,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [165, 77, -170]
-            },
+            "geometry": { "type": "Point", "coordinates": [165, 77, -170] },
             "id": 2,
             "type": "Feature",
             "properties": {
@@ -30,10 +24,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [203, 77, -188]
-            },
+            "geometry": { "coordinates": [203, 77, -188], "type": "Point" },
             "id": 3,
             "type": "Feature",
             "properties": {
@@ -44,10 +35,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [177, 75, -124],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [177, 75, -124] },
             "id": 4,
             "type": "Feature",
             "properties": {
@@ -58,10 +46,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [147, 77, -140]
-            },
+            "geometry": { "coordinates": [147, 77, -140], "type": "Point" },
             "id": 5,
             "type": "Feature",
             "properties": {
@@ -72,10 +57,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [163, 75, -114],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [163, 75, -114] },
             "id": 6,
             "type": "Feature",
             "properties": {
@@ -86,10 +68,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [191, 75, -101],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [191, 75, -101] },
             "id": 7,
             "type": "Feature",
             "properties": {
@@ -100,10 +79,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [198, 77, -80],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [198, 77, -80] },
             "id": 8,
             "type": "Feature",
             "properties": {
@@ -114,10 +90,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [152, 84, -85]
-            },
+            "geometry": { "coordinates": [152, 84, -85], "type": "Point" },
             "id": 9,
             "type": "Feature",
             "properties": {
@@ -128,10 +101,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [267, 83, -127],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [267, 83, -127] },
             "id": 10,
             "type": "Feature",
             "properties": {
@@ -142,10 +112,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [259, 81, -109],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [259, 81, -109], "type": "Point" },
             "id": 11,
             "type": "Feature",
             "properties": {
@@ -156,10 +123,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [283, 85, -64],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [283, 85, -64], "type": "Point" },
             "id": 12,
             "type": "Feature",
             "properties": {
@@ -170,10 +134,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [302, 85, -76]
-            },
+            "geometry": { "type": "Point", "coordinates": [302, 85, -76] },
             "id": 13,
             "type": "Feature",
             "properties": {
@@ -184,10 +145,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [310, 85, -131],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [310, 85, -131], "type": "Point" },
             "id": 14,
             "type": "Feature",
             "properties": {
@@ -198,10 +156,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [332, 92, -127]
-            },
+            "geometry": { "type": "Point", "coordinates": [332, 92, -127] },
             "id": 15,
             "type": "Feature",
             "properties": {
@@ -212,10 +167,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [320, 91, -156]
-            },
+            "geometry": { "coordinates": [320, 91, -156], "type": "Point" },
             "id": 16,
             "type": "Feature",
             "properties": {
@@ -226,10 +178,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [328, 91, -173]
-            },
+            "geometry": { "coordinates": [328, 91, -173], "type": "Point" },
             "id": 17,
             "type": "Feature",
             "properties": {
@@ -240,10 +189,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [372, 91, -170],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [372, 91, -170], "type": "Point" },
             "id": 18,
             "type": "Feature",
             "properties": {
@@ -254,10 +200,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [364, 92, -135],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [364, 92, -135] },
             "id": 19,
             "type": "Feature",
             "properties": {
@@ -268,10 +211,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [405, 95, -138],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [405, 95, -138], "type": "Point" },
             "id": 20,
             "type": "Feature",
             "properties": {
@@ -282,10 +222,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [373, 91, -127]
-            },
+            "geometry": { "coordinates": [373, 91, -127], "type": "Point" },
             "id": 21,
             "type": "Feature",
             "properties": {
@@ -296,10 +233,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [353, 86, -105]
-            },
+            "geometry": { "type": "Point", "coordinates": [353, 86, -105] },
             "id": 22,
             "type": "Feature",
             "properties": {
@@ -310,10 +244,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [403, 92, -87],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [403, 92, -87] },
             "id": 23,
             "type": "Feature",
             "properties": {
@@ -324,10 +255,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [480, 79, -38]
-            },
+            "geometry": { "type": "Point", "coordinates": [480, 79, -38] },
             "id": 24,
             "type": "Feature",
             "properties": {
@@ -338,10 +266,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [318, 88, -59],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [318, 88, -59], "type": "Point" },
             "id": 25,
             "type": "Feature",
             "properties": {
@@ -352,10 +277,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [107, 114, 161],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [107, 114, 161], "type": "Point" },
             "id": 26,
             "type": "Feature",
             "properties": {
@@ -366,10 +288,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [92, 79, -108]
-            },
+            "geometry": { "type": "Point", "coordinates": [92, 79, -108] },
             "id": 27,
             "type": "Feature",
             "properties": {
@@ -380,10 +299,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [92, 82, -190],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [92, 82, -190] },
             "id": 28,
             "type": "Feature",
             "properties": {
@@ -394,10 +310,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [81, 81, -85],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [200, 78, -137], "type": "Point" },
             "id": 29,
             "type": "Feature",
             "properties": {
@@ -408,10 +321,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [89, 81, -83]
-            },
+            "geometry": { "type": "Point", "coordinates": [200, 78, -153] },
             "id": 30,
             "type": "Feature",
             "properties": {
@@ -422,10 +332,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [73, 81, -83],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [208, 78, -145], "type": "Point" },
             "id": 31,
             "type": "Feature",
             "properties": {
@@ -436,10 +343,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [52, 77, -103],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [52, 77, -103], "type": "Point" },
             "id": 32,
             "type": "Feature",
             "properties": {
@@ -450,10 +354,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-40, 77, -90]
-            },
+            "geometry": { "type": "Point", "coordinates": [-40, 77, -90] },
             "id": 33,
             "type": "Feature",
             "properties": {
@@ -464,10 +365,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [98, 81, -145]
-            },
+            "geometry": { "type": "Point", "coordinates": [98, 81, -145] },
             "id": 34,
             "type": "Feature",
             "properties": {
@@ -478,10 +376,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [58, 82, -150],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [58, 82, -150] },
             "id": 35,
             "type": "Feature",
             "properties": {
@@ -492,10 +387,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [39, 83, -138]
-            },
+            "geometry": { "type": "Point", "coordinates": [39, 83, -138] },
             "id": 36,
             "type": "Feature",
             "properties": {
@@ -506,10 +398,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [27, 84, -179],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [27, 84, -179] },
             "id": 37,
             "type": "Feature",
             "properties": {
@@ -520,10 +409,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [75, 82, -208],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [75, 82, -208], "type": "Point" },
             "id": 38,
             "type": "Feature",
             "properties": {
@@ -534,10 +420,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [20, 86, -237]
-            },
+            "geometry": { "coordinates": [20, 86, -237], "type": "Point" },
             "id": 39,
             "type": "Feature",
             "properties": {
@@ -548,10 +431,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [172, 76, -56],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [172, 76, -56], "type": "Point" },
             "id": 40,
             "type": "Feature",
             "properties": {
@@ -562,10 +442,7 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [249, 80, 212]
-            },
+            "geometry": { "type": "Point", "coordinates": [249, 80, 212] },
             "id": 41,
             "type": "Feature",
             "properties": {
@@ -576,10 +453,7 @@
             }
         },
         {
-            "geometry": {
-                "coordinates": [294, 74, 15],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [294, 74, 15] },
             "id": 42,
             "type": "Feature",
             "properties": {
@@ -590,15 +464,56 @@
             }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [201, 116, 2]
-            },
+            "geometry": { "coordinates": [201, 116, 2], "type": "Point" },
             "id": 43,
             "type": "Feature",
             "properties": {
                 "name": "Picassonkey",
                 "description": "Painter",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [147, 49, -100] },
+            "id": 44,
+            "type": "Feature",
+            "properties": {
+                "name": "Doorito",
+                "description": "Entrance: 197 72 -124",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "coordinates": [193, 74, -127], "type": "Point" },
+            "id": 45,
+            "type": "Feature",
+            "properties": {
+                "name": "Inspector Spintail",
+                "description": "Detective",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "coordinates": [79, 78, -95], "type": "Point" },
+            "id": 46,
+            "type": "Feature",
+            "properties": {
+                "name": "Pet owner",
+                "description": "Shiny informations",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [166, 47, -73] },
+            "id": 47,
+            "type": "Feature",
+            "properties": {
+                "name": "Poodle",
+                "description": "Puddles shop - Entrance: 186 47 -93",
                 "iconUrl": "",
                 "map": "spawn"
             }
