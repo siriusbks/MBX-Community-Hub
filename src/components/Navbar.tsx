@@ -9,14 +9,15 @@ import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
     return (
-        <header className="w-full bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
-            <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+        <header className="w-full h-18 bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
+            <div className="container mx-auto px-6 py-0 h-full flex items-center justify-between">
                 {/* Logo */}
-                <NavLink
-                    to="/"
-                    className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent hover:underline transition-all"
-                >
-                    MBX Community Hub
+                <NavLink to="/" className="flex items-center h-full">
+                    <img
+                        src="/assets/media/website/logo.png"
+                        alt="MBX Logo"
+                        className="h-[96px] max-h-full object-contain"
+                    />
                 </NavLink>
 
                 {/* Navigation Links */}
