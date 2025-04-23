@@ -2,224 +2,130 @@
     "type": "FeatureCollection",
     "features": [
         {
-            "geometry": {
-                "coordinates": [74, 67, 15],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [74, 67, 15] },
             "id": 1,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [77, 96, 43],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [77, 96, 43], "type": "Point" },
             "id": 2,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [77, 66, 56],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [77, 66, 56] },
             "id": 3,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [64, 84, 57],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [64, 84, 57] },
             "id": 4,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [69, 14, 48]
-            },
+            "geometry": { "type": "Point", "coordinates": [69, 14, 48] },
             "id": 5,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [42, 79, 118],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [42, 79, 118], "type": "Point" },
             "id": 6,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [169, 76, 130]
-            },
+            "geometry": { "coordinates": [169, 76, 130], "type": "Point" },
             "id": 7,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [213, 72, 20]
-            },
+            "geometry": { "type": "Point", "coordinates": [213, 72, 20] },
             "id": 8,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [206, 13, 48],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [206, 13, 48] },
             "id": 9,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [40, 80, 151]
-            },
+            "geometry": { "coordinates": [40, 80, 151], "type": "Point" },
             "id": 10,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [47, 5, 58],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [47, 5, 58], "type": "Point" },
             "id": 11,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [26, 17, 57]
-            },
+            "geometry": { "coordinates": [26, 17, 57], "type": "Point" },
             "id": 12,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [166, 0, 25]
-            },
+            "geometry": { "coordinates": [166, 0, 25], "type": "Point" },
             "id": 13,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [205, -17, 14]
-            },
+            "geometry": { "type": "Point", "coordinates": [205, -17, 14] },
             "id": 14,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [121, 36, 27]
-            },
+            "geometry": { "type": "Point", "coordinates": [121, 36, 27] },
             "id": 15,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [111, 41, 16],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [111, 41, 16] },
             "id": 16,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [142, 69, 39],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [142, 69, 39], "type": "Point" },
             "id": 17,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [70, 81, 145]
-            },
+            "geometry": { "type": "Point", "coordinates": [70, 81, 145] },
             "id": 18,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [134, 77, 141],
-                "type": "Point"
-            },
+            "geometry": { "coordinates": [134, 77, 141], "type": "Point" },
             "id": 19,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
         },
         {
-            "geometry": {
-                "coordinates": [197, 108, 110],
-                "type": "Point"
-            },
+            "geometry": { "type": "Point", "coordinates": [197, 108, 110] },
             "id": 20,
             "type": "Feature",
-            "properties": {
-                "map": "home_island"
-            }
+            "properties": { "map": "home_island" }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [52, 78, 21] },
+            "id": 21,
+            "type": "Feature",
+            "properties": { "map": "home_island" }
         }
     ]
 }
