@@ -66,6 +66,17 @@
             "properties": {
                 "map": "home_island"
             }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [196, 90, 152]
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
         }
     ]
 }
