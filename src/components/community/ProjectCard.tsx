@@ -16,12 +16,20 @@ interface ProjectProps {
         website: string;
         logo: string;
         type: string;
+        badge?: string;
     };
 }
 
 const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     return (
         <div className="relative bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all p-4">
+            {/* Bandeau personnalisé */}
+            {project.badge && (
+                <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-bl-lg z-10 uppercase tracking-wide shadow-md">
+                    {project.badge}
+                </div>
+            )}
+
             {/* Logo & Name */}
             <div className="flex items-center gap-4">
                 <img
