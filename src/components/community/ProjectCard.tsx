@@ -6,6 +6,7 @@
 
 import React from "react";
 import { Globe, Layers } from "lucide-react";
+import { SiModrinth, SiCurseforge, SiGithub } from "react-icons/si";
 
 interface ProjectProps {
     project: {
@@ -13,17 +14,25 @@ interface ProjectProps {
         name: string;
         description: string;
         creator: string;
-        website: string;
+        website?: string;
         logo: string;
         type: string;
         badge?: string;
+        links?: {
+            website?: string;
+            modrinth?: string;
+            curseforge?: string;
+            github?: string;
+        };
     };
 }
 
 const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
+    const { links } = project;
+
     return (
         <div className="relative bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all p-4">
-            {/* Bandeau personnalisé */}
+            {/* Personalized headband */}
             {project.badge && (
                 <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-bl-lg z-10 uppercase tracking-wide shadow-md">
                     {project.badge}
@@ -60,15 +69,51 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                 </span>
             </div>
 
-            {/* Button */}
-            <a
-                href={project.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block mt-4 text-green-400 hover:text-green-300 font-semibold text-sm flex items-center gap-1"
-            >
-                <Globe size={14} /> Visit Website
-            </a>
+            {/* Links */}
+            {links && (
+                <div className="flex flex-wrap items-center gap-3 mt-4">
+                    {links.website && (
+                        <a
+                            href={links.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                        >
+                            <Globe size={14} /> Website
+                        </a>
+                    )}
+                    {links.modrinth && (
+                        <a
+                            href={links.modrinth}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                        >
+                            <SiModrinth size={14} /> Modrinth
+                        </a>
+                    )}
+                    {links.curseforge && (
+                        <a
+                            href={links.curseforge}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                        >
+                            <SiCurseforge size={14} /> CurseForge
+                        </a>
+                    )}
+                    {links.github && (
+                        <a
+                            href={links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                        >
+                            <SiGithub size={14} /> GitHub
+                        </a>
+                    )}
+                </div>
+            )}
         </div>
     );
 };
