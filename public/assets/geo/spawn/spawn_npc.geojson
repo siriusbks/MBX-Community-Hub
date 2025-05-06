@@ -453,12 +453,12 @@
             }
         },
         {
-            "geometry": { "type": "Point", "coordinates": [294, 74, 15] },
+            "geometry": { "type": "Point", "coordinates": [134, 75, -173] },
             "id": 42,
             "type": "Feature",
             "properties": {
                 "name": "Mermaida",
-                "description": "Treasures/Artifacts",
+                "description": "Daily Trade",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -514,6 +514,17 @@
             "properties": {
                 "name": "Poodle",
                 "description": "Puddles shop - Entrance: 186 47 -93",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [89, 79, -124] },
+            "id": 48,
+            "type": "Feature",
+            "properties": {
+                "name": "Fishgerald",
+                "description": "Fish Buyer",
                 "iconUrl": "",
                 "map": "spawn"
             }
