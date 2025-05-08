@@ -671,6 +671,39 @@
             "properties": {
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [153, 100, -27],
+                "type": "Point"
+            },
+            "id": 62,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [146, 100, -24],
+                "type": "Point"
+            },
+            "id": 63,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [106, 102, 15],
+                "type": "Point"
+            },
+            "id": 64,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
         }
     ]
 }
