@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { MarkerConfig } from "../../types/markerTypes";
+import { MarkerConfig } from "@t/markerTypes";
 
 const quadraMarkers: Record<string, MarkerConfig> = {
     log_chestnut: {

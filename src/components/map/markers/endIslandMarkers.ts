@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { MarkerConfig } from "../../types/markerTypes";
+import { MarkerConfig } from "@t/markerTypes";
 
-const homeIslandMarkers: Record<string, MarkerConfig> = {
+const endIslandMarkers: Record<string, MarkerConfig> = {
     treasure_common: {
         displayName: "Common treasure",
         iconUrl: "assets/media/treasure/treasure_common.png",
-        geoJsonFile: "assets/geo/home_island/treasure_common.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_common.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -20,7 +20,7 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     treasure_uncommon: {
         displayName: "Uncommon treasure",
         iconUrl: "assets/media/treasure/treasure_uncommon.png",
-        geoJsonFile: "assets/geo/home_island/treasure_uncommon.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_uncommon.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -30,7 +30,7 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     treasure_rare: {
         displayName: "Rare treasure",
         iconUrl: "assets/media/treasure/treasure_rare.png",
-        geoJsonFile: "assets/geo/home_island/treasure_rare.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_rare.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -40,7 +40,7 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     treasure_epic: {
         displayName: "Epic treasure",
         iconUrl: "assets/media/treasure/treasure_epic.png",
-        geoJsonFile: "assets/geo/home_island/treasure_epic.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_epic.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -50,7 +50,7 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     treasure_legendary: {
         displayName: "Legendary treasure",
         iconUrl: "assets/media/treasure/treasure_legendary.png",
-        geoJsonFile: "assets/geo/home_island/treasure_legendary.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_legendary.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -60,7 +60,7 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     treasure_mythic: {
         displayName: "Mythic treasure",
         iconUrl: "assets/media/treasure/treasure_mythic.png",
-        geoJsonFile: "assets/geo/home_island/treasure_mythic.geojson",
+        geoJsonFile: "assets/geo/end_island/treasure_mythic.geojson",
         category: "Treasure",
         defaultChecked: true,
         properties: {
@@ -69,4 +69,4 @@ const homeIslandMarkers: Record<string, MarkerConfig> = {
     },
 };
 
-export default homeIslandMarkers;
+export default endIslandMarkers;

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { MarkerConfig } from "../../types/markerTypes";
+import { MarkerConfig } from "@t/markerTypes";
 
 const spawnMarkers: Record<string, MarkerConfig> = {
     log_banana: {
