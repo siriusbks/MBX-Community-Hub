@@ -92,7 +92,7 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 2,
             maxZoom: 0,
         },
-        requiredLevel: 0,
+        requiredLevel: 20,
         description: "",
         referencePoint: { x: 17, y: 143 },
         markerRefs: [
@@ -114,7 +114,7 @@ export const mapData: Record<string, MapDataConfig> = {
             minZoom: 2,
             maxZoom: 0,
         },
-        requiredLevel: 0,
+        requiredLevel: 40,
         description: "",
         referencePoint: { x: 17, y: 143 },
         markerRefs: [
