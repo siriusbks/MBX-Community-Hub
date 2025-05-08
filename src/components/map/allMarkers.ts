@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import spawnMarkers from "./spawnMarkers";
-import homeIslandMarkers from "./homeIslandMarkers";
-import netherIslandMarkers from "./netherIslandMarkers";
-import endIslandMarkers from "./endIslandMarkers";
-import kokokoMarkers from "./kokokoMarkers";
-import quadraMarkers from "./quadraMarkers";
-import bambooMarkers from "./bambooMarkers";
-import frostbiteMarkers from "./frostbiteMarkers";
-import sandwhisperMarkers from "./sandwhisperMarkers";
+import spawnMarkers from "./markers/spawnMarkers";
+import homeIslandMarkers from "./markers/homeIslandMarkers";
+import netherIslandMarkers from "./markers/netherIslandMarkers";
+import endIslandMarkers from "./markers/endIslandMarkers";
+import kokokoMarkers from "./markers/kokokoMarkers";
+import quadraMarkers from "./markers/quadraMarkers";
+import bambooMarkers from "./markers/bambooMarkers";
+import frostbiteMarkers from "./markers/frostbiteMarkers";
+import sandwhisperMarkers from "./markers/sandwhisperMarkers";
 
 const allMarkers: Record<string, Record<string, any>> = {
     spawn: spawnMarkers,
