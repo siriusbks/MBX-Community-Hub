@@ -95,14 +95,7 @@ export const mapData: Record<string, MapDataConfig> = {
         requiredLevel: 20,
         description: "",
         referencePoint: { x: 17, y: 143 },
-        markerRefs: [
-            "treasure_common",
-            "treasure_uncommon",
-            "treasure_rare",
-            "treasure_epic",
-            "treasure_legendary",
-            "treasure_mythic",
-        ],
+        markerRefs: ["treasure_rare", "treasure_epic", "treasure_legendary"],
     },
     end_island: {
         imageUrl: "/assets/media/maps/end_island.png",
