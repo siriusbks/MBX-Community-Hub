@@ -7,20 +7,23 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowRightLeft, Undo2 } from "lucide-react";
-import InteractiveMap from "../components/InteractiveMap";
-import { mapData } from "../components/map/mapData";
-import { fishData, spotByMap } from "@components/map/fishData";
-import { MarkerConfig } from "@t/markerTypes";
 
-import kokokoMarkers from "../components/map/kokokoMarkers";
-import spawnMarkers from "../components/map/spawnMarkers";
-import quadraMarkers from "../components/map/quadraMarkers";
-import homeIslandMarkers from "../components/map/homeIslandMarkers";
-import bambooMarkers from "../components/map/bambooMarkers";
-import frostbiteMarkers from "../components/map/frostbiteMarkers";
-import sandwhisperMarkers from "../components/map/sandwhisperMarkers";
-import netherIslandMarkers from "../components/map/netherIslandMarkers";
-import endIslandMarkers from "../components/map/endIslandMarkers";
+import InteractiveMap from "@components/InteractiveMap";
+
+import { MarkerConfig } from "@t/markerTypes";
+import { mapData } from "@components/map/mapData";
+import { fishData, spotByMap } from "@components/map/fishData";
+import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
+
+import kokokoMarkers from "@components/map/markers/kokokoMarkers";
+import spawnMarkers from "@components/map/markers/spawnMarkers";
+import quadraMarkers from "@components/map/markers/quadraMarkers";
+import homeIslandMarkers from "@components/map/markers/homeIslandMarkers";
+import bambooMarkers from "@components/map/markers/bambooMarkers";
+import frostbiteMarkers from "@components/map/markers/frostbiteMarkers";
+import sandwhisperMarkers from "@components/map/markers/sandwhisperMarkers";
+import netherIslandMarkers from "@components/map/markers/netherIslandMarkers";
+import endIslandMarkers from "@components/map/markers/endIslandMarkers";
 
 // Interfaces
 interface GeoJSONFeature {
@@ -108,6 +111,15 @@ const MapPage: FC = () => {
         );
     };
 
+    // Update selected markers based on the map config
+    useEffect(() => {
+        const defaults = defaultSelectedPerMap[selectedMapKey] || [];
+        const validDefaults = defaults.filter((ref) =>
+            mapConfig.markerRefs.includes(ref)
+        );
+        setSelectedMarkers(validDefaults);
+    }, [selectedMapKey]);
+
     const filteredMarkers = useMemo(() => {
         return rawMarkers.filter((marker) => {
             const config = markers[marker.key];
@@ -182,56 +194,70 @@ const MapPage: FC = () => {
                         />
                     </label>
 
-                    <div className="overflow-y-auto max-h-56 custom-scrollbar">
-                        {mapConfig.markerRefs.map((ref) => {
-                            const config = allMarkers[selectedMapKey]?.[ref];
-                            if (!config) return null;
+                    <div className="overflow-y-auto max-h-56 custom-scrollbar space-y-2">
+                        {Object.entries(
+                            mapConfig.markerRefs.reduce((acc, ref) => {
+                                const config =
+                                    allMarkers[selectedMapKey]?.[ref];
+                                if (!config) return acc;
 
-                            {
-                                /* feature temporarily disabled
-                            // Count the number of markers for this config
-                                /* const markerCount = rawMarkers.filter(
-                                (m) => m.key === ref
-                            ).length; */
-                            }
-
-                            return (
-                                <label
-                                    key={ref}
-                                    className="flex items-center gap-1 text-sm text-gray-200"
-                                >
-                                    <input
-                                        type="checkbox"
-                                        className="form-checkbox accent-green-500 cursor-pointer"
-                                        checked={selectedMarkers.includes(ref)}
-                                        onChange={() => toggleMarker(ref)}
-                                    />
-                                    {config.iconUrl && (
-                                        <img
-                                            src={config.iconUrl}
-                                            alt={config.displayName}
-                                            className="w-5 h-5"
-                                        />
-                                    )}
-                                    <span className="flex-1 flex justify-between items-center">
-                                        <span className="flex items-center gap-1 truncate">
-                                            {config.displayName}
-                                            {config.properties?.level !==
-                                                undefined && (
-                                                <span className="text-xs text-gray-400 whitespace-nowrap">
-                                                    (lv.{" "}
-                                                    {config.properties.level})
-                                                </span>
+                                const category =
+                                    config.category || "Uncategorized";
+                                if (!acc[category]) acc[category] = [];
+                                acc[category].push({ ref, config });
+                                return acc;
+                            }, {} as Record<string, { ref: string; config: any }[]>)
+                        ).map(([category, items]) => (
+                            <div key={category}>
+                                <h3 className="text-sm font-semibold text-gray-400 mb-1">
+                                    {category}
+                                </h3>
+                                <div className="space-y-1">
+                                    {items.map(({ ref, config }) => (
+                                        <label
+                                            key={ref}
+                                            className="flex items-center gap-1 text-sm text-gray-200"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                className="form-checkbox accent-green-500 cursor-pointer"
+                                                checked={selectedMarkers.includes(
+                                                    ref
+                                                )}
+                                                onChange={() =>
+                                                    toggleMarker(ref)
+                                                }
+                                            />
+                                            {config.iconUrl && (
+                                                <img
+                                                    src={config.iconUrl}
+                                                    alt={config.displayName}
+                                                    className="w-5 h-5"
+                                                />
                                             )}
-                                        </span>
-                                        {/* feature temporarily disabled 
-                                        <span className="text-xs text-green-600 whitespace-nowrap">
-                                            ({markerCount})
-                                        </span> */}
-                                    </span>
-                                </label>
-                            );
-                        })}
+                                            <span className="flex-1 flex justify-between items-center">
+                                                <span className="flex items-center gap-1 truncate">
+                                                    {config.displayName}
+                                                    {config.properties
+                                                        ?.level !==
+                                                        undefined && (
+                                                        <span className="text-xs text-gray-400 whitespace-nowrap">
+                                                            (lv.{" "}
+                                                            {
+                                                                config
+                                                                    .properties
+                                                                    .level
+                                                            }
+                                                            )
+                                                        </span>
+                                                    )}
+                                                </span>
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

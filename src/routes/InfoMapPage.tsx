@@ -6,9 +6,10 @@
 
 import { FC, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { mapData } from "../components/map/mapData";
-import allMarkers from "../components/map/allMarkers";
 import { Info } from "lucide-react";
+
+import { mapData } from "@components/map/mapData";
+import allMarkers from "@components/map/allMarkers";
 
 const InfoMapPage: FC = () => {
     const navigate = useNavigate();

@@ -7,6 +7,7 @@
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import React from "react";
+import { useEffect } from "react";
 import {
     ImageOverlay,
     MapContainer,
@@ -16,17 +17,17 @@ import {
     useMapEvents,
 } from "react-leaflet";
 
-import kokokoMarkers from "./map/kokokoMarkers";
 import { MapDataConfig } from "./map/mapData";
-import quadraMarkers from "./map/quadraMarkers";
-import spawnMarkers from "./map/spawnMarkers";
-import homeIslandMarkers from "./map/homeIslandMarkers";
-import bambooMarkers from "./map/bambooMarkers";
-import frostbiteMarkers from "./map/frostbiteMarkers";
-import sandwhisperMarkers from "./map/sandwhisperMarkers";
-import { useEffect } from "react";
-import netherIslandMarkers from "./map/netherIslandMarkers";
-import endIslandMarkers from "./map/endIslandMarkers";
+
+import kokokoMarkers from "./map/markers/kokokoMarkers";
+import quadraMarkers from "./map/markers/quadraMarkers";
+import spawnMarkers from "./map/markers/spawnMarkers";
+import homeIslandMarkers from "./map/markers/homeIslandMarkers";
+import bambooMarkers from "./map/markers/bambooMarkers";
+import frostbiteMarkers from "./map/markers/frostbiteMarkers";
+import sandwhisperMarkers from "./map/markers/sandwhisperMarkers";
+import netherIslandMarkers from "./map/markers/netherIslandMarkers";
+import endIslandMarkers from "./map/markers/endIslandMarkers";
 
 interface GeoJSONFeature {
     type: "Feature";
