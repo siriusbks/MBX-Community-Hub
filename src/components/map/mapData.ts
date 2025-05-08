@@ -110,14 +110,7 @@ export const mapData: Record<string, MapDataConfig> = {
         requiredLevel: 40,
         description: "",
         referencePoint: { x: 17, y: 143 },
-        markerRefs: [
-            "treasure_common",
-            "treasure_uncommon",
-            "treasure_rare",
-            "treasure_epic",
-            "treasure_legendary",
-            "treasure_mythic",
-        ],
+        markerRefs: ["treasure_epic", "treasure_legendary", "treasure_mythic"],
     },
     kokoko: {
         imageUrl: "assets/media/maps/kokoko.png",
