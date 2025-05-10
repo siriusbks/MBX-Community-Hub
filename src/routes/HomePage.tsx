@@ -33,8 +33,7 @@ export function HomePage() {
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Join the Minebox community and enhance your experience
-                        with personalized profiles, an interactive map, and
-                        powerful equipment management.
+                        with personalized profiles, an interactive map.
                     </p>
                     <div className="mt-5 h-1 w-24 mx-auto bg-green-500/60 rounded-full animate-pulse"></div>
                 </div>
