@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { useProfileStore } from "@store/profileStore";
 import { UploadIcon } from "lucide-react";
+
+import { useProfileStore } from "@store/profileStore";
 
 const BACKGROUND_OPTIONS = [
     { id: "bg1", url: "/assets/media/profile/background/mineboxcover.webp" },

@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-import ErrorBoundary from "@components/preview/ErrorBoundary";
 import { AppRoutes } from "@routes/index";
 import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+
+import ErrorBoundary from "@components/preview/ErrorBoundary";
 
 export default function App() {
     useEffect(() => {

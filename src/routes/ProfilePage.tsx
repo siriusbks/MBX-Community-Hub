@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { FC } from "react";
+
 import { Preview } from "@components/Preview";
 import { ProfileEditor } from "@components/ProfileEditor";
-import { FC } from "react";
 
 const ProfilePage: FC = () => {
     return (

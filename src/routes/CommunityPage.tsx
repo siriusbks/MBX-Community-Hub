@@ -5,6 +5,7 @@
  */
 
 import { FC, useEffect, useState } from "react";
+
 import ProjectCard from "@components/community/ProjectCard";
 
 const CommunityPage: FC = () => {

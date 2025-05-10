@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import background_default from "/assets/media/profile/background/mineboxcover.webp";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
+import background_default from "/assets/media/profile/background/mineboxcover.webp";
 
 import { Profession, ProfileState } from "../types";
 

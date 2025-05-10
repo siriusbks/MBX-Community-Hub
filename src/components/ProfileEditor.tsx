@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { FC } from "react";
+
 import { BackgroundSelector } from "@components/editor/BackgroundSelector";
 import { LevelInput } from "@components/editor/LevelInput";
 import { ProfessionInput } from "@components/editor/ProfessionInput";
 import { SkinDisplay } from "@components/editor/SkinDisplay";
-import { FC } from "react";
 
 export const ProfileEditor: FC = () => {
     return (

@@ -6,6 +6,7 @@
 
 import { FC, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+
 import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
 

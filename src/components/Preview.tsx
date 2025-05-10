@@ -4,15 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { FC, useMemo, useRef, useState } from "react";
+import { saveAs } from "file-saver";
+import html2canvas from "html2canvas";
+import { Download } from "lucide-react";
+
 import { BrowserWarning } from "@components/preview/BrowserWarning";
 import { ProfessionsGrid } from "@components/preview/ProfessionsGrid";
 import { SkinDisplay } from "@components/preview/SkinDisplay";
 import { Watermark } from "@components/preview/Watermark";
 import { useProfileStore } from "@store/profileStore";
-import { saveAs } from "file-saver";
-import html2canvas from "html2canvas";
-import { Download } from "lucide-react";
-import { FC, useMemo, useRef, useState } from "react";
 
 const BACKGROUND_FILTER = "blur(2.5px)";
 const BACKGROUND_SCALE = "scale(1.02)";

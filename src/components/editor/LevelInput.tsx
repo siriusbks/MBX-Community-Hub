@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { useProfileStore } from "@store/profileStore";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useCallback, useRef } from "react";
+
+import { useProfileStore } from "@store/profileStore";
 
 export function LevelInput() {
     const { level, setLevel } = useProfileStore();
