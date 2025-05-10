@@ -88,6 +88,17 @@
             "properties": {
                 "map": "end_island"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [114, 82, 99],
+                "type": "Point"
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "end_island"
+            }
         }
     ]
 }
