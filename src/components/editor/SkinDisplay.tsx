@@ -53,7 +53,7 @@ export function SkinDisplay() {
         async function fetchUUID() {
             try {
                 const response = await fetch(
-                    `https://proxymc.nb.studio/api/minecraft/${debouncedUsername}`
+                    `https://skin.mineboxcommunity.com/api/minecraft/${debouncedUsername}`
                 );
 
                 if (response.ok) {
