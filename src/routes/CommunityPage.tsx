@@ -5,7 +5,6 @@
  */
 
 import { FC, useEffect, useState } from "react";
-
 import ProjectCard from "@components/community/ProjectCard";
 
 const CommunityPage: FC = () => {
@@ -17,9 +16,7 @@ const CommunityPage: FC = () => {
         const loadProjects = async () => {
             try {
                 const response = await fetch("/assets/data/projects.json");
-                if (!response.ok) {
-                    throw new Error("Failed to load projects.");
-                }
+                if (!response.ok) throw new Error("Failed to load projects.");
                 const data = await response.json();
                 setProjects(data);
             } catch (err) {
@@ -36,7 +33,7 @@ const CommunityPage: FC = () => {
     return (
         <div className="p-10 max-w-7xl mx-auto">
             {/* Header */}
-            <div className="text-center">
+            <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold text-white mb-4">
                     🌟 Community Projects
                 </h1>
@@ -49,23 +46,25 @@ const CommunityPage: FC = () => {
 
             {/* Loading & Error Handling */}
             {loading && (
-                <p className="text-gray-400 text-center mt-6">
-                    ⏳ Loading projects...
+                <p className="text-gray-400 text-center mt-6 animate-pulse">
+                    ⏳ Loading community projects...
                 </p>
             )}
-            {error && <p className="text-red-400 text-center mt-6">{error}</p>}
+            {error && (
+                <p className="text-red-400 text-center mt-6">❌ {error}</p>
+            )}
 
             {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-                {projects.length > 0
-                    ? projects.map((project) => (
-                          <ProjectCard key={project.id} project={project} />
-                      ))
-                    : !loading && (
-                          <p className="text-gray-400 text-center col-span-full mt-6">
-                              ❌ No community projects available at the moment.
-                          </p>
-                      )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                {!loading && projects.length === 0 ? (
+                    <p className="text-center col-span-full text-gray-500">
+                        ❌ No community projects found.
+                    </p>
+                ) : (
+                    projects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
+                    ))
+                )}
             </div>
         </div>
     );
