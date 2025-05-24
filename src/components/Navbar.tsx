@@ -12,11 +12,11 @@ export const Navbar = () => {
         <header className="w-full h-18 bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
             <div className="container mx-auto px-6 py-0 h-full flex items-center justify-between">
                 {/* Logo */}
-                <NavLink to="/" className="flex items-center h-full">
+                <NavLink to="/" className="flex items-center h-full group">
                     <img
                         src="/assets/media/website/logo.png"
                         alt="MBX Logo"
-                        className="h-[96px] max-h-full object-contain"
+                        className="h-[96px] max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                 </NavLink>
 
