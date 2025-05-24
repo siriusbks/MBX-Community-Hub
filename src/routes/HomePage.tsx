@@ -11,14 +11,15 @@ export function HomePage() {
     return (
         <>
             {/* 🤝 Community Call */}
-            <div className="bg-green-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg animate-pulse">
+            <div className="bg-green-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg">
                 <HandHelping className="inline-block mr-2" size={20} />
                 MBX is a community-driven project — and we need your help to
                 make it even better!
-                <span className="ml-1 underline hover:text-white transition">
+                <span className="ml-2 underline hover:text-white transition-colors duration-150">
                     <Link
                         to="https://github.com/siriusbks/MBX-Community-Hub?tab=readme-ov-file#-how-to-contribute"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                         Start contributing
                     </Link>
@@ -33,9 +34,9 @@ export function HomePage() {
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Join the Minebox community and enhance your experience
-                        with personalized profiles, an interactive map.
+                        with personalized profiles and an interactive world map.
                     </p>
-                    <div className="mt-5 h-1 w-24 mx-auto bg-green-500/60 rounded-full animate-pulse"></div>
+                    <div className="mt-5 h-1 w-24 mx-auto bg-green-500/60 rounded-full"></div>
                 </div>
 
                 {/* Features Grid */}
@@ -46,14 +47,14 @@ export function HomePage() {
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-green-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-400/20 transition">
+                            <div className="p-3 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-400/20 transition-colors">
                                 <User size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
                                 Player Profile
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             Customize your profile with stats, achievements, and
                             more to showcase your Minebox journey.
                         </p>
@@ -65,14 +66,14 @@ export function HomePage() {
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-blue-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition">
+                            <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition-colors">
                                 <Map size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
                                 Interactive Map
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             Explore the Minebox world with detailed interactive
                             maps showing locations and resources.
                         </p>
@@ -84,14 +85,14 @@ export function HomePage() {
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-red-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition">
+                            <div className="p-3 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition-colors">
                                 <Users size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
                                 Community Projects
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             Discover and explore community-driven mods, tools,
                             and websites for Minebox.
                         </p>

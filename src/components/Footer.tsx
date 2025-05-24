@@ -14,6 +14,7 @@ export const Footer = () => {
                         className="text-green-400 font-medium"
                         href="https://minebox.co/"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                         Minebox
                     </a>{" "}
