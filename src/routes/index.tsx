@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
+import NotFound from "./NotFound";
 
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
 const InfoMapPage = lazy(() => import("@routes/InfoMapPage"));
@@ -29,6 +30,7 @@ export const AppRoutes: FC = () => (
                 }
             >
                 <Routes>
+                    <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/map" element={<InfoMapPage />} />
