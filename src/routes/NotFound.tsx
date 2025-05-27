@@ -12,7 +12,7 @@ const NotFound = () => {
 
     return (
         <div className="w-full min-h-[60vh] flex flex-col items-center justify-center px-6 text-center">
-            <AlertTriangle className="w-16 h-16 text-green-400 mb-4" />
+            <AlertTriangle className="w-16 h-16 text-green-500 mb-4" />
             <h1 className="text-4xl font-extrabold mb-3 bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent opacity-90">
                 404 — Not Found
             </h1>
