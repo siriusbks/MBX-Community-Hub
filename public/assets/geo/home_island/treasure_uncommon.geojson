@@ -132,6 +132,18 @@
             "id": 22,
             "type": "Feature",
             "properties": { "map": "home_island" }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [237, -42, 231] },
+            "id": 23,
+            "type": "Feature",
+            "properties": { "map": "home_island" }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [241, -46, 210] },
+            "id": 24,
+            "type": "Feature",
+            "properties": { "map": "home_island" }
         }
     ]
 }

@@ -66,6 +66,28 @@
             "properties": {
                 "map": "home_island"
             }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [43, 105, 218]
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [112, -37, 224]
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "home_island"
+            }
         }
     ]
 }
