@@ -94,7 +94,7 @@
                 "type": "Point",
                 "coordinates": [4, 60, 128]
             },
-            "id": 8,
+            "id": 9,
             "type": "Feature",
             "properties": {
                 "map": "home_island"
