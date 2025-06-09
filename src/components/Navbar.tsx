@@ -31,7 +31,7 @@ export const Navbar = () => {
                             key={to}
                             to={to}
                             className={({ isActive }) =>
-                                `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 ${
+                                `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50${
                                     isActive ||
                                     (to === "/map" &&
                                         location.pathname.startsWith(
