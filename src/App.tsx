@@ -5,7 +5,7 @@
  */
 
 import { AppRoutes } from "@routes/index";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ReactGA from "react-ga4";
 import { BrowserRouter, useLocation } from "react-router-dom";
 
@@ -15,11 +15,19 @@ const GA_MEASUREMENT_ID = "G-1E5DGV7ZFK";
 
 function GA4Tracking() {
     const location = useLocation();
+    const initialized = useRef(false);
 
     useEffect(() => {
-        ReactGA.initialize(GA_MEASUREMENT_ID);
-        ReactGA.send({ hitType: "pageview", page: location.pathname });
-    }, [location.pathname]);
+        if (!initialized.current) {
+            ReactGA.initialize(GA_MEASUREMENT_ID);
+            initialized.current = true;
+        }
+
+        ReactGA.send({
+            hitType: "pageview",
+            page: location.pathname + location.search,
+        });
+    }, [location.pathname, location.search]);
 
     return null;
 }
