@@ -398,13 +398,13 @@
             }
         },
         {
-            "geometry": { "type": "Point", "coordinates": [27, 84, -179] },
+            "geometry": { "type": "Point", "coordinates": [27, 85, -178] },
             "id": 37,
             "type": "Feature",
             "properties": {
-                "name": "The Mayor",
-                "description": "City Hall",
-                "iconUrl": "the_mayor",
+                "name": "Beardifacto",
+                "description": "Museum Curator",
+                "iconUrl": "beardifacto",
                 "map": "spawn"
             }
         },
@@ -464,7 +464,7 @@
             }
         },
         {
-            "geometry": { "coordinates": [201, 116, 2], "type": "Point" },
+            "geometry": { "coordinates": [201, 117, 2], "type": "Point" },
             "id": 43,
             "type": "Feature",
             "properties": {
@@ -525,6 +525,28 @@
             "properties": {
                 "name": "Fishgerald",
                 "description": "Fish Buyer",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [157, 77, -83] },
+            "id": 49,
+            "type": "Feature",
+            "properties": {
+                "name": "Helka Assembla",
+                "description": "Daily Furniture",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [-76, 74, -178] },
+            "id": 50,
+            "type": "Feature",
+            "properties": {
+                "name": "Bob Slowley",
+                "description": "Sell ​​at night or full moon",
                 "iconUrl": "",
                 "map": "spawn"
             }
