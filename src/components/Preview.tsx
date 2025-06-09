@@ -31,7 +31,7 @@ export const Preview: FC = () => {
             const img = new Image();
             img.crossOrigin = "anonymous";
             img.onload = () => resolve();
-            img.onerror = (e) =>
+            img.onerror = () =>
                 reject(new Error(`Failed to load image: ${src}`));
             img.src = src;
         });
