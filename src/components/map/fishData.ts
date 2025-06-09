@@ -25,6 +25,14 @@ export const spotByMap: Record<string, string> = {
 export const fishData: Record<string, FishInfo[]> = {
     spawn: [
         {
+            name: "Mandarinfish",
+            level: 1,
+            time: ["Day"],
+            rarity: "Common",
+            condition: "",
+            image: "assets/media/item/fishing/mandarinfish.png",
+        },
+        {
             name: "Bone",
             level: 10,
             time: ["Day", "Night"],
@@ -333,14 +341,6 @@ export const fishData: Record<string, FishInfo[]> = {
             rarity: "Rare",
             condition: "",
             image: "assets/media/item/fishing/poop.png",
-        },
-        {
-            name: "Mandarinfish",
-            level: 1,
-            time: ["Day"],
-            rarity: "Common",
-            condition: "",
-            image: "assets/media/item/fishing/mandarinfish.png",
         },
     ],
     sandwhisper_dunes: [
