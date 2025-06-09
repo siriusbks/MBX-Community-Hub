@@ -88,6 +88,17 @@
             "properties": {
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [157, 55, -131],
+                "type": "Point"
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
         }
     ]
 }
