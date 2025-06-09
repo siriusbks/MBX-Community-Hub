@@ -11,7 +11,7 @@ export function HomePage() {
     return (
         <>
             {/* 🤝 Community Call */}
-            <div className="bg-green-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg">
+            <div className="bg-emerald-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg">
                 <HandHelping className="inline-block mr-2" size={20} />
                 MBX is a community-driven project — and we need your help to
                 make it even better!
