@@ -8,164 +8,109 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import background_default from "/assets/media/profile/background/mineboxcover.webp";
-
-import { Profession, ProfileState } from "../types";
-
-const DEFAULT_PROFESSIONS: Profession[] = [
-    {
-        id: "alchemy",
-        name: "Alchemist",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "⚗️",
-        enabled: true,
-    },
+import { ProfileState, Profession } from "../types";
+// Static professions data
+// This data is used to initialize the professions in the profile store
+const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
+    { id: "alchemy", name: "Alchemist", icon: "⚗️", maxXP: 75, enabled: true },
     {
         id: "blacksmithing",
         name: "Blacksmith",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
         icon: "🔨",
-        enabled: true,
-    },
-    {
-        id: "cooking",
-        name: "Cook",
-        level: 1,
-        currentXP: 0,
         maxXP: 75,
-        icon: "🍳",
         enabled: true,
     },
-    {
-        id: "farming",
-        name: "Farmer",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "🌾",
-        enabled: true,
-    },
-    {
-        id: "fishing",
-        name: "Fisherman",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "🎣",
-        enabled: true,
-    },
-    {
-        id: "hunting",
-        name: "Hunter",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "🏹",
-        enabled: true,
-    },
-    {
-        id: "jeweling",
-        name: "Jeweler",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "💎",
-        enabled: true,
-    },
+    { id: "cooking", name: "Cook", icon: "🍳", maxXP: 75, enabled: true },
+    { id: "farming", name: "Farmer", icon: "🌾", maxXP: 75, enabled: true },
+    { id: "fishing", name: "Fisherman", icon: "🎣", maxXP: 75, enabled: true },
+    { id: "hunting", name: "Hunter", icon: "🏹", maxXP: 75, enabled: true },
+    { id: "jeweling", name: "Jeweler", icon: "💎", maxXP: 75, enabled: true },
     {
         id: "lumberjack",
         name: "Lumberjack",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
         icon: "🪓",
-        enabled: true,
-    },
-    {
-        id: "mining",
-        name: "Miner",
-        level: 1,
-        currentXP: 0,
         maxXP: 75,
-        icon: "⛏️",
         enabled: true,
     },
+    { id: "mining", name: "Miner", icon: "⛏️", maxXP: 75, enabled: true },
     {
         id: "shoemaking",
         name: "Shoemaker",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
         icon: "👢",
-        enabled: true,
-    },
-    {
-        id: "tailoring",
-        name: "Tailor",
-        level: 1,
-        currentXP: 0,
         maxXP: 75,
-        icon: "🧵",
         enabled: true,
     },
-    {
-        id: "tinkering",
-        name: "Tinkerer",
-        level: 1,
-        currentXP: 0,
-        maxXP: 75,
-        icon: "⚙️",
-        enabled: true,
-    },
+    { id: "tailoring", name: "Tailor", icon: "🧵", maxXP: 75, enabled: true },
+    { id: "tinkering", name: "Tinkerer", icon: "⚙️", maxXP: 75, enabled: true },
 ];
 
-const defaultProfileState = {
-    username: "6rius",
-    uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
+const staticMap = Object.fromEntries(STATIC_PROFESSIONS.map((p) => [p.id, p]));
+
+const defaultDynamic = Object.keys(staticMap).map((id) => ({
+    id,
     level: 1,
-    background: background_default,
-    professions: DEFAULT_PROFESSIONS,
-};
+    currentXP: 0,
+}));
+
+function mergeProfession(dynamic: {
+    id: string;
+    level: number;
+    currentXP: number;
+}): Profession {
+    const staticData = staticMap[dynamic.id];
+    return {
+        ...dynamic,
+        ...staticData,
+    };
+}
 
 export const useProfileStore = create<ProfileState>()(
     persist(
         (set, get) => ({
-            ...defaultProfileState,
+            username: "6rius",
+            uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
+            level: 1,
+            background: background_default,
+            professions: defaultDynamic.map(mergeProfession),
 
-            setUsername: (username) => {
-                set({ username });
-            },
-
-            setUUID: (uuid) => {
-                set({ uuid });
-            },
-
-            setLevel: (value) => {
-                set((state) => {
-                    if (typeof value === "function") {
-                        return { ...state, level: value(state.level) };
-                    }
-                    return { ...state, level: value };
-                });
-            },
-
-            setBackground: (background) => {
-                set({ background });
-            },
+            setUsername: (username) => set({ username }),
+            setUUID: (uuid) => set({ uuid }),
+            setLevel: (value) =>
+                set((state) => ({
+                    level:
+                        typeof value === "function"
+                            ? value(state.level)
+                            : value,
+                })),
+            setBackground: (background) => set({ background }),
 
             updateProfession: (id, updates) => {
-                const { professions } = get();
-                const newProfessions = professions.map((prof) =>
+                const updated = get().professions.map((prof) =>
                     prof.id === id ? { ...prof, ...updates } : prof
                 );
-                set({ professions: newProfessions });
+                set({ professions: updated });
             },
         }),
         {
             name: "profileData",
+            partialize: (state) => ({
+                username: state.username,
+                uuid: state.uuid,
+                level: state.level,
+                background: state.background,
+                professions: state.professions.map(
+                    ({ id, level, currentXP }) => ({
+                        id,
+                        level,
+                        currentXP,
+                    })
+                ),
+            }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    state.professions = state.professions.map(mergeProfession);
+                }
+            },
         }
     )
 );
