@@ -16,5 +16,17 @@
     "profile.professionInput.title": "Métiers",
     "profile.professionInput.level": "Niveau",
     "profile.professionInput.maxXP": "Max XP",
-    "profile.professionInput.currentXP": "XP Actuelle"
+    "profile.professionInput.currentXP": "XP Actuelle",
+    "profile.profession.alchemy": "Alchimiste",
+    "profile.profession.blacksmithing": "Forgeron",
+    "profile.profession.cooking": "Cusinier",
+    "profile.profession.farming": "Récolteur",
+    "profile.profession.fishing": "Pêcheur",
+    "profile.profession.hunting": "Chasseur",
+    "profile.profession.jeweling": "Bijoutier",
+    "profile.profession.lumberjack": "Bucheron",
+    "profile.profession.mining": "Mineur",
+    "profile.profession.shoemaking": "Cordonnier",
+    "profile.profession.tailoring": "Tailleur",
+    "profile.profession.tinkering": "Bricoleur"
 }

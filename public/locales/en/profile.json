@@ -17,5 +17,16 @@
     "profile.professionInput.level": "Level",
     "profile.professionInput.maxXP": "Max XP",
     "profile.professionInput.currentXP": "Current XP",
-    "profile.jobs.alchemy": "Alchemist"
+    "profile.profession.alchemy": "Alchemist",
+    "profile.profession.blacksmithing": "Blacksmith",
+    "profile.profession.cooking": "Cook",
+    "profile.profession.farming": "Farmer",
+    "profile.profession.fishing": "Fisherman",
+    "profile.profession.hunting": "Hunter",
+    "profile.profession.jeweling": "Jeweler",
+    "profile.profession.lumberjack": "Lumberjack",
+    "profile.profession.mining": "Miner",
+    "profile.profession.shoemaking": "Shoemaker",
+    "profile.profession.tailoring": "Tailor",
+    "profile.profession.tinkering": "Tinkerer"
 }
