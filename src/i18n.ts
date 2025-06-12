@@ -16,6 +16,7 @@ i18n.use(HttpBackend)
             order: ["cookie", "localStorage", "navigator"],
             caches: ["cookie"],
             lookupCookie: "mbxcom_lang",
+            cookieMinutes: 10080,
         },
         ns: ["homepage", "navbar", "profile", "map", "community", "fishing"],
         defaultNS: "homepage",
