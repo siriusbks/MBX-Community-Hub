@@ -5,6 +5,7 @@
  */
 
 import { UploadIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { useProfileStore } from "@store/profileStore";
 
@@ -79,6 +80,8 @@ async function convertToJpeg(
 }
 
 export function BackgroundSelector() {
+    const { t } = useTranslation("profile");
+
     const { background, setBackground } = useProfileStore();
 
     const handleFileUpload = async (file: File) => {
@@ -111,7 +114,7 @@ export function BackgroundSelector() {
     return (
         <div className="space-y-4">
             <label className="block text-sm font-medium text-gray-200">
-                Background Image
+                {t("profile.backgroundSelector.label")}
             </label>
             <div className="grid grid-cols-3 gap-4">
                 {BACKGROUND_OPTIONS.map((bg) => (
@@ -134,7 +137,7 @@ export function BackgroundSelector() {
             </div>
             <div className="relative mt-4">
                 <label className="block text-sm font-medium text-gray-200 mb-2">
-                    Or Upload Your Own Image
+                    {t("profile.backgroundSelector.uploadLabel")}
                 </label>
                 <div className="flex items-center gap-4">
                     <input
@@ -156,11 +159,11 @@ export function BackgroundSelector() {
                         className="flex items-center gap-2 px-4 py-2 bg-gray-700 rounded-lg text-sm text-gray-200 cursor-pointer hover:bg-gray-600 transition-colors"
                     >
                         <UploadIcon size={16} />
-                        Upload Image
+                        {t("profile.backgroundSelector.uploadButton")}
                     </label>
                 </div>
                 <p className="mt-2 text-xs text-gray-400">
-                    Animated GIF or WebP will become a single-frame JPEG.
+                    {t("profile.backgroundSelector.uploadHint")}
                 </p>
             </div>
         </div>

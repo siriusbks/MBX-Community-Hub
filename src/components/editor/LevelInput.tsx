@@ -6,10 +6,13 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useProfileStore } from "@store/profileStore";
 
 export function LevelInput() {
+    const { t } = useTranslation("profile");
+
     const { level, setLevel } = useProfileStore();
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -46,7 +49,7 @@ export function LevelInput() {
     return (
         <div className="space-y-4">
             <label className="block text-sm font-medium text-gray-200">
-                Enter your level
+                {t("profile.levelInput.label")}
             </label>
             <div className="relative">
                 <input

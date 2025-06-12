@@ -8,6 +8,7 @@ import { AppRoutes } from "@routes/index";
 import { useEffect, useRef } from "react";
 import ReactGA from "react-ga4";
 import { BrowserRouter, useLocation } from "react-router-dom";
+import "./i18n";
 
 import ErrorBoundary from "@components/preview/ErrorBoundary";
 

@@ -7,7 +7,10 @@
 import { Link } from "react-router-dom";
 import { User, Map, Users, HandHelping } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 export function HomePage() {
+    const { t } = useTranslation("homepage");
     return (
         <>
             {/* 🤝 Community Call */}
@@ -30,11 +33,10 @@ export function HomePage() {
                 {/* Hero Section */}
                 <div className="text-center mb-20">
                     <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent leading-tight">
-                        Welcome to MBX Community
+                        {t("homepage.title")}
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                        Join the Minebox community and enhance your experience
-                        with personalized profiles and an interactive world map.
+                        {t("homepage.subtitle")}
                     </p>
                     <div className="mt-5 h-1 w-24 mx-auto bg-green-500/60 rounded-full"></div>
                 </div>
@@ -51,12 +53,11 @@ export function HomePage() {
                                 <User size={28} />
                             </div>
                             <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                Player Profile
+                                {t("homepage.features.playerProfile.title")}
                             </h2>
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            Customize your profile with stats, achievements, and
-                            more to showcase your Minebox journey.
+                            {t("homepage.features.playerProfile.description")}
                         </p>
                     </Link>
 
@@ -70,12 +71,11 @@ export function HomePage() {
                                 <Map size={28} />
                             </div>
                             <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                Interactive Map
+                                {t("homepage.features.interactiveMap.title")}
                             </h2>
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            Explore the Minebox world with detailed interactive
-                            maps showing locations and resources.
+                            {t("homepage.features.interactiveMap.description")}
                         </p>
                     </Link>
 
@@ -89,12 +89,13 @@ export function HomePage() {
                                 <Users size={28} />
                             </div>
                             <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                Community Projects
+                                {t("homepage.features.communityProjects.title")}
                             </h2>
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            Discover and explore community-driven mods, tools,
-                            and websites for Minebox.
+                            {t(
+                                "homepage.features.communityProjects.description"
+                            )}
                         </p>
                     </Link>
                 </div>

@@ -5,9 +5,11 @@
  */
 
 import { FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import ProjectCard from "@components/community/ProjectCard";
 
 const CommunityPage: FC = () => {
+    const { t } = useTranslation("community");
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -35,11 +37,10 @@ const CommunityPage: FC = () => {
             {/* Header */}
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold text-white mb-4">
-                    🌟 Community Projects
+                    {t("community.title")}
                 </h1>
                 <p className="text-gray-400 max-w-3xl mx-auto">
-                    Explore the amazing community-driven projects built for
-                    Minebox.
+                    {t("community.subtitle")}
                 </p>
                 <div className="mt-4 h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
             </div>

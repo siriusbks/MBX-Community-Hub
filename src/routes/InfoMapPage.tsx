@@ -7,11 +7,13 @@
 import { FC, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Info } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { mapData } from "@components/map/mapData";
 import allMarkers from "@components/map/allMarkers";
 
 const InfoMapPage: FC = () => {
+    const { t } = useTranslation("map");
     const navigate = useNavigate();
     const [tooltipMap, setTooltipMap] = useState<string | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
@@ -32,12 +34,12 @@ const InfoMapPage: FC = () => {
         <div className="flex flex-col items-center min-h-screen text-white p-6">
             {/* Header */}
             <h1 className="text-4xl font-extrabold text-green-400 mb-4">
-                🌍 Explore Maps
+                {t("mappage.title")}
             </h1>
             <p className="text-gray-300 text-lg mb-8 flex items-center gap-2">
-                Hover over the{" "}
-                <Info className="w-5 h-5 text-white inline-block" /> to view
-                resources.
+                {t("mappage.hoverInfo1")}{" "}
+                <Info className="w-5 h-5 text-white inline-block" />{" "}
+                {t("mappage.hoverInfo2")}
             </p>
 
             {/* Grid card */}
@@ -95,7 +97,7 @@ const InfoMapPage: FC = () => {
                                     onMouseLeave={handleMouseLeave}
                                 >
                                     <h3 className="text-green-400 font-semibold mb-2 text-center">
-                                        Available Resources
+                                        {t("mappage.tooltipTitle")}
                                     </h3>
                                     <div className="grid grid-cols-1 gap-2 pb-6">
                                         {mapConfig.markerRefs.map(
@@ -149,7 +151,7 @@ const InfoMapPage: FC = () => {
                                 }
                                 className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg w-full transition"
                             >
-                                View Interactive Map
+                                {t("mappage.buttonViewMap")}
                             </button>
                         </div>
                     </div>

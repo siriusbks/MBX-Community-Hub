@@ -6,6 +6,7 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useProfileStore } from "@store/profileStore";
 
@@ -19,6 +20,7 @@ function clamp(value: number, minVal: number, maxVal?: number) {
 }
 
 export function ProfessionInput() {
+    const { t } = useTranslation("profile");
     const { professions, updateProfession } = useProfileStore();
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -115,7 +117,7 @@ export function ProfessionInput() {
                         <div className="grid grid-cols-2 gap-3">
                             <div>
                                 <label className="block text-xs text-gray-400 mb-1">
-                                    Level
+                                    {t("profile.professionInput.level")}
                                 </label>
                                 <div className="relative">
                                     <input
@@ -178,7 +180,7 @@ export function ProfessionInput() {
                             </div>
                             <div>
                                 <label className="block text-xs text-gray-400 mb-1">
-                                    Max XP
+                                    {t("profile.professionInput.maxXP")}
                                 </label>
                                 <div className="relative">
                                     <input
@@ -232,7 +234,7 @@ export function ProfessionInput() {
                             </div>
                             <div className="col-span-2">
                                 <label className="block text-xs text-gray-400 mb-1">
-                                    Current XP
+                                    {t("profile.professionInput.currentXP")}
                                 </label>
                                 <div className="relative">
                                     <input

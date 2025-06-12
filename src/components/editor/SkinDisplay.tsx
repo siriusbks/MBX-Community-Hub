@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { AlertCircle, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { useProfileStore } from "@store/profileStore";
 
@@ -21,6 +22,7 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export function SkinDisplay() {
+    const { t } = useTranslation("profile");
     const { username, setUsername, setUUID } = useProfileStore();
     const [error, setError] = useState<string | null>(null);
 
@@ -85,7 +87,7 @@ export function SkinDisplay() {
                 htmlFor="minecraft-username"
                 className="block text-sm font-medium text-gray-200"
             >
-                Enter your Minecraft username
+                {t("profile.minecraftUsername")}
             </label>
             <div className="relative">
                 <input
@@ -93,7 +95,7 @@ export function SkinDisplay() {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your Minecraft username"
+                    placeholder={t("profile.minecraftUsername")}
                     minLength={3}
                     maxLength={16}
                     className={`w-full bg-gray-700 rounded-lg px-4 py-2 pl-10 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 ${

@@ -8,6 +8,7 @@ import { FC, useMemo, useRef, useState } from "react";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { BrowserWarning } from "@components/preview/BrowserWarning";
 import { ProfessionsGrid } from "@components/preview/ProfessionsGrid";
@@ -20,6 +21,7 @@ const BACKGROUND_SCALE = "scale(1.02)";
 const BACKGROUND_TRANSITION = "filter 0.3s ease";
 
 export const Preview: FC = () => {
+    const { t } = useTranslation("profile");
     const { username, uuid, level, background, professions } =
         useProfileStore();
     const previewRef = useRef<HTMLDivElement>(null);
@@ -124,7 +126,9 @@ export const Preview: FC = () => {
         <div className="h-full flex flex-col">
             <BrowserWarning />
             <div className="flex items-center justify-between mb-4 px-4">
-                <h2 className="text-2xl font-semibold text-white">Preview</h2>
+                <h2 className="text-2xl font-semibold text-white">
+                    {t("profile.preview")}
+                </h2>
                 <button
                     onClick={handleDownload}
                     disabled={isDownloading}
@@ -136,7 +140,9 @@ export const Preview: FC = () => {
                     }`}
                 >
                     <Download size={24} />
-                    {isDownloading ? "Downloading..." : "Download Image"}
+                    {isDownloading
+                        ? t("profile.downloading")
+                        : t("profile.download")}
                 </button>
             </div>
 
