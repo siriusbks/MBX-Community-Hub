@@ -5,6 +5,7 @@
  */
 
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Profession } from "../../types";
 
@@ -18,13 +19,15 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
         100
     );
 
+    const { t } = useTranslation("profile");
+
     return (
         <div className="bg-black bg-opacity-30 p-3 rounded-md border border-white border-opacity-5 flex flex-col justify-between h-full min-h-[100px]">
             <div className="flex items-center gap-2 w-full mb-2">
                 <span className="text-2xl">{profession.icon}</span>
                 <div className="flex-1">
                     <h4 className="text-sm font-medium text-white mb-1">
-                        {profession.name}
+                        {t(`profile.profession.${profession.id}`)}
                     </h4>
                     <span className="text-xs text-green-400">
                         Level {profession.level}

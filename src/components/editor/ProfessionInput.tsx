@@ -109,7 +109,7 @@ export function ProfessionInput() {
                         <div className="flex items-center gap-2">
                             <span className="text-xl">{prof.icon}</span>
                             <span className="font-medium capitalize">
-                                {prof.name}
+                                {t(`profile.profession.${prof.id}`)}
                             </span>
                         </div>
                     </div>
