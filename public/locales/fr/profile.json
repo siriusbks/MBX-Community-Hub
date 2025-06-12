@@ -1,0 +1,20 @@
+{
+    "profile.browserWarning.textone": "Utilise Mozilla Firefox ou Google Chrome",
+    "profile.browserWarning.texttwo": "Passe en plein écran ou maximise ta fenêtre",
+    "profile.browserWarning.textthree": "Solution alternative: Prends une capture d'écran manuelle de la zone d'aperçu",
+    "profile.browserWarning.title": "Pour de meilleurs résultats lors du téléchargement:",
+    "profile.download": "Télécharger l'image",
+    "profile.downloading": "Téléchargement...",
+    "profile.preview": "Aperçu",
+    "profile.minecraftUsername": "Entre ton pseudonyme Minecraft",
+    "profile.backgroundSelector.label": "Image d'arrière plan",
+    "profile.backgroundSelector.uploadLabel": "Ou importe ta propre image",
+    "profile.backgroundSelector.uploadButton": "Importer l'image",
+    "profile.backgroundSelector.uploadHint": "Un GIF animé ou un WebP deviendra une image unique JPEG.",
+    "profile.levelInput.title": "Niveau du joueur",
+    "profile.levelInput.label": "Entre ton niveau",
+    "profile.professionInput.title": "Métiers",
+    "profile.professionInput.level": "Niveau",
+    "profile.professionInput.maxXP": "Max XP",
+    "profile.professionInput.currentXP": "XP Actuelle"
+}

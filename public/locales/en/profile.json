@@ -1,0 +1,21 @@
+{
+    "profile.browserWarning.textone": "Use Mozilla Firefox and Google Chrome",
+    "profile.browserWarning.texttwo": "Go full screen or maximize your window",
+    "profile.browserWarning.textthree": "Alternative: Take a manual screenshot of the preview area",
+    "profile.browserWarning.title": "For best results when downloading:",
+    "profile.download": "Download Image",
+    "profile.downloading": "Downloading...",
+    "profile.preview": "Preview",
+    "profile.minecraftUsername": "Enter your Minecraft username",
+    "profile.backgroundSelector.label": "Background Image",
+    "profile.backgroundSelector.uploadLabel": "Or Upload Your Own Image",
+    "profile.backgroundSelector.uploadButton": "Upload Image",
+    "profile.backgroundSelector.uploadHint": "Animated GIF or WebP will become a single-frame JPEG.",
+    "profile.levelInput.title": "Player Level",
+    "profile.levelInput.label": "Enter your level",
+    "profile.professionInput.title": "Professions",
+    "profile.professionInput.level": "Level",
+    "profile.professionInput.maxXP": "Max XP",
+    "profile.professionInput.currentXP": "Current XP",
+    "profile.jobs.alchemy": "Alchemist"
+}
