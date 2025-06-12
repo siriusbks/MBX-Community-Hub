@@ -5,6 +5,7 @@
  */
 
 import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SkinDisplayProps {
     username: string;
@@ -26,6 +27,8 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
         );
     };
 
+    const { t } = useTranslation("profile");
+
     return (
         <div className="w-64 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col items-center">
             {username && (
@@ -34,7 +37,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                         {username}
                     </p>
                     <span className="text-xs font-semibold text-green-400">
-                        Level {level}
+                        {t("profile.professionInput.level")} {level}
                     </span>
                 </div>
             )}

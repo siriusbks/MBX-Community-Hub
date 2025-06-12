@@ -30,7 +30,7 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
                         {t(`profile.profession.${profession.id}`)}
                     </h4>
                     <span className="text-xs text-green-400">
-                        Level {profession.level}
+                        {t("profile.professionInput.level")} {profession.level}
                     </span>
                 </div>
             </div>
