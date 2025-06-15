@@ -33,6 +33,17 @@
             "properties": {
                 "map": "spawn"
             }
+        },
+        {
+            "type": "Feature",
+            "id": 4,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [157, 55, -131]
+            },
+            "properties": {
+                "map": "spawn"
+            }
         }
     ]
 }
