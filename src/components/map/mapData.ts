@@ -28,7 +28,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/spawn.png",
         width: 640,
         height: 592,
-        name: "Spawn Island",
+        name: "mappage.maps.spawn_island.name",
         mapProperties: {
             minZoom: 0.5,
             maxZoom: 2,
@@ -65,7 +65,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/island_home.png",
         width: 320,
         height: 320,
-        name: "Home Island",
+        name: "mappage.maps.home_island.name",
         mapProperties: {
             minZoom: 1.5,
             maxZoom: 0,
@@ -87,7 +87,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "/assets/media/preview_map/island_nether.png",
         width: 160,
         height: 176,
-        name: "Nether Island",
+        name: "mappage.maps.nether_island.name",
         mapProperties: {
             minZoom: 2,
             maxZoom: 0,
@@ -102,7 +102,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "/assets/media/preview_map/island_end.png",
         width: 160,
         height: 176,
-        name: "End Island",
+        name: "mappage.maps.end_island.name",
         mapProperties: {
             minZoom: 2,
             maxZoom: 0,
@@ -117,7 +117,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/kokoko.png",
         width: 528,
         height: 528,
-        name: "Kokoko Island",
+        name: "mappage.maps.kokoko_island.name",
         mapProperties: {
             minZoom: 0.75,
             maxZoom: 2,
@@ -168,7 +168,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/quadra_plains.png",
         width: 608,
         height: 560,
-        name: "Quadra Plains",
+        name: "mappage.maps.quadra_plains.name",
         mapProperties: {
             minZoom: 0.5,
             maxZoom: 2,
@@ -204,7 +204,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/bamboo_peak.png",
         width: 1256,
         height: 608,
-        name: "Bamboo Peak",
+        name: "mappage.maps.bamboo_peak.name",
         mapProperties: {
             minZoom: 0.5,
             maxZoom: 2,
@@ -234,9 +234,9 @@ export const mapData: Record<string, MapDataConfig> = {
     frostbite_fortress: {
         imageUrl: "assets/media/maps/frostbite_fortress.png",
         previewUrl: "assets/media/preview_map/frostbite_fortress.png",
-        width: 752,
-        height: 752,
-        name: "Frostbite Fortress",
+        width: 720,
+        height: 720,
+        name: "mappage.maps.frostbite_fortress.name",
         mapProperties: {
             minZoom: 0.25,
             maxZoom: 2,
@@ -270,7 +270,7 @@ export const mapData: Record<string, MapDataConfig> = {
         previewUrl: "assets/media/preview_map/sandwhisper_dunes.png",
         width: 752,
         height: 752,
-        name: "Sandwhisper Dunes",
+        name: "mappage.maps.sandwhisper_dunes.name",
         mapProperties: {
             minZoom: 0.25,
             maxZoom: 2,
