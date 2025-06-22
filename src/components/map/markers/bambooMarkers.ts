@@ -8,10 +8,10 @@ import { MarkerConfig } from "@t/markerTypes";
 
 const bambooMarkers: Record<string, MarkerConfig> = {
     log_ecalyptus: {
-        displayName: "Ecalyptus",
+        displayName: "markers.item.ecalyptus",
         iconUrl: "assets/media/tree/log_ecalyptus.png",
         geoJsonFile: "assets/geo/bamboo_peak/tree/log_ecalyptus.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "60",
@@ -19,10 +19,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     log_laughing: {
-        displayName: "Laughing",
+        displayName: "markers.item.laughing",
         iconUrl: "assets/media/tree/log_laughing.png",
         geoJsonFile: "assets/geo/bamboo_peak/tree/log_laughing.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "80",
@@ -30,10 +30,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     log_elm: {
-        displayName: "Elm",
+        displayName: "markers.item.elm",
         iconUrl: "assets/media/tree/log_elm.png",
         geoJsonFile: "assets/geo/bamboo_peak/tree/log_elm.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "100",
@@ -41,10 +41,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_manganese: {
-        displayName: "Manganese",
+        displayName: "markers.item.manganese",
         iconUrl: "assets/media/ore/ore_manganese.png",
         geoJsonFile: "assets/geo/bamboo_peak/ore/ore_manganese.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "20",
@@ -52,10 +52,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_liquid_diamond: {
-        displayName: "Liquid Diamond",
+        displayName: "markers.item.liquid_diamond",
         iconUrl: "assets/media/ore/ore_liquid_diamond.png",
         geoJsonFile: "assets/geo/bamboo_peak/ore/ore_liquid_diamond.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "50",
@@ -63,10 +63,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     st_john_wort: {
-        displayName: "St John's Wort",
+        displayName: "markers.item.st_john_wort",
         iconUrl: "assets/media/flower/st_john_wort.png",
         geoJsonFile: "assets/geo/bamboo_peak/flower/st_john_wort.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "20",
@@ -74,10 +74,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     ginger_root: {
-        displayName: "Ginger Root",
+        displayName: "markers.item.ginger_root",
         iconUrl: "assets/media/flower/ginger_root.png",
         geoJsonFile: "assets/geo/bamboo_peak/flower/ginger_root.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "70",
@@ -85,10 +85,10 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     origami: {
-        displayName: "Origami",
+        displayName: "markers.item.origami",
         iconUrl: "assets/media/flower/origami.png",
         geoJsonFile: "assets/geo/bamboo_peak/flower/origami.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "100",
@@ -96,42 +96,42 @@ const bambooMarkers: Record<string, MarkerConfig> = {
         },
     },
     bamboo_peak_fish: {
-        displayName: "Bamboo Shoal",
+        displayName: "markers.item.bamboo_peak_fish",
         iconUrl: "assets/media/fish/fishing_rod_3.png",
         geoJsonFile: "assets/geo/bamboo_peak/bamboo_shoal.geojson",
         defaultChecked: true,
-        category: "Fishing",
+        category: "markers.category.fishing",
         properties: {
             level: "30",
             showCount: true,
         },
     },
     bamboo_peak_bloon: {
-        displayName: "Bloon",
+        displayName: "markers.item.bloon",
         iconUrl: "assets/media/exploration/bloon.png",
         geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_bloon.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     bamboo_peak_viewPoint: {
-        displayName: "View point",
+        displayName: "markers.item.viewPoint",
         iconUrl: "assets/media/exploration/viewPoint.png",
         geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_viewPoint.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     bamboo_peak_coin: {
-        displayName: "Coin",
+        displayName: "markers.item.coin",
         iconUrl: "assets/media/exploration/coin.png",
         geoJsonFile: "assets/geo/bamboo_peak/bamboo_peak_coin.geojson",
         defaultChecked: false,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },

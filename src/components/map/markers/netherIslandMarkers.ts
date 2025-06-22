@@ -8,60 +8,60 @@ import { MarkerConfig } from "@t/markerTypes";
 
 const netherIslandMarkers: Record<string, MarkerConfig> = {
     treasure_common: {
-        displayName: "Common treasure",
+        displayName: "markers.item.treasure_common",
         iconUrl: "assets/media/treasure/treasure_common.png",
         geoJsonFile: "assets/geo/nether_island/treasure_common.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,
         },
     },
     treasure_uncommon: {
-        displayName: "Uncommon treasure",
+        displayName: "markers.item.treasure_uncommon",
         iconUrl: "assets/media/treasure/treasure_uncommon.png",
         geoJsonFile: "assets/geo/nether_island/treasure_uncommon.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,
         },
     },
     treasure_rare: {
-        displayName: "Rare treasure",
+        displayName: "markers.item.treasure_rare",
         iconUrl: "assets/media/treasure/treasure_rare.png",
         geoJsonFile: "assets/geo/nether_island/treasure_rare.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,
         },
     },
     treasure_epic: {
-        displayName: "Epic treasure",
+        displayName: "markers.item.treasure_epic",
         iconUrl: "assets/media/treasure/treasure_epic.png",
         geoJsonFile: "assets/geo/nether_island/treasure_epic.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,
         },
     },
     treasure_legendary: {
-        displayName: "Legendary treasure",
+        displayName: "markers.item.treasure_legendary",
         iconUrl: "assets/media/treasure/treasure_legendary.png",
         geoJsonFile: "assets/geo/nether_island/treasure_legendary.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,
         },
     },
     treasure_mythic: {
-        displayName: "Mythic treasure",
+        displayName: "markers.item.treasure_mythic",
         iconUrl: "assets/media/treasure/treasure_mythic.png",
         geoJsonFile: "assets/geo/nether_island/treasure_mythic.geojson",
-        category: "Treasure",
+        category: "markers.category.treasure",
         defaultChecked: true,
         properties: {
             showCount: true,

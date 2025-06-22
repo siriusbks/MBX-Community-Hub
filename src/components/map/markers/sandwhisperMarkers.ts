@@ -8,10 +8,10 @@ import { MarkerConfig } from "@t/markerTypes";
 
 const sandwhisperMarkers: Record<string, MarkerConfig> = {
     log_olive: {
-        displayName: "Olive",
+        displayName: "markers.item.olive",
         iconUrl: "assets/media/tree/log_olive.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/tree/log_olive.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "40",
@@ -19,10 +19,10 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_seafoam: {
-        displayName: "Seafoam",
+        displayName: "markers.item.seafoam",
         iconUrl: "assets/media/ore/ore_seafoam.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_seafoam.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "60",
@@ -30,10 +30,10 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_silicate: {
-        displayName: "Silicate",
+        displayName: "markers.item.silicate",
         iconUrl: "assets/media/ore/ore_silicate.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_silicate.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "70",
@@ -41,10 +41,10 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_topaz: {
-        displayName: "Topaz",
+        displayName: "markers.item.topaz",
         iconUrl: "assets/media/ore/ore_topaz.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/ore/ore_topaz.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "80",
@@ -52,45 +52,45 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
         },
     },
     sandwhisper_dunes_fish: {
-        displayName: "Desert Shoal",
+        displayName: "markers.item.desert_shoal",
         iconUrl: "assets/media/fish/fishing_rod_5.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/desert_shoal.geojson",
         defaultChecked: true,
-        category: "Fishing",
+        category: "markers.category.fishing",
         properties: {
             level: "40",
             showCount: true,
         },
     },
     sandwhisper_dunes_bloon: {
-        displayName: "Bloon",
+        displayName: "markers.item.bloon",
         iconUrl: "assets/media/exploration/bloon.png",
         geoJsonFile:
             "assets/geo/sandwhisper_dunes/sandwhisper_dunes_bloon.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     sandwhisper_dunes_viewPoint: {
-        displayName: "View point",
+        displayName: "markers.item.viewPoint",
         iconUrl: "assets/media/exploration/viewPoint.png",
         geoJsonFile:
             "assets/geo/sandwhisper_dunes/sandwhisper_dunes_viewPoint.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     sandwhisper_dunes_coin: {
-        displayName: "Coin",
+        displayName: "markers.item.coin",
         iconUrl: "assets/media/exploration/coin.png",
         geoJsonFile:
             "assets/geo/sandwhisper_dunes/sandwhisper_dunes_coin.geojson",
         defaultChecked: false,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },

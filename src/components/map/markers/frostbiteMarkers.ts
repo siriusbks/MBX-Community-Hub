@@ -8,10 +8,10 @@ import { MarkerConfig } from "@t/markerTypes";
 
 const frostbiteMarkers: Record<string, MarkerConfig> = {
     log_hazel: {
-        displayName: "Hazelnut",
+        displayName: "markers.item.hazelnut",
         iconUrl: "assets/media/tree/log_hazel.png",
         geoJsonFile: "assets/geo/frostbite_fortress/tree/log_hazel.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "40",
@@ -19,10 +19,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     log_maple: {
-        displayName: "Maple",
+        displayName: "markers.item.maple",
         iconUrl: "assets/media/tree/log_maple.png",
         geoJsonFile: "assets/geo/frostbite_fortress/tree/log_maple.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "70",
@@ -30,10 +30,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     log_yew: {
-        displayName: "Yew",
+        displayName: "markers.item.yew",
         iconUrl: "assets/media/tree/log_yew.png",
         geoJsonFile: "assets/geo/frostbite_fortress/tree/log_yew.geojson",
-        category: "Woodcutting",
+        category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {
             level: "70",
@@ -41,10 +41,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_tin: {
-        displayName: "Tin",
+        displayName: "markers.item.tin",
         iconUrl: "assets/media/ore/ore_tin.png",
         geoJsonFile: "assets/geo/frostbite_fortress/ore/ore_tin.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "40",
@@ -52,10 +52,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     ore_opale: {
-        displayName: "Opale",
+        displayName: "markers.item.opale",
         iconUrl: "assets/media/ore/ore_opale.png",
         geoJsonFile: "assets/geo/frostbite_fortress/ore/ore_opale.geojson",
-        category: "Mining",
+        category: "markers.category.mining",
         defaultChecked: true,
         properties: {
             level: "90",
@@ -63,10 +63,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     mullein: {
-        displayName: "Mullein",
+        displayName: "markers.item.mullein",
         iconUrl: "assets/media/flower/mullein.png",
         geoJsonFile: "assets/geo/frostbite_fortress/flower/mullein.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "40",
@@ -74,10 +74,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     foxglove: {
-        displayName: "Foxglove",
+        displayName: "markers.item.foxglove",
         iconUrl: "assets/media/flower/foxglove.png",
         geoJsonFile: "assets/geo/frostbite_fortress/flower/foxglove.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "40",
@@ -85,10 +85,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     yarrow: {
-        displayName: "Yarrow",
+        displayName: "markers.item.yarrow",
         iconUrl: "assets/media/flower/yarrow.png",
         geoJsonFile: "assets/geo/frostbite_fortress/flower/yarrow.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "50",
@@ -96,10 +96,10 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     snowdrop: {
-        displayName: "Snowdrop",
+        displayName: "markers.item.snowdrop",
         iconUrl: "assets/media/flower/snowdrop.png",
         geoJsonFile: "assets/geo/frostbite_fortress/flower/snowdrop.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "60",
@@ -107,11 +107,11 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     five_leaf_clover: {
-        displayName: "Five Leaf Clover",
+        displayName: "markers.item.five_leaf_clover",
         iconUrl: "assets/media/flower/five_leaf_clover.png",
         geoJsonFile:
             "assets/geo/frostbite_fortress/flower/five_leaf_clover.geojson",
-        category: "Picking",
+        category: "markers.category.picking",
         defaultChecked: true,
         properties: {
             level: "90",
@@ -119,45 +119,45 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
         },
     },
     frostbite_fortress_fish: {
-        displayName: "Cold Shoal",
+        displayName: "markers.item.frostbite_fortress_fish",
         iconUrl: "assets/media/fish/fishing_rod_6.png",
         geoJsonFile: "assets/geo/frostbite_fortress/cold_shoal.geojson",
         defaultChecked: true,
-        category: "Fishing",
+        category: "markers.category.fishing",
         properties: {
             level: "60",
             showCount: true,
         },
     },
     frostbite_fortress_bloon: {
-        displayName: "Bloon",
+        displayName: "markers.item.bloon",
         iconUrl: "assets/media/exploration/bloon.png",
         geoJsonFile:
             "assets/geo/frostbite_fortress/frostbite_fortress_bloon.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     frostbite_fortress_viewPoint: {
-        displayName: "View point",
+        displayName: "markers.item.viewPoint",
         iconUrl: "assets/media/exploration/viewPoint.png",
         geoJsonFile:
             "assets/geo/frostbite_fortress/frostbite_fortress_viewPoint.geojson",
         defaultChecked: true,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
     },
     frostbite_fortress_coin: {
-        displayName: "Coin",
+        displayName: "markers.item.coin",
         iconUrl: "assets/media/exploration/coin.png",
         geoJsonFile:
             "assets/geo/frostbite_fortress/frostbite_fortress_coin.geojson",
         defaultChecked: false,
-        category: "Exploration",
+        category: "markers.category.exploration",
         properties: {
             showCount: true,
         },
