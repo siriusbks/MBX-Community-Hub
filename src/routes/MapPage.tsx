@@ -7,6 +7,7 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowRightLeft, Undo2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import InteractiveMap from "@components/InteractiveMap";
 
@@ -73,6 +74,8 @@ const MapPage: FC = () => {
 
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
+
+    const { t } = useTranslation(["map", "fishing"]);
 
     // Load markers
     useEffect(() => {
@@ -141,13 +144,13 @@ const MapPage: FC = () => {
                     className="inline-flex items-center gap-2 text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 transition px-4 py-2 rounded-lg shadow"
                 >
                     <Undo2 size={20} />
-                    Exploration map
+                    {t("mappage.backToMap")}
                 </Link>
 
                 {/* Map Selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🌍 Select a Map
+                        {t("mappage.selectMap")}
                     </h2>
                     <select
                         className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
@@ -164,7 +167,7 @@ const MapPage: FC = () => {
                     >
                         {Object.entries(mapData).map(([key, map]) => (
                             <option key={key} value={key}>
-                                {map.name}
+                                {t(map.name ?? "")}
                             </option>
                         ))}
                     </select>
@@ -173,11 +176,11 @@ const MapPage: FC = () => {
                 {/* Markers selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 space-y-2">
                     <h2 className="text-lg font-semibold text-gray-300 flex items-center">
-                        📍 Resources Pins
+                        {t("mappage.markersSelection")}
                     </h2>
 
                     <label className="flex items-center gap-2 text-sm text-gray-300 font-medium">
-                        Select/Unselect all:
+                        {t("mappage.selectAllMarkers")}
                         <input
                             type="checkbox"
                             className="form-checkbox accent-green-500 cursor-pointer"
@@ -264,7 +267,7 @@ const MapPage: FC = () => {
                 {/* Map visibility */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        🌗 Adjust Visibility
+                        {t("mappage.mapOpacity")}
                     </h2>
                     <input
                         type="range"
@@ -278,7 +281,8 @@ const MapPage: FC = () => {
                         className="w-full cursor-pointer range-custom"
                     />
                     <p className="text-gray-400 text-sm mt-1 text-center">
-                        {Math.round(mapOpacity * 100)}% visibility
+                        {Math.round(mapOpacity * 100)}%{" "}
+                        {t("mappage.mapPercOpacity")}
                     </p>
                 </div>
             </aside>
@@ -316,8 +320,10 @@ const MapPage: FC = () => {
                             </button>
                             {isSidebarOpen && (
                                 <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
-                                    🎣 Fishing Info -{" "}
-                                    {spotByMap[selectedMapKey]}
+                                    {t("mappage.fishinginfo.title")} -{" "}
+                                    {t(spotByMap[selectedMapKey], {
+                                        ns: "fishing",
+                                    })}
                                 </h2>
                             )}
                         </div>
@@ -390,7 +396,11 @@ const MapPage: FC = () => {
                                                         {/* Left */}
                                                         <div className="flex flex-col">
                                                             <span className="font-semibold text-white">
-                                                                {fish.name}
+                                                                {t(fish.name, {
+                                                                    ns: "fishing",
+                                                                    defaultValue:
+                                                                        fish.name,
+                                                                })}
                                                             </span>
                                                             <div className="flex gap-2 text-xs">
                                                                 <span

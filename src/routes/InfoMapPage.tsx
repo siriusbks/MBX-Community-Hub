@@ -69,7 +69,7 @@ const InfoMapPage: FC = () => {
                         {/* Informations */}
                         <div className="p-5">
                             <h2 className="text-2xl font-bold text-white">
-                                {mapConfig.name}
+                                {t(mapConfig.name ?? "")}
                             </h2>
                             <p className="text-gray-400 text-sm">
                                 {mapConfig.description}
@@ -77,13 +77,11 @@ const InfoMapPage: FC = () => {
                             <p className="text-gray-300 text-sm mt-2">
                                 <strong>
                                     {mapConfig.requiredLevel === 0
-                                        ? "No required level"
-                                        : "Required Level:"}
+                                        ? t("mappage.requiredLevelNone")
+                                        : t("mappage.requiredLevel")}
                                 </strong>{" "}
-                                {mapConfig.requiredLevel &&
-                                mapConfig.requiredLevel !== 0
-                                    ? mapConfig.requiredLevel
-                                    : ""}
+                                {mapConfig.requiredLevel !== 0 &&
+                                    mapConfig.requiredLevel}
                             </p>
 
                             {/* 'Tooltip' */}
