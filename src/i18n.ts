@@ -18,7 +18,15 @@ i18n.use(HttpBackend)
             lookupCookie: "mbxcom_lang",
             cookieMinutes: 10080,
         },
-        ns: ["homepage", "navbar", "profile", "map", "community", "fishing"],
+        ns: [
+            "homepage",
+            "navbar",
+            "profile",
+            "map",
+            "community",
+            "fishing",
+            "markers",
+        ],
         defaultNS: "homepage",
         interpolation: {
             escapeValue: false,

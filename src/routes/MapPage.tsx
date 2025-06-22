@@ -75,7 +75,7 @@ const MapPage: FC = () => {
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
 
-    const { t } = useTranslation(["map", "fishing"]);
+    const { t } = useTranslation(["map", "fishing", "markers"]);
 
     // Load markers
     useEffect(() => {
@@ -213,7 +213,9 @@ const MapPage: FC = () => {
                         ).map(([category, items]) => (
                             <div key={category}>
                                 <h3 className="text-sm font-semibold text-gray-400 mb-1">
-                                    {category}
+                                    {t(category, {
+                                        ns: "markers",
+                                    })}
                                 </h3>
                                 <div className="space-y-1">
                                     {items.map(({ ref, config }) => (
@@ -240,7 +242,9 @@ const MapPage: FC = () => {
                                             )}
                                             <span className="flex-1 flex justify-between items-center">
                                                 <span className="flex items-center gap-1 truncate">
-                                                    {config.displayName}
+                                                    {t(config.displayName, {
+                                                        ns: "markers",
+                                                    })}
                                                     {config.properties
                                                         ?.level !==
                                                         undefined && (
