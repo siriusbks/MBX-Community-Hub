@@ -16,6 +16,7 @@ import {
     useMap,
     useMapEvents,
 } from "react-leaflet";
+import { useTranslation } from "react-i18next";
 
 import { MapDataConfig } from "./map/mapData";
 
@@ -135,6 +136,9 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
             imageRef.current.setOpacity(opacity);
         }
     }, [opacity]);
+
+    const { t } = useTranslation(["markers", "npc"]);
+
     return (
         <MapContainer
             crs={L.CRS.Simple}
@@ -175,20 +179,13 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                 const properties = marker.properties || {};
 
                 const isNpc =
-                    config.category === "Villager" ||
-                    properties.category === "Villager";
+                    typeof properties.name === "string" &&
+                    properties.name.startsWith("npc.");
 
-                let markerIconUrl =
-                    config.iconUrl || "/assets/media/npc/default.png";
-                if (isNpc) {
-                    markerIconUrl = properties.iconUrl
+                const markerIconUrl =
+                    isNpc && properties.iconUrl
                         ? `/assets/media/npc/${properties.iconUrl}.png`
-                        : "/assets/media/npc/default.png";
-                }
-
-                const displayName = isNpc
-                    ? properties.name || "NPC"
-                    : config.displayName || "Unknown Marker";
+                        : config.iconUrl || "/assets/media/npc/default.png";
 
                 return (
                     <Marker
@@ -200,28 +197,44 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                             iconAnchor: [16, 16],
                             popupAnchor: [0, -16],
                         })}
-                        eventHandlers={{
-                            click: (e) => {
-                                e.target.openTooltip();
-                            },
-                        }}
                     >
                         <Popup>
                             <strong>
-                                {displayName}
-                                {config.properties?.level
-                                    ? ` (lvl ${config.properties.level})`
-                                    : ""}
-                                {isNpc && properties.description && (
-                                    <span
-                                        style={{
-                                            fontWeight: "normal",
-                                            color: "#666",
-                                        }}
-                                    >
-                                        {" "}
-                                        ({properties.description})
-                                    </span>
+                                {isNpc ? (
+                                    <>
+                                        {t(properties.name || "", {
+                                            ns: "npc",
+                                        })}
+                                        {properties.description && (
+                                            <span
+                                                style={{
+                                                    fontWeight: "normal",
+                                                    color: "#666",
+                                                }}
+                                            >
+                                                {" "}
+                                                (
+                                                {t(properties.description, {
+                                                    ns: "npc",
+                                                })}
+                                                )
+                                            </span>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        {t(
+                                            config.displayName ??
+                                                "markers.unknown",
+                                            { ns: "markers" }
+                                        )}
+                                        {config.properties?.level && (
+                                            <>
+                                                {" "}
+                                                (lvl {config.properties.level})
+                                            </>
+                                        )}
+                                    </>
                                 )}
                             </strong>
                             <br />

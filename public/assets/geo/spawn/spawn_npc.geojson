@@ -6,8 +6,8 @@
             "id": 1,
             "type": "Feature",
             "properties": {
-                "name": "Captain",
-                "description": "Navigation",
+                "name": "npc.captain",
+                "description": "npc.description.captain",
                 "iconUrl": "captain",
                 "map": "spawn"
             }
@@ -17,8 +17,8 @@
             "id": 2,
             "type": "Feature",
             "properties": {
-                "name": "Piggo",
-                "description": "Bloon",
+                "name": "npc.piggo",
+                "description": "npc.description.piggo",
                 "iconUrl": "piggo",
                 "map": "spawn"
             }
@@ -28,8 +28,8 @@
             "id": 3,
             "type": "Feature",
             "properties": {
-                "name": "Captain Icebeard",
-                "description": "Ship shop",
+                "name": "npc.captain_icebeard",
+                "description": "npc.description.captain_icebeard",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -39,8 +39,8 @@
             "id": 4,
             "type": "Feature",
             "properties": {
-                "name": "Plunderjack",
-                "description": "Daily market",
+                "name": "npc.plunderjack",
+                "description": "npc.description.plunderjack",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -50,8 +50,8 @@
             "id": 5,
             "type": "Feature",
             "properties": {
-                "name": "Lily",
-                "description": "Shop",
+                "name": "npc.lily",
+                "description": "npc.description.lily",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -61,8 +61,8 @@
             "id": 6,
             "type": "Feature",
             "properties": {
-                "name": "Whiskerwise",
-                "description": "Skull infos",
+                "name": "npc.whiskerwise",
+                "description": "npc.description.whiskerwise",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -72,8 +72,8 @@
             "id": 7,
             "type": "Feature",
             "properties": {
-                "name": "Captain bonny",
-                "description": "Bank infos",
+                "name": "npc.captain_bonny",
+                "description": "npc.description.captain_bonny",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -83,8 +83,8 @@
             "id": 8,
             "type": "Feature",
             "properties": {
-                "name": "Banker",
-                "description": "Bank",
+                "name": "npc.banker",
+                "description": "npc.description.banker",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -94,8 +94,8 @@
             "id": 9,
             "type": "Feature",
             "properties": {
-                "name": "Squawk",
-                "description": "Weather station",
+                "name": "npc.squawk",
+                "description": "npc.description.squawk",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -105,8 +105,8 @@
             "id": 10,
             "type": "Feature",
             "properties": {
-                "name": "Forgehoof",
-                "description": "Blacksmith workshop",
+                "name": "npc.forgehoof",
+                "description": "npc.description.forgehoof",
                 "iconUrl": "forgehoof",
                 "map": "spawn"
             }
@@ -116,8 +116,8 @@
             "id": 11,
             "type": "Feature",
             "properties": {
-                "name": "Smithy Slick",
-                "description": "Workshops infos",
+                "name": "npc.smithy_slick",
+                "description": "npc.description.smithy_slick",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -127,8 +127,8 @@
             "id": 12,
             "type": "Feature",
             "properties": {
-                "name": "Scarecrow Joe",
-                "description": "Farming workshop",
+                "name": "npc.scarecrow_joe",
+                "description": "npc.description.scarecrow_joe",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -138,8 +138,8 @@
             "id": 13,
             "type": "Feature",
             "properties": {
-                "name": "Hoonter",
-                "description": "Hunter",
+                "name": "npc.hoonter",
+                "description": "npc.description.hoonter",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -149,8 +149,8 @@
             "id": 14,
             "type": "Feature",
             "properties": {
-                "name": "Chef Tentacook",
-                "description": "Cook workshop",
+                "name": "npc.chef_tentacook",
+                "description": "npc.description.chef_tentacook",
                 "iconUrl": "chef_tentacook",
                 "map": "spawn"
             }
@@ -160,8 +160,8 @@
             "id": 15,
             "type": "Feature",
             "properties": {
-                "name": "Hammerhand",
-                "description": "Repair workshop",
+                "name": "npc.hammerhand",
+                "description": "npc.description.hammerhand",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -171,8 +171,8 @@
             "id": 16,
             "type": "Feature",
             "properties": {
-                "name": "Bling Whiskers",
-                "description": "Jeweler workshop",
+                "name": "npc.bling_whiskers",
+                "description": "npc.description.bling_whiskers",
                 "iconUrl": "bling_whiskers",
                 "map": "spawn"
             }
@@ -182,8 +182,8 @@
             "id": 17,
             "type": "Feature",
             "properties": {
-                "name": "Slowpaw",
-                "description": "Shoemaker workshop",
+                "name": "npc.slowpaw",
+                "description": "npc.description.slowpaw",
                 "iconUrl": "slowpaw",
                 "map": "spawn"
             }
@@ -193,8 +193,8 @@
             "id": 18,
             "type": "Feature",
             "properties": {
-                "name": "Croissant the Frog",
-                "description": "Bakery",
+                "name": "npc.croissant_the_frog",
+                "description": "npc.description.croissant_the_frog",
                 "iconUrl": "croissant_the_frog",
                 "map": "spawn"
             }
@@ -204,8 +204,8 @@
             "id": 19,
             "type": "Feature",
             "properties": {
-                "name": "Tinkerella",
-                "description": "Tinkerer workshop",
+                "name": "npc.tinkerella",
+                "description": "npc.description.tinkerella",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -215,8 +215,8 @@
             "id": 20,
             "type": "Feature",
             "properties": {
-                "name": "Runatic",
-                "description": "Forgemagy workshop",
+                "name": "npc.runatic",
+                "description": "npc.description.runatic",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -226,8 +226,8 @@
             "id": 21,
             "type": "Feature",
             "properties": {
-                "name": "Sir Purrington",
-                "description": "Tailor workshop",
+                "name": "npc.sir_purrington",
+                "description": "npc.description.sir_purrington",
                 "iconUrl": "sir_purrington",
                 "map": "spawn"
             }
@@ -237,8 +237,8 @@
             "id": 22,
             "type": "Feature",
             "properties": {
-                "name": "Deafbeard",
-                "description": "Miner workshop",
+                "name": "npc.deafbeard",
+                "description": "npc.description.deafbeard",
                 "iconUrl": "deafbeard",
                 "map": "spawn"
             }
@@ -248,8 +248,8 @@
             "id": 23,
             "type": "Feature",
             "properties": {
-                "name": "Chamelephial",
-                "description": "Alchemist workshop",
+                "name": "npc.chamelephial",
+                "description": "npc.description.chamelephial",
                 "iconUrl": "chamelephial",
                 "map": "spawn"
             }
@@ -259,8 +259,8 @@
             "id": 24,
             "type": "Feature",
             "properties": {
-                "name": "Pelipish",
-                "description": "Fisherman workshop",
+                "name": "npc.pelipish",
+                "description": "npc.description.pelipish",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -270,8 +270,8 @@
             "id": 25,
             "type": "Feature",
             "properties": {
-                "name": "Chopchop",
-                "description": "Lumberjack workshop",
+                "name": "npc.chopchop",
+                "description": "npc.description.chopchop",
                 "iconUrl": "chopchop",
                 "map": "spawn"
             }
@@ -281,8 +281,8 @@
             "id": 26,
             "type": "Feature",
             "properties": {
-                "name": "Cuco",
-                "description": "Church",
+                "name": "npc.cuco",
+                "description": "npc.description.cuco",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -292,8 +292,8 @@
             "id": 27,
             "type": "Feature",
             "properties": {
-                "name": "Shellara",
-                "description": "Trade infos",
+                "name": "npc.shellara",
+                "description": "npc.description.shellara",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -303,8 +303,8 @@
             "id": 28,
             "type": "Feature",
             "properties": {
-                "name": "Eagle buck",
-                "description": "Buckstar",
+                "name": "npc.eagle_buck",
+                "description": "npc.description.eagle_buck",
                 "iconUrl": "eagle_buck",
                 "map": "spawn"
             }
@@ -314,8 +314,8 @@
             "id": 29,
             "type": "Feature",
             "properties": {
-                "name": "Barter Bandit",
-                "description": "Bazaar",
+                "name": "npc.barter_bandit",
+                "description": "npc.description.barter_bandit",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -325,8 +325,8 @@
             "id": 30,
             "type": "Feature",
             "properties": {
-                "name": "Cowida",
-                "description": "Farm seller",
+                "name": "npc.cowida",
+                "description": "npc.description.cowida",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -336,8 +336,8 @@
             "id": 31,
             "type": "Feature",
             "properties": {
-                "name": "Racketeer Raccoon",
-                "description": "Auction House",
+                "name": "npc.racketeer_raccoon",
+                "description": "npc.description.racketeer_raccoon",
                 "iconUrl": "racketeer_raccoon",
                 "map": "spawn"
             }
@@ -347,8 +347,8 @@
             "id": 32,
             "type": "Feature",
             "properties": {
-                "name": "Mineral Mike",
-                "description": "Minerals seller",
+                "name": "npc.mineral_mike",
+                "description": "npc.description.mineral_mike",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -358,8 +358,8 @@
             "id": 33,
             "type": "Feature",
             "properties": {
-                "name": "Sharkette",
-                "description": "Sharkoffe",
+                "name": "npc.sharkette",
+                "description": "npc.description.sharkette",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -369,8 +369,8 @@
             "id": 34,
             "type": "Feature",
             "properties": {
-                "name": "Shylo the Cow",
-                "description": "Loot seller",
+                "name": "npc.shylo_the_cow",
+                "description": "npc.description.shylo_the_cow",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -380,8 +380,8 @@
             "id": 35,
             "type": "Feature",
             "properties": {
-                "name": "Beeatrice",
-                "description": "Florist",
+                "name": "npc.beeatrice",
+                "description": "npc.description.beeatrice",
                 "iconUrl": "beeatrice",
                 "map": "spawn"
             }
@@ -391,8 +391,8 @@
             "id": 36,
             "type": "Feature",
             "properties": {
-                "name": "Brick Barry",
-                "description": "Block seller",
+                "name": "npc.brick_barry",
+                "description": "npc.description.brick_barry",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -402,8 +402,8 @@
             "id": 37,
             "type": "Feature",
             "properties": {
-                "name": "Beardifacto",
-                "description": "Museum Curator",
+                "name": "npc.beardifactor",
+                "description": "npc.description.beardifacto",
                 "iconUrl": "beardifacto",
                 "map": "spawn"
             }
@@ -413,8 +413,8 @@
             "id": 38,
             "type": "Feature",
             "properties": {
-                "name": "Reggo",
-                "description": "Musician",
+                "name": "npc.reggo",
+                "description": "npc.description.reggo",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -424,8 +424,8 @@
             "id": 39,
             "type": "Feature",
             "properties": {
-                "name": "Karateka Red Panda",
-                "description": "Dojo",
+                "name": "npc.karateka_red_panda",
+                "description": "npc.description.karateka_red_panda",
                 "iconUrl": "karateka_red_panda",
                 "map": "spawn"
             }
@@ -435,8 +435,8 @@
             "id": 40,
             "type": "Feature",
             "properties": {
-                "name": "Questbound",
-                "description": "Exploration infos",
+                "name": "npc.questbound",
+                "description": "npc.description.questbound",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -446,8 +446,8 @@
             "id": 41,
             "type": "Feature",
             "properties": {
-                "name": "Remycel",
-                "description": "Cheese shop",
+                "name": "npc.remycel",
+                "description": "npc.description.remycel",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -457,8 +457,8 @@
             "id": 42,
             "type": "Feature",
             "properties": {
-                "name": "Mermaida",
-                "description": "Daily Trade",
+                "name": "npc.mermaida",
+                "description": "npc.description.mermaida",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -468,8 +468,8 @@
             "id": 43,
             "type": "Feature",
             "properties": {
-                "name": "Picassonkey",
-                "description": "Painter",
+                "name": "npc.picassonkey",
+                "description": "npc.description.picassonkey",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -479,8 +479,8 @@
             "id": 44,
             "type": "Feature",
             "properties": {
-                "name": "Doorito",
-                "description": "Entrance: 197 72 -124",
+                "name": "npc.doorito",
+                "description": "npc.description.doorito",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -490,8 +490,8 @@
             "id": 45,
             "type": "Feature",
             "properties": {
-                "name": "Inspector Spintail",
-                "description": "Detective",
+                "name": "npc.inspector_spintail",
+                "description": "npc.description.inspector_spintail",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -501,8 +501,8 @@
             "id": 46,
             "type": "Feature",
             "properties": {
-                "name": "Pet owner",
-                "description": "Shiny informations",
+                "name": "npc.pet_owner",
+                "description": "npc.description.pet_owner",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -512,8 +512,8 @@
             "id": 47,
             "type": "Feature",
             "properties": {
-                "name": "Poodle",
-                "description": "Puddles shop - Entrance: 186 47 -93",
+                "name": "npc.poodle",
+                "description": "npc.description.poodle",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -523,8 +523,8 @@
             "id": 48,
             "type": "Feature",
             "properties": {
-                "name": "Fishgerald",
-                "description": "Fish Buyer",
+                "name": "npc.fishgerald",
+                "description": "npc.description.fishgerald",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -534,8 +534,8 @@
             "id": 49,
             "type": "Feature",
             "properties": {
-                "name": "Helka Assembla",
-                "description": "Daily Furniture",
+                "name": "npc.helka_assembla",
+                "description": "npc.description.helka_assembla",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -545,8 +545,8 @@
             "id": 50,
             "type": "Feature",
             "properties": {
-                "name": "Bob Slowley",
-                "description": "Sell ​​at night or full moon",
+                "name": "npc.bob_slowley",
+                "description": "npc.description.bob_slowley",
                 "iconUrl": "",
                 "map": "spawn"
             }
