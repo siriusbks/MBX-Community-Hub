@@ -14,18 +14,18 @@ export interface FishInfo {
 }
 
 export const spotByMap: Record<string, string> = {
-    spawn: "Tropical Shoal (Lvl 1)",
-    kokoko: "Deep Shoal (Lvl 10)",
-    quadra_plains: "Plain Shoal (Lvl 20)",
-    bamboo_peak: "Bamboo Shoal (Lvl 30)",
-    frostbite_fortress: "Cold Shoal (Lvl 60)",
-    sandwhisper_dunes: "Desert Shoal (Lvl 40)",
+    spawn: "fishing.spot.spawn",
+    kokoko: "fishing.spot.kokoko",
+    quadra_plains: "fishing.spot.quadra_plains",
+    bamboo_peak: "fishing.spot.bamboo_peak",
+    frostbite_fortress: "fishing.spot.frostbite_fortress",
+    sandwhisper_dunes: "fishing.spot.sandwhisper_dunes",
 };
 
 export const fishData: Record<string, FishInfo[]> = {
     spawn: [
         {
-            name: "Mandarinfish",
+            name: "fishing.mandarinfish",
             level: 1,
             time: ["Day"],
             rarity: "Common",
@@ -33,7 +33,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/mandarinfish.png",
         },
         {
-            name: "Bone",
+            name: "fishing.bone",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -41,7 +41,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/bone.png",
         },
         {
-            name: "Common Key",
+            name: "fishing.common_key",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -49,7 +49,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/common_key.png",
         },
         {
-            name: "Kraken",
+            name: "fishing.kraken",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -57,7 +57,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/kraken.png",
         },
         {
-            name: "Breaded Fish",
+            name: "fishing.breaded_fish",
             level: 1,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -65,7 +65,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/breaded_fish.png",
         },
         {
-            name: "Pirate Crab",
+            name: "fishing.pirate_crab",
             level: 1,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -73,7 +73,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/pirate_crab.png",
         },
         {
-            name: "Sea Salt",
+            name: "fishing.sea_salt",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -81,7 +81,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/sea_salt.png",
         },
         {
-            name: "Cowrie Shell",
+            name: "fishing.cowrie_shell",
             level: 20,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -89,7 +89,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/cowrie_shell.png",
         },
         {
-            name: "Algae",
+            name: "fishing.algae",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -97,7 +97,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/kelp.png",
         },
         {
-            name: "Clam",
+            name: "fishing.clam",
             level: 1,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -105,7 +105,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/clam.png",
         },
         {
-            name: "Common Treasure",
+            name: "fishing.common_treasure",
             level: 0,
             time: ["Day"],
             rarity: "Common",
@@ -115,7 +115,7 @@ export const fishData: Record<string, FishInfo[]> = {
     ],
     kokoko: [
         {
-            name: "Cowrie Shell",
+            name: "fishing.cowrie_shell",
             level: 20,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -123,7 +123,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/cowrie_shell.png",
         },
         {
-            name: "Pirate Crab",
+            name: "fishing.pirate_crab",
             level: 1,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -131,7 +131,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/pirate_crab.png",
         },
         {
-            name: "Sea Salt",
+            name: "fishing.sea_salt",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -139,7 +139,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/sea_salt.png",
         },
         {
-            name: "Green Ray",
+            name: "fishing.green_ray",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -147,7 +147,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/green_ray.png",
         },
         {
-            name: "Kraken",
+            name: "fishing.kraken",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -155,7 +155,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/kraken.png",
         },
         {
-            name: "Moon Jellyfish",
+            name: "fishing.moon_jellyfish",
             level: 0,
             time: ["Night"],
             rarity: "Uncommon",
@@ -163,7 +163,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/moon_jellyfish.png",
         },
         {
-            name: "Clam",
+            name: "fishing.clam",
             level: 1,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -171,7 +171,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/clam.png",
         },
         {
-            name: "Common Key",
+            name: "fishing.common_key",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -179,7 +179,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/common_key.png",
         },
         {
-            name: "Common Treasure",
+            name: "fishing.common_treasure",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -187,7 +187,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/treasure_common.png",
         },
         {
-            name: "Algae",
+            name: "fishing.algae",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -195,7 +195,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/kelp.png",
         },
         {
-            name: "Ink Sac",
+            name: "fishing.ink_sac",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -203,7 +203,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/ink_sac.png",
         },
         {
-            name: "Bone",
+            name: "fishing.bone",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -213,7 +213,7 @@ export const fishData: Record<string, FishInfo[]> = {
     ],
     quadra_plains: [
         {
-            name: "Ink Sac",
+            name: "fishing.ink_sac",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -221,7 +221,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/ink_sac.png",
         },
         {
-            name: "Angelfish",
+            name: "fishing.angelfish",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Common",
@@ -229,7 +229,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/angelfish.png",
         },
         {
-            name: "Swordfish",
+            name: "fishing.swordfish",
             level: 20,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -237,7 +237,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/swordfish.png",
         },
         {
-            name: "Wrasse",
+            name: "fishing.wrasse",
             level: 50,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -245,7 +245,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/wrasse.png",
         },
         {
-            name: "Rainbow Trout",
+            name: "fishing.rainbow_trout",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -253,7 +253,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/rainbow_trout.png",
         },
         {
-            name: "Bone",
+            name: "fishing.bone",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -261,7 +261,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/bone.png",
         },
         {
-            name: "Algae",
+            name: "fishing.algae",
             level: 0,
             time: ["Night"],
             rarity: "Vanilla",
@@ -269,7 +269,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/kelp.png",
         },
         {
-            name: "Common Treasure",
+            name: "fishing.common_treasure",
             level: 0,
             time: ["Night"],
             rarity: "Common",
@@ -279,7 +279,7 @@ export const fishData: Record<string, FishInfo[]> = {
     ],
     bamboo_peak: [
         {
-            name: "Parrotfish",
+            name: "fishing.parrotfish",
             level: 50,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -287,7 +287,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/parrotfish.png",
         },
         {
-            name: "Moorish Ido",
+            name: "fishing.moorish_idol",
             level: 60,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -295,7 +295,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/moorish_idol.png",
         },
         {
-            name: "Monkfish",
+            name: "fishing.monkfish",
             level: 60,
             time: ["Day", "Night"],
             rarity: "Epic",
@@ -303,7 +303,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/monkfish.png",
         },
         {
-            name: "Clownfish",
+            name: "fishing.clownfish",
             level: 30,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -311,7 +311,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/clownfish.png",
         },
         {
-            name: "Sushi Crab",
+            name: "fishing.sushi_crab",
             level: 80,
             time: ["Day"],
             rarity: "Legendary",
@@ -319,7 +319,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/sushi_crab.png",
         },
         {
-            name: "Surgeonfish",
+            name: "fishing.surgeonfish",
             level: 30,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -327,7 +327,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/surgeonfish.png",
         },
         {
-            name: "Bamboo",
+            name: "fishing.bamboo",
             level: 0,
             time: ["Day"],
             rarity: "Vanilla",
@@ -335,7 +335,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/bamboo.png",
         },
         {
-            name: "Poop",
+            name: "fishing.poop",
             level: 1,
             time: ["Day"],
             rarity: "Rare",
@@ -345,7 +345,7 @@ export const fishData: Record<string, FishInfo[]> = {
     ],
     sandwhisper_dunes: [
         {
-            name: "Stick",
+            name: "fishing.stick",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -353,7 +353,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/stick.png",
         },
         {
-            name: "Cobweb",
+            name: "fishing.cobweb",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -361,7 +361,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/cobweb.png",
         },
         {
-            name: "Lionfish",
+            name: "fishing.lionfish",
             level: 40,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -369,7 +369,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/lionfish.png",
         },
         {
-            name: "Triggerfish",
+            name: "fishing.triggerfish",
             level: 40,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -377,7 +377,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/triggerfish.png",
         },
         {
-            name: "Butterflyfish",
+            name: "fishing.butterflyfish",
             level: 40,
             time: ["Day", "Night"],
             rarity: "Rare",
@@ -385,7 +385,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/butterflyfish.png",
         },
         {
-            name: "Cactus",
+            name: "fishing.cactus",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -393,7 +393,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/cactus_side.png",
         },
         {
-            name: "Rainbow Sparkle Jelly",
+            name: "fishing.rainbow_sparkle_jelly",
             level: 90,
             time: ["Night"],
             rarity: "Legendary",
@@ -401,7 +401,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/rainbow_sparkle_jelly.png",
         },
         {
-            name: "Shulker Shell",
+            name: "fishing.shulker_shell",
             level: 0,
             time: ["Night"],
             rarity: "Vanilla",
@@ -411,7 +411,7 @@ export const fishData: Record<string, FishInfo[]> = {
     ],
     frostbite_fortress: [
         {
-            name: "Golden Shrimp",
+            name: "fishing.golden_shrimp",
             level: 80,
             time: ["Night"],
             rarity: "Legendary",
@@ -419,7 +419,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/golden_shrimp.png",
         },
         {
-            name: "Shrimp",
+            name: "fishing.shrimp",
             level: 60,
             time: ["Day", "Night"],
             rarity: "Epic",
@@ -427,7 +427,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/shrimp.png",
         },
         {
-            name: "Zander",
+            name: "fishing.zander",
             level: 60,
             time: ["Day", "Night"],
             rarity: "Epic",
@@ -435,7 +435,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/zander.png",
         },
         {
-            name: "Sea Salt",
+            name: "fishing.sea_salt",
             level: 10,
             time: ["Day", "Night"],
             rarity: "Uncommon",
@@ -443,7 +443,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/sea_salt.png",
         },
         {
-            name: "Ice",
+            name: "fishing.ice",
             level: 0,
             time: ["Day", "Night"],
             rarity: "Vanilla",
@@ -451,7 +451,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/ice.png",
         },
         {
-            name: "Snow Crab",
+            name: "fishing.snow_crab",
             level: 40,
             time: ["Day", "Night"],
             rarity: "Epic",
@@ -459,7 +459,7 @@ export const fishData: Record<string, FishInfo[]> = {
             image: "assets/media/item/fishing/snow_crab.png",
         },
         {
-            name: "Nether Star",
+            name: "fishing.nether_star",
             level: 0,
             time: ["Night"],
             rarity: "Vanilla",
