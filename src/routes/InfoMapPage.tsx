@@ -13,7 +13,7 @@ import { mapData } from "@components/map/mapData";
 import allMarkers from "@components/map/allMarkers";
 
 const InfoMapPage: FC = () => {
-    const { t } = useTranslation("map");
+    const { t } = useTranslation(["map", "markers"]);
     const navigate = useNavigate();
     const [tooltipMap, setTooltipMap] = useState<string | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
@@ -118,9 +118,12 @@ const InfoMapPage: FC = () => {
                                                                 className="w-6 h-6 rounded"
                                                             />
                                                             <span className="text-gray-200 text-sm">
-                                                                {
-                                                                    resource.displayName
-                                                                }
+                                                                {t(
+                                                                    resource.displayName,
+                                                                    {
+                                                                        ns: "markers",
+                                                                    }
+                                                                )}
                                                             </span>
                                                         </div>
                                                         {resource.properties

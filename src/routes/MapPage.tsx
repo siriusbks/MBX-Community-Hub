@@ -175,7 +175,7 @@ const MapPage: FC = () => {
 
                 {/* Markers selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 space-y-2">
-                    <h2 className="text-lg font-semibold text-gray-300 flex items-center">
+                    <h2 className="text-base font-semibold text-gray-300 flex items-center">
                         {t("mappage.markersSelection")}
                     </h2>
 
