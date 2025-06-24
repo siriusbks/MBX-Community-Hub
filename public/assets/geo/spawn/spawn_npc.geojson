@@ -288,12 +288,12 @@
             }
         },
         {
-            "geometry": { "type": "Point", "coordinates": [92, 79, -108] },
+            "geometry": { "type": "Point", "coordinates": [76, 79, -93] },
             "id": 27,
             "type": "Feature",
             "properties": {
-                "name": "npc.shellara",
-                "description": "npc.description.shellara",
+                "name": "npc.peck_and_love",
+                "description": "npc.description.peck_and_love",
                 "iconUrl": "",
                 "map": "spawn"
             }
@@ -497,7 +497,7 @@
             }
         },
         {
-            "geometry": { "coordinates": [79, 78, -95], "type": "Point" },
+            "geometry": { "coordinates": [92, 79, -105], "type": "Point" },
             "id": 46,
             "type": "Feature",
             "properties": {
