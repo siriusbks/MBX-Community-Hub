@@ -19,13 +19,13 @@ i18n.use(HttpBackend)
             cookieMinutes: 10080,
         },
         ns: [
-            "homepage",
-            "navbar",
-            "profile",
-            "map",
             "community",
             "fishing",
+            "map",
             "markers",
+            "navbar",
+            "npc",
+            "profile",
         ],
         defaultNS: "homepage",
         interpolation: {
