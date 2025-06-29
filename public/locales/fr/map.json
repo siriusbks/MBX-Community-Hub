@@ -15,11 +15,11 @@
     "mappage.maps.bamboo_peak.name": "Pic Bambou",
     "mappage.maps.frostbite_fortress.name": "Forteresse d'En-gelure",
     "mappage.maps.sandwhisper_dunes.name": "Dunes de sable murmurant",
-    "mappage.backToMap": "Exploration des îles",
+    "mappage.backToMap": "Exploration des maps",
     "mappage.selectMap": "🌍 Sélectionne une île",
     "mappage.markersSelection": "📍 Ressources épinglées",
     "mappage.selectAllMarkers": "(Dé)sélectionner tout",
     "mappage.mapOpacity": "🌗 Ajuste la visibilité",
-    "mappage.mapPercOpacity": "visibilité",
+    "mappage.mapPercOpacity": "de visibilité",
     "mappage.fishinginfo.title": "🎣 Info de pêche"
 }
