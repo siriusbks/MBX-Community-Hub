@@ -403,7 +403,7 @@
             "type": "Feature",
             "properties": {
                 "name": "npc.beardifactor",
-                "description": "npc.description.beardifacto",
+                "description": "npc.description.beardifactor",
                 "iconUrl": "beardifacto",
                 "map": "spawn"
             }
@@ -534,8 +534,8 @@
             "id": 49,
             "type": "Feature",
             "properties": {
-                "name": "npc.helka_assembla",
-                "description": "npc.description.helka_assembla",
+                "name": "npc.helka_assemblage",
+                "description": "npc.description.helka_assemblage",
                 "iconUrl": "",
                 "map": "spawn"
             }
