@@ -3,7 +3,6 @@
         "id": "0",
         "name": "Minebox ModPack",
         "creator": "lupusarctos9747",
-        "description": "Modpack compiling the mods permitted by the rules on Minebox; any additional mods are beyond my responsibility if you face sanctions.",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/modpack/mineboxmodpack",
@@ -18,7 +17,6 @@
         "id": "1",
         "name": "MineboxAdditions",
         "creator": "Dampen59",
-        "description": "MineboxAdditions is a mod that adds blatant features to your average Minebox gameplay !",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/mod/mineboxadditions",
@@ -33,7 +31,6 @@
         "id": "2",
         "name": "Notra",
         "creator": "imjustprism",
-        "description": "Notra is a simple utility mod built with fabric specifically for Minebox.",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/mod/notra",
@@ -48,7 +45,6 @@
         "id": "3",
         "name": "MineboxMaps",
         "creator": "AerWyn81",
-        "description": "An interactive web-based map for the Minebox server, helping players explore and navigate the world with ease.",
         "links": {
             "website": "https://mineboxmaps.com/",
             "modrinth": "",
@@ -63,7 +59,6 @@
         "id": "4",
         "name": "Minebox Journeymap",
         "creator": "ThirtyTwelveNor",
-        "description": "A highly customizable JourneyMap addon that makes waypoints for MineBox.",
         "links": {
             "website": "",
             "modrinth": "",
@@ -78,7 +73,6 @@
         "id": "5",
         "name": "Minebox Plus | Retextured Vanilla Textures",
         "creator": "tinyslimestudio",
-        "description": "The Minebox Plus pack fills in the missing textures for the Server Resource Pack available at minebox.co.",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-plus",
@@ -93,7 +87,6 @@
         "id": "6",
         "name": "Minebox Plus | Gray Crops Addon",
         "creator": "tinyslimestudio",
-        "description": "An add-on for Minebox Plus that changes the appearance of immature crops to grayscale.",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-plus-gray-crops",
@@ -108,7 +101,6 @@
         "id": "7",
         "name": "Minebox Plus | Remove Bush Leaves Addon",
         "creator": "tinyslimestudio",
-        "description": "An add-on for Minebox Plus that removes the default Bushy Leaves effect from Minebox.",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-plus-remove-bushy-leaves",
