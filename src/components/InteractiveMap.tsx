@@ -87,10 +87,11 @@ const toLeafletCoords = (
 
 const SetCRS: React.FC<{ mapConfig: MapDataConfig }> = ({ mapConfig }) => {
     const map = useMap();
+    const padding = 64;
     React.useEffect(() => {
         const bounds: L.LatLngBoundsExpression = [
-            [0, 0],
-            [mapConfig.height, mapConfig.width],
+            [-padding, -padding],
+            [mapConfig.height + padding, mapConfig.width + padding],
         ];
         map.fitBounds(bounds);
         map.setMaxBounds(bounds);
