@@ -26,6 +26,7 @@ i18n.use(HttpBackend)
             "navbar",
             "npc",
             "profile",
+            "projects",
         ],
         defaultNS: "homepage",
         interpolation: {
