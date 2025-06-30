@@ -6,6 +6,7 @@
 
 import React from "react";
 import { Globe, Layers } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiModrinth, SiCurseforge, SiGithub } from "react-icons/si";
 
 interface ProjectProps {
@@ -29,13 +30,17 @@ interface ProjectProps {
 
 const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     const { links } = project;
+    const t = useTranslation("projects").t;
 
     return (
         <div className="relative bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all p-4">
             {/* Badge */}
             {project.badge && (
                 <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-bl-lg z-10 uppercase tracking-wide shadow-md">
-                    {project.badge}
+                    {t(`badge.${project.badge}`, {
+                        ns: "projects",
+                        defaultValue: project.badge,
+                    })}
                 </div>
             )}
 
@@ -63,7 +68,12 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
             </div>
 
             {/* Description */}
-            <p className="text-gray-300 text-sm mt-3">{project.description}</p>
+            <p className="text-gray-300 text-sm mt-3">
+                {t(`description.${project.id}`, {
+                    ns: "projects",
+                    defaultValue: project.description,
+                })}
+            </p>
 
             {/* Type */}
             <div className="flex items-center gap-2 mt-3 text-gray-400 text-xs font-medium">
