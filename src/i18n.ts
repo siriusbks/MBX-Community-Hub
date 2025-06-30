@@ -1,3 +1,9 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
