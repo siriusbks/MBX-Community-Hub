@@ -336,12 +336,13 @@ const MapPage: FC = () => {
                             <div className="p-4 overflow-y-auto custom-scrollbar">
                                 {(() => {
                                     const rarityOrder = [
-                                        "Common",
-                                        "Uncommon",
-                                        "Rare",
-                                        "Epic",
-                                        "Legendary",
+                                        "fishing.rarity.common",
+                                        "fishing.rarity.uncommon",
+                                        "fishing.rarity.rare",
+                                        "fishing.rarity.epic",
+                                        "fishing.rarity.legendary",
                                     ];
+
                                     const sortedFish = [
                                         ...(fishData[selectedMapKey] || []),
                                     ].sort(
@@ -351,30 +352,45 @@ const MapPage: FC = () => {
                                     );
 
                                     return sortedFish.map((fish, index) => {
+                                        const rarityColorMap: Record<
+                                            string,
+                                            string
+                                        > = {
+                                            "fishing.rarity.vanilla":
+                                                "text-gray-400",
+                                            "fishing.rarity.common":
+                                                "text-gray-400",
+                                            "fishing.rarity.uncommon":
+                                                "text-green-400",
+                                            "fishing.rarity.rare":
+                                                "text-blue-400",
+                                            "fishing.rarity.epic":
+                                                "text-pink-400",
+                                            "fishing.rarity.legendary":
+                                                "text-yellow-400",
+                                        };
+
                                         const rarityColor =
-                                            fish.rarity === "Vanilla"
-                                                ? "text-gray-400"
-                                                : fish.rarity === "Common"
-                                                ? "text-gray-400"
-                                                : fish.rarity === "Uncommon"
-                                                ? "text-green-400"
-                                                : fish.rarity === "Rare"
-                                                ? "text-blue-400"
-                                                : fish.rarity === "Epic"
-                                                ? "text-pink-400"
-                                                : "text-yellow-400";
+                                            rarityColorMap[fish.rarity] ||
+                                            "text-white";
 
                                         const timeLabel =
-                                            fish.time.includes("Day") &&
-                                            fish.time.includes("Night")
-                                                ? "Day/Night"
+                                            fish.time.includes(
+                                                "fishing.time.day"
+                                            ) &&
+                                            fish.time.includes(
+                                                "fishing.time.night"
+                                            )
+                                                ? t("fishing.time.day_night")
                                                 : fish.time
-                                                      .map((t) =>
-                                                          t === "Day"
-                                                              ? "Day"
-                                                              : "Night"
+                                                      .map((tKey) =>
+                                                          t(tKey, {
+                                                              ns: "fishing",
+                                                              defaultValue:
+                                                                  tKey,
+                                                          })
                                                       )
-                                                      .join("/");
+                                                      .join(" / ");
 
                                         return (
                                             <div
@@ -412,10 +428,16 @@ const MapPage: FC = () => {
                                                                         rarityColor
                                                                     }
                                                                 >
-                                                                    {
-                                                                        fish.rarity
-                                                                    }
+                                                                    {t(
+                                                                        fish.rarity,
+                                                                        {
+                                                                            ns: "fishing",
+                                                                            defaultValue:
+                                                                                fish.rarity,
+                                                                        }
+                                                                    )}
                                                                 </span>
+
                                                                 <span className="text-gray-300">
                                                                     {timeLabel}
                                                                 </span>
