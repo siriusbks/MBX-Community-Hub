@@ -22,6 +22,7 @@ const LanguageSelector = ({
     const languages = [
         { code: "en", label: "English", flag: "/assets/media/flags/us.svg" },
         { code: "fr", label: "Français", flag: "/assets/media/flags/fr.svg" },
+        { code: "pl", label: "Polski", flag: "/assets/media/flags/pl.svg" },
     ];
 
     const selected =
