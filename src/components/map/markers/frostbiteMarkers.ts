@@ -118,14 +118,25 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
-    frostbite_fortress_fish: {
-        displayName: "markers.item.frostbite_fortress_fish",
-        iconUrl: "assets/media/fish/fishing_rod_6.png",
+    frostbite_fortress_fish_coldshoal: {
+        displayName: "markers.item.frostbite_cold_shoal",
+        iconUrl: "assets/media/fish/mid_fishing_rod.png",
         geoJsonFile: "assets/geo/frostbite_fortress/cold_shoal.geojson",
         defaultChecked: true,
         category: "markers.category.fishing",
         properties: {
-            level: "60",
+            level: "70",
+            showCount: true,
+        },
+    },
+    frostbite_fortress_fish_superdeepshoal: {
+        displayName: "markers.item.frostbite_superdeep_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_6.png",
+        geoJsonFile: "assets/geo/frostbite_fortress/superdeep_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "90",
             showCount: true,
         },
     },
