@@ -150,7 +150,7 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
-    kokoko_fish: {
+    kokoko_fish_deepshoal: {
         displayName: "markers.item.deep_shoal",
         iconUrl: "assets/media/fish/fishing_rod_2.png",
         geoJsonFile: "assets/geo/kokoko/deep_shoal.geojson",
@@ -158,6 +158,28 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
         category: "markers.category.fishing",
         properties: {
             level: "10",
+            showCount: true,
+        },
+    },
+    kokoko_fish_coralshoal: {
+        displayName: "markers.item.coral_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "assets/geo/kokoko/coral_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "50",
+            showCount: true,
+        },
+    },
+    kokoko_fish_jungleshoal: {
+        displayName: "markers.item.jungle_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_5.png",
+        geoJsonFile: "assets/geo/kokoko/jungle_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "80",
             showCount: true,
         },
     },
