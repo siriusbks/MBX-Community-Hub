@@ -279,97 +279,9 @@
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [304, 48, -378]
-            },
-            "id": 26,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [438, 46, -417]
-            },
-            "id": 27,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [480, 48, -350]
-            },
-            "id": 28,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [479, 48, -341]
-            },
-            "id": 29,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [477, 46, -306]
-            },
-            "id": 30,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [398, 48, -286]
-            },
-            "id": 31,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [379, 48, -290]
-            },
-            "id": 32,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
                 "coordinates": [363, 46, -304]
             },
-            "id": 33,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [370, 46, -381]
-            },
-            "id": 34,
+            "id": 26,
             "type": "Feature",
             "properties": {
                 "map": "quadra_plains"

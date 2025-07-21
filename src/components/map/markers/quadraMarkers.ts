@@ -128,14 +128,25 @@ const quadraMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
-    quadra_plains_fish: {
+    quadra_plains_fish_plainshoal: {
         displayName: "markers.item.plain_shoal",
-        iconUrl: "assets/media/fish/fishing_rod_3.png",
+        iconUrl: "assets/media/fish/fishing_rod_2.png",
         geoJsonFile: "assets/geo/quadra_plains/plain_shoal.geojson",
         defaultChecked: true,
         category: "markers.category.fishing",
         properties: {
             level: "20",
+            showCount: true,
+        },
+    },
+    quadra_plains_fish_swampshoal: {
+        displayName: "markers.item.swamp_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_3.png",
+        geoJsonFile: "assets/geo/quadra_plains/swamp_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "60",
             showCount: true,
         },
     },
