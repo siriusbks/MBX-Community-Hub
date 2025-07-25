@@ -157,8 +157,8 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [451, 59, 612]
+                "coordinates": [358, 67, 372],
+                "type": "Point"
             },
             "id": 15,
             "type": "Feature",
@@ -169,64 +169,9 @@
         {
             "geometry": {
                 "type": "Point",
-                "coordinates": [506, 57, 514]
-            },
-            "id": 16,
-            "type": "Feature",
-            "properties": {
-                "map": "sandwhisper_dunes"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [477, 58, 501],
-                "type": "Point"
-            },
-            "id": 17,
-            "type": "Feature",
-            "properties": {
-                "map": "sandwhisper_dunes"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [348, 57, 527],
-                "type": "Point"
-            },
-            "id": 18,
-            "type": "Feature",
-            "properties": {
-                "map": "sandwhisper_dunes"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [340, 57, 575]
-            },
-            "id": 19,
-            "type": "Feature",
-            "properties": {
-                "map": "sandwhisper_dunes"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [358, 67, 372],
-                "type": "Point"
-            },
-            "id": 20,
-            "type": "Feature",
-            "properties": {
-                "map": "sandwhisper_dunes"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
                 "coordinates": [283, 67, 344]
             },
-            "id": 21,
+            "id": 16,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -237,7 +182,7 @@
                 "coordinates": [446, 67, 336],
                 "type": "Point"
             },
-            "id": 22,
+            "id": 17,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -248,7 +193,7 @@
                 "type": "Point",
                 "coordinates": [506, 67, 341]
             },
-            "id": 23,
+            "id": 18,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -259,7 +204,7 @@
                 "coordinates": [582, 67, 211],
                 "type": "Point"
             },
-            "id": 24,
+            "id": 19,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -270,7 +215,7 @@
                 "coordinates": [582, 67, 196],
                 "type": "Point"
             },
-            "id": 25,
+            "id": 20,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -281,7 +226,7 @@
                 "coordinates": [537, 67, 44],
                 "type": "Point"
             },
-            "id": 26,
+            "id": 21,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -292,7 +237,7 @@
                 "type": "Point",
                 "coordinates": [503, 67, 29]
             },
-            "id": 27,
+            "id": 22,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -303,7 +248,7 @@
                 "coordinates": [440, 67, 0],
                 "type": "Point"
             },
-            "id": 28,
+            "id": 23,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -314,7 +259,7 @@
                 "coordinates": [376, 68, -10],
                 "type": "Point"
             },
-            "id": 29,
+            "id": 24,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -325,7 +270,7 @@
                 "coordinates": [313, 66, -14],
                 "type": "Point"
             },
-            "id": 30,
+            "id": 25,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"
@@ -336,7 +281,7 @@
                 "type": "Point",
                 "coordinates": [267, 66, -14]
             },
-            "id": 31,
+            "id": 26,
             "type": "Feature",
             "properties": {
                 "map": "sandwhisper_dunes"

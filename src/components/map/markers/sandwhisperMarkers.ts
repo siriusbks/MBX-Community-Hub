@@ -51,14 +51,25 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
-    sandwhisper_dunes_fish: {
+    desert_shoal: {
         displayName: "markers.item.desert_shoal",
-        iconUrl: "assets/media/fish/fishing_rod_5.png",
+        iconUrl: "assets/media/fish/fishing_rod_3.png",
         geoJsonFile: "assets/geo/sandwhisper_dunes/desert_shoal.geojson",
         defaultChecked: true,
         category: "markers.category.fishing",
         properties: {
             level: "40",
+            showCount: true,
+        },
+    },
+    canyon_shoal: {
+        displayName: "markers.item.canyon_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_5.png",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/canyon_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "80",
             showCount: true,
         },
     },
