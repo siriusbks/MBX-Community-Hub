@@ -106,6 +106,17 @@ const bambooMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    bamboo_jungle_shoal: {
+        displayName: "markers.item.bamboo_jungle_shoal",
+        iconUrl: "assets/media/fish/fishing_rod_5.png",
+        geoJsonFile: "assets/geo/bamboo_peak/bamboo_jungle_shoal.geojson",
+        defaultChecked: true,
+        category: "markers.category.fishing",
+        properties: {
+            level: "70",
+            showCount: true,
+        },
+    },
     bamboo_peak_bloon: {
         displayName: "markers.item.bloon",
         iconUrl: "assets/media/exploration/bloon.png",

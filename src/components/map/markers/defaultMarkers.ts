@@ -83,6 +83,7 @@ export const defaultSelectedPerMap: Record<string, string[]> = {
         "ore_manganese",
         "ore_liquid_diamond",
         "bamboo_peak_fish",
+        "bamboo_jungle_shoal",
         "bamboo_peak_bloon",
         "bamboo_peak_viewPoint",
     ],
