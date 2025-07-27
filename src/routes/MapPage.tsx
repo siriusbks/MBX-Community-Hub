@@ -13,7 +13,11 @@ import InteractiveMap from "@components/InteractiveMap";
 
 import { MarkerConfig } from "@t/markerTypes";
 import { mapData } from "@components/map/mapData";
-import { fishData, spotByMap } from "@components/map/fishData";
+import {
+    fishData,
+    spotNames,
+    mapNameTranslationKeys,
+} from "@components/map/fishData";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
@@ -316,171 +320,192 @@ const MapPage: FC = () => {
                                 className="text-green-400 hover:text-white transition text-sm"
                                 title={isSidebarOpen ? "Close" : "Open"}
                             >
-                                {isSidebarOpen ? (
-                                    <ArrowRightLeft size={20} />
-                                ) : (
-                                    <ArrowRightLeft size={20} />
-                                )}
+                                <ArrowRightLeft size={20} />
                             </button>
                             {isSidebarOpen && (
                                 <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
                                     {t("mappage.fishinginfo.title")} -{" "}
-                                    {t(spotByMap[selectedMapKey], {
-                                        ns: "fishing",
-                                    })}
+                                    {t(mapNameTranslationKeys[selectedMapKey], {
+                                        defaultValue: selectedMapKey,
+                                    })}{" "}
                                 </h2>
                             )}
                         </div>
 
                         {isSidebarOpen && (
-                            <div className="p-4 overflow-y-auto custom-scrollbar">
-                                {(() => {
-                                    const rarityOrder = [
-                                        "fishing.rarity.common",
-                                        "fishing.rarity.uncommon",
-                                        "fishing.rarity.rare",
-                                        "fishing.rarity.epic",
-                                        "fishing.rarity.legendary",
-                                    ];
+                            <div className="p-4 overflow-y-auto custom-scrollbar space-y-4">
+                                {Object.entries(fishData[selectedMapKey]).map(
+                                    ([spotKey, fishList]) => (
+                                        <details
+                                            key={spotKey}
+                                            className="bg-gray-700 rounded-lg"
+                                        >
+                                            <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
+                                                {t(spotNames[spotKey], {
+                                                    ns: "fishing",
+                                                    defaultValue: spotKey,
+                                                })}
+                                            </summary>
 
-                                    const sortedFish = [
-                                        ...(fishData[selectedMapKey] || []),
-                                    ].sort(
-                                        (a, b) =>
-                                            rarityOrder.indexOf(a.rarity) -
-                                            rarityOrder.indexOf(b.rarity)
-                                    );
+                                            <div className="px-3 pt-2 pb-4 space-y-2">
+                                                {[...fishList]
+                                                    .sort(
+                                                        (a, b) =>
+                                                            a.level - b.level
+                                                    )
+                                                    .map((fish, index) => {
+                                                        const rarityColorMap: Record<
+                                                            string,
+                                                            string
+                                                        > = {
+                                                            "fishing.rarity.vanilla":
+                                                                "text-gray-400",
+                                                            "fishing.rarity.common":
+                                                                "text-gray-400",
+                                                            "fishing.rarity.uncommon":
+                                                                "text-green-400",
+                                                            "fishing.rarity.rare":
+                                                                "text-blue-400",
+                                                            "fishing.rarity.epic":
+                                                                "text-pink-400",
+                                                            "fishing.rarity.legendary":
+                                                                "text-yellow-400",
+                                                        };
 
-                                    return sortedFish.map((fish, index) => {
-                                        const rarityColorMap: Record<
-                                            string,
-                                            string
-                                        > = {
-                                            "fishing.rarity.vanilla":
-                                                "text-gray-400",
-                                            "fishing.rarity.common":
-                                                "text-gray-400",
-                                            "fishing.rarity.uncommon":
-                                                "text-green-400",
-                                            "fishing.rarity.rare":
-                                                "text-blue-400",
-                                            "fishing.rarity.epic":
-                                                "text-pink-400",
-                                            "fishing.rarity.legendary":
-                                                "text-yellow-400",
-                                        };
+                                                        const rarityColor =
+                                                            rarityColorMap[
+                                                                fish.rarity
+                                                            ] || "text-white";
 
-                                        const rarityColor =
-                                            rarityColorMap[fish.rarity] ||
-                                            "text-white";
+                                                        const timeLabel =
+                                                            fish.time.includes(
+                                                                "fishing.time.day"
+                                                            ) &&
+                                                            fish.time.includes(
+                                                                "fishing.time.night"
+                                                            )
+                                                                ? t(
+                                                                      "fishing.time.day_night"
+                                                                  )
+                                                                : fish.time
+                                                                      .map(
+                                                                          (
+                                                                              tKey
+                                                                          ) =>
+                                                                              t(
+                                                                                  tKey,
+                                                                                  {
+                                                                                      ns: "fishing",
+                                                                                      defaultValue:
+                                                                                          tKey,
+                                                                                  }
+                                                                              )
+                                                                      )
+                                                                      .join(
+                                                                          " / "
+                                                                      );
 
-                                        const timeLabel =
-                                            fish.time.includes(
-                                                "fishing.time.day"
-                                            ) &&
-                                            fish.time.includes(
-                                                "fishing.time.night"
-                                            )
-                                                ? t("fishing.time.day_night")
-                                                : fish.time
-                                                      .map((tKey) =>
-                                                          t(tKey, {
-                                                              ns: "fishing",
-                                                              defaultValue:
-                                                                  tKey,
-                                                          })
-                                                      )
-                                                      .join(" / ");
-
-                                        return (
-                                            <div
-                                                key={index}
-                                                className="bg-gray-700 rounded-lg p-3 mb-2 flex gap-3 items-center"
-                                            >
-                                                {/* Image */}
-                                                {fish.image ? (
-                                                    <img
-                                                        src={fish.image}
-                                                        alt={fish.name}
-                                                        className="w-8 h-8 items-center justify-center pointer-events-none"
-                                                    />
-                                                ) : (
-                                                    <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
-                                                        🎣
-                                                    </div>
-                                                )}
-
-                                                {/* Infos */}
-                                                <div className="flex-1">
-                                                    <div className="flex justify-between items-center">
-                                                        {/* Left */}
-                                                        <div className="flex flex-col">
-                                                            <span className="font-semibold text-white">
-                                                                {t(fish.name, {
-                                                                    ns: "fishing",
-                                                                    defaultValue:
-                                                                        fish.name,
-                                                                })}
-                                                            </span>
-                                                            <div className="flex gap-2 text-xs">
-                                                                <span
-                                                                    className={
-                                                                        rarityColor
-                                                                    }
-                                                                >
-                                                                    {t(
-                                                                        fish.rarity,
-                                                                        {
-                                                                            ns: "fishing",
-                                                                            defaultValue:
-                                                                                fish.rarity,
+                                                        return (
+                                                            <div
+                                                                key={index}
+                                                                className="bg-gray-800 rounded p-2 flex gap-3 items-center"
+                                                            >
+                                                                {/* Image */}
+                                                                {fish.image ? (
+                                                                    <img
+                                                                        src={
+                                                                            fish.image
                                                                         }
-                                                                    )}
-                                                                </span>
+                                                                        alt={
+                                                                            fish.name
+                                                                        }
+                                                                        className="w-8 h-8"
+                                                                    />
+                                                                ) : (
+                                                                    <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
+                                                                        🎣
+                                                                    </div>
+                                                                )}
 
-                                                                <span className="text-gray-300">
-                                                                    {timeLabel}
-                                                                </span>
+                                                                {/* Infos */}
+                                                                <div className="flex-1">
+                                                                    <div className="flex justify-between items-center">
+                                                                        {/* Left */}
+                                                                        <div className="flex flex-col">
+                                                                            <span className="font-semibold text-white">
+                                                                                {t(
+                                                                                    fish.name,
+                                                                                    {
+                                                                                        ns: "fishing",
+                                                                                        defaultValue:
+                                                                                            fish.name,
+                                                                                    }
+                                                                                )}
+                                                                            </span>
+                                                                            <div className="flex gap-2 text-xs">
+                                                                                <span
+                                                                                    className={
+                                                                                        rarityColor
+                                                                                    }
+                                                                                >
+                                                                                    {t(
+                                                                                        fish.rarity,
+                                                                                        {
+                                                                                            ns: "fishing",
+                                                                                            defaultValue:
+                                                                                                fish.rarity,
+                                                                                        }
+                                                                                    )}
+                                                                                </span>
+
+                                                                                <span className="text-gray-300">
+                                                                                    {
+                                                                                        timeLabel
+                                                                                    }
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {/* Conditions */}
+                                                                        <div className="flex gap-1">
+                                                                            {fish.condition?.includes(
+                                                                                "rain"
+                                                                            ) && (
+                                                                                <span title="Only when it rains">
+                                                                                    🌧️
+                                                                                </span>
+                                                                            )}
+                                                                            {fish.condition?.includes(
+                                                                                "fullmoon"
+                                                                            ) && (
+                                                                                <span title="Only during full moon">
+                                                                                    🌕
+                                                                                </span>
+                                                                            )}
+                                                                            {fish.condition?.includes(
+                                                                                "storm"
+                                                                            ) && (
+                                                                                <span title="Only at storm">
+                                                                                    🌩️
+                                                                                </span>
+                                                                            )}
+                                                                            {fish.condition?.includes(
+                                                                                "niceweather"
+                                                                            ) && (
+                                                                                <span title="Nice weather">
+                                                                                    🌤️
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-
-                                                        {/* Conditions */}
-                                                        <div className="flex gap-1">
-                                                            {fish.condition?.includes(
-                                                                "rain"
-                                                            ) && (
-                                                                <span title="Only when it rains">
-                                                                    🌧️
-                                                                </span>
-                                                            )}
-                                                            {fish.condition?.includes(
-                                                                "fullmoon"
-                                                            ) && (
-                                                                <span title="Only during full moon">
-                                                                    🌕
-                                                                </span>
-                                                            )}
-                                                            {fish.condition?.includes(
-                                                                "storm"
-                                                            ) && (
-                                                                <span title="Only at storm">
-                                                                    🌩️
-                                                                </span>
-                                                            )}
-                                                            {fish.condition?.includes(
-                                                                "niceweather"
-                                                            ) && (
-                                                                <span title="Nice weather">
-                                                                    🌤️
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                        );
+                                                    })}
                                             </div>
-                                        );
-                                    });
-                                })()}
+                                        </details>
+                                    )
+                                )}
                             </div>
                         )}
                     </div>
