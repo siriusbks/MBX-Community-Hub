@@ -18,7 +18,7 @@ const HomePage = lazy(() => import("@routes/HomePage"));
 const CommunityPage = lazy(() => import("@routes/CommunityPage"));
 
 export const AppRoutes: FC = () => (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white flex flex-col">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
         {/* Navbar */}
         <Navbar />
 

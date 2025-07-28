@@ -33,7 +33,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     const t = useTranslation("projects").t;
 
     return (
-        <div className="relative bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all p-4">
+        <div className="relative bg-gradient-to-br from-gray-800/50 to-gray-900/60 rounded-xl shadow-lg overflow-hidden border border-gray-800 hover:shadow-2xl hover:-translate-y-1 transition-all p-4">
             {/* Badge */}
             {project.badge && (
                 <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-bl-lg z-10 uppercase tracking-wide shadow-md">
