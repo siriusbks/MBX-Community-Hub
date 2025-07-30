@@ -62,6 +62,16 @@ const allMarkers: Record<string, Record<string, MarkerConfig>> = {
     sandwhisper_dunes: sandwhisperMarkers,
 };
 
+const rarityOrder = [
+    "fishing.rarity.vanilla",
+    "fishing.rarity.common",
+    "fishing.rarity.uncommon",
+    "fishing.rarity.rare",
+    "fishing.rarity.epic",
+    "fishing.rarity.legendary",
+    "fishing.rarity.mythic",
+];
+
 const MapPage: FC = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -351,7 +361,12 @@ const MapPage: FC = () => {
                                                 {[...fishList]
                                                     .sort(
                                                         (a, b) =>
-                                                            a.level - b.level
+                                                            rarityOrder.indexOf(
+                                                                a.rarity
+                                                            ) -
+                                                            rarityOrder.indexOf(
+                                                                b.rarity
+                                                            )
                                                     )
                                                     .map((fish, index) => {
                                                         const rarityColorMap: Record<
@@ -359,7 +374,7 @@ const MapPage: FC = () => {
                                                             string
                                                         > = {
                                                             "fishing.rarity.vanilla":
-                                                                "text-gray-400",
+                                                                "text-gray-300",
                                                             "fishing.rarity.common":
                                                                 "text-gray-400",
                                                             "fishing.rarity.uncommon":
@@ -370,6 +385,8 @@ const MapPage: FC = () => {
                                                                 "text-pink-400",
                                                             "fishing.rarity.legendary":
                                                                 "text-yellow-400",
+                                                            "fishing.rarity.mythic":
+                                                                "text-red-700",
                                                         };
 
                                                         const rarityColor =
