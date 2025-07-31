@@ -640,6 +640,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     frostbite_fortress: {
         cold_shoal: [
             {
+                name: "fishing.nether_star",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.vanilla",
+                condition: "",
+                image: "assets/media/item/fishing/nether_star.png",
+            },
+            {
                 name: "fishing.uncommon_treasure",
                 level: 0,
                 time: [""],
@@ -798,6 +806,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     sandwhisper_dunes: {
         desert_shoal: [
             {
+                name: "fishing.rainbow_sparkle_jelly",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.legendary",
+                condition: "",
+                image: "assets/media/item/fishing/rainbow_sparkle_jelly.png",
+            },
+            {
                 name: "fishing.uncommon_treasure",
                 level: 0,
                 time: [""],
@@ -907,7 +923,7 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 name: "fishing.humpback_chub",
                 level: 0,
                 time: [""],
-                rarity: "fishing.rarity.rare",
+                rarity: "fishing.rarity.epic",
                 condition: "",
                 image: "assets/media/item/fishing/humpback_chub.png",
             },

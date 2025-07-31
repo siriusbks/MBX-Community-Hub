@@ -433,9 +433,10 @@ const MapPage: FC = () => {
                                                                         src={
                                                                             fish.image
                                                                         }
+                                                                        /* (temporarily disabled) 
                                                                         alt={
                                                                             fish.name
-                                                                        }
+                                                                        }*/
                                                                         className="w-8 h-8 pointer-events-none"
                                                                     />
                                                                 ) : (
