@@ -56,6 +56,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     spawn: {
         tropical_shoal: [
             {
+                name: "fishing.common_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_common.png",
+            },
+            {
+                name: "fishing.common_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
+            {
                 name: "fishing.mandarinfish",
                 level: 0,
                 time: [""],
@@ -123,6 +139,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     },
     kokoko: {
         deep_shoal: [
+            {
+                name: "fishing.common_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
             {
                 name: "fishing.tuna",
                 level: 0,
@@ -214,6 +238,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
         ],
         coral_shoal: [
             {
+                name: "fishing.uncommon_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
+            {
+                name: "fishing.uncommon_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_uncommon.png",
+            },
+            {
                 name: "fishing.sea_salt",
                 level: 0,
                 time: [""],
@@ -271,6 +311,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
             },
         ],
         jungle_shoal: [
+            {
+                name: "fishing.rare_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/rare_key.png",
+            },
+            {
+                name: "fishing.rare_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_rare.png",
+            },
             {
                 name: "fishing.pirate_crab",
                 level: 0,
@@ -332,6 +388,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     quadra_plains: {
         plain_shoal: [
             {
+                name: "fishing.common_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_common.png",
+            },
+            {
+                name: "fishing.common_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
+            {
                 name: "fishing.wrasse",
                 level: 0,
                 time: [""],
@@ -382,6 +454,30 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
         ],
         swamp_shoal: [
             {
+                name: "fishing.uncommon_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/key_uncommon.png",
+            },
+            {
+                name: "fishing.uncommon_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_uncommon.png",
+            },
+            {
+                name: "fishing.poop",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/poop.png",
+            },
+            {
                 name: "fishing.carp",
                 level: 0,
                 time: [""],
@@ -417,6 +513,38 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     },
     bamboo_peak: {
         bamboo_shoal: [
+            {
+                name: "fishing.sea_pickle",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.vanilla",
+                condition: "",
+                image: "assets/media/item/fishing/sea_pickle.png",
+            },
+            {
+                name: "fishing.bamboo",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.vanilla",
+                condition: "",
+                image: "assets/media/item/fishing/bamboo.png",
+            },
+            {
+                name: "fishing.common_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_common.png",
+            },
+            {
+                name: "fishing.common_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
             {
                 name: "fishing.surgeonfish",
                 level: 0,
@@ -512,6 +640,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     frostbite_fortress: {
         cold_shoal: [
             {
+                name: "fishing.uncommon_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_uncommon.png",
+            },
+            {
+                name: "fishing.uncommon_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/key_uncommon.png",
+            },
+            {
                 name: "fishing.sea_salt",
                 level: 0,
                 time: [""],
@@ -570,6 +714,46 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
         ],
         superdeep_shoal: [
             {
+                name: "fishing.ink_sac",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.vanilla",
+                condition: "",
+                image: "assets/media/item/fishing/ink_sac.png",
+            },
+            {
+                name: "fishing.common_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/key_common.png",
+            },
+            {
+                name: "fishing.common_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.common",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_common.png",
+            },
+            {
+                name: "fishing.rare_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/key_rare.png",
+            },
+            {
+                name: "fishing.rare_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_rare.png",
+            },
+            {
                 name: "fishing.kraken",
                 level: 0,
                 time: [""],
@@ -613,6 +797,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
     },
     sandwhisper_dunes: {
         desert_shoal: [
+            {
+                name: "fishing.uncommon_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_uncommon.png",
+            },
             {
                 name: "fishing.butterflyfish",
                 level: 0,
@@ -679,6 +871,22 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
             },
         ],
         canyon_shoal: [
+            {
+                name: "fishing.rare_treasure",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/treasure_rare.png",
+            },
+            {
+                name: "fishing.rare_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/key_rare.png",
+            },
             {
                 name: "fishing.moray_eel",
                 level: 0,

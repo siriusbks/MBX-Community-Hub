@@ -436,7 +436,7 @@ const MapPage: FC = () => {
                                                                         alt={
                                                                             fish.name
                                                                         }
-                                                                        className="w-8 h-8"
+                                                                        className="w-8 h-8 pointer-events-none"
                                                                     />
                                                                 ) : (
                                                                     <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
