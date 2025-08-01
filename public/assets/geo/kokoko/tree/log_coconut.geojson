@@ -377,7 +377,7 @@
         },
         {
             "geometry": {
-                "coordinates": [233, 66, -34],
+                "coordinates": [220, 66, -25],
                 "type": "Point"
             },
             "id": 35,
@@ -388,7 +388,7 @@
         },
         {
             "geometry": {
-                "coordinates": [255, 66, -28],
+                "coordinates": [193, 67, -45],
                 "type": "Point"
             },
             "id": 36,
@@ -399,43 +399,10 @@
         },
         {
             "geometry": {
-                "coordinates": [236, 66, -12],
-                "type": "Point"
-            },
-            "id": 37,
-            "type": "Feature",
-            "properties": {
-                "map": "kokoko"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [220, 66, -25],
-                "type": "Point"
-            },
-            "id": 38,
-            "type": "Feature",
-            "properties": {
-                "map": "kokoko"
-            }
-        },
-        {
-            "geometry": {
-                "coordinates": [193, 67, -45],
-                "type": "Point"
-            },
-            "id": 39,
-            "type": "Feature",
-            "properties": {
-                "map": "kokoko"
-            }
-        },
-        {
-            "geometry": {
                 "type": "Point",
                 "coordinates": [158, 69, -54]
             },
-            "id": 40,
+            "id": 37,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
@@ -446,7 +413,7 @@
                 "coordinates": [163, 66, -21],
                 "type": "Point"
             },
-            "id": 41,
+            "id": 38,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
@@ -457,7 +424,7 @@
                 "type": "Point",
                 "coordinates": [134, 66, -31]
             },
-            "id": 42,
+            "id": 39,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
@@ -468,7 +435,7 @@
                 "coordinates": [110, 66, -41],
                 "type": "Point"
             },
-            "id": 43,
+            "id": 40,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
