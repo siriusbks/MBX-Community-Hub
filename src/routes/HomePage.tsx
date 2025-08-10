@@ -5,8 +5,7 @@
  */
 
 import { Link } from "react-router-dom";
-import { User, Map, Users, HandHelping } from "lucide-react";
-
+import { User, Map, Users, HandHelping, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export function HomePage() {
@@ -42,7 +41,7 @@ export function HomePage() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                     {/* Player Profile */}
                     <Link
                         to="/profile"
@@ -76,6 +75,29 @@ export function HomePage() {
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.interactiveMap.description")}
+                        </p>
+                    </Link>
+
+                    {/* Equipment Manager  */}
+                    <Link
+                        to="/equipment"
+                        className="relative group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        {/* Badge */}
+                        <span className="absolute top-3 right-3 bg-yellow-500 text-black text-xs font-bold px-2 py-0.5 rounded">
+                            BETA
+                        </span>
+
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 group-hover:bg-yellow-400/20 transition-colors">
+                                <Shield size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                                {t("homepage.features.equipment.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {t("homepage.features.equipment.description")}
                         </p>
                     </Link>
 
