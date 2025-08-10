@@ -11,6 +11,7 @@ import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
 import NotFound from "./NotFound";
 
+const EquipPage = lazy(() => import("@routes/EquipPage"));
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
 const InfoMapPage = lazy(() => import("@routes/InfoMapPage"));
 const MapPage = lazy(() => import("@routes/MapPage"));
@@ -35,6 +36,7 @@ export const AppRoutes: FC = () => (
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/map" element={<InfoMapPage />} />
                     <Route path="/mappage" element={<MapPage />} />
+                    <Route path="/equipment" element={<EquipPage />} />
                     <Route path="/community" element={<CommunityPage />} />
                 </Routes>
             </Suspense>
