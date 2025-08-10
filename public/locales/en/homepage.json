@@ -6,5 +6,7 @@
     "homepage.features.interactiveMap.title": "Interactive Map",
     "homepage.features.interactiveMap.description": "Explore the Minebox world with detailed interactive maps showing locations and resources.",
     "homepage.features.communityProjects.title": "Community Projects",
-    "homepage.features.communityProjects.description": "Discover and explore community-driven mods, tools, and websites for Minebox."
+    "homepage.features.communityProjects.description": "Discover and explore community-driven mods, tools, and websites for Minebox.",
+    "homepage.features.equipment.title": "Equipment Manager",
+    "homepage.features.equipment.description": "Build and optimize your character’s gear."
 }
