@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Github, Map, Users, User, ChevronDown } from "lucide-react";
+import { Github, Map, Users, User, ChevronDown, Shield } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
@@ -115,6 +115,11 @@ export const Navbar = () => {
                         },
                         { to: "/map", icon: Map, label: t("navbar.map") },
                         {
+                            to: "/equipment",
+                            icon: Shield,
+                            label: t("navbar.equipement"),
+                        },
+                        {
                             to: "/community",
                             icon: Users,
                             label: t("navbar.community"),
@@ -136,7 +141,14 @@ export const Navbar = () => {
                             }
                         >
                             <Icon size={18} />
-                            {label}
+                            <span className="flex items-center gap-1">
+                                {label}
+                                {to === "/equipment" && (
+                                    <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
+                                        Beta
+                                    </span>
+                                )}
+                            </span>
                         </NavLink>
                     ))}
                 </nav>
