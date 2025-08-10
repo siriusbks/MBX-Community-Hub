@@ -96,7 +96,9 @@ export const EquipmentSelector: React.FC<Props> = ({
                                             {item.name}
                                         </h3>
                                         <p className="text-xs text-gray-300 capitalize">
-                                            {item.rarity.toLowerCase()}
+                                            {t(`equip.rarity.${item.rarity}`, {
+                                                defaultValue: item.rarity,
+                                            })}
                                         </p>
                                         {item.level != null && (
                                             <p className="text-xs text-gray-400">
