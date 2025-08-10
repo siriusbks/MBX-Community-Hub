@@ -17,6 +17,8 @@ export default defineConfig({
             "@components": resolve(__dirname, "src/components"),
             "@t": resolve(__dirname, "src/types"),
             "@routes": resolve(__dirname, "src/routes"),
+            "@hooks": resolve(__dirname, "src/hooks"),
+            "@utils": resolve(__dirname, "src/utils"),
         },
     },
     optimizeDeps: {

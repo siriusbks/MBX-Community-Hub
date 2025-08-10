@@ -28,7 +28,9 @@
             "@store/*": ["store/*"],
             "@components/*": ["components/*"],
             "@t/*": ["types/*"],
-            "@routes/*": ["routes/*"]
+            "@routes/*": ["routes/*"],
+            "@utils/*": ["utils/*"],
+            "@hooks/*": ["hooks/*"]
         }
     },
     "include": ["src"]
