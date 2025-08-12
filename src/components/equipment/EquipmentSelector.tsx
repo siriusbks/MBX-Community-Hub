@@ -19,6 +19,8 @@ interface Props {
     onSelect: (item: Equipment | null) => void;
     onRemove: () => void;
     onClose: () => void;
+    equippedItems: { [key: string]: Equipment | null };
+    selectedSlotId: string;
 }
 
 export const EquipmentSelector: React.FC<Props> = ({
@@ -27,14 +29,21 @@ export const EquipmentSelector: React.FC<Props> = ({
     onSelect,
     onRemove,
     onClose,
+    equippedItems,
+    selectedSlotId,
 }) => {
     const [q, setQ] = useState("");
     const { t } = useTranslation("equipment");
+
     const filtered = equipment.filter(
         (it) =>
             it.category === category &&
             it.name.toLowerCase().includes(q.toLowerCase())
     );
+
+    const isRingSlot = selectedSlotId === "ring1" || selectedSlotId === "ring2";
+    const otherRingId = selectedSlotId === "ring1" ? "ring2" : "ring1";
+    const otherRingItemId = equippedItems[otherRingId]?.id;
 
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
@@ -66,69 +75,101 @@ export const EquipmentSelector: React.FC<Props> = ({
 
                 <div className="p-4 overflow-y-auto max-h-[60vh] custom-scrollbar">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {filtered.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => onSelect(item)}
-                                className={`text-left p-4 rounded-lg ${getRarityColor(
-                                    item.rarity
-                                )} hover:scale-[1.01] transition-all`}
-                            >
-                                <div className="flex items-center gap-3">
-                                    {!!item.image && (
-                                        <img
-                                            src={
-                                                item.image.startsWith("data:")
-                                                    ? item.image
-                                                    : imgFromB64(item.image)
-                                            }
-                                            alt={item.name}
-                                            className="w-12 h-12 object-contain"
-                                            onError={(e) =>
-                                                ((
-                                                    e.target as HTMLImageElement
-                                                ).style.display = "none")
-                                            }
-                                        />
-                                    )}
-                                    <div className="min-w-0">
-                                        <h3 className="font-semibold text-white truncate">
-                                            {item.name}
-                                        </h3>
-                                        <p className="text-xs text-gray-300 capitalize">
-                                            {t(`equip.rarity.${item.rarity}`, {
-                                                defaultValue: item.rarity,
-                                            })}
-                                        </p>
-                                        {item.level != null && (
-                                            <p className="text-xs text-gray-400">
-                                                Level {item.level}
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
+                        {filtered.map((item) => {
+                            const isEquippedSameRing =
+                                isRingSlot &&
+                                !!item.id &&
+                                !!otherRingItemId &&
+                                item.id === otherRingItemId;
 
-                                {item.stats && (
-                                    <div className="mt-3 text-xs text-gray-300">
-                                        {Object.entries(item.stats).map(
-                                            ([stat, range]) => (
-                                                <div
-                                                    key={stat}
-                                                    className="flex justify-between"
-                                                >
-                                                    <span>{stat}</span>
-                                                    <span>
-                                                        {range[0] === range[1]
-                                                            ? range[0]
-                                                            : `${range[0]}-${range[1]}`}
-                                                    </span>
-                                                </div>
-                                            )
+                            return (
+                                <button
+                                    key={item.id}
+                                    onClick={() => {
+                                        if (isEquippedSameRing) return;
+                                        onSelect(item);
+                                    }}
+                                    className={`text-left p-4 rounded-lg ${getRarityColor(
+                                        item.rarity
+                                    )} transition-all ${
+                                        isEquippedSameRing
+                                            ? "opacity-50 cursor-not-allowed"
+                                            : "hover:scale-[1.01]"
+                                    }`}
+                                    title={
+                                        isEquippedSameRing
+                                            ? "Already equipped on the other ring"
+                                            : ""
+                                    }
+                                >
+                                    <div className="flex items-center gap-3">
+                                        {!!item.image && (
+                                            <img
+                                                src={
+                                                    item.image.startsWith(
+                                                        "data:"
+                                                    )
+                                                        ? item.image
+                                                        : imgFromB64(item.image)
+                                                }
+                                                alt={item.name}
+                                                className="w-12 h-12 object-contain"
+                                                onError={(e) =>
+                                                    ((
+                                                        e.target as HTMLImageElement
+                                                    ).style.display = "none")
+                                                }
+                                            />
                                         )}
+                                        <div className="min-w-0">
+                                            <h3 className="font-semibold text-white truncate">
+                                                {item.name}
+                                            </h3>
+                                            <p className="text-xs text-gray-300 capitalize">
+                                                {t(
+                                                    `equip.rarity.${item.rarity}`,
+                                                    {
+                                                        defaultValue:
+                                                            item.rarity,
+                                                    }
+                                                )}
+                                            </p>
+                                            {item.level != null && (
+                                                <p className="text-xs text-gray-400">
+                                                    Level {item.level}
+                                                </p>
+                                            )}
+                                            {isEquippedSameRing && (
+                                                <p className="text-[11px] text-yellow-400 mt-1">
+                                                    Equipped on other ring
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                            </button>
-                        ))}
+
+                                    {item.stats && (
+                                        <div className="mt-3 text-xs text-gray-300">
+                                            {Object.entries(item.stats).map(
+                                                ([stat, range]) => (
+                                                    <div
+                                                        key={stat}
+                                                        className="flex justify-between"
+                                                    >
+                                                        <span>{stat}</span>
+                                                        <span>
+                                                            {range[0] ===
+                                                            range[1]
+                                                                ? range[0]
+                                                                : `${range[0]}-${range[1]}`}
+                                                        </span>
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
+                                    )}
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
 
