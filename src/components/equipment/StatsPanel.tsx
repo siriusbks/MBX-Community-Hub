@@ -20,13 +20,25 @@ export const StatsPanel: React.FC<Props> = ({ stats, equippedItems }) => {
     const { t } = useTranslation("equipment");
 
     const color: Record<string, string> = {
-        HEALTH: "text-red-400",
-        AGILITY: "text-green-400",
-        STRENGTH: "text-orange-400",
-        INTELLIGENCE: "text-blue-400",
-        WISDOM: "text-purple-400",
-        LUCK: "text-yellow-400",
-        POWER: "text-pink-400",
+        HEALTH: "#e02044",
+        AGILITY: "#85c062",
+        STRENGTH: "#58350b",
+        INTELLIGENCE: "#df3f29",
+        WISDOM: "#846cf0",
+        LUCK: "#7ccbf9",
+        FORTUNE: "#f1903e",
+        DEFENSE: "#0045cd",
+    };
+
+    const iconMap: Record<string, string> = {
+        HEALTH: "/assets/media/elemental/health.png",
+        AGILITY: "/assets/media/elemental/agility.png",
+        STRENGTH: "/assets/media/elemental/strength.png",
+        INTELLIGENCE: "/assets/media/elemental/intelligence.png",
+        WISDOM: "/assets/media/elemental/wisdom.png",
+        LUCK: "/assets/media/elemental/luck.png",
+        FORTUNE: "/assets/media/elemental/fortune.png",
+        DEFENSE: "/assets/media/elemental/defense.png",
     };
 
     const allZero = Object.values(stats).every(([a, b]) => a + b === 0);
@@ -52,10 +64,16 @@ export const StatsPanel: React.FC<Props> = ({ stats, equippedItems }) => {
                                 className="flex items-center justify-between py-1 border-b border-gray-700/60"
                             >
                                 <span
-                                    className={`font-medium ${
-                                        color[name] ?? "text-gray-300"
-                                    }`}
+                                    className="flex items-center gap-2 font-medium"
+                                    style={{ color: color[name] ?? "#ccc" }}
                                 >
+                                    {iconMap[name] && (
+                                        <img
+                                            src={iconMap[name]}
+                                            alt={name}
+                                            className="w-5 h-5"
+                                        />
+                                    )}
                                     {t(`equip.stats.names.${name}`, {
                                         defaultValue: name,
                                     })}
