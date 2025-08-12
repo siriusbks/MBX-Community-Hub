@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Equipment, EquipmentSlot as SlotType } from "@t/equip";
 import { getRarityColor } from "@utils/equipmentSlots";
 import { Plus } from "lucide-react";
@@ -19,6 +20,58 @@ interface Props {
     onSlotClick: (slotId: string) => void;
 }
 
+const isNearBottom = (top: string) => {
+    if (top.endsWith("%")) {
+        const n = parseFloat(top);
+        return !Number.isNaN(n) && n > 84;
+    }
+    if (top.endsWith("px")) {
+        const n = parseFloat(top);
+        return !Number.isNaN(n) && n > 420;
+    }
+    return false;
+};
+
+type TooltipPos = { left: number; top: number; place: "bottom" | "top" };
+
+function useAnchorPosition(
+    anchor: HTMLElement | null,
+    preferBottom: boolean
+): TooltipPos | null {
+    const [pos, setPos] = useState<TooltipPos | null>(null);
+
+    useEffect(() => {
+        if (!anchor) return;
+
+        const compute = () => {
+            const r = anchor.getBoundingClientRect();
+            let place: TooltipPos["place"] = preferBottom ? "top" : "bottom";
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            let left = Math.min(Math.max(r.left + r.width / 2, 8), vw - 8);
+            let top = place === "bottom" ? r.bottom + 8 : r.top - 8;
+
+            if (place === "bottom" && r.bottom + 160 > vh) {
+                place = "top";
+                top = r.top - 8;
+            }
+
+            setPos({ left, top, place });
+        };
+
+        compute();
+        window.addEventListener("scroll", compute, { passive: true });
+        window.addEventListener("resize", compute);
+        return () => {
+            window.removeEventListener("scroll", compute);
+            window.removeEventListener("resize", compute);
+        };
+    }, [anchor, preferBottom]);
+
+    return pos;
+}
+
 export const EquipmentSlot: React.FC<Props> = ({
     slot,
     equippedItem,
@@ -29,6 +82,99 @@ export const EquipmentSlot: React.FC<Props> = ({
         defaultValue: slot.name || slot.id,
     });
 
+    const rarityLabel =
+        equippedItem?.rarity &&
+        t(`equip.rarity.${equippedItem.rarity}`, {
+            defaultValue: equippedItem.rarity,
+        });
+
+    const low = isNearBottom(slot.position.top);
+
+    const slotRef = useRef<HTMLDivElement | null>(null);
+    const [hover, setHover] = useState(false);
+    const pos = useAnchorPosition(slotRef.current, low);
+
+    const tooltip = useMemo(() => {
+        if (!equippedItem || !hover || !pos) return null;
+
+        const body = document.body;
+        if (!body) return null;
+
+        const translate = "translateX(-50%)";
+        const isTop = pos.place === "top";
+
+        return createPortal(
+            <>
+                <div
+                    className={[
+                        "pointer-events-none fixed z-[9999] w-56",
+                        "rounded-md border border-gray-700 bg-gray-900 p-2 shadow-xl",
+                        "text-white",
+                    ].join(" ")}
+                    style={{
+                        left: pos.left,
+                        top: isTop ? pos.top : pos.top,
+                        transform: `${translate} ${
+                            isTop ? "translateY(-100%)" : ""
+                        }`,
+                        opacity: 1,
+                    }}
+                >
+                    <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold truncate">
+                            {equippedItem.name}
+                        </span>
+                        {rarityLabel && (
+                            <span className="text-[10px] text-gray-300 ml-2">
+                                {rarityLabel}
+                            </span>
+                        )}
+                    </div>
+
+                    {equippedItem.stats && (
+                        <ul className="mt-1 space-y-0.5">
+                            {Object.entries(equippedItem.stats).map(
+                                ([stat, range]) => (
+                                    <li
+                                        key={stat}
+                                        className="flex justify-between text-[11px] text-gray-300"
+                                    >
+                                        <span className="capitalize">
+                                            {stat.charAt(0) +
+                                                stat.slice(1).toLowerCase()}
+                                        </span>
+                                        <span className="text-gray-200">
+                                            {range[0] === range[1]
+                                                ? range[0]
+                                                : `${range[0]}–${range[1]}`}
+                                        </span>
+                                    </li>
+                                )
+                            )}
+                        </ul>
+                    )}
+                </div>
+
+                {/* Flèche */}
+                <div
+                    className={[
+                        "pointer-events-none fixed z-[9999] h-2 w-2 rotate-45",
+                        "bg-gray-900 border-l border-t border-gray-700",
+                    ].join(" ")}
+                    style={{
+                        left: pos.left,
+                        top: isTop ? pos.top : pos.top,
+                        transform: `${translate} ${
+                            isTop ? "translateY(-4px)" : "translateY(4px)"
+                        }`,
+                        opacity: 1,
+                    }}
+                />
+            </>,
+            body
+        );
+    }, [equippedItem, hover, pos, rarityLabel]);
+
     return (
         <div
             className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer text-center"
@@ -37,7 +183,10 @@ export const EquipmentSlot: React.FC<Props> = ({
             aria-label={`Slot ${slotLabel}`}
         >
             <div
-                className={`w-16 h-16 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg ${
+                ref={slotRef}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+                className={`relative w-16 h-16 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg ${
                     equippedItem
                         ? getRarityColor(equippedItem.rarity)
                         : "border border-gray-600 bg-gray-700 hover:border-gray-500"
@@ -51,22 +200,35 @@ export const EquipmentSlot: React.FC<Props> = ({
                                 : srcFromBase64(equippedItem.image)
                         }
                         alt={equippedItem.name}
-                        className="w-12 h-12 object-contain"
+                        className="w-12 h-12 object-contain pointer-events-none"
                         onError={(e) =>
                             ((e.target as HTMLImageElement).style.display =
                                 "none")
                         }
                     />
                 ) : (
-                    <Plus className="w-6 h-6 text-gray-400" />
+                    <Plus className="w-6 h-6 text-gray-400 pointer-events-none" />
+                )}
+
+                {/* Badge niveau */}
+                {equippedItem?.level != null && (
+                    <div className="absolute bottom-0 inset-x-0 flex justify-center">
+                        <span className="mb-0.5 inline-flex items-center gap-1 rounded-t px-1.5 py-0.5 text-[10px] font-semibold bg-black/70 text-yellow-300">
+                            {t("equip.levelShort", { defaultValue: "Lv." })}{" "}
+                            {equippedItem.level}
+                        </span>
+                    </div>
                 )}
             </div>
 
+            {/* Label slot */}
             <div className="mt-1">
                 <span className="text-[11px] font-medium text-gray-300 bg-gray-700 px-2 py-0.5 rounded">
                     {slotLabel}
                 </span>
             </div>
+
+            {tooltip}
         </div>
     );
 };
