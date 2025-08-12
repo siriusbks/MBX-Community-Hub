@@ -21,7 +21,7 @@ export const CharacterDisplay: React.FC<Props> = ({
 }) => {
     const { t } = useTranslation("equipment");
     return (
-        <div className="relative bg-gray-800 border border-gray-700 rounded-lg shadow-lg px-6 py-8">
+        <div className="relative bg-gray-800 border border-gray-700 rounded-lg shadow-lg px-4 py-6">
             <div className="relative w-[350px] h-[500px] mx-auto">
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-gray-700"></div>
 
@@ -35,7 +35,7 @@ export const CharacterDisplay: React.FC<Props> = ({
                 ))}
             </div>
 
-            <div className="text-center mt-6">
+            <div className="text-center mt-4">
                 <h3 className="text-base font-bold text-white">
                     {t("equip.character.title")}
                 </h3>
