@@ -1,0 +1,201 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
+import React, { useState } from "react";
+import { EQUIPMENT_SLOTS } from "@utils/equipmentSlots";
+import { Equipment } from "@t/equip";
+import { useItemDetails } from "@hooks/useItemDetails";
+import { Hammer, ChevronDown, FlaskConical, PackageOpen } from "lucide-react";
+
+type Locale = "us" | "fr" | "pl";
+
+interface Props {
+    equippedItems: { [key: string]: Equipment | null };
+    locale?: Locale;
+}
+
+const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
+    src,
+    alt,
+    size = 24,
+}) => {
+    if (!src)
+        return (
+            <div
+                className="bg-gray-700/60 rounded border border-gray-700"
+                style={{ width: size, height: size }}
+            />
+        );
+
+    const final =
+        src.startsWith("data:") || src.startsWith("http")
+            ? src
+            : `data:image/png;base64,${src}`;
+
+    return (
+        <img
+            src={final}
+            alt={alt}
+            className="object-contain bg-gray-800/40 rounded border border-gray-700"
+            style={{ width: size, height: size }}
+            onError={(e) =>
+                ((e.target as HTMLImageElement).style.display = "none")
+            }
+        />
+    );
+};
+
+const CraftSection: React.FC<{
+    slotName: string;
+    item: Equipment;
+    locale: Locale;
+    defaultOpen?: boolean;
+}> = ({ slotName, item, locale, defaultOpen }) => {
+    const [open, setOpen] = useState(!!defaultOpen);
+    const { data, loading, error } = useItemDetails(item.id, locale);
+
+    return (
+        <div className="border rounded-md bg-gray-900/40 border-gray-700">
+            <button
+                onClick={() => setOpen((o) => !o)}
+                className="w-full flex items-center justify-between px-4 py-2 text-left text-sm font-medium text-gray-100 hover:bg-gray-800/60"
+            >
+                <span className="truncate">
+                    <span className="text-gray-400">{slotName}</span>
+                    {item?.name ? ` – ${item.name}` : ""}
+                </span>
+                <ChevronDown
+                    className={`w-4 h-4 transition-transform ${
+                        open ? "rotate-180" : ""
+                    }`}
+                />
+            </button>
+
+            {open && (
+                <div className="px-4 pb-3 pt-2">
+                    {loading && (
+                        <p className="text-sm text-gray-400">Loading recipe…</p>
+                    )}
+                    {error && (
+                        <p className="text-sm text-red-300">
+                            Failed to load: {error}
+                        </p>
+                    )}
+                    {!loading &&
+                        !error &&
+                        !data?.recipe?.ingredients?.length && (
+                            <p className="text-sm text-gray-400">
+                                No recipe available for this item.
+                            </p>
+                        )}
+
+                    {!!data?.recipe?.ingredients?.length && (
+                        <div className="space-y-2">
+                            {data.recipe.job && (
+                                <div className="flex items-center gap-2 text-xs text-gray-300 mb-1">
+                                    <FlaskConical className="w-4 h-4 text-emerald-400" />
+                                    <span>Job:</span>
+                                    <span className="font-medium text-white">
+                                        {data.recipe.job}
+                                    </span>
+                                </div>
+                            )}
+
+                            <ul className="space-y-2">
+                                {data.recipe.ingredients!.map(
+                                    (ing: any, idx: number) => {
+                                        const type = ing.type ?? "custom";
+                                        const amount = ing.amount ?? 1;
+                                        const name =
+                                            type === "custom"
+                                                ? ing.item?.name ??
+                                                  ing.item?.id ??
+                                                  ing.id ??
+                                                  "Unknown"
+                                                : type === "vanilla"
+                                                ? ing.id
+                                                : ing.id ?? "Unknown";
+                                        const img =
+                                            type === "custom"
+                                                ? ing.item?.image
+                                                : undefined;
+
+                                        return (
+                                            <li
+                                                key={idx}
+                                                className="flex items-center justify-between gap-3 bg-gray-800/60 p-2 rounded border border-gray-700"
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <Img
+                                                        src={img}
+                                                        alt={name}
+                                                        size={32}
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm text-white">
+                                                            {name}
+                                                        </span>
+                                                        <span className="text-xs text-gray-400">
+                                                            {type
+                                                                .charAt(0)
+                                                                .toUpperCase() +
+                                                                type.slice(1)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-1 text-xs text-gray-300">
+                                                    <PackageOpen className="w-4 h-4 text-blue-300" />
+                                                    <span>x{amount}</span>
+                                                </div>
+                                            </li>
+                                        );
+                                    }
+                                )}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export const CraftingBreakdown: React.FC<Props> = ({
+    equippedItems,
+    locale = "us",
+}) => {
+    return (
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+                <Hammer className="w-5 h-5 text-green-400" />
+                <h3 className="text-sm font-semibold text-white">
+                    Crafting by Slot
+                </h3>
+            </div>
+
+            <div className="space-y-2 max-h-72 xl:max-h-80 overflow-y-auto custom-scrollbar pr-1">
+                {EQUIPMENT_SLOTS.map((slot) => {
+                    const item = equippedItems[slot.id];
+                    if (!item?.id) return null;
+                    return (
+                        <CraftSection
+                            key={slot.id}
+                            slotName={slot.name}
+                            item={item}
+                            locale={locale}
+                        />
+                    );
+                })}
+            </div>
+
+            {Object.values(equippedItems).every((it) => !it) && (
+                <p className="text-sm text-gray-400">
+                    Equip an item to see its recipe.
+                </p>
+            )}
+        </div>
+    );
+};
