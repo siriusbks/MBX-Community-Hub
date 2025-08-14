@@ -11,13 +11,14 @@ import { ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const statColors: Record<string, string> = {
-    HEALTH: "text-red-400",
-    AGILITY: "text-green-400",
-    STRENGTH: "text-orange-400",
-    INTELLIGENCE: "text-blue-400",
-    WISDOM: "text-purple-400",
-    LUCK: "text-yellow-400",
-    POWER: "text-pink-400",
+    HEALTH: "#e02044",
+    AGILITY: "#85c062",
+    STRENGTH: "#58350b",
+    INTELLIGENCE: "#df3f29",
+    WISDOM: "#846cf0",
+    LUCK: "#7ccbf9",
+    FORTUNE: "#f1903e",
+    DEFENSE: "#0045cd",
 };
 
 interface Props {
@@ -78,6 +79,11 @@ export const StatsBreakdown: React.FC<Props> = ({ equippedItems }) => {
                                                     statColors[stat] ||
                                                     "text-gray-600"
                                                 }`}
+                                                style={{
+                                                    color:
+                                                        statColors[stat] ??
+                                                        "#ccc",
+                                                }}
                                             >
                                                 {t(
                                                     `equip.stats.names.${stat}`,
