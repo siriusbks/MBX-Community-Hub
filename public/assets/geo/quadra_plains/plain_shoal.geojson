@@ -231,61 +231,6 @@
             "properties": {
                 "map": "quadra_plains"
             }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [315, 50, -280]
-            },
-            "id": 22,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [275, 46, -340]
-            },
-            "id": 23,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [277, 48, -361]
-            },
-            "id": 24,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [286, 47, -383]
-            },
-            "id": 25,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
-        },
-        {
-            "geometry": {
-                "type": "Point",
-                "coordinates": [363, 46, -304]
-            },
-            "id": 26,
-            "type": "Feature",
-            "properties": {
-                "map": "quadra_plains"
-            }
         }
     ]
 }
