@@ -6,17 +6,23 @@
 
 import React from "react";
 import { Equipment, PlayerStats } from "@t/equip";
-import { StatsBreakdown } from "./StatsBreakdown";
 import { formatStatRange } from "@utils/statsCalculator";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
     stats: PlayerStats;
     equippedItems: { [key: string]: Equipment | null };
+
+    skullNames?: string[];
+    onOpenSkulls?: () => void;
 }
 
-export const StatsPanel: React.FC<Props> = ({ stats, equippedItems }) => {
+export const StatsPanel: React.FC<Props> = ({
+    stats,
+    skullNames = [],
+    onOpenSkulls,
+}) => {
     const { t } = useTranslation("equipment");
 
     const color: Record<string, string> = {
@@ -46,12 +52,40 @@ export const StatsPanel: React.FC<Props> = ({ stats, equippedItems }) => {
     return (
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center gap-2 mb-4">
-                <TrendingUp className="w-5 h-5 text-green-400" />
-                <h2 className="text-lg font-bold text-white">
-                    {t("equip.stats.title")}
-                </h2>
+            <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-green-400" />
+                    <h2 className="text-lg font-bold text-white">
+                        {t("equip.stats.title")}
+                    </h2>
+                </div>
+
+                {onOpenSkulls && (
+                    <button
+                        onClick={onOpenSkulls}
+                        className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-yellow-600/40 bg-yellow-900/30 text-yellow-300 hover:bg-yellow-900/50 transition"
+                        title={t("equip.stats.addSkulls", {
+                            defaultValue: "Add skull bonuses",
+                        })}
+                    >
+                        <Plus className="w-4 h-4" />
+                        {t("equip.stats.skulls", { defaultValue: "Skulls" })}
+                    </button>
+                )}
             </div>
+
+            {skullNames.length > 0 && (
+                <div className="mb-3 -mt-1">
+                    {skullNames.map((n) => (
+                        <span
+                            key={n}
+                            className="inline-block text-[10px] mr-2 mb-2 px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-200"
+                        >
+                            {n}
+                        </span>
+                    ))}
+                </div>
+            )}
 
             {/* Main Stats */}
             {!allZero && (
@@ -95,10 +129,6 @@ export const StatsPanel: React.FC<Props> = ({ stats, equippedItems }) => {
                     </p>
                 </div>
             )}
-
-            <div className="mt-auto max-h-64 overflow-y-auto pr-1 custom-scrollbar">
-                <StatsBreakdown equippedItems={equippedItems} />
-            </div>
         </div>
     );
 };
