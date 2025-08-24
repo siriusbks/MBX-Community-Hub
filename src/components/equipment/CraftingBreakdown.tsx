@@ -48,6 +48,24 @@ const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
     );
 };
 
+const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
+    if (id === undefined || id === null) return null;
+    const href = `https://minebox.co/universe/items?id=${id}`;
+    return (
+        <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-full border border-blue-400/60 text-blue-300 hover:text-white hover:border-blue-300 bg-blue-500/10 w-5 h-5 text-[10px] leading-none"
+            aria-label="Open in Minebox"
+            title="Open in Minebox"
+            onClick={(e) => e.stopPropagation()}
+        >
+            ?
+        </a>
+    );
+};
+
 const CraftSection: React.FC<{
     slotName: string;
     item: Equipment;
@@ -63,15 +81,22 @@ const CraftSection: React.FC<{
                 onClick={() => setOpen((o) => !o)}
                 className="w-full flex items-center justify-between px-4 py-2 text-left text-sm font-medium text-gray-100 hover:bg-gray-800/60"
             >
-                <span className="truncate">
+                <span
+                    className="truncate pr-2"
+                    title={item?.name ? `${slotName} – ${item.name}` : slotName}
+                >
                     <span className="text-gray-400">{slotName}</span>
                     {item?.name ? ` – ${item.name}` : ""}
                 </span>
-                <ChevronDown
-                    className={`w-4 h-4 transition-transform ${
-                        open ? "rotate-180" : ""
-                    }`}
-                />
+
+                <span className="flex items-center gap-2 flex-shrink-0 ml-2">
+                    <MineboxLink id={item?.id} />
+                    <ChevronDown
+                        className={`w-4 h-4 transition-transform ${
+                            open ? "rotate-180" : ""
+                        }`}
+                    />
+                </span>
             </button>
 
             {open && (
