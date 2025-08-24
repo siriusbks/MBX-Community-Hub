@@ -95,7 +95,7 @@ export const EquipmentSlot: React.FC<Props> = ({
     const pos = useAnchorPosition(slotRef.current, low);
 
     const tooltip = useMemo(() => {
-        if (!equippedItem || !hover || !pos) return null;
+        if (!hover || !pos) return null;
 
         const body = document.body;
         if (!body) return null;
@@ -119,43 +119,71 @@ export const EquipmentSlot: React.FC<Props> = ({
                         }`,
                         opacity: 1,
                     }}
+                    role="tooltip"
                 >
-                    <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold truncate">
-                            {equippedItem.name}
-                        </span>
-                        {rarityLabel && (
-                            <span className="text-[10px] text-gray-300 ml-2">
-                                {rarityLabel}
-                            </span>
-                        )}
-                    </div>
+                    {equippedItem ? (
+                        <>
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-semibold truncate">
+                                    {equippedItem.name}
+                                </span>
+                                {rarityLabel && (
+                                    <span className="text-[10px] text-gray-300 ml-2">
+                                        {rarityLabel}
+                                    </span>
+                                )}
+                            </div>
 
-                    {equippedItem.stats && (
-                        <ul className="mt-1 space-y-0.5">
-                            {Object.entries(equippedItem.stats).map(
-                                ([stat, range]) => (
-                                    <li
-                                        key={stat}
-                                        className="flex justify-between text-[11px] text-gray-300"
-                                    >
-                                        <span className="capitalize">
-                                            {stat.charAt(0) +
-                                                stat.slice(1).toLowerCase()}
-                                        </span>
-                                        <span className="text-gray-200">
-                                            {range[0] === range[1]
-                                                ? range[0]
-                                                : `${range[0]}–${range[1]}`}
-                                        </span>
-                                    </li>
-                                )
+                            {equippedItem.stats && (
+                                <ul className="mt-1 space-y-0.5">
+                                    {Object.entries(equippedItem.stats).map(
+                                        ([stat, range]) => (
+                                            <li
+                                                key={stat}
+                                                className="flex justify-between text-[11px] text-gray-300"
+                                            >
+                                                <span className="capitalize">
+                                                    {stat.charAt(0) +
+                                                        stat
+                                                            .slice(1)
+                                                            .toLowerCase()}
+                                                </span>
+                                                <span className="text-gray-200">
+                                                    {range[0] === range[1]
+                                                        ? range[0]
+                                                        : `${range[0]} / ${range[1]}`}
+                                                </span>
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
                             )}
-                        </ul>
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-semibold truncate">
+                                    {slotLabel}
+                                </span>
+                            </div>
+                            <ul className="mt-1 space-y-0.5">
+                                <li className="text-[11px] text-gray-300">
+                                    {t("equip.tooltip.empty", {
+                                        defaultValue:
+                                            "No items equipped for this slot.",
+                                    })}
+                                </li>
+                                <li className="text-[11px] text-gray-300">
+                                    {t("equip.tooltip.action", {
+                                        defaultValue:
+                                            "Click to manage equipment.",
+                                    })}
+                                </li>
+                            </ul>
+                        </>
                     )}
                 </div>
 
-                {/* Flèche */}
                 <div
                     className={[
                         "pointer-events-none fixed z-[9999] h-2 w-2 rotate-45",
@@ -173,20 +201,22 @@ export const EquipmentSlot: React.FC<Props> = ({
             </>,
             body
         );
-    }, [equippedItem, hover, pos, rarityLabel]);
+    }, [equippedItem, hover, pos, rarityLabel, slotLabel, t]);
 
     return (
         <div
             className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer text-center"
             style={{ top: slot.position.top, left: slot.position.left }}
             onClick={() => onSlotClick(slot.id)}
-            aria-label={`Slot ${slotLabel}`}
+            aria-label={`Slot ${slotLabel}${
+                equippedItem ? " – hover for details" : " – hover for info"
+            }`}
         >
             <div
                 ref={slotRef}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
-                className={`relative w-16 h-16 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg ${
+                className={`group relative w-16 h-16 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-lg ${
                     equippedItem
                         ? getRarityColor(equippedItem.rarity)
                         : "border border-gray-600 bg-gray-700 hover:border-gray-500"
@@ -210,7 +240,14 @@ export const EquipmentSlot: React.FC<Props> = ({
                     <Plus className="w-6 h-6 text-gray-400 pointer-events-none" />
                 )}
 
-                {/* Badge niveau */}
+                <span
+                    className="pointer-events-none select-none absolute -top-1 -right-1 z-10 w-4 h-4 rounded-full bg-black/70 border border-gray-600 text-gray-200 text-[10px] leading-none flex items-center justify-center opacity-60 group-hover:opacity-100 group-focus-within:opacity-100 shadow"
+                    aria-hidden="true"
+                >
+                    ?
+                </span>
+
+                {/* Badge Lv */}
                 {equippedItem?.level != null && (
                     <div className="absolute bottom-0 inset-x-0 flex justify-center">
                         <span className="mb-0.5 inline-flex items-center gap-1 rounded-t px-1.5 py-0.5 text-[10px] font-semibold bg-black/70 text-yellow-300">
