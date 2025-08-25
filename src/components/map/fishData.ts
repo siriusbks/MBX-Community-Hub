@@ -135,6 +135,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 condition: "",
                 image: "assets/media/item/fishing/kelp.png",
             },
+            {
+                name: "fishing.clam",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.rare",
+                condition: "",
+                image: "assets/media/item/fishing/clam.png",
+            },
         ],
     },
     kokoko: {
@@ -309,6 +317,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 condition: "",
                 image: "assets/media/item/fishing/tube_coral.png",
             },
+            {
+                name: "fishing.bubble_coral",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.vanilla",
+                condition: "",
+                image: "assets/media/item/fishing/bubble_coral.png",
+            },
         ],
         jungle_shoal: [
             {
@@ -339,7 +355,7 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 name: "fishing.barracuda",
                 level: 0,
                 time: [""],
-                rarity: "fishing.rarity.mythic",
+                rarity: "fishing.rarity.legendary",
                 condition: "",
                 image: "assets/media/item/fishing/barracuda.png",
             },
@@ -934,6 +950,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 rarity: "fishing.rarity.legendary",
                 condition: "",
                 image: "assets/media/item/fishing/sawfish.png",
+            },
+            {
+                name: "fishing.razorback_sucker",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.epic",
+                condition: "",
+                image: "assets/media/item/fishing/fish_razorback_sucker.png",
             },
         ],
     },

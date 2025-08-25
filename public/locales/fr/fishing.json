@@ -24,7 +24,8 @@
     "fishing.tuna": "Thon",
     "fishing.reef_shark": "Requin de Récif",
     "fishing.octopus": "Poulpe",
-    "fishing.tube_coral": "Corail",
+    "fishing.tube_coral": "Corail tubulaire",
+    "fishing.bubble_coral": "Corail bulles",
     "fishing.flying_fish": "Poisson Volant",
     "fishing.barracuda": "Barracuda",
     "fishing.lobster": "Homard",
@@ -88,5 +89,6 @@
     "fishing.zander": "Sandre",
     "fishing.ice": "Glace",
     "fishing.snow_crab": "Crabe des neiges",
-    "fishing.nether_star": "Etoile du nether"
+    "fishing.nether_star": "Etoile du nether",
+    "fishing.razorback_sucker": "Meunier à dos de rasoir"
 }

@@ -25,6 +25,7 @@
     "fishing.reef_shark": "Reef Shark",
     "fishing.octopus": "Octopus",
     "fishing.tube_coral": "Tube Coral",
+    "fishing.bubble_coral": "Bubble Coral",
     "fishing.flying_fish": "Flying Fish",
     "fishing.barracuda": "Barracuda",
     "fishing.lobster": "Lobster",
@@ -88,5 +89,6 @@
     "fishing.zander": "Zander",
     "fishing.ice": "Ice",
     "fishing.snow_crab": "Snow Crab",
-    "fishing.nether_star": "Nether Star"
+    "fishing.nether_star": "Nether Star",
+    "fishing.razorback_sucker": "Razorback Sucker"
 }

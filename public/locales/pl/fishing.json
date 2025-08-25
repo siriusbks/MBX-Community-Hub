@@ -25,6 +25,7 @@
     "fishing.reef_shark": "Rekin rafowy",
     "fishing.octopus": "Ośmiornica",
     "fishing.tube_coral": "Koral rurkowy",
+    "fishing.bubble_coral": "Bubble Coral",
     "fishing.flying_fish": "Latająca ryba",
     "fishing.barracuda": "Barakuda",
     "fishing.lobster": "Homar",
@@ -88,5 +89,6 @@
     "fishing.zander": "Sandacz",
     "fishing.ice": "Lód",
     "fishing.snow_crab": "Śnieżny Krab",
-    "fishing.nether_star": "Gwiazda Netheru"
+    "fishing.nether_star": "Gwiazda Netheru",
+    "fishing.razorback_sucker": "Razorback Sucker"
 }
