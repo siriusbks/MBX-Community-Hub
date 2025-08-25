@@ -29,6 +29,20 @@
     },
     {
         "id": "2",
+        "name": "MineboxTools",
+        "creator": "Silv04",
+        "links": {
+            "website": "",
+            "modrinth": "https://modrinth.com/mod/mineboxtools",
+            "github": "https://github.com/Silv-04/MineboxTools",
+            "curseforge": ""
+        },
+        "logo": "https://cdn.modrinth.com/data/pgS7fqz5/2840877421f511a0d1ab05d7e4898958285e466b_96.webp",
+        "type": "Minecraft Mod",
+        "badge": "New"
+    },
+    {
+        "id": "3",
         "name": "Notra",
         "creator": "imjustprism",
         "links": {
@@ -42,7 +56,7 @@
         "badge": ""
     },
     {
-        "id": "3",
+        "id": "4",
         "name": "MineboxMaps",
         "creator": "AerWyn81",
         "links": {
@@ -56,7 +70,7 @@
         "badge": ""
     },
     {
-        "id": "4",
+        "id": "5",
         "name": "Minebox Journeymap",
         "creator": "ThirtyTwelveNor",
         "links": {
@@ -70,7 +84,7 @@
         "badge": ""
     },
     {
-        "id": "5",
+        "id": "6",
         "name": "Minebox Plus | Retextured Vanilla Textures",
         "creator": "tinyslimestudio",
         "links": {
@@ -84,7 +98,7 @@
         "badge": ""
     },
     {
-        "id": "6",
+        "id": "7",
         "name": "Minebox Plus | Gray Crops Addon",
         "creator": "tinyslimestudio",
         "links": {
@@ -98,7 +112,7 @@
         "badge": ""
     },
     {
-        "id": "7",
+        "id": "8",
         "name": "Minebox Plus | Remove Bush Leaves Addon",
         "creator": "tinyslimestudio",
         "links": {

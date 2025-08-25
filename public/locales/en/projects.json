@@ -2,15 +2,17 @@
   "description": {
     "0": "Modpack compiling the mods permitted by the rules on Minebox; any additional mods are beyond my responsibility if you face sanctions.",
     "1": "MineboxAdditions is a mod that adds blatant features to your average Minebox gameplay !",
-    "2": "Notra is a simple utility mod built with fabric specifically for Minebox.",
-    "3": "An interactive web-based map for the Minebox server, helping players explore and navigate the world with ease.",
-    "4": "A highly customizable JourneyMap addon that makes waypoints for MineBox.",
-    "5": "The Minebox Plus pack fills in the missing textures for the Server Resource Pack available at minebox.co.",
-    "6": "An add-on for Minebox Plus that changes the appearance of immature crops to grayscale.",
-    "7": "An add-on for Minebox Plus that removes the default Bushy Leaves effect from Minebox."
+    "2": "A set of tools for a better experience on Minebox.",
+    "3": "Notra is a simple utility mod built with fabric specifically for Minebox.",
+    "4": "An interactive web-based map for the Minebox server, helping players explore and navigate the world with ease.",
+    "5": "A highly customizable JourneyMap addon that makes waypoints for MineBox.",
+    "6": "The Minebox Plus pack fills in the missing textures for the Server Resource Pack available at minebox.co.",
+    "7": "An add-on for Minebox Plus that changes the appearance of immature crops to grayscale.",
+    "8": "An add-on for Minebox Plus that removes the default Bushy Leaves effect from Minebox."
   },
   "badge": {
     "Recommended": "Recommended",
-    "Popular": "Popular"
+    "Popular": "Popular",
+    "New": "New"
   }
 }
