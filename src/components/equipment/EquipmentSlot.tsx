@@ -168,16 +168,10 @@ export const EquipmentSlot: React.FC<Props> = ({
                             </div>
                             <ul className="mt-1 space-y-0.5">
                                 <li className="text-[11px] text-gray-300">
-                                    {t("equip.tooltip.empty", {
-                                        defaultValue:
-                                            "No items equipped for this slot.",
-                                    })}
+                                    {t("equip.tooltip.empty")}
                                 </li>
                                 <li className="text-[11px] text-gray-300">
-                                    {t("equip.tooltip.action", {
-                                        defaultValue:
-                                            "Click to manage equipment.",
-                                    })}
+                                    {t("equip.tooltip.action")}
                                 </li>
                             </ul>
                         </>
