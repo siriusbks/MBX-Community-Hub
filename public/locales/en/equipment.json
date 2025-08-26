@@ -18,6 +18,7 @@
   "equip.character.hint": "Click on a slot to equip an item",
   "equip.selector.title": "Select {{category}}",
   "equip.selector.search": "Search equipment...",
+  "equip.otherRingEquipped": "Equipped on other ring",
   "equip.stats.title": "Character Stats",
   "equip.stats.emptyTitle": "No equipment equipped",
   "equip.stats.emptySubtitle": "Start selecting equipment to see your stats!",

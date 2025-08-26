@@ -141,7 +141,9 @@ export const EquipmentSelector: React.FC<Props> = ({
                                             )}
                                             {isEquippedSameRing && (
                                                 <p className="text-[11px] text-yellow-400 mt-1">
-                                                    Equipped on other ring
+                                                    {t(
+                                                        "equip.otherRingEquipped"
+                                                    )}
                                                 </p>
                                             )}
                                         </div>
