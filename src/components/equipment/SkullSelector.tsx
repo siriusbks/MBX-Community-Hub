@@ -6,6 +6,7 @@
 
 import React, { useMemo, useState } from "react";
 import { X, Check, Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SKULLS } from "../../constants/skulls";
 
 interface Props {
@@ -21,6 +22,7 @@ export const SkullSelector: React.FC<Props> = ({
     onChange,
     onClose,
 }) => {
+    const { t } = useTranslation("equipment");
     const [q, setQ] = useState("");
 
     const filtered = useMemo(() => {
@@ -44,7 +46,9 @@ export const SkullSelector: React.FC<Props> = ({
             <div className="w-full max-w-2xl bg-gray-900 border border-gray-700 rounded-lg overflow-hidden text-white">
                 {/* Header */}
                 <div className="px-4 py-3 border-b border-gray-700 flex items-center justify-between">
-                    <h3 className="font-semibold">Select Skulls</h3>
+                    <h3 className="font-semibold">
+                        {t("equip.selector.skulls")}
+                    </h3>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-gray-800 rounded"
@@ -60,7 +64,7 @@ export const SkullSelector: React.FC<Props> = ({
                         <input
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
-                            placeholder="Search skull..."
+                            placeholder={t("equip.search.skulls")}
                             className="w-full bg-gray-800 border border-gray-700 rounded px-9 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-green-400 focus:border-transparent"
                         />
                     </div>
@@ -104,13 +108,13 @@ export const SkullSelector: React.FC<Props> = ({
                 {/* Footer */}
                 <div className="px-4 py-3 border-t border-gray-700 flex items-center justify-between">
                     <span className="text-xs text-gray-400">
-                        {selected.length} selected
+                        {t("equip.skulls.selected", { count: selected.length })}
                     </span>
                     <button
                         onClick={onClose}
                         className="px-4 py-2 text-sm bg-green-900/40 hover:bg-green-900/60 border border-green-700/50 rounded text-green-200"
                     >
-                        Close
+                        {t("equip.buttons.skulls.close")}
                     </button>
                 </div>
             </div>
