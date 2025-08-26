@@ -2,6 +2,8 @@
   "equip.title": "Equipment Manager",
   "equip.itemsLoaded": "{{count}} items loaded",
   "equip.resetAll": "Reset All",
+  "equip.stats": "Stats",
+  "equip.crafting": "Crafting",
   "equip.buttons.resetAllEquipment": "Reset All Equipment",
   "equip.buttons.close": "Close",
   "equip.buttons.removeEquipped": "Remove equipped item",

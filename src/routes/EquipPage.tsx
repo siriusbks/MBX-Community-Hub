@@ -6,6 +6,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Loader2, RotateCcw, Shield } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { useEquipment } from "@hooks/useEquipment";
 import { CharacterDisplay } from "@components/equipment/CharacterDisplay";
@@ -35,6 +36,7 @@ function addFlatToRanges(
 }
 
 const EquipPage: React.FC = () => {
+    const { t } = useTranslation("equipment");
     const { equipment, loading, error } = useEquipment();
     const [equippedItems, setEquippedItems] = useState<EquippedItems>({});
     const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
@@ -119,14 +121,14 @@ const EquipPage: React.FC = () => {
             {/* Topbar */}
             <header className="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
-                    <Shield className="w-6 h-6 text-yellow-400" />
+                    <Shield className="w-6 h-6 text-green-400" />
                     <h1 className="text-lg font-semibold text-gray-100">
-                        Equipment Manager
+                        {t("equip.title")}
                     </h1>
                 </div>
                 <div className="flex items-center gap-3">
                     <span className="text-xs text-gray-400">
-                        {equipment.length} items loaded
+                        {t("equip.itemsLoaded", { count: equipment.length })}
                     </span>
                     <button
                         onClick={onResetAll}
@@ -134,7 +136,7 @@ const EquipPage: React.FC = () => {
                         title="Reset All Equipment"
                     >
                         <RotateCcw className="w-4 h-4" />
-                        Reset All
+                        {t("equip.resetAll")}
                     </button>
                 </div>
             </header>
@@ -163,7 +165,7 @@ const EquipPage: React.FC = () => {
                                     }`}
                                     aria-selected={activeTab === "stats"}
                                 >
-                                    Stats
+                                    {t("equip.stats")}
                                 </button>
                                 <button
                                     onClick={() => setActiveTab("craft")}
@@ -174,7 +176,7 @@ const EquipPage: React.FC = () => {
                                     }`}
                                     aria-selected={activeTab === "craft"}
                                 >
-                                    Crafting
+                                    {t("equip.crafting")}
                                 </button>
                             </div>
 
