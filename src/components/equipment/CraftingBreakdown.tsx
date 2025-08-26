@@ -17,18 +17,32 @@ interface Props {
     equippedItems: { [key: string]: Equipment | null };
     locale?: Locale;
 }
+
+const MC_ITEM_BASE =
+    "https://assets.mcasset.cloud/1.21.8/assets/minecraft/textures/item/";
+
+function vanillaItemUrl(id: string) {
+    const key = (id ?? "")
+        .toString()
+        .toLowerCase()
+        .replace(/^minecraft:/, "")
+        .replace(/\s+/g, "_");
+    return `${MC_ITEM_BASE}/${key}.png`;
+}
+
 const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
     src,
     alt,
     size = 24,
 }) => {
-    if (!src)
+    if (!src) {
         return (
             <div
                 className="bg-gray-700/60 rounded border border-gray-700"
                 style={{ width: size, height: size }}
             />
         );
+    }
 
     const final =
         src.startsWith("data:") || src.startsWith("http")
@@ -41,9 +55,9 @@ const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
             alt={alt}
             className="object-contain bg-gray-800/40 rounded border border-gray-700"
             style={{ width: size, height: size }}
-            onError={(e) =>
-                ((e.target as HTMLImageElement).style.display = "none")
-            }
+            onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
         />
     );
 };
@@ -52,6 +66,7 @@ const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
     if (id === undefined || id === null) return null;
     const href = `https://minebox.co/universe/items?id=${id}`;
     const { t } = useTranslation("equipment");
+
     return (
         <a
             href={href}
@@ -66,6 +81,7 @@ const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
         </a>
     );
 };
+
 const CraftSection: React.FC<{
     slotId: string;
     item: Equipment;
@@ -77,6 +93,7 @@ const CraftSection: React.FC<{
     const { t } = useTranslation("equipment");
 
     const slotLabel = t(`equip.slots.${slotId}`);
+
     return (
         <div className="border rounded-md bg-gray-900/40 border-gray-700">
             <button
@@ -147,9 +164,12 @@ const CraftSection: React.FC<{
                                                 : type === "vanilla"
                                                 ? ing.id
                                                 : ing.id ?? "Unknown";
+
                                         const img =
                                             type === "custom"
                                                 ? ing.item?.image
+                                                : type === "vanilla" && ing.id
+                                                ? vanillaItemUrl(ing.id)
                                                 : undefined;
 
                                         return (
@@ -197,6 +217,7 @@ export const CraftingBreakdown: React.FC<Props> = ({
     locale = "us",
 }) => {
     const { t } = useTranslation("equipment");
+
     return (
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
