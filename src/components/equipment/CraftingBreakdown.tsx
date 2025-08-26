@@ -67,15 +67,16 @@ const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
     );
 };
 const CraftSection: React.FC<{
-    slotName: string;
+    slotId: string;
     item: Equipment;
     locale: Locale;
     defaultOpen?: boolean;
-}> = ({ slotName, item, locale, defaultOpen }) => {
+}> = ({ slotId, item, locale, defaultOpen }) => {
     const [open, setOpen] = useState(!!defaultOpen);
     const { data, loading, error } = useItemDetails(item.id, locale);
     const { t } = useTranslation("equipment");
 
+    const slotLabel = t(`equip.slots.${slotId}`);
     return (
         <div className="border rounded-md bg-gray-900/40 border-gray-700">
             <button
@@ -84,9 +85,11 @@ const CraftSection: React.FC<{
             >
                 <span
                     className="truncate pr-2"
-                    title={item?.name ? `${slotName} – ${item.name}` : slotName}
+                    title={
+                        item?.name ? `${slotLabel} – ${item.name}` : slotLabel
+                    }
                 >
-                    <span className="text-gray-400">{slotName}</span>
+                    <span className="text-gray-400">{slotLabel}</span>
                     {item?.name ? ` – ${item.name}` : ""}
                 </span>
 
@@ -210,7 +213,7 @@ export const CraftingBreakdown: React.FC<Props> = ({
                     return (
                         <CraftSection
                             key={slot.id}
-                            slotName={slot.name}
+                            slotId={slot.id}
                             item={item}
                             locale={locale}
                         />
