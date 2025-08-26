@@ -4,26 +4,31 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Equipment, PlayerStats } from "@t/equip";
 import { formatStatRange } from "@utils/statsCalculator";
 import { TrendingUp, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { SKULLS } from "../../constants/skulls";
 
 interface Props {
     stats: PlayerStats;
     equippedItems: { [key: string]: Equipment | null };
-
+    skullIds?: string[];
     skullNames?: string[];
     onOpenSkulls?: () => void;
 }
 
 export const StatsPanel: React.FC<Props> = ({
     stats,
+    skullIds,
     skullNames = [],
     onOpenSkulls,
 }) => {
-    const { t } = useTranslation("equipment");
+    const { t: tEquip } = useTranslation("equipment");
+    const { t: tSkulls } = useTranslation("skulls", {
+        keyPrefix: "skulls.names",
+    });
 
     const color: Record<string, string> = {
         HEALTH: "#e02044",
@@ -47,6 +52,28 @@ export const StatsPanel: React.FC<Props> = ({
         DEFENSE: "/assets/media/elemental/defense.png",
     };
 
+    const selectedSkullLabels = useMemo(() => {
+        if (skullIds?.length) {
+            return skullIds.map((id) =>
+                tSkulls(id, {
+                    defaultValue: SKULLS.find((s) => s.id === id)?.name ?? id,
+                })
+            );
+        }
+        if (skullNames.length) {
+            return skullNames.map((raw) => {
+                const tryAsId = tSkulls(raw, { defaultValue: "" });
+                if (tryAsId) return tryAsId;
+
+                const match = SKULLS.find(
+                    (s) => s.name.toLowerCase() === raw.toLowerCase()
+                );
+                return tSkulls(match?.id ?? raw, { defaultValue: raw });
+            });
+        }
+        return [];
+    }, [skullIds, skullNames, tSkulls]);
+
     const allZero = Object.values(stats).every(([a, b]) => a + b === 0);
 
     return (
@@ -55,8 +82,8 @@ export const StatsPanel: React.FC<Props> = ({
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-green-400" />
-                    <h2 className="text-lg font-bold text-white">
-                        {t("equip.stats.title")}
+                    <h2 className="text-xs font-bold text-white">
+                        {tEquip("equip.stats.title")}
                     </h2>
                 </div>
 
@@ -64,24 +91,24 @@ export const StatsPanel: React.FC<Props> = ({
                     <button
                         onClick={onOpenSkulls}
                         className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-yellow-600/40 bg-yellow-900/30 text-yellow-300 hover:bg-yellow-900/50 transition"
-                        title={t("equip.stats.addSkulls", {
+                        title={tEquip("equip.stats.addSkulls", {
                             defaultValue: "Add skull bonuses",
                         })}
                     >
                         <Plus className="w-4 h-4" />
-                        {t("equip.buttons.skulls")}
+                        {tEquip("equip.buttons.skulls")}
                     </button>
                 )}
             </div>
 
-            {skullNames.length > 0 && (
+            {selectedSkullLabels.length > 0 && (
                 <div className="mb-3 -mt-1">
-                    {skullNames.map((n) => (
+                    {selectedSkullLabels.map((label) => (
                         <span
-                            key={n}
+                            key={label}
                             className="inline-block text-[10px] mr-2 mb-2 px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-200"
                         >
-                            {n}
+                            {label}
                         </span>
                     ))}
                 </div>
@@ -108,7 +135,7 @@ export const StatsPanel: React.FC<Props> = ({
                                             className="w-5 h-5"
                                         />
                                     )}
-                                    {t(`equip.stats.names.${name}`, {
+                                    {tEquip(`equip.stats.names.${name}`, {
                                         defaultValue: name,
                                     })}
                                 </span>
@@ -123,9 +150,9 @@ export const StatsPanel: React.FC<Props> = ({
 
             {allZero && (
                 <div className="text-center py-8 text-gray-400">
-                    <p>{t("equip.stats.emptyTitle")}</p>
+                    <p>{tEquip("equip.stats.emptyTitle")}</p>
                     <p className="text-sm text-gray-500 mt-1">
-                        {t("equip.stats.emptySubtitle")}
+                        {tEquip("equip.stats.emptySubtitle")}
                     </p>
                 </div>
             )}
