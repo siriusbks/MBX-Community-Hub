@@ -59,7 +59,7 @@ const LanguageSelector = ({
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 z-20 mt-2 bg-gray-800 border border-gray-700 rounded shadow-md w-40">
+                <div className="absolute right-0 z-50 mt-2 bg-gray-800 border border-gray-700 rounded shadow-md w-40">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}
@@ -94,7 +94,7 @@ export const Navbar = () => {
     };
 
     return (
-        <header className="w-full h-18 bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
+        <header className="relative z-50 w-full h-18 bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
             <div className="container mx-auto px-6 py-0 h-full flex items-center justify-between">
                 {/* Logo */}
                 <NavLink to="/" className="flex items-center h-full group">
