@@ -8,7 +8,8 @@ import React, { useState } from "react";
 import { EQUIPMENT_SLOTS } from "@utils/equipmentSlots";
 import { Equipment } from "@t/equip";
 import { useItemDetails } from "@hooks/useItemDetails";
-import { Hammer, ChevronDown, FlaskConical, PackageOpen } from "lucide-react";
+import { Hammer, ChevronDown, PackageOpen, Cog } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type Locale = "us" | "fr" | "pl";
 
@@ -16,7 +17,6 @@ interface Props {
     equippedItems: { [key: string]: Equipment | null };
     locale?: Locale;
 }
-
 const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
     src,
     alt,
@@ -51,6 +51,7 @@ const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
 const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
     if (id === undefined || id === null) return null;
     const href = `https://minebox.co/universe/items?id=${id}`;
+    const { t } = useTranslation("equipment");
     return (
         <a
             href={href}
@@ -58,14 +59,13 @@ const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-full border border-blue-400/60 text-blue-300 hover:text-white hover:border-blue-300 bg-blue-500/10 w-5 h-5 text-[10px] leading-none"
             aria-label="Open in Minebox"
-            title="Open in Minebox"
+            title={t("equip.buttons.openInMinebox")}
             onClick={(e) => e.stopPropagation()}
         >
             ?
         </a>
     );
 };
-
 const CraftSection: React.FC<{
     slotName: string;
     item: Equipment;
@@ -74,6 +74,7 @@ const CraftSection: React.FC<{
 }> = ({ slotName, item, locale, defaultOpen }) => {
     const [open, setOpen] = useState(!!defaultOpen);
     const { data, loading, error } = useItemDetails(item.id, locale);
+    const { t } = useTranslation("equipment");
 
     return (
         <div className="border rounded-md bg-gray-900/40 border-gray-700">
@@ -113,7 +114,7 @@ const CraftSection: React.FC<{
                         !error &&
                         !data?.recipe?.ingredients?.length && (
                             <p className="text-sm text-gray-400">
-                                No recipe available for this item.
+                                {t("equip.recipeNotFound")}
                             </p>
                         )}
 
@@ -121,8 +122,8 @@ const CraftSection: React.FC<{
                         <div className="space-y-2">
                             {data.recipe.job && (
                                 <div className="flex items-center gap-2 text-xs text-gray-300 mb-1">
-                                    <FlaskConical className="w-4 h-4 text-emerald-400" />
-                                    <span>Job:</span>
+                                    <Cog className="w-4 h-4 text-emerald-400" />
+                                    <span>{t("equip.title.job")}</span>
                                     <span className="font-medium text-white">
                                         {data.recipe.job}
                                     </span>
@@ -192,12 +193,13 @@ export const CraftingBreakdown: React.FC<Props> = ({
     equippedItems,
     locale = "us",
 }) => {
+    const { t } = useTranslation("equipment");
     return (
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
                 <Hammer className="w-5 h-5 text-green-400" />
                 <h3 className="text-sm font-semibold text-white">
-                    Crafting by Slot
+                    {t("equip.craftingBySlot")}
                 </h3>
             </div>
 
@@ -217,9 +219,7 @@ export const CraftingBreakdown: React.FC<Props> = ({
             </div>
 
             {Object.values(equippedItems).every((it) => !it) && (
-                <p className="text-sm text-gray-400">
-                    Equip an item to see its recipe.
-                </p>
+                <p className="text-sm text-gray-400">{t("equip.seerecipe")}</p>
             )}
         </div>
     );
