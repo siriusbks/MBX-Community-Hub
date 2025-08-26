@@ -69,7 +69,7 @@ export const StatsPanel: React.FC<Props> = ({
                         })}
                     >
                         <Plus className="w-4 h-4" />
-                        {t("equip.stats.skulls", { defaultValue: "Skulls" })}
+                        {t("equip.buttons.skulls")}
                     </button>
                 )}
             </div>
