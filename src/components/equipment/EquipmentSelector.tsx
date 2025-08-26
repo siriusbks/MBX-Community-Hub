@@ -98,7 +98,9 @@ export const EquipmentSelector: React.FC<Props> = ({
                                     }`}
                                     title={
                                         isEquippedSameRing
-                                            ? "Already equipped on the other ring"
+                                            ? t(
+                                                  "equip.alreadyEquippedOnOtherRing"
+                                              )
                                             : ""
                                     }
                                 >
