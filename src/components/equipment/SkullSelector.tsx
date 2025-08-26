@@ -22,23 +22,30 @@ export const SkullSelector: React.FC<Props> = ({
     onChange,
     onClose,
 }) => {
-    const { t } = useTranslation("equipment");
+    const { t } = useTranslation(["equipment", "skulls"]);
     const [q, setQ] = useState("");
 
     const filtered = useMemo(() => {
         const s = q.trim().toLowerCase();
         if (!s) return SKULLS;
-        return SKULLS.filter((k) => k.name.toLowerCase().includes(s));
-    }, [q]);
+
+        return SKULLS.filter((k) => {
+            const label = t(`skulls.names.${k.id}`, {
+                ns: "skulls",
+                defaultValue: k.name,
+            });
+            return (
+                label.toLowerCase().includes(s) ||
+                k.name.toLowerCase().includes(s)
+            );
+        });
+    }, [q, t]);
 
     if (!open) return null;
 
     const toggle = (id: string) => {
-        if (selected.includes(id)) {
-            onChange(selected.filter((x) => x !== id));
-        } else {
-            onChange([...selected, id]);
-        }
+        if (selected.includes(id)) onChange(selected.filter((x) => x !== id));
+        else onChange([...selected, id]);
     };
 
     return (
@@ -47,7 +54,7 @@ export const SkullSelector: React.FC<Props> = ({
                 {/* Header */}
                 <div className="px-4 py-3 border-b border-gray-700 flex items-center justify-between">
                     <h3 className="font-semibold">
-                        {t("equip.selector.skulls")}
+                        {t("equipment:equip.selector.skulls")}
                     </h3>
                     <button
                         onClick={onClose}
@@ -64,7 +71,7 @@ export const SkullSelector: React.FC<Props> = ({
                         <input
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
-                            placeholder={t("equip.search.skulls")}
+                            placeholder={t("equipment:equip.search.skulls")}
                             className="w-full bg-gray-800 border border-gray-700 rounded px-9 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-green-400 focus:border-transparent"
                         />
                     </div>
@@ -74,6 +81,11 @@ export const SkullSelector: React.FC<Props> = ({
                 <div className="max-h-[60vh] overflow-y-auto p-3 space-y-2 custom-scrollbar">
                     {filtered.map((sk) => {
                         const active = selected.includes(sk.id);
+                        const skullLabel = t(`skulls.names.${sk.id}`, {
+                            ns: "skulls",
+                            defaultValue: sk.name,
+                        });
+
                         return (
                             <button
                                 key={sk.id}
@@ -83,7 +95,9 @@ export const SkullSelector: React.FC<Props> = ({
                                 }`}
                             >
                                 <div>
-                                    <div className="font-medium">{sk.name}</div>
+                                    <div className="font-medium">
+                                        {skullLabel}
+                                    </div>
                                     <div className="text-xs text-gray-300 mt-1">
                                         {Object.entries(sk.stats).map(
                                             ([stat, val]) => (
@@ -91,7 +105,11 @@ export const SkullSelector: React.FC<Props> = ({
                                                     key={stat}
                                                     className="inline-block mr-3"
                                                 >
-                                                    +{val} {stat}
+                                                    +{val}{" "}
+                                                    {t(
+                                                        `equipment:equip.stats.names.${stat}`,
+                                                        { defaultValue: stat }
+                                                    )}
                                                 </span>
                                             )
                                         )}
@@ -108,13 +126,15 @@ export const SkullSelector: React.FC<Props> = ({
                 {/* Footer */}
                 <div className="px-4 py-3 border-t border-gray-700 flex items-center justify-between">
                     <span className="text-xs text-gray-400">
-                        {t("equip.skulls.selected", { count: selected.length })}
+                        {t("equipment:equip.skulls.selected", {
+                            count: selected.length,
+                        })}
                     </span>
                     <button
                         onClick={onClose}
                         className="px-4 py-2 text-sm bg-green-900/40 hover:bg-green-900/60 border border-green-700/50 rounded text-green-200"
                     >
-                        {t("equip.buttons.skulls.close")}
+                        {t("equipment:equip.buttons.skulls.close")}
                     </button>
                 </div>
             </div>
