@@ -33,6 +33,8 @@ i18n.use(HttpBackend)
             "npc",
             "profile",
             "projects",
+            "equipement",
+            "skulls",
         ],
         defaultNS: "homepage",
         interpolation: {

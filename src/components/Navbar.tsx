@@ -25,8 +25,12 @@ const LanguageSelector = ({
         { code: "pl", label: "Polski", flag: "/assets/media/flags/pl.svg" },
     ];
 
+    const resolved = i18n.resolvedLanguage || i18n.language;
+    const currentCode =
+        (typeof resolved === "string" ? resolved.split("-")[0] : "en") || "en";
+
     const selected =
-        languages.find((l) => l.code === i18n.language) || languages[0];
+        languages.find((l) => l.code === currentCode) || languages[0];
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -38,17 +42,17 @@ const LanguageSelector = ({
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        return () => {
+        return () =>
             document.removeEventListener("mousedown", handleClickOutside);
-        };
     }, []);
 
     return (
         <div className="relative" ref={dropdownRef}>
-            {/* Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="bg-gray-800 border border-gray-700 text-sm text-white px-3 py-1.5 rounded w-16 h-8 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
             >
                 <img
                     src={selected.flag}
@@ -69,7 +73,11 @@ const LanguageSelector = ({
                                 });
                                 setIsOpen(false);
                             }}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-gray-700"
+                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-gray-700 ${
+                                lang.code === currentCode ? "bg-white/5" : ""
+                            }`}
+                            role="option"
+                            aria-selected={lang.code === currentCode}
                         >
                             <img
                                 src={lang.flag}
