@@ -135,21 +135,10 @@
         },
         {
             "geometry": {
-                "type": "Point",
-                "coordinates": [448, 96, -56]
-            },
-            "id": 13,
-            "type": "Feature",
-            "properties": {
-                "map": "kokoko"
-            }
-        },
-        {
-            "geometry": {
                 "coordinates": [423, 93, -76],
                 "type": "Point"
             },
-            "id": 14,
+            "id": 13,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
@@ -160,7 +149,7 @@
                 "coordinates": [294, 68, -51],
                 "type": "Point"
             },
-            "id": 15,
+            "id": 14,
             "type": "Feature",
             "properties": {
                 "map": "kokoko"
