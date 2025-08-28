@@ -429,6 +429,17 @@
             "properties": {
                 "map": "quadra_plains"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [425, 47, -348],
+                "type": "Point"
+            },
+            "id": 39,
+            "type": "Feature",
+            "properties": {
+                "map": "quadra_plains"
+            }
         }
     ]
 }
