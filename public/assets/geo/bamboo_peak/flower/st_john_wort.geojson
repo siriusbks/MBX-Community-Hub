@@ -352,6 +352,17 @@
             "properties": {
                 "map": "bamboo_peak"
             }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-203, 69, 95]
+            },
+            "id": 33,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
         }
     ]
 }
