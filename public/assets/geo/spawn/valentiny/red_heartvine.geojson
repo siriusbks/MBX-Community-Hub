@@ -39,7 +39,7 @@
             "id": 4,
             "geometry": {
                 "type": "Point",
-                "coordinates": [157, 55, -131]
+                "coordinates": [42, 112, 160]
             },
             "properties": {
                 "map": "spawn"
