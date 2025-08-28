@@ -341,6 +341,17 @@
             "properties": {
                 "map": "kokoko"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [184, 82, 430],
+                "type": "Point"
+            },
+            "id": 32,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
         }
     ]
 }
