@@ -231,6 +231,17 @@
             "properties": {
                 "map": "frostbite_fortress"
             }
+        },
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [416, 52, -7]
+            },
+            "id": 22,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
         }
     ]
 }
