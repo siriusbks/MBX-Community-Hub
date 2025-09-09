@@ -11,6 +11,7 @@ import { BackgroundSelector } from "@components/editor/BackgroundSelector";
 import { LevelInput } from "@components/editor/LevelInput";
 import { ProfessionInput } from "@components/editor/ProfessionInput";
 import { SkinDisplay } from "@components/editor/SkinDisplay";
+import ApiImport from "@components/editor/ApiImport";
 
 export const ProfileEditor: FC = () => {
     const { t } = useTranslation("profile");
@@ -19,6 +20,7 @@ export const ProfileEditor: FC = () => {
             <div className="space-y-6">
                 <SkinDisplay />
                 <BackgroundSelector />
+                <ApiImport />
             </div>
 
             <div className="border-t border-gray-700/50 pt-6">

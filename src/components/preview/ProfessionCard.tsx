@@ -4,22 +4,49 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Profession } from "../../types";
+import { totalXpForLevel } from "../../utils/xpCurve";
 
 interface ProfessionCardProps {
     profession: Profession;
 }
 
 export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
+    // Bar = progress PER level
     const xpPercentage = Math.min(
-        (profession.currentXP / profession.maxXP) * 100,
+        (profession.currentXP / profession.maxXP) * 100 || 0,
         100
     );
 
     const { t } = useTranslation("profile");
+
+    // Label = global progres
+    const [globalTotals, setGlobalTotals] = useState<{ total: number; next: number } | null>(null);
+
+    useEffect(() => {
+        let alive = true;
+        (async () => {
+            try {
+                const before = await totalXpForLevel(
+                    profession.id as any,
+                    profession.level
+                );
+                const next = await totalXpForLevel(
+                    profession.id as any,
+                    profession.level + 1
+                );
+                const total = before + Math.max(0, profession.currentXP);
+                const nextTotal = next > before ? next : total;
+                if (alive) setGlobalTotals({ total, next: nextTotal });
+            } catch {
+                if (alive) setGlobalTotals(null);
+            }
+        })();
+        return () => { alive = false; };
+    }, [profession.id, profession.level, profession.currentXP]);
 
     return (
         <div className="bg-black bg-opacity-30 p-3 rounded-md border border-white border-opacity-5 flex flex-col justify-between h-full min-h-[100px]">
@@ -46,10 +73,17 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({ profession }) => {
                     />
                 </div>
                 <div className="text-[clamp(8px,1vw,10px)] leading-tight text-center">
-                    <span className="text-white">
-                        ({profession.currentXP.toLocaleString()} /{" "}
-                        {profession.maxXP.toLocaleString()})
-                    </span>
+                    {globalTotals ? (
+                        <span className="text-white">
+                            ({globalTotals.total.toLocaleString()} /{" "}
+                            {globalTotals.next.toLocaleString()})
+                        </span>
+                    ) : (
+                        <span className="text-white">
+                            ({profession.currentXP.toLocaleString()} /{" "}
+                            {profession.maxXP.toLocaleString()})
+                        </span>
+                    )}
                     <span className="block text-gray-300 font-bold">XP</span>
                 </div>
             </div>
