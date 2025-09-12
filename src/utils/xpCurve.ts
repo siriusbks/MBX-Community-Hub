@@ -24,32 +24,32 @@ const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
 
 const DATA_URL = "/assets/data/skillXp.json";
 
+// cache JSON once
 let xpData: XpJson | null = null;
-let xpDataLoading: Promise<XpJson> | null = null;
-
 async function loadXpData(): Promise<XpJson> {
   if (xpData) return xpData;
-  if (!xpDataLoading) {
-    xpDataLoading = fetch(DATA_URL, { cache: "force-cache" })
-      .then(async (res) => {
-        if (!res.ok) throw new Error(`Failed to load ${DATA_URL}: ${res.status}`);
-        return (await res.json()) as XpJson;
-      })
-      .then((json) => (xpData = json));
-  }
-  return xpDataLoading;
+  const res = await fetch(DATA_URL, {
+    // use "no-cache" in dev to avoid stale JSON; switch to "force-cache" for prod + versioned URL
+    cache: "no-cache",
+  });
+  if (!res.ok) throw new Error(`Failed to load ${DATA_URL}: ${res.status}`);
+  xpData = (await res.json()) as XpJson;
+  return xpData;
 }
 
-// per-level costs; drop leading 0 if present
+// arr[0] is level 1, and so on
+function normalizePerLevel(arr: number[]): number[] {
+  if (!arr.length) return [];
+  return arr[0] === 0 ? arr.slice() : [0, ...arr];
+}
+
 async function perLevel(job: StoreProfessionId): Promise<number[]> {
   const data = await loadXpData();
   const key = STORE_TO_DATA_KEY[job];
-  const arr = data[key]?.experience_per_level ?? [];
-  if (!arr.length) return [];
-  return arr[0] === 0 ? arr.slice(1) : arr.slice();
+  return normalizePerLevel(data[key]?.experience_per_level ?? []);
 }
 
-// cumulative[L] = total XP to reach level L (sum of 1..L); cumulative[0] = 0
+// cumulative[L] = total XP to reach level L (sum of lvl1..L). cumulative[0] = 0.
 async function cumulative(job: StoreProfessionId): Promise<number[]> {
   const per = await perLevel(job);
   const cum = [0];
@@ -57,7 +57,7 @@ async function cumulative(job: StoreProfessionId): Promise<number[]> {
   return cum;
 }
 
-// total XP required to reach <level> (should be [lvl1 + … + lvlN] as per evlad)
+// Total XP required to reach `level` (lvl1 + … + lvlN)
 export async function totalXpForLevel(job: StoreProfessionId, level: number): Promise<number> {
   const cum = await cumulative(job);
   if (level <= 0) return 0;
@@ -65,15 +65,16 @@ export async function totalXpForLevel(job: StoreProfessionId, level: number): Pr
   return cum[level];
 }
 
-// from the job XP (returned by mbx api) return the curr job lvl, curr lvl xp and xp required for next lvl
+// Given total XP, return per-level progress (for the bar)
 export async function levelFromTotalXp(
   job: StoreProfessionId,
   totalXp: number
 ): Promise<{ level: number; xpIntoLevel: number; xpForNextLevel: number | null; }> {
   const per = await perLevel(job);
   const cum = await cumulative(job);
-  if (per.length === 0) return { level: 0, xpIntoLevel: 0, xpForNextLevel: null };
+  if (!per.length) return { level: 0, xpIntoLevel: 0, xpForNextLevel: null };
 
+  // largest L with cum[L] <= totalXp
   let level = 0;
   for (let L = 0; L < cum.length; L++) {
     if (cum[L] <= totalXp) level = L; else break;
@@ -86,7 +87,7 @@ export async function levelFromTotalXp(
   return { level, xpIntoLevel, xpForNextLevel };
 }
 
-// per level !!
+// per-level (bar)
 export async function progressForJob(
   job: StoreProfessionId,
   totalXp: number
@@ -95,14 +96,12 @@ export async function progressForJob(
   return { level, currentXP: Math.max(0, xpIntoLevel), maxXP: xpForNextLevel };
 }
 
-// load
+// optional preload
 export async function initXpCurve(url = DATA_URL): Promise<void> {
-  if (xpData) return;
-  if (url !== DATA_URL) {
-    const res = await fetch(url, { cache: "force-cache" });
+  if (url === DATA_URL) await loadXpData();
+  else {
+    const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
     xpData = (await res.json()) as XpJson;
-  } else {
-    await loadXpData();
   }
 }
