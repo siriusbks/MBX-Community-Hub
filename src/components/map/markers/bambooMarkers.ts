@@ -147,6 +147,26 @@ const bambooMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    cheese: {
+        displayName: "markers.item.cheese",
+        iconUrl: "assets/media/exploration/cheese.png",
+        geoJsonFile: "assets/geo/spawn/cheese.geojson",
+        defaultChecked: false,
+        category: "markers.category.exploration",
+        properties: {
+            showCount: true,
+        },
+    },
+    duck: {
+        displayName: "markers.item.duck",
+        iconUrl: "assets/media/exploration/duck.png",
+        geoJsonFile: "assets/geo/spawn/duck.geojson",
+        defaultChecked: false,
+        category: "markers.category.exploration",
+        properties: {
+            showCount: true,
+        },
+    },
 };
 
 export default bambooMarkers;

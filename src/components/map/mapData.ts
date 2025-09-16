@@ -18,7 +18,7 @@ export interface MapDataConfig {
     requiredLevel?: number;
     description?: string;
     previewUrl?: string;
-    referencePoint: { x: number; y: number };
+    referencePoint: { x: number; y: number; };
     markerRefs: string[];
 }
 
@@ -58,6 +58,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "spawn_viewPoint",
             "spawn_coin",
             "spawn_npc",
+            "cheese",
+            "duck",
         ],
     },
     home_island: {
@@ -163,6 +165,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "spicy_lava_bucket",
             "debris_golem",
             "monkey_ghost",
+            "cheese",
+            "duck",
         ],
     },
     quadra_plains: {
@@ -200,6 +204,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "venomous_spidey",
             "pirate_farmer",
             "old_pirate_farmer",
+            "cheese",
+            "duck",
         ],
     },
     bamboo_peak: {
@@ -233,6 +239,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "bloomboo",
             "pandaboo_warrior",
             "pandaboo_wizard",
+            "cheese",
+            "duck",
         ],
     },
     frostbite_fortress: {
@@ -268,6 +276,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "froztail",
             "froztail_magus",
             "chillolith",
+            "cheese",
+            "duck",
         ],
     },
     sandwhisper_dunes: {
@@ -293,6 +303,8 @@ export const mapData: Record<string, MapDataConfig> = {
             "sandwhisper_dunes_bloon",
             "sandwhisper_dunes_viewPoint",
             "sandwhisper_dunes_coin",
+            "cheese",
+            "duck",
         ],
     },
 };
