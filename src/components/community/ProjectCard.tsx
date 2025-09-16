@@ -7,7 +7,7 @@
 import React from "react";
 import { Globe, Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { SiModrinth, SiCurseforge, SiGithub } from "react-icons/si";
+import { SiModrinth, SiCurseforge, SiGithub, SiDiscord } from "react-icons/si";
 
 interface ProjectProps {
     project: {
@@ -24,6 +24,7 @@ interface ProjectProps {
             modrinth?: string;
             curseforge?: string;
             github?: string;
+            discord?: string;
         };
     };
 }
@@ -127,6 +128,17 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
                         >
                             <SiGithub size={14} /> GitHub
+                        </a>
+                    )}
+                    {links.discord && (
+                        <a
+                            href={links.discord}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="View on GitHub"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                        >
+                            <SiDiscord size={14} /> Discord
                         </a>
                     )}
                 </div>

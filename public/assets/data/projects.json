@@ -57,17 +57,18 @@
     },
     {
         "id": "4",
-        "name": "MineboxMaps",
-        "creator": "AerWyn81",
+        "name": "Minebox Atlas",
+        "creator": "Nyx_031",
         "links": {
-            "website": "https://mineboxmaps.com/",
+            "website": "",
             "modrinth": "",
             "github": "",
-            "curseforge": ""
+            "curseforge": "",
+            "discord": "https://discord.gg/ZcYajnQ8at"
         },
-        "logo": "https://i.imgur.com/fCj9OLj.png",
-        "type": "Website",
-        "badge": ""
+        "logo": "https://cdn.discordapp.com/icons/1407555576472535110/bc06d4317575655abdd1642c83815d93.png?size=100&quality=lossless",
+        "type": "Discord",
+        "badge": "New"
     },
     {
         "id": "5",
