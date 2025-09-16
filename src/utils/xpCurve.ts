@@ -1,3 +1,4 @@
+import { CorsIfDev } from "./helper";
 // File used to do weird minebox job maths
 // Have fun exploring this file ! (you won't have any fun)
 
@@ -22,7 +23,7 @@ const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
   tinkering: "tinkerer",
 };
 
-const DATA_URL = "https://cdn2.minebox.co/data/skills.json";
+const DATA_URL = CorsIfDev("https://cdn2.minebox.co/data/skills.json");
 
 // cache JSON once
 let xpData: XpJson | null = null;

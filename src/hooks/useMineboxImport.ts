@@ -7,6 +7,7 @@
 import { useCallback, useState } from "react";
 import { useProfileStore } from "@store/profileStore";
 import { progressForJob, StoreProfessionId } from "../utils/xpCurve";
+import { CorsIfDev } from "../utils/helper";
 
 // mbx api job ids and our store differs, this map acts as a helper
 // maybe consider unifying everything ?
@@ -39,9 +40,8 @@ export function useMineboxImport() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        `https://api.minebox.co/data/${username}`
-      );
+      const url = CorsIfDev(`https://api.minebox.co/data/${encodeURIComponent(username)}`);
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
       const json = (await res.json()) as MineboxResponse;
 
