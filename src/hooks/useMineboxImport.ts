@@ -40,7 +40,7 @@ export function useMineboxImport() {
     setError(null);
     try {
       const res = await fetch(
-        `https://corsproxy.io/?url=https://api.minebox.co/data/${username}`
+        `https://api.minebox.co/data/${username}`
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
       const json = (await res.json()) as MineboxResponse;
