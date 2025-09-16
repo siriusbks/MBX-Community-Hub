@@ -150,7 +150,7 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     cheese: {
         displayName: "markers.item.cheese",
         iconUrl: "assets/media/exploration/cheese.png",
-        geoJsonFile: "assets/geo/spawn/cheese.geojson",
+        geoJsonFile: "assets/geo/bamboo_peak/cheese.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
@@ -160,7 +160,7 @@ const bambooMarkers: Record<string, MarkerConfig> = {
     duck: {
         displayName: "markers.item.duck",
         iconUrl: "assets/media/exploration/duck.png",
-        geoJsonFile: "assets/geo/spawn/duck.geojson",
+        geoJsonFile: "assets/geo/bamboo_peak/duck.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {

@@ -183,7 +183,7 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     cheese: {
         displayName: "markers.item.cheese",
         iconUrl: "assets/media/exploration/cheese.png",
-        geoJsonFile: "assets/geo/spawn/cheese.geojson",
+        geoJsonFile: "assets/geo/quadra_plains/cheese.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
@@ -193,7 +193,7 @@ const quadraMarkers: Record<string, MarkerConfig> = {
     duck: {
         displayName: "markers.item.duck",
         iconUrl: "assets/media/exploration/duck.png",
-        geoJsonFile: "assets/geo/spawn/duck.geojson",
+        geoJsonFile: "assets/geo/quadra_plains/duck.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
