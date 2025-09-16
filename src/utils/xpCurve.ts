@@ -22,7 +22,7 @@ const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
   tinkering: "tinkerer",
 };
 
-const DATA_URL = "/assets/data/skillXp.json";
+const DATA_URL = "https://cdn2.minebox.co/data/skills.json";
 
 // cache JSON once
 let xpData: XpJson | null = null;
