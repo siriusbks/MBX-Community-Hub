@@ -176,7 +176,7 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
     cheese: {
         displayName: "markers.item.cheese",
         iconUrl: "assets/media/exploration/cheese.png",
-        geoJsonFile: "assets/geo/frostbite_fortress/cheese.geojson",
+        geoJsonFile: "assets/geo/frostbite_fortress/frostbite_fortress_cheese.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
@@ -186,7 +186,7 @@ const frostbiteMarkers: Record<string, MarkerConfig> = {
     duck: {
         displayName: "markers.item.duck",
         iconUrl: "assets/media/exploration/duck.png",
-        geoJsonFile: "assets/geo/frostbite_fortress/duck.geojson",
+        geoJsonFile: "assets/geo/frostbite_fortress/frostbite_fortress_duck.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {

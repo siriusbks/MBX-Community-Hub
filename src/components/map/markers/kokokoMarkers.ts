@@ -216,7 +216,7 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     cheese: {
         displayName: "markers.item.cheese",
         iconUrl: "assets/media/exploration/cheese.png",
-        geoJsonFile: "assets/geo/kokoko/cheese.geojson",
+        geoJsonFile: "assets/geo/kokoko/kokoko_cheese.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
@@ -226,7 +226,7 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
     duck: {
         displayName: "markers.item.duck",
         iconUrl: "assets/media/exploration/duck.png",
-        geoJsonFile: "assets/geo/kokoko/duck.geojson",
+        geoJsonFile: "assets/geo/kokoko/kokoko_duck.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {

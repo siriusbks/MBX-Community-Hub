@@ -109,7 +109,7 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     cheese: {
         displayName: "markers.item.cheese",
         iconUrl: "assets/media/exploration/cheese.png",
-        geoJsonFile: "assets/geo/sandwhisper_dunes/cheese.geojson",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/sandwhisper_dunes_cheese.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {
@@ -119,7 +119,7 @@ const sandwhisperMarkers: Record<string, MarkerConfig> = {
     duck: {
         displayName: "markers.item.duck",
         iconUrl: "assets/media/exploration/duck.png",
-        geoJsonFile: "assets/geo/sandwhisper_dunes/duck.geojson",
+        geoJsonFile: "assets/geo/sandwhisper_dunes/sandwhisper_dunes_duck.geojson",
         defaultChecked: false,
         category: "markers.category.exploration",
         properties: {

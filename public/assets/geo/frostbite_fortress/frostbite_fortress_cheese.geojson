@@ -1,0 +1,82 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [485, 57, -104],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [306, 72, -65],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [107, 48, -172],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-58, 58, -203],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [54, 55, -47],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-70, 65, -493],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [102, 58, -576],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        }
+    ]
+}

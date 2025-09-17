@@ -1,0 +1,82 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [96, 70, 110],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [163, 76, 328],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [344, 71, 288],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [407, 72, 117],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [452, 43, 103],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [242, 106, 665],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [386, 88, 545],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        }
+    ]
+}

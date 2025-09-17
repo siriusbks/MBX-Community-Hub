@@ -1,0 +1,71 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [-323, 66, 24],
+                "type": "Point"
+            },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-490, 74, 140],
+                "type": "Point"
+            },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-358, 79, 258],
+                "type": "Point"
+            },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-267, 80, 318],
+                "type": "Point"
+            },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-98, 97, 321],
+                "type": "Point"
+            },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-217, 76, 497],
+                "type": "Point"
+            },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        }
+    ]
+}
