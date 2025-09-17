@@ -84,5 +84,7 @@
     "markers.item.liquid_diamond": "Minerai de Diamant Liquide",
     "markers.item.st_john_wort": "Millepertuis",
     "markers.item.ginger_root": "Racine de Gingembre",
-    "markers.item.origami": "Fleur en Origami"
+    "markers.item.origami": "Fleur en Origami",
+    "markers.item.cheese": "Fromage",
+    "markers.item.duck": "Canard"
 }
