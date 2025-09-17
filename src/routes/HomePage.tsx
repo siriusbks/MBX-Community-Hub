@@ -15,16 +15,10 @@ export function HomePage() {
             {/* 🤝 Community Call */}
             <div className="bg-emerald-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg">
                 <HandHelping className="inline-block mr-2" size={20} />
-                MBX is a community-driven project — and we need your help to
-                make it even better!
-                <span className="ml-2 underline hover:text-white transition-colors duration-150">
-                    <Link
-                        to="https://github.com/siriusbks/MBX-Community-Hub?tab=readme-ov-file#-how-to-contribute"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Start contributing
-                    </Link>
+                MBX is a community-driven project — and we’re looking for translators
+                in <strong>Spanish</strong> and <strong>German</strong>!
+                <span className="ml-2">
+                    Contact me on Discord: <strong>@siriusb_</strong>
                 </span>
             </div>
 
