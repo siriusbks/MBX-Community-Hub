@@ -14,7 +14,7 @@
         },
         {
             "geometry": {
-                "coordinates": [358, 94, -90],
+                "coordinates": [358, 95, -90],
                 "type": "Point"
             },
             "id": 2,
@@ -25,7 +25,7 @@
         },
         {
             "geometry": {
-                "coordinates": [372, 90, -133],
+                "coordinates": [372, 91, -133],
                 "type": "Point"
             },
             "id": 3,
@@ -58,7 +58,7 @@
         },
         {
             "geometry": {
-                "coordinates": [129, 52, -115],
+                "coordinates": [129, 53, -115],
                 "type": "Point"
             },
             "id": 6,
@@ -80,7 +80,7 @@
         },
         {
             "geometry": {
-                "coordinates": [252, 78, 217],
+                "coordinates": [252, 79, 217],
                 "type": "Point"
             },
             "id": 8,
@@ -95,6 +95,50 @@
                 "type": "Point"
             },
             "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [182, 87, -15],
+                "type": "Point"
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [104, 94, 85],
+                "type": "Point"
+            },
+            "id": 11,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [98, 109, 158],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-53, 78, -213],
+                "type": "Point"
+            },
+            "id": 13,
             "type": "Feature",
             "properties": {
                 "map": "spawn"
