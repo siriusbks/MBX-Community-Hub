@@ -251,7 +251,7 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 time: [""],
                 rarity: "fishing.rarity.uncommon",
                 condition: "",
-                image: "assets/media/item/fishing/key_common.png",
+                image: "assets/media/item/fishing/key_uncommon.png",
             },
             {
                 name: "fishing.uncommon_treasure",
@@ -333,7 +333,7 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 time: [""],
                 rarity: "fishing.rarity.rare",
                 condition: "",
-                image: "assets/media/item/fishing/rare_key.png",
+                image: "assets/media/item/fishing/key_rare.png",
             },
             {
                 name: "fishing.rare_treasure",
@@ -867,7 +867,7 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 time: ["fishing.time.night"],
                 rarity: "fishing.rarity.uncommon",
                 condition: "",
-                image: "assets/media/item/fishing/uncommon_key.png",
+                image: "assets/media/item/fishing/key_uncommon.png",
             },
             {
                 name: "fishing.cobweb",
