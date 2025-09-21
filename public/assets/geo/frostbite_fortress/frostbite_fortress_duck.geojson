@@ -25,7 +25,7 @@
         },
         {
             "geometry": {
-                "coordinates": [432, 57, -230],
+                "coordinates": [432, 70, -230],
                 "type": "Point"
             },
             "id": 3,
@@ -84,6 +84,28 @@
                 "type": "Point"
             },
             "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [268, 73, -273],
+                "type": "Point"
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "frostbite_fortress"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [204, 52, -18],
+                "type": "Point"
+            },
+            "id": 10,
             "type": "Feature",
             "properties": {
                 "map": "frostbite_fortress"
