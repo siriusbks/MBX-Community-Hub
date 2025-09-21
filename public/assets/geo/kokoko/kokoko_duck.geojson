@@ -121,6 +121,28 @@
             "properties": {
                 "map": "kokoko"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [238, 65, -299],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [367, 82, -238],
+                "type": "Point"
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
         }
     ]
 }
