@@ -8,5 +8,7 @@
     "homepage.features.communityProjects.title": "Projekty Społeczności",
     "homepage.features.communityProjects.description": "Odkrywaj i eksploruj mody, narzędzia oraz strony internetowe tworzone przez społeczność Minebox.",
     "homepage.features.equipment.title": "Menedżer ekwipunku",
-    "homepage.features.equipment.description": "Twórz i optymalizuj wyposażenie swojej postaci."
+    "homepage.features.equipment.description": "Twórz i optymalizuj wyposażenie swojej postaci.",
+    "homepage.features.museum.title": "Muzeum",
+    "homepage.features.museum.description":"Przeglądaj swoje muzeum bez logowania, ale nie zapomnij aktywować swojego API. By LupusArctos4"
 }

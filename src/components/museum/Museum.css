@@ -1,0 +1,302 @@
+/*
+ * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
+*/
+
+/* ============================================================== */
+/*                         Global Reset                           */
+/* ============================================================== */
+
+/* Réinitialisation des marges du body pour éviter les espaces indésirables */
+body {
+  margin: 0;  /* Pas de marge sur le body pour que le contenu s'aligne avec le reste du site */
+}
+
+/* ============================================================== */
+/*                   Zone d'entrée du pseudo                      */
+/* ============================================================== */
+
+/* Conteneur principal pour l'entrée du pseudo */
+.pseudo-box {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(21, 29, 44);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Conteneur pour le texte à gauche dans la zone de saisie du pseudo */
+.pseudo-box-left-text {
+  margin: 1rem;
+}
+
+/* Style de base pour l'input de saisie du pseudo */
+.base-class {
+  width: 100%;
+  background-color: #374151;
+  border-radius: 0.5rem;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Effet de focus sur l'entrée basique */
+.base-class:focus {
+  box-shadow: 0 0 0 2px #10B981;
+}
+
+/* Effet de focus pour une entrée en erreur */
+.error:focus {
+  box-shadow: 0 0 0 2px #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+/* Effet de focus pour une entrée réussie */
+.success:focus {
+  box-shadow: 0 0 0 2px #10B981;
+}
+
+/* Conteneur de l'input, centré et avec une couleur de fond adaptée */
+.pseudo-input-container {
+  background-color: rgb(55, 65, 81);
+  border-radius: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Style du bouton de validation (import) aligné à droite */
+#importPseudoButton {
+  background-color: rgb(22, 163, 74);
+  color: white;
+  border: 2px solid white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  margin: 1rem;
+}
+
+/* Effet de survol du bouton d'import */
+#importPseudoButton:hover {
+  background-color: rgb(20, 140, 64);
+}
+
+/* ============================================================== */
+/*                   Zone des catégories                           */
+/* ============================================================== */
+
+/* Conteneur de la navigation des catégories */
+#categoryNav {
+  background-color: rgb(55, 65, 81);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+/* Style de la liste des catégories en affichage flex */
+#categoryNav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style des liens de la navigation */
+#categoryNav a {
+  background-color: #ddd;
+  color: #1a202c;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+/* Effet de survol sur les liens de navigation */
+#categoryNav a:hover {
+  background-color: #007722;
+}
+
+/* ============================================================== */
+/*              Boutons de récapitulatif et ressources              */
+/* ============================================================== */
+
+/* Conteneur pour les boutons de récapitulatif et de ressources */
+.recap-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.5rem;
+}
+
+/* Style commun pour les boutons récap et ressources */
+#recapButton,
+#resourcesButton {
+  background-color: rgb(22, 163, 74);
+  color: white;
+  border: 2px solid white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+/* Effet de survol des boutons récap et ressources */
+#recapButton:hover,
+#resourcesButton:hover {
+  background-color: rgb(20, 140, 64);
+}
+
+/* ============================================================== */
+/*         Zone des catégories et des items (titre, groupe)         */
+/* ============================================================== */
+
+/* Style du titre de la catégorie */
+.titreCategory {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Conteneur du groupe d'items de chaque catégorie */
+.groupItem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* ============================================================== */
+/*                   Zone d'affichage des items                     */
+/* ============================================================== */
+
+/* Conteneur global des items affichés sur la page */
+#itemsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+
+/* Style individuel de chaque item */
+.item {
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease;
+  margin: 5px;
+}
+
+/* Effet de survol pour chaque item */
+.item:hover {
+  transform: scale(1.02);
+  background: #007722;
+}
+
+/* Style particulier pour les items déjà possédés (class "museum") */
+.item.museum {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  background-color: #ccc;
+  cursor: default;
+}
+
+/* Taille uniforme de l'image de l'item */
+.item img {
+  width: 75px;
+  height: 75px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* ============================================================== */
+/*                       Styles pour les modaux                     */
+/* ============================================================== */
+
+/* Style général du modal (fond sombre et positionnement fixe) */
+.modal {
+  display: block; /* Pour afficher le modal, le code JavaScript doit le conditionner */
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+/* Style du contenu interne du modal */
+.modal-content {
+  background-color: rgb(31, 41, 55);
+  color: white;  
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 90%;
+  margin: 5% auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* ============================================================== */
+/*                   Bouton de fermeture du modal                   */
+/* ============================================================== */
+
+/* Style de la croix pour fermer le modal */
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+/* Effet de survol sur le bouton de fermeture */
+.close:hover {
+  color: rgb(22, 163, 74);
+}
+
+/* ============================================================== */
+/*                      Bouton "Remonter en haut"                   */
+/* ============================================================== */
+
+/* Style du bouton pour remonter en haut de la page */
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: none; /* Affiché uniquement lors du scroll */
+}
