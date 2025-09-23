@@ -9,6 +9,10 @@
 /* Réinitialisation des marges du body pour éviter les espaces indésirables */
 body {
   margin: 0;  /* Pas de marge sur le body pour que le contenu s'aligne avec le reste du site */
+  
+}
+body.modal-open {
+  overflow: hidden;
 }
 
 /* ============================================================== */
@@ -224,8 +228,8 @@ body {
 
 /* Taille uniforme de l'image de l'item */
 .item img {
-  width: 75px;
-  height: 75px;
+  width: 50px;
+  height: 50px;
   display: block;
   margin-bottom: 5px;
 }
@@ -251,13 +255,15 @@ body {
 /* Style du contenu interne du modal */
 .modal-content {
   background-color: rgb(31, 41, 55);
-  color: white;  
+  color: white;
   padding: 1.5rem;
   border-radius: 0.5rem;
   max-width: 90%;
+  max-height: 80vh; /* Limite la hauteur du modal */
   margin: 5% auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
+  overflow-y: auto; /* Défilement interne */
   word-wrap: break-word;
 }
 

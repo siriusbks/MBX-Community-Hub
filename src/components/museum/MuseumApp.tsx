@@ -339,6 +339,13 @@ export const MuseumApp: FC = () => {
             window.removeEventListener("scroll", handleScroll);
             backToTopBtn?.removeEventListener("click", handleBackToTop);
         };
+
+
+        if (craftModalItem || showRecapModal || showResourcesModal) {
+            document.body.classList.add("modal-open");
+        } else {
+            document.body.classList.remove("modal-open");
+        }
     }, []);
 
     // Handling the form for entering the username
@@ -387,7 +394,7 @@ export const MuseumApp: FC = () => {
             </div>
             {/* Display error message if exists */}
             {errorMsg && (
-                <p style={{ color: "red", textAlign: "center", marginTop: "0.5rem" }}>
+                <p className="text-red-400 text-center mt-2">
                     {errorMsg}
                 </p>
             )}
