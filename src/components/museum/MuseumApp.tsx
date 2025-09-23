@@ -200,19 +200,19 @@ export const MuseumApp: FC = () => {
             const missingItems = group.items.filter(item => !museumItems.includes(item));
             if (missingItems.length === 0) return null;
             return (
-                <div key={index} style={{ marginBottom: "15px" }}>
+                <div key={index} className="mb-4">
                     {/* Display the category */}
-                    <div style={{ fontSize: "20px" }}>{group.category}</div>
-                    <ul style={{ listStyle: "none", padding: 0, display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    <div className="text-2xl font-bold">{group.category}</div>
+                    <ul className="list-none flex flex-wrap gap-4">
                         {missingItems.map(itemId => {
                             const imageSrc =
                                 detailsIndex && detailsIndex[itemId] && detailsIndex[itemId].image
                                     ? "data:image/png;base64," + detailsIndex[itemId].image
                                     : `assets/media/item/textures/${itemId}.png`;
                             return (
-                                <li key={itemId} style={{ display: "flex", alignItems: "center" }}>
+                                <li key={itemId} className="flex items-center">
                                     <img
-                                        style={{ width: "30px", height: "30px", marginRight: "5px" }}
+                                        className="w-8 h-8 mr-2"
                                         src={imageSrc}
                                         alt={itemId}
                                         onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
@@ -249,17 +249,17 @@ export const MuseumApp: FC = () => {
             return <p>{t("museum.noResourceRquired")}</p>;
         }
         return (
-            <ul style={{ listStyle: "none", padding: 0 }}>
+            <ul className="list-none">
                 {sortedResourceIds.map(resId => {
                     const imageSrc =
                         detailsIndex && detailsIndex[resId] && detailsIndex[resId].image
                             ? "data:image/png;base64," + detailsIndex[resId].image
                             : `assets/media/item/textures/${resId}.png`;
                     return (
-                        <li key={resId} style={{ display: "block", marginBottom: "10px", fontSize: "20px" }}>
-                            <div style={{ display: "flex", alignItems: "center" }}>
+                        <li key={resId} className="block mb-2 text-2xl">
+                            <div className="flex items-center">
                                 <img
-                                    style={{ width: "50px", height: "50px", marginRight: "5px" }}
+                                    className="w-12 h-12 mr-2"
                                     src={imageSrc}
                                     alt={resId}
                                     onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
@@ -281,10 +281,10 @@ export const MuseumApp: FC = () => {
             const categoryId = "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
             return (
                 <div key={index} className="category" id={categoryId}>
-                    <div className="titreCategory">
+                    <div className="titreCategory text-2xl font-bold">
                         {group.category} ({ownedCount} / {group.items.length})
                     </div>
-                    <div className="groupItem" style={{ display: "flex", flexWrap: "wrap" }}>
+                    <div className="groupItem flex flex-wrap justify-between">
                         {group.items.map(itemId => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
@@ -294,12 +294,14 @@ export const MuseumApp: FC = () => {
                             return (
                                 <div
                                     key={itemId}
-                                    className={`item ${isOwned ? "museum" : ""}`}
-                                    style={{ cursor: !isOwned ? "pointer" : "default", margin: "5px" }}
+                                    className={`item flex flex-col items-center border border-gray-300 p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
+                                        isOwned ? "opacity-50 grayscale bg-gray-300 cursor-default" : "cursor-pointer"
+                                    }`}
                                     // When clicking on an unowned item, open the corresponding modal
                                     onClick={() => { if (!isOwned) openCraftModal(itemId); }}
                                 >
                                     <img
+                                        className="w-12 h-12 mb-1"
                                         src={imageSrc}
                                         alt={itemId}
                                         onError={(e) => ((e.target as HTMLImageElement).style.display = "none")}
@@ -361,8 +363,8 @@ export const MuseumApp: FC = () => {
       {/* Form for entering the username */}
       <form id="pseudoForm" onSubmit={handleUsernameSubmit}>
         <div>
-            <div className="pseudo-box">
-                <div className="pseudo-box-left-text">
+            <div className="w-full p-4 flex justify-around items-center bg-[rgb(21,29,44)] rounded md:mb-2">
+                <div className="m-4">
                 <label
                     htmlFor="minecraft-username"
                     className="block text-sm font-medium text-gray-200"
@@ -370,7 +372,7 @@ export const MuseumApp: FC = () => {
                     {t("museum.minecraftUsername")}
                 </label>
                 </div>
-                <div className="pseudo-input-container relative">
+                <div className="bg-[rgb(55,65,81)] rounded-full max-w-[500px] mx-auto w-full relative">
                     <input
                     type="text"
                     id="pseudo"
@@ -380,7 +382,11 @@ export const MuseumApp: FC = () => {
                     maxLength={16}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    className={`base-class ${error ? "error" : "success"}`}
+                    className={`w-full bg-gray-700 rounded-lg px-4 py-2 pl-10 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 ${
+                        error
+                            ? "focus:ring-red-500 border border-red-500/50"
+                            : "focus:ring-green-500"
+                    }`}
                     />
                     <User
                         className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -388,7 +394,11 @@ export const MuseumApp: FC = () => {
                         aria-hidden="true"
                     />
                 </div>
-                <button id="importPseudoButton" type="submit">
+                <button 
+                    id="importPseudoButton"
+                    className="bg-emerald-800 text-white border-2 border-white rounded-lg py-2 px-4 cursor-pointer text-base transition-colors hover:bg-emerald-500 whitespace-nowrap m-4"
+                    type="submit"
+                >
                 {t("museum.importMuseum.button")}
                 </button>
             </div>
@@ -402,15 +412,15 @@ export const MuseumApp: FC = () => {
       </form>
 
       {/* Navigation bar displaying item categories */}
-      <nav id="categoryNav">
-        <ul>
+      <nav id="categoryNav" className="bg-[rgb(55,65,81)] p-4 rounded-lg m-2">
+        <ul className="flex flex-wrap gap-4 justify-center p-0 m-0">
             {groupedItems &&
             groupedItems.map((group, i) => {
                 const ownedCount = group.items.filter(item => museumItems.includes(item)).length;
                 const categoryId = "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
                 return (
                     <li key={group.category}>
-                        <a key={i} href={"#" + categoryId} style={{ marginRight: "10px" }}>
+                        <a key={i} href={"#" + categoryId} className="bg-gray-300 text-[rgb(26,32,44)] px-4 py-2 mr-2.5 rounded transition-colors hover:bg-emerald-500 whitespace-nowrap">
                             {group.category} ({ownedCount} / {group.items.length})
                         </a>
                     </li>
@@ -420,25 +430,45 @@ export const MuseumApp: FC = () => {
       </nav>
 
       {/* Buttons to display the missing items and resources modals */}
-      <div className="recap-buttons-container">
-        <button id="recapButton" onClick={() => setShowRecapModal(true)}>{t("museum.recapMuseum.button")}</button>
-        <button id="resourcesButton" onClick={() => setShowResourcesModal(true)}>{t("museum.resourceMuseum.button")}</button>
+      <div className="recap-buttons-container flex justify-center gap-4 m-2">
+        <button 
+            id="recapButton"
+            className="bg-emerald-800 text-white border-2 border-white rounded-lg py-2 px-4 transition-colors hover:bg-emerald-500 whitespace-nowrap"
+            onClick={() => setShowRecapModal(true)}
+        >
+            {t("museum.recapMuseum.button")}
+        </button>
+        <button 
+            id="resourcesButton"
+            className="bg-emerald-800 text-white border-2 border-white rounded-lg py-2 px-4 transition-colors hover:bg-emerald-500 whitespace-nowrap"
+            onClick={() => setShowResourcesModal(true)}
+        >
+            {t("museum.resourceMuseum.button")}
+        </button>
       </div>
 
       {/* Display of the items list */}
-      <div id="itemsContainer">{renderItems()}</div>
+      <div id="itemsContainer" className="flex flex-wrap gap-4 justify-start p-4">{renderItems()}</div>
 
       {/* "Back to Top" button */}
-      <button id="backToTop" style={{ display: "none" }}>
+      <button id="backToTop" className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded shadow hidden">
         {t("museum.backToTop.button")}
       </button>
 
       {/* Craft modal */}
       {craftModalItem && detailsIndex && (
-        <div className="modal" id="craftModal"
-          onClick={(e) => {if (e.target === e.currentTarget) setCraftModalItem(null);}}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setCraftModalItem(null)}>&times;</span>
+        <div 
+            className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+            id="craftModal"
+            onClick={(e) => {if (e.target === e.currentTarget) setCraftModalItem(null);}}
+        >
+          <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
+            <span 
+                className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
+                onClick={() => setCraftModalItem(null)}
+            >
+                &times;
+            </span>
             <div id="craftDetails">
               {detailsIndex[craftModalItem] && detailsIndex[craftModalItem].recipe ? (
                 <>
@@ -456,10 +486,18 @@ export const MuseumApp: FC = () => {
 
       {/* Missing items recap modal */}
       {showRecapModal && (
-        <div className="modal" id="recapModal"
-          onClick={(e) => {if (e.target === e.currentTarget) setShowRecapModal(false);}}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setShowRecapModal(false)}>&times;</span>
+        <div 
+            className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+            id="recapModal"
+            onClick={(e) => {if (e.target === e.currentTarget) setShowRecapModal(false);}}
+        >
+          <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
+            <span 
+                className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
+                onClick={() => setShowRecapModal(false)}
+            >
+                &times;
+            </span>
             <div id="recapContent">{renderRecapContent()}</div>
           </div>
         </div>
@@ -467,11 +505,18 @@ export const MuseumApp: FC = () => {
 
       {/* Missing resources modal */}
       {showResourcesModal && (
-        <div className="modal" id="resourcesModal"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setShowResourcesModal(false);}}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setShowResourcesModal(false)}>&times;</span>
+        <div 
+            className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+            id="resourcesModal"
+            onClick={(e) => {if (e.target === e.currentTarget) setShowResourcesModal(false);}}
+        >
+          <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
+            <span 
+                className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
+                onClick={() => setShowResourcesModal(false)}
+            >
+                &times;
+            </span>
             <div id="resourcesContent">{renderResourcesContent()}</div>
           </div>
         </div>

@@ -4,7 +4,6 @@
 
 import React from "react";
 import { MuseumApp } from "./museum/MuseumApp";
-import "./museum/Museum.css";
 
 export const Museum: React.FC = () => {
   return (
