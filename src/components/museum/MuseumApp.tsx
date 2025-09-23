@@ -28,6 +28,7 @@ export const MuseumApp: FC = () => {
     const [museumItems, setMuseumItems] = useState<string[]>([]);
     const [username, setUsername] = useState("");
     const [error] = useState<string | null>(null);
+    const [errorMsg, setErrorMsg] = useState(""); 
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
@@ -38,10 +39,17 @@ export const MuseumApp: FC = () => {
     const loadData = async (pseudo: string) => {
         try {
             const apiResponse = await fetch(`https://api.minebox.co/data/${pseudo}`);
+            if (!apiResponse.ok) {
+                // If response is not OK, throw an error with the status and text
+                throw new Error(`HTTP ${apiResponse.status}: ${await apiResponse.text()}`);
+            }
             const apiData = await apiResponse.json();
 
-            let museumItemsFetched: string[] = apiData.data.OBJECTIVES.museum || [];
+            if (!apiData.data || !apiData.data.OBJECTIVES || !apiData.data.OBJECTIVES.museum) {
+                throw new Error(`HTTP 401: {"error":"User does not allow API requests"}`);
+            }
 
+            let museumItemsFetched: string[] = apiData.data.OBJECTIVES.museum || [];
             museumItemsFetched = museumItemsFetched.map((item) => {
                 if (item.startsWith("transformed_material-"))
                     return item.replace("transformed_material-", "transformed_");
@@ -64,14 +72,17 @@ export const MuseumApp: FC = () => {
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
-                details[item.id] = item;
+            details[item.id] = item;
             });
-            
+
             setGroupedItems(itemsGrouped);
             setDetailsIndex(details);
+
+            // Clear any previous error message
+            setErrorMsg("");
         } catch (error) {
-            // TODO: handle error properly
-            console.error("Error loading data:", error);
+            // Set the error message in the state: if the error is 401, use the formatted message
+            setErrorMsg(error instanceof Error ? error.message : "Unknown error");
         }
     };
 
@@ -306,7 +317,7 @@ export const MuseumApp: FC = () => {
     // useEffect hook to handle the "Back to Top" button using a scroll listener
     useEffect(() => {
         const backToTopBtn = document.getElementById("backToTop");
-        
+
         const handleScroll = () => {
             if (backToTopBtn) {
                 if (window.pageYOffset > 300) {
@@ -342,36 +353,44 @@ export const MuseumApp: FC = () => {
     <div className="museum-page">
       {/* Form for entering the username */}
       <form id="pseudoForm" onSubmit={handleUsernameSubmit}>
-        <div className="pseudo-box">
-            <div className="pseudo-box-left-text">
+        <div>
+            <div className="pseudo-box">
+                <div className="pseudo-box-left-text">
                 <label
                     htmlFor="minecraft-username"
                     className="block text-sm font-medium text-gray-200"
                 >
                     {t("museum.minecraftUsername")}
                 </label>
+                </div>
+                <div className="pseudo-input-container relative">
+                    <input
+                    type="text"
+                    id="pseudo"
+                    placeholder={t("museum.minecraftUsername")}
+                    value={username}
+                    minLength={3}
+                    maxLength={16}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className={`base-class ${error ? "error" : "success"}`}
+                    />
+                    <User
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                        size={16}
+                        aria-hidden="true"
+                    />
+                </div>
+                <button id="importPseudoButton" type="submit">
+                {t("museum.importMuseum.button")}
+                </button>
             </div>
-            <div className="pseudo-input-container relative">
-                <input
-                  type="text"
-                  id="pseudo"
-                  placeholder={t("museum.minecraftUsername")}
-                  value={username}
-                  minLength={3}
-                  maxLength={16}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  className={`base-class ${error ? "error" : "success"}`}
-                />
-                <User
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    size={16}
-                    aria-hidden="true"
-                />
-            </div>
-            <button id="importPseudoButton" type="submit">
-              {t("museum.importMuseum.button")}
-            </button>
+            {/* Display error message if exists */}
+            {errorMsg && (
+                <p style={{ color: "red", textAlign: "center", marginTop: "0.5rem" }}>
+                    {errorMsg}
+                </p>
+            )}
         </div>
       </form>
 
