@@ -10,5 +10,5 @@
     "homepage.features.equipment.title": "Equipment Manager",
     "homepage.features.equipment.description": "Build and optimize your character’s gear.",
     "homepage.features.museum.title": "Museum",
-    "homepage.features.museum.description": "Explore your museum without being connected, but don't forget to activate your API. By LupusArctos4"
+    "homepage.features.museum.description": "Explore your museum without being connected, but don't forget to enable third-parties API access in-game."
 }
