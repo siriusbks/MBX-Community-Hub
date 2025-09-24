@@ -14,7 +14,7 @@
         },
         {
             "geometry": {
-                "coordinates": [398, 58, -186],
+                "coordinates": [398, 60, 71],
                 "type": "Point"
             },
             "id": 2,
@@ -95,6 +95,17 @@
                 "type": "Point"
             },
             "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "quadra_plains"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [300, 75, -240],
+                "type": "Point"
+            },
+            "id": 10,
             "type": "Feature",
             "properties": {
                 "map": "quadra_plains"

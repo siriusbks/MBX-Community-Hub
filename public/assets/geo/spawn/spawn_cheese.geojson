@@ -14,7 +14,7 @@
         },
         {
             "geometry": {
-                "coordinates": [358, 95, -90],
+                "coordinates": [359, 91, -82],
                 "type": "Point"
             },
             "id": 2,
@@ -36,7 +36,7 @@
         },
         {
             "geometry": {
-                "coordinates": [184, 73, -81],
+                "coordinates": [178, 75, -81],
                 "type": "Point"
             },
             "id": 4,
@@ -47,7 +47,7 @@
         },
         {
             "geometry": {
-                "coordinates": [179, 71, -162],
+                "coordinates": [180, 75, -158],
                 "type": "Point"
             },
             "id": 5,
@@ -58,7 +58,7 @@
         },
         {
             "geometry": {
-                "coordinates": [129, 53, -115],
+                "coordinates": [140, 52, -113],
                 "type": "Point"
             },
             "id": 6,
@@ -80,7 +80,7 @@
         },
         {
             "geometry": {
-                "coordinates": [252, 79, 217],
+                "coordinates": [254, 80, 213],
                 "type": "Point"
             },
             "id": 8,
@@ -91,7 +91,7 @@
         },
         {
             "geometry": {
-                "coordinates": [293, 99, 41],
+                "coordinates": [289, 99, 40],
                 "type": "Point"
             },
             "id": 9,
@@ -102,7 +102,7 @@
         },
         {
             "geometry": {
-                "coordinates": [182, 87, -15],
+                "coordinates": [180, 88, -19],
                 "type": "Point"
             },
             "id": 10,
@@ -113,7 +113,7 @@
         },
         {
             "geometry": {
-                "coordinates": [104, 94, 85],
+                "coordinates": [108, 95, 83],
                 "type": "Point"
             },
             "id": 11,
@@ -124,7 +124,7 @@
         },
         {
             "geometry": {
-                "coordinates": [98, 109, 158],
+                "coordinates": [101, 112, 157],
                 "type": "Point"
             },
             "id": 12,

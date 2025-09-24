@@ -66,6 +66,50 @@
             "properties": {
                 "map": "bamboo_peak"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [-438, 78, 388],
+                "type": "Point"
+            },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [-125, 76, 463],
+                "type": "Point"
+            },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [205, 229, 217],
+                "type": "Point"
+            },
+            "id": 9,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [402, 235, 235],
+                "type": "Point"
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "bamboo_peak"
+            }
         }
     ]
 }
