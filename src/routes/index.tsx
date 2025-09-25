@@ -17,6 +17,7 @@ const InfoMapPage = lazy(() => import("@routes/InfoMapPage"));
 const MapPage = lazy(() => import("@routes/MapPage"));
 const HomePage = lazy(() => import("@routes/HomePage"));
 const CommunityPage = lazy(() => import("@routes/CommunityPage"));
+const MuseumPage = lazy(() => import("@routes/MuseumPage"));
 
 export const AppRoutes: FC = () => (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
@@ -38,6 +39,7 @@ export const AppRoutes: FC = () => (
                     <Route path="/mappage" element={<MapPage />} />
                     <Route path="/equipment" element={<EquipPage />} />
                     <Route path="/community" element={<CommunityPage />} />
+                    <Route path="/museum" element={<MuseumPage />} />
                 </Routes>
             </Suspense>
         </main>

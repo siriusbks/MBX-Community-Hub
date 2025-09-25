@@ -1,0 +1,12 @@
+{
+  "museum.minecraftUsername": "Enter your Minecraft username",
+  "museum.importMuseum.button": "Import Museum",
+  "museum.recapMuseum.button": "Show missing items summary",
+  "museum.resourceMuseum.button": "Show missing resources",
+  "museum.backToTop.button": "Back to top",
+  "museum.noRecipe": "This item has no crafting recipe.",
+  "museum.craftFor": "Craft for ",
+  "museum.jobRequired": "Required job: ",
+  "museum.noDataLoaded": "Data has not loaded yet.",
+  "museum.noResourceRquired": "No resources required (or no craft available for missing items)."
+}

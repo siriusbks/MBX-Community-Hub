@@ -1,0 +1,12 @@
+{
+    "museum.minecraftUsername": "Entre ton pseudonyme Minecraft",
+    "museum.importMuseum.button" : "Importer le musée",
+    "museum.recapMuseum.button": "Afficher le récapitulatif des items manquants",
+    "museum.resourceMuseum.button": "Afficher les ressources manquantes",
+    "museum.backToTop.button": "Remonter en haut",
+    "museum.noRecipe": "Cet item n'a pas de craft.",
+    "museum.craftFor": "Craft pour ",
+    "museum.jobRequired": "Métier requis : ",
+    "museum.noDataLoaded": "Les données ne sont pas encore chargées.",
+    "museum.noResourceRquired": "Aucune ressource requise (ou aucun craft disponible pour les items manquants)."
+}
