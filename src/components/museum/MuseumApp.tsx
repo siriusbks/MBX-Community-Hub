@@ -72,7 +72,15 @@ export const MuseumApp: FC = () => {
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
-            details[item.id] = item;
+                details[item.id] = item;
+            });
+
+            const itemsNoRecipeResponse = await fetch("/assets/data/items-no-in-MBapi.json");
+            const itemsNoRecipeData = await itemsNoRecipeResponse.json();
+            itemsNoRecipeData.forEach((item: any) => {
+                if (!details[item.id] || !details[item.id].recipe) {
+                    details[item.id] = item;
+                }
             });
 
             setGroupedItems(itemsGrouped);
