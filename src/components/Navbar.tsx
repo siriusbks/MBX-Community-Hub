@@ -14,7 +14,7 @@ const LanguageSelector = ({
     handleLanguageChange,
 }: {
     i18n: any;
-    handleLanguageChange: (event: { target: { value: string } }) => void;
+    handleLanguageChange: (event: { target: { value: string; }; }) => void;
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -73,9 +73,8 @@ const LanguageSelector = ({
                                 });
                                 setIsOpen(false);
                             }}
-                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-gray-700 ${
-                                lang.code === currentCode ? "bg-white/5" : ""
-                            }`}
+                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-gray-700 ${lang.code === currentCode ? "bg-white/5" : ""
+                                }`}
                             role="option"
                             aria-selected={lang.code === currentCode}
                         >
@@ -97,7 +96,7 @@ export const Navbar = () => {
     const { i18n } = useTranslation();
     const { t } = useTranslation("navbar");
 
-    const handleLanguageChange = (event: { target: { value: string } }) => {
+    const handleLanguageChange = (event: { target: { value: string; }; }) => {
         i18n.changeLanguage(event.target.value);
     };
 
@@ -127,11 +126,11 @@ export const Navbar = () => {
                             icon: Shield,
                             label: t("navbar.equipement"),
                         },
-                        {
-                            to: "/museum",
-                            icon: BookMarked,
-                            label: t("navbar.museum"),
-                        },
+                        //{
+                        //    to: "/museum",
+                        //    icon: BookMarked,
+                        //    label: t("navbar.museum"),
+                        //},
                         {
                             to: "/community",
                             icon: Users,
@@ -142,14 +141,13 @@ export const Navbar = () => {
                             key={to}
                             to={to}
                             className={({ isActive }) =>
-                                `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
-                                    isActive ||
+                                `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${isActive ||
                                     (to === "/map" &&
                                         location.pathname.startsWith(
                                             "/mappage"
                                         ))
-                                        ? "bg-green-500/20 text-green-400"
-                                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                                    ? "bg-green-500/20 text-green-400"
+                                    : "text-gray-400 hover:text-white hover:bg-white/5"
                                 }`
                             }
                         >
