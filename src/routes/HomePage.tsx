@@ -13,13 +13,18 @@ export function HomePage() {
     return (
         <>
             {/* 🤝 Community Call */}
-            <div className="bg-emerald-600/90 text-white text-center p-3 rounded-lg mx-6 mt-6 shadow-lg">
-                <HandHelping className="inline-block mr-2" size={20} />
-                MBX is a community-driven project — and we’re looking for translators
-                in <strong>Spanish</strong> and <strong>German</strong>!
-                <span className="ml-2">
-                    Contact me on Discord: <strong>@siriusb_</strong>
-                </span>
+            {/* 🤝 Community Call */}
+            <div className="bg-emerald-600/90 text-white text-center p-4 rounded-lg mx-6 mt-6 shadow-lg">
+                <HandHelping className="inline-block mr-2" size={22} />
+                Help translate <strong>MBX Community</strong> on Crowdin!
+                <a
+                    href="https://crowdin.com/project/minebox-community"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-3 bg-white text-emerald-700 font-semibold px-3 py-1 rounded-lg shadow hover:bg-gray-100 transition"
+                >
+                    Join here
+                </a>
             </div>
 
             <div className="py-20 px-6">
