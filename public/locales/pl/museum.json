@@ -1,0 +1,12 @@
+{
+  "museum.minecraftUsername": "Wprowadź swój pseudonim Minecraft",
+  "museum.importMuseum.button": "Importuj muzeum",
+  "museum.recapMuseum.button": "Pokaż podsumowanie brakujących przedmiotów",
+  "museum.resourceMuseum.button": "Pokaż brakujące zasoby",
+  "museum.backToTop.button": "Powrót na górę",
+  "museum.noRecipe": "Ten przedmiot nie ma receptury.",
+  "museum.craftFor": "Craft dla ",
+  "museum.jobRequired": "Wymagany zawód: ",
+  "museum.noDataLoaded": "Dane nie zostały jeszcze załadowane.",
+  "museum.noResourceRquired": "Żadne zasoby nie są wymagane (lub brak dostępnej receptury dla brakujących przedmiotów)."
+}

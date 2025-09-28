@@ -1,0 +1,496 @@
+[
+    {
+        "id": "mm-action_table",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "essence_of_blue_starfish",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_raw_obsidian",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_dolomite",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-bazaar_table",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "harvester_amethyst",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "potion_base",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "reinforced_plank",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "clover_bottle",
+                    "amount": 16
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-shop_table",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "insect_firefly",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_rainbow_trout",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_dolomite",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "bag_pumpkin",
+                    "amount": 16
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-bank_atm",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "olivewood_resin",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "herbal_soup",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_manganese",
+                    "amount": 16
+                },
+                {
+                    "type": "vanilla",
+                    "id": "gold_ingot",
+                    "amount": 48
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_farmer_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "fallen_star",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "harvester_potato_reaper",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_wheat",
+                    "amount": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_miner_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "ingot_tin",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "liquid_diamond",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "manganese_bar",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "obsidian_fragment",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_cook_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "kibble_turkey_and_rice_mash",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_sandwich",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "avocado_toast",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "fried_egg",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_lumberjack_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "olivewood_resin",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "walnut_oil",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "mahogany_carving_block",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "reinforced_plank",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_fisherman_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "salt_crusted_fish",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "wrasse_wraps",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_salad",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "surgeonfish_salad",
+                    "amount": 8
+                }
+            ]
+        },
+        "comment": "Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT"
+    },
+    {
+        "id": "mm-workshop_hunter_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "shulker_prismarine_stew",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "feathered_turtle_brew",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "elemental_harmony_medley",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "starry_honey_delight",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_alchemist_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "henbane_elixir",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "spider_venum_bottle",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "chamomile_herbal_tea",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "foxglove_draught",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_blacksmith_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "ingot_ashstone",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_bauxite",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "drawing_board",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "liquid_diamond",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_tailor_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "super_leather",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "drawing_board",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "reinforced_plank",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "nailed_wooden_board",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_shoemaker_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "super_leather",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "black_leather",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_hammershark_goofish",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "liquid_diamond",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_jeweler_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "silver_plate",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "green_wood_plaque",
+                    "amount": 4
+                },
+                {
+                    "type": "vanilla",
+                    "id": "gold_ingot",
+                    "amount": 48
+                },
+                {
+                    "type": "custom",
+                    "id": "mahogany_carving_block",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_tinkerer_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "ingot_raw_obsidian",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "red_wood_plaque",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "black_leather",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "reinforced_plank",
+                    "amount": 8
+                }
+            ]
+        }
+    },
+    {
+        "id": "mm-workshop_runeforger_small",
+        "category": "UTILILTY_BLOCK",
+        "recipe": {
+            "job": "TINKERER",
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "rune_enchanted_agility",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "rune_enchanted_fortune",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "rune_enchanted_luck",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "rune_enchanted_intelligence",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "fortified_plank",
+                    "amount": 8
+                }
+            ]
+        }
+    }
+]

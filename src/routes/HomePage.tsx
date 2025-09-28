@@ -5,7 +5,7 @@
  */
 
 import { Link } from "react-router-dom";
-import { User, Map, Users, HandHelping, Shield } from "lucide-react";
+import { User, Map, Users, HandHelping, Shield, BookMarked } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export function HomePage() {
@@ -97,6 +97,24 @@ export function HomePage() {
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.equipment.description")}
+                        </p>
+                    </Link>
+
+                    {/* Museum */}
+                    <Link
+                        to="/museum"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-purple-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-purple-600/10 text-purple-500 group-hover:bg-purple-500/20 transition-colors">
+                                <BookMarked size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                                {t("homepage.features.museum.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {t("homepage.features.museum.description")}
                         </p>
                     </Link>
 
