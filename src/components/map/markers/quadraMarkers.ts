@@ -29,10 +29,10 @@ const quadraMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
-    log_mystic_horbeam: {
-        displayName: "markers.item.mystic_horbeam",
-        iconUrl: "assets/media/tree/log_mystic_horbeam.png",
-        geoJsonFile: "assets/geo/quadra_plains/tree/log_mystic_horbeam.geojson",
+    log_mystic_hornbeam: {
+        displayName: "markers.item.mystic_hornbeam",
+        iconUrl: "assets/media/tree/log_mystic_hornbeam.png",
+        geoJsonFile: "assets/geo/quadra_plains/tree/log_mystic_hornbeam.geojson",
         category: "markers.category.woodcutting",
         defaultChecked: true,
         properties: {

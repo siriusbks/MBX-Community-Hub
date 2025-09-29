@@ -185,7 +185,7 @@ export const mapData: Record<string, MapDataConfig> = {
         markerRefs: [
             "log_chestnut",
             "log_walnut",
-            "log_mystic_horbeam",
+            "log_mystic_hornbeam",
             "chamomille",
             "henbane",
             "peppermint",

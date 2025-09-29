@@ -59,7 +59,7 @@ export const defaultSelectedPerMap: Record<string, string[]> = {
     quadra_plains: [
         "log_chestnut",
         "log_walnut",
-        "log_mystic_horbeam",
+        "log_mystic_hornbeam",
         "chamomille",
         "henbane",
         "peppermint",
