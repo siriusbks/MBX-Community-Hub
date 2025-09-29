@@ -29,6 +29,8 @@
   "equip.title.job": "Métier :",
   "equip.craftingBySlot": "Artisanat par emplacement",
   "equip.seerecipe": "Équipez un objet pour voir sa recette.",
+  "equip.selector.clearFilters": "Effacer les filtres",
+  "equip.selector.filterRarity": "Filtre",
   "equip.stats.names.AGILITY": "Agilité",
   "equip.stats.names.HEALTH": "Vitalité",
   "equip.stats.names.LUCK": "Chance",

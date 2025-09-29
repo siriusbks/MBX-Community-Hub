@@ -29,6 +29,8 @@
   "equip.title.job": "Job:",
   "equip.craftingBySlot": "Crafting by Slot",
   "equip.seerecipe": "Equip an item to see its recipe.",
+  "equip.selector.clearFilters": "Clear Filters",
+  "equip.selector.filterRarity": "Filter",
   "equip.stats.names.AGILITY": "Agility",
   "equip.stats.names.HEALTH": "Health",
   "equip.stats.names.LUCK": "Luck",

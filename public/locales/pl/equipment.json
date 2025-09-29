@@ -29,6 +29,8 @@
   "equip.title.job": "Klasa:",
   "equip.craftingBySlot": "Rzemiosło według slotów",
   "equip.seerecipe": "Wyposaż przedmiot, aby zobaczyć jego przepis.",
+  "equip.selector.clearFilters": "",
+  "equip.selector.filterRarity": "",
   "equip.stats.names.AGILITY": "Zwinność",
   "equip.stats.names.HEALTH": "Zdrowie",
   "equip.stats.names.LUCK": "Szczęście",
