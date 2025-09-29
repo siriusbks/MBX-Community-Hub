@@ -164,7 +164,7 @@ const MapPage: FC = () => {
                 {/* Map Selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        {t("mappage.selectMap")}
+                        🌍 {t("mappage.selectMap")}
                     </h2>
                     <select
                         className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
@@ -190,7 +190,7 @@ const MapPage: FC = () => {
                 {/* Markers selection */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4 space-y-2">
                     <h2 className="text-base font-semibold text-gray-300 flex items-center">
-                        {t("mappage.markersSelection")}
+                        📍 {t("mappage.markersSelection")}
                     </h2>
 
                     <label className="flex items-center gap-2 text-sm text-gray-300 font-medium">
@@ -223,7 +223,7 @@ const MapPage: FC = () => {
                                 if (!acc[category]) acc[category] = [];
                                 acc[category].push({ ref, config });
                                 return acc;
-                            }, {} as Record<string, { ref: string; config: any }[]>)
+                            }, {} as Record<string, { ref: string; config: any; }[]>)
                         ).map(([category, items]) => (
                             <div key={category}>
                                 <h3 className="text-sm font-semibold text-gray-400 mb-1">
@@ -262,16 +262,16 @@ const MapPage: FC = () => {
                                                     {config.properties
                                                         ?.level !==
                                                         undefined && (
-                                                        <span className="text-xs text-gray-400 whitespace-nowrap">
-                                                            (lv.{" "}
-                                                            {
-                                                                config
-                                                                    .properties
-                                                                    .level
-                                                            }
-                                                            )
-                                                        </span>
-                                                    )}
+                                                            <span className="text-xs text-gray-400 whitespace-nowrap">
+                                                                (lv.{" "}
+                                                                {
+                                                                    config
+                                                                        .properties
+                                                                        .level
+                                                                }
+                                                                )
+                                                            </span>
+                                                        )}
                                                 </span>
                                             </span>
                                         </label>
@@ -285,7 +285,7 @@ const MapPage: FC = () => {
                 {/* Map visibility */}
                 <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
-                        {t("mappage.mapOpacity")}
+                        🌗 {t("mappage.mapOpacity")}
                     </h2>
                     <input
                         type="range"
@@ -319,9 +319,8 @@ const MapPage: FC = () => {
                 {/* Sidebar Right = Fish Info */}
                 {fishData[selectedMapKey] && fishingVisible && (
                     <div
-                        className={`transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
-                            isSidebarOpen ? "w-80" : "w-12"
-                        }`}
+                        className={`transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${isSidebarOpen ? "w-80" : "w-12"
+                            }`}
                     >
                         {/* Header retract */}
                         <div className="flex items-center justify-between p-2 border-b border-gray-700">
@@ -334,7 +333,7 @@ const MapPage: FC = () => {
                             </button>
                             {isSidebarOpen && (
                                 <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
-                                    {t("mappage.fishinginfo.title")} -{" "}
+                                    🎣 {t("mappage.fishinginfo.title")} -{" "}
                                     {t(mapNameTranslationKeys[selectedMapKey], {
                                         defaultValue: selectedMapKey,
                                     })}{" "}
@@ -391,36 +390,36 @@ const MapPage: FC = () => {
 
                                                         const rarityColor =
                                                             rarityColorMap[
-                                                                fish.rarity
+                                                            fish.rarity
                                                             ] || "text-white";
 
                                                         const timeLabel =
                                                             fish.time.includes(
                                                                 "fishing.time.day"
                                                             ) &&
-                                                            fish.time.includes(
-                                                                "fishing.time.night"
-                                                            )
+                                                                fish.time.includes(
+                                                                    "fishing.time.night"
+                                                                )
                                                                 ? t(
-                                                                      "fishing.time.day_night"
-                                                                  )
+                                                                    "fishing.time.day_night"
+                                                                )
                                                                 : fish.time
-                                                                      .map(
-                                                                          (
-                                                                              tKey
-                                                                          ) =>
-                                                                              t(
-                                                                                  tKey,
-                                                                                  {
-                                                                                      ns: "fishing",
-                                                                                      defaultValue:
-                                                                                          tKey,
-                                                                                  }
-                                                                              )
-                                                                      )
-                                                                      .join(
-                                                                          " / "
-                                                                      );
+                                                                    .map(
+                                                                        (
+                                                                            tKey
+                                                                        ) =>
+                                                                            t(
+                                                                                tKey,
+                                                                                {
+                                                                                    ns: "fishing",
+                                                                                    defaultValue:
+                                                                                        tKey,
+                                                                                }
+                                                                            )
+                                                                    )
+                                                                    .join(
+                                                                        " / "
+                                                                    );
 
                                                         return (
                                                             <div
@@ -489,31 +488,31 @@ const MapPage: FC = () => {
                                                                             {fish.condition?.includes(
                                                                                 "rain"
                                                                             ) && (
-                                                                                <span title="Only when it rains">
-                                                                                    🌧️
-                                                                                </span>
-                                                                            )}
+                                                                                    <span title="Only when it rains">
+                                                                                        🌧️
+                                                                                    </span>
+                                                                                )}
                                                                             {fish.condition?.includes(
                                                                                 "fullmoon"
                                                                             ) && (
-                                                                                <span title="Only during full moon">
-                                                                                    🌕
-                                                                                </span>
-                                                                            )}
+                                                                                    <span title="Only during full moon">
+                                                                                        🌕
+                                                                                    </span>
+                                                                                )}
                                                                             {fish.condition?.includes(
                                                                                 "storm"
                                                                             ) && (
-                                                                                <span title="Only at storm">
-                                                                                    🌩️
-                                                                                </span>
-                                                                            )}
+                                                                                    <span title="Only at storm">
+                                                                                        🌩️
+                                                                                    </span>
+                                                                                )}
                                                                             {fish.condition?.includes(
                                                                                 "niceweather"
                                                                             ) && (
-                                                                                <span title="Nice weather">
-                                                                                    🌤️
-                                                                                </span>
-                                                                            )}
+                                                                                    <span title="Nice weather">
+                                                                                        🌤️
+                                                                                    </span>
+                                                                                )}
                                                                         </div>
                                                                     </div>
                                                                 </div>

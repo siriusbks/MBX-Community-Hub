@@ -37,7 +37,7 @@ const CommunityPage: FC = () => {
             {/* Header */}
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold text-white mb-4">
-                    {t("community.title")}
+                    🌟 {t("community.title")}
                 </h1>
                 <p className="text-gray-400 max-w-3xl mx-auto">
                     {t("community.subtitle")}

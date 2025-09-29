@@ -1,5 +1,5 @@
 {
-    "mappage.title": "🌍 Explore Maps",
+    "mappage.title": "Explore Maps",
     "mappage.hoverInfo1": "Hover over the",
     "mappage.hoverInfo2": "to view resources.",
     "mappage.tooltipTitle": "Available Resources",
@@ -16,10 +16,10 @@
     "mappage.maps.frostbite_fortress.name": "Frostbite Fortress",
     "mappage.maps.sandwhisper_dunes.name": "Sandwhisper Dunes",
     "mappage.backToMap": "Exploration map",
-    "mappage.selectMap": "🌍 Select a Map",
-    "mappage.markersSelection": "📍 Resources Pins",
+    "mappage.selectMap": "Select a Map",
+    "mappage.markersSelection": "Resources Pins",
     "mappage.selectAllMarkers": "Select/Unselect all:",
-    "mappage.mapOpacity": "🌗 Adjust Visibility",
+    "mappage.mapOpacity": "Adjust Visibility",
     "mappage.mapPercOpacity": "of visibility",
-    "mappage.fishinginfo.title": "🎣 Fishing Info"
+    "mappage.fishinginfo.title": "Fishing Info"
 }

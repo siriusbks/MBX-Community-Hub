@@ -34,7 +34,7 @@ const InfoMapPage: FC = () => {
         <div className="flex flex-col items-center min-h-screen text-white p-6">
             {/* Header */}
             <h1 className="text-4xl font-extrabold text-green-400 mb-4">
-                {t("mappage.title")}
+                🌍 {t("mappage.title")}
             </h1>
             <p className="text-gray-300 text-lg mb-8 flex items-center gap-2">
                 {t("mappage.hoverInfo1")}{" "}
@@ -128,15 +128,15 @@ const InfoMapPage: FC = () => {
                                                         </div>
                                                         {resource.properties
                                                             ?.level && (
-                                                            <span className="text-xs bg-green-700 text-white px-2 py-1 rounded-md">
-                                                                lvl{" "}
-                                                                {
-                                                                    resource
-                                                                        .properties
-                                                                        .level
-                                                                }
-                                                            </span>
-                                                        )}
+                                                                <span className="text-xs bg-green-700 text-white px-2 py-1 rounded-md">
+                                                                    lvl{" "}
+                                                                    {
+                                                                        resource
+                                                                            .properties
+                                                                            .level
+                                                                    }
+                                                                </span>
+                                                            )}
                                                     </div>
                                                 ) : null;
                                             }
