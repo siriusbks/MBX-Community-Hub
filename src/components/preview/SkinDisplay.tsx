@@ -5,7 +5,7 @@
  */
 
 import { FC, useState } from "react";
-import { useTranslation } from "react-i18next";
+{/* import { useTranslation } from "react-i18next"; */ }
 
 interface SkinDisplayProps {
     username: string;
@@ -27,18 +27,25 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
         );
     };
 
-    const { t } = useTranslation("profile");
+    {/* Translation Hook [Disabled For Now]
+    {/* const { t } = useTranslation("profile"); */ }
 
     return (
         <div className="w-64 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col items-center">
             {username && (
-                <div className="flex items-center gap-3 mb-2">
-                    <p className="text-xl font-semibold text-white">
-                        {username}
-                    </p>
-                    <span className="text-xs font-semibold text-green-400">
-                        {t("profile.professionInput.level")} {level}
+                <div className="flex flex-col items-center gap-0 mb-2">
+                    <span className="flex items-center gap-2">
+                        <span className="text-xs font-semibold rounded bg-green-600 px-1.5 py-0.5">
+                            Lvl {level}
+                        </span>
+                        <p className="text-xl font-semibold text-white">
+                            {username}
+                        </p>
                     </span>
+                    {/* Future Feature: Display Player Title */}
+                    {/* <p className="text-xs  text- opacity-80">
+                        (Title Coming Soon)
+                    </p> */}
                 </div>
             )}
             {uuid && !imgError ? (
@@ -71,6 +78,46 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </svg>
                 </div>
             )}
+            {/* Future Feature: Base Info Display */}
+            {/*
+            <div className="mt-auto grid grid-cols-2 gap-2 w-full">
+                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <span className="text-2xl">😒</span>
+                    <span className="flex flex-col justify-center items-left">
+                        <h4 className="text-xs font-bold text-white mb-0">
+                            Playtime
+                        </h4>
+                        <p className="text-xs text-green-400">0000 H</p>
+                    </span>
+                </div>
+                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <span className="text-2xl">😒</span>
+                    <span className="flex flex-col justify-center items-left">
+                        <h4 className="text-xs font-bold text-white mb-0">
+                            Muzeum
+                        </h4>
+                        <p className="text-xs text-green-400">0000/0000</p>
+                    </span>
+                </div>
+                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <span className="text-2xl">😒</span>
+                    <span className="flex flex-col justify-center items-left">
+                        <h4 className="text-xs font-bold text-white mb-0">
+                            Daily
+                        </h4>
+                        <p className="text-[10px] text-green-400">000 Quests</p>
+                    </span>
+                </div>
+                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <span className="text-2xl">😒</span>
+                    <span className="flex flex-col justify-center items-left">
+                        <h4 className="text-xs font-bold text-white mb-0">
+                            Weekly
+                        </h4>
+                        <p className="text-[10px] text-green-400">000 Quests</p>
+                    </span>
+                </div>
+            </div> */}
         </div>
     );
 };

@@ -15,8 +15,6 @@ interface ProfessionsGridProps {
 }
 
 export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
-    const columns = Math.min(4, Math.ceil(Math.sqrt(professions.length)));
-
     const { t } = useTranslation("profile");
 
     return (
@@ -25,13 +23,26 @@ export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
                 {t("profile.professionInput.title")}
             </h3>
             <div
-                className="grid gap-3 flex-1 min-h-0 h-full"
-                style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+                className="grid gap-2 mb-2"
+                style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
             >
-                {professions.map((profession) => (
+                {professions.slice(0, 4).map((profession) => (
                     <ProfessionCard
                         key={profession.id}
                         profession={profession}
+                        orientation={true}
+                    />
+                ))}
+            </div>
+            <div
+                className="grid gap-2 h-full"
+                style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
+            >
+                {professions.slice(4).map((profession) => (
+                    <ProfessionCard
+                        key={profession.id}
+                        profession={profession}
+                        orientation={false}
                     />
                 ))}
             </div>
