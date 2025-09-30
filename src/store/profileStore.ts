@@ -42,6 +42,7 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     },
     { id: "tailoring", name: "Tailor", icon: "🧵", maxXP: 75, enabled: true },
     { id: "tinkering", name: "Tinkerer", icon: "⚙️", maxXP: 75, enabled: true },
+    { id: "runeforgering", name: "Runeforger", icon: "📜", maxXP: 75, enabled: true },
 ];
 
 const staticMap = Object.fromEntries(STATIC_PROFESSIONS.map((p) => [p.id, p]));
