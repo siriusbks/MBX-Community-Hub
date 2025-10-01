@@ -26,7 +26,7 @@ export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
                 className="grid gap-2 mb-2"
                 style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
             >
-                {professions.slice(0, 4).map((profession) => (
+                {professions.filter((profession) => profession.priority === true).map((profession) => (
                     <ProfessionCard
                         key={profession.id}
                         profession={profession}
@@ -38,7 +38,7 @@ export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
                 className="grid gap-2 h-full"
                 style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
             >
-                {professions.slice(4).map((profession) => (
+                {professions.filter((profession) => profession.priority === false).map((profession) => (
                     <ProfessionCard
                         key={profession.id}
                         profession={profession}

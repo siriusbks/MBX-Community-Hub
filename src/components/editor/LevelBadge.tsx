@@ -49,7 +49,7 @@ const LevelBadge: React.FC<LevelBadgeProps> = ({ level }) => {
 
   return (
     <span className="relative inline-block px-1.5 py-0 level-wrapper">
-      <span className={`text-sm font-bold text-white relative z-10 level-text ${getTextColor()}`}>
+      <span className={`text-sm font-bold  relative z-10 level-text ${getTextColor()}`}>
         LVL {level}
       </span>
       <span
