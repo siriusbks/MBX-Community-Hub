@@ -19,12 +19,6 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
     profession,
     orientation,
 }) => {
-    // Progress %
-    const xpPercentage = Math.min(
-        (profession.currentXP / profession.maxXP) * 100 || 0,
-        100
-    );
-
     const { t } = useTranslation("profile");
 
     // Global XP totals
@@ -45,8 +39,10 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
                     profession.id as any,
                     profession.level + 1
                 );
+
                 const total = before + Math.max(0, profession.currentXP);
                 const nextTotal = next > before ? next : total;
+
                 if (alive) setGlobalTotals({ total, next: nextTotal });
             } catch {
                 if (alive) setGlobalTotals(null);
@@ -56,6 +52,21 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
             alive = false;
         };
     }, [profession.id, profession.level, profession.currentXP]);
+
+    // Progress %
+    let xpPercentage = Math.min(
+        (profession.currentXP / profession.maxXP) * 100 || 0,
+        100
+    );
+
+    // Force 100% if at max XP
+    if (
+        globalTotals &&
+        globalTotals.total === globalTotals.next &&
+        profession.currentXP === profession.maxXP
+    ) {
+        xpPercentage = 100;
+    }
 
     return (
         <div className="bg-black bg-opacity-40 p-2 rounded-md border border-white border-opacity-5 flex flex-col h-full min-h-[90px]">
