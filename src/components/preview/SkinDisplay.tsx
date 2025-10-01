@@ -12,12 +12,18 @@ interface SkinDisplayProps {
     username: string;
     uuid: string;
     level: number;
+    playtime: number;
+    daily: number;
+    weekly: number;
 }
 
 export const SkinDisplay: FC<SkinDisplayProps> = ({
     username,
     uuid,
     level,
+    playtime,
+    daily,
+    weekly,
 }) => {
     const [imgError, setImgError] = useState(false);
 
@@ -78,7 +84,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                 </div>
             )}
             {/* Future Feature: Base Info Display */}
-            {/*
+            
             <div className="mt-auto grid grid-cols-2 gap-2 w-full">
                 <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
                     <span className="text-2xl">😒</span>
@@ -86,7 +92,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                         <h4 className="text-xs font-bold text-white mb-0">
                             Playtime
                         </h4>
-                        <p className="text-xs text-green-400">0000 H</p>
+                        <p className="text-xs text-green-400">{(Number(playtime) / 3600).toFixed(0)}H</p>
                     </span>
                 </div>
                 <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
@@ -104,7 +110,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                         <h4 className="text-xs font-bold text-white mb-0">
                             Daily
                         </h4>
-                        <p className="text-[10px] text-green-400">000 Quests</p>
+                        <p className="text-[10px] text-green-400">{daily} Quests</p>
                     </span>
                 </div>
                 <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
@@ -113,10 +119,10 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                         <h4 className="text-xs font-bold text-white mb-0">
                             Weekly
                         </h4>
-                        <p className="text-[10px] text-green-400">000 Quests</p>
+                        <p className="text-[10px] text-green-400">{weekly} Quests</p>
                     </span>
                 </div>
-            </div> */}
+            </div> 
         </div>
     );
 };

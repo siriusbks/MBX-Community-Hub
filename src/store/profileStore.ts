@@ -15,7 +15,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "alchemy",
         name: "Alchemist",
-        icon: "⚗️",
         maxXP: 75,
         priority: true,
         enabled: true,
@@ -23,7 +22,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "blacksmithing",
         name: "Blacksmith",
-        icon: "🔨",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -31,7 +29,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "cooking",
         name: "Cook",
-        icon: "🍳",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -39,7 +36,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "farming",
         name: "Farmer",
-        icon: "🌾",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -47,7 +43,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "fishing",
         name: "Fisherman",
-        icon: "🎣",
         maxXP: 75,
         priority: true,
         enabled: true,
@@ -55,7 +50,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "hunting",
         name: "Hunter",
-        icon: "🏹",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -63,7 +57,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "jeweling",
         name: "Jeweler",
-        icon: "💎",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -71,7 +64,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "lumberjack",
         name: "Lumberjack",
-        icon: "🪓",
         maxXP: 75,
         priority: true,
         enabled: true,
@@ -79,7 +71,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "mining",
         name: "Miner",
-        icon: "⛏️",
         maxXP: 75,
         priority: true,
         enabled: true,
@@ -87,7 +78,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "shoemaking",
         name: "Shoemaker",
-        icon: "👢",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -95,7 +85,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "tailoring",
         name: "Tailor",
-        icon: "🧵",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -103,7 +92,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "tinkering",
         name: "Tinkerer",
-        icon: "⚙️",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -111,7 +99,6 @@ const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "runeforging",
         name: "Runeforger",
-        icon: "📜",
         maxXP: 75,
         priority: false,
         enabled: true,
@@ -144,6 +131,9 @@ export const useProfileStore = create<ProfileState>()(
             username: "6rius",
             uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
             level: 1,
+            playtime: 0,
+            daily: 0,
+            weekly: 0,
             background: background_default,
             professions: defaultDynamic.map(mergeProfession),
 
@@ -154,6 +144,27 @@ export const useProfileStore = create<ProfileState>()(
                     level:
                         typeof value === "function"
                             ? value(state.level)
+                            : value,
+                })),
+            setPlaytime: (value) =>
+                set((state) => ({
+                    playtime:
+                        typeof value === "function"
+                            ? value(state.playtime)
+                            : value,
+                })),
+            setDaily: (value) =>
+                set((state) => ({
+                    daily:
+                        typeof value === "function"
+                            ? value(state.daily)
+                            : value,
+                })),
+            setWeekly: (value) =>
+                set((state) => ({
+                    weekly:
+                        typeof value === "function"
+                            ? value(state.weekly)
                             : value,
                 })),
             setBackground: (background) => set({ background }),
@@ -171,6 +182,9 @@ export const useProfileStore = create<ProfileState>()(
                 username: state.username,
                 uuid: state.uuid,
                 level: state.level,
+                playtime: state.playtime,
+                daily: state.daily,
+                weekly: state.weekly,
                 background: state.background,
                 professions: state.professions.map(
                     ({ id, level, currentXP }) => ({

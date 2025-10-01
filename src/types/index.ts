@@ -10,7 +10,6 @@ export interface Profession {
     level: number;
     currentXP: number;
     maxXP: number;
-    icon: string;
     priority: boolean;
     enabled: boolean;
 }
@@ -19,11 +18,17 @@ export interface ProfileState {
     username: string;
     uuid: string;
     level: number;
+    playtime: number;
+    daily: number;
+    weekly: number;
     background: string;
     professions: Profession[];
     setUsername: (username: string) => void;
     setUUID: (uuid: string) => void;
     setLevel: (value: number | ((prevLevel: number) => number)) => void;
+    setPlaytime: (value: number | ((prevPlaytime: number) => number)) => void;
+    setDaily: (value: number | ((prevDaily: number) => number)) => void;
+    setWeekly: (value: number | ((prevWeekly: number) => number)) => void;
     setBackground: (url: string) => void;
     updateProfession: (id: string, updates: Partial<Profession>) => void;
 }

@@ -22,7 +22,7 @@ const BACKGROUND_TRANSITION = "filter 0.3s ease";
 
 export const Preview: FC = () => {
     const { t } = useTranslation("profile");
-    const { username, uuid, level, background, professions } =
+    const { username, uuid, level, background, professions, playtime, daily, weekly } =
         useProfileStore();
     const previewRef = useRef<HTMLDivElement>(null);
     const [isDownloading, setIsDownloading] = useState(false);
@@ -200,6 +200,9 @@ export const Preview: FC = () => {
                             username={username}
                             uuid={uuid}
                             level={level}
+                            playtime={playtime}
+                            daily={daily}
+                            weekly={weekly}
                         />
                         <ProfessionsGrid professions={enabledProfessions} />
                     </div>
