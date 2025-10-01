@@ -80,13 +80,31 @@ export const Preview: FC = () => {
                     ).fontFamily;
 
                     // Fix level badge position
-                    const levelWrapper = clonedDoc.querySelector(".level-wrapper") as HTMLElement;
+                    const levelWrapper = clonedDoc.querySelector(
+                        ".level-wrapper"
+                    ) as HTMLElement;
                     if (levelWrapper) {
-                        const shadow = levelWrapper.querySelector(".level-shadow") as HTMLElement;
-                        const text = levelWrapper.querySelector(".level-text") as HTMLElement;
-                        if (shadow) { shadow.style.transform = "translate(0px,0.65rem)"; }
-                        if (text) { text.style.transform = "translate(0px,0.2rem)"; }
+                        const shadow = levelWrapper.querySelector(
+                            ".level-shadow"
+                        ) as HTMLElement;
+                        const text = levelWrapper.querySelector(
+                            ".level-text"
+                        ) as HTMLElement;
+                        if (shadow) {
+                            shadow.style.transform = "translate(0px,0.65rem)";
+                        }
+                        if (text) {
+                            text.style.transform = "translate(0px,0.2rem)";
+                        }
                     }
+
+                    const cardsIcons = clonedDoc.querySelectorAll(
+                        ".card-icon-fixer"
+                    ) as NodeListOf<HTMLElement>;
+
+                    cardsIcons.forEach((el) => {
+                        el.style.transform = "translate(0px,0.5rem)";
+                    });
 
                     const bgElement = clonedDoc.querySelector(
                         ".downloadable-bg"
@@ -119,7 +137,7 @@ export const Preview: FC = () => {
             } else {
                 setError(
                     err.message ||
-                    "Failed to download the image. Please try again."
+                        "Failed to download the image. Please try again."
                 );
             }
         } finally {
@@ -143,10 +161,11 @@ export const Preview: FC = () => {
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${isDownloading
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-green-700"
-                        }`}
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
+                        isDownloading
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-green-700"
+                    }`}
                 >
                     <Download size={24} />
                     {isDownloading
