@@ -6,7 +6,7 @@
 
 import { create } from "zustand";
 import background_default from "/assets/media/profile/background/mineboxcover.webp";
-import { ProfileState, Profession } from "../types";
+import { ProfileState, Profession } from "@t/index";
 
 // Static professions data
 const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [

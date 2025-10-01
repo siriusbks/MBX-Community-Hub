@@ -7,8 +7,8 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Profession } from "../../types";
-import { totalXpForLevel } from "../../utils/xpCurve";
+import { Profession } from "@t/index";
+import { totalXpForLevel } from "@utils/xpCurve";
 
 interface ProfessionCardProps {
     profession: Profession;

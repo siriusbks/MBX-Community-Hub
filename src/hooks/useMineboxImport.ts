@@ -6,8 +6,8 @@
 
 import { useCallback, useState } from "react";
 import { useProfileStore } from "@store/profileStore";
-import { progressForJob, StoreProfessionId } from "../utils/xpCurve";
-import { CorsIfDev } from "../utils/helper";
+import { progressForJob, StoreProfessionId } from "@utils/xpCurve";
+import { CorsIfDev } from "@utils/helper";
 
 // mbx api job ids and our store differs, this map acts as a helper
 // maybe consider unifying everything ?
