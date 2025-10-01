@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 import { useProfileStore } from "@store/profileStore";
 
-import type { Profession } from "../../types";
+import type { Profession } from "@t/index";
 
 function clamp(value: number, minVal: number, maxVal?: number) {
     if (typeof maxVal === "number") {
@@ -107,7 +107,7 @@ export function ProfessionInput() {
                 <div key={prof.id} className="bg-gray-800/50 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
-                            <span className="text-xl">{prof.icon}</span>
+                            <span className="text-xl"></span>
                             <span className="font-medium capitalize">
                                 {t(`profile.profession.${prof.id}`)}
                             </span>

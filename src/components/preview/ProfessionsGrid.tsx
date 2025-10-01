@@ -7,7 +7,7 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Profession } from "../../types";
+import { Profession } from "@t/index";
 import { ProfessionCard } from "./ProfessionCard";
 
 interface ProfessionsGridProps {

@@ -7,8 +7,8 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Profession } from "../../types";
-import { totalXpForLevel } from "../../utils/xpCurve";
+import { Profession } from "@t/index";
+import { totalXpForLevel } from "@utils/xpCurve";
 
 interface ProfessionCardProps {
     profession: Profession;
@@ -73,7 +73,7 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
             {/* Header */}
             {orientation ? (
                 <div className="flex flex-col items-center gap-1 w-full mb-1">
-                    <img src={`../../assets/media/jobs/${profession.id}.png`} alt="icon" className="w-8 h-8 drop-shadow card-icon-fixer"/>
+                    <img src={`/assets/media/jobs/${profession.id}.png`} alt="icon" className="w-8 h-8 drop-shadow card-icon-fixer" />
                     <div className="flex flex-col items-center text-center leading-tight">
                         <h4 className="text-sm font-bold text-white">
                             {t(`profile.profession.${profession.id}`)}
@@ -85,7 +85,7 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
                 </div>
             ) : (
                 <div className="flex flex-row items-center gap-2 w-full mb-1">
-                    <img src={`../../assets/media/jobs/${profession.id}.png`} alt="icon" className="w-8 h-8 drop-shadow card-icon-fixer"/>
+                    <img src={`/assets/media/jobs/${profession.id}.png`} alt="icon" className="w-8 h-8 drop-shadow card-icon-fixer" />
                     <div className="flex flex-col text-left leading-tight">
                         <h4 className="text-sm font-bold text-white">
                             {t(`profile.profession.${profession.id}`)}

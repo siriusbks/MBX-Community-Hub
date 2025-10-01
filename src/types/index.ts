@@ -10,7 +10,6 @@ export interface Profession {
     level: number;
     currentXP: number;
     maxXP: number;
-    icon: string;
     priority: boolean;
     enabled: boolean;
 }

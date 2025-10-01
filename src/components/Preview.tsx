@@ -137,7 +137,7 @@ export const Preview: FC = () => {
             } else {
                 setError(
                     err.message ||
-                        "Failed to download the image. Please try again."
+                    "Failed to download the image. Please try again."
                 );
             }
         } finally {
@@ -161,11 +161,10 @@ export const Preview: FC = () => {
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
-                        isDownloading
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${isDownloading
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:bg-green-700"
-                    }`}
+                        }`}
                 >
                     <Download size={24} />
                     {isDownloading
