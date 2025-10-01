@@ -33,5 +33,6 @@
     "profile.profession.mining": "Mineur",
     "profile.profession.shoemaking": "Cordonnier",
     "profile.profession.tailoring": "Tailleur",
-    "profile.profession.tinkering": "Bricoleur"
+    "profile.profession.tinkering": "Bricoleur",
+    "profile.profession.runeforging": "Forgeruneur"
 }
