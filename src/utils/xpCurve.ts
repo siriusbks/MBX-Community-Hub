@@ -6,7 +6,7 @@ export type XpJson = Record<string, { id: string; experience_per_level: number[]
 
 export type StoreProfessionId =
   | "alchemy" | "blacksmithing" | "cooking" | "farming" | "fishing" | "hunting"
-  | "jeweling" | "lumberjack" | "mining" | "shoemaking" | "tailoring" | "tinkering" | "runeforgering";
+  | "jeweling" | "lumberjack" | "mining" | "shoemaking" | "tailoring" | "tinkering" | "runeforging";
 
 const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
   alchemy: "alchemist",
@@ -21,7 +21,7 @@ const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
   shoemaking: "shoemaker",
   tailoring: "tailor",
   tinkering: "tinkerer",
-  runeforgering: "runeforger",
+  runeforging: "runeforger",
 };
 
 const DATA_URL = CorsIfDev("https://cdn2.minebox.co/data/skills.json");

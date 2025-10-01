@@ -78,6 +78,16 @@ export const Preview: FC = () => {
                     clonedDoc.body.style.fontFamily = getComputedStyle(
                         document.body
                     ).fontFamily;
+
+                    // Fix level badge position
+                    const levelWrapper = clonedDoc.querySelector(".level-wrapper") as HTMLElement;
+                    if (levelWrapper) {
+                        const shadow = levelWrapper.querySelector(".level-shadow") as HTMLElement;
+                        const text = levelWrapper.querySelector(".level-text") as HTMLElement;
+                        if (shadow) { shadow.style.transform = "translate(0px,0.65rem)"; }
+                        if (text) { text.style.transform = "translate(0px,0.2rem)"; }
+                    }
+
                     const bgElement = clonedDoc.querySelector(
                         ".downloadable-bg"
                     ) as HTMLElement;

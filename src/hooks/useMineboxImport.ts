@@ -24,7 +24,7 @@ const API_TO_STORE_ID: Record<string, StoreProfessionId | undefined> = {
   BLACKSMITH: "blacksmithing",
   JEWELER: "jeweling",
   TAILOR: "tailoring",
-  RUNEFORGER: "runeforgering",
+  RUNEFORGER: "runeforging",
 };
 
 type MineboxResponse = {
