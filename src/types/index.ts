@@ -11,6 +11,7 @@ export interface Profession {
     currentXP: number;
     maxXP: number;
     icon: string;
+    priority: boolean;
     enabled: boolean;
 }
 
