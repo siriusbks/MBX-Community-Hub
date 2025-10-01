@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import LevelBadge from "@components/editor/LevelBadge";
 import { FC, useState } from "react";
 {/* import { useTranslation } from "react-i18next"; */ }
 
@@ -35,12 +36,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
             {username && (
                 <div className="flex flex-col items-center gap-0 mb-2">
                     <span className="flex items-center gap-2">
-                        <span className="relative inline-block px-1.5 py-0 level-wrapper">
-                            <span className="text-sm font-semibold text-white relative z-10 level-text">
-                                Lvl {level}
-                            </span>
-                            <span className="absolute inset-0 bg-green-600 rounded-sm z-0 level-shadow" />
-                        </span>
+                        <LevelBadge level={level} />
                         <p className="text-xl font-semibold text-white">
                             {username}
                         </p>
