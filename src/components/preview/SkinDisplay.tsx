@@ -17,6 +17,10 @@ interface SkinDisplayProps {
     weekly: number;
     museum: number;
     relics: string[];
+
+    showRelics?: boolean;
+    showStatistics?: boolean;
+    showJoinTime?: boolean;
 }
 
 export const SkinDisplay: FC<SkinDisplayProps> = ({
@@ -27,7 +31,10 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
     daily,
     weekly,
     museum,
-    relics
+    relics,
+    showRelics = true,
+    showStatistics = true,
+    //showJoinTime = true,
 }) => {
     const [imgError, setImgError] = useState(false);
 
@@ -86,8 +93,11 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </svg>
                 </div>
             )}
+            <span className="mt-auto"></span>
 
-            <div className="mt-auto w-full flex items-center justify-center mb-2 -space-x-2 overflow-visible">
+            {/* Relics Display */}
+            {showRelics && relics.length > 0 && (
+            <div className="w-full flex items-center justify-center-space-x-2 overflow-visible">
                 {Array.from({ length: relics.length }).map((_, idx) => (
                     <span className="inline-block">
                         <img
@@ -99,7 +109,12 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </span>
                 ))}
             </div>
-            <div className=" grid grid-cols-2 gap-2 w-full">
+            )}
+
+
+            {/* Statistics Display */}
+            {showStatistics && (
+            <div className="mt-2 grid grid-cols-2 gap-2 w-full">
                 <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
                     <img
                         src="assets/media/icons/playtime.png"
@@ -153,6 +168,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </span>
                 </div>
             </div>
+            )}
         </div>
     );
 };

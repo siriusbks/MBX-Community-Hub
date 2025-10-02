@@ -11,14 +11,16 @@ import { AlertCircle } from "lucide-react";
 import { BackgroundSelector } from "@components/editor/BackgroundSelector";
 import { SkinDisplay } from "@components/editor/SkinDisplay";
 import ApiImport from "@components/editor/ApiImport";
+import { ProfileSettings } from "./editor/ProfileSettings";
 
 export const ProfileEditor: FC = () => {
     const { t } = useTranslation("profile");
     return (
         <div className="space-y-6">
-            <div className="space-y-6">
+            <div className="space-y-4">
                 <SkinDisplay />
                 <BackgroundSelector />
+                <ProfileSettings/>
                 <ApiImport />
             </div>
 

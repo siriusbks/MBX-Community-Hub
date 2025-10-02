@@ -191,6 +191,11 @@ export const useProfileStore = create<ProfileState>()(
                 );
                 set({ professions: updated });
             },
+
+            // Settings
+            showRelics: true,
+            showStatistics: true,
+            showJoinTime: true,
         }),
         {
             name: "profileData",

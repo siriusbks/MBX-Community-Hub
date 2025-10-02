@@ -12,7 +12,7 @@ import { ProfileEditor } from "@components/ProfileEditor";
 const ProfilePage: FC = () => {
     return (
         <div className="flex flex-col lg:flex-row gap-8 p-8">
-            <div className="w-full lg:w-1/3 bg-gray-800 bg-opacity-30 rounded-xl h-[calc(100vh-10rem)]">
+            <div className="w-full lg:w-1/3 bg-gray-800 bg-opacity-30 rounded-xl h-[calc(100vh-5.5rem)]">
                 <div className="h-full overflow-y-auto custom-scrollbar">
                     <div className="p-4">
                         <ProfileEditor />

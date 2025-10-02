@@ -35,4 +35,8 @@ export interface ProfileState {
     setRelics: (value: string[] | ((prevRelics: string[]) => string[])) => void;
     setBackground: (url: string) => void;
     updateProfession: (id: string, updates: Partial<Profession>) => void;
+
+    showRelics: boolean;
+    showStatistics: boolean;
+    showJoinTime: boolean;
 }
