@@ -12,62 +12,118 @@ import { CorsIfDev } from "@utils/helper";
 // mbx api job ids and our store differs, this map acts as a helper
 // maybe consider unifying everything ?
 const API_TO_STORE_ID: Record<string, StoreProfessionId | undefined> = {
-  ALCHEMIST: "alchemy",
-  COOK: "cooking",
-  FARMER: "farming",
-  FISHERMAN: "fishing",
-  HUNTER: "hunting",
-  LUMBERJACK: "lumberjack",
-  MINER: "mining",
-  SHOEMAKER: "shoemaking",
-  TINKERER: "tinkering",
-  BLACKSMITH: "blacksmithing",
-  JEWELER: "jeweling",
-  TAILOR: "tailoring",
-  RUNEFORGER: "runeforging",
+    ALCHEMIST: "alchemy",
+    COOK: "cooking",
+    FARMER: "farming",
+    FISHERMAN: "fishing",
+    HUNTER: "hunting",
+    LUMBERJACK: "lumberjack",
+    MINER: "mining",
+    SHOEMAKER: "shoemaking",
+    TINKERER: "tinkering",
+    BLACKSMITH: "blacksmithing",
+    JEWELER: "jeweling",
+    TAILOR: "tailoring",
+    RUNEFORGER: "runeforging",
 };
 
 type MineboxResponse = {
-  level?: number;
-  data?: { SKILLS?: { data?: Record<string, number>; }; };
+    level?: number;
+    playtime?: number;
+    data?: {
+        SKILLS?: {
+            data?: Record<string, number>;
+        };
+        OBJECTIVES?: {
+            completed_quests?: {
+                DAILY?: number;
+                WEEKLY?: number;
+            };
+            relics?: Record<string, object>; // np. { abyss: {}, basic: {} }
+            museum?: number;
+        };
+    };
 };
 
 export function useMineboxImport() {
-  const { updateProfession, setLevel } = useProfileStore();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+    const {
+        updateProfession,
+        setLevel,
+        setPlaytime,
+        setDaily,
+        setWeekly,
+        setMuseum,
+        setRelics,
+    } = useProfileStore();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  const importByUsername = useCallback(async (username: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const url = CorsIfDev(`https://api.minebox.co/data/${encodeURIComponent(username)}`);
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
-      const json = (await res.json()) as MineboxResponse;
+    const importByUsername = useCallback(
+        async (username: string) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const url = CorsIfDev(
+                    `https://api.minebox.co/data/${encodeURIComponent(
+                        username
+                    )}`
+                );
+                const res = await fetch(url);
+                if (!res.ok)
+                    throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+                const json = (await res.json()) as MineboxResponse;
 
-      if (typeof json.level === "number") setLevel(json.level);
+                if (typeof json.level === "number") setLevel(json.level);
+                if (typeof json.playtime === "number")
+                    setPlaytime(json.playtime);
+                if (
+                    typeof json.data?.OBJECTIVES?.completed_quests?.DAILY ===
+                    "number"
+                ) {
+                    setDaily(json.data?.OBJECTIVES.completed_quests.DAILY);
+                }
 
-      const skills = json?.data?.SKILLS?.data ?? {};
-      for (const [apiKey, totalXpRaw] of Object.entries(skills)) {
-        const storeId = API_TO_STORE_ID[apiKey];
-        if (!storeId) continue;
+                if (
+                    typeof json.data?.OBJECTIVES?.completed_quests?.WEEKLY ===
+                    "number"
+                ) {
+                    setWeekly(json.data?.OBJECTIVES.completed_quests.WEEKLY);
+                }
+                if (Array.isArray(json.data?.OBJECTIVES?.museum)) {
+                    setMuseum(json.data.OBJECTIVES.museum.length);
+                }
+                if (
+                    json.data?.OBJECTIVES?.relics &&
+                    typeof json.data.OBJECTIVES.relics === "object"
+                ) {
+                    setRelics(Object.keys(json.data.OBJECTIVES.relics));
+                }
 
-        const totalXp = Number(totalXpRaw) || 0;
+                const skills = json?.data?.SKILLS?.data ?? {};
+                for (const [apiKey, totalXpRaw] of Object.entries(skills)) {
+                    const storeId = API_TO_STORE_ID[apiKey];
+                    if (!storeId) continue;
 
-        const { level, currentXP, maxXP } = await progressForJob(storeId, totalXp);
-        updateProfession(storeId, {
-          level,
-          currentXP,
-          maxXP: maxXP ?? 0,
-        });
-      }
-    } catch (e: any) {
-      setError(e?.message ?? "something went absolutely wrong :(");
-    } finally {
-      setLoading(false);
-    }
-  }, [setLevel, updateProfession]);
+                    const totalXp = Number(totalXpRaw) || 0;
 
-  return { importByUsername, loading, error };
+                    const { level, currentXP, maxXP } = await progressForJob(
+                        storeId,
+                        totalXp
+                    );
+                    updateProfession(storeId, {
+                        level,
+                        currentXP,
+                        maxXP: maxXP ?? 0,
+                    });
+                }
+            } catch (e: any) {
+                setError(e?.message ?? "something went absolutely wrong :(");
+            } finally {
+                setLoading(false);
+            }
+        },
+        [setLevel, updateProfession]
+    );
+
+    return { importByUsername, loading, error };
 }

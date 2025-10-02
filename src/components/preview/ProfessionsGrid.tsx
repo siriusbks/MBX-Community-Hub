@@ -18,7 +18,7 @@ export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
     const { t } = useTranslation("profile");
 
     return (
-        <section className="flex-1 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col">
+        <section className="professions-grid-fix flex-1 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col">
             <h3 className="text-lg font-semibold text-white mb-3">
                 🛠️ {t("profile.professionInput.title")}
             </h3>

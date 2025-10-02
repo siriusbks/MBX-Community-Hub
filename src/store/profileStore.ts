@@ -5,10 +5,12 @@
  */
 
 import { create } from "zustand";
-import background_default from "/assets/media/profile/background/mineboxcover.webp";
-import { ProfileState, Profession } from "@t/index";
+import { persist } from "zustand/middleware";
 
+import background_default from "/assets/media/profile/background/mineboxcover.webp";
+import { ProfileState, Profession } from "../types";
 // Static professions data
+// This data is used to initialize the professions in the profile store
 const STATIC_PROFESSIONS: Omit<Profession, "level" | "currentXP">[] = [
     {
         id: "alchemy",
@@ -117,28 +119,103 @@ function mergeProfession(dynamic: {
     currentXP: number;
 }): Profession {
     const staticData = staticMap[dynamic.id];
-    return { ...dynamic, ...staticData };
+    return {
+        ...dynamic,
+        ...staticData,
+    };
 }
 
-export const useProfileStore = create<ProfileState>()((set, get) => ({
-    username: "6rius",
-    uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
-    level: 1,
-    background: background_default,
-    professions: defaultDynamic.map(mergeProfession),
+export const useProfileStore = create<ProfileState>()(
+    persist(
+        (set, get) => ({
+            username: "6rius",
+            uuid: "1ffb3a0d4c5d47089bf626cbe70023eb",
+            level: 1,
+            playtime: 0,
+            daily: 0,
+            weekly: 0,
+            museum: 0,
+            relics: [],
+            background: background_default,
+            professions: defaultDynamic.map(mergeProfession),
 
-    setUsername: (username) => set({ username }),
-    setUUID: (uuid) => set({ uuid }),
-    setLevel: (value) =>
-        set((state) => ({
-            level: typeof value === "function" ? value(state.level) : value,
-        })),
-    setBackground: (background) => set({ background }),
+            setUsername: (username) => set({ username }),
+            setUUID: (uuid) => set({ uuid }),
+            setLevel: (value) =>
+                set((state) => ({
+                    level:
+                        typeof value === "function"
+                            ? value(state.level)
+                            : value,
+                })),
+            setPlaytime: (value) =>
+                set((state) => ({
+                    playtime:
+                        typeof value === "function"
+                            ? value(state.playtime)
+                            : value,
+                })),
+            setDaily: (value) =>
+                set((state) => ({
+                    daily:
+                        typeof value === "function"
+                            ? value(state.daily)
+                            : value,
+                })),
+            setWeekly: (value) =>
+                set((state) => ({
+                    weekly:
+                        typeof value === "function"
+                            ? value(state.weekly)
+                            : value,
+                })),
+            setMuseum: (value) =>
+                set((state) => ({
+                    museum:
+                        typeof value === "function"
+                            ? value(state.museum)
+                            : value,
+                })),
+            setRelics: (value) =>
+                set((state) => ({
+                    relics:
+                        typeof value === "function"
+                            ? value(state.relics)
+                            : value,
+                })),
+            setBackground: (background) => set({ background }),
 
-    updateProfession: (id, updates) => {
-        const updated = get().professions.map((prof) =>
-            prof.id === id ? { ...prof, ...updates } : prof
-        );
-        set({ professions: updated });
-    },
-}));
+            updateProfession: (id, updates) => {
+                const updated = get().professions.map((prof) =>
+                    prof.id === id ? { ...prof, ...updates } : prof
+                );
+                set({ professions: updated });
+            },
+        }),
+        {
+            name: "profileData",
+            partialize: (state) => ({
+                username: state.username,
+                uuid: state.uuid,
+                level: state.level,
+                playtime: state.playtime,
+                daily: state.daily,
+                weekly: state.weekly,
+                museum: state.museum,
+                background: state.background,
+                professions: state.professions.map(
+                    ({ id, level, currentXP }) => ({
+                        id,
+                        level,
+                        currentXP,
+                    })
+                ),
+            }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    state.professions = state.professions.map(mergeProfession);
+                }
+            },
+        }
+    )
+);
