@@ -134,6 +134,8 @@ export const useProfileStore = create<ProfileState>()(
             playtime: 0,
             daily: 0,
             weekly: 0,
+            museum: 0,
+            relics: [],
             background: background_default,
             professions: defaultDynamic.map(mergeProfession),
 
@@ -167,6 +169,20 @@ export const useProfileStore = create<ProfileState>()(
                             ? value(state.weekly)
                             : value,
                 })),
+            setMuseum: (value) =>
+                set((state) => ({
+                    museum:
+                        typeof value === "function"
+                            ? value(state.museum)
+                            : value,
+                })),
+            setRelics: (value) =>
+                set((state) => ({
+                    relics:
+                        typeof value === "function"
+                            ? value(state.relics)
+                            : value,
+                })),
             setBackground: (background) => set({ background }),
 
             updateProfession: (id, updates) => {
@@ -185,6 +201,7 @@ export const useProfileStore = create<ProfileState>()(
                 playtime: state.playtime,
                 daily: state.daily,
                 weekly: state.weekly,
+                museum: state.museum,
                 background: state.background,
                 professions: state.professions.map(
                     ({ id, level, currentXP }) => ({

@@ -22,7 +22,7 @@ const BACKGROUND_TRANSITION = "filter 0.3s ease";
 
 export const Preview: FC = () => {
     const { t } = useTranslation("profile");
-    const { username, uuid, level, background, professions, playtime, daily, weekly } =
+    const { username, uuid, level, background, professions, playtime, daily, weekly, museum } =
         useProfileStore();
     const previewRef = useRef<HTMLDivElement>(null);
     const [isDownloading, setIsDownloading] = useState(false);
@@ -99,12 +99,36 @@ export const Preview: FC = () => {
                     }
 
                     const cardsIcons = clonedDoc.querySelectorAll(
-                        ".card-icon-fixer"
+                        ".card-text-fixer"
                     ) as NodeListOf<HTMLElement>;
 
                     cardsIcons.forEach((el) => {
-                        el.style.transform = "translate(0px,0.5rem)";
+                        el.style.transform = "translate(0px,-0.5rem)";
                     });
+
+                    const statsText = clonedDoc.querySelectorAll(
+                        ".stats-text-fixer"
+                    ) as NodeListOf<HTMLElement>;
+
+                    statsText.forEach((el) => {
+                        el.style.transform = "translate(0px,-0.5rem)";
+                    });
+
+                    const SkinDisplayProps = clonedDoc.querySelector(
+                        ".skin-display-fix"
+                    ) as HTMLElement;
+
+                    if (SkinDisplayProps) {
+                        SkinDisplayProps.style.paddingTop = "0.25rem";
+                    }
+
+                    const ProfessionsGridProps = clonedDoc.querySelector(
+                        ".professions-grid-fix"
+                    ) as HTMLElement;
+
+                    if (ProfessionsGridProps) {
+                        ProfessionsGridProps.style.paddingTop = "0rem";
+                    }
 
                     const bgElement = clonedDoc.querySelector(
                         ".downloadable-bg"
@@ -137,7 +161,7 @@ export const Preview: FC = () => {
             } else {
                 setError(
                     err.message ||
-                        "Failed to download the image. Please try again."
+                    "Failed to download the image. Please try again."
                 );
             }
         } finally {
@@ -161,11 +185,10 @@ export const Preview: FC = () => {
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
-                        isDownloading
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${isDownloading
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:bg-green-700"
-                    }`}
+                        }`}
                 >
                     <Download size={24} />
                     {isDownloading
@@ -194,7 +217,7 @@ export const Preview: FC = () => {
                     }}
                 ></div>
 
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-between p-6">
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-between p-4">
                     <div className="flex gap-4 flex-1">
                         <SkinDisplay
                             username={username}
@@ -203,6 +226,8 @@ export const Preview: FC = () => {
                             playtime={playtime}
                             daily={daily}
                             weekly={weekly}
+                            museum={museum}
+                            relics={useProfileStore.getState().relics}
                         />
                         <ProfessionsGrid professions={enabledProfessions} />
                     </div>

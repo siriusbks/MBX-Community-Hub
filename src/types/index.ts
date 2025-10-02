@@ -21,7 +21,9 @@ export interface ProfileState {
     playtime: number;
     daily: number;
     weekly: number;
+    museum: number;
     background: string;
+    relics: string[]
     professions: Profession[];
     setUsername: (username: string) => void;
     setUUID: (uuid: string) => void;
@@ -29,6 +31,8 @@ export interface ProfileState {
     setPlaytime: (value: number | ((prevPlaytime: number) => number)) => void;
     setDaily: (value: number | ((prevDaily: number) => number)) => void;
     setWeekly: (value: number | ((prevWeekly: number) => number)) => void;
+    setMuseum: (value: number | ((prevMuseum: number) => number)) => void;
+    setRelics: (value: string[] | ((prevRelics: string[]) => string[])) => void;
     setBackground: (url: string) => void;
     updateProfession: (id: string, updates: Partial<Profession>) => void;
 }

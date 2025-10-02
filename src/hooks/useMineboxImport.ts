@@ -6,8 +6,8 @@
 
 import { useCallback, useState } from "react";
 import { useProfileStore } from "@store/profileStore";
-import { progressForJob, StoreProfessionId } from "../utils/xpCurve";
-import { CorsIfDev } from "../utils/helper";
+import { progressForJob, StoreProfessionId } from "@utils/xpCurve";
+import { CorsIfDev } from "@utils/helper";
 
 // mbx api job ids and our store differs, this map acts as a helper
 // maybe consider unifying everything ?
@@ -30,22 +30,31 @@ const API_TO_STORE_ID: Record<string, StoreProfessionId | undefined> = {
 type MineboxResponse = {
     level?: number;
     playtime?: number;
-  data?: {
-    SKILLS?: {
-      data?: Record<string, number>;
+    data?: {
+        SKILLS?: {
+            data?: Record<string, number>;
+        };
+        OBJECTIVES?: {
+            completed_quests?: {
+                DAILY?: number;
+                WEEKLY?: number;
+            };
+            relics?: Record<string, object>; // np. { abyss: {}, basic: {} }
+            museum?: number;
+        };
     };
-    OBJECTIVES?: {
-      completed_quests?: {
-        DAILY?: number;
-        WEEKLY?: number;
-      };
-    };
-  };
 };
 
 export function useMineboxImport() {
-    const { updateProfession, setLevel, setPlaytime, setDaily, setWeekly } =
-        useProfileStore();
+    const {
+        updateProfession,
+        setLevel,
+        setPlaytime,
+        setDaily,
+        setWeekly,
+        setMuseum,
+        setRelics,
+    } = useProfileStore();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -68,7 +77,8 @@ export function useMineboxImport() {
                 if (typeof json.playtime === "number")
                     setPlaytime(json.playtime);
                 if (
-                    typeof json.data?.OBJECTIVES?.completed_quests?.DAILY === "number"
+                    typeof json.data?.OBJECTIVES?.completed_quests?.DAILY ===
+                    "number"
                 ) {
                     setDaily(json.data?.OBJECTIVES.completed_quests.DAILY);
                 }
@@ -78,6 +88,15 @@ export function useMineboxImport() {
                     "number"
                 ) {
                     setWeekly(json.data?.OBJECTIVES.completed_quests.WEEKLY);
+                }
+                if (Array.isArray(json.data?.OBJECTIVES?.museum)) {
+                    setMuseum(json.data.OBJECTIVES.museum.length);
+                }
+                if (
+                    json.data?.OBJECTIVES?.relics &&
+                    typeof json.data.OBJECTIVES.relics === "object"
+                ) {
+                    setRelics(Object.keys(json.data.OBJECTIVES.relics));
                 }
 
                 const skills = json?.data?.SKILLS?.data ?? {};

@@ -143,6 +143,17 @@
             "properties": {
                 "map": "kokoko"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [435, 87, -194],
+                "type": "Point"
+            },
+            "id": 14,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
         }
     ]
 }

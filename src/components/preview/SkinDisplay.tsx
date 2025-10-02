@@ -15,6 +15,8 @@ interface SkinDisplayProps {
     playtime: number;
     daily: number;
     weekly: number;
+    museum: number;
+    relics: string[];
 }
 
 export const SkinDisplay: FC<SkinDisplayProps> = ({
@@ -24,6 +26,8 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
     playtime,
     daily,
     weekly,
+    museum,
+    relics
 }) => {
     const [imgError, setImgError] = useState(false);
 
@@ -38,7 +42,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
     {/* const { t } = useTranslation("profile"); */ }
 
     return (
-        <div className="w-64 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col items-center">
+        <div className="skin-display-fix w-64 bg-black bg-opacity-40 p-4 rounded-md border  border-white border-opacity-10  flex flex-col items-center">
             {username && (
                 <div className="flex flex-col items-center gap-0 mb-2">
                     <span className="flex items-center gap-2">
@@ -57,7 +61,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                 <img
                     src={`https://vzge.me/full/832/${uuid}.png?no=cape`}
                     alt={`${username}'s Minecraft Skin`}
-                    className="w-40 h-auto image-pixelated"
+                    className="w-40 h-auto image-pixelated mt-2"
                     crossOrigin="anonymous"
                     onError={handleImageError}
                 />
@@ -83,43 +87,70 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </svg>
                 </div>
             )}
-            {/* Future Feature: Base Info Display */}
             
-            <div className="mt-auto grid grid-cols-2 gap-2 w-full">
-                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <span className="text-2xl">😒</span>
-                    <span className="flex flex-col justify-center items-left">
+                <div className="mt-auto w-full flex items-center justify-center mb-2 -space-x-2 overflow-visible">
+                    {Array.from({ length: relics.length }).map((_, idx) => (
+                        <span className="inline-block">
+                            <img
+                                src={`assets/media/skulls/${relics[idx]}.png`}
+                                alt={`skull-${idx}`}
+                                className="h-8 w-8  object-cover drop-shadow-md"
+                                draggable={false}
+                            />
+                        </span>
+                    ))}
+                </div>
+            <div className=" grid grid-cols-2 gap-2 w-full">
+                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <img
+                        src="assets/media/icons/playtime.png"
+                        alt="playtime"
+                        className="h-6 w-6"
+                    />
+                    <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
                             Playtime
                         </h4>
                         <p className="text-xs text-green-400">{(Number(playtime) / 3600).toFixed(0)}H</p>
                     </span>
                 </div>
-                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <span className="text-2xl">😒</span>
-                    <span className="flex flex-col justify-center items-left">
+                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <img
+                        src="assets/media/icons/museum.png"
+                        alt="museum"
+                        className="h-6 w-6"
+                    />
+                    <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
-                            Muzeum
+                            Museum
                         </h4>
-                        <p className="text-xs text-green-400">0000/0000</p>
+                        <p className="text-xs text-green-400">{museum}</p>
                     </span>
                 </div>
-                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <span className="text-2xl">😒</span>
-                    <span className="flex flex-col justify-center items-left">
+                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <img
+                        src="assets/media/icons/quest.png"
+                        alt="quest"
+                        className="h-6 w-6"
+                    />
+                    <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
                             Daily
                         </h4>
-                        <p className="text-[10px] text-green-400">{daily} Quests</p>
+                        <p className="text-[10px] text-green-400">{daily}</p>
                     </span>
                 </div>
-                <div className="flex flex-row gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <span className="text-2xl">😒</span>
-                    <span className="flex flex-col justify-center items-left">
+                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                    <img
+                        src="assets/media/icons/quest.png"
+                        alt="quest"
+                        className="h-6 w-6"
+                    />
+                    <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
                             Weekly
                         </h4>
-                        <p className="text-[10px] text-green-400">{weekly} Quests</p>
+                        <p className="text-[10px] text-green-400">{weekly}</p>
                     </span>
                 </div>
             </div> 
