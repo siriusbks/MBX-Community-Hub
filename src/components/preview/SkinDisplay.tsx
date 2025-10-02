@@ -6,7 +6,7 @@
 
 import LevelBadge from "@components/editor/LevelBadge";
 import { FC, useState } from "react";
-{/* import { useTranslation } from "react-i18next"; */ }
+import { useTranslation } from "react-i18next";
 
 interface SkinDisplayProps {
     username: string;
@@ -38,8 +38,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
         );
     };
 
-    {/* Translation Hook [Disabled For Now]
-    {/* const { t } = useTranslation("profile"); */ }
+    const { t } = useTranslation("profile");
 
     return (
         <div className="skin-display-fix w-64 bg-black bg-opacity-40 p-4 rounded-md border  border-white border-opacity-10  flex flex-col items-center">
@@ -87,19 +86,19 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     </svg>
                 </div>
             )}
-            
-                <div className="mt-auto w-full flex items-center justify-center mb-2 -space-x-2 overflow-visible">
-                    {Array.from({ length: relics.length }).map((_, idx) => (
-                        <span className="inline-block">
-                            <img
-                                src={`assets/media/skulls/${relics[idx]}.png`}
-                                alt={`skull-${idx}`}
-                                className="h-8 w-8  object-cover drop-shadow-md"
-                                draggable={false}
-                            />
-                        </span>
-                    ))}
-                </div>
+
+            <div className="mt-auto w-full flex items-center justify-center mb-2 -space-x-2 overflow-visible">
+                {Array.from({ length: relics.length }).map((_, idx) => (
+                    <span className="inline-block">
+                        <img
+                            src={`assets/media/skulls/${relics[idx]}.png`}
+                            alt={`skull-${idx}`}
+                            className="h-8 w-8  object-cover drop-shadow-md"
+                            draggable={false}
+                        />
+                    </span>
+                ))}
+            </div>
             <div className=" grid grid-cols-2 gap-2 w-full">
                 <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
                     <img
@@ -109,7 +108,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     />
                     <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
-                            Playtime
+                            {t("profile.display.playtime")}
                         </h4>
                         <p className="text-xs text-green-400">{(Number(playtime) / 3600).toFixed(0)}H</p>
                     </span>
@@ -122,7 +121,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     />
                     <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
-                            Museum
+                            {t("profile.display.museum")}
                         </h4>
                         <p className="text-xs text-green-400">{museum}</p>
                     </span>
@@ -135,7 +134,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     />
                     <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
-                            Daily
+                            {t("profile.display.daily")}
                         </h4>
                         <p className="text-[10px] text-green-400">{daily}</p>
                     </span>
@@ -148,12 +147,12 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                     />
                     <span className="flex flex-col justify-center items-left stats-text-fixer">
                         <h4 className="text-xs font-bold text-white mb-0">
-                            Weekly
+                            {t("profile.display.weekly")}
                         </h4>
                         <p className="text-[10px] text-green-400">{weekly}</p>
                     </span>
                 </div>
-            </div> 
+            </div>
         </div>
     );
 };
