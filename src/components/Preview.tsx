@@ -218,7 +218,7 @@ export const Preview: FC = () => {
                 ></div>
 
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-between p-4">
-                    <div className="flex gap-4 flex-1">
+                    <div className="flex gap-2 flex-1">
                         <SkinDisplay
                             username={username}
                             uuid={uuid}
@@ -228,6 +228,9 @@ export const Preview: FC = () => {
                             weekly={weekly}
                             museum={museum}
                             relics={useProfileStore.getState().relics}
+                            showRelics={useProfileStore.getState().showRelics}
+                            showStatistics={useProfileStore.getState().showStatistics}
+                            showJoinTime={useProfileStore.getState().showJoinTime}
                         />
                         <ProfessionsGrid professions={enabledProfessions} />
                     </div>

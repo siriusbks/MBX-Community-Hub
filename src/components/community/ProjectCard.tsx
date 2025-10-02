@@ -13,6 +13,7 @@ interface ProjectProps {
     project: {
         id: string;
         name: string;
+        subname?: string;
         description: string;
         creator: string;
         website?: string;
@@ -53,23 +54,41 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                     className="w-16 h-16 rounded-lg bg-gray-800 p-2 border border-gray-700"
                 />
                 <div>
-                    <h2 className="text-xl font-bold text-white">
+                    <h2 className="text-xl font-bold text-white flex flex-row">
                         {project.name}
                     </h2>
-                    <p className="text-gray-400 text-sm">
-                        by{" "}
-                        <span
-                            className="text-green-400 hover:underline"
-                            title={`Created by ${project.creator}`}
-                        >
-                            {project.creator}
-                        </span>
-                    </p>
+                    {project.subname && (
+                        <h4 className="text-xs leading-[0.5rem] mb-1 font-semibold text-gray-400">
+                            {project.subname}
+                        </h4>
+                    )}
+                    {!project.subname && (
+                        <p className="text-gray-400 text-xs">
+                            by{" "}
+                            <span
+                                className="text-green-400 hover:underline font-medium"
+                                title={`Created by ${project.creator}`}
+                            >
+                                {project.creator}
+                            </span>
+                        </p>
+                    )}
+                    {project.subname && (
+                        <p className="text-gray-400 text-xs mb-1">
+                            by{" "}
+                            <span
+                                className="text-green-400 hover:underline font-medium"
+                                title={`Created by ${project.creator}`}
+                            >
+                                {project.creator}
+                            </span>
+                        </p>
+                    )}
                 </div>
             </div>
 
             {/* Description */}
-            <p className="text-gray-300 text-sm mt-3">
+            <p className="text-gray-300 text-xs mt-3 h-12">
                 {t(`description.${project.id}`, {
                     ns: "projects",
                     defaultValue: project.description,
@@ -92,7 +111,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Project Website"
-                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm font-medium"
                         >
                             <Globe size={14} /> Website
                         </a>
@@ -103,7 +122,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="View on Modrinth"
-                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm font-medium"
                         >
                             <SiModrinth size={14} /> Modrinth
                         </a>
@@ -114,7 +133,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="View on CurseForge"
-                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm font-medium"
                         >
                             <SiCurseforge size={14} /> CurseForge
                         </a>
@@ -125,7 +144,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="View on GitHub"
-                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm font-medium"
                         >
                             <SiGithub size={14} /> GitHub
                         </a>
@@ -135,8 +154,8 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                             href={links.discord}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label="View on GitHub"
-                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm"
+                            aria-label="View on Discord"
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 text-sm font-medium"
                         >
                             <SiDiscord size={14} /> Discord
                         </a>

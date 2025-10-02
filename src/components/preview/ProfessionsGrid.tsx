@@ -19,8 +19,8 @@ export const ProfessionsGrid: FC<ProfessionsGridProps> = ({ professions }) => {
 
     return (
         <section className="professions-grid-fix flex-1 bg-black bg-opacity-40 p-4 rounded-md border border-white border-opacity-10 flex flex-col">
-            <h3 className="text-lg font-semibold text-white mb-3">
-                🛠️ {t("profile.professionInput.title")}
+            <h3 className="flex flex-row justify-between text-lg font-semibold text-white mb-3">
+                <p>🛠️ {t("profile.professionInput.title")}</p>
             </h3>
             <div
                 className="grid gap-2 mb-2"
