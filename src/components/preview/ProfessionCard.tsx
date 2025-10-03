@@ -99,7 +99,7 @@ export const ProfessionCard: FC<ProfessionCardProps> = ({
 
             <div className="flex-1"></div>
             <div className="flex flex-col w-full mt-auto">
-                <div className="text-[clamp(8px,1vw,10px)] font-thin text-center text-green-300">
+                <div className="text-[clamp(8px,1vw,10px)] font-thin text-center text-green-300 progress-text-fix">
                     {globalTotals ? (
                         <>
                             {globalTotals.total.toLocaleString()} /{" "}

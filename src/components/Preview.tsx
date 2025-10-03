@@ -106,6 +106,14 @@ export const Preview: FC = () => {
                         el.style.transform = "translate(0px,-0.5rem)";
                     });
 
+                    const progressTextProps = clonedDoc.querySelectorAll(
+                        ".progress-text-fix"
+                    ) as NodeListOf<HTMLElement>;
+
+                    progressTextProps.forEach((el) => {
+                        el.style.transform = "translate(0px,-0.3rem)";
+                    });
+
                     const statsText = clonedDoc.querySelectorAll(
                         ".stats-text-fixer"
                     ) as NodeListOf<HTMLElement>;
