@@ -8,5 +8,15 @@
   "museum.craftFor": "Craft dla ",
   "museum.jobRequired": "Wymagany zawód: ",
   "museum.noDataLoaded": "Dane nie zostały jeszcze załadowane.",
-  "museum.noResourceRquired": "Żadne zasoby nie są wymagane (lub brak dostępnej receptury dla brakujących przedmiotów)."
+  "museum.noResourceRquired": "Żadne zasoby nie są wymagane (lub brak dostępnej receptury dla brakujących przedmiotów).",
+  "museum.options": "Ustawienia muzeum",
+  "museum.completion": "Ukończenie Muzeum",
+  "museum.donated": "PRZEKAZANE",
+  "museum.rarity.COMMON": "Pospolity",
+  "museum.rarity.UNCOMMON": "Niepospolity",
+  "museum.rarity.RARE": "Rrzadki",
+  "museum.rarity.EPIC": "Epicki",
+  "museum.rarity.LEGENDARY": "Legendarny",
+  "museum.rarity.MYTHIC": "Mityczny",
+  "museum.rarity.UNKNOWN": "NIEZNANY"
 }

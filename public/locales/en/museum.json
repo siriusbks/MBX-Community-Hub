@@ -8,5 +8,15 @@
   "museum.craftFor": "Craft for ",
   "museum.jobRequired": "Required job: ",
   "museum.noDataLoaded": "Data has not loaded yet.",
-  "museum.noResourceRquired": "No resources required (or no craft available for missing items)."
+  "museum.noResourceRquired": "No resources required (or no craft available for missing items).",
+  "museum.options": "Museum Options",
+  "museum.completion": "Museum Completion",
+  "museum.donated": "DONATED",
+  "museum.rarity.COMMON": "Common",
+  "museum.rarity.UNCOMMON": "Uncommon",
+  "museum.rarity.RARE": "Rare",
+  "museum.rarity.EPIC": "Epic",
+  "museum.rarity.LEGENDARY": "Legendary",
+  "museum.rarity.MYTHIC": "Mythic",
+  "museum.rarity.UNKNOWN": "UNKNOWN"
 }
