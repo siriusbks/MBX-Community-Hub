@@ -550,6 +550,17 @@
                 "iconUrl": "",
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [62, 83, -144] },
+            "id": 51,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.beeanna",
+                "description": "npc.description.beeanna",
+                "iconUrl": "",
+                "map": "spawn"
+            }
         }
     ]
 }
