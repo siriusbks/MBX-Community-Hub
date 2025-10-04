@@ -190,6 +190,7 @@ export const MuseumApp: FC = () => {
                                                 {globalAmount.toLocaleString(
                                                     "fr-FR"
                                                 )}
+                                                {/* DISABLED ITEM NAME (ID) */}
                                                 x {key}
                                                 {index < arr.length - 1 && ", "}
                                             </span>
@@ -202,7 +203,7 @@ export const MuseumApp: FC = () => {
 
                     // Render each ingredient in an <li>
                     return (
-                        <li key={i} style={{ marginBottom: "8px" }}>
+                        <li key={i} className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20">
                             <div
                                 style={{
                                     display: "flex",
@@ -290,45 +291,66 @@ export const MuseumApp: FC = () => {
         if (!groupedItems || !detailsIndex || !museumItems) {
             return <p>{t("museum.noDataLoaded")}</p>;
         }
-        return groupedItems.map((group, index) => {
-            // Filter to obtain only the missing items
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item)
-            );
-            if (missingItems.length === 0) return null;
-            return (
-                <div key={index} className="mb-4">
-                    {/* Display the category */}
-                    <div className="text-2xl font-bold">{group.category}</div>
-                    <ul className="list-none flex flex-wrap gap-4">
-                        {missingItems.map((itemId) => {
-                            const imageSrc =
-                                detailsIndex &&
-                                detailsIndex[itemId] &&
-                                detailsIndex[itemId].image
-                                    ? "data:image/png;base64," +
-                                      detailsIndex[itemId].image
-                                    : `assets/media/item/textures/${itemId}.png`;
-                            return (
-                                <li key={itemId} className="flex items-center">
-                                    <img
-                                        className="w-8 h-8 mr-2"
-                                        src={imageSrc}
-                                        alt={itemId}
-                                        onError={(e) =>
-                                            ((
-                                                e.target as HTMLImageElement
-                                            ).style.display = "none")
-                                        }
-                                    />
-                                    {itemId}
-                                </li>
-                            );
-                        })}
-                    </ul>
+
+        return (
+            <div>
+                <div className="text-2xl font-bold">
+                    {t("museum.recapMuseum.title")}
                 </div>
-            );
-        });
+                <div className="text-sm font-normal mb-4 opacity-60">
+                    {t("museum.recapMuseum.description")}
+                </div>
+
+                {groupedItems.map((group, index) => {
+                    const missingItems = group.items.filter(
+                        (item) => !museumItems.includes(item)
+                    );
+                    if (missingItems.length === 0) return null;
+
+                    return (
+                        <div key={index} className="mb-4">
+                            <div className="text-2xl font-bold">
+                                {group.category}
+                            </div>
+
+                            <ul className="list-none grid grid-cols-5 gap-2">
+                                {missingItems.map((itemId) => {
+                                    const imageSrc =
+                                        detailsIndex &&
+                                        detailsIndex[itemId] &&
+                                        detailsIndex[itemId].image
+                                            ? "data:image/png;base64," +
+                                              detailsIndex[itemId].image
+                                            : `assets/media/item/textures/${itemId}.png`;
+
+                                    return (
+                                        <li
+                                            key={itemId}
+                                            className="flex items-center bg-gray-700 p-2 rounded-lg"
+                                        >
+                                            <img
+                                                className="w-8 h-8 mr-2"
+                                                src={imageSrc}
+                                                alt={itemId}
+                                                onError={(e) => {
+                                                    e.currentTarget.onerror =
+                                                        null;
+                                                    e.currentTarget.src =
+                                                        "assets/media/museum/not-found.png";
+                                                }}
+                                            />
+                                            <span className="text-sm font-semibold">
+                                                {itemId}
+                                            </span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    );
+                })}
+            </div>
+        );
     };
 
     // Function that returns the content of the missing resources
@@ -358,35 +380,53 @@ export const MuseumApp: FC = () => {
             return <p>{t("museum.noResourceRquired")}</p>;
         }
         return (
-            <ul className="list-none">
-                {sortedResourceIds.map((resId) => {
-                    const imageSrc =
-                        detailsIndex &&
-                        detailsIndex[resId] &&
-                        detailsIndex[resId].image
-                            ? "data:image/png;base64," +
-                              detailsIndex[resId].image
-                            : `assets/media/item/textures/${resId}.png`;
-                    return (
-                        <li key={resId} className="block mb-2 text-2xl">
-                            <div className="flex items-center">
-                                <img
-                                    className="w-12 h-12 mr-2"
-                                    src={imageSrc}
-                                    alt={resId}
-                                    onError={(e) =>
-                                        ((
-                                            e.target as HTMLImageElement
-                                        ).style.display = "none")
-                                    }
-                                />
-                                {resId} :{" "}
-                                {totalResources[resId].toLocaleString("fr-FR")}
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
+            <span>
+                <div className="text-2xl font-bold">
+                    {t("museum.resourceMuseum.title")}
+                </div>
+                <div className="text-sm font-normal mb-4 opacity-60">
+                    {t("museum.resourceMuseum.description")}
+                </div>
+                <span className="grid grid-cols-4 gap-2">
+                    {sortedResourceIds.map((resId) => {
+                        const imageSrc =
+                            detailsIndex &&
+                            detailsIndex[resId] &&
+                            detailsIndex[resId].image
+                                ? "data:image/png;base64," +
+                                  detailsIndex[resId].image
+                                : `assets/media/item/textures/${resId}.png`;
+                        return (
+                            <li
+                                key={resId}
+                                className="block bg-gray-700 p-2 rounded-lg"
+                            >
+                                <div className="flex items-center">
+                                    <img
+                                        className="w-8 h-8 mr-2 rounded"
+                                        src={imageSrc}
+                                        alt={resId}
+                                                onError={(e) => {
+                                                    e.currentTarget.onerror =
+                                                        null;
+                                                    e.currentTarget.src =
+                                                        "assets/media/museum/not-found.png";
+                                                }}
+                                    />
+                                    <span className="font-bold text-sm">
+                                        {resId}
+                                    </span>
+                                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
+                                        {totalResources[resId].toLocaleString(
+                                            "fr-FR"
+                                        )}
+                                    </span>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </span>
+            </span>
         );
     };
 
@@ -556,7 +596,9 @@ export const MuseumApp: FC = () => {
                 </form>
                 <span className="flex h-24 w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
                     <span>
-                        <h3 className="text-lg font-bold">{t("museum.completion")}</h3>
+                        <h3 className="text-lg font-bold">
+                            {t("museum.completion")}
+                        </h3>
                         <span className="flex flex-row justify-between gap-2">
                             <p className="text-sm opacity-50">[0000 / 0000]</p>
                             <p className="text-sm text-green-600">[00.0%]</p>
@@ -601,7 +643,7 @@ export const MuseumApp: FC = () => {
                                                     e.currentTarget.src =
                                                         "assets/media/museum/not-found.png";
                                                 }}
-                                                className="h-8 w-8"
+                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
                                             />
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">

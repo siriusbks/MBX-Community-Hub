@@ -25,6 +25,24 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             LEGENDARY: "orange-500",
             MYTHIC: "red-500",
         }[rarity] || "pink-500";
+    const TMPBorderColorClass =
+        {
+            COMMON: "border-gray-500",
+            UNCOMMON: "border-green-500",
+            RARE: "border-blue-500",
+            EPIC: "border-purple-500",
+            LEGENDARY: "border-orange-500",
+            MYTHIC: "border-red-500",
+        }[rarity] || "border-pink-500";
+    const TMPBackgroundColorClass =
+        {
+            COMMON: "bg-gray-500",
+            UNCOMMON: "bg-green-500",
+            RARE: "bg-blue-500",
+            EPIC: "bg-purple-500",
+            LEGENDARY: "bg-orange-500",
+            MYTHIC: "bg-red-500",
+        }[rarity] || "bg-pink-500";
     const TMPShadowClass =
         {
             COMMON: "shadow-[inset_0_0_8px_theme(colors.gray.500)]",
@@ -39,7 +57,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     return (
         <div
             key={itemId}
-            className={`min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 border-${TMPColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
+            className={`min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
                 isOwned
                     ? "bg-green-600 bg-opacity-20 border-4  cursor-default !border-green-600 shadow-[inset_0_0_4px_theme(colors.green.600)]" // jeśli item jest posiadany, box jest przygaszony
                     : `cursor-pointer ${TMPShadowClass}`
@@ -84,7 +102,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                     {t(`museum.donated`)}
                 </span>
             )}
-            {rarity && <RarityBadge rarity={rarity} color={TMPColorClass} />}
+            {rarity && <RarityBadge rarity={rarity} color={TMPBackgroundColorClass} />}
         </div>
     );
 };
@@ -96,7 +114,7 @@ const RarityBadge: React.FC<{ rarity: string; color: string }> = ({
     const { t } = useTranslation("museum");
     return (
         <span
-            className={`mt-auto text-xs  py-0.5 px-2 rounded font-bold bg-${color}
+            className={`mt-auto text-xs  py-0.5 px-2 rounded font-bold ${color}
             `}
         >
             {t(`museum.rarity.${rarity.toUpperCase()}`)}
