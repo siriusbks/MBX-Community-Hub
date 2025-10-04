@@ -37,6 +37,28 @@ export const MuseumApp: FC = () => {
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
+const totalStats = groupedItems && Array.isArray(groupedItems)
+    ? {
+          owned: groupedItems.reduce((sum, group) => {
+              return (
+                  sum +
+                  group.items.filter((item) =>
+                      museumItems.includes(item)
+                  ).length
+              );
+          }, 0),
+          total: groupedItems.reduce(
+              (sum, group) => sum + group.items.length,
+              0
+          ),
+      }
+    : { owned: 0, total: 0 };
+
+const completionPercent =
+    totalStats.total > 0
+        ? ((totalStats.owned / totalStats.total) * 100).toFixed(1)
+        : "0.0";
+
     // Asynchronous function to load data (API and JSON)
     const loadData = async (pseudo: string) => {
         try {
@@ -598,15 +620,18 @@ export const MuseumApp: FC = () => {
                     </div>
                 </form>
                 <span className="flex h-24 w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
-                    <span>
-                        <h3 className="text-lg font-bold">
-                            {t("museum.completion")}
-                        </h3>
-                        <span className="flex flex-row justify-between gap-2">
-                            <p className="text-sm opacity-50">[0000 / 0000]</p>
-                            <p className="text-sm text-green-600">[00.0%]</p>
-                        </span>
-                    </span>
+<span>
+    <h3 className="text-lg font-bold">
+        {t("museum.completion")}
+    </h3>
+    <span className="flex flex-row justify-between gap-2">
+        <p className="text-sm opacity-50">
+            [{totalStats.owned.toString()} /{" "}
+            {totalStats.total.toString()}]
+        </p>
+        <p className="text-sm text-green-600">[{completionPercent}%]</p>
+    </span>
+</span>
                     <img
                         src="assets/media/icons/museum.png"
                         className="h-12 w-12"
