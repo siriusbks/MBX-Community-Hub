@@ -2,7 +2,11 @@
   "museum.minecraftUsername": "Enter your Minecraft username",
   "museum.importMuseum.button": "Import Museum",
   "museum.recapMuseum.button": "Show missing items summary",
+  "museum.recapMuseum.title": "Missing Items",
+  "museum.recapMuseum.description": "These are the items you are missing in your museum.",
   "museum.resourceMuseum.button": "Show missing resources",
+  "museum.resourceMuseum.title": "Missing Resources",
+  "museum.resourceMuseum.description": "These are the resources you are missing for crafts to complete your museum.",
   "museum.backToTop.button": "Back to top",
   "museum.noRecipe": "This item has no crafting recipe.",
   "museum.craftFor": "Craft for ",
@@ -19,4 +23,5 @@
   "museum.rarity.LEGENDARY": "Legendary",
   "museum.rarity.MYTHIC": "Mythic",
   "museum.rarity.UNKNOWN": "UNKNOWN"
+
 }
