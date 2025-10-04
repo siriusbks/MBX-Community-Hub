@@ -945,7 +945,7 @@
                   ]
     },
     {
-        "category":  "UTILILTY_BLOCK",
+        "category":  "UTILITY_BLOCK",
         "itemCount":  32,
         "items":  [
                       "block_jump_pad",
