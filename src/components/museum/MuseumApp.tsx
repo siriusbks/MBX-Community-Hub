@@ -489,9 +489,8 @@ const completionPercent =
                             const imageSrc =
                                 detailsIndex[itemId] &&
                                 detailsIndex[itemId].image
-                                    ? "data:image/png;base64," +
-                                      detailsIndex[itemId].image
-                                    : `assets/media/item/textures/${itemId}.png`;
+                                    ? "data:image/png;base64," + detailsIndex[itemId].image
+                                    : `assets/media/museum/${group.category}/${itemId}.png`;
                             const rarity =
                                 detailsIndex[itemId] &&
                                 detailsIndex[itemId].rarity
