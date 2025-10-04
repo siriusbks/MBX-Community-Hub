@@ -143,12 +143,8 @@ export const MuseumApp: FC = () => {
                         );
                         summary = (
                             <span
-                                style={{
-                                    marginLeft: "5px",
-                                    backgroundColor: "rgb(55,65,81)",
-                                    padding: "0.5rem",
-                                    borderRadius: "0.5rem",
-                                }}
+                                className="ml-auto  bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2"
+
                             >
                                 {Object.keys(subResources).map(
                                     (key, index, arr) => {
@@ -158,18 +154,15 @@ export const MuseumApp: FC = () => {
                                             // Each span represents a resource (with its icon and quantity)
                                             <span
                                                 key={key}
-                                                style={{
-                                                    display: "inline-flex",
-                                                    alignItems: "center",
-                                                    marginRight: "5px",
-                                                }}
+                                                className="inline-flex items-center mr-1 text-xs align-baseline"
                                             >
-                                                <img
-                                                    style={{
-                                                        width: "20px",
-                                                        height: "20px",
-                                                        marginRight: "2px",
-                                                    }}
+                                                <span className="">
+                                                    {globalAmount.toLocaleString(
+                                                        "fr-FR"
+                                                    )}
+                                                </span>
+                                                x<img
+                                                    className="h-4 w-4 ml-0.5"
                                                     src={
                                                         detailsIndex &&
                                                         detailsIndex[key] &&
@@ -187,12 +180,7 @@ export const MuseumApp: FC = () => {
                                                             "none")
                                                     }
                                                 />
-                                                {globalAmount.toLocaleString(
-                                                    "fr-FR"
-                                                )}
-                                                {/* DISABLED ITEM NAME (ID) */}
-                                                x {key}
-                                                {index < arr.length - 1 && ", "}
+                                                <span className="ml-0.5">{index < arr.length - 1 && " "}</span>
                                             </span>
                                         );
                                     }
@@ -203,7 +191,10 @@ export const MuseumApp: FC = () => {
 
                     // Render each ingredient in an <li>
                     return (
-                        <li key={i} className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20">
+                        <li
+                            key={i}
+                            className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border-2 border-gray-500 border-opacity-30"
+                        >
                             <div
                                 style={{
                                     display: "flex",
@@ -225,8 +216,21 @@ export const MuseumApp: FC = () => {
                                         ).style.display = "none")
                                     }
                                 />
-                                <span>
-                                    {ing.amount}x {ing.id}
+                                <span className="font-bold text-sm flex flex-col">
+<span className="flex items-center mr-2 whitespace-nowrap">
+    {ing.amount}x {ing.id}{" "}
+</span>
+                                    {detailsIndex &&
+                                        detailsIndex[ing.id] &&
+                                        detailsIndex[ing.id].recipe &&
+                                        detailsIndex[ing.id].recipe.job && (
+                                            <span className="text-xs font-normal text-green-500">
+                                                {
+                                                    detailsIndex[ing.id].recipe
+                                                        .job
+                                                }
+                                            </span>
+                                        )}
                                 </span>
                                 {summary}
                             </div>
@@ -239,7 +243,7 @@ export const MuseumApp: FC = () => {
                                     <div
                                         style={{
                                             marginLeft: "25px",
-                                            borderLeft: "2px solid #ddd",
+                                            borderLeft: "0px solid #ddd",
                                             paddingLeft: "10px",
                                             marginTop: "5px",
                                         }}
@@ -406,12 +410,11 @@ export const MuseumApp: FC = () => {
                                         className="w-8 h-8 mr-2 rounded"
                                         src={imageSrc}
                                         alt={resId}
-                                                onError={(e) => {
-                                                    e.currentTarget.onerror =
-                                                        null;
-                                                    e.currentTarget.src =
-                                                        "assets/media/museum/not-found.png";
-                                                }}
+                                        onError={(e) => {
+                                            e.currentTarget.onerror = null;
+                                            e.currentTarget.src =
+                                                "assets/media/museum/not-found.png";
+                                        }}
                                     />
                                     <span className="font-bold text-sm">
                                         {resId}
@@ -723,19 +726,39 @@ export const MuseumApp: FC = () => {
                             {detailsIndex[craftModalItem] &&
                             detailsIndex[craftModalItem].recipe ? (
                                 <>
-                                    <div style={{ fontSize: "20px" }}>
-                                        {t("museum.craftFor")} {craftModalItem}
-                                    </div>
-                                    <p style={{ fontSize: "16px" }}>
-                                        {t("museum.jobRequired")}{" "}
-                                        {
-                                            detailsIndex[craftModalItem].recipe
-                                                .job
-                                        }
-                                    </p>
-                                    {buildRecipeTree(
-                                        detailsIndex[craftModalItem].recipe
-                                    )}
+                                    <span className="flex flex-row gap-2 items-center  mb-4">
+                                        <img
+                                            src={
+                                                detailsIndex[craftModalItem]
+                                                    .image
+                                                    ? "data:image/png;base64," +
+                                                      detailsIndex[
+                                                          craftModalItem
+                                                      ].image
+                                                    : `assets/media/item/textures/${craftModalItem}.png`
+                                            }
+                                            alt={craftModalItem}
+                                            className="h-16 w-16"
+                                        />
+                                        <span>
+                                            <div className="text-2xl font-bold mb-0">
+                                                {t("museum.craftFor")}{" "}
+                                                {craftModalItem}
+                                            </div>
+                                            <p className="text-sm opacity-60">
+                                                {t("museum.jobRequired")}{" "}
+                                                {
+                                                    detailsIndex[craftModalItem]
+                                                        .recipe.job
+                                                }
+                                            </p>
+                                            
+                                        </span>
+                                    </span>
+                                            {buildRecipeTree(
+                                                detailsIndex[craftModalItem]
+                                                    .recipe
+                                            )}
                                 </>
                             ) : (
                                 <p>{t("museum.noRecipe")}</p>
