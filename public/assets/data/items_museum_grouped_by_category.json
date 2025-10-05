@@ -956,11 +956,11 @@
                       "block_egg_incubator_red",
                       "block_egg_incubator_blue",
                       "block_egg_incubator_green",
-                      "block_compactor_bag",
-                      "block_compactor_barrel",
-                      "block_compactor_crate",
-                      "block_compactor_enchanted",
                       "block_compactor_transformed",
+                      "block_compactor_bag",
+                      "block_compactor_crate",
+                      "block_compactor_barrel",
+                      "block_compactor_enchanted",
                       "mm-action_table",
                       "mm-bazaar_table",
                       "mm-shop_table",
@@ -1096,6 +1096,7 @@
         "category":  "PET",
         "itemCount":  26,
         "items":  [
+                     "poop",
                       "pet_skull",
                       "pet_polar_bear",
                       "pet_fat_shiba",
@@ -1120,8 +1121,7 @@
                       "pet_wyrmling",
                       "pet_slimy",
                       "pet_rabbit",
-                      "pet_robot",
-                      "pet_founder_parrot"
+                      "pet_robot"
                   ]
     },
     {

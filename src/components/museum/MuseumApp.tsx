@@ -4,7 +4,7 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { User, Import, Eye } from "lucide-react";
+import { User, Import, Eye, ArrowUpFromLine } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 
 // Definition of interfaces
@@ -34,30 +34,34 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
+        null
+    );
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
-const totalStats = groupedItems && Array.isArray(groupedItems)
-    ? {
-          owned: groupedItems.reduce((sum, group) => {
-              return (
-                  sum +
-                  group.items.filter((item) =>
-                      museumItems.includes(item)
-                  ).length
-              );
-          }, 0),
-          total: groupedItems.reduce(
-              (sum, group) => sum + group.items.length,
-              0
-          ),
-      }
-    : { owned: 0, total: 0 };
+    const totalStats =
+        groupedItems && Array.isArray(groupedItems)
+            ? {
+                  owned: groupedItems.reduce((sum, group) => {
+                      return (
+                          sum +
+                          group.items.filter((item) =>
+                              museumItems.includes(item)
+                          ).length
+                      );
+                  }, 0),
+                  total: groupedItems.reduce(
+                      (sum, group) => sum + group.items.length,
+                      0
+                  ),
+              }
+            : { owned: 0, total: 0 };
 
-const completionPercent =
-    totalStats.total > 0
-        ? ((totalStats.owned / totalStats.total) * 100).toFixed(1)
-        : "0.0";
+    const completionPercent =
+        totalStats.total > 0
+            ? ((totalStats.owned / totalStats.total) * 100).toFixed(1)
+            : "0.0";
 
     // Asynchronous function to load data (API and JSON)
     const loadData = async (pseudo: string) => {
@@ -164,10 +168,7 @@ const completionPercent =
                             detailsIndex[ing.id].recipe
                         );
                         summary = (
-                            <span
-                                className="ml-auto  bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2"
-
-                            >
+                            <span className="ml-auto  bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
                                 {Object.keys(subResources).map(
                                     (key, index, arr) => {
                                         const globalAmount =
@@ -183,8 +184,13 @@ const completionPercent =
                                                         "fr-FR"
                                                     )}
                                                 </span>
-                                                x<img
+                                                x
+                                                <img
                                                     className="h-4 w-4 ml-0.5"
+                                                    style={{
+                                                        imageRendering:
+                                                            "pixelated",
+                                                    }}
                                                     src={
                                                         detailsIndex &&
                                                         detailsIndex[key] &&
@@ -202,7 +208,10 @@ const completionPercent =
                                                             "none")
                                                     }
                                                 />
-                                                <span className="ml-0.5">{index < arr.length - 1 && " "}</span>
+                                                <span className="ml-0.5">
+                                                    {index < arr.length - 1 &&
+                                                        " "}
+                                                </span>
                                             </span>
                                         );
                                     }
@@ -229,6 +238,7 @@ const completionPercent =
                                         height: "35px",
                                         marginRight: "5px",
                                         verticalAlign: "middle",
+                                        imageRendering: "pixelated",
                                     }}
                                     src={imageSrc}
                                     alt={ing.id}
@@ -239,9 +249,9 @@ const completionPercent =
                                     }
                                 />
                                 <span className="font-bold text-sm flex flex-col">
-<span className="flex items-center mr-2 whitespace-nowrap">
-    {ing.amount}x {ing.id}{" "}
-</span>
+                                    <span className="flex items-center mr-2 whitespace-nowrap">
+                                        {ing.amount}x {ing.id}{" "}
+                                    </span>
                                     {detailsIndex &&
                                         detailsIndex[ing.id] &&
                                         detailsIndex[ing.id].recipe &&
@@ -308,8 +318,9 @@ const completionPercent =
     };
 
     // Function that is executed when clicking on an unowned item to open the craft modal
-    const openCraftModal = (itemId: string) => {
+    const openCraftModal = (itemId: string, category: string) => {
         setCraftModalItem(itemId);
+        setCraftModalCategory(category);
     };
 
     // Function that returns the content of the missing items recap
@@ -339,7 +350,7 @@ const completionPercent =
                                 {group.category}
                             </div>
 
-                            <ul className="list-none grid grid-cols-5 gap-2">
+                            <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
                                 {missingItems.map((itemId) => {
                                     const imageSrc =
                                         detailsIndex &&
@@ -355,14 +366,28 @@ const completionPercent =
                                             className="flex items-center bg-gray-700 p-2 rounded-lg"
                                         >
                                             <img
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                                 className="w-8 h-8 mr-2"
-                                                src={imageSrc}
+                                                src={`assets/media/museum/${group.category}/${itemId}.png`}
                                                 alt={itemId}
                                                 onError={(e) => {
-                                                    e.currentTarget.onerror =
-                                                        null;
-                                                    e.currentTarget.src =
-                                                        "assets/media/museum/not-found.png";
+                                                    if (
+                                                        e.currentTarget.src.endsWith(
+                                                            `${group.category}/${itemId}.png`
+                                                        )
+                                                    ) {
+                                                        e.currentTarget.src =
+                                                            imageSrc;
+                                                    } else if (
+                                                        e.currentTarget.src !==
+                                                        window.location.origin +
+                                                            "/assets/media/museum/not-found.png"
+                                                    ) {
+                                                        e.currentTarget.src =
+                                                            "assets/media/museum/not-found.png";
+                                                    }
                                                 }}
                                             />
                                             <span className="text-sm font-semibold">
@@ -413,7 +438,7 @@ const completionPercent =
                 <div className="text-sm font-normal mb-4 opacity-60">
                     {t("museum.resourceMuseum.description")}
                 </div>
-                <span className="grid grid-cols-4 gap-2">
+                <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {sortedResourceIds.map((resId) => {
                         const imageSrc =
                             detailsIndex &&
@@ -430,6 +455,7 @@ const completionPercent =
                                 <div className="flex items-center">
                                     <img
                                         className="w-8 h-8 mr-2 rounded"
+                                        style={{ imageRendering: "pixelated" }}
                                         src={imageSrc}
                                         alt={resId}
                                         onError={(e) => {
@@ -470,6 +496,7 @@ const completionPercent =
                     <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
                         <img
                             src={`assets/media/museum/${group.category}.png`}
+                            style={{ imageRendering: "pixelated" }}
                             onError={(e) => {
                                 e.currentTarget.onerror = null;
                                 e.currentTarget.src =
@@ -483,7 +510,7 @@ const completionPercent =
                         </p>
                     </div>
                     {/* Grid of items */}
-                    <div className="groupItem grid grid-cols-8 justify-between">
+                    <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
                         {group.items.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
@@ -491,7 +518,7 @@ const completionPercent =
                                 detailsIndex[itemId].image
                                     ? "data:image/png;base64," +
                                       detailsIndex[itemId].image
-                                    : `assets/media/item/textures/${itemId}.png`;
+                                    : `assets/media/museum/${group.category}/${itemId}.png`;
                             const rarity =
                                 detailsIndex[itemId] &&
                                 detailsIndex[itemId].rarity
@@ -504,8 +531,9 @@ const completionPercent =
                                     imageSrc={imageSrc}
                                     isOwned={isOwned}
                                     rarity={rarity}
+                                    category={group.category}
                                     craftModalOpener={() =>
-                                        openCraftModal(itemId)
+                                        openCraftModal(itemId, group.category)
                                     }
                                 />
                             );
@@ -560,7 +588,7 @@ const completionPercent =
     return (
         <div className="museum-page">
             {/* Form for entering the username */}
-            <span className="flex flex-row md:mb-2 gap-2">
+            <span className="flex flex-col md:flex-row mb-2 gap-2">
                 <form
                     id="pseudoForm"
                     onSubmit={handleUsernameSubmit}
@@ -619,19 +647,21 @@ const completionPercent =
                         )}
                     </div>
                 </form>
-                <span className="flex h-24 w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
-<span>
-    <h3 className="text-lg font-bold">
-        {t("museum.completion")}
-    </h3>
-    <span className="flex flex-row justify-between gap-2">
-        <p className="text-sm opacity-50">
-            [{totalStats.owned.toString()} /{" "}
-            {totalStats.total.toString()}]
-        </p>
-        <p className="text-sm text-green-600">[{completionPercent}%]</p>
-    </span>
-</span>
+                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
+                    <span>
+                        <h3 className="text-lg font-bold">
+                            {t("museum.completion")}
+                        </h3>
+                        <span className="flex flex-row justify-between gap-2">
+                            <p className="text-sm opacity-50">
+                                [{totalStats.owned.toString()} /{" "}
+                                {totalStats.total.toString()}]
+                            </p>
+                            <p className="text-sm text-green-600">
+                                [{completionPercent}%]
+                            </p>
+                        </span>
+                    </span>
                     <img
                         src="assets/media/icons/museum.png"
                         className="h-12 w-12"
@@ -643,7 +673,7 @@ const completionPercent =
                 id="categoryNav"
                 className="bg-gray-800 bg-opacity-50 p-4 rounded-lg "
             >
-                <ul className="grid grid-cols-8 gap-2 p-0 m-0">
+                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
                         groupedItems.map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
@@ -665,6 +695,9 @@ const completionPercent =
                                             {/* Category Icon */}
                                             <img
                                                 src={`assets/media/museum/${group.category}.png`}
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                                 onError={(e) => {
                                                     e.currentTarget.onerror =
                                                         null;
@@ -723,12 +756,16 @@ const completionPercent =
             </div>
 
             {/* "Back to Top" button */}
-            <button
-                id="backToTop"
-                className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded shadow hidden"
-            >
-                {t("museum.backToTop.button")}
-            </button>
+<button
+    id="backToTop"
+    className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow hidden flex flex-col items-center justify-center gap-1 text-center"
+>
+    <ArrowUpFromLine className="h-4 w-4 mx-auto" />
+    <span>{t("museum.backToTop.button")}</span>
+</button>
+
+
+
 
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (
@@ -738,12 +775,16 @@ const completionPercent =
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setCraftModalItem(null);
+                        setCraftModalCategory(null);
                     }}
                 >
                     <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
                         <span
                             className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
-                            onClick={() => setCraftModalItem(null)}
+                            onClick={() => {
+                                setCraftModalItem(null);
+                                setCraftModalCategory(null);
+                            }}
                         >
                             &times;
                         </span>
@@ -753,18 +794,43 @@ const completionPercent =
                                 <>
                                     <span className="flex flex-row gap-2 items-center  mb-4">
                                         <img
-                                            src={
-                                                detailsIndex[craftModalItem]
-                                                    .image
-                                                    ? "data:image/png;base64," +
-                                                      detailsIndex[
-                                                          craftModalItem
-                                                      ].image
-                                                    : `assets/media/item/textures/${craftModalItem}.png`
-                                            }
+                                            style={{
+                                                imageRendering: "pixelated",
+                                            }}
+                                            className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                            src={`assets/media/museum/${craftModalCategory}/${craftModalItem}.png`}
                                             alt={craftModalItem}
-                                            className="h-16 w-16"
+                                            onError={(e) => {
+                                                const base64Image =
+                                                    detailsIndex[craftModalItem]
+                                                        ?.image
+                                                        ? "data:image/png;base64," +
+                                                          detailsIndex[
+                                                              craftModalItem
+                                                          ].image
+                                                        : null;
+
+                                                if (
+                                                    e.currentTarget.src.endsWith(
+                                                        `${craftModalCategory}/${craftModalItem}.png`
+                                                    ) &&
+                                                    base64Image
+                                                ) {
+                                                    e.currentTarget.src =
+                                                        base64Image;
+                                                }
+                                                // Jeśli Base64 nie działa → wczytaj not-found.png
+                                                else if (
+                                                    e.currentTarget.src !==
+                                                    window.location.origin +
+                                                        "/assets/media/museum/not-found.png"
+                                                ) {
+                                                    e.currentTarget.src =
+                                                        "assets/media/museum/not-found.png";
+                                                }
+                                            }}
                                         />
+
                                         <span>
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
@@ -777,13 +843,11 @@ const completionPercent =
                                                         .recipe.job
                                                 }
                                             </p>
-                                            
                                         </span>
                                     </span>
-                                            {buildRecipeTree(
-                                                detailsIndex[craftModalItem]
-                                                    .recipe
-                                            )}
+                                    {buildRecipeTree(
+                                        detailsIndex[craftModalItem].recipe
+                                    )}
                                 </>
                             ) : (
                                 <p>{t("museum.noRecipe")}</p>
