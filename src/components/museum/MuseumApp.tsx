@@ -350,7 +350,7 @@ export const MuseumApp: FC = () => {
                                 {group.category}
                             </div>
 
-                            <ul className="list-none grid grid-cols-5 gap-2">
+                            <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
                                 {missingItems.map((itemId) => {
                                     const imageSrc =
                                         detailsIndex &&
@@ -438,7 +438,7 @@ export const MuseumApp: FC = () => {
                 <div className="text-sm font-normal mb-4 opacity-60">
                     {t("museum.resourceMuseum.description")}
                 </div>
-                <span className="grid grid-cols-4 gap-2">
+                <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {sortedResourceIds.map((resId) => {
                         const imageSrc =
                             detailsIndex &&
@@ -510,7 +510,7 @@ export const MuseumApp: FC = () => {
                         </p>
                     </div>
                     {/* Grid of items */}
-                    <div className="groupItem grid grid-cols-8 justify-between">
+                    <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
                         {group.items.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
@@ -588,7 +588,7 @@ export const MuseumApp: FC = () => {
     return (
         <div className="museum-page">
             {/* Form for entering the username */}
-            <span className="flex flex-row md:mb-2 gap-2">
+            <span className="flex flex-col md:flex-row mb-2 gap-2">
                 <form
                     id="pseudoForm"
                     onSubmit={handleUsernameSubmit}
@@ -647,7 +647,7 @@ export const MuseumApp: FC = () => {
                         )}
                     </div>
                 </form>
-                <span className="flex h-24 w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
+                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
                     <span>
                         <h3 className="text-lg font-bold">
                             {t("museum.completion")}
@@ -673,7 +673,7 @@ export const MuseumApp: FC = () => {
                 id="categoryNav"
                 className="bg-gray-800 bg-opacity-50 p-4 rounded-lg "
             >
-                <ul className="grid grid-cols-8 gap-2 p-0 m-0">
+                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
                         groupedItems.map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
