@@ -1096,6 +1096,7 @@
         "category":  "PET",
         "itemCount":  26,
         "items":  [
+                     "poop",
                       "pet_skull",
                       "pet_polar_bear",
                       "pet_fat_shiba",
@@ -1120,8 +1121,7 @@
                       "pet_wyrmling",
                       "pet_slimy",
                       "pet_rabbit",
-                      "pet_robot",
-                      "pet_founder_parrot"
+                      "pet_robot"
                   ]
     },
     {
