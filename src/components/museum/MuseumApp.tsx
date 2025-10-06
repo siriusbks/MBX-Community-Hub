@@ -758,7 +758,7 @@ export const MuseumApp: FC = () => {
             {/* "Back to Top" button */}
 <button
     id="backToTop"
-    className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow hidden flex flex-col items-center justify-center gap-1 text-center"
+    className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow flex flex-col items-center justify-center gap-1 text-center"
 >
     <ArrowUpFromLine className="h-4 w-4 mx-auto" />
     <span>{t("museum.backToTop.button")}</span>

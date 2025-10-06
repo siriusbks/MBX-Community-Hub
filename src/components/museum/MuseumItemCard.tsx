@@ -18,15 +18,6 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     category,
     craftModalOpener,
 }) => {
-    const TMPColorClass =
-        {
-            COMMON: "gray-500",
-            UNCOMMON: "green-500",
-            RARE: "blue-500",
-            EPIC: "purple-500",
-            LEGENDARY: "orange-500",
-            MYTHIC: "red-500",
-        }[rarity] || "pink-500";
     const TMPBorderColorClass =
         {
             COMMON: "border-gray-500",

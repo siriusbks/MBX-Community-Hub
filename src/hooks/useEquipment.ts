@@ -25,18 +25,21 @@ export const useEquipment = (locale: Locale = "us") => {
             return hasName && hasCategory && hasRarity;
         };
 
-        const normalizeItem = (raw: any, idFromPath?: string): Equipment => {
-            const id = String(raw.id ?? idFromPath ?? crypto.randomUUID());
-            return {
-                id,
-                name: raw.name ?? raw.displayName ?? id,
-                category: raw.category ?? "UNKNOWN",
-                rarity: raw.rarity ?? "COMMON",
-                image: typeof raw.image === "string" ? raw.image : "",
-                stats: raw.stats ?? undefined,
-                level: typeof raw.level === "number" ? raw.level : undefined,
-            };
-        };
+const normalizeItem = (raw: any, idFromPath?: string): Equipment => {
+    const id = String(raw.id ?? idFromPath ?? crypto.randomUUID());
+    let image = typeof raw.image === "string" ? raw.image.trim() : "";
+
+    return {
+        id,
+        name: raw.name ?? raw.displayName ?? id,
+        category: raw.category ?? "UNKNOWN",
+        rarity: raw.rarity ?? "COMMON",
+        image,
+        stats: raw.stats ?? undefined,
+        level: typeof raw.level === "number" ? raw.level : undefined,
+    };
+};
+
 
         const extractItems = (
             node: any,

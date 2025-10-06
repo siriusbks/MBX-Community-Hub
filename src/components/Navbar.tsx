@@ -141,7 +141,7 @@ export const Navbar = () => {
                             key={to}
                             to={to}
                             className={({ isActive }) =>
-                                `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${isActive ||
+                                `flex items-center gap-2 px-2 md:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${isActive ||
                                     (to === "/map" &&
                                         location.pathname.startsWith(
                                             "/mappage"
@@ -151,10 +151,10 @@ export const Navbar = () => {
                                 }`
                             }
                         >
-                            <Icon size={18} />
-                            <span className="flex items-center gap-1">
-                                {label}
-                                {to === "/equipment" && (
+                            <Icon className="h-5 w-5" />
+                            <span className="items-center gap-1 hidden md:flex">
+                                <span className="">{label}</span>
+                                {(to === "/equipment" || to === "/museum") && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
                                         Beta
                                     </span>
