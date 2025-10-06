@@ -18,6 +18,37 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     category,
     craftModalOpener,
 }) => {
+    let adjustedRarity = rarity;
+
+    if (itemId.startsWith("bag_") || itemId.startsWith("scroll_small_")) {
+        adjustedRarity = "UNCOMMON";
+    } else if (
+        itemId.startsWith("candy_enchanted_fly") ||
+        itemId.startsWith("candy_enchanted_crafting")
+    ) {
+        adjustedRarity = "MYTHIC";
+    } else if (
+        itemId.startsWith("barrel_") ||
+        itemId.startsWith("rune_enchanted_") ||
+        itemId.startsWith("scroll_enchanted_") ||
+        itemId.startsWith("candy_enchanted_")
+    ) {
+        adjustedRarity = "EPIC";
+    } else if (
+        itemId.startsWith("enchanted_") ||
+        itemId.startsWith("candy_fly") ||
+        itemId.startsWith("candy_crafting")
+    ) {
+        adjustedRarity = "LEGENDARY";
+    } else if (
+        itemId.startsWith("crate_") ||
+        itemId.startsWith("rune_big_") ||
+        itemId.startsWith("scroll_big_") ||
+        itemId.startsWith("candy_")
+    ) {
+        adjustedRarity = "RARE";
+    }
+
     const TMPBorderColorClass =
         {
             COMMON: "border-gray-500",
@@ -26,7 +57,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             EPIC: "border-purple-500",
             LEGENDARY: "border-orange-500",
             MYTHIC: "border-red-500",
-        }[rarity] || "border-pink-500";
+        }[adjustedRarity] || "border-pink-500";
     const TMPBackgroundColorClass =
         {
             COMMON: "bg-gray-500",
@@ -35,7 +66,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             EPIC: "bg-purple-500",
             LEGENDARY: "bg-orange-500",
             MYTHIC: "bg-red-500",
-        }[rarity] || "bg-pink-500";
+        }[adjustedRarity] || "bg-pink-500";
     const TMPShadowClass =
         {
             COMMON: "shadow-[inset_0_0_8px_theme(colors.gray.500)]",
@@ -44,11 +75,13 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             EPIC: "shadow-[inset_0_0_8px_theme(colors.purple.500)]",
             LEGENDARY: "shadow-[inset_0_0_8px_theme(colors.orange.500)]",
             MYTHIC: "shadow-[inset_0_0_8px_theme(colors.red.500)]",
-        }[rarity] || "shadow-[inset_0_0_8px_theme(colors.pink.500)]";
+        }[adjustedRarity] || "shadow-[inset_0_0_8px_theme(colors.pink.500)]";
 
     const { t } = useTranslation("museum");
 
-    const [src, setSrc] = useState(`/assets/media/museum/${category}/${itemId}.png`);
+    const [src, setSrc] = useState(
+        `/assets/media/museum/${category}/${itemId}.png`
+    );
 
     useEffect(() => {
         const mainSrc = `/assets/media/museum/${category}/${itemId}.png`;
@@ -115,7 +148,12 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                 </span>
             )}
 
-            {rarity && <RarityBadge rarity={rarity} color={TMPBackgroundColorClass} />}
+            {adjustedRarity && (
+                <RarityBadge
+                    rarity={adjustedRarity}
+                    color={TMPBackgroundColorClass}
+                />
+            )}
         </div>
     );
 };
