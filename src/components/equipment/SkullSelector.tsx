@@ -48,6 +48,17 @@ export const SkullSelector: React.FC<Props> = ({
         else onChange([...selected, id]);
     };
 
+    const iconMap: Record<string, string> = {
+        HEALTH: "/assets/media/elemental/health.png",
+        AGILITY: "/assets/media/elemental/agility.png",
+        STRENGTH: "/assets/media/elemental/strength.png",
+        INTELLIGENCE: "/assets/media/elemental/intelligence.png",
+        WISDOM: "/assets/media/elemental/wisdom.png",
+        LUCK: "/assets/media/elemental/luck.png",
+        FORTUNE: "/assets/media/elemental/fortune.png",
+        DEFENSE: "/assets/media/elemental/defense.png",
+    };
+
     return (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
             <div className="w-full max-w-2xl bg-gray-900 border border-gray-700 rounded-lg overflow-hidden text-white">
@@ -94,18 +105,21 @@ export const SkullSelector: React.FC<Props> = ({
                                     active ? "ring-1 ring-green-500/60" : ""
                                 }`}
                             >
-                                <div>
-                                    <div className="font-medium">
+                                <div className="flex items-center gap-4">
+                                    <img src ={sk.icon} alt={sk.name} className="w-12 h-12" />
+                                    <span>
+                                    <div className="font-bold text-xl">
                                         {skullLabel}
                                     </div>
-                                    <div className="text-xs text-gray-300 mt-1">
+                                    <div className="text-xs text-gray-300 mb-0.5">
                                         {Object.entries(sk.stats).map(
                                             ([stat, val]) => (
                                                 <span
                                                     key={stat}
-                                                    className="inline-block mr-3"
+                                                    className={`inline-block mr-2  rounded px-1`}
                                                 >
-                                                    +{val}{" "}
+                                                                                                        +{val}{" "}
+                                                    <img src={iconMap[stat]} alt={stat} className="inline-block w-3 h-3 mb-[2px] mr-0.5" />                                                    
                                                     {t(
                                                         `equipment:equip.stats.names.${stat}`,
                                                         { defaultValue: stat }
@@ -114,6 +128,7 @@ export const SkullSelector: React.FC<Props> = ({
                                             )
                                         )}
                                     </div>
+                                    </span>
                                 </div>
                                 {active && (
                                     <Check className="w-5 h-5 text-green-400 shrink-0" />

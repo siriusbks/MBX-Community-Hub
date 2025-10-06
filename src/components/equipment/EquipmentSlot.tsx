@@ -7,7 +7,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Equipment, EquipmentSlot as SlotType } from "@t/equip";
-import { getRarityColor } from "@utils/equipmentSlots";
+import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 import { Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -107,7 +107,7 @@ export const EquipmentSlot: React.FC<Props> = ({
             <>
                 <div
                     className={[
-                        "pointer-events-none fixed z-[9999] w-56",
+                        "pointer-events-none fixed z-[9999] w-64",
                         "rounded-md border border-gray-700 bg-gray-900 p-2 shadow-xl",
                         "text-white",
                     ].join(" ")}
@@ -128,7 +128,11 @@ export const EquipmentSlot: React.FC<Props> = ({
                                     {equippedItem.name}
                                 </span>
                                 {rarityLabel && (
-                                    <span className="text-[10px] text-gray-300 ml-2">
+                                    <span
+                                        className={`text-[10px] text-white ml-2 px-1 rounded ${getRarityBadge(
+                                            equippedItem.rarity
+                                        )}`}
+                                    >
                                         {rarityLabel}
                                     </span>
                                 )}
@@ -142,12 +146,13 @@ export const EquipmentSlot: React.FC<Props> = ({
                                                 key={stat}
                                                 className="flex justify-between text-[11px] text-gray-300"
                                             >
-                                                <span className="capitalize">
-                                                    {stat.charAt(0) +
-                                                        stat
-                                                            .slice(1)
-                                                            .toLowerCase()}
-                                                </span>
+                                                
+                                                {t(
+                                                    `equip.stats.names.${stat}`,
+                                                    {
+                                                        defaultValue: stat,
+                                                    }
+                                                )}
                                                 <span className="text-gray-200">
                                                     {range[0] === range[1]
                                                         ? range[0]
@@ -216,19 +221,38 @@ export const EquipmentSlot: React.FC<Props> = ({
                         : "border border-gray-600 bg-gray-700 hover:border-gray-500"
                 }`}
             >
-                {equippedItem?.image ? (
+                {equippedItem ? (
                     <img
-                        src={
-                            equippedItem.image.startsWith("data:")
-                                ? equippedItem.image
-                                : srcFromBase64(equippedItem.image)
-                        }
+                        style={{
+                            imageRendering: "pixelated",
+                        }}
+                        src={`/assets/media/museum/${slot.category.toUpperCase()}/${
+                            equippedItem.id
+                        }.png`}
                         alt={equippedItem.name}
-                        className="w-12 h-12 object-contain pointer-events-none"
-                        onError={(e) =>
-                            ((e.target as HTMLImageElement).style.display =
-                                "none")
-                        }
+                        className="w-12 h-12 object-contain"
+                        onError={(e) => {
+                            const img = e.target as HTMLImageElement;
+
+                            if (!img.dataset.fallback) {
+                                img.dataset.fallback = "1";
+
+                                img.src = equippedItem.image.startsWith("data:")
+                                    ? equippedItem.image
+                                    : srcFromBase64(equippedItem.image);
+                                return;
+                            }
+
+                            if (img.dataset.fallback === "1") {
+                                img.dataset.fallback = "2";
+                                img.src = "/assets/media/museum/not-found.png";
+                                return;
+                            }
+
+                            console.warn(
+                                `Image failed to load for item: ${equippedItem.name}`
+                            );
+                        }}
                     />
                 ) : (
                     <Plus className="w-6 h-6 text-gray-400 pointer-events-none" />

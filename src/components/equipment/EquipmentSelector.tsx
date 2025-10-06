@@ -6,14 +6,21 @@
 
 import React, { useState } from "react";
 import { Equipment } from "@t/equip";
-import { getRarityColor } from "@utils/equipmentSlots";
+import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 import { Search, X, Trash2, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const imgFromB64 = (b64: string) =>
     `data:image/png;base64,${b64.replace(/\s/g, "")}`;
 
-const ALL_RARITIES = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"];
+const ALL_RARITIES = [
+    "COMMON",
+    "UNCOMMON",
+    "RARE",
+    "EPIC",
+    "LEGENDARY",
+    "MYTHIC",
+];
 
 interface Props {
     equipment: Equipment[];
@@ -21,7 +28,7 @@ interface Props {
     onSelect: (item: Equipment | null) => void;
     onRemove: () => void;
     onClose: () => void;
-    equippedItems: { [key: string]: Equipment | null; };
+    equippedItems: { [key: string]: Equipment | null };
     selectedSlotId: string;
 }
 
@@ -41,7 +48,9 @@ export const EquipmentSelector: React.FC<Props> = ({
 
     const toggleRarity = (rarity: string) => {
         setSelectedRarities((prev) =>
-            prev.includes(rarity) ? prev.filter((r) => r !== rarity) : [...prev, rarity]
+            prev.includes(rarity)
+                ? prev.filter((r) => r !== rarity)
+                : [...prev, rarity]
         );
     };
 
@@ -49,7 +58,8 @@ export const EquipmentSelector: React.FC<Props> = ({
         (it) =>
             it.category === category &&
             it.name.toLowerCase().includes(q.toLowerCase()) &&
-            (selectedRarities.length === 0 || selectedRarities.includes(it.rarity))
+            (selectedRarities.length === 0 ||
+                selectedRarities.includes(it.rarity))
     );
 
     const isRingSlot = selectedSlotId === "ring1" || selectedSlotId === "ring2";
@@ -63,7 +73,10 @@ export const EquipmentSelector: React.FC<Props> = ({
                     <h2 className="text-lg font-bold capitalize">
                         {t("equip.selector.title", { category })}
                     </h2>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-800 rounded">
+                    <button
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-800 rounded"
+                    >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
@@ -91,7 +104,9 @@ export const EquipmentSelector: React.FC<Props> = ({
                             >
                                 <span>{t("equip.selector.filterRarity")}</span>
                                 <ChevronDown
-                                    className={`w-4 h-4 transition-transform ${filterOpen ? "rotate-180" : ""}`}
+                                    className={`w-4 h-4 transition-transform ${
+                                        filterOpen ? "rotate-180" : ""
+                                    }`}
                                 />
                             </button>
 
@@ -104,17 +119,25 @@ export const EquipmentSelector: React.FC<Props> = ({
                                         >
                                             <input
                                                 type="checkbox"
-                                                checked={selectedRarities.includes(rarity)}
-                                                onChange={() => toggleRarity(rarity)}
+                                                checked={selectedRarities.includes(
+                                                    rarity
+                                                )}
+                                                onChange={() =>
+                                                    toggleRarity(rarity)
+                                                }
                                                 className="mr-2 accent-green-500"
                                             />
-                                            {t(`equip.rarity.${rarity}`, { defaultValue: rarity })}
+                                            {t(`equip.rarity.${rarity}`, {
+                                                defaultValue: rarity,
+                                            })}
                                         </label>
                                     ))}
 
                                     {selectedRarities.length > 0 && (
                                         <button
-                                            onClick={() => setSelectedRarities([])}
+                                            onClick={() =>
+                                                setSelectedRarities([])
+                                            }
                                             className="w-full text-left px-3 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-700"
                                         >
                                             {t("equip.selector.clearFilters")}
@@ -131,7 +154,10 @@ export const EquipmentSelector: React.FC<Props> = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         {filtered.map((item) => {
                             const isEquippedSameRing =
-                                isRingSlot && !!item.id && !!otherRingItemId && item.id === otherRingItemId;
+                                isRingSlot &&
+                                !!item.id &&
+                                !!otherRingItemId &&
+                                item.id === otherRingItemId;
 
                             return (
                                 <button
@@ -140,42 +166,93 @@ export const EquipmentSelector: React.FC<Props> = ({
                                         if (isEquippedSameRing) return;
                                         onSelect(item);
                                     }}
-                                    className={`text-left p-4 rounded-lg ${getRarityColor(item.rarity)} transition-all ${isEquippedSameRing
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "hover:scale-[1.01]"
-                                        }`}
+                                    className={`text-left p-4 rounded-lg items-start ${getRarityColor(
+                                        item.rarity
+                                    )} transition-all ${
+                                        isEquippedSameRing
+                                            ? "opacity-50 cursor-not-allowed"
+                                            : "hover:scale-[1.01]"
+                                    }`}
                                     title={
-                                        isEquippedSameRing ? t("equip.alreadyEquippedOnOtherRing") : ""
+                                        isEquippedSameRing
+                                            ? t(
+                                                  "equip.alreadyEquippedOnOtherRing"
+                                              )
+                                            : ""
                                     }
                                 >
                                     <div className="flex items-center gap-3">
-                                        {!!item.image && (
-                                            <img
-                                                src={
-                                                    item.image.startsWith("data:")
-                                                        ? item.image
-                                                        : imgFromB64(item.image)
+                                        <img
+                                            style={{
+                                                imageRendering: "pixelated",
+                                            }}
+                                            src={`/assets/media/museum/${category}/${item.id}.png`}
+                                            alt={item.name}
+                                            className="w-12 h-12 object-contain"
+                                            onError={(e) => {
+                                                const img =
+                                                    e.target as HTMLImageElement;
+
+                                                if (!img.dataset.fallback) {
+                                                    img.dataset.fallback = "1";
+
+                                                    img.src =
+                                                        item.image.startsWith(
+                                                            "data:"
+                                                        )
+                                                            ? item.image
+                                                            : imgFromB64(
+                                                                  item.image
+                                                              );
+                                                    return;
                                                 }
-                                                alt={item.name}
-                                                className="w-12 h-12 object-contain"
-                                                onError={(e) =>
-                                                    ((e.target as HTMLImageElement).style.display = "none")
+
+                                                if (
+                                                    img.dataset.fallback === "1"
+                                                ) {
+                                                    img.dataset.fallback = "2";
+                                                    img.src =
+                                                        "/assets/media/museum/not-found.png";
+                                                    return;
                                                 }
-                                            />
-                                        )}
+
+                                                console.warn(
+                                                    `Image failed to load for item: ${item.name}`
+                                                );
+                                            }}
+                                        />
+
                                         <div className="min-w-0">
                                             <h3 className="font-semibold text-white truncate">
                                                 {item.name}
-                                            </h3>
-                                            <p className="text-xs text-gray-300 capitalize">
-                                                {t(`equip.rarity.${item.rarity}`, { defaultValue: item.rarity })}
-                                            </p>
-                                            {item.level != null && (
-                                                <p className="text-xs text-gray-400">Level {item.level}</p>
-                                            )}
+                                            </h3>{" "}
+                                            <span className="flex flex-row gap-1 items-center align-center">
+                                                <p
+                                                    className={`${getRarityBadge(
+                                                        item.rarity
+                                                    )} text-xs text-white font-bold capitalize px-1 rounded`}
+                                                >
+                                                    {t(
+                                                        `equip.rarity.${item.rarity}`,
+                                                        {
+                                                            defaultValue:
+                                                                item.rarity,
+                                                        }
+                                                    )}
+                                                </p>
+
+                                                {item.level != null && (
+                                                    <p className="text-xs text-gray-400">
+                                                        {" | "}Level{" "}
+                                                        {item.level}
+                                                    </p>
+                                                )}
+                                            </span>
                                             {isEquippedSameRing && (
                                                 <p className="text-[11px] text-yellow-400 mt-1">
-                                                    {t("equip.otherRingEquipped")}
+                                                    {t(
+                                                        "equip.otherRingEquipped"
+                                                    )}
                                                 </p>
                                             )}
                                         </div>
@@ -183,14 +260,28 @@ export const EquipmentSelector: React.FC<Props> = ({
 
                                     {item.stats && (
                                         <div className="mt-3 text-xs text-gray-300">
-                                            {Object.entries(item.stats).map(([stat, range]) => (
-                                                <div key={stat} className="flex justify-between">
-                                                    <span>{stat}</span>
-                                                    <span>
-                                                        {range[0] === range[1] ? range[0] : `${range[0]}-${range[1]}`}
-                                                    </span>
-                                                </div>
-                                            ))}
+                                            {Object.entries(item.stats).map(
+                                                ([stat, range]) => (
+                                                    <div
+                                                        key={stat}
+                                                        className="flex justify-between"
+                                                    >
+                                                        {t(
+                                                            `equip.stats.names.${stat}`,
+                                                            {
+                                                                defaultValue:
+                                                                    stat,
+                                                            }
+                                                        )}
+                                                        <span>
+                                                            {range[0] ===
+                                                            range[1]
+                                                                ? range[0]
+                                                                : `${range[0]} / ${range[1]}`}
+                                                        </span>
+                                                    </div>
+                                                )
+                                            )}
                                         </div>
                                     )}
                                 </button>

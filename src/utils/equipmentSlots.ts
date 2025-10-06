@@ -82,11 +82,22 @@ export const EQUIPMENT_SLOTS: EquipmentSlot[] = [
 export const getRarityColor = (rarity: string): string => {
     const map: Record<string, string> = {
         COMMON: "border-gray-500 bg-gray-700/50",
-        UNCOMMON: "border-green-500/80 bg-green-900/20",
-        RARE: "border-blue-500/80 bg-blue-900/20",
-        EPIC: "border-pink-500/80 bg-pink-900/20",
-        LEGENDARY: "border-yellow-500/80 bg-yellow-900/20",
-        MYTHIC: "border-red-500/80 bg-red-900/20",
+        UNCOMMON: "border-green-500 bg-green-900/20",
+        RARE: "border-blue-500 bg-blue-900/20",
+        EPIC: "border-purple-500 bg-purple-900/20",
+        LEGENDARY: "border-orange-500 bg-orange-900/20",
+        MYTHIC: "border-red-500 bg-red-900/20",
     };
     return `border ${map[rarity] ?? map.COMMON}`;
+};
+export const getRarityBadge = (rarity: string): string => {
+    const map: Record<string, string> = {
+        COMMON: "bg-gray-500",
+        UNCOMMON: "bg-green-500",
+        RARE: "bg-blue-500",
+        EPIC: "bg-purple-500",
+        LEGENDARY: "bg-orange-500",
+        MYTHIC: "bg-red-500",
+    };
+    return ` ${map[rarity] ?? map.COMMON}`;
 };

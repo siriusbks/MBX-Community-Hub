@@ -54,7 +54,7 @@ const InfoMapPage: FC = () => {
                             <img
                                 src={mapConfig.previewUrl}
                                 alt={mapConfig.name}
-                                className="w-full h-48 object-contain bg-gray-900"
+                                className="w-full h-48 object-contain bg-[#156b97] p-4"
                             />
                             {/* Icon */}
                             <button
@@ -67,14 +67,14 @@ const InfoMapPage: FC = () => {
                         </div>
 
                         {/* Informations */}
-                        <div className="p-5">
-                            <h2 className="text-2xl font-bold text-white">
+                        <div className="p-4">
+                            <h2 className="text-2xl font-bold text-white text-center leading-none">
                                 {t(mapConfig.name ?? "")}
                             </h2>
-                            <p className="text-gray-400 text-sm">
+                            <p className="text-gray-400 text-sm text-center">
                                 {mapConfig.description}
                             </p>
-                            <p className="text-gray-300 text-sm mt-2">
+                            <p className="pt-2 pb-4 text-gray-300 text-xs mt-0 text-center">
                                 <strong>
                                     {mapConfig.requiredLevel === 0
                                         ? t("mappage.requiredLevelNone")
@@ -128,15 +128,15 @@ const InfoMapPage: FC = () => {
                                                         </div>
                                                         {resource.properties
                                                             ?.level && (
-                                                                <span className="text-xs bg-green-700 text-white px-2 py-1 rounded-md">
-                                                                    lvl{" "}
-                                                                    {
-                                                                        resource
-                                                                            .properties
-                                                                            .level
-                                                                    }
-                                                                </span>
-                                                            )}
+                                                            <span className="text-xs bg-green-700 text-white px-2 py-1 rounded-md">
+                                                                lvl{" "}
+                                                                {
+                                                                    resource
+                                                                        .properties
+                                                                        .level
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 ) : null;
                                             }
@@ -150,7 +150,7 @@ const InfoMapPage: FC = () => {
                                 onClick={() =>
                                     navigate(`/mappage?selectedMap=${mapKey}`)
                                 }
-                                className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg w-full transition"
+                                className="mt-auto bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full transition"
                             >
                                 {t("mappage.buttonViewMap")}
                             </button>
