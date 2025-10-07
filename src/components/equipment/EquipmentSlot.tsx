@@ -230,7 +230,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                             equippedItem.id
                         }.png`}
                         alt={equippedItem.name}
-                        className="w-12 h-12 object-contain"
+                        className="w-12 h-12 "
                         onError={(e) => {
                             const img = e.target as HTMLImageElement;
 
