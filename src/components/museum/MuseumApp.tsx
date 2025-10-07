@@ -12,6 +12,7 @@ import {
     AlertTriangle,
 } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
+import { useProfileStore } from "@store/profileStore";
 
 // Definition of interfaces
 interface Group {
@@ -29,12 +30,12 @@ interface Details {
 
 export const MuseumApp: FC = () => {
     const { t } = useTranslation("museum");
+    const { username, setUsername } = useProfileStore();
 
     // States for storing data from the API and JSON files
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
-    const [username, setUsername] = useState("");
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
