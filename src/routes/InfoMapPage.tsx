@@ -43,7 +43,7 @@ const InfoMapPage: FC = () => {
             </p>
 
             {/* Grid card */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
                 {Object.entries(mapData).map(([mapKey, mapConfig]) => (
                     <div
                         key={mapKey}
@@ -54,7 +54,8 @@ const InfoMapPage: FC = () => {
                             <img
                                 src={mapConfig.previewUrl}
                                 alt={mapConfig.name}
-                                className="w-full h-48 object-contain bg-[#156b97] p-4"
+                                style={{ imageRendering: "pixelated" }}
+                                className="w-full h-48 object-contain bg-[#156b97] p-2 hover:p-0 transition-all duration-300"
                             />
                             {/* Icon */}
                             <button

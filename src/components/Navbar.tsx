@@ -22,7 +22,9 @@ const LanguageSelector = ({
     const languages = [
         { code: "en", label: "English", flag: "/assets/media/flags/us.svg" },
         { code: "fr", label: "Français", flag: "/assets/media/flags/fr.svg" },
-        { code: "pl", label: "Polski", flag: "/assets/media/flags/pl.svg" },
+        { code: "pl", label: "Polski", flag: "/assets/media/flags/pl.svg" }/*,
+        { code: "es", label: "Español", flag: "/assets/media/flags/es.svg" },
+        { code: "de", label: "Deutsch", flag: "/assets/media/flags/de.svg" },*/
     ];
 
     const resolved = i18n.resolvedLanguage || i18n.language;

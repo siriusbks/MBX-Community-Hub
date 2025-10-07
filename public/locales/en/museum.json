@@ -22,6 +22,7 @@
   "museum.rarity.EPIC": "Epic",
   "museum.rarity.LEGENDARY": "Legendary",
   "museum.rarity.MYTHIC": "Mythic",
-  "museum.rarity.UNKNOWN": "UNKNOWN"
-
+  "museum.rarity.UNKNOWN": "UNKNOWN",
+  "museum.beta.title": "Museum Manager is in the early stages of development",
+  "museum.beta.description": "Some features may not work as expected or be unavailable. If you encounter any issues, please report them on the Discord Forum"
 }

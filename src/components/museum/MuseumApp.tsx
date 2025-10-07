@@ -4,7 +4,13 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { User, Import, Eye, ArrowUpFromLine } from "lucide-react";
+import {
+    User,
+    Import,
+    Eye,
+    ArrowUpFromLine,
+    AlertTriangle,
+} from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 
 // Definition of interfaces
@@ -587,6 +593,44 @@ export const MuseumApp: FC = () => {
 
     return (
         <div className="museum-page">
+            <section
+                className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
+                role="alert"
+                aria-live="assertive"
+            >
+                <div className="flex items-start gap-3">
+                    <AlertTriangle
+                        className="text-yellow-500 flex-shrink-0 mt-0.5"
+                        size={20}
+                        aria-hidden="true"
+                    />
+                    <div className="text-sm text-yellow-200/90">
+                        <p className="font-medium mb-1">
+                            {t("museum.beta.title")}
+                        </p>
+                        <p className="text-yellow-200/70">
+                            {t("museum.beta.description")}{" "}
+                            <a
+                                className="underline"
+                                href="https://discord.com/channels/318496737067270146/1324109110693597315"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                [EN]
+                            </a>{" "}
+                            <a
+                                className="underline"
+                                href="https://discord.com/channels/318496737067270146/1324392188607467551"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                [FR]
+                            </a>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </section>
             {/* Form for entering the username */}
             <span className="flex flex-col md:flex-row mb-2 gap-2">
                 <form
@@ -756,16 +800,13 @@ export const MuseumApp: FC = () => {
             </div>
 
             {/* "Back to Top" button */}
-<button
-    id="backToTop"
-    className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow flex flex-col items-center justify-center gap-1 text-center"
->
-    <ArrowUpFromLine className="h-4 w-4 mx-auto" />
-    <span>{t("museum.backToTop.button")}</span>
-</button>
-
-
-
+            <button
+                id="backToTop"
+                className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow flex flex-col items-center justify-center gap-1 text-center"
+            >
+                <ArrowUpFromLine className="h-4 w-4 mx-auto" />
+                <span>{t("museum.backToTop.button")}</span>
+            </button>
 
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (

@@ -188,7 +188,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                             }}
                                             src={`/assets/media/museum/${category}/${item.id}.png`}
                                             alt={item.name}
-                                            className="w-12 h-12 object-contain"
+                                            className="w-12 h-12 "
                                             onError={(e) => {
                                                 const img =
                                                     e.target as HTMLImageElement;

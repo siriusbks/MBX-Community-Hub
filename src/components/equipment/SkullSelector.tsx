@@ -106,28 +106,42 @@ export const SkullSelector: React.FC<Props> = ({
                                 }`}
                             >
                                 <div className="flex items-center gap-4">
-                                    <img src ={sk.icon} alt={sk.name} className="w-12 h-12" />
+                                    <img
+                                        style={{
+                                            imageRendering: "pixelated",
+                                        }}
+                                        src={sk.icon}
+                                        alt={sk.name}
+                                        className="w-12 h-12"
+                                    />
                                     <span>
-                                    <div className="font-bold text-xl">
-                                        {skullLabel}
-                                    </div>
-                                    <div className="text-xs text-gray-300 mb-0.5">
-                                        {Object.entries(sk.stats).map(
-                                            ([stat, val]) => (
-                                                <span
-                                                    key={stat}
-                                                    className={`inline-block mr-2  rounded px-1`}
-                                                >
-                                                                                                        +{val}{" "}
-                                                    <img src={iconMap[stat]} alt={stat} className="inline-block w-3 h-3 mb-[2px] mr-0.5" />                                                    
-                                                    {t(
-                                                        `equipment:equip.stats.names.${stat}`,
-                                                        { defaultValue: stat }
-                                                    )}
-                                                </span>
-                                            )
-                                        )}
-                                    </div>
+                                        <div className="font-bold text-xl">
+                                            {skullLabel}
+                                        </div>
+                                        <div className="text-xs text-gray-300 mb-0.5">
+                                            {Object.entries(sk.stats).map(
+                                                ([stat, val]) => (
+                                                    <span
+                                                        key={stat}
+                                                        className={`inline-block mr-2  rounded px-1`}
+                                                    >
+                                                        +{val}{" "}
+                                                        <img
+                                                            src={iconMap[stat]}
+                                                            alt={stat}
+                                                            className="inline-block w-3 h-3 mb-[2px] mr-0.5"
+                                                        />
+                                                        {t(
+                                                            `equipment:equip.stats.names.${stat}`,
+                                                            {
+                                                                defaultValue:
+                                                                    stat,
+                                                            }
+                                                        )}
+                                                    </span>
+                                                )
+                                            )}
+                                        </div>
                                     </span>
                                 </div>
                                 {active && (
