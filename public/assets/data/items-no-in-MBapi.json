@@ -1,6 +1,6 @@
 [
     {
-        "id": "mm-action_table",
+        "id": "mm-auction_table",
         "category": "UTILILTY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -87,7 +87,7 @@
         }
     },
     {
-        "id": "mm-bank_atm",
+        "id": "mm-atm_green",
         "category": "UTILILTY_BLOCK",
         "recipe": {
             "job": "TINKERER",
