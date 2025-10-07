@@ -33,6 +33,10 @@ export const Footer = () => {
                         </a>{" "}
                         community
                     </span>
+                    <span className="block text-xs text-gray-500">
+                        Some illustrations are property of Qore Games and
+                        Minebox
+                    </span>
                 </div>
 
                 <div className="w-full md:w-1/3" />
