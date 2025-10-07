@@ -101,9 +101,6 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                 {Array.from({ length: relics.length }).map((_, idx) => (
                     <span className="inline-block">
                         <img
-                                                                    style={{
-                                                imageRendering: "pixelated",
-                                            }}
                             src={`assets/media/skulls/${relics[idx]}.png`}
                             alt={`skull-${idx}`}
                             className="h-8 w-8  object-cover drop-shadow-md"

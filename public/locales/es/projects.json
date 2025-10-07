@@ -1,0 +1,18 @@
+{
+  "description": {
+    "0": "Modpack que compila los mods permitidos según las reglas de Minebox; cualquier mod adicional queda fuera de mi responsabilidad si enfrentas sanciones.",
+    "1": "¡MineboxAdditions es un mod que añade características escandalosas a tu jugabilidad promedio de Minebox!",
+    "2": "Un conjunto de herramientas para una mejor experiencia en Minebox.",
+    "3": "Notra es un mod de utilidad simple construido con fabric específicamente para Minebox.",
+    "4": "Servidor de discord con un atlas y guía para Minebox (sólo en francés).",
+    "5": "Un complemento de JourneyMap altamente personalizable que hace waypoints para MineBox.",
+    "6": "El paquete Minebox Plus completa las texturas faltantes para el paquete de recursos del Servidor disponible en minebox.co.",
+    "7": "Un complemento para Minebox Plus que cambia la apariencia de cultivos inmaduros a escala de grises.",
+    "8": "Un complemento para Minebox Plus que elimina el efecto predeterminado de hojas frondosas de MineBox."
+  },
+  "badge": {
+    "Recommended": "Recomendado",
+    "Popular": "Popular",
+    "New": "Nuevo"
+  }
+}

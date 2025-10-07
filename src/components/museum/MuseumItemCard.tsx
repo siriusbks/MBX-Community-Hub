@@ -119,7 +119,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         >
             <img
                 style={{ imageRendering: "pixelated" }}
-                className={`${category == "UTILITY_BLOCK" ? "object-scale-down" : ""} w-16 h-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] ${
+                className={`w-16 h-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] ${
                     isOwned ? "grayscale" : ""
                 }`}
                 src={src}
