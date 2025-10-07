@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { Check } from "lucide-react";
-{/*import { useTranslation } from "react-i18next";*/}
+import { useTranslation } from "react-i18next";
 import { useProfileStore } from "@store/profileStore";
 
 export function ProfileSettings() {
-    {/*const { t } = useTranslation("profile");*/}
+    const { t } = useTranslation("profile");
 
     return (
         <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-200">
-                Customize displayed information
+                {t("profile.settings.title")}
             </label>
 
             {/* Show Relics Toggle */}
@@ -31,7 +31,7 @@ export function ProfileSettings() {
                 <Check className="absolute left-[-6px] top-[3px] w-3 h-3 text-white hidden peer-checked:block pointer-events-none" />
                 <div className="flex items-center">
                     <p className="text-xs font-semibold text-gray-400">
-                        Show All Unlocked Relics
+                        {t("profile.settings.toggleRelics")}
                     </p>
                 </div>
             </label>
@@ -50,7 +50,7 @@ export function ProfileSettings() {
                 <Check className="absolute left-[-6px] top-[3px] w-3 h-3 text-white hidden peer-checked:block pointer-events-none" />
                 <div className="flex items-center">
                     <p className="text-xs font-semibold text-gray-400">
-                        Show Player Statistics
+                        {t("profile.settings.toggleStats")}
                     </p>
                 </div>
             </label>
