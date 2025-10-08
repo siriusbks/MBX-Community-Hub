@@ -21,5 +21,19 @@
     "mappage.selectAllMarkers": "Select/Unselect all:",
     "mappage.mapOpacity": "Adjust Visibility",
     "mappage.mapPercOpacity": "of visibility",
-    "mappage.fishinginfo.title": "Fishing Info"
+    "mappage.fishinginfo.title": "Fishing Info",
+
+    "mappage.insectinfo.title": "Insect Info",
+    "mappage.condition.time.morning": "Morning",
+    "mappage.condition.time.afternoon": "Afternoon",
+    "mappage.condition.time.evening": "Evening",
+    "mappage.condition.time.night": "Night",
+    "mappage.condition.time.all_day": "All Day",
+    "mappage.condition.time.all_night": "All Night",
+    "mappage.condition.time.day_night": "Day & Night",
+    "mappage.condition.weather.clear": "Clear",
+    "mappage.condition.weather.rain": "Rain",
+    "mappage.condition.weather.storm": "Storm",
+    "mappage.condition.weather.full_moon": "Full Moon",
+    "mappage.condition.weather.any": "Any Weather"
 }
