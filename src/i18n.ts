@@ -35,6 +35,7 @@ i18n.use(HttpBackend)
             "projects",
             "equipement",
             "skulls",
+            "museum",
         ],
         defaultNS: "homepage",
         interpolation: {

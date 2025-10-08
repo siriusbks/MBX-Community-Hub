@@ -1,6 +1,6 @@
 {
     "homepage.title": "Witamy w społeczności MBX",
-    "homepage.subtitle": "Join the Minebox community and enhance your journey with Player Profiles, Interactive Maps, the Equipment Manager, and Community Projects.",
+    "homepage.subtitle": "Dołącz do społeczności Minebox i wzbogać swoją przygodę dzięki profilom graczy, interaktywnym mapom, menedżerowi wyposażenia i projektom społecznościowym.",
     "homepage.features.playerProfile.title": "Profil Gracza",
     "homepage.features.playerProfile.description": "Dostosuj swój profil za pomocą statystyk, osiągnięć i innych elementów, aby zaprezentować swoją podróż w Minebox.",
     "homepage.features.interactiveMap.title": "Interaktywna Mapa",
@@ -10,5 +10,5 @@
     "homepage.features.equipment.title": "Menedżer ekwipunku",
     "homepage.features.equipment.description": "Twórz i optymalizuj wyposażenie swojej postaci.",
     "homepage.features.museum.title": "Muzeum",
-    "homepage.features.museum.description":"Odkrywaj swoje muzeum bez logowania, ale nie zapomnij włączyć dostępu do API stron trzecich w grze."
+    "homepage.features.museum.description": "Zwiedzaj muzeum bez połączenia z internetem, ale nie zapomnij włączyć dostępu do API stron trzecich w grze."
 }
