@@ -496,7 +496,7 @@ export const MuseumApp: FC = () => {
                     {/* Category Title with icon and owned count */}
                     <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
                         <img
-                            src={`assets/media/museum/${group.category}.png`}
+                            src={`assets/media/museum/${group.category}/${group.category}.png`}
                             style={{ imageRendering: "pixelated" }}
                             onError={(e) => {
                                 e.currentTarget.onerror = null;
@@ -733,7 +733,7 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-row items-center gap-2">
                                             {/* Category Icon */}
                                             <img
-                                                src={`assets/media/museum/${group.category}.png`}
+                                                src={`assets/media/museum/${group.category}/${group.category}.png`}
                                                 style={{
                                                     imageRendering: "pixelated",
                                                 }}
