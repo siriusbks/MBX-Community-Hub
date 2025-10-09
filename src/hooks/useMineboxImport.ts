@@ -73,6 +73,23 @@ export function useMineboxImport() {
                     throw new Error(`HTTP ${res.status}: ${await res.text()}`);
                 const json = (await res.json()) as MineboxResponse;
 
+                // reset everything first
+                useProfileStore.setState((state) => ({
+                    ...state,
+                    username,
+                    professions: state.professions.map((p) => ({
+                        ...p,
+                        level: 1,
+                        currentXP: 0,
+                    })),
+                    level: 1,
+                    playtime: 0,
+                    daily: 0,
+                    weekly: 0,
+                    museum: 0,
+                    relics: [],
+                }));
+
                 if (typeof json.level === "number") setLevel(json.level);
                 if (typeof json.playtime === "number")
                     setPlaytime(json.playtime);
@@ -80,14 +97,13 @@ export function useMineboxImport() {
                     typeof json.data?.OBJECTIVES?.completed_quests?.DAILY ===
                     "number"
                 ) {
-                    setDaily(json.data?.OBJECTIVES.completed_quests.DAILY);
+                    setDaily(json.data.OBJECTIVES.completed_quests.DAILY);
                 }
-
                 if (
                     typeof json.data?.OBJECTIVES?.completed_quests?.WEEKLY ===
                     "number"
                 ) {
-                    setWeekly(json.data?.OBJECTIVES.completed_quests.WEEKLY);
+                    setWeekly(json.data.OBJECTIVES.completed_quests.WEEKLY);
                 }
                 if (Array.isArray(json.data?.OBJECTIVES?.museum)) {
                     setMuseum(json.data.OBJECTIVES.museum.length);
@@ -105,11 +121,11 @@ export function useMineboxImport() {
                     if (!storeId) continue;
 
                     const totalXp = Number(totalXpRaw) || 0;
-
                     const { level, currentXP, maxXP } = await progressForJob(
                         storeId,
                         totalXp
                     );
+
                     updateProfession(storeId, {
                         level,
                         currentXP,
