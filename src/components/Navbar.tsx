@@ -136,11 +136,11 @@ export const Navbar = () => {
                             icon: Shield,
                             label: t("navbar.equipement"),
                         },
-                        //{
-                        //    to: "/museum",
-                        //    icon: BookMarked,
-                        //    label: t("navbar.museum"),
-                        //},
+                        {
+                            to: "/museum",
+                            icon: BookMarked,
+                          label: t("navbar.museum"),
+                        },
                         {
                             to: "/community",
                             icon: Users,
@@ -151,7 +151,7 @@ export const Navbar = () => {
                             key={to}
                             to={to}
                             className={({ isActive }) =>
-                                `flex items-center gap-2 px-2 md:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
+                                `flex items-center gap-2 px-2 lg:px-4  py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
                                     isActive ||
                                     (to === "/map" &&
                                         location.pathname.startsWith(
@@ -164,7 +164,7 @@ export const Navbar = () => {
                         >
                             <Icon className="h-5 w-5" />
                             <span className="items-center gap-1 hidden md:flex">
-                                <span className="">{label}</span>
+                                <span className="hidden lg:flex">{label}</span>
                                 {(to === "/equipment" || to === "/museum") && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
                                         Beta

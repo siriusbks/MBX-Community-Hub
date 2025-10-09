@@ -746,13 +746,35 @@ export const MuseumApp: FC = () => {
                                                 {detailsIndex[craftModalItem].recipe.job}
                                             </p>
                                         </span>
+                                        <span className="ml-auto">
+                                            <a className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20" href={`https://minebox.co/pl/universe/items?id=${craftModalItem}`} target="_blank" rel="noopener noreferrer">?</a>
+                                        </span>
                                     </span>
                                     {buildRecipeTree(
                                         detailsIndex[craftModalItem].recipe
                                     )}
                                 </>
                             ) : (
-                                <p>{t("museum.noRecipe")}</p>
+                                                                <>
+                                    <span className="flex flex-row gap-2 items-center mb-4">
+                                        <MuseumItemImage
+                                            groupCategory={craftModalCategory!}
+                                            itemId={craftModalItem}
+                                            detailsIndex={detailsIndex}
+                                            className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                            style={{ imageRendering: "pixelated" }}
+                                        />
+                                        <span>
+                                            <div className="text-2xl font-bold mb-0">
+                                                {t("museum.craftFor")}{" "}
+                                                {craftModalItem}
+                                            </div>
+                                            <p className="text-sm opacity-60">
+                                                {t("museum.noRecipe")}
+                                            </p>
+                                        </span>
+                                    </span>
+                                </>
                             )}
                         </div>
                     </div>
