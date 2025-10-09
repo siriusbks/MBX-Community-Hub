@@ -156,6 +156,7 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                 height: "100%",
                 width: "100%",
                 backgroundColor: "#151d2c",
+                imageRendering: "pixelated" 
             }}
         >
             <SetCRS mapConfig={mapConfig} />

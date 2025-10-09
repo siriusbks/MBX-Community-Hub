@@ -105,6 +105,7 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
                                 alt={`skull-${idx}`}
                                 className="h-8 w-8  object-cover drop-shadow-md"
                                 draggable={false}
+                                style={{ imageRendering: "pixelated" }}
                             />
                         </span>
                     ))}
