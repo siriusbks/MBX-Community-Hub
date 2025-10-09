@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { User, Import, Eye, ArrowUpFromLine, AlertTriangle } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
+import MuseumItemImage from "./MuseumItemImage"; // Nouvelle importation
 
 // Definition of interfaces
 interface Group {
@@ -35,27 +36,19 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
-        null
-    );
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
     const totalStats =
         groupedItems && Array.isArray(groupedItems)
             ? {
-                  owned: groupedItems.reduce((sum, group) => {
-                      return (
-                          sum +
-                          group.items.filter((item) =>
-                              museumItems.includes(item)
-                          ).length
-                      );
-                  }, 0),
-                  total: groupedItems.reduce(
-                      (sum, group) => sum + group.items.length,
+                  owned: groupedItems.reduce(
+                      (sum, group) =>
+                          sum + group.items.filter((item) => museumItems.includes(item)).length,
                       0
                   ),
+                  total: groupedItems.reduce((sum, group) => sum + group.items.length, 0),
               }
             : { owned: 0, total: 0 };
 
@@ -92,10 +85,7 @@ export const MuseumApp: FC = () => {
                 apiData.data.OBJECTIVES.museum || [];
             museumItemsFetched = museumItemsFetched.map((item) => {
                 if (item.startsWith("transformed_material-"))
-                    return item.replace(
-                        "transformed_material-",
-                        "transformed_"
-                    );
+                    return item.replace("transformed_material-", "transformed_");
                 else if (item.startsWith("bag_material-"))
                     return item.replace("bag_material-", "bag_");
                 else if (item.startsWith("crate_material-"))
@@ -151,14 +141,6 @@ export const MuseumApp: FC = () => {
         return (
             <ul>
                 {recipe.ingredients.map((ing: any, i: number) => {
-                    const imageSrc =
-                        detailsIndex &&
-                        detailsIndex[ing.id] &&
-                        detailsIndex[ing.id].image
-                            ? "data:image/png;base64," +
-                              detailsIndex[ing.id].image
-                            : `assets/media/item/textures/${ing.id}.png`;
-
                     let summary: JSX.Element | null = null;
                     if (
                         detailsIndex &&
@@ -169,49 +151,30 @@ export const MuseumApp: FC = () => {
                             detailsIndex[ing.id].recipe
                         );
                         summary = (
-                            <span className="ml-auto  bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
+                            <span className="ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
                                 {Object.keys(subResources).map(
                                     (key, index, arr) => {
-                                        const globalAmount =
-                                            subResources[key] * ing.amount;
+                                        const globalAmount = subResources[key] * ing.amount;
                                         return (
                                             // Each span represents a resource (with its icon and quantity)
                                             <span
                                                 key={key}
                                                 className="inline-flex items-center mr-1 text-xs align-baseline"
                                             >
-                                                <span className="">
+                                                <span>
                                                     {globalAmount.toLocaleString(
                                                         "fr-FR"
                                                     )}
                                                 </span>
                                                 x
-                                                <img
+                                                <MuseumItemImage
+                                                    itemId={key}
+                                                    detailsIndex={detailsIndex}
                                                     className="h-4 w-4 ml-0.5"
-                                                    style={{
-                                                        imageRendering:
-                                                            "pixelated",
-                                                    }}
-                                                    src={
-                                                        detailsIndex &&
-                                                        detailsIndex[key] &&
-                                                        detailsIndex[key].image
-                                                            ? "data:image/png;base64," +
-                                                              detailsIndex[key]
-                                                                  .image
-                                                            : `assets/media/item/textures/${key}.png`
-                                                    }
-                                                    alt={key}
-                                                    onError={(e) =>
-                                                        ((
-                                                            e.target as HTMLImageElement
-                                                        ).style.display =
-                                                            "none")
-                                                    }
+                                                    style={{ imageRendering: "pixelated" }}
                                                 />
                                                 <span className="ml-0.5">
-                                                    {index < arr.length - 1 &&
-                                                        " "}
+                                                    {index < arr.length - 1 && " "}
                                                 </span>
                                             </span>
                                         );
@@ -233,7 +196,9 @@ export const MuseumApp: FC = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <img
+                                <MuseumItemImage
+                                    itemId={ing.id}
+                                    detailsIndex={detailsIndex}
                                     style={{
                                         width: "35px",
                                         height: "35px",
@@ -241,13 +206,6 @@ export const MuseumApp: FC = () => {
                                         verticalAlign: "middle",
                                         imageRendering: "pixelated",
                                     }}
-                                    src={imageSrc}
-                                    alt={ing.id}
-                                    onError={(e) =>
-                                        ((
-                                            e.target as HTMLImageElement
-                                        ).style.display = "none")
-                                    }
                                 />
                                 <span className="font-bold text-sm flex flex-col">
                                     <span className="flex items-center mr-2 whitespace-nowrap">
@@ -353,43 +311,17 @@ export const MuseumApp: FC = () => {
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
                                 {missingItems.map((itemId) => {
-                                    const imageSrc =
-                                        detailsIndex &&
-                                        detailsIndex[itemId] &&
-                                        detailsIndex[itemId].image
-                                            ? "data:image/png;base64," +
-                                              detailsIndex[itemId].image
-                                            : `assets/media/item/textures/${itemId}.png`;
-
                                     return (
                                         <li
                                             key={itemId}
                                             className="flex items-center bg-gray-700 p-2 rounded-lg"
                                         >
-                                            <img
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
+                                            <MuseumItemImage
+                                                groupCategory={group.category}
+                                                itemId={itemId}
+                                                detailsIndex={detailsIndex}
                                                 className="w-8 h-8 mr-2"
-                                                src={`assets/media/museum/${group.category}/${itemId}.png`}
-                                                alt={itemId}
-                                                onError={(e) => {
-                                                    if (
-                                                        e.currentTarget.src.endsWith(
-                                                            `${group.category}/${itemId}.png`
-                                                        )
-                                                    ) {
-                                                        e.currentTarget.src =
-                                                            imageSrc;
-                                                    } else if (
-                                                        e.currentTarget.src !==
-                                                        window.location.origin +
-                                                            "/assets/media/museum/not-found.png"
-                                                    ) {
-                                                        e.currentTarget.src =
-                                                            "assets/media/museum/not-found.png";
-                                                    }
-                                                }}
+                                                style={{ imageRendering: "pixelated" }}
                                             />
                                             <span className="text-sm font-semibold">
                                                 {itemId}
@@ -441,29 +373,17 @@ export const MuseumApp: FC = () => {
                 </div>
                 <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {sortedResourceIds.map((resId) => {
-                        const imageSrc =
-                            detailsIndex &&
-                            detailsIndex[resId] &&
-                            detailsIndex[resId].image
-                                ? "data:image/png;base64," +
-                                  detailsIndex[resId].image
-                                : `assets/media/item/textures/${resId}.png`;
                         return (
                             <li
                                 key={resId}
                                 className="block bg-gray-700 p-2 rounded-lg"
                             >
                                 <div className="flex items-center">
-                                    <img
+                                    <MuseumItemImage
+                                        itemId={resId}
+                                        detailsIndex={detailsIndex}
                                         className="w-8 h-8 mr-2 rounded"
                                         style={{ imageRendering: "pixelated" }}
-                                        src={imageSrc}
-                                        alt={resId}
-                                        onError={(e) => {
-                                            e.currentTarget.onerror = null;
-                                            e.currentTarget.src =
-                                                "assets/media/museum/not-found.png";
-                                        }}
                                     />
                                     <span className="font-bold text-sm">
                                         {resId}
@@ -495,15 +415,12 @@ export const MuseumApp: FC = () => {
                 <div key={index} className="category" id={categoryId}>
                     {/* Category Title with icon and owned count */}
                     <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
-                        <img
-                            src={`assets/media/museum/${group.category}.png`}
-                            style={{ imageRendering: "pixelated" }}
-                            onError={(e) => {
-                                e.currentTarget.onerror = null;
-                                e.currentTarget.src =
-                                    "assets/media/museum/not-found.png";
-                            }}
+                        <MuseumItemImage
+                            groupCategory={group.category}
+                            itemId={group.category}
+                            detailsIndex={detailsIndex}
                             className="h-8 w-8"
+                            style={{ imageRendering: "pixelated" }}
                         />
                         {group.category}
                         <p className="opacity-40 text-sm">
@@ -588,7 +505,7 @@ export const MuseumApp: FC = () => {
 
     return (
         <div className="museum-page">
-                        <section
+            <section
                 className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
                 role="alert"
                 aria-live="assertive"
@@ -626,6 +543,7 @@ export const MuseumApp: FC = () => {
                     </div>
                 </div>
             </section>
+
             {/* Form for entering the username */}
             <span className="flex flex-col md:flex-row mb-2 gap-2">
                 <form
@@ -669,7 +587,7 @@ export const MuseumApp: FC = () => {
                             </div>
                             <button
                                 id="importPseudoButton"
-                                className="bg-green-600 text-white border-0  rounded-lg py-2 px-4 cursor-pointer text-base transition-colors hover:bg-green-700 whitespace-nowrap m-4"
+                                className="bg-green-600 text-white border-0 rounded-lg py-2 px-4 cursor-pointer text-base transition-colors hover:bg-green-700 whitespace-nowrap m-4"
                                 type="submit"
                             >
                                 <span className="flex flex-row items-center gap-2">
@@ -686,31 +604,24 @@ export const MuseumApp: FC = () => {
                         )}
                     </div>
                 </form>
-                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center  gap-6">
+                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6">
                     <span>
-                        <h3 className="text-lg font-bold">
-                            {t("museum.completion")}
-                        </h3>
+                        <h3 className="text-lg font-bold">{t("museum.completion")}</h3>
                         <span className="flex flex-row justify-between gap-2">
                             <p className="text-sm opacity-50">
-                                [{totalStats.owned.toString()} /{" "}
-                                {totalStats.total.toString()}]
+                                [{totalStats.owned.toString()} / {totalStats.total.toString()}]
                             </p>
-                            <p className="text-sm text-green-600">
-                                [{completionPercent}%]
-                            </p>
+                            <p className="text-sm text-green-600">[{completionPercent}%]</p>
                         </span>
                     </span>
-                    <img
-                        src="assets/media/icons/museum.png"
-                        className="h-12 w-12"
-                    />
+                    <img src="assets/media/icons/museum.png" className="h-12 w-12" alt="museum icon" />
                 </span>
             </span>
+            
             {/* Navigation bar displaying item categories */}
             <nav
                 id="categoryNav"
-                className="bg-gray-800 bg-opacity-50 p-4 rounded-lg "
+                className="bg-gray-800 bg-opacity-50 p-4 rounded-lg"
             >
                 <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
@@ -731,28 +642,17 @@ export const MuseumApp: FC = () => {
                                         className="block w-full bg-gray-700 text-white p-2 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
                                     >
                                         <span className="flex flex-row items-center gap-2">
-                                            {/* Category Icon */}
-                                            <img
-                                                src={`assets/media/museum/${group.category}.png`}
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                                onError={(e) => {
-                                                    e.currentTarget.onerror =
-                                                        null;
-                                                    e.currentTarget.src =
-                                                        "assets/media/museum/not-found.png";
-                                                }}
+                                            <MuseumItemImage
+                                                groupCategory={group.category}
+                                                itemId={group.category}
+                                                detailsIndex={detailsIndex}
                                                 className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{ imageRendering: "pixelated" }}
                                             />
                                             <span className="flex flex-col items-start leading-tight">
-                                                <span className="font-bold text-sm">
-                                                    {group.category}
-                                                </span>
+                                                <span className="font-bold text-sm">{group.category}</span>
                                                 <span className="text-xs opacity-50">
-                                                    [{ownedCount}
-                                                    {" / "}
-                                                    {group.items.length}]
+                                                    [{ownedCount} / {group.items.length}]
                                                 </span>
                                             </span>
                                         </span>
@@ -795,16 +695,13 @@ export const MuseumApp: FC = () => {
             </div>
 
             {/* "Back to Top" button */}
-<button
-    id="backToTop"
-    className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow flex flex-col items-center justify-center gap-1 text-center"
->
-    <ArrowUpFromLine className="h-4 w-4 mx-auto" />
-    <span>{t("museum.backToTop.button")}</span>
-</button>
-
-
-
+            <button
+                id="backToTop"
+                className="fixed bottom-5 right-5 py-2 px-4 bg-gray-800 text-white rounded-lg text-xs shadow flex flex-col items-center justify-center gap-1 text-center"
+            >
+                <ArrowUpFromLine className="h-4 w-4 mx-auto" />
+                <span>{t("museum.backToTop.button")}</span>
+            </button>
 
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (
@@ -831,45 +728,14 @@ export const MuseumApp: FC = () => {
                             {detailsIndex[craftModalItem] &&
                             detailsIndex[craftModalItem].recipe ? (
                                 <>
-                                    <span className="flex flex-row gap-2 items-center  mb-4">
-                                        <img
-                                            style={{
-                                                imageRendering: "pixelated",
-                                            }}
+                                    <span className="flex flex-row gap-2 items-center mb-4">
+                                        <MuseumItemImage
+                                            groupCategory={craftModalCategory!}
+                                            itemId={craftModalItem}
+                                            detailsIndex={detailsIndex}
                                             className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            src={`assets/media/museum/${craftModalCategory}/${craftModalItem}.png`}
-                                            alt={craftModalItem}
-                                            onError={(e) => {
-                                                const base64Image =
-                                                    detailsIndex[craftModalItem]
-                                                        ?.image
-                                                        ? "data:image/png;base64," +
-                                                          detailsIndex[
-                                                              craftModalItem
-                                                          ].image
-                                                        : null;
-
-                                                if (
-                                                    e.currentTarget.src.endsWith(
-                                                        `${craftModalCategory}/${craftModalItem}.png`
-                                                    ) &&
-                                                    base64Image
-                                                ) {
-                                                    e.currentTarget.src =
-                                                        base64Image;
-                                                }
-                                                // Jeśli Base64 nie działa → wczytaj not-found.png
-                                                else if (
-                                                    e.currentTarget.src !==
-                                                    window.location.origin +
-                                                        "/assets/media/museum/not-found.png"
-                                                ) {
-                                                    e.currentTarget.src =
-                                                        "assets/media/museum/not-found.png";
-                                                }
-                                            }}
+                                            style={{ imageRendering: "pixelated" }}
                                         />
-
                                         <span>
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
@@ -877,10 +743,7 @@ export const MuseumApp: FC = () => {
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
-                                                {
-                                                    detailsIndex[craftModalItem]
-                                                        .recipe.job
-                                                }
+                                                {detailsIndex[craftModalItem].recipe.job}
                                             </p>
                                         </span>
                                     </span>
@@ -917,8 +780,6 @@ export const MuseumApp: FC = () => {
                     </div>
                 </div>
             )}
-
-            {/* Missing resources modal */}
             {showResourcesModal && (
                 <div
                     className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
