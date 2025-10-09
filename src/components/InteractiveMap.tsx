@@ -15,6 +15,7 @@ import {
     Popup,
     useMap,
     useMapEvents,
+    Polygon,
 } from "react-leaflet";
 import { useTranslation } from "react-i18next";
 
@@ -156,12 +157,31 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                 height: "100%",
                 width: "100%",
                 backgroundColor: "#151d2c",
-                imageRendering: "pixelated" 
+                imageRendering: "pixelated",
             }}
         >
             <SetCRS mapConfig={mapConfig} />
             <FixPopup />
             <SetMapOpacity opacity={opacity} />{" "}
+            {/* Example polygon (uncomment to use) */}
+            {/*}
+            <Polygon
+                positions={[
+                    [339, 511],
+                    [505,480],
+                    [505, 390]
+                ]}
+                pathOptions={{
+                    color: "orange",
+                    fillColor: "orange",
+                    fillOpacity: 0.2,
+                }}
+            >
+                <Popup>
+                    <p className="font-bold !my-0">Kokoko Island</p>
+                    <p className="!my-0">Beach</p>
+                </Popup>
+            </Polygon>*/}
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
