@@ -22,5 +22,7 @@
   "museum.rarity.EPIC": "Épico",
   "museum.rarity.LEGENDARY": "Legendario",
   "museum.rarity.MYTHIC": "Mítico",
-  "museum.rarity.UNKNOWN": "DESCONOCIDO"
+  "museum.rarity.UNKNOWN": "DESCONOCIDO",
+  "museum.beta.title": "La gestión del museo está en las primeras etapas de desarrollo",
+  "museum.beta.description": "Algunas características pueden no funcionar como se espera o no estar disponibles. Si encuentras algún problema, por favor repórtalo en el foro de Discord"
 }

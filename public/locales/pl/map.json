@@ -1,5 +1,5 @@
 {
-    "mappage.title": "Eksploruj Mapy",
+    "mappage.title": "Przeglądaj mapy",
     "mappage.hoverInfo1": "Najedź kursorem na",
     "mappage.hoverInfo2": "aby zobaczyć zasoby.",
     "mappage.tooltipTitle": "Dostępne Zasoby",
@@ -17,9 +17,9 @@
     "mappage.maps.sandwhisper_dunes.name": "Wydmy Piaskowego Szeptu",
     "mappage.backToMap": "Mapa eksploracji",
     "mappage.selectMap": "Wybierz Mapę",
-    "mappage.markersSelection": "Zaznaczenia Zasobów",
+    "mappage.markersSelection": "Pinezki Zasobów",
     "mappage.selectAllMarkers": "Zaznacz/Odznacz wszystko:",
-    "mappage.mapOpacity": "Dostosuj Widoczność",
+    "mappage.mapOpacity": "Dostosuj widoczność",
     "mappage.mapPercOpacity": "widoczności",
     "mappage.fishinginfo.title": "Łowiska"
 }

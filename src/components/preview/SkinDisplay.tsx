@@ -97,77 +97,83 @@ export const SkinDisplay: FC<SkinDisplayProps> = ({
 
             {/* Relics Display */}
             {showRelics && relics.length > 0 && (
-            <div className="w-full flex items-center justify-center-space-x-2 overflow-visible">
-                {Array.from({ length: relics.length }).map((_, idx) => (
-                    <span className="inline-block">
-                        <img
-                            src={`assets/media/skulls/${relics[idx]}.png`}
-                            alt={`skull-${idx}`}
-                            className="h-8 w-8  object-cover drop-shadow-md"
-                            draggable={false}
-                        />
-                    </span>
-                ))}
-            </div>
+                <div className="w-full flex items-center justify-center-space-x-2 overflow-visible">
+                    {Array.from({ length: relics.length }).map((_, idx) => (
+                        <span key={idx} className="inline-block">
+                            <img
+                                src={`assets/media/skulls/${relics[idx]}.png`}
+                                alt={`skull-${idx}`}
+                                className="h-8 w-8  object-cover drop-shadow-md"
+                                draggable={false}
+                                style={{ imageRendering: "pixelated" }}
+                            />
+                        </span>
+                    ))}
+                </div>
             )}
-
 
             {/* Statistics Display */}
             {showStatistics && (
-            <div className="mt-2 grid grid-cols-2 gap-2 w-full">
-                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <img
-                        src="assets/media/icons/playtime.png"
-                        alt="playtime"
-                        className="h-6 w-6"
-                    />
-                    <span className="flex flex-col justify-center items-left stats-text-fixer">
-                        <h4 className="text-xs font-bold text-white mb-0">
-                            {t("profile.display.playtime")}
-                        </h4>
-                        <p className="text-xs text-green-400">{(Number(playtime) / 3600).toFixed(0)}H</p>
-                    </span>
+                <div className="mt-2 grid grid-cols-2 gap-2 w-full">
+                    <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                        <img
+                            src="assets/media/icons/playtime.png"
+                            alt="playtime"
+                            className="h-6 w-6"
+                        />
+                        <span className="flex flex-col justify-center items-left stats-text-fixer">
+                            <h4 className="text-xs font-bold text-white mb-0">
+                                {t("profile.display.playtime")}
+                            </h4>
+                            <p className="text-xs text-green-400">
+                                {(Number(playtime) / 3600).toFixed(0)}H
+                            </p>
+                        </span>
+                    </div>
+                    <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                        <img
+                            src="assets/media/icons/museum.png"
+                            alt="museum"
+                            className="h-6 w-6"
+                        />
+                        <span className="flex flex-col justify-center items-left stats-text-fixer">
+                            <h4 className="text-xs font-bold text-white mb-0">
+                                {t("profile.display.museum")}
+                            </h4>
+                            <p className="text-xs text-green-400">{museum}</p>
+                        </span>
+                    </div>
+                    <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                        <img
+                            src="assets/media/icons/quest.png"
+                            alt="quest"
+                            className="h-6 w-6"
+                        />
+                        <span className="flex flex-col justify-center items-left stats-text-fixer">
+                            <h4 className="text-xs font-bold text-white mb-0">
+                                {t("profile.display.daily")}
+                            </h4>
+                            <p className="text-[10px] text-green-400">
+                                {daily}
+                            </p>
+                        </span>
+                    </div>
+                    <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
+                        <img
+                            src="assets/media/icons/quest.png"
+                            alt="quest"
+                            className="h-6 w-6"
+                        />
+                        <span className="flex flex-col justify-center items-left stats-text-fixer">
+                            <h4 className="text-xs font-bold text-white mb-0">
+                                {t("profile.display.weekly")}
+                            </h4>
+                            <p className="text-[10px] text-green-400">
+                                {weekly}
+                            </p>
+                        </span>
+                    </div>
                 </div>
-                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <img
-                        src="assets/media/icons/museum.png"
-                        alt="museum"
-                        className="h-6 w-6"
-                    />
-                    <span className="flex flex-col justify-center items-left stats-text-fixer">
-                        <h4 className="text-xs font-bold text-white mb-0">
-                            {t("profile.display.museum")}
-                        </h4>
-                        <p className="text-xs text-green-400">{museum}</p>
-                    </span>
-                </div>
-                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <img
-                        src="assets/media/icons/quest.png"
-                        alt="quest"
-                        className="h-6 w-6"
-                    />
-                    <span className="flex flex-col justify-center items-left stats-text-fixer">
-                        <h4 className="text-xs font-bold text-white mb-0">
-                            {t("profile.display.daily")}
-                        </h4>
-                        <p className="text-[10px] text-green-400">{daily}</p>
-                    </span>
-                </div>
-                <div className="flex flex-row items-center gap-1 bg-black bg-opacity-30 p-2 rounded-md">
-                    <img
-                        src="assets/media/icons/quest.png"
-                        alt="quest"
-                        className="h-6 w-6"
-                    />
-                    <span className="flex flex-col justify-center items-left stats-text-fixer">
-                        <h4 className="text-xs font-bold text-white mb-0">
-                            {t("profile.display.weekly")}
-                        </h4>
-                        <p className="text-[10px] text-green-400">{weekly}</p>
-                    </span>
-                </div>
-            </div>
             )}
         </div>
     );

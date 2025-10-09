@@ -1,5 +1,5 @@
 {
-    "mappage.title": "Explore les maps",
+    "mappage.title": "Explorer les cartes",
     "mappage.hoverInfo1": "Passe sur le",
     "mappage.hoverInfo2": "pour voir les ressources.",
     "mappage.tooltipTitle": "Ressources disponibles",
@@ -16,10 +16,10 @@
     "mappage.maps.frostbite_fortress.name": "Forteresse d'En-gelure",
     "mappage.maps.sandwhisper_dunes.name": "Dunes de sable murmurant",
     "mappage.backToMap": "Exploration des maps",
-    "mappage.selectMap": "Sélectionne une île",
+    "mappage.selectMap": "Sélectionnez une carte",
     "mappage.markersSelection": "Ressources épinglées",
     "mappage.selectAllMarkers": "(Dé)sélectionner tout",
-    "mappage.mapOpacity": "Ajuste la visibilité",
+    "mappage.mapOpacity": "Ajuster la visibilité",
     "mappage.mapPercOpacity": "de visibilité",
     "mappage.fishinginfo.title": "Info de pêche"
 }

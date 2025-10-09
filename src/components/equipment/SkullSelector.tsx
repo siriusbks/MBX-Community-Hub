@@ -106,7 +106,7 @@ export const SkullSelector: React.FC<Props> = ({
                                 }`}
                             >
                                 <div className="flex items-center gap-4">
-                                    <img src ={sk.icon} alt={sk.name} className="w-12 h-12" />
+                                    <img src ={sk.icon} alt={sk.name} className="w-12 h-12" style={{ imageRendering: "pixelated" }} />
                                     <span>
                                     <div className="font-bold text-xl">
                                         {skullLabel}

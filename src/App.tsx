@@ -11,6 +11,7 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import "./i18n";
 
 import ErrorBoundary from "@components/preview/ErrorBoundary";
+import { isDev } from "@utils/helper";
 
 const GA_MEASUREMENT_ID = "G-1E5DGV7ZFK";
 
@@ -19,6 +20,10 @@ function GA4Tracking() {
     const initialized = useRef(false);
 
     useEffect(() => {
+        if (isDev()) {
+            console.log("Dev mode: Google Analytics disabled");
+            return;
+        }
         if (!initialized.current) {
             ReactGA.initialize(GA_MEASUREMENT_ID);
             initialized.current = true;
