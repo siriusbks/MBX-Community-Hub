@@ -1,9 +1,6 @@
 /*
  * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
  */
-/*
- * MuseumItemImage.tsx
- */
 
 import React, { useEffect, useState } from "react";
 
