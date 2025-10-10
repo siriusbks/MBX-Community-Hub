@@ -47,7 +47,7 @@ export function HomePage() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
                     {/* Player Profile */}
                     <Link
                         to="/profile"
@@ -84,6 +84,30 @@ export function HomePage() {
                         </p>
                     </Link>
 
+                    {/* Community Projects */}
+                    <Link
+                        to="/community"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-red-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition-colors">
+                                <Users size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                                {t("homepage.features.communityProjects.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {t(
+                                "homepage.features.communityProjects.description"
+                            )}
+                        </p>
+                    </Link>
+                </div>
+
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto">
+
                     {/* Equipment Manager  */}
                     <Link
                         to="/equipment"
@@ -108,7 +132,7 @@ export function HomePage() {
                     </Link>
 
                     {/* Museum temporarily deactivated */}
-                    {/*
+                    
                     <Link
                         to="/museum"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-purple-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -129,27 +153,6 @@ export function HomePage() {
                             {t("homepage.features.museum.description")}
                         </p>
                         </Link>
-*/}
-
-                    {/* Community Projects */}
-                    <Link
-                        to="/community"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-red-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition-colors">
-                                <Users size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.communityProjects.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t(
-                                "homepage.features.communityProjects.description"
-                            )}
-                        </p>
-                    </Link>
                 </div>
             </div>
         </>

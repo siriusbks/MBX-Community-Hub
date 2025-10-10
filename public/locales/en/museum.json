@@ -1,6 +1,8 @@
 {
   "museum.minecraftUsername": "Enter your Minecraft username",
   "museum.importMuseum.button": "Import Museum",
+  "museum.hideDonated.button": "Hide Donated Items",
+  "museum.showDonated.button":"Show Donated Items",
   "museum.recapMuseum.button": "Show missing items summary",
   "museum.recapMuseum.title": "Missing Items",
   "museum.recapMuseum.description": "These are the items you are missing in your museum.",

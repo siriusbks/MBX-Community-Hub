@@ -51,31 +51,31 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
 
     const TMPBorderColorClass =
         {
-            COMMON: "border-gray-500",
-            UNCOMMON: "border-green-500",
-            RARE: "border-blue-500",
-            EPIC: "border-purple-500",
-            LEGENDARY: "border-orange-500",
-            MYTHIC: "border-red-500",
-        }[adjustedRarity] || "border-pink-500";
+            COMMON: "border-COMMON-BORDER",
+            UNCOMMON: "border-UNCOMMON",
+            RARE: "border-RARE",
+            EPIC: "border-EPIC",
+            LEGENDARY: "border-LEGENDARY",
+            MYTHIC: "border-MYTHIC",
+        }[adjustedRarity] || "border-UNKNOWN";
     const TMPBackgroundColorClass =
         {
-            COMMON: "bg-gray-500",
-            UNCOMMON: "bg-green-500",
-            RARE: "bg-blue-500",
-            EPIC: "bg-purple-500",
-            LEGENDARY: "bg-orange-500",
-            MYTHIC: "bg-red-500",
-        }[adjustedRarity] || "bg-pink-500";
+            COMMON: "bg-COMMON",
+            UNCOMMON: "bg-UNCOMMON",
+            RARE: "bg-RARE",
+            EPIC: "bg-EPIC",
+            LEGENDARY: "bg-LEGENDARY",
+            MYTHIC: "bg-MYTHIC",
+        }[adjustedRarity] || "bg-UNKNOWN";
     const TMPShadowClass =
         {
-            COMMON: "shadow-[inset_0_0_8px_theme(colors.gray.500)]",
-            UNCOMMON: "shadow-[inset_0_0_8px_theme(colors.green.500)]",
-            RARE: "shadow-[inset_0_0_8px_theme(colors.blue.500)]",
-            EPIC: "shadow-[inset_0_0_8px_theme(colors.purple.500)]",
-            LEGENDARY: "shadow-[inset_0_0_8px_theme(colors.orange.500)]",
-            MYTHIC: "shadow-[inset_0_0_8px_theme(colors.red.500)]",
-        }[adjustedRarity] || "shadow-[inset_0_0_8px_theme(colors.pink.500)]";
+            COMMON: "shadow-[inset_0_0_4px_theme(colors.COMMON.BORDER)]",
+            UNCOMMON: "shadow-[inset_0_0_8px_theme(colors.UNCOMMON.DEFAULT)]",
+            RARE: "shadow-[inset_0_0_8px_theme(colors.RARE.DEFAULT)]",
+            EPIC: "shadow-[inset_0_0_8px_theme(colors.EPIC.DEFAULT)]",
+            LEGENDARY: "shadow-[inset_0_0_12px_theme(colors.LEGENDARY.DEFAULT)]",
+            MYTHIC: "shadow-[inset_0_0_16px_theme(colors.MYTHIC.DEFAULT)]",
+        }[adjustedRarity] || "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
     const { t } = useTranslation("museum");
 
@@ -108,7 +108,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     return (
         <div
             key={itemId}
-            className={`min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
+            className={`text-regal-blue min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
                 isOwned
                     ? "bg-green-600 bg-opacity-20 border-4 cursor-default !border-green-600 shadow-[inset_0_0_4px_theme(colors.green.600)]"
                     : `cursor-pointer ${TMPShadowClass}`

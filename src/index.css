@@ -86,3 +86,21 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+:root {
+    --color-COMMON: #665466;
+    --color-COMMON-50: #66546620;
+    --color-COMMON-BORDER: #55a0ac ;
+    --color-UNCOMMON: #00c06f;
+    --color-UNCOMMON-50: #00c06f20;
+    --color-RARE: #00a5fc;
+    --color-RARE-50: #00a5fc20;
+    --color-EPIC: #c507ff;
+    --color-EPIC-50: #c507ff20;
+    --color-LEGENDARY: #cc982a;
+    --color-LEGENDARY-50: #cc982a20;
+    --color-MYTHIC: #c6070c;
+    --color-MYTHIC-50: #c6070c20;
+    --color-UNKNOWN: #ff0095;
+    --color-UNKNOWN-50: #ff009520;
+}

@@ -39,7 +39,7 @@ export const AppRoutes: FC = () => (
                     <Route path="/mappage" element={<MapPage />} />
                     <Route path="/equipment" element={<EquipPage />} />
                     <Route path="/community" element={<CommunityPage />} />
-                    {/*<Route path="/museum" element={<MuseumPage />} />*/}
+                    <Route path="/museum" element={<MuseumPage />} />
                 </Routes>
             </Suspense>
         </main>
