@@ -18,10 +18,7 @@ import {
     spotNames,
     mapNameTranslationKeys,
 } from "@components/map/fishData";
-import {
-    insectData,
-    regionsName,
-} from "@components/map/insectData";
+import { insectData, regionsName } from "@components/map/insectData";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
@@ -93,7 +90,7 @@ const MapPage: FC = () => {
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
 
-    const { t } = useTranslation(["map", "fishing", "markers"]);
+    const { t } = useTranslation(["map", "fishing", "markers", "insects"]);
 
     // Load markers
     useEffect(() => {
@@ -323,11 +320,11 @@ const MapPage: FC = () => {
                 {/* Sidebar Right = Fish Info */}
                 {fishData[selectedMapKey] && fishingVisible && (
                     <div
-                        className={`transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
-                            isSidebarOpen ? "w-80" : "w-12"
+                        className={`overflow-y-auto custom-scrollbar transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
+                            isSidebarOpen ? "w-[22rem]" : "w-12"
                         }`}
                     >
-                        {/* Header retract */}
+                        {/* Fishing Info Header + Sidebar Toggle */}
                         <div className="flex items-center justify-between p-2 border-b border-gray-700">
                             <button
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -346,8 +343,9 @@ const MapPage: FC = () => {
                             )}
                         </div>
 
+                        {/* Fishing Spots List */}
                         {isSidebarOpen && (
-                            <div className="p-4 overflow-y-auto custom-scrollbar space-y-4">
+                            <div className="p-4  space-y-4">
                                 {Object.entries(fishData[selectedMapKey]).map(
                                     ([spotKey, fishList]) => (
                                         <details
@@ -378,19 +376,19 @@ const MapPage: FC = () => {
                                                             string
                                                         > = {
                                                             "fishing.rarity.vanilla":
-                                                                "text-gray-300",
+                                                                "bg-gray-600 text-gray-300",
                                                             "fishing.rarity.common":
-                                                                "text-gray-400",
+                                                                "bg-COMMON text-white",
                                                             "fishing.rarity.uncommon":
-                                                                "text-green-400",
+                                                                "bg-UNCOMMON text-white",
                                                             "fishing.rarity.rare":
-                                                                "text-blue-400",
+                                                                "bg-RARE text-white",
                                                             "fishing.rarity.epic":
-                                                                "text-pink-400",
+                                                                "bg-EPIC text-white",
                                                             "fishing.rarity.legendary":
-                                                                "text-yellow-400",
+                                                                "bg-LEGENDARY text-white",
                                                             "fishing.rarity.mythic":
-                                                                "text-red-700",
+                                                                "bg-MYTHIC text-white",
                                                         };
 
                                                         const rarityColor =
@@ -441,7 +439,11 @@ const MapPage: FC = () => {
                                                                         alt={
                                                                             fish.name
                                                                         }*/
-                                                                        className="w-8 h-8 pointer-events-none"
+                                                                        className="w-8 h-8 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
                                                                     />
                                                                 ) : (
                                                                     <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
@@ -454,21 +456,9 @@ const MapPage: FC = () => {
                                                                     <div className="flex justify-between items-center">
                                                                         {/* Left */}
                                                                         <div className="flex flex-col">
-                                                                            <span className="font-semibold text-white">
-                                                                                {t(
-                                                                                    fish.name,
-                                                                                    {
-                                                                                        ns: "fishing",
-                                                                                        defaultValue:
-                                                                                            fish.name,
-                                                                                    }
-                                                                                )}
-                                                                            </span>
-                                                                            <div className="flex gap-2 text-xs">
+                                                                            <span className="font-semibold text-white items-center flex  leading-none">
                                                                                 <span
-                                                                                    className={
-                                                                                        rarityColor
-                                                                                    }
+                                                                                    className={`${rarityColor} px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
                                                                                 >
                                                                                     {t(
                                                                                         fish.rarity,
@@ -479,7 +469,16 @@ const MapPage: FC = () => {
                                                                                         }
                                                                                     )}
                                                                                 </span>
-
+                                                                                {t(
+                                                                                    fish.name,
+                                                                                    {
+                                                                                        ns: "fishing",
+                                                                                        defaultValue:
+                                                                                            fish.name,
+                                                                                    }
+                                                                                )}
+                                                                            </span>
+                                                                            <div className="flex gap-2 text-xs">
                                                                                 <span className="text-gray-300">
                                                                                     {
                                                                                         timeLabel
@@ -530,34 +529,38 @@ const MapPage: FC = () => {
                                 )}
                             </div>
                         )}
-{/* INSECTS (disabled for now)}
-                        {isSidebarOpen && (
-                            <div className="flex items-center justify-between p-2 border-y border-gray-700">
-                                <button
-                                    onClick={() =>
-                                        setIsSidebarOpen(!isSidebarOpen)
-                                    }
-                                    className="text-green-400 hover:text-white transition text-sm"
-                                    title={isSidebarOpen ? "Close" : "Open"}
-                                ></button>
-                                {isSidebarOpen && (
-                                    <h2 className="text-sm font-semibold text-green-400 ml-2 truncate">
-                                        🦋 {t("mappage.insectinfo.title")} -{" "}
-                                        {t(
-                                            mapNameTranslationKeys[
-                                                selectedMapKey
-                                            ],
-                                            {
-                                                defaultValue: selectedMapKey,
-                                            }
-                                        )}{" "}
-                                    </h2>
-                                )}
-                            </div>
-                        )}
 
+                        {/* Insect Info Header */}
+                        {isSidebarOpen &&
+                            selectedMapKey != "frostbite_fortress" && (
+                                <div className="flex items-center justify-between p-2 border-y border-gray-700">
+                                    <button
+                                        onClick={() =>
+                                            setIsSidebarOpen(!isSidebarOpen)
+                                        }
+                                        className="text-green-400 hover:text-white transition text-sm"
+                                        title={isSidebarOpen ? "Close" : "Open"}
+                                    ></button>
+                                    {isSidebarOpen && (
+                                        <h2 className="text-sm font-semibold text-green-400 ml-2">
+                                            🦋 {t("mappage.insectinfo.title")} -{" "}
+                                            {t(
+                                                mapNameTranslationKeys[
+                                                    selectedMapKey
+                                                ],
+                                                {
+                                                    defaultValue:
+                                                        selectedMapKey,
+                                                }
+                                            )}{" "}
+                                        </h2>
+                                    )}
+                                </div>
+                            )}
+
+                        {/* Insect Spots (Regions) List */}
                         {isSidebarOpen && (
-                            <div className="p-4 overflow-y-auto custom-scrollbar space-y-4">
+                            <div className="p-4 space-y-4">
                                 {Object.entries(insectData[selectedMapKey]).map(
                                     ([spotKey, insectList]) => (
                                         <details
@@ -566,7 +569,7 @@ const MapPage: FC = () => {
                                         >
                                             <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
                                                 {t(regionsName[spotKey], {
-                                                    ns: "fishing",
+                                                    ns: "map",
                                                     defaultValue: spotKey,
                                                 })}
                                             </summary>
@@ -588,19 +591,19 @@ const MapPage: FC = () => {
                                                             string
                                                         > = {
                                                             "fishing.rarity.vanilla":
-                                                                "text-gray-300",
+                                                                "bg-gray-600 text-gray-300",
                                                             "fishing.rarity.common":
-                                                                "text-gray-400",
+                                                                "bg-COMMON text-white",
                                                             "fishing.rarity.uncommon":
-                                                                "text-green-400",
+                                                                "bg-UNCOMMON text-white",
                                                             "fishing.rarity.rare":
-                                                                "text-blue-400",
+                                                                "bg-RARE text-white",
                                                             "fishing.rarity.epic":
-                                                                "text-pink-400",
+                                                                "bg-EPIC text-white",
                                                             "fishing.rarity.legendary":
-                                                                "text-yellow-400",
+                                                                "bg-LEGENDARY text-white",
                                                             "fishing.rarity.mythic":
-                                                                "text-red-700",
+                                                                "bg-MYTHIC text-white",
                                                         };
 
                                                         const rarityColor =
@@ -646,8 +649,11 @@ const MapPage: FC = () => {
                                                                         src={
                                                                             fish.image
                                                                         }
-
-                                                                        className="w-8 h-8 pointer-events-none"
+                                                                        className="w-10 h-10 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
                                                                     />
                                                                 ) : (
                                                                     <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
@@ -657,23 +663,10 @@ const MapPage: FC = () => {
 
                                                                 <div className="flex-1">
                                                                     <div className="flex justify-between items-center">
-                                                                        
                                                                         <div className="flex flex-col">
-                                                                            <span className="font-semibold text-white">
-                                                                                {t(
-                                                                                    fish.name,
-                                                                                    {
-                                                                                        ns: "fishing",
-                                                                                        defaultValue:
-                                                                                            fish.name,
-                                                                                    }
-                                                                                )}
-                                                                            </span>
-                                                                            <div className="flex gap-2 text-xs">
+                                                                            <span className="font-semibold text-white items-center flex leading-none">
                                                                                 <span
-                                                                                    className={
-                                                                                        rarityColor
-                                                                                    }
+                                                                                    className={`${rarityColor} px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
                                                                                 >
                                                                                     {t(
                                                                                         fish.rarity,
@@ -684,61 +677,67 @@ const MapPage: FC = () => {
                                                                                         }
                                                                                     )}
                                                                                 </span>
-
-                                                                                <span className="text-gray-300">
-                                                                                    {t(
-                                                                                        fish.time,
-                                                                                        {
-                                                                                            ns: "map",
-                                                                                            defaultValue:
+                                                                                {t(
+                                                                                    fish.name,
+                                                                                    {
+                                                                                        ns: "insects",
+                                                                                        defaultValue:
+                                                                                            fish.name,
+                                                                                    }
+                                                                                )}
+                                                                            </span>
+                                                                            <div className="flex gap-1 text-xs">
+                                                                                {!fish.time.includes(
+                                                                                    "mappage.condition.time.day_night"
+                                                                                ) && (
+                                                                                    <>
+                                                                                        <span className="text-gray-300">
+                                                                                            {t(
                                                                                                 fish.time,
-                                                                                        }
-                                                                                    )}
-                                                                                </span>
-                                                                                    &
-                                                                                <span className="text-gray-300">
-                                                                                    {t(
-                                                                                        fish.weather,
-                                                                                        {
-                                                                                            ns: "map",
-                                                                                            defaultValue:
-                                                                                                fish.weather,
-                                                                                        }
-                                                                                    )}
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
+                                                                                                {
+                                                                                                    ns: "map",
+                                                                                                    defaultValue:
+                                                                                                        fish.time,
+                                                                                                }
+                                                                                            )}
+                                                                                        </span>
 
-                                                                        
-                                                                        <div className="flex gap-1">
-                                                                            {fish.weather?.includes(
-                                                                                "rain"
-                                                                            ) && (
-                                                                                <span title="Only when it rains">
-                                                                                    🌧️
-                                                                                </span>
-                                                                            )}
-                                                                            {fish.weather?.includes(
-                                                                                "fullmoon"
-                                                                            ) && (
-                                                                                <span title="Only during full moon">
-                                                                                    🌕
-                                                                                </span>
-                                                                            )}
-                                                                            {fish.weather?.includes(
-                                                                                "storm"
-                                                                            ) && (
-                                                                                <span title="Only at storm">
-                                                                                    🌩️
-                                                                                </span>
-                                                                            )}
-                                                                            {fish.weather?.includes(
-                                                                                "niceweather"
-                                                                            ) && (
-                                                                                <span title="Nice weather">
-                                                                                    🌤️
-                                                                                </span>
-                                                                            )}
+                                                                                        {!fish.weather.includes(
+                                                                                            "mappage.condition.weather.any"
+                                                                                        ) && (
+                                                                                            <span>
+                                                                                                &
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </>
+                                                                                )}
+                                                                                {!fish.weather.includes(
+                                                                                    "mappage.condition.weather.any"
+                                                                                ) && (
+                                                                                    <span className="text-gray-300">
+                                                                                        {t(
+                                                                                            fish.weather,
+                                                                                            {
+                                                                                                ns: "map",
+                                                                                                defaultValue:
+                                                                                                    fish.weather,
+                                                                                            }
+                                                                                        )}
+                                                                                    </span>
+                                                                                )}
+                                                                                {fish.weather.includes(
+                                                                                    "mappage.condition.weather.any"
+                                                                                ) &&
+                                                                                    fish.time.includes(
+                                                                                        "mappage.condition.time.day_night"
+                                                                                    ) && (
+                                                                                        <span className="text-gray-500">
+                                                                                            {t(
+                                                                                                "mappage.condition.no_condition"
+                                                                                            )}
+                                                                                        </span>
+                                                                                    )}
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -750,7 +749,7 @@ const MapPage: FC = () => {
                                     )
                                 )}
                             </div>
-                        )}*/}
+                        )}
                     </div>
                 )}
             </div>
