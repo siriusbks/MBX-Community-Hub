@@ -51,6 +51,9 @@ export const mapNameTranslationKeys: Record<string, string> = {
 
 export const regionsName: Record<string, string> = {
     universal: "mappage.maps.spawn.universal",
+    exploration_island: "mappage.maps.spawn.exploration_island",
+    italian_restaurant: "mappage.maps.spawn.italian_restaurant",
+    church: "mappage.maps.spawn.church",
 
     beach: "mappage.maps.kokoko.beach",
     jungle: "mappage.maps.kokoko.jungle",
@@ -97,13 +100,6 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 weather: ["mappage.condition.weather.noclear"],
             },
             {
-                name: "insect.insect_ant",
-                rarity: "fishing.rarity.uncommon",
-                image: "assets/media/museum/INSECT/insect_ant.png",
-                time: ["mappage.condition.time.all_day"],
-                weather: ["mappage.condition.weather.clear"],
-            },
-            {
                 name: "insect.butterfly_yellow",
                 rarity: "fishing.rarity.rare",
                 image: "assets/media/museum/INSECT/butterfly_yellow.png",
@@ -124,6 +120,26 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 time: ["mappage.condition.time.all_night"],
                 weather: ["mappage.condition.weather.clear"],
             },
+        ],
+        exploration_island: [
+            {
+                name: "insect.insect_ant",
+                rarity: "fishing.rarity.uncommon",
+                image: "assets/media/museum/INSECT/insect_ant.png",
+                time: ["mappage.condition.time.all_day"],
+                weather: ["mappage.condition.weather.clear"],
+            },
+        ],
+        italian_restaurant: [
+            {
+                name: "insect.insect_wasp",
+                rarity: "fishing.rarity.legendary",
+                image: "assets/media/museum/INSECT/insect_wasp.png",
+                time: ["mappage.condition.time.afternoon"],
+                weather: ["mappage.condition.weather.clear"],
+            },
+        ],
+        church: [
             {
                 name: "insect.insect_wasp",
                 rarity: "fishing.rarity.legendary",
@@ -215,6 +231,13 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 time: ["mappage.condition.time.all_day"],
                 weather: ["mappage.condition.weather.clear"],
             },
+            {
+                name: "insect.insect_firefly",
+                rarity: "fishing.rarity.epic",
+                image: "assets/media/museum/INSECT/insect_firefly.png",
+                time: ["mappage.condition.time.all_night"],
+                weather: ["mappage.condition.weather.clear"],
+            },
         ],
         savenna: [
             {
@@ -229,6 +252,13 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 rarity: "fishing.rarity.epic",
                 image: "assets/media/museum/INSECT/insect_dragonfly_red.png",
                 time: ["mappage.condition.time.afternoon"],
+                weather: ["mappage.condition.weather.clear"],
+            },
+            {
+                name: "insect.insect_ladybug",
+                rarity: "fishing.rarity.legendary",
+                image: "assets/media/museum/INSECT/insect_ladybug.png",
+                time: ["mappage.condition.time.morning"],
                 weather: ["mappage.condition.weather.clear"],
             },
         ],
@@ -288,6 +318,15 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 time: ["mappage.condition.time.afternoon"],
                 weather: ["mappage.condition.weather.clear"],
             },
+        ],
+        cherry_forest: [
+            {
+                name: "insect.insect_stick_insect",
+                rarity: "fishing.rarity.rare",
+                image: "assets/media/museum/INSECT/insect_stick_insect.png",
+                time: ["mappage.condition.time.all_night"],
+                weather: ["mappage.condition.weather.clear"],
+            }
         ],
     },
     frostbite_fortress: {},
