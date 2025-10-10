@@ -5,7 +5,7 @@
  */
 
 import { FC, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -14,7 +14,6 @@ import allMarkers from "@components/map/allMarkers";
 
 const InfoMapPage: FC = () => {
     const { t } = useTranslation(["map", "markers"]);
-    const navigate = useNavigate();
     const [tooltipMap, setTooltipMap] = useState<string | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -146,15 +145,13 @@ const InfoMapPage: FC = () => {
                                 </div>
                             )}
 
-                            {/* Button Interactive Map*/}
-                            <button
-                                onClick={() =>
-                                    navigate(`/mappage?selectedMap=${mapKey}`)
-                                }
-                                className="mt-auto bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full transition"
+                            {/* Button Interactive Map */}
+                            <Link
+                                to={`/mappage?selectedMap=${mapKey}`}
+                                className="mt-auto bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full text-center transition block"
                             >
                                 {t("mappage.buttonViewMap")}
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
