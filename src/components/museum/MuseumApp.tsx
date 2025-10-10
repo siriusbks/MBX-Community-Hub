@@ -4,7 +4,16 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { User, Import, Eye, ArrowUpFromLine, AlertTriangle } from "lucide-react";
+import {
+    User,
+    Import,
+    Eye,
+    EyeOff,
+    ArrowUpFromLine,
+    AlertTriangle,
+    Plus,
+    Minus,
+} from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage"; // Nouvelle importation
@@ -36,19 +45,29 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
+        null
+    );
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
+
+    const [showDonated, setShowDonated] = useState(true);
 
     const totalStats =
         groupedItems && Array.isArray(groupedItems)
             ? {
                   owned: groupedItems.reduce(
                       (sum, group) =>
-                          sum + group.items.filter((item) => museumItems.includes(item)).length,
+                          sum +
+                          group.items.filter((item) =>
+                              museumItems.includes(item)
+                          ).length,
                       0
                   ),
-                  total: groupedItems.reduce((sum, group) => sum + group.items.length, 0),
+                  total: groupedItems.reduce(
+                      (sum, group) => sum + group.items.length,
+                      0
+                  ),
               }
             : { owned: 0, total: 0 };
 
@@ -85,7 +104,10 @@ export const MuseumApp: FC = () => {
                 apiData.data.OBJECTIVES.museum || [];
             museumItemsFetched = museumItemsFetched.map((item) => {
                 if (item.startsWith("transformed_material-"))
-                    return item.replace("transformed_material-", "transformed_");
+                    return item.replace(
+                        "transformed_material-",
+                        "transformed_"
+                    );
                 else if (item.startsWith("bag_material-"))
                     return item.replace("bag_material-", "bag_");
                 else if (item.startsWith("crate_material-"))
@@ -136,121 +158,6 @@ export const MuseumApp: FC = () => {
         }
     };
 
-    // Recursive function that returns a JSX tree representing a recipe
-    const buildRecipeTree = (recipe: any): JSX.Element => {
-        return (
-            <ul>
-                {recipe.ingredients.map((ing: any, i: number) => {
-                    let summary: JSX.Element | null = null;
-                    if (
-                        detailsIndex &&
-                        detailsIndex[ing.id] &&
-                        detailsIndex[ing.id].recipe
-                    ) {
-                        const subResources = gatherResources(
-                            detailsIndex[ing.id].recipe
-                        );
-                        summary = (
-                            <span className="ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
-                                {Object.keys(subResources).map(
-                                    (key, index, arr) => {
-                                        const globalAmount = subResources[key] * ing.amount;
-                                        return (
-                                            // Each span represents a resource (with its icon and quantity)
-                                            <span
-                                                key={key}
-                                                className="inline-flex items-center mr-1 text-xs align-baseline"
-                                            >
-                                                <span>
-                                                    {globalAmount.toLocaleString(
-                                                        "fr-FR"
-                                                    )}
-                                                </span>
-                                                x
-                                                <MuseumItemImage
-                                                    itemId={key}
-                                                    detailsIndex={detailsIndex}
-                                                    className="h-4 w-4 ml-0.5"
-                                                    style={{ imageRendering: "pixelated" }}
-                                                />
-                                                <span className="ml-0.5">
-                                                    {index < arr.length - 1 && " "}
-                                                </span>
-                                            </span>
-                                        );
-                                    }
-                                )}
-                            </span>
-                        );
-                    }
-
-                    // Render each ingredient in an <li>
-                    return (
-                        <li
-                            key={i}
-                            className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border-2 border-gray-500 border-opacity-30"
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MuseumItemImage
-                                    itemId={ing.id}
-                                    detailsIndex={detailsIndex}
-                                    style={{
-                                        width: "35px",
-                                        height: "35px",
-                                        marginRight: "5px",
-                                        verticalAlign: "middle",
-                                        imageRendering: "pixelated",
-                                    }}
-                                />
-                                <span className="font-bold text-sm flex flex-col">
-                                    <span className="flex items-center mr-2 whitespace-nowrap">
-                                        {ing.amount}x {ing.id}{" "}
-                                    </span>
-                                    {detailsIndex &&
-                                        detailsIndex[ing.id] &&
-                                        detailsIndex[ing.id].recipe &&
-                                        detailsIndex[ing.id].recipe.job && (
-                                            <span className="text-xs font-normal text-green-500">
-                                                {
-                                                    detailsIndex[ing.id].recipe
-                                                        .job
-                                                }
-                                            </span>
-                                        )}
-                                </span>
-                                {summary}
-                            </div>
-                            {/* If the ingredient has a recipe and its job is not "FARMER", render the sub-recipe */}
-                            {detailsIndex &&
-                                detailsIndex[ing.id] &&
-                                detailsIndex[ing.id].recipe &&
-                                detailsIndex[ing.id].recipe.job !==
-                                    "FARMER" && (
-                                    <div
-                                        style={{
-                                            marginLeft: "25px",
-                                            borderLeft: "0px solid #ddd",
-                                            paddingLeft: "10px",
-                                            marginTop: "5px",
-                                        }}
-                                    >
-                                        {buildRecipeTree(
-                                            detailsIndex[ing.id].recipe
-                                        )}
-                                    </div>
-                                )}
-                        </li>
-                    );
-                })}
-            </ul>
-        );
-    };
-
     // Recursive function to aggregate the required resources from a given recipe
     const gatherResources = (recipe: any): { [key: string]: number } => {
         const resources: { [key: string]: number } = {};
@@ -274,6 +181,146 @@ export const MuseumApp: FC = () => {
             }
         });
         return resources;
+    };
+
+    // Small component that renders the full recipe tree. We split nodes into
+    // a separate component so each node can use hooks safely (one hook call per
+    // component instance) and to avoid calling hooks inside loops.
+    const RecipeTree: FC<{ recipe: any; detailsIndex: any }> = ({
+        recipe,
+        detailsIndex,
+    }) => {
+        if (!recipe || !recipe.ingredients) return <></>;
+        return (
+            <ul>
+                {recipe.ingredients.map((ing: any, i: number) => (
+                    <RecipeNode key={i} ing={ing} detailsIndex={detailsIndex} />
+                ))}
+            </ul>
+        );
+    };
+
+    const RecipeNode: FC<{ ing: any; detailsIndex: any }> = ({
+        ing,
+        detailsIndex,
+    }) => {
+        const [isExpanded, setIsExpanded] = useState(false);
+
+        const hasSubRecipe =
+            detailsIndex &&
+            detailsIndex[ing.id] &&
+            detailsIndex[ing.id].recipe &&
+            detailsIndex[ing.id].recipe.job !== "FARMER";
+
+        let summary: JSX.Element | null = null;
+
+        if (
+            detailsIndex &&
+            detailsIndex[ing.id] &&
+            detailsIndex[ing.id].recipe
+        ) {
+            const subResources = gatherResources(detailsIndex[ing.id].recipe);
+            summary = (
+                <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
+                    {Object.keys(subResources).map((key, index, arr) => {
+                        const globalAmount = subResources[key] * ing.amount;
+                        return (
+                            <span
+                                key={key}
+                                className="inline-flex items-center mr-1 text-xs align-baseline"
+                            >
+                                <span>
+                                    {globalAmount.toLocaleString("fr-FR")}
+                                </span>
+                                x
+                                <MuseumItemImage
+                                    itemId={key}
+                                    detailsIndex={detailsIndex}
+                                    className="h-4 w-4 ml-0.5"
+                                    style={{ imageRendering: "pixelated" }}
+                                />
+                                <span className="ml-0.5">
+                                    {index < arr.length - 1 && " "}
+                                </span>
+                            </span>
+                        );
+                    })}
+                </span>
+            );
+        }
+
+        return (
+            <li className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border-2 border-gray-500 border-opacity-30">
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                    }}
+                    onClick={() => setIsExpanded(!isExpanded)}
+                >
+                    <div className="flex items-center">
+                        <MuseumItemImage
+                            itemId={ing.id}
+                            detailsIndex={detailsIndex}
+                            style={{
+                                width: "35px",
+                                height: "35px",
+                                marginRight: "5px",
+                                verticalAlign: "middle",
+                                imageRendering: "pixelated",
+                            }}
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        />
+
+                        <span className="font-bold text-sm flex flex-col">
+                            <span
+                                className="flex items-center mr-2 whitespace-nowrap"
+                                onClick={() => setIsExpanded(!isExpanded)}
+                            >
+                                {/* Przycisk zwijania/rozwijania */}
+                                {hasSubRecipe && (
+                                    <button className="mr-0.5 text-xs text-gray-300 hover:text-white focus:outline-none">
+                                        {isExpanded ? (
+                                            <Minus className="h-4 w-4" />
+                                        ) : (
+                                            <Plus className="h-4 w-4" />
+                                        )}
+                                    </button>
+                                )}
+                                {ing.amount}x {ing.id}
+                            </span>
+
+                            {detailsIndex &&
+                                detailsIndex[ing.id] &&
+                                detailsIndex[ing.id].recipe &&
+                                detailsIndex[ing.id].recipe.job && (
+                                    <span className="text-xs font-normal text-green-500">
+                                        {detailsIndex[ing.id].recipe.job}
+                                    </span>
+                                )}
+                        </span>
+                    </div>
+                    {summary}
+                </div>
+
+                {/* Renderuj poddrzewo tylko jeśli rozwinięte */}
+                {hasSubRecipe && isExpanded && (
+                    <div
+                        style={{
+                            marginLeft: "25px",
+                            paddingLeft: "10px",
+                            marginTop: "5px",
+                        }}
+                    >
+                        <RecipeTree
+                            recipe={detailsIndex[ing.id].recipe}
+                            detailsIndex={detailsIndex}
+                        />
+                    </div>
+                )}
+            </li>
+        );
     };
 
     // Function that is executed when clicking on an unowned item to open the craft modal
@@ -321,7 +368,9 @@ export const MuseumApp: FC = () => {
                                                 itemId={itemId}
                                                 detailsIndex={detailsIndex}
                                                 className="w-8 h-8 mr-2"
-                                                style={{ imageRendering: "pixelated" }}
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                             />
                                             <span className="text-sm font-semibold">
                                                 {itemId}
@@ -412,7 +461,7 @@ export const MuseumApp: FC = () => {
             const categoryId =
                 "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
             return (
-                <div key={index} className="category" id={categoryId}>
+                <div key={index} className="category w-full" id={categoryId}>
                     {/* Category Title with icon and owned count */}
                     <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
                         <MuseumItemImage
@@ -442,19 +491,22 @@ export const MuseumApp: FC = () => {
                                 detailsIndex[itemId].rarity
                                     ? detailsIndex[itemId].rarity
                                     : "UNKNOWN";
-                            return (
-                                <MuseumItemCard
-                                    key={itemId}
-                                    itemId={itemId}
-                                    imageSrc={imageSrc}
-                                    isOwned={isOwned}
-                                    rarity={rarity}
-                                    category={group.category}
-                                    craftModalOpener={() =>
-                                        openCraftModal(itemId, group.category)
-                                    }
-                                />
-                            );
+                            if (showDonated || !isOwned) {
+                                return (
+                                    <MuseumItemCard
+                                        key={itemId}
+                                        itemId={itemId}
+                                        imageSrc={imageSrc}
+                                        isOwned={isOwned}
+                                        rarity={rarity}
+                                        category={group.category}
+                                        craftModalOpener={() =>
+                                            openCraftModal(itemId, group.category)
+                                        }
+                                    />
+                                );
+                            }
+                            return null;
                         })}
                     </div>
                 </div>
@@ -606,18 +658,27 @@ export const MuseumApp: FC = () => {
                 </form>
                 <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6">
                     <span>
-                        <h3 className="text-lg font-bold">{t("museum.completion")}</h3>
+                        <h3 className="text-lg font-bold">
+                            {t("museum.completion")}
+                        </h3>
                         <span className="flex flex-row justify-between gap-2">
                             <p className="text-sm opacity-50">
-                                [{totalStats.owned.toString()} / {totalStats.total.toString()}]
+                                [{totalStats.owned.toString()} /{" "}
+                                {totalStats.total.toString()}]
                             </p>
-                            <p className="text-sm text-green-600">[{completionPercent}%]</p>
+                            <p className="text-sm text-green-600">
+                                [{completionPercent}%]
+                            </p>
                         </span>
                     </span>
-                    <img src="assets/media/icons/museum.png" className="h-12 w-12" alt="museum icon" />
+                    <img
+                        src="assets/media/icons/museum.png"
+                        className="h-12 w-12"
+                        alt="museum icon"
+                    />
                 </span>
             </span>
-            
+
             {/* Navigation bar displaying item categories */}
             <nav
                 id="categoryNav"
@@ -647,12 +708,17 @@ export const MuseumApp: FC = () => {
                                                 itemId={group.category}
                                                 detailsIndex={detailsIndex}
                                                 className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{ imageRendering: "pixelated" }}
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                             />
                                             <span className="flex flex-col items-start leading-tight">
-                                                <span className="font-bold text-sm">{group.category}</span>
+                                                <span className="font-bold text-sm">
+                                                    {group.category}
+                                                </span>
                                                 <span className="text-xs opacity-50">
-                                                    [{ownedCount} / {group.items.length}]
+                                                    [{ownedCount} /{" "}
+                                                    {group.items.length}]
                                                 </span>
                                             </span>
                                         </span>
@@ -670,15 +736,30 @@ export const MuseumApp: FC = () => {
                 </span>
                 <span className="flex gap-2">
                     <button
+                        id="hideDonated"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        onClick={() => setShowDonated(!showDonated)}
+                    >
+                        {showDonated ? (
+                            <>
+                                <EyeOff /> {t("museum.hideDonated.button")}
+                            </>
+                        ) : (
+                            <>
+                                <Eye /> {t("museum.showDonated.button")}
+                            </>
+                        )}
+                    </button>
+                    <button
                         id="recapButton"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
                         onClick={() => setShowRecapModal(true)}
                     >
                         <Eye /> {t("museum.recapMuseum.button")}
                     </button>
                     <button
                         id="resourcesButton"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
                         onClick={() => setShowResourcesModal(true)}
                     >
                         <Eye /> {t("museum.resourceMuseum.button")}
@@ -734,7 +815,9 @@ export const MuseumApp: FC = () => {
                                             itemId={craftModalItem}
                                             detailsIndex={detailsIndex}
                                             className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            style={{ imageRendering: "pixelated" }}
+                                            style={{
+                                                imageRendering: "pixelated",
+                                            }}
                                         />
                                         <span>
                                             <div className="text-2xl font-bold mb-0">
@@ -743,26 +826,41 @@ export const MuseumApp: FC = () => {
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
-                                                {detailsIndex[craftModalItem].recipe.job}
+                                                {
+                                                    detailsIndex[craftModalItem]
+                                                        .recipe.job
+                                                }
                                             </p>
                                         </span>
                                         <span className="ml-auto">
-                                            <a className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20" href={`https://minebox.co/pl/universe/items?id=${craftModalItem}`} target="_blank" rel="noopener noreferrer">?</a>
+                                            <a
+                                                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
+                                                href={`https://minebox.co/pl/universe/items?id=${craftModalItem}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                ?
+                                            </a>
                                         </span>
                                     </span>
-                                    {buildRecipeTree(
-                                        detailsIndex[craftModalItem].recipe
-                                    )}
+                                    <RecipeTree
+                                        recipe={
+                                            detailsIndex[craftModalItem].recipe
+                                        }
+                                        detailsIndex={detailsIndex}
+                                    />
                                 </>
                             ) : (
-                                                                <>
+                                <>
                                     <span className="flex flex-row gap-2 items-center mb-4">
                                         <MuseumItemImage
                                             groupCategory={craftModalCategory!}
                                             itemId={craftModalItem}
                                             detailsIndex={detailsIndex}
                                             className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            style={{ imageRendering: "pixelated" }}
+                                            style={{
+                                                imageRendering: "pixelated",
+                                            }}
                                         />
                                         <span>
                                             <div className="text-2xl font-bold mb-0">
