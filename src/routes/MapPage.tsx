@@ -18,7 +18,8 @@ import {
     spotNames,
     mapNameTranslationKeys,
 } from "@components/map/fishData";
-import { insectData, regionsName } from "@components/map/insectData";
+import { insectData, insectRegions } from "@components/map/insectData";
+import { bestiaryData, bestiaryRegions } from "@components/map/bestiaryData";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
@@ -90,7 +91,7 @@ const MapPage: FC = () => {
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
 
-    const { t } = useTranslation(["map", "fishing", "markers", "insects"]);
+    const { t } = useTranslation(["map", "fishing", "markers", "insects", "bestiary"]);
 
     // Load markers
     useEffect(() => {
@@ -568,7 +569,7 @@ const MapPage: FC = () => {
                                             className="bg-gray-700 rounded-lg"
                                         >
                                             <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
-                                                {t(regionsName[spotKey], {
+                                                {t(insectRegions[spotKey], {
                                                     ns: "map",
                                                     defaultValue: spotKey,
                                                 })}
@@ -738,6 +739,121 @@ const MapPage: FC = () => {
                                                                                         </span>
                                                                                     )}
                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                            </div>
+                                        </details>
+                                    )
+                                )}
+                            </div>
+                        )}
+
+                        
+
+                        {/* Bestiary Info Header */}
+                        {isSidebarOpen &&
+                            selectedMapKey != "spawn" && (
+                                <div className="flex items-center justify-between p-2 border-y border-gray-700">
+                                    <button
+                                        onClick={() =>
+                                            setIsSidebarOpen(!isSidebarOpen)
+                                        }
+                                        className="text-green-400 hover:text-white transition text-sm"
+                                        title={isSidebarOpen ? "Close" : "Open"}
+                                    ></button>
+                                    {isSidebarOpen && (
+                                        <h2 className="text-sm font-semibold text-green-400 ml-2">
+                                            💀 {t("mappage.bestiaryinfo.title")} -{" "}
+                                            {t(
+                                                mapNameTranslationKeys[
+                                                    selectedMapKey
+                                                ],
+                                                {
+                                                    defaultValue:
+                                                        selectedMapKey,
+                                                }
+                                            )}{" "}
+                                        </h2>
+                                    )}
+                                </div>
+                            )}
+
+                            
+
+                        {/* Bestiary Spots (Regions) List */}
+                        {isSidebarOpen && (
+                            <div className="p-4 space-y-4">
+                                {Object.entries(bestiaryData[selectedMapKey]).map(
+                                    ([spotKey, BestiaryList]) => (
+                                        <details
+                                            key={spotKey}
+                                            className="bg-gray-700 rounded-lg"
+                                        >
+                                            <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
+                                                {t(bestiaryRegions[spotKey], {
+                                                    ns: "map",
+                                                    defaultValue: spotKey,
+                                                })}
+                                            </summary>
+
+                                            <div className="px-3 pt-2 pb-4 space-y-2">
+                                                {[...BestiaryList]
+                                                    .map((fish, index) => {
+                                                        
+                                                         
+    
+
+                                                        return (
+                                                            <div
+                                                                key={index}
+                                                                className="bg-gray-800 rounded p-2 flex gap-3 items-center"
+                                                            >
+                                                                {fish.image ? (
+                                                                    <img
+                                                                        src={
+                                                                            fish.image
+                                                                        }
+                                                                        className="w-8 h-8 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
+                                                                        🎣
+                                                                    </div>
+                                                                )}
+
+                                                                <div className="flex-1">
+                                                                    <div className="flex justify-between items-center">
+                                                                        <div className="flex flex-col">
+                                                                            <span className="font-semibold text-white items-center flex leading-none">
+                                                                                <span
+                                                                                    className={`bg-gray-700 px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
+                                                                                >
+                                                                                    {t(
+                                                                                    "bestiary.level",
+                                                                                    {
+                                                                                        ns: "bestiary",
+                                                                                        defaultValue:
+                                                                                    "bestiary.level",
+                                                                                    }
+                                                                                )} {fish.minlevel}-{fish.maxlevel}
+                                                                                </span>
+                                                                                {t(
+                                                                                    fish.name,
+                                                                                    {
+                                                                                        ns: "bestiary",
+                                                                                        defaultValue:
+                                                                                            fish.name,
+                                                                                    }
+                                                                                )}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

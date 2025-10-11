@@ -21,9 +21,11 @@
     "mappage.selectAllMarkers": "Select/Unselect all:",
     "mappage.mapOpacity": "Adjust Visibility",
     "mappage.mapPercOpacity": "of visibility",
-    "mappage.fishinginfo.title": "Fishing Info",
 
+    "mappage.fishinginfo.title": "Fishing Info",
     "mappage.insectinfo.title": "Insect Info",
+    "mappage.bestiaryinfo.title": "Bestiary Info",
+
     "mappage.region.title": "Region",
     "mappage.condition.time.morning": "Morning",
     "mappage.condition.time.afternoon": "Afternoon",

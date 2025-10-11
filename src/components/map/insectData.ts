@@ -1,6 +1,6 @@
 /*
  * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
+ * Copyright (c) 2025 SiriusB_
  * SPDX-License-Identifier: MIT
  */
 
@@ -49,7 +49,7 @@ export const mapNameTranslationKeys: Record<string, string> = {
     sandwhisper_dunes: "mappage.maps.sandwhisper_dunes.name",
 };
 
-export const regionsName: Record<string, string> = {
+export const insectRegions: Record<string, string> = {
     universal: "mappage.maps.spawn.universal",
     exploration_island: "mappage.maps.spawn.exploration_island",
     italian_restaurant: "mappage.maps.spawn.italian_restaurant",
