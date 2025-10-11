@@ -636,6 +636,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 image: "assets/media/item/fishing/treasure_uncommon.png",
             },
             {
+                name: "fishing.uncommon_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/key_uncommon.png",
+            },
+            {
                 name: "fishing.sea_pickle",
                 level: 0,
                 time: [""],
