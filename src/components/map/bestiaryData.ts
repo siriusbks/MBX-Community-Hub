@@ -9,6 +9,11 @@ export interface BestiaryInfo {
     name: string;
     minlevel: number;
     maxlevel: number;
+    boss?: boolean;
+    fireResistant?: number;
+    waterResistant?: number;
+    airResistant?: number;
+    earthResistant?: number;
 }
 
 export const mapNameTranslationKeys: Record<string, string> = {
@@ -146,6 +151,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             {
                 name: "bestiary.jungle_ogre",
                 image: "assets/media/bestiary/boss/jungle_ogre.png",
+                boss: true,
                 minlevel: 1,
                 maxlevel: 5,
             },
@@ -232,6 +238,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             {
                 name: "bestiary.logzilla",
                 image: "assets/media/bestiary/boss/logzilla.png",
+                boss: true,
                 minlevel: 50,
                 maxlevel: 60,
             },
@@ -294,6 +301,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             {
                 name: "bestiary.snow_ogre",
                 image: "assets/media/bestiary/boss/snow_ogre.png",
+                boss: true,
                 minlevel: 1,
                 maxlevel: 5,
             },
@@ -328,6 +336,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             {
                 name: "bestiary.desert_ogre",
                 image: "assets/media/bestiary/boss/desert_ogre.png",
+                boss: true,
                 minlevel: 1,
                 maxlevel: 5,
             },

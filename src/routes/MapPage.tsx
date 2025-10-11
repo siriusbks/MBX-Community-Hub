@@ -832,9 +832,9 @@ const MapPage: FC = () => {
                                                                 <div className="flex-1">
                                                                     <div className="flex justify-between items-center">
                                                                         <div className="flex flex-col">
-                                                                            <span className="font-semibold text-white items-center flex leading-none">
+                                                                            <span className={` font-semibold text-white items-center align-middle flex leading-none`}>
                                                                                 <span
-                                                                                    className={`bg-gray-700 px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
+                                                                                    className={`bg-gray-700 text-white px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
                                                                                 >
                                                                                     {t(
                                                                                     "bestiary.level",
@@ -845,6 +845,7 @@ const MapPage: FC = () => {
                                                                                     }
                                                                                 )} {fish.minlevel}-{fish.maxlevel}
                                                                                 </span>
+                                                                                <span className='mb-0.5'>
                                                                                 {t(
                                                                                     fish.name,
                                                                                     {
@@ -853,6 +854,21 @@ const MapPage: FC = () => {
                                                                                             fish.name,
                                                                                     }
                                                                                 )}
+                                                                                </span>
+                                                                            </span>
+                                                                            <span className="text-xs text-gray-300 gap-1 flex">
+                                                                                <span className="flex items-center min-w-12">
+                                                                                    {fish.fireResistant ?? 0}%<img src="assets/media/elemental/intelligence.png" className='h-3 w-3 inline ml-0.5'/>
+                                                                                </span>
+                                                                                <span className="flex items-center min-w-12">
+                                                                                    {fish.waterResistant ?? 0}%<img src="assets/media/elemental/luck.png" className='h-3 w-3 inline ml-0.5'/>
+                                                                                </span>
+                                                                                <span className="flex items-center min-w-12">
+                                                                                    {fish.airResistant ?? 0}%<img src="assets/media/elemental/agility.png" className='h-3 w-3 inline ml-0.5'/>
+                                                                                </span>
+                                                                                <span className="flex items-center min-w-12">
+                                                                                    {fish.earthResistant ?? 0}%<img src="assets/media/elemental/strength.png" className='h-3 w-3 inline ml-0.5'/>
+                                                                                </span>
                                                                             </span>
                                                                         </div>
                                                                     </div>
