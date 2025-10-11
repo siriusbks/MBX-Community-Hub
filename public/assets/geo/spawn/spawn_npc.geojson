@@ -561,6 +561,17 @@
                 "iconUrl": "",
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [207, 78, -78] },
+            "id": 52,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.banker",
+                "description": "npc.description.banker_gemex",
+                "iconUrl": "",
+                "map": "spawn"
+            }
         }
     ]
 }
