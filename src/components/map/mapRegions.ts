@@ -123,6 +123,18 @@ export const regionsData: Record<string, Record<string, L.LatLngExpression[]>> =
             [275, 345],
             [560, 345],
             [560, 608],
+        ],
+        savenna:[
+            [0, 0],
+            [275, 0],
+            [275, 345],
+            [0, 345]
+        ],
+        mystic_forest: [
+            [275, 0],
+            [275, 345],
+            [560, 345],
+            [560, 0],
         ]
     },
     bamboo_peak: {
