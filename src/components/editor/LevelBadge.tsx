@@ -7,8 +7,8 @@ interface LevelBadgeProps {
 /**
  * Returns a CSS gradient class based on the level.
  */
-const LevelBadge: React.FC<LevelBadgeProps> = ({ level }) => {
-  const getGradient = () => {
+
+export const LevelBG_Gradient = (level: number) => {
     const gradients = [
       'bg-[#a5a5a5]', // 0–9
       'bg-[#2f2f2f]', // 10–19
@@ -24,12 +24,29 @@ const LevelBadge: React.FC<LevelBadgeProps> = ({ level }) => {
     ];
     const index = Math.min(Math.floor(level / 10), gradients.length - 1);
     return gradients[index];
+
+  };export const LevelBG_Color = (level: number) => {
+    const gradients = [
+      'bg-[#a5a5a5]', // 0–9
+      'bg-[#2f2f2f]', // 10–19
+      'bg-[#6ef9be]', // 20–29
+      'bg-[#00be6e]', // 30–39
+      'bg-gradient-to-br from-[#0d5afb]  to-[#0d5afb]', // 40–49
+      'bg-gradient-to-br from-[#f22afe]  to-[#f22afe]', // 50–59
+      'bg-gradient-to-br from-[#f9bb09]  to-[#f9bb09]', // 60–69
+      'bg-gradient-to-br from-[#5c0a0a]  to-[#5c0a0a]', // 70–79
+      'bg-gradient-to-br from-[#d30050]  to-[#d30050]', // 80–89
+      'bg-gradient-to-br from-[#c483d1] via-[#8593e8] to-[#c483d1]', // 90–99
+      'bg-[linear-gradient(to_bottom_right,_#20bdfb_0%,_#4efbcc_25%,_#f8e562_50%,_#e88e94_75%,_#20bdfb_100%)]', // 100+
+    ];
+    const index = Math.min(Math.floor(level / 10), gradients.length - 1);
+    return gradients[index];
   };
 
-  /**
+    /**
    * Returns a CSS text color class based on the level.
    */
-  const getTextColor = () => {
+export const LevelTextColor = (level: number) => {
     const colors = [
       'text-gray-900', // 0–9
       'text-white', // 10–19
@@ -47,13 +64,14 @@ const LevelBadge: React.FC<LevelBadgeProps> = ({ level }) => {
     return colors[index];
   };
 
+const LevelBadge: React.FC<LevelBadgeProps> = ({ level }) => {
   return (
     <span className="relative inline-block px-1.5 py-0 level-wrapper">
-      <span className={`text-sm font-bold  relative z-10 level-text ${getTextColor()}`}>
+      <span className={`text-sm font-bold  relative z-10 level-text ${LevelTextColor(level)}`}>
         LVL {level}
       </span>
       <span
-        className={`absolute inset-0 rounded-sm z-0 level-shadow ${getGradient()}`}
+        className={`absolute inset-0 rounded-sm z-0 level-shadow ${LevelBG_Gradient(level)}`}
       />
     </span>
   );
