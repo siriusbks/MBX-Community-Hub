@@ -28,15 +28,6 @@ export interface FishInfo {
     condition?: string;
 }
 
-export const mapNameTranslationKeys: Record<string, string> = {
-    spawn: "mappage.maps.spawn_island.name",
-    kokoko: "mappage.maps.kokoko_island.name",
-    quadra_plains: "mappage.maps.quadra_plains.name",
-    bamboo_peak: "mappage.maps.bamboo_peak.name",
-    frostbite_fortress: "mappage.maps.frostbite_fortress.name",
-    sandwhisper_dunes: "mappage.maps.sandwhisper_dunes.name",
-};
-
 export const spotNames: Record<string, string> = {
     tropical_shoal: "fishing.spot.tropical_shoal",
     deep_shoal: "fishing.spot.deep_shoal",
@@ -634,6 +625,14 @@ export const fishData: Record<string, Record<string, FishInfo[]>> = {
                 rarity: "fishing.rarity.uncommon",
                 condition: "",
                 image: "assets/media/item/fishing/treasure_uncommon.png",
+            },
+            {
+                name: "fishing.uncommon_key",
+                level: 0,
+                time: [""],
+                rarity: "fishing.rarity.uncommon",
+                condition: "",
+                image: "assets/media/item/fishing/key_uncommon.png",
             },
             {
                 name: "fishing.sea_pickle",

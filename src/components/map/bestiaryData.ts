@@ -1,0 +1,485 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2025 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
+export interface BestiaryInfo {
+    image?: string;
+    name: string;
+    minlevel: number;
+    maxlevel: number;
+    minhealth: number;
+    maxhealth: number;
+    boss?: boolean;
+    fireResistant?: number;
+    waterResistant?: number;
+    airResistant?: number;
+    earthResistant?: number;
+}
+
+export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
+    spawn: {},
+    kokoko: {
+        beach: [
+            {
+                name: "bestiary.blue_starfish",
+                image: "assets/media/bestiary/kokoko_island/blue_starfish.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 20,
+                maxhealth: 20,
+                waterResistant: 35, //20-50
+                fireResistant: 35 //20-50
+            },
+            {
+                name: "bestiary.orange_starfish",
+                image: "assets/media/bestiary/kokoko_island/orange_starfish.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 20,
+                maxhealth: 25,
+                fireResistant: 35 //20 - 50
+            },
+            {
+                name: "bestiary.cat_goofish",
+                image: "assets/media/bestiary/kokoko_island/cat_goofish.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 20,
+                maxhealth: 20,
+                fireResistant: 35 //20-50
+            },
+            {
+                name: "bestiary.clown_goofish",
+                image: "assets/media/bestiary/kokoko_island/clown_goofish.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 20,
+                maxhealth: 25,
+                fireResistant: 35 // 20-50
+            },
+            {
+                name: "bestiary.hammershark_goofish",
+                image: "assets/media/bestiary/kokoko_island/hammershark_goofish.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 25,
+                maxhealth: 30,
+                waterResistant: 35, // 20-50
+                fireResistant: 35 // 20-50
+            },
+            {
+                name: "bestiary.crabician",
+                image: "assets/media/bestiary/kokoko_island/crabician.png",
+                minlevel: 5,
+                maxlevel: 10,
+                minhealth: 30,
+                maxhealth: 40,
+                earthResistant: 90,
+                fireResistant: -15 // -20 - -10
+            },
+            {
+                name: "bestiary.craboxer",
+                image: "assets/media/bestiary/kokoko_island/craboxer.png",
+                minlevel: 5,
+                maxlevel: 10,
+                minhealth: 40,
+                maxhealth: 50,
+                waterResistant: 90,
+                fireResistant: -15  // -10 - -20
+            },
+            {
+                name: "bestiary.coconut_warrior",
+                image: "assets/media/bestiary/kokoko_island/coconut_warrior.png",
+                minlevel: 5,
+                maxlevel: 10,
+                minhealth: 60,
+                maxhealth: 80,
+                earthResistant: 20,
+                fireResistant: -30
+            },
+            {
+                name: "bestiary.coconut_magician",
+                image: "assets/media/bestiary/kokoko_island/coconut_magician.png",
+                minlevel: 5,
+                maxlevel: 10,
+                minhealth: 70,
+                maxhealth: 85,
+                earthResistant: 20,
+                fireResistant: -30
+            },
+        ],
+        jungle: [
+            {
+                name: "bestiary.monkey",
+                image: "assets/media/bestiary/kokoko_island/monkey.png",
+                minlevel: 10,
+                maxlevel: 15,
+                minhealth: 70,
+                maxhealth: 90,
+                earthResistant: 30,
+                fireResistant: 30
+            },
+            {
+                name: "bestiary.monkey_banana",
+                image: "assets/media/bestiary/kokoko_island/monkey_banana.png",
+                minlevel: 10,
+                maxlevel: 15,
+                minhealth: 110,
+                maxhealth: 130,
+                earthResistant: 50,
+                fireResistant: 50
+            },
+            {
+                name: "bestiary.monkey_barrel",
+                image: "assets/media/bestiary/kokoko_island/monkey_barrel.png",
+                minlevel: 10,
+                maxlevel: 15,
+                minhealth: 70,
+                maxhealth: 90,
+                earthResistant: 50,
+                waterResistant: -50,
+                fireResistant: 100
+            },
+            {
+                name: "bestiary.monkey_mage",
+                image: "assets/media/bestiary/kokoko_island/monkey_mage.png",
+                minlevel: 10,
+                maxlevel: 15,
+                minhealth: 135,
+                maxhealth: 160,
+                earthResistant: 50,
+                fireResistant: 50
+            },
+            {
+                name: "bestiary.moskitoko",
+                image: "assets/media/bestiary/kokoko_island/moskitoko.png",
+                minlevel: 10,
+                maxlevel: 15,
+                minhealth: 80,
+                maxhealth: 95,
+                airResistant: 100,
+                earthResistant: 100
+            },
+            {
+                name: "bestiary.jungle_ogre",
+                image: "assets/media/bestiary/boss/jungle_ogre.png",
+                boss: true,
+                minlevel: 25,
+                maxlevel: 30,
+                minhealth: 15000,
+                maxhealth: 20000,
+                airResistant: 20,
+                earthResistant: 60,
+                waterResistant: 30,
+                fireResistant: -30
+            },
+        ],
+        burned_jungle: [
+            {
+                name: "bestiary.monkey_ghost",
+                image: "assets/media/bestiary/kokoko_island/monkey_ghost.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 1000,
+                maxhealth: 1200,
+                earthResistant: 50,
+                fireResistant: 50
+            },
+            {
+                name: "bestiary.scavenger_vulture",
+                image: "assets/media/bestiary/kokoko_island/scavenger_vulture.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 800,
+                maxhealth: 900,
+                earthResistant: 50,
+                fireResistant: 50
+            },
+            {
+                name: "bestiary.spicy_lava_bucket",
+                image: "assets/media/bestiary/kokoko_island/spicy_lava_bucket.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 1000,
+                maxhealth: 1200,
+                earthResistant: 50,
+                fireResistant: 100
+            },
+            {
+                name: "bestiary.debris_golem",
+                image: "assets/media/bestiary/kokoko_island/debris_golem.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 1400,
+                maxhealth: 1600,
+                earthResistant: 50,
+                fireResistant: 50
+            },
+        ],
+    },
+    quadra_plains: {
+        plains: [
+            {
+                name: "bestiary.spidey",
+                image: "assets/media/bestiary/quadra_plains/spidey.png",
+                minlevel: 20,
+                maxlevel: 30,
+                minhealth: 150,
+                maxhealth: 225,
+                earthResistant: 50,
+                waterResistant: -25
+            },
+            {
+                name: "bestiary.venomous_spidey",
+                image: "assets/media/bestiary/quadra_plains/venomous_spidey.png",
+                minlevel: 20,
+                maxlevel: 30,
+                minhealth: 180,
+                maxhealth: 250,
+                airResistant: 10,
+                earthResistant: 65,
+                waterResistant: -25
+            },
+            {
+                name: "bestiary.scarecrow",
+                image: "assets/media/bestiary/quadra_plains/scarecrow.png",
+                minlevel: 20,
+                maxlevel: 30,
+                minhealth: 500,
+                maxhealth: 600,
+                earthResistant: 50,
+                fireResistant: -25
+            },
+            {
+                name: "bestiary.pirate_farmer",
+                image: "assets/media/bestiary/quadra_plains/pirate_farmer.png",
+                minlevel: 20,
+                maxlevel: 30,
+                minhealth: 200,
+                maxhealth: 300,
+                earthResistant: 50,
+                fireResistant: 25
+            },
+            {
+                name: "bestiary.old_pirate_farmer",
+                image: "assets/media/bestiary/quadra_plains/old_pirate_farmer.png",
+                minlevel: 20,
+                maxlevel: 30,
+                minhealth: 350,
+                maxhealth: 400,
+                earthResistant: 50,
+                fireResistant: 25
+            },
+        ],
+        swamp: [
+            {
+                name: "bestiary.boogoo",
+                image: "assets/media/bestiary/quadra_plains/boogoo.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 300,
+                maxhealth: 400,
+                airResistant: 100,
+                earthResistant: 100,
+                waterResistant: -50,
+                fireResistant: 100
+            },
+            {
+                name: "bestiary.fungoo_dancer",
+                image: "assets/media/bestiary/quadra_plains/fungoo_dancer.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 500,
+                maxhealth: 600,
+                earthResistant: 25,
+                waterResistant: 25,
+                fireResistant: -25
+            },
+            {
+                name: "bestiary.sporelord",
+                image: "assets/media/bestiary/quadra_plains/sporelord.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 700,
+                maxhealth: 800,
+                airResistant: 60,
+                earthResistant: 40,
+                waterResistant: 60
+            },
+            {
+                name: "bestiary.logzilla",
+                image: "assets/media/bestiary/boss/logzilla.png",
+                boss: true,
+                minlevel: 50,
+                maxlevel: 60,
+                minhealth: 90000,
+                maxhealth: 100000,
+                airResistant: -15,
+                earthResistant: 50,
+                waterResistant: 50,
+                fireResistant: -30
+            },
+        ],
+    },
+    bamboo_peak: {
+        bamboo_plains: [
+            {
+                name: "bestiary.bloomboo",
+                image: "assets/media/bestiary/bamboo_peak/bloomboo.png",
+                minlevel: 30,
+                maxlevel: 40,
+                minhealth: 150,
+                maxhealth: 250,
+                airResistant: 30,
+                earthResistant: 30,
+                waterResistant: 50,
+                fireResistant: -10
+            },
+            {
+                name: "bestiary.bambooboo",
+                image: "assets/media/bestiary/bamboo_peak/bambooboo.png",
+                minlevel:30,
+                maxlevel: 40,
+                minhealth: 350,
+                maxhealth: 450,
+                airResistant: 30,
+                earthResistant: 30,
+                fireResistant: -10
+            },
+            {
+                name: "bestiary.pandaboo_warrior",
+                image: "assets/media/bestiary/bamboo_peak/pandaboo_warrior.png",
+                minlevel: 30,
+                maxlevel: 40,
+                minhealth: 300,
+                maxhealth: 400,
+                airResistant: 50,
+                fireResistant: 30
+            },
+            {
+                name: "bestiary.pandaboo_wizard",
+                image: "assets/media/bestiary/bamboo_peak/pandaboo_wizard.png",
+                minlevel: 30,
+                maxlevel: 40,
+                minhealth: 350,
+                maxhealth: 450,
+                airResistant: 50,
+                fireResistant: 30
+            },
+        ],
+    },
+    frostbite_fortress: {
+        snow_plains: [
+            {
+                name: "bestiary.froztail",
+                image: "assets/media/bestiary/frostbite_fortress/froztail.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 400,
+                maxhealth: 550,
+                waterResistant: 40,
+                fireResistant: -20
+            },
+            {
+                name: "bestiary.froztail_magus",
+                image: "assets/media/bestiary/frostbite_fortress/froztail_magus.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 300,
+                maxhealth: 450,
+                waterResistant: 40,
+                fireResistant: -20
+            },
+            {
+                name: "bestiary.frozehound",
+                image: "assets/media/bestiary/frostbite_fortress/frozehound.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 500,
+                maxhealth: 700,
+                waterResistant: 50,
+                fireResistant: -20
+            },
+            {
+                name: "bestiary.chillolith",
+                image: "assets/media/bestiary/frostbite_fortress/chillolith.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 2000,
+                maxhealth: 2500,
+                earthResistant: 90,
+                waterResistant: 90,
+                fireResistant: -50
+            },
+            {
+                name: "bestiary.snow_ogre",
+                image: "assets/media/bestiary/boss/snow_ogre.png",
+                boss: true,
+                minlevel: 50,
+                maxlevel: 60,
+                minhealth: 190000,
+                maxhealth: 200000,
+                airResistant: 50,
+                earthResistant: 30,
+                waterResistant: 100,
+                fireResistant: -30
+            },
+        ],
+    },
+    sandwhisper_dunes: {
+        desert: [
+            {
+                name: "bestiary.sandoodle",
+                image: "assets/media/bestiary/sandwhisper_dunes/sandoodle.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 500,
+                maxhealth: 650,
+                fireResistant: 25
+            },
+            {
+                name: "bestiary.scorchfang",
+                image: "assets/media/bestiary/sandwhisper_dunes/scorchfang.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 300,
+                maxhealth: 450,
+                fireResistant: -20
+            },
+            {
+                name: "bestiary.pokeboo",
+                image: "assets/media/bestiary/sandwhisper_dunes/pokeboo.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 750,
+                maxhealth: 1000,
+                waterResistant: 40,
+                fireResistant: 20
+            },
+            {
+                name: "bestiary.dunebeard",
+                image: "assets/media/bestiary/sandwhisper_dunes/dunebeard.png",
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 300,
+                maxhealth: 450,
+                fireResistant: -20
+            },
+            {
+                name: "bestiary.desert_ogre",
+                image: "assets/media/bestiary/boss/desert_ogre.png",
+                minlevel: 50,
+                maxlevel: 60,
+                boss: true,
+                minhealth: 110000,
+                maxhealth: 130000,
+                airResistant: 100,
+                earthResistant: 60,
+                waterResistant: -30,
+                fireResistant: 100
+            },
+        ],
+    },
+};

@@ -20,6 +20,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { MapDataConfig } from "./map/mapData";
+import { mapNameTranslationKeys, mapNameRegions, regionsData, getMapNameKey } from "./map/mapRegions";
 
 import kokokoMarkers from "./map/markers/kokokoMarkers";
 import quadraMarkers from "./map/markers/quadraMarkers";
@@ -140,6 +141,8 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
     }, [opacity]);
 
     const { t } = useTranslation(["markers", "npc"]);
+    const regionKey = getMapNameKey(mapConfig.name);
+    console.log("Current mapConfig.name:", mapConfig.name);
 
     return (
         <MapContainer
@@ -164,24 +167,25 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
             <FixPopup />
             <SetMapOpacity opacity={opacity} />{" "}
             {/* Example polygon (uncomment to use) */}
-            {/*}
-            <Polygon
-                positions={[
-                    [339, 511],
-                    [505,480],
-                    [505, 390]
-                ]}
-                pathOptions={{
-                    color: "orange",
-                    fillColor: "orange",
-                    fillOpacity: 0.2,
-                }}
-            >
-                <Popup>
-                    <p className="font-bold !my-0">Kokoko Island</p>
-                    <p className="!my-0">Beach</p>
-                </Popup>
-            </Polygon>*/}
+
+
+            {Object.entries(regionsData[regionKey] || {}).map(([subregionName, positions]) => (
+                <Polygon
+                    key={subregionName}
+                    positions={positions}
+                    pathOptions={{
+                        color: "orange",
+                        fillColor: "orange",
+                        fillOpacity: 0.2,
+                    }}
+                >
+                    <Popup>
+                        <p className="font-bold !my-0">{mapConfig.name}</p>
+                        <p className="!my-0">{subregionName}</p>
+                    </Popup>
+                </Polygon>
+            ))}
+
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
@@ -248,7 +252,7 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                                     <>
                                         {t(
                                             config.displayName ??
-                                                "markers.unknown",
+                                            "markers.unknown",
                                             { ns: "markers" }
                                         )}
                                         {config.properties?.level && (
