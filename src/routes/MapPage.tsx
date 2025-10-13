@@ -8,7 +8,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowRightLeft, Undo2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { LevelBG_Color, LevelTextColor } from "@components/editor/LevelBadge";
+import { LevelBG_Color, LevelBG_Gradient, LevelTextColor } from "@components/editor/LevelBadge";
 
 import InteractiveMap from "@components/InteractiveMap";
 
@@ -22,7 +22,7 @@ import {
     mapNameRegions,
 } from "@components/map/mapRegions";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
-import { Eye, eye-closed } from "lucide-react";
+import { Check , EyeOff } from "lucide-react";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
 import spawnMarkers from "@components/map/markers/spawnMarkers";
@@ -204,23 +204,43 @@ const MapPage: FC = () => {
                         📍 {t("mappage.markersSelection")}
                     </h2>
 
-                    <label className="flex items-center gap-2 text-sm text-gray-300 font-medium">
-                        {t("mappage.selectAllMarkers")}
-                        <input
-                            type="checkbox"
-                            className="form-checkbox accent-green-500 cursor-pointer"
-                            checked={mapConfig.markerRefs.every((ref) =>
-                                selectedMarkers.includes(ref)
-                            )}
-                            onChange={(e) => {
-                                if (e.target.checked) {
-                                    setSelectedMarkers(mapConfig.markerRefs);
-                                } else {
-                                    setSelectedMarkers([]);
-                                }
-                            }}
-                        />
-                    </label>
+<label className="flex items-center gap-2 text-sm text-gray-300 font-medium cursor-pointer select-none">
+    {t("mappage.selectAllMarkers")}
+
+    {/* Ukryty checkbox */}
+    <input
+        type="checkbox"
+        checked={mapConfig.markerRefs.every((ref) =>
+            selectedMarkers.includes(ref)
+        )}
+        onChange={(e) => {
+            if (e.target.checked) {
+                setSelectedMarkers(mapConfig.markerRefs);
+            } else {
+                setSelectedMarkers([]);
+            }
+        }}
+        className="hidden"
+    />
+
+    {/* Stylizowany przycisk */}
+    <span
+        className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+            mapConfig.markerRefs.every((ref) =>
+                selectedMarkers.includes(ref)
+            )
+                ? "bg-green-600 hover:bg-green-500"
+                : "bg-gray-700 hover:bg-gray-600"
+        }`}
+    >
+        {mapConfig.markerRefs.every((ref) =>
+            selectedMarkers.includes(ref)
+        ) ? (<Check strokeWidth={3} className="w-3 h-3 text-white" />
+        ) : (
+            <EyeOff className="w-3 h-3 hidden text-white" />
+        )}
+    </span>
+</label>
 
                     <div className="overflow-y-auto max-h-56 custom-scrollbar space-y-2">
                         {Object.entries(
@@ -242,61 +262,74 @@ const MapPage: FC = () => {
                                         ns: "markers",
                                     })}
                                 </h3>
-                                <div className="space-y-1">{items.map(({ ref, config }) => {
-    const isSelected = selectedMarkers.includes(ref);
+                                <div className="space-y-1">
+                                    {items.map(({ ref, config }) => {
+                                        const isSelected =
+                                            selectedMarkers.includes(ref);
 
-    return (
-        <label
-            key={ref}
-            className="flex items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
-        >
-            {/* Ukryty checkbox */}
-            <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={() => toggleMarker(ref)}
-                className="hidden"
-            />
+                                        return (
+                                            <label
+                                                key={ref}
+                                                className="flex items-center gap-1 text-sm text-gray-200 cursor-pointer select-none"
+                                            >
+                                                {/* Ukryty checkbox */}
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isSelected}
+                                                    onChange={() =>
+                                                        toggleMarker(ref)
+                                                    }
+                                                    className="hidden"
+                                                />
 
-            {/* Stylizowany przycisk toggle */}
-            <span
-                className={`flex items-center justify-center w-5 h-5 rounded transition-colors duration-200 ${
-                    isSelected
-                        ? "bg-green-600 hover:bg-green-500"
-                        : "bg-gray-700 hover:bg-gray-600"
-                }`}
-            >
-                {isSelected ? (
-                    <Eye className="w-3 h-3 text-white" />
-                ) : (
-                    <EyeClosed className="w-3 h-3 text-white" />
-                )}
-            </span>
+                                                {/* Stylizowany przycisk toggle */}
+                                                <span
+                                                    className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                                        isSelected
+                                                            ? "bg-green-600 hover:bg-green-500"
+                                                            : "bg-gray-700 hover:bg-gray-600"
+                                                    }`}
+                                                >
+                                                    {isSelected ? (
+                                                        <Check strokeWidth={3} className="w-3 h-3 text-white" />
+                                                    ) : (
+                                                        <EyeOff className="w-3 h-3 hidden text-white" />
+                                                    )}
+                                                </span>
 
-            {/* Ikona markera */}
-            {config.iconUrl && (
-                <img
-                    src={config.iconUrl}
-                    alt={config.displayName}
-                    className="w-5 h-5"
-                />
-            )}
+                                                {/* Ikona markera */}
+                                                {config.iconUrl && (
+                                                    <img
+                                                        src={config.iconUrl}
+                                                        alt={config.displayName}
+                                                        className="w-5 h-5"
+                                                    />
+                                                )}
 
-            {/* Nazwa i level */}
-            <span className="flex-1 flex justify-between items-center">
-                <span className="flex items-center gap-1 truncate">
-                    {t(config.displayName, { ns: "markers" })}
-                    {config.properties?.level !== undefined && (
-                        <span className="text-xs text-gray-400 whitespace-nowrap">
-                            (lv. {config.properties.level})
-                        </span>
-                    )}
-                </span>
-            </span>
-        </label>
-    );
-})}
-
+                                                {/* Nazwa i level */}
+                                                <span className="flex-1 flex justify-between items-center">
+                                                    <span className="flex items-center gap-1 truncate">
+                                                        {t(config.displayName, {
+                                                            ns: "markers",
+                                                        })}
+                                                        {config.properties
+                                                            ?.level !==
+                                                            undefined && (
+                                                            <span className="text-xs text-gray-400 whitespace-nowrap">
+                                                                (lv.{" "}
+                                                                {
+                                                                    config
+                                                                        .properties
+                                                                        .level
+                                                                }
+                                                                )
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         ))}
@@ -308,6 +341,31 @@ const MapPage: FC = () => {
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🌗 {t("mappage.mapOpacity")}
                     </h2>
+                    <label
+                        key="showRegions"
+                        className="flex items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
+                    >
+                        <input
+                            type="checkbox"
+                            checked={showRegions}
+                            onChange={() => setShowRegions((prev) => !prev)}
+                            className="hidden"
+                        />
+                        <span
+                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                showRegions
+                                    ? "bg-green-600 hover:bg-green-500"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            {showRegions ? (<Check strokeWidth={3} className="w-3 h-3 text-white" />
+                            ) : (
+                                <EyeOff className="w-3 h-3 hidden text-white" />
+                            )}
+                        </span>
+                        {t("mappage.showMapRegions")}
+                        
+                    </label>
                     <input
                         type="range"
                         min="0.2"
@@ -323,32 +381,6 @@ const MapPage: FC = () => {
                         {Math.round(mapOpacity * 100)}%{" "}
                         {t("mappage.mapPercOpacity")}
                     </p>
-
-                    <label
-                        key="showRegions"
-                        className="flex items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
-                    >
-                        <input
-                            type="checkbox"
-                            checked={showRegions}
-                            onChange={() => setShowRegions((prev) => !prev)}
-                            className="hidden"
-                        />
-                        <span
-                            className={`flex items-center justify-center w-5 h-5 rounded transition-colors duration-200 ${
-                                showRegions
-                                    ? "bg-green-600 hover:bg-green-500"
-                                    : "bg-gray-700 hover:bg-gray-600"
-                            }`}
-                        >
-                            {showRegions ? (
-                                <Eye className="w-3 h-3 text-white" />
-                            ) : (
-                                <EyeClosed className="w-3 h-3 text-white" />
-                            )}
-                        </span>
-                        Show Map Regions
-                    </label>
                 </div>
             </aside>
 
@@ -368,7 +400,7 @@ const MapPage: FC = () => {
                 {fishData[selectedMapKey] && fishingVisible && (
                     <div
                         className={`overflow-y-auto custom-scrollbar transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
-                            isSidebarOpen ? "w-[22rem]" : "w-12"
+                            isSidebarOpen ? "w-80" : "w-12"
                         }`}
                     >
                         {/* Fishing Info Header + Sidebar Toggle */}
@@ -854,7 +886,7 @@ const MapPage: FC = () => {
                                                                     src={
                                                                         fish.image
                                                                     }
-                                                                    className="w-12 h-12 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                    className="w-10 h-10 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
                                                                 />
                                                             ) : (
                                                                 <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
@@ -869,11 +901,11 @@ const MapPage: FC = () => {
                                                                             className={` font-semibold text-white items-center align-middle flex  leading-none`}
                                                                         >
                                                                             <span
-                                                                                className={`${LevelBG_Color(
+                                                                                className={`${LevelBG_Gradient(
                                                                                     fish.minlevel
                                                                                 )} ${LevelTextColor(
                                                                                     fish.minlevel
-                                                                                )} px-1  mr-1 pb-0.5 rounded font-bold text-xs w-fit `}
+                                                                                )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[12px] w-fit `}
                                                                             >
                                                                                 {t(
                                                                                     "bestiary.level",
@@ -892,7 +924,7 @@ const MapPage: FC = () => {
                                                                                     fish.maxlevel
                                                                                 }
                                                                             </span>
-                                                                            <span className="mb-0.5 text-sm">
+                                                                            <span className="mb-0.5 text-[13px]">
                                                                                 {t(
                                                                                     fish.name,
                                                                                     {
@@ -904,20 +936,27 @@ const MapPage: FC = () => {
                                                                             </span>
                                                                             {fish.boss && (
                                                                                 <span
-                                                                                    className={`ml-auto bg-LEGENDARY px-1  mr-1 pb-0.5 rounded font-bold text-xs w-fit `}
+                                                                                    className={`ml-auto bg-LEGENDARY px-2  mr-1 pt-0.5 pb-1 rounded font-bold text-[12px] w-fit `}
                                                                                 >
-                                                                                    BOSS
+                                                                                    {t(
+                                                                                    "bestiary.boss",
+                                                                                    {
+                                                                                        ns: "bestiary",
+                                                                                        defaultValue:
+                                                                                            "bestiary.boss",
+                                                                                    }
+                                                                                )}
                                                                                 </span>
                                                                             )}
                                                                         </span>
-                                                                        <span className=" mt-0.5 bg-red-700/60 border-red-700/80 border-2 text-xs rounded items-center align-middle flex">
+                                                                        <span className=" mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
                                                                             <span className="mx-auto">
                                                                                 {fish.minhealth.toLocaleString()}{" "}
                                                                                 -{" "}
                                                                                 {fish.maxhealth.toLocaleString()}
                                                                             </span>
                                                                         </span>
-                                                                        <span className="text-xs text-gray-300 flex justify-between">
+                                                                        <span className="text-[11px] text-gray-300 flex justify-between">
                                                                             <span className="flex items-center min-w-10">
                                                                                 {fish.fireResistant ??
                                                                                     0}

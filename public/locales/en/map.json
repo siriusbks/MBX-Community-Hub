@@ -21,6 +21,7 @@
     "mappage.selectAllMarkers": "Select/Unselect all:",
     "mappage.mapOpacity": "Adjust Visibility",
     "mappage.mapPercOpacity": "of visibility",
+    "mappage.showMapRegions": "Show Map Regions",
 
     "mappage.fishinginfo.title": "Fishing Info",
     "mappage.insectinfo.title": "Insect Info",
