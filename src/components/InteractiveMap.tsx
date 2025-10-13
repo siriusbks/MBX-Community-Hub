@@ -16,11 +16,21 @@ import {
     useMap,
     useMapEvents,
     Polygon,
+    Tooltip,
 } from "react-leaflet";
 import { useTranslation } from "react-i18next";
 
 import { MapDataConfig } from "./map/mapData";
-import { mapNameTranslationKeys, mapNameRegions, regionsData, getMapNameKey } from "./map/mapRegions";
+import {
+    mapNameTranslationKeys,
+    mapNameRegions,
+    regionsData,
+    getMapNameKey,
+    regionsColor,
+} from "./map/mapRegions";
+
+import { insectData } from "./map/insectData";
+import { bestiaryData } from "./map/bestiaryData";
 
 import kokokoMarkers from "./map/markers/kokokoMarkers";
 import quadraMarkers from "./map/markers/quadraMarkers";
@@ -167,25 +177,48 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
             <FixPopup />
             <SetMapOpacity opacity={opacity} />{" "}
             {/* Example polygon (uncomment to use) */}
+            {Object.entries(regionsData[regionKey] || {}).map(
+                ([subregionName, positions]) => (
+                    <Polygon
+                        key={subregionName}
+                        positions={positions}
+                        pathOptions={{
+                            color: "#33cc99",
+                            weight: 1,
+                            fillColor: "#33cc99",
+                            fillOpacity: 0,
+                        }}
+                    >
+                        <Tooltip sticky>
+                            <div className="font-bold text-md">
+                                {t(mapConfig.name, {
+                                    ns: "map",
+                                })}
+                            </div>
+                            <span className="text-xs">
+                                {t(mapNameRegions[subregionName], {
+                                    ns: "map",
+                                })}
+                            </span>
 
-
-            {Object.entries(regionsData[regionKey] || {}).map(([subregionName, positions]) => (
-                <Polygon
-                    key={subregionName}
-                    positions={positions}
-                    pathOptions={{
-                        color: "orange",
-                        fillColor: "orange",
-                        fillOpacity: 0.2,
-                    }}
-                >
-                    <Popup>
-                        <p className="font-bold !my-0">{mapConfig.name}</p>
-                        <p className="!my-0">{subregionName}</p>
-                    </Popup>
-                </Polygon>
-            ))}
-
+                            {/* Insects & Bestiary Section */}
+                            {/*<span>
+                                {(
+                                    insectData[regionKey]?.[subregionName] ?? []
+                                ).map((insect, index) => (
+                                    <img
+                                        src={insect.image}
+                                        alt={insect.name}
+                                        key={index}
+                                        className="inline w-3 h-3"
+                                    />
+                                ))}
+                                
+                            </span>*/}
+                        </Tooltip>
+                    </Polygon>
+                )
+            )}
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
@@ -252,7 +285,7 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                                     <>
                                         {t(
                                             config.displayName ??
-                                            "markers.unknown",
+                                                "markers.unknown",
                                             { ns: "markers" }
                                         )}
                                         {config.properties?.level && (

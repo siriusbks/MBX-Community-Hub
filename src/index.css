@@ -86,11 +86,19 @@
     border-radius: 50%;
     cursor: pointer;
 }
+.leaflet-interactive:focus {
+    outline: none;
+}
+.leaflet-interactive:hover {
+    fill-opacity: 0.4 ;
+    stroke-width: 3;
+    transition: fill-opacity, stroke-width 0.1s ease-in-out;
+}
 
 :root {
     --color-COMMON: #665466;
     --color-COMMON-50: #66546620;
-    --color-COMMON-BORDER: #55a0ac ;
+    --color-COMMON-BORDER: #55a0ac;
     --color-UNCOMMON: #00c06f;
     --color-UNCOMMON-50: #00c06f20;
     --color-RARE: #00a5fc;
