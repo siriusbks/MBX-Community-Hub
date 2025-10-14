@@ -6,7 +6,7 @@
 
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { ArrowRightLeft, Undo2 } from "lucide-react";
+import { ArrowRightLeft, Undo2, MapPinned  } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
     LevelBG_Color,
@@ -94,6 +94,7 @@ const MapPage: FC = () => {
     const [fishingVisible, setFishingVisible] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [showRegions, setShowRegions] = useState(false);
+    const [showSpawnpoints, setShowSpawnpoints] = useState(false);
 
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
@@ -352,9 +353,11 @@ const MapPage: FC = () => {
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🌗 {t("mappage.mapOpacity")}
                     </h2>
+
+                    {/* Show Regions Toggle */}
                     <label
                         key="showRegions"
-                        className="flex items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
+                        className="flex mb-1 text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
                     >
                         <input
                             type="checkbox"
@@ -380,6 +383,38 @@ const MapPage: FC = () => {
                         </span>
                         {t("mappage.showMapRegions")}
                     </label>
+
+                    {/* Show Regions Toggle */}
+                    <label
+                        key="showSpawnpoints"
+                        className="flex text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
+                    >
+                        <input
+                            type="checkbox"
+                            checked={showSpawnpoints}
+                            onChange={() => setShowSpawnpoints((prev) => !prev)}
+                            className="hidden"
+                        />
+                        <span
+                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                showSpawnpoints
+                                    ? "bg-green-600 hover:bg-green-500"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            {showSpawnpoints ? (
+                                <Check
+                                    strokeWidth={3}
+                                    className="w-3 h-3 text-white"
+                                />
+                            ) : (
+                                <EyeOff className="w-3 h-3 hidden text-white" />
+                            )}
+                        </span>
+                        {t("mappage.showBestiarySpawnpoints")}
+                    </label>
+
+
                     <input
                         type="range"
                         min="0.2"
