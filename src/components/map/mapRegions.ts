@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { BestiaryInfo, bestiaryData } from "./bestiaryData";
+
 export const mapNameTranslationKeys: Record<string, string> = {
     spawn: "mappage.maps.spawn_island.name",
     kokoko: "mappage.maps.kokoko_island.name",
@@ -250,5 +252,57 @@ export const regionsData: Record<string, Record<string, L.LatLngExpression[]>> =
             [370, 550],
             [330, 460],
         ]  
+    },
+};
+
+
+{/* Bestiary Spawnpoints Data */}
+type LatLngTuple = [number, number];
+
+interface ColoredZone {
+    color: string;
+    coords: LatLngTuple[];
+    mobs: BestiaryInfo[];
+}
+
+interface ZoneGroup {
+    zones: ColoredZone[];
+}
+
+interface BestiaryRegionData {
+    [zoneName: string]: ZoneGroup;
+}
+
+export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
+    quadra_plains: {
+        plains: {
+            zones: [
+                {
+                    color: "#ff0000",
+                    coords: [
+                        [190, 360],
+                        [190, 400],
+                        [130, 460],
+                        [50, 460],
+                        [50, 420],
+                        [110, 360],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.plains[0], bestiaryData.quadra_plains.plains[1], bestiaryData.quadra_plains.plains[2]],
+                },
+                {
+                    color: "#bbff00ff",
+                    coords: [
+                        [130, 460],
+                        [50, 460],
+                        [50, 550],
+                        [250, 550],
+                        [250, 490],
+                        [195, 450],
+                        [150, 480],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.plains[3], bestiaryData.quadra_plains.plains[4], bestiaryData.quadra_plains.plains[2]],
+                },
+            ],
+        },
     },
 };

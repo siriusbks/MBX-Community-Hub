@@ -6,7 +6,7 @@
 
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 import {
     ImageOverlay,
@@ -25,6 +25,7 @@ import {
     mapNameTranslationKeys,
     mapNameRegions,
     regionsData,
+    bestiaryRegionsData,
     getMapNameKey,
 } from "./map/mapRegions";
 import { LevelBG_Gradient, LevelTextColor } from "./editor/LevelBadge";
@@ -138,8 +139,12 @@ interface InteractiveMapProps {
 }
 
 const InteractiveMap: React.FC<
-    InteractiveMapProps & { opacity: number; showRegions: boolean }
-> = ({ mapConfig, markers, opacity, showRegions }) => {
+    InteractiveMapProps & {
+        opacity: number;
+        showRegions: boolean;
+        showSpawnpoints: boolean;
+    }
+> = ({ mapConfig, markers, opacity, showRegions, showSpawnpoints }) => {
     const imageRef = React.useRef<L.ImageOverlay | null>(null);
 
     React.useEffect(() => {
@@ -173,7 +178,9 @@ const InteractiveMap: React.FC<
         >
             <SetCRS mapConfig={mapConfig} />
             <FixPopup />
-            <SetMapOpacity opacity={opacity} /> {/* Map Regions */}
+            <SetMapOpacity opacity={opacity} />
+
+            {/* Map Regions */}
             {showRegions &&
                 Object.entries(regionsData[regionKey] || {}).map(
                     ([subregionName, positions]) => (
@@ -181,6 +188,7 @@ const InteractiveMap: React.FC<
                             key={subregionName}
                             positions={positions}
                             renderer={test}
+                            pane="regionsPane"
                             pathOptions={{
                                 color: "#33cc99",
                                 weight: 1,
@@ -218,12 +226,85 @@ const InteractiveMap: React.FC<
                         </Polygon>
                     )
                 )}
+
+            {/* Bestiary Regions */}
+            {showSpawnpoints &&
+                Object.entries(bestiaryRegionsData[regionKey] || {}).map(
+                    ([subregionName, subregionData]) =>
+                        subregionData.zones.map((zone, index) => (
+                            <Polygon
+                                key={`${subregionName}-${index}`}
+                                positions={zone.coords}
+                                renderer={test}
+                                pane="bestiaryPane"
+                                pathOptions={{
+                                    color: zone.color,
+                                    weight: 1,
+                                    fillColor: zone.color,
+                                    fillOpacity: 0.25,
+                                }}
+                                ref={(poly) => {
+                                    if (poly) {
+                                        poly.bringToFront();
+                                    }
+                                }}
+                            >
+                                <Tooltip sticky opacity={1}>
+                                    <div className="font-bold text-sm">
+                                        {t(mapNameRegions[subregionName], {
+                                            ns: "map",
+                                        })}
+                                    </div>
+                                    <span className="text-xs text-gray-400">
+                                        {t(mapConfig.name, { ns: "map" })}
+                                    </span>
+
+                                    {/* 🧟 Bestiary section */}
+                                    <div
+                                        className="mt-1 text-xs text-gray-500"
+                                        style={{ width: "max-content" }}
+                                    >
+                                        {zone.mobs.map((mob, i) => (
+                                            <span className="flex flex-row items-center align-middle mt-1" key={i}>
+                                                <img
+                                                    src={mob.image}
+                                                    alt={mob.name}
+                                                    className="inline w-10 h-10 mr-1"
+                                                />
+                                                <span className="flex flex-col">
+                                                    <span
+                                                        className={` ${LevelBG_Gradient(
+                                                            mob.minlevel
+                                                        )} ${LevelTextColor(
+                                                            mob.minlevel
+                                                        )} px-[4px] py-0 rounded text-[10px] mr-1 w-min`}
+                                                    >
+                                                        lvl. {mob.minlevel}
+                                                        {"-"}
+                                                        {mob.maxlevel}
+                                                    </span>
+                                                    <span className="text-xs text-gray-300">
+                                                        {t(mob.name, {
+                                                            ns: "bestiary",
+                                                        })}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </Tooltip>
+                            </Polygon>
+                        ))
+                )}
+
+            {/* Map Image Overlay */}
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
                     [0, 0],
                     [mapConfig.height, mapConfig.width],
                 ]}
+                pane="overlayPane"
             />
             {markers.map((marker, index) => {
                 const [x, z, y] = marker.geometry.coordinates;

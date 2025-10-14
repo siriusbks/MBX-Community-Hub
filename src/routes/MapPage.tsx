@@ -6,7 +6,7 @@
 
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { ArrowRightLeft, Undo2, MapPinned  } from "lucide-react";
+import { ArrowRightLeft, Undo2, MapPinned } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
     LevelBG_Color,
@@ -362,7 +362,20 @@ const MapPage: FC = () => {
                         <input
                             type="checkbox"
                             checked={showRegions}
-                            onChange={() => setShowRegions((prev) => !prev)}
+                            onChange={() => {
+                                setShowRegions((prev) => !prev);
+
+                                setShowSpawnpoints((prev) => {
+                                    if (prev) {
+                                        setShowSpawnpoints(false);
+                                        setTimeout(
+                                            () => setShowSpawnpoints(true),
+                                            0
+                                        );
+                                    }
+                                    return prev;
+                                });
+                            }}
                             className="hidden"
                         />
                         <span
@@ -414,7 +427,6 @@ const MapPage: FC = () => {
                         {t("mappage.showBestiarySpawnpoints")}
                     </label>
 
-
                     <input
                         type="range"
                         min="0.2"
@@ -442,6 +454,7 @@ const MapPage: FC = () => {
                         markers={filteredMarkers}
                         opacity={mapOpacity}
                         showRegions={showRegions}
+                        showSpawnpoints={showSpawnpoints}
                     />
                 </div>
 
