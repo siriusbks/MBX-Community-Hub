@@ -287,7 +287,7 @@ const InteractiveMap: React.FC<
                                     <span className="text-sm items-center align-middle flex flex-col">
                                         <img
                                             src={markerIconUrl}
-                                            className="w-8 h-8 mb-1"
+                                            className="w-12 h-12 mb-1"
                                         />
                                         <span className="flex flex-row gap-1">
                                             {t(

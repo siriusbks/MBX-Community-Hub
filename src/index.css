@@ -132,6 +132,27 @@
     display: none !important;
 
 }
+.leaflet-control-zoom {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: transparent !important;
+    transition: all 0.1s ease-in-out !important;
+}
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    background-color: rgba(31, 41, 55, 1) !important;
+    color: white !important;
+    font-size: 1rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    line-height: 2rem !important;
+    text-align: center !important;
+    border: none !important;
+    margin-bottom: 0.25rem;
+}
+.leaflet-disabled{
+    opacity: 0.5 !important;
+    transition: all 0.1s ease-in-out !important;
+}
 /** Leaflet Map Custom Styles */
 
 :root {

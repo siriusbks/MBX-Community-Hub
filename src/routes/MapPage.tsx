@@ -8,7 +8,11 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowRightLeft, Undo2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { LevelBG_Color, LevelBG_Gradient, LevelTextColor } from "@components/editor/LevelBadge";
+import {
+    LevelBG_Color,
+    LevelBG_Gradient,
+    LevelTextColor,
+} from "@components/editor/LevelBadge";
 
 import InteractiveMap from "@components/InteractiveMap";
 
@@ -22,7 +26,7 @@ import {
     mapNameRegions,
 } from "@components/map/mapRegions";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
-import { Check , EyeOff } from "lucide-react";
+import { Check, EyeOff } from "lucide-react";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
 import spawnMarkers from "@components/map/markers/spawnMarkers";
@@ -204,43 +208,47 @@ const MapPage: FC = () => {
                         📍 {t("mappage.markersSelection")}
                     </h2>
 
-<label className="flex items-center gap-2 text-sm text-gray-300 font-medium cursor-pointer select-none">
-    {t("mappage.selectAllMarkers")}
+                    <label className="flex items-center gap-2 text-sm text-gray-300 font-medium cursor-pointer select-none">
+                        {t("mappage.selectAllMarkers")}
 
-    {/* Ukryty checkbox */}
-    <input
-        type="checkbox"
-        checked={mapConfig.markerRefs.every((ref) =>
-            selectedMarkers.includes(ref)
-        )}
-        onChange={(e) => {
-            if (e.target.checked) {
-                setSelectedMarkers(mapConfig.markerRefs);
-            } else {
-                setSelectedMarkers([]);
-            }
-        }}
-        className="hidden"
-    />
+                        {/* Ukryty checkbox */}
+                        <input
+                            type="checkbox"
+                            checked={mapConfig.markerRefs.every((ref) =>
+                                selectedMarkers.includes(ref)
+                            )}
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setSelectedMarkers(mapConfig.markerRefs);
+                                } else {
+                                    setSelectedMarkers([]);
+                                }
+                            }}
+                            className="hidden"
+                        />
 
-    {/* Stylizowany przycisk */}
-    <span
-        className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
-            mapConfig.markerRefs.every((ref) =>
-                selectedMarkers.includes(ref)
-            )
-                ? "bg-green-600 hover:bg-green-500"
-                : "bg-gray-700 hover:bg-gray-600"
-        }`}
-    >
-        {mapConfig.markerRefs.every((ref) =>
-            selectedMarkers.includes(ref)
-        ) ? (<Check strokeWidth={3} className="w-3 h-3 text-white" />
-        ) : (
-            <EyeOff className="w-3 h-3 hidden text-white" />
-        )}
-    </span>
-</label>
+                        {/* Stylizowany przycisk */}
+                        <span
+                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                mapConfig.markerRefs.every((ref) =>
+                                    selectedMarkers.includes(ref)
+                                )
+                                    ? "bg-green-600 hover:bg-green-500"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            {mapConfig.markerRefs.every((ref) =>
+                                selectedMarkers.includes(ref)
+                            ) ? (
+                                <Check
+                                    strokeWidth={3}
+                                    className="w-3 h-3 text-white"
+                                />
+                            ) : (
+                                <EyeOff className="w-3 h-3 hidden text-white" />
+                            )}
+                        </span>
+                    </label>
 
                     <div className="overflow-y-auto max-h-56 custom-scrollbar space-y-2">
                         {Object.entries(
@@ -291,7 +299,10 @@ const MapPage: FC = () => {
                                                     }`}
                                                 >
                                                     {isSelected ? (
-                                                        <Check strokeWidth={3} className="w-3 h-3 text-white" />
+                                                        <Check
+                                                            strokeWidth={3}
+                                                            className="w-3 h-3 text-white"
+                                                        />
                                                     ) : (
                                                         <EyeOff className="w-3 h-3 hidden text-white" />
                                                     )}
@@ -358,13 +369,16 @@ const MapPage: FC = () => {
                                     : "bg-gray-700 hover:bg-gray-600"
                             }`}
                         >
-                            {showRegions ? (<Check strokeWidth={3} className="w-3 h-3 text-white" />
+                            {showRegions ? (
+                                <Check
+                                    strokeWidth={3}
+                                    className="w-3 h-3 text-white"
+                                />
                             ) : (
                                 <EyeOff className="w-3 h-3 hidden text-white" />
                             )}
                         </span>
                         {t("mappage.showMapRegions")}
-                        
                     </label>
                     <input
                         type="range"
@@ -939,13 +953,13 @@ const MapPage: FC = () => {
                                                                                     className={`ml-auto bg-LEGENDARY px-2  mr-1 pt-0.5 pb-1 rounded font-bold text-[12px] w-fit `}
                                                                                 >
                                                                                     {t(
-                                                                                    "bestiary.boss",
-                                                                                    {
-                                                                                        ns: "bestiary",
-                                                                                        defaultValue:
-                                                                                            "bestiary.boss",
-                                                                                    }
-                                                                                )}
+                                                                                        "bestiary.boss",
+                                                                                        {
+                                                                                            ns: "bestiary",
+                                                                                            defaultValue:
+                                                                                                "bestiary.boss",
+                                                                                        }
+                                                                                    )}
                                                                                 </span>
                                                                             )}
                                                                         </span>
