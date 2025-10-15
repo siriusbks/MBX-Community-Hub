@@ -13,7 +13,7 @@ export interface MapDataConfig {
     imageUrl: string;
     width: number;
     height: number;
-    name?: string;
+    name: string;
     mapProperties: MapProperties;
     requiredLevel?: number;
     description?: string;
