@@ -36,6 +36,7 @@ i18n.use(HttpBackend)
             "equipement",
             "skulls",
             "museum",
+            "insects",
         ],
         defaultNS: "homepage",
         interpolation: {
