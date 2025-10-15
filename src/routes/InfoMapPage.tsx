@@ -11,9 +11,22 @@ import { useTranslation } from "react-i18next";
 
 import { mapData } from "@components/map/mapData";
 import allMarkers from "@components/map/allMarkers";
+import { bestiaryData } from "@components/map/bestiaryData";
+import { insectData } from "@components/map/insectData";
+import {
+    LevelBG_Gradient,
+    LevelTextColor,
+} from "@components/editor/LevelBadge";
 
 const InfoMapPage: FC = () => {
-    const { t } = useTranslation(["map", "markers"]);
+    const { t } = useTranslation([
+        "map",
+        "markers",
+        "insects",
+        "bestiary",
+        "fishing",
+        "bestiary",
+    ]);
     const [tooltipMap, setTooltipMap] = useState<string | null>(null);
     const tooltipRef = useRef<HTMLDivElement | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -88,16 +101,17 @@ const InfoMapPage: FC = () => {
                             {tooltipMap === mapKey && (
                                 <div
                                     ref={tooltipRef}
-                                    className="absolute top-14 right-0 w-[280px] bg-gray-900 text-white p-4 rounded-lg shadow-2xl border border-gray-700 z-50 backdrop-blur-md transition-opacity duration-200 animate-fadeIn max-h-80 overflow-y-auto custom-scrollbar"
+                                    className="absolute top-14 right-0 w-[280px] bg-gray-900 text-white p-4 pb-6 rounded-lg shadow-2xl border border-gray-700 z-50 backdrop-blur-md transition-opacity duration-200 animate-fadeIn max-h-[86%] overflow-y-auto custom-scrollbar"
                                     onMouseEnter={() =>
                                         handleMouseEnter(mapKey)
                                     }
                                     onMouseLeave={handleMouseLeave}
                                 >
+                                    {/* Markers List */}
                                     <h3 className="text-green-400 font-semibold mb-2 text-center">
                                         {t("mappage.tooltipTitle")}
                                     </h3>
-                                    <div className="grid grid-cols-1 gap-2 pb-6">
+                                    <div className="grid grid-cols-1 gap-2 pb-0">
                                         {mapConfig.markerRefs.map(
                                             (ref, index) => {
                                                 const resource =
@@ -105,9 +119,9 @@ const InfoMapPage: FC = () => {
                                                 return resource ? (
                                                     <div
                                                         key={index}
-                                                        className="flex items-center justify-between bg-gray-800 px-3 py-2 rounded-md"
+                                                        className="flex items-center justify-between bg-gray-800 px-2 py-2 rounded-md"
                                                     >
-                                                        <div className="flex items-center gap-3">
+                                                        <div className="flex items-center gap-2">
                                                             <img
                                                                 src={
                                                                     resource.iconUrl
@@ -115,20 +129,56 @@ const InfoMapPage: FC = () => {
                                                                 alt={
                                                                     resource.displayName
                                                                 }
-                                                                className="w-6 h-6 rounded"
+                                                                className="w-8 h-8 rounded"
+                                                                style={{
+                                                                    imageRendering:
+                                                                        "pixelated",
+                                                                }}
                                                             />
-                                                            <span className="text-gray-200 text-sm">
-                                                                {t(
-                                                                    resource.displayName,
-                                                                    {
-                                                                        ns: "markers",
-                                                                    }
+                                                            <div className="flex flex-row gap-1 items-center align-middle">
+                                                                {resource
+                                                                    .properties
+                                                                    ?.level && (
+                                                                    <span
+                                                                        className={`text-xs text-gray-400 leading-none ${LevelBG_Gradient(
+                                                                            Number(
+                                                                                resource
+                                                                                    .properties
+                                                                                    .level
+                                                                            )
+                                                                        )} ${LevelTextColor(
+                                                                            Number(
+                                                                                resource
+                                                                                    .properties
+                                                                                    .level
+                                                                            )
+                                                                        )} px-1 py-0.5 min-w-12 rounded-sm w-fit inline-flex items-center justify-center`}
+                                                                    >
+                                                                        lvl{" "}
+                                                                        {t(
+                                                                            resource
+                                                                                .properties
+                                                                                .level,
+                                                                            {
+                                                                                ns: "fishing",
+                                                                            }
+                                                                        )}
+                                                                    </span>
                                                                 )}
-                                                            </span>
+                                                                <span className="text-gray-200 text-sm font-medium leading-none">
+                                                                    {t(
+                                                                        resource.displayName,
+                                                                        {
+                                                                            ns: "markers",
+                                                                        }
+                                                                    )}
+                                                                </span>
+                                                            </div>
                                                         </div>
+                                                        {/*
                                                         {resource.properties
                                                             ?.level && (
-                                                            <span className="text-xs bg-green-700 text-white px-2 py-1 rounded-md">
+                                                            <span className="font-bold text-xs bg-green-700 text-white px-2 py-1 rounded-md">
                                                                 lvl{" "}
                                                                 {
                                                                     resource
@@ -136,12 +186,169 @@ const InfoMapPage: FC = () => {
                                                                         .level
                                                                 }
                                                             </span>
-                                                        )}
+                                                        )}*/}
                                                     </div>
                                                 ) : null;
                                             }
                                         )}
                                     </div>
+
+                                    {/* Insects Section */}
+                                    {Object.values(insectData[mapKey] || {})
+                                        .length > 0 && (
+                                        <>
+                                            <h3 className="pt-6 text-green-400 font-semibold mb-2 text-center">
+                                                {t("mappage.insectsTitle")}
+                                            </h3>
+                                            <div className="grid grid-cols-1 gap-2 pb-0">
+                                                {Object.values(
+                                                    insectData[mapKey] || {}
+                                                )
+                                                    .flat()
+                                                    .filter(
+                                                        (insect, index, self) =>
+                                                            index ===
+                                                            self.findIndex(
+                                                                (i) =>
+                                                                    i.name ===
+                                                                    insect.name
+                                                            )
+                                                    )
+                                                    .map((insect, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="flex items-center justify-between bg-gray-800 px-2 py-2 rounded-md"
+                                                        >
+                                                            <div className="flex items-center gap-2">
+                                                                {insect.image && (
+                                                                    <img
+                                                                        src={
+                                                                            insect.image
+                                                                        }
+                                                                        alt={t(
+                                                                            insect.name,
+                                                                            {
+                                                                                ns: "insects",
+                                                                            }
+                                                                        )}
+                                                                        className="w-8 h-8 rounded"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                                <div className="flex flex-col gap-0">
+                                                                    <span className="text-gray-200 text-sm font-medium leading-none">
+                                                                        {t(
+                                                                            insect.name,
+                                                                            {
+                                                                                ns: "insects",
+                                                                            }
+                                                                        )}
+                                                                    </span>
+                                                                    <span
+                                                                        className={`mt-1 text-xs text-gray-400 leading-none bg-${formatRarity(
+                                                                            insect.rarity
+                                                                        )} text-white px-1 py-0.5 min-w-12 rounded-sm w-fit inline-flex items-center justify-center`}
+                                                                    >
+                                                                        {t(
+                                                                            insect.rarity,
+                                                                            {
+                                                                                ns: "fishing",
+                                                                            }
+                                                                        )}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </>
+                                    )}
+
+                                    {/* Bestiary List */}
+                                    {Object.values(bestiaryData[mapKey] || {})
+                                        .length > 0 && (
+                                        <>
+                                            <h3 className="pt-6 text-green-400 font-semibold mb-2 text-center">
+                                                {t("mappage.bestiaryTitle")}
+                                            </h3>
+                                            <div className="grid grid-cols-1 gap-2 pb-0">
+                                                {Object.values(
+                                                    bestiaryData[mapKey] || {}
+                                                )
+                                                    .flat()
+                                                    .filter(
+                                                        (
+                                                            bestiary,
+                                                            index,
+                                                            self
+                                                        ) =>
+                                                            index ===
+                                                            self.findIndex(
+                                                                (i) =>
+                                                                    i.name ===
+                                                                    bestiary.name
+                                                            )
+                                                    )
+                                                    .map((bestiary, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="flex items-center justify-between bg-gray-800 px-2 py-2 rounded-md"
+                                                        >
+                                                            <div className="flex items-center gap-2">
+                                                                {bestiary.image && (
+                                                                    <img
+                                                                        src={
+                                                                            bestiary.image
+                                                                        }
+                                                                        alt={t(
+                                                                            bestiary.name,
+                                                                            {
+                                                                                ns: "bestiary",
+                                                                            }
+                                                                        )}
+                                                                        className="w-8 h-8 rounded"
+                                                                    />
+                                                                )}
+                                                                <div className="flex flex-col gap-0">
+                                                                    <span className="text-gray-200 text-sm font-medium leading-none">
+                                                                        {t(
+                                                                            bestiary.name,
+                                                                            {
+                                                                                ns: "bestiary",
+                                                                            }
+                                                                        )}
+                                                                    </span>
+                                                                    <span
+                                                                        className={`mt-1 text-xs leading-none ${LevelBG_Gradient(
+                                                                            bestiary.minlevel
+                                                                        )} ${LevelTextColor(
+                                                                            bestiary.minlevel
+                                                                        )} px-1 py-0.5 min-w-12 items-center align-middle rounded-sm w-fit`}
+                                                                    >
+                                                                        {t(
+                                                                            "bestiary.level",
+                                                                            {
+                                                                                ns: "bestiary",
+                                                                            }
+                                                                        )}{" "}
+                                                                        {
+                                                                            bestiary.minlevel
+                                                                        }
+                                                                        {"-"}
+                                                                        {
+                                                                            bestiary.maxlevel
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             )}
 
@@ -159,5 +366,8 @@ const InfoMapPage: FC = () => {
         </div>
     );
 };
+
+const formatRarity = (rarity: string) =>
+    rarity.split(".").pop()?.toUpperCase() || "";
 
 export default InfoMapPage;

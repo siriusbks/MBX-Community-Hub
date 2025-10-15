@@ -278,19 +278,29 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
         plains: {
             zones: [
                 {
-                    color: "#ff0000",
+                    color: "#00ff4cff",
                     coords: [
-                        [190, 360],
                         [190, 400],
-                        [130, 460],
-                        [50, 460],
-                        [50, 420],
+                        [170, 410],
+                        [115, 395],
                         [110, 360],
+                        [150, 355],
+                        [190, 360],
                     ],
                     mobs: [bestiaryData.quadra_plains.plains[0], bestiaryData.quadra_plains.plains[1], bestiaryData.quadra_plains.plains[2]],
                 },
                 {
-                    color: "#bbff00ff",
+                    color: "#00ff4cff",
+                    coords: [
+                        [135, 450],
+                        [50, 460],
+                        [60, 420],
+                        [130, 415],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.plains[0], bestiaryData.quadra_plains.plains[1], bestiaryData.quadra_plains.plains[2]],
+                },
+                {
+                    color: "#cacacaff",
                     coords: [
                         [130, 460],
                         [50, 460],
@@ -303,6 +313,84 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
                     mobs: [bestiaryData.quadra_plains.plains[3], bestiaryData.quadra_plains.plains[4], bestiaryData.quadra_plains.plains[2]],
                 },
             ],
+        },
+        swamp: {
+            zones: [
+                {
+                    color: "#ff0000ff",
+                    coords: [
+                        [365, 505],
+                        [365, 540],
+                        [305, 540],
+                        [305, 505],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[1], bestiaryData.quadra_plains.swamp[2]],
+                },
+                {
+                    color: "#ff0000ff",
+                    coords: [
+                        [485, 505],
+                        [485, 540],
+                        [445, 565],
+                        [415, 565],
+                        [415, 525],
+                        [445, 505],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[1], bestiaryData.quadra_plains.swamp[2]],
+                },
+                {
+                    color: "#ff0000ff",
+                    coords: [
+                        [345, 360],
+                        [345, 420],
+                        [310, 450],
+                        [295, 450],
+                        [305, 415],
+                        [320, 360],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[1], bestiaryData.quadra_plains.swamp[2]],
+                },
+                {
+                    color: "#ff0000ff",
+                    coords: [
+                        [435, 390],
+                        [445, 455],
+                        [450, 480],
+                        [490, 480],
+                        [470, 400],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[1], bestiaryData.quadra_plains.swamp[2]],
+                },
+                {
+                    color: "#0066ffff",
+                    coords: [
+                        [375, 430],
+                        [355, 360],
+                        [345, 360],
+                        [345, 420],
+                        [320, 450],
+                        [320, 490],
+                        [365, 505],
+                        [445, 505],
+                        [400, 455],
+                        [400, 490],
+                        [365, 490],
+                        [365, 455],
+                        [400, 455],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[0]],
+                },
+                {
+                    color: "#ff00d4ff",
+                    coords: [
+                        [400, 490],
+                        [400, 455],
+                        [365, 455],
+                        [365, 490],
+                    ],
+                    mobs: [bestiaryData.quadra_plains.swamp[3]],
+                },
+            ]
         },
     },
 };

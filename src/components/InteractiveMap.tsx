@@ -241,13 +241,9 @@ const InteractiveMap: React.FC<
                                     color: zone.color,
                                     weight: 1,
                                     fillColor: zone.color,
-                                    fillOpacity: 0.25,
+                                    fillOpacity: 0.4,
                                 }}
-                                ref={(poly) => {
-                                    if (poly) {
-                                        poly.bringToFront();
-                                    }
-                                }}
+                                className="bestiary-polygon"
                             >
                                 <Tooltip sticky opacity={1}>
                                     <div className="font-bold text-sm">
@@ -265,7 +261,10 @@ const InteractiveMap: React.FC<
                                         style={{ width: "max-content" }}
                                     >
                                         {zone.mobs.map((mob, i) => (
-                                            <span className="flex flex-row items-center align-middle mt-1" key={i}>
+                                            <span
+                                                className="flex flex-row items-center align-middle mt-1"
+                                                key={i}
+                                            >
                                                 <img
                                                     src={mob.image}
                                                     alt={mob.name}
@@ -411,6 +410,18 @@ const InteractiveMap: React.FC<
                                 </span>
                             </span>
                         </Popup>
+                        <Tooltip sticky opacity={1}>
+                            <div className="font-bold text-sm">
+                                {t(config.displayName ?? "markers.unknown", {
+                                    ns: "markers",
+                                })}
+                            </div>
+                            <span className="text-xs text-gray-400">
+                                [{t( "mappage.showMoreInfo", {
+                                    ns: "map",
+                                })}]
+                            </span>
+                        </Tooltip>
                     </Marker>
                 );
             })}

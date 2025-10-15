@@ -96,6 +96,11 @@
     stroke-width: 3;
     transition: fill-opacity, stroke-width 0.1s ease-in-out;
 }
+.bestiary-polygon:hover {
+    fill-opacity: 0.6;
+    stroke-width: 5;
+    transition: fill-opacity, stroke-width 0.1s ease-in-out;
+}
 .leaflet-tooltip {
     background-color: rgba(31, 41, 55, 1) !important;
     border: none !important;
