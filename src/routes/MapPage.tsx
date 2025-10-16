@@ -212,7 +212,6 @@ const MapPage: FC = () => {
                     <label className="flex items-center gap-2 text-sm text-gray-300 font-medium cursor-pointer select-none">
                         {t("mappage.selectAllMarkers")}
 
-                        {/* Ukryty checkbox */}
                         <input
                             type="checkbox"
                             checked={mapConfig.markerRefs.every((ref) =>
@@ -228,7 +227,6 @@ const MapPage: FC = () => {
                             className="hidden"
                         />
 
-                        {/* Stylizowany przycisk */}
                         <span
                             className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
                                 mapConfig.markerRefs.every((ref) =>
@@ -281,7 +279,6 @@ const MapPage: FC = () => {
                                                 key={ref}
                                                 className="flex items-center gap-1 text-sm text-gray-200 cursor-pointer select-none"
                                             >
-                                                {/* Ukryty checkbox */}
                                                 <input
                                                     type="checkbox"
                                                     checked={isSelected}
@@ -291,9 +288,8 @@ const MapPage: FC = () => {
                                                     className="hidden"
                                                 />
 
-                                                {/* Stylizowany przycisk toggle */}
                                                 <span
-                                                    className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                                    className={`flex items-center justify-center w-4 h-4 min-w-4 min-h-4 rounded transition-colors duration-200 ${
                                                         isSelected
                                                             ? "bg-green-600 hover:bg-green-500"
                                                             : "bg-gray-700 hover:bg-gray-600"
@@ -314,29 +310,25 @@ const MapPage: FC = () => {
                                                     <img
                                                         src={config.iconUrl}
                                                         alt={config.displayName}
-                                                        className="w-5 h-5"
+                                                        className="w-6 h-6"
                                                     />
                                                 )}
 
                                                 {/* Nazwa i level */}
-                                                <span className="flex-1 flex justify-between items-center">
-                                                    <span className="flex items-center gap-1 truncate">
+                                                <span className="flex flex gap-1 items-center">
+                                                    {config.properties ?.level !== undefined && (
+                                                        <span
+  className={`flex justify-center items-center text-center text-xs rounded ${LevelBG_Gradient(
+    Number(config.properties.level)
+  )} ${LevelTextColor(Number(config.properties.level))} min-w-10 whitespace-nowrap`}
+>
+  lv. {config.properties.level}
+</span>
+                                                    )}
+                                                    <span className={`flex text-xs leading-none ${config.properties ?.level !== undefined ? "max-w-[80%]" : "max-w-[100%]"}  items-center gap-1`}>
                                                         {t(config.displayName, {
                                                             ns: "markers",
                                                         })}
-                                                        {config.properties
-                                                            ?.level !==
-                                                            undefined && (
-                                                            <span className="text-xs text-gray-400 whitespace-nowrap">
-                                                                (lv.{" "}
-                                                                {
-                                                                    config
-                                                                        .properties
-                                                                        .level
-                                                                }
-                                                                )
-                                                            </span>
-                                                        )}
                                                     </span>
                                                 </span>
                                             </label>
@@ -534,36 +526,36 @@ const MapPage: FC = () => {
 
                                                         const rarityColor =
                                                             rarityColorMap[
-                                                            fish.rarity
+                                                                fish.rarity
                                                             ] || "text-white";
 
                                                         const timeLabel =
                                                             fish.time.includes(
                                                                 "fishing.time.day"
                                                             ) &&
-                                                                fish.time.includes(
-                                                                    "fishing.time.night"
-                                                                )
+                                                            fish.time.includes(
+                                                                "fishing.time.night"
+                                                            )
                                                                 ? t(
-                                                                    "fishing.time.day_night"
-                                                                )
+                                                                      "fishing.time.day_night"
+                                                                  )
                                                                 : fish.time
-                                                                    .map(
-                                                                        (
-                                                                            tKey
-                                                                        ) =>
-                                                                            t(
-                                                                                tKey,
-                                                                                {
-                                                                                    ns: "fishing",
-                                                                                    defaultValue:
-                                                                                        tKey,
-                                                                                }
-                                                                            )
-                                                                    )
-                                                                    .join(
-                                                                        " / "
-                                                                    );
+                                                                      .map(
+                                                                          (
+                                                                              tKey
+                                                                          ) =>
+                                                                              t(
+                                                                                  tKey,
+                                                                                  {
+                                                                                      ns: "fishing",
+                                                                                      defaultValue:
+                                                                                          tKey,
+                                                                                  }
+                                                                              )
+                                                                      )
+                                                                      .join(
+                                                                          " / "
+                                                                      );
 
                                                         return (
                                                             <div
@@ -633,31 +625,31 @@ const MapPage: FC = () => {
                                                                             {fish.condition?.includes(
                                                                                 "rain"
                                                                             ) && (
-                                                                                    <span title="Only when it rains">
-                                                                                        🌧️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only when it rains">
+                                                                                    🌧️
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "fullmoon"
                                                                             ) && (
-                                                                                    <span title="Only during full moon">
-                                                                                        🌕
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only during full moon">
+                                                                                    🌕
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "storm"
                                                                             ) && (
-                                                                                    <span title="Only at storm">
-                                                                                        🌩️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only at storm">
+                                                                                    🌩️
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "niceweather"
                                                                             ) && (
-                                                                                    <span title="Nice weather">
-                                                                                        🌤️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Nice weather">
+                                                                                    🌤️
+                                                                                </span>
+                                                                            )}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -687,7 +679,7 @@ const MapPage: FC = () => {
                                             🦋 {t("mappage.insectinfo.title")} -{" "}
                                             {t(
                                                 mapNameTranslationKeys[
-                                                selectedMapKey
+                                                    selectedMapKey
                                                 ],
                                                 {
                                                     defaultValue:
@@ -749,36 +741,36 @@ const MapPage: FC = () => {
 
                                                         const rarityColor =
                                                             rarityColorMap[
-                                                            fish.rarity
+                                                                fish.rarity
                                                             ] || "text-white";
 
                                                         const timeLabel =
                                                             fish.time.includes(
                                                                 "fishing.time.day"
                                                             ) &&
-                                                                fish.time.includes(
-                                                                    "fishing.time.night"
-                                                                )
+                                                            fish.time.includes(
+                                                                "fishing.time.night"
+                                                            )
                                                                 ? t(
-                                                                    "fishing.time.day_night"
-                                                                )
+                                                                      "fishing.time.day_night"
+                                                                  )
                                                                 : fish.time
-                                                                    .map(
-                                                                        (
-                                                                            tKey
-                                                                        ) =>
-                                                                            t(
-                                                                                tKey,
-                                                                                {
-                                                                                    ns: "fishing",
-                                                                                    defaultValue:
-                                                                                        tKey,
-                                                                                }
-                                                                            )
-                                                                    )
-                                                                    .join(
-                                                                        " / "
-                                                                    );
+                                                                      .map(
+                                                                          (
+                                                                              tKey
+                                                                          ) =>
+                                                                              t(
+                                                                                  tKey,
+                                                                                  {
+                                                                                      ns: "fishing",
+                                                                                      defaultValue:
+                                                                                          tKey,
+                                                                                  }
+                                                                              )
+                                                                      )
+                                                                      .join(
+                                                                          " / "
+                                                                      );
 
                                                         return (
                                                             <div
@@ -831,41 +823,41 @@ const MapPage: FC = () => {
                                                                                 {!fish.time.includes(
                                                                                     "mappage.condition.time.day_night"
                                                                                 ) && (
-                                                                                        <>
-                                                                                            <span className="text-gray-300">
-                                                                                                {t(
-                                                                                                    fish.time,
-                                                                                                    {
-                                                                                                        ns: "map",
-                                                                                                        defaultValue:
-                                                                                                            fish.time,
-                                                                                                    }
-                                                                                                )}
-                                                                                            </span>
-
-                                                                                            {!fish.weather.includes(
-                                                                                                "mappage.condition.weather.any"
-                                                                                            ) && (
-                                                                                                    <span>
-                                                                                                        &
-                                                                                                    </span>
-                                                                                                )}
-                                                                                        </>
-                                                                                    )}
-                                                                                {!fish.weather.includes(
-                                                                                    "mappage.condition.weather.any"
-                                                                                ) && (
+                                                                                    <>
                                                                                         <span className="text-gray-300">
                                                                                             {t(
-                                                                                                fish.weather,
+                                                                                                fish.time,
                                                                                                 {
                                                                                                     ns: "map",
                                                                                                     defaultValue:
-                                                                                                        fish.weather,
+                                                                                                        fish.time,
                                                                                                 }
                                                                                             )}
                                                                                         </span>
-                                                                                    )}
+
+                                                                                        {!fish.weather.includes(
+                                                                                            "mappage.condition.weather.any"
+                                                                                        ) && (
+                                                                                            <span>
+                                                                                                &
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </>
+                                                                                )}
+                                                                                {!fish.weather.includes(
+                                                                                    "mappage.condition.weather.any"
+                                                                                ) && (
+                                                                                    <span className="text-gray-300">
+                                                                                        {t(
+                                                                                            fish.weather,
+                                                                                            {
+                                                                                                ns: "map",
+                                                                                                defaultValue:
+                                                                                                    fish.weather,
+                                                                                            }
+                                                                                        )}
+                                                                                    </span>
+                                                                                )}
                                                                                 {fish.weather.includes(
                                                                                     "mappage.condition.weather.any"
                                                                                 ) &&

@@ -274,6 +274,57 @@ interface BestiaryRegionData {
 }
 
 export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
+    kokoko:{
+        burned_jungle: {
+            zones: [
+                {
+                    color: "#ff6600ff",
+                    coords: [
+                        [37, 450],
+                        [45, 465],
+                        [71, 487],
+                        [111, 495],
+                        [147, 480],
+                        [187, 447],
+                        [205, 420],
+                        [195, 400],
+                        [165, 383],
+                        [146, 383],
+                        [105, 415],
+                        [74, 415],
+                    ],
+                    mobs: [bestiaryData.kokoko.burned_jungle[3]],
+                },
+                {
+                    color: "#ff0000ff",
+                    coords: [
+                        [178, 371],
+                        [147, 367],
+                        [117, 374],
+                        [86, 340],
+                        [123, 320],
+                        [156, 343],
+                    ],
+                    mobs: [bestiaryData.kokoko.burned_jungle[2]],
+                },
+                {
+                    color: "#0da0c5ff",
+                    coords: [
+                        [176, 310],
+                        [150, 338],
+                        [123, 311],
+                        [95, 301],
+                        [60, 295],
+                        [101, 270],
+                        [116, 277],
+                        [137, 268],
+                        [163, 278],
+                    ],
+                    mobs: [bestiaryData.kokoko.burned_jungle[1], bestiaryData.kokoko.burned_jungle[0]],
+                }
+            ],
+        },
+    },
     quadra_plains: {
         plains: {
             zones: [
@@ -391,6 +442,133 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
                     mobs: [bestiaryData.quadra_plains.swamp[3]],
                 },
             ]
+        },
+    },
+    bamboo_peak: {
+        bamboo_plains: {
+            zones: [
+                {
+                    color: "#ff15e0ff",
+                    coords: [
+                        [586, 222],
+                        [584, 190],
+                        [548, 160],
+                        [508, 162],
+                        [477, 175],
+                        [482, 220],
+                        [500, 231],
+                        [525, 220],
+                        [545, 231]
+                    ],
+                    mobs: [bestiaryData.bamboo_peak.bamboo_plains[3],bestiaryData.bamboo_peak.bamboo_plains[2]],
+                },
+                {
+                    color: "#ff15e0ff",
+                    coords: [
+                        [578,520],
+                        [550,522],
+                        [522, 590],
+                        [550, 598],
+                        [578,620],
+                        [595,605],
+                        [595,552],
+                    ],
+                    mobs: [bestiaryData.bamboo_peak.bamboo_plains[3],bestiaryData.bamboo_peak.bamboo_plains[2]],
+                },
+                {
+                    color: "#d4ff15ff",
+                    coords: [
+                        [485,220],
+                        [446,267],
+                        [474,319],
+                        [488,358],
+                        [491,414],
+                        [547,427],
+                        [562,466],
+                        [591,461],
+                        [580,418],
+                        [560,387],
+                        [520,351],
+                        [540,307],
+                        [568,260],
+                        [523,248]
+                    ],
+                    mobs: [bestiaryData.bamboo_peak.bamboo_plains[0],bestiaryData.bamboo_peak.bamboo_plains[1]],
+                },
+            ],
+        },
+    },
+    sandwhisper_dunes: {
+        desert: {
+            zones: [
+                {
+                    color: "#ffae15ff",
+                    coords: [
+                        [480,116],
+                        [421,118],
+                        [390,160],
+                        [355,190],
+                        [364,141],
+                        [375,87],
+                        [432,84]
+                    ],
+                    mobs: [bestiaryData.sandwhisper_dunes.desert[3]],
+                },
+                {
+                    color: "#15ffaeff",
+                    coords: [
+                        [562,240],
+                        [520,220],
+                        [480,218],
+                        [488,190],
+                        [625,190],
+                        [656,180],
+                        [680,220],
+                        [632,267],
+                        [640,307],
+                        [680,326],
+                        [678,350],
+                        [625,365],
+                    ],
+                    mobs: [bestiaryData.sandwhisper_dunes.desert[0], bestiaryData.sandwhisper_dunes.desert[1]],
+                },
+                {
+                    color: "#ff15d4ff",
+                    coords: [
+                        [560,330],
+                        [480,282],
+                        [411,285],
+                        [470,209],
+                        [511,253],
+                        [563,287],
+                    ],
+                    mobs: [bestiaryData.sandwhisper_dunes.desert[2]],
+                },
+                {
+                    color: "#ff15d4ff",
+                    coords: [
+                        [560,330],[480,282],
+                        [475,246],
+                        [448,250],
+                        [455,283],
+                        [411,285],
+                        [470,209],
+                        [511,253],
+                        [563,287],
+                    ],
+                    mobs: [bestiaryData.sandwhisper_dunes.desert[2]],
+                },
+                {
+                    color: "#4c00ffff",
+                    coords: [
+                        [480,282],
+                        [475,246],
+                        [448,250],
+                        [455,283],
+                    ],
+                    mobs: [bestiaryData.sandwhisper_dunes.desert[4]],
+                },
+            ],
         },
     },
 };
