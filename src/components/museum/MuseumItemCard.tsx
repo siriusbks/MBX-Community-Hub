@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { unobtainable } from "../../../public/assets/data/items-unobtainable.json";
 
 interface MuseumCard {
     itemId: string;
@@ -73,15 +74,19 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             UNCOMMON: "shadow-[inset_0_0_8px_theme(colors.UNCOMMON.DEFAULT)]",
             RARE: "shadow-[inset_0_0_8px_theme(colors.RARE.DEFAULT)]",
             EPIC: "shadow-[inset_0_0_8px_theme(colors.EPIC.DEFAULT)]",
-            LEGENDARY: "shadow-[inset_0_0_12px_theme(colors.LEGENDARY.DEFAULT)]",
+            LEGENDARY:
+                "shadow-[inset_0_0_12px_theme(colors.LEGENDARY.DEFAULT)]",
             MYTHIC: "shadow-[inset_0_0_16px_theme(colors.MYTHIC.DEFAULT)]",
-        }[adjustedRarity] || "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
+        }[adjustedRarity] ||
+        "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
     const { t } = useTranslation("museum");
 
     const [src, setSrc] = useState(
         `/assets/media/museum/${category}/${itemId}.png`
     );
+
+    const isUnobtainable = unobtainable.includes(itemId);
 
     useEffect(() => {
         const mainSrc = `/assets/media/museum/${category}/${itemId}.png`;
@@ -111,6 +116,8 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             className={`text-regal-blue min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
                 isOwned
                     ? "bg-green-600 bg-opacity-20 border-4 cursor-default !border-green-600 shadow-[inset_0_0_4px_theme(colors.green.600)]"
+                    : isUnobtainable
+                    ? "bg-red-600 bg-opacity-20 border-4 cursor-default !border-red-600 shadow-[inset_0_0_4px_theme(colors.red.600)]"
                     : `cursor-pointer ${TMPShadowClass}`
             }`}
             onClick={() => {
@@ -132,19 +139,18 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                 }`}
             >
                 {itemId
-                    .replace(/_/g, " ")
-                    .split(" ")
-                    .map(
-                        (word) =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                    )
-                    .join(" ")}
+                    }
             </span>
 
             {isOwned && (
                 <span className="absolute font-bold top-0 right-0 text-xs bg-green-600 py-0.5 px-2 rounded-bl shadow-[0_0_8px_theme(colors.green.600)]">
                     {t(`museum.donated`)}
+                </span>
+            )}
+
+            {isUnobtainable && (
+                <span className="absolute font-bold top-0 right-0 text-xs bg-red-600 py-0.5 px-2 rounded-bl shadow-[0_0_8px_theme(colors.red.600)]">
+                    {t(`museum.unobtainable`)}
                 </span>
             )}
 

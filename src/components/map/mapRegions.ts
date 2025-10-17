@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Church } from "lucide-react";
 import { BestiaryInfo, bestiaryData } from "./bestiaryData";
+import { it } from "node:test";
 
 export const mapNameTranslationKeys: Record<string, string> = {
     spawn: "mappage.maps.spawn_island.name",
@@ -17,6 +19,10 @@ export const mapNameTranslationKeys: Record<string, string> = {
 
 export const mapNameRegions: Record<string, string> = {
     universal: "mappage.maps.spawn.universal",
+    central_island: "mappage.maps.spawn.central_island",
+    trade_island: "mappage.maps.spawn.trade_island",
+    workshop_island: "mappage.maps.spawn.workshop_island",
+    small_island: "mappage.maps.spawn.small_island",
     exploration_island: "mappage.maps.spawn.exploration_island",
     italian_restaurant: "mappage.maps.spawn.italian_restaurant",
     church: "mappage.maps.spawn.church",
@@ -60,7 +66,112 @@ export const regionsData: Record<
     string,
     Record<string, L.LatLngExpression[]>
 > = {
-    spawn: {},
+    spawn: {
+        central_island: [
+            [360, 230],
+            [371, 236],
+            [469, 235],
+            [464, 324],
+            [447, 345],
+            [428, 346],
+            [400, 335],
+            [371, 340],
+            [347, 322],
+            [351, 286],
+            [348, 242],
+            [351, 230],
+        ],
+        trade_island: [
+            [469, 236],
+            [502, 231],
+            [527, 244],
+            [551, 233],
+            [567, 175],
+            [576, 124],
+            [566, 78],
+            [532, 44],
+            [487, 18],
+            [442, 25],
+            [380, 57],
+            [321, 84],
+            [313, 110],
+            [331, 123],
+            [335, 141],
+            [326, 156],
+            [331, 186],
+            [345, 212],
+            [398, 237],
+        ],
+
+        workshop_island: [
+            [350, 343],
+            [398, 343],
+            [436, 356],
+            [470, 345],
+            [500, 338],
+            [515, 343],
+            [523, 367],
+            [513, 406],
+            [489, 461],
+            [467, 530],
+            [426, 570],
+            [369, 600],
+            [315, 623],
+            [293, 616],
+            [265, 582],
+            [260, 555],
+            [288, 508],
+            [302, 480],
+            [294, 441],
+            [297, 409],
+            [310, 373],
+        ],
+
+        small_island: [
+            [245, 365],
+            [279, 382],
+            [282, 442],
+            [260, 500],
+            [236, 492],
+            [195, 428],
+            [215, 375],
+        ],
+
+        exploration_island: [
+            [245, 365],
+            [320, 353],
+            [345, 324],
+            [342, 226],
+            [311, 146],
+            [257, 100],
+            [232, 90],
+            [145, 80],
+            [75, 86],
+            [30, 236],
+            [6, 315],
+            [34, 390],
+            [64, 466],
+            [85, 480],
+            [142, 472],
+            [175, 427],
+            [213, 360],
+        ],
+        church: [
+            [128, 190],
+            [194, 190],
+            [194, 246],
+            [129, 246],
+            [111, 219],
+        ],
+        italian_restaurant: [
+            [60, 360],
+            [75, 333],
+            [106, 341],
+            [120, 374],
+            [99, 400],
+            [69, 390],
+        ],
+    },
     kokoko: {
         beach: [
             [0, 0],
