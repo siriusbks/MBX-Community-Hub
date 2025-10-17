@@ -326,7 +326,7 @@ const InfoMapPage: FC = () => {
                                                                             bestiary.minlevel
                                                                         )} ${LevelTextColor(
                                                                             bestiary.minlevel
-                                                                        )} px-1 py-0.5 min-w-12 items-center align-middle rounded-sm w-fit`}
+                                                                        )} px-1 py-0.5 min-w-16 items-center align-middle rounded-sm w-fit text-center`}
                                                                     >
                                                                         {t(
                                                                             "bestiary.level",

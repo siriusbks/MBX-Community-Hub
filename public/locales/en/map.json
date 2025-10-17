@@ -3,6 +3,8 @@
     "mappage.hoverInfo1": "Hover over the",
     "mappage.hoverInfo2": "to view resources.",
     "mappage.tooltipTitle": "Available Resources",
+    "mappage.insectsTitle": "Available Insects",
+    "mappage.bestiaryTitle": "Available Bestiary",
     "mappage.buttonViewMap": "View Interactive Map",
     "mappage.requiredLevel": "Required Level:",
     "mappage.requiredLevelNone": "No required level",
