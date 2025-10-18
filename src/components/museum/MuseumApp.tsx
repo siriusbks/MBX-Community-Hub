@@ -831,7 +831,7 @@ export const MuseumApp: FC = () => {
                                         </span>
                                         <a
                                             className="ml-auto"
-                                            href={`https://minebox.co/pl/universe/items?id=${craftModalItem}`}
+                                            href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
