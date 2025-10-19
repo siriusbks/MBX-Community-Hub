@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { unobtainable } from "../../../public/assets/data/items-unobtainable.json";
 
 interface MuseumCard {
     itemId: string;
@@ -59,6 +58,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             LEGENDARY: "border-LEGENDARY",
             MYTHIC: "border-MYTHIC",
         }[adjustedRarity] || "border-UNKNOWN";
+
     const TMPBackgroundColorClass =
         {
             COMMON: "bg-COMMON",
@@ -68,6 +68,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             LEGENDARY: "bg-LEGENDARY",
             MYTHIC: "bg-MYTHIC",
         }[adjustedRarity] || "bg-UNKNOWN";
+
     const TMPShadowClass =
         {
             COMMON: "shadow-[inset_0_0_4px_theme(colors.COMMON.BORDER)]",
@@ -86,11 +87,20 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         `/assets/media/museum/${category}/${itemId}.png`
     );
 
-    const isUnobtainable = unobtainable.includes(itemId);
+    const [unobtainable, setUnobtainable] = useState<string[]>([]);
+
+    useEffect(() => {
+        fetch("/assets/data/items-unobtainable.json")
+            .then((res) => res.json())
+            .then((data) => setUnobtainable(data.unobtainable || []))
+            .catch((err) => console.error("Error loading JSON :", err));
+    }, []);
+
+    const isUnobtainable =
+        Array.isArray(unobtainable) && unobtainable.includes(itemId);
 
     useEffect(() => {
         const mainSrc = `/assets/media/museum/${category}/${itemId}.png`;
-
         const testImg = new Image();
         testImg.onload = () => {
             setSrc(mainSrc);
