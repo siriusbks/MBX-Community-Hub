@@ -16,7 +16,6 @@ import {
     List,
     ListTodo,
     X,
-    Globe,
 } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
