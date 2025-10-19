@@ -176,6 +176,28 @@
             "properties": {
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [81, 82, -260],
+                "type": "Point"
+            },
+            "id": 17,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [349, 82, -174],
+                "type": "Point"
+            },
+            "id": 18,
+            "type": "Feature",
+            "properties": {
+                "map": "spawn"
+            }
         }
     ]
 }
