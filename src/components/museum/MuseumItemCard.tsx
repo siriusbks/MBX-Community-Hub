@@ -7,6 +7,7 @@ interface MuseumCard {
     isOwned: boolean;
     category?: string;
     rarity: string;
+    unobtainable: string[];
     craftModalOpener?: (itemId: string) => void;
 }
 
@@ -16,6 +17,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     isOwned,
     rarity,
     category,
+    unobtainable,
     craftModalOpener,
 }) => {
     let adjustedRarity = rarity;
@@ -86,15 +88,6 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     const [src, setSrc] = useState(
         `/assets/media/museum/${category}/${itemId}.png`
     );
-
-    const [unobtainable, setUnobtainable] = useState<string[]>([]);
-
-    useEffect(() => {
-        fetch("/assets/data/items-unobtainable.json")
-            .then((res) => res.json())
-            .then((data) => setUnobtainable(data.unobtainable || []))
-            .catch((err) => console.error("Error loading JSON :", err));
-    }, []);
 
     const isUnobtainable =
         Array.isArray(unobtainable) && unobtainable.includes(itemId);

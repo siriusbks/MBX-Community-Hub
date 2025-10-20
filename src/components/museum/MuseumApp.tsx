@@ -56,6 +56,15 @@ export const MuseumApp: FC = () => {
 
     const [showDonated, setShowDonated] = useState(true);
 
+    // FIX: items-unobtainable.json loading 1.5K times :)
+    const [unobtainable, setUnobtainable] = useState<string[]>([]);
+    useEffect(() => {
+        fetch("/assets/data/items-unobtainable.json")
+            .then((res) => res.json())
+            .then((data) => setUnobtainable(data.unobtainable || []))
+            .catch((err) => console.error("Error loading JSON :", err));
+    }, []);
+
     const totalStats =
         groupedItems && Array.isArray(groupedItems)
             ? {
@@ -349,7 +358,7 @@ export const MuseumApp: FC = () => {
                     return (
                         <div key={index} className="mb-4">
                             <div className="text-2xl font-bold">
-                                {group.category}
+                                {t(`museum.category.${group.category}`)}
                             </div>
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
@@ -443,17 +452,43 @@ export const MuseumApp: FC = () => {
 
     // Function that returns the display of the items grid and the category navigation bar
     const renderItems = () => {
+        const [expandedGroups, setExpandedGroups] = useState<
+            Record<string, boolean>
+        >({});
+
+        const toggleGroup = (category: string) => {
+            setExpandedGroups((prev) => ({
+                ...prev,
+                [category]: !prev[category],
+            }));
+        };
+
+        useEffect(() => {
+            if (groupedItems) {
+                const allExpanded: Record<string, boolean> = {};
+                groupedItems.forEach((group) => {
+                    allExpanded[group.category] = true;
+                });
+                setExpandedGroups(allExpanded);
+            }
+        }, [groupedItems]);
+
         if (!groupedItems || !detailsIndex) return null;
+
         return groupedItems.map((group, index) => {
             const ownedCount = group.items.filter((item) =>
                 museumItems.includes(item)
             ).length;
             const categoryId =
                 "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
+            const isExpanded = expandedGroups[group.category];
+
             return (
                 <div key={index} className="category w-full" id={categoryId}>
-                    {/* Category Title with icon and owned count */}
-                    <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
+                    <div
+                        className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
+                        onClick={() => toggleGroup(group.category)}
+                    >
                         <MuseumItemImage
                             groupCategory={group.category}
                             itemId={group.category}
@@ -461,13 +496,24 @@ export const MuseumApp: FC = () => {
                             className="h-8 w-8"
                             style={{ imageRendering: "pixelated" }}
                         />
-                        {group.category}
-                        <p className="opacity-40 text-sm">
+                        <span className="flex items-center">
+                            {isExpanded ? (
+                                <Minus className="p-0.5 opacity-70" />
+                            ) : (
+                                <Plus className="p-0.5 opacity-70" />
+                            )}
+                            {t(`museum.category.${group.category}`)}
+                        </span>
+                        <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
                         </p>
                     </div>
-                    {/* Grid of items */}
-                    <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
+
+                    <div
+                        className={`groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between overflow-hidden ${
+                            isExpanded ? "opacity-100" : "max-h-0 opacity-0"
+                        }`}
+                    >
                         {group.items.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
@@ -490,6 +536,7 @@ export const MuseumApp: FC = () => {
                                         isOwned={isOwned}
                                         rarity={rarity}
                                         category={group.category}
+                                        unobtainable={unobtainable}
                                         craftModalOpener={() =>
                                             openCraftModal(
                                                 itemId,
@@ -651,7 +698,7 @@ export const MuseumApp: FC = () => {
                 </form>
                 <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6">
                     <span>
-                        <h3 className="text-lg font-bold">
+                        <h3 className="text-lg font-bold leading-none">
                             {t("museum.completion")}
                         </h3>
                         <span className="flex flex-row justify-between gap-2">
@@ -707,7 +754,7 @@ export const MuseumApp: FC = () => {
                                             />
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
-                                                    {group.category}
+                                                    {t(`museum.category.${group.category}`)}
                                                 </span>
                                                 <span className="text-xs opacity-50">
                                                     [{ownedCount} /{" "}
