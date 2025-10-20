@@ -36,7 +36,7 @@ interface Details {
 }
 
 export const MuseumApp: FC = () => {
-    const { t } = useTranslation("museum");
+    const { t } = useTranslation(["museum", "items"]);
     const { username, setUsername } = useProfileStore();
 
     // States for storing data from the API and JSON files
@@ -300,7 +300,19 @@ export const MuseumApp: FC = () => {
                                         )}
                                     </button>
                                 )}
-                                {ing.amount}x {ing.id}
+                                {ing.amount}x{" "}
+                                {t(`item.${ing.id}`, {
+                                    ns: "items",
+                                    defaultValue: ing.id
+                                        .replace(/_/g, " ")
+                                        .split(" ")
+                                        .map(
+                                            (word: string) =>
+                                                word.charAt(0).toUpperCase() +
+                                                word.slice(1).toLowerCase()
+                                        )
+                                        .join(" "),
+                                })}
                             </span>
 
                             {detailsIndex &&
@@ -378,7 +390,22 @@ export const MuseumApp: FC = () => {
                                                 }}
                                             />
                                             <span className="text-sm font-semibold">
-                                                {itemId}
+                                                {t(`item.${itemId}`, {
+                                                    ns: "items",
+                                                    defaultValue: itemId
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </span>
                                         </li>
                                     );
@@ -434,7 +461,22 @@ export const MuseumApp: FC = () => {
                                         style={{ imageRendering: "pixelated" }}
                                     />
                                     <span className="font-bold text-sm">
-                                        {resId}
+                                        {t(`item.${resId}`, {
+                                            ns: "items",
+                                            defaultValue: resId
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}
                                     </span>
                                     <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
                                         {totalResources[resId].toLocaleString(
@@ -754,7 +796,9 @@ export const MuseumApp: FC = () => {
                                             />
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
-                                                    {t(`museum.category.${group.category}`)}
+                                                    {t(
+                                                        `museum.category.${group.category}`
+                                                    )}
                                                 </span>
                                                 <span className="text-xs opacity-50">
                                                     [{ownedCount} /{" "}
@@ -865,7 +909,22 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {craftModalItem}
+                                                {t(`item.${craftModalItem}`, {
+                                                    ns: "items",
+                                                    defaultValue: craftModalItem
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
@@ -923,7 +982,22 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {craftModalItem}
+                                                {t(`item.${craftModalItem}`, {
+                                                    ns: "items",
+                                                    defaultValue: craftModalItem
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.noRecipe")}
