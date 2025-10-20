@@ -782,7 +782,7 @@ export const MuseumApp: FC = () => {
                                     <a
                                         key={i}
                                         href={"#" + categoryId}
-                                        className="block w-full bg-gray-700 text-white p-2 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
+                                        className="block w-full bg-gray-700 text-white p-2 rounded-t transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
                                     >
                                         <span className="flex flex-row items-center gap-2">
                                             <MuseumItemImage
@@ -807,6 +807,19 @@ export const MuseumApp: FC = () => {
                                             </span>
                                         </span>
                                     </a>
+                                    {/* Progress bar */}
+                                    <div className="w-full bg-gray-600 rounded-b h-1 overflow-hidden">
+                                        <div
+                                            className="bg-gray-500 h-full transition-all duration-300"
+                                            style={{
+                                                width: `${
+                                                    (ownedCount /
+                                                        group.items.length) *
+                                                    100
+                                                }%`,
+                                            }}
+                                        ></div>
+                                    </div>
                                 </li>
                             );
                         })}
@@ -814,14 +827,14 @@ export const MuseumApp: FC = () => {
             </nav>
 
             {/* Buttons to display the missing items and resources modals */}
-            <div className="bg-gray-800 bg-opacity-50 p-4 rounded-lg recap-buttons-container flex justify-between gap-4 mt-2">
+            <div className="bg-gray-800 bg-opacity-50 p-4 rounded-lg recap-buttons-container flex justify-between gap-4 mt-2 flex-col sm:flex-row">
                 <span className="flex flex-row gap-2 items-center text-sm font-medium text-gray-200">
                     {t("museum.options")}
                 </span>
-                <span className="flex gap-2">
+                <span className="flex gap-2 md:flex-row flex-col">
                     <button
                         id="hideDonated"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none  items-center"
                         onClick={() => setShowDonated(!showDonated)}
                     >
                         {showDonated ? (
@@ -836,14 +849,14 @@ export const MuseumApp: FC = () => {
                     </button>
                     <button
                         id="recapButton"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none items-center"
                         onClick={() => setShowRecapModal(true)}
                     >
                         <ListTodo /> {t("museum.recapMuseum.button")}
                     </button>
                     <button
                         id="resourcesButton"
-                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none  items-center"
                         onClick={() => setShowResourcesModal(true)}
                     >
                         <List /> {t("museum.resourceMuseum.button")}

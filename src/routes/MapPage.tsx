@@ -665,7 +665,7 @@ const MapPage: FC = () => {
 
                         {/* Insect Info Header */}
                         {isSidebarOpen &&
-                            selectedMapKey != "frostbite_fortress" && (
+                            Object.keys(insectData[selectedMapKey] || {}).length > 0 && (
                                 <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                     <button
                                         onClick={() =>
@@ -885,7 +885,7 @@ const MapPage: FC = () => {
                         )}
 
                         {/* Bestiary Info Header */}
-                        {isSidebarOpen && selectedMapKey != "spawn" && (
+                        {isSidebarOpen && Object.keys(bestiaryData[selectedMapKey] || {}).length > 0 && (
                             <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                 <button
                                     onClick={() =>
@@ -951,6 +951,11 @@ const MapPage: FC = () => {
                                                             <div className="flex-1">
                                                                 <div className="flex justify-between items-center">
                                                                     <div className="flex flex-col w-full">
+                                                                        {fish.halloween2025 && (
+                                                                            <span className="text-xs bg-orange-600 w-fit px-2 py-0 rounded mb-1">
+                                                                                Halloween Event
+                                                                            </span>
+                                                                        )}
                                                                         <span
                                                                             className={` font-semibold text-white items-center align-middle flex  leading-none`}
                                                                         >
@@ -988,7 +993,7 @@ const MapPage: FC = () => {
                                                                                     }
                                                                                 )}
                                                                             </span>
-                                                                            {fish.boss && (
+                                                                            {/*{fish.boss && (
                                                                                 <span
                                                                                     className={`ml-auto bg-LEGENDARY px-2  mr-1 pt-0.5 pb-1 rounded font-bold text-[12px] w-fit `}
                                                                                 >
@@ -1001,7 +1006,7 @@ const MapPage: FC = () => {
                                                                                         }
                                                                                     )}
                                                                                 </span>
-                                                                            )}
+                                                                            )}*/}
                                                                         </span>
                                                                         <span className=" mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
                                                                             <span className="mx-auto">
