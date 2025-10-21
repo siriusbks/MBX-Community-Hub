@@ -402,10 +402,10 @@ const InteractiveMap: React.FC<
                                         x: <b className="text-gray-300">{x}</b>
                                     </span>
                                     <span>
-                                        y: <b className="text-gray-300">{y}</b>
+                                        y: <b className="text-gray-300">{z}</b>
                                     </span>
                                     <span>
-                                        z: <b className="text-gray-300">{z}</b>
+                                        z: <b className="text-gray-300">{y}</b>
                                     </span>
                                 </span>
                             </span>
