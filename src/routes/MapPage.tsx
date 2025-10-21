@@ -24,6 +24,7 @@ import { bestiaryData } from "@components/map/bestiaryData";
 import {
     mapNameTranslationKeys,
     mapNameRegions,
+    regionsData,
 } from "@components/map/mapRegions";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
 import { Check, EyeOff } from "lucide-react";
@@ -56,6 +57,7 @@ interface GeoJSONFeatureCollection {
 
 interface ExtendedFeature extends GeoJSONFeature {
     key: string;
+    event?: boolean;
 }
 
 const allMarkers: Record<string, Record<string, MarkerConfig>> = {
@@ -316,16 +318,41 @@ const MapPage: FC = () => {
 
                                                 {/* Nazwa i level */}
                                                 <span className="flex flex gap-1 items-center">
-                                                    {config.properties ?.level !== undefined && (
+                                                    {config.properties
+                                                        ?.level !==
+                                                        undefined && (
                                                         <span
-  className={`flex justify-center items-center text-center text-xs rounded ${LevelBG_Gradient(
-    Number(config.properties.level)
-  )} ${LevelTextColor(Number(config.properties.level))} min-w-10 whitespace-nowrap`}
->
-  lv. {config.properties.level}
-</span>
+                                                            className={`flex justify-center items-center text-center text-xs rounded ${LevelBG_Gradient(
+                                                                Number(
+                                                                    config
+                                                                        .properties
+                                                                        .level
+                                                                )
+                                                            )} ${LevelTextColor(
+                                                                Number(
+                                                                    config
+                                                                        .properties
+                                                                        .level
+                                                                )
+                                                            )} min-w-10 whitespace-nowrap`}
+                                                        >
+                                                            lv.{" "}
+                                                            {
+                                                                config
+                                                                    .properties
+                                                                    .level
+                                                            }
+                                                        </span>
                                                     )}
-                                                    <span className={`flex text-xs leading-none ${config.properties ?.level !== undefined ? "max-w-[80%]" : "max-w-[100%]"}  items-center gap-1`}>
+                                                    <span
+                                                        className={`flex text-xs leading-none ${
+                                                            config.properties
+                                                                ?.level !==
+                                                            undefined
+                                                                ? "max-w-[80%]"
+                                                                : "max-w-[100%]"
+                                                        }  items-center gap-1`}
+                                                    >
                                                         {t(config.displayName, {
                                                             ns: "markers",
                                                         })}
@@ -347,77 +374,85 @@ const MapPage: FC = () => {
                     </h2>
 
                     {/* Show Regions Toggle */}
-                    <label
-                        key="showRegions"
-                        className="flex mb-1 text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
-                    >
-                        <input
-                            type="checkbox"
-                            checked={showRegions}
-                            onChange={() => {
-                                setShowRegions((prev) => !prev);
-
-                                setShowSpawnpoints((prev) => {
-                                    if (prev) {
-                                        setShowSpawnpoints(false);
-                                        setTimeout(
-                                            () => setShowSpawnpoints(true),
-                                            0
-                                        );
-                                    }
-                                    return prev;
-                                });
-                            }}
-                            className="hidden"
-                        />
-                        <span
-                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
-                                showRegions
-                                    ? "bg-green-600 hover:bg-green-500"
-                                    : "bg-gray-700 hover:bg-gray-600"
-                            }`}
+                    {Object.keys(regionsData[selectedMapKey] || {}).length >
+                        0 && (
+                        <label
+                            key="showRegions"
+                            className="flex mb-1 text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
                         >
-                            {showRegions ? (
-                                <Check
-                                    strokeWidth={3}
-                                    className="w-3 h-3 text-white"
-                                />
-                            ) : (
-                                <EyeOff className="w-3 h-3 hidden text-white" />
-                            )}
-                        </span>
-                        {t("mappage.showMapRegions")}
-                    </label>
+                            <input
+                                type="checkbox"
+                                checked={showRegions}
+                                onChange={() => {
+                                    setShowRegions((prev) => !prev);
 
-                    {/* Show Regions Toggle */}
-                    <label
-                        key="showSpawnpoints"
-                        className="flex text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
-                    >
-                        <input
-                            type="checkbox"
-                            checked={showSpawnpoints}
-                            onChange={() => setShowSpawnpoints((prev) => !prev)}
-                            className="hidden"
-                        />
-                        <span
-                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
-                                showSpawnpoints
-                                    ? "bg-green-600 hover:bg-green-500"
-                                    : "bg-gray-700 hover:bg-gray-600"
-                            }`}
+                                    setShowSpawnpoints((prev) => {
+                                        if (prev) {
+                                            setShowSpawnpoints(false);
+                                            setTimeout(
+                                                () => setShowSpawnpoints(true),
+                                                0
+                                            );
+                                        }
+                                        return prev;
+                                    });
+                                }}
+                                className="hidden"
+                            />
+                            <span
+                                className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                    showRegions
+                                        ? "bg-green-600 hover:bg-green-500"
+                                        : "bg-gray-700 hover:bg-gray-600"
+                                }`}
+                            >
+                                {showRegions ? (
+                                    <Check
+                                        strokeWidth={3}
+                                        className="w-3 h-3 text-white"
+                                    />
+                                ) : (
+                                    <EyeOff className="w-3 h-3 hidden text-white" />
+                                )}
+                            </span>
+                            {t("mappage.showMapRegions")}
+                        </label>
+                    )}
+
+                    {/* Show Spawnpoints Toggle */}
+                    {Object.keys(bestiaryData[selectedMapKey] || {}).length >
+                        0 && (
+                        <label
+                            key="showSpawnpoints"
+                            className="flex text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
                         >
-                            {showSpawnpoints ? (
-                                <Check
-                                    strokeWidth={3}
-                                    className="w-3 h-3 text-white"
-                                />
-                            ) : (
-                                <EyeOff className="w-3 h-3 hidden text-white" />
-                            )}
-                        </span>
-                        {t("mappage.showBestiarySpawnpoints")}
-                    </label>
+                            <input
+                                type="checkbox"
+                                checked={showSpawnpoints}
+                                onChange={() =>
+                                    setShowSpawnpoints((prev) => !prev)
+                                }
+                                className="hidden"
+                            />
+                            <span
+                                className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                    showSpawnpoints
+                                        ? "bg-green-600 hover:bg-green-500"
+                                        : "bg-gray-700 hover:bg-gray-600"
+                                }`}
+                            >
+                                {showSpawnpoints ? (
+                                    <Check
+                                        strokeWidth={3}
+                                        className="w-3 h-3 text-white"
+                                    />
+                                ) : (
+                                    <EyeOff className="w-3 h-3 hidden text-white" />
+                                )}
+                            </span>
+                            {t("mappage.showBestiarySpawnpoints")}
+                        </label>
+                    )}
 
                     <input
                         type="range"
@@ -665,7 +700,8 @@ const MapPage: FC = () => {
 
                         {/* Insect Info Header */}
                         {isSidebarOpen &&
-                            Object.keys(insectData[selectedMapKey] || {}).length > 0 && (
+                            Object.keys(insectData[selectedMapKey] || {})
+                                .length > 0 && (
                                 <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                     <button
                                         onClick={() =>
@@ -885,30 +921,34 @@ const MapPage: FC = () => {
                         )}
 
                         {/* Bestiary Info Header */}
-                        {isSidebarOpen && Object.keys(bestiaryData[selectedMapKey] || {}).length > 0 && (
-                            <div className="flex items-center justify-between p-2 border-y border-gray-700">
-                                <button
-                                    onClick={() =>
-                                        setIsSidebarOpen(!isSidebarOpen)
-                                    }
-                                    className="text-green-400 hover:text-white transition text-sm"
-                                    title={isSidebarOpen ? "Close" : "Open"}
-                                ></button>
-                                {isSidebarOpen && (
-                                    <h2 className="text-sm font-semibold text-green-400 ml-2">
-                                        💀 {t("mappage.bestiaryinfo.title")} -{" "}
-                                        {t(
-                                            mapNameTranslationKeys[
-                                                selectedMapKey
-                                            ],
-                                            {
-                                                defaultValue: selectedMapKey,
-                                            }
-                                        )}{" "}
-                                    </h2>
-                                )}
-                            </div>
-                        )}
+                        {isSidebarOpen &&
+                            Object.keys(bestiaryData[selectedMapKey] || {})
+                                .length > 0 && (
+                                <div className="flex items-center justify-between p-2 border-y border-gray-700">
+                                    <button
+                                        onClick={() =>
+                                            setIsSidebarOpen(!isSidebarOpen)
+                                        }
+                                        className="text-green-400 hover:text-white transition text-sm"
+                                        title={isSidebarOpen ? "Close" : "Open"}
+                                    ></button>
+                                    {isSidebarOpen && (
+                                        <h2 className="text-sm font-semibold text-green-400 ml-2">
+                                            💀 {t("mappage.bestiaryinfo.title")}{" "}
+                                            -{" "}
+                                            {t(
+                                                mapNameTranslationKeys[
+                                                    selectedMapKey
+                                                ],
+                                                {
+                                                    defaultValue:
+                                                        selectedMapKey,
+                                                }
+                                            )}{" "}
+                                        </h2>
+                                    )}
+                                </div>
+                            )}
 
                         {/* Bestiary Spots (Regions) List */}
                         {isSidebarOpen && (
@@ -951,9 +991,10 @@ const MapPage: FC = () => {
                                                             <div className="flex-1">
                                                                 <div className="flex justify-between items-center">
                                                                     <div className="flex flex-col w-full">
-                                                                        {fish.halloween2025 && (
-                                                                            <span className="text-xs bg-orange-600 w-fit px-2 py-0 rounded mb-1">
-                                                                                Halloween Event
+                                                                        {fish.EventExclusive && (
+                                                                            <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
+                                                                                Halloween
+                                                                                Event
                                                                             </span>
                                                                         )}
                                                                         <span
@@ -964,24 +1005,26 @@ const MapPage: FC = () => {
                                                                                     fish.minlevel
                                                                                 )} ${LevelTextColor(
                                                                                     fish.minlevel
-                                                                                )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[12px] w-fit `}
+                                                                                )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[10px] w-fit overflow-hidden min-w-16 items-center flex justify-center`}
                                                                             >
-                                                                                {t(
-                                                                                    "bestiary.level",
+                                                                                <span>
+                                                                                    {t(
+                                                                                        "bestiary.level",
+                                                                                        {
+                                                                                            ns: "bestiary",
+                                                                                            defaultValue:
+                                                                                                "bestiary.level",
+                                                                                        }
+                                                                                    )}{" "}
                                                                                     {
-                                                                                        ns: "bestiary",
-                                                                                        defaultValue:
-                                                                                            "bestiary.level",
+                                                                                        fish.minlevel
                                                                                     }
-                                                                                )}{" "}
-                                                                                {
-                                                                                    fish.minlevel
-                                                                                }
 
-                                                                                -
-                                                                                {
-                                                                                    fish.maxlevel
-                                                                                }
+                                                                                    -
+                                                                                    {
+                                                                                        fish.maxlevel
+                                                                                    }
+                                                                                </span>
                                                                             </span>
                                                                             <span className="mb-0.5 text-[13px]">
                                                                                 {t(
