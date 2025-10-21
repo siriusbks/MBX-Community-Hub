@@ -67,6 +67,8 @@ export const Preview: FC = () => {
                 );
             }
 
+                    await new Promise((r) => setTimeout(r, 100));
+
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
                 allowTaint: false,

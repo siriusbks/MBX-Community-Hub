@@ -11,6 +11,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/6mE2lByQ/36b2e5420ef2dfe80fa642ed9b1a5ab4ab18020e_96.webp",
         "type": "Modpack",
+        "language": [],
         "badge": "Recommended"
     },
     {
@@ -25,6 +26,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/HFGMc58X/b23b00e294318cd70f7f44263d49eecf7134e624_96.webp",
         "type": "Minecraft Mod",
+        "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": "Popular"
     },
     {
@@ -39,6 +41,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/pgS7fqz5/2840877421f511a0d1ab05d7e4898958285e466b_96.webp",
         "type": "Minecraft Mod",
+        "language": ["🇺🇸", "🇫🇷"],
         "badge": "New"
     },
     {
@@ -53,6 +56,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/2ZCi35uw/63d8c1bb82de88d78a0c1cb5d4cd1d7004d47804_96.webp",
         "type": "Minecraft Mod",
+        "language": ["🇺🇸"],
         "badge": ""
     },
     {
@@ -68,6 +72,7 @@
         },
         "logo": "https://cdn.discordapp.com/icons/1407555576472535110/bc06d4317575655abdd1642c83815d93.png?size=100&quality=lossless",
         "type": "Discord",
+        "language": ["🇫🇷"],
         "badge": "New"
     },
     {
@@ -82,6 +87,7 @@
         },
         "logo": "https://i.imgur.com/t1mXmUW.png",
         "type": "Minecraft Mod",
+        "language": ["🇺🇸"],
         "badge": ""
     },
     {
@@ -97,6 +103,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/SiyJSGns/7352eb4713d9da6bf026026b27a1112f932741df_96.webp",
         "type": "Resource Pack",
+        "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
     },
     {
@@ -112,6 +119,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/3NQofyGp/8f91bbf5cef3cff67fa847abff15ecab93f526bd_96.webp",
         "type": "Resource Pack",
+        "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
     },
     {
@@ -127,6 +135,7 @@
         },
         "logo": "https://cdn.modrinth.com/data/Kb8wWhwz/0cb0b10ccd5e1a9a335ff0cf865ae0a6d209c41c_96.webp",
         "type": "Resource Pack",
+        "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
     }
 ]

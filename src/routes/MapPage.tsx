@@ -991,7 +991,7 @@ const MapPage: FC = () => {
                                                             <div className="flex-1">
                                                                 <div className="flex justify-between items-center">
                                                                     <div className="flex flex-col w-full">
-                                                                        {fish.EventExclusive && (
+                                                                        {fish.halloween2025 && (
                                                                             <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
                                                                                 Halloween
                                                                                 Event
