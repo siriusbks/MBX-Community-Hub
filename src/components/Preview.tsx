@@ -48,6 +48,28 @@ export const Preview: FC = () => {
         });
     };
 
+    const cleanupHtml2Canvas = () => {
+        // Workaround for sporadic NotFoundError during html2canvas cleanup in Chrome
+        // We safely remove any leftover containers if present
+        try {
+            const containers = document.querySelectorAll(
+                ".html2canvas-container"
+            );
+            containers.forEach((el) => {
+                const parent = el.parentNode;
+                if (parent) {
+                    try {
+                        parent.removeChild(el);
+                    } catch {
+                        // ignore if already removed/moved
+                    }
+                }
+            });
+        } catch {
+            // no-op
+        }
+    };
+
     const handleDownload = async () => {
         if (!previewRef.current) {
             setError("Preview element not found");
@@ -84,6 +106,8 @@ export const Preview: FC = () => {
                 scale: window.devicePixelRatio || 1,
                 backgroundColor: null,
                 logging: true,
+                // Avoid auto-removal race in Chrome; we'll clean up manually in finally
+                removeContainer: false,
                 onclone: (clonedDoc) => {
                     clonedDoc.body.className = document.body.className;
                     clonedDoc.body.style.fontFamily = getComputedStyle(
@@ -184,6 +208,8 @@ export const Preview: FC = () => {
                 );
             }
         } finally {
+            // Best-effort cleanup to prevent leftover containers and avoid NotFoundError
+            cleanupHtml2Canvas();
             setIsDownloading(false);
         }
     };
