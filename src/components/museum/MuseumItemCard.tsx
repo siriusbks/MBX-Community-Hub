@@ -8,6 +8,7 @@ interface MuseumCard {
     category?: string;
     rarity: string;
     unobtainable: string[];
+    missingRarity: Record<string, string>;
     craftModalOpener?: (itemId: string) => void;
 }
 
@@ -18,37 +19,12 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     rarity,
     category,
     unobtainable,
+    missingRarity,
     craftModalOpener,
 }) => {
     let adjustedRarity = rarity;
-
-    if (itemId.startsWith("bag_") || itemId.startsWith("scroll_small_")) {
-        adjustedRarity = "UNCOMMON";
-    } else if (
-        itemId.startsWith("candy_enchanted_fly") ||
-        itemId.startsWith("candy_enchanted_crafting")
-    ) {
-        adjustedRarity = "MYTHIC";
-    } else if (
-        itemId.startsWith("barrel_") ||
-        itemId.startsWith("rune_enchanted_") ||
-        itemId.startsWith("scroll_enchanted_") ||
-        itemId.startsWith("candy_enchanted_")
-    ) {
-        adjustedRarity = "EPIC";
-    } else if (
-        itemId.startsWith("enchanted_") ||
-        itemId.startsWith("candy_fly") ||
-        itemId.startsWith("candy_crafting")
-    ) {
-        adjustedRarity = "LEGENDARY";
-    } else if (
-        itemId.startsWith("crate_") ||
-        itemId.startsWith("rune_big_") ||
-        itemId.startsWith("scroll_big_") ||
-        itemId.startsWith("candy_")
-    ) {
-        adjustedRarity = "RARE";
+    if ((adjustedRarity === "UNKNOWN" || adjustedRarity === "COMMON") && missingRarity[itemId]) {
+        adjustedRarity = missingRarity[itemId];
     }
 
     const TMPBorderColorClass =

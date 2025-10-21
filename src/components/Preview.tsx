@@ -22,8 +22,17 @@ const BACKGROUND_TRANSITION = "filter 0.3s ease";
 
 export const Preview: FC = () => {
     const { t } = useTranslation("profile");
-    const { username, uuid, level, background, professions, playtime, daily, weekly, museum } =
-        useProfileStore();
+    const {
+        username,
+        uuid,
+        level,
+        background,
+        professions,
+        playtime,
+        daily,
+        weekly,
+        museum,
+    } = useProfileStore();
     const previewRef = useRef<HTMLDivElement>(null);
     const [isDownloading, setIsDownloading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -67,7 +76,7 @@ export const Preview: FC = () => {
                 );
             }
 
-                    await new Promise((r) => setTimeout(r, 100));
+            await new Promise((r) => setTimeout(r, 100));
 
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
@@ -171,7 +180,7 @@ export const Preview: FC = () => {
             } else {
                 setError(
                     err.message ||
-                    "Failed to download the image. Please try again."
+                        "Failed to download the image. Please try again."
                 );
             }
         } finally {
@@ -195,10 +204,11 @@ export const Preview: FC = () => {
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${isDownloading
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
+                        isDownloading
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:bg-green-700"
-                        }`}
+                    }`}
                 >
                     <Download size={24} />
                     {isDownloading
@@ -239,8 +249,12 @@ export const Preview: FC = () => {
                             museum={museum}
                             relics={useProfileStore.getState().relics}
                             showRelics={useProfileStore.getState().showRelics}
-                            showStatistics={useProfileStore.getState().showStatistics}
-                            showJoinTime={useProfileStore.getState().showJoinTime}
+                            showStatistics={
+                                useProfileStore.getState().showStatistics
+                            }
+                            showJoinTime={
+                                useProfileStore.getState().showJoinTime
+                            }
                         />
                         <ProfessionsGrid professions={enabledProfessions} />
                     </div>

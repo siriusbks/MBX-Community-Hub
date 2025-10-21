@@ -65,6 +65,14 @@ export const MuseumApp: FC = () => {
             .catch((err) => console.error("Error loading JSON :", err));
     }, []);
 
+    const [missingRarity, setMissingRarity] = useState<Record<string, string>>({});
+    useEffect(() => {
+        fetch("/assets/data/items-missing-rarity.json")
+            .then((res) => res.json())
+            .then((data) => setMissingRarity(data || {}))
+            .catch((err) => console.error("Error loading JSON:", err));
+    }, []);
+
     const totalStats =
         groupedItems && Array.isArray(groupedItems)
             ? {
@@ -579,6 +587,7 @@ export const MuseumApp: FC = () => {
                                         rarity={rarity}
                                         category={group.category}
                                         unobtainable={unobtainable}
+                                        missingRarity={missingRarity}
                                         craftModalOpener={() =>
                                             openCraftModal(
                                                 itemId,
