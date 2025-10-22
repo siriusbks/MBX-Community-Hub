@@ -169,7 +169,7 @@
         }
     },
     {
-        "id": "mm-workshop_cook_small",
+        "id": "mm-workshop_cooker_small",
         "category": "UTILILTY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -227,7 +227,7 @@
         }
     },
     {
-        "id": "mm-workshop_fisherman_small",
+        "id": "mm-workshop_fisher_small",
         "category": "UTILILTY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -402,7 +402,7 @@
         }
     },
     {
-        "id": "mm-workshop_jeweler_small",
+        "id": "mm-workshop_jeweller_small",
         "category": "UTILILTY_BLOCK",
         "recipe": {
             "job": "TINKERER",
