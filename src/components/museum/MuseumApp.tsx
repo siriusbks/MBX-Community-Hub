@@ -747,7 +747,7 @@ export const MuseumApp: FC = () => {
                         )}
                     </div>
                 </form>
-                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6">
+                <span className={`${totalStats.total < 1 ? "hidden" : ""} flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6`}>
                     <span>
                         <h3 className="text-lg font-bold leading-none">
                             {t("museum.completion")}
