@@ -7,6 +7,8 @@ interface MuseumCard {
     isOwned: boolean;
     category?: string;
     rarity: string;
+    unobtainable: string[];
+    missingRarity: Record<string, string>;
     craftModalOpener?: (itemId: string) => void;
 }
 
@@ -16,37 +18,13 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     isOwned,
     rarity,
     category,
+    unobtainable,
+    missingRarity,
     craftModalOpener,
 }) => {
     let adjustedRarity = rarity;
-
-    if (itemId.startsWith("bag_") || itemId.startsWith("scroll_small_")) {
-        adjustedRarity = "UNCOMMON";
-    } else if (
-        itemId.startsWith("candy_enchanted_fly") ||
-        itemId.startsWith("candy_enchanted_crafting")
-    ) {
-        adjustedRarity = "MYTHIC";
-    } else if (
-        itemId.startsWith("barrel_") ||
-        itemId.startsWith("rune_enchanted_") ||
-        itemId.startsWith("scroll_enchanted_") ||
-        itemId.startsWith("candy_enchanted_")
-    ) {
-        adjustedRarity = "EPIC";
-    } else if (
-        itemId.startsWith("enchanted_") ||
-        itemId.startsWith("candy_fly") ||
-        itemId.startsWith("candy_crafting")
-    ) {
-        adjustedRarity = "LEGENDARY";
-    } else if (
-        itemId.startsWith("crate_") ||
-        itemId.startsWith("rune_big_") ||
-        itemId.startsWith("scroll_big_") ||
-        itemId.startsWith("candy_")
-    ) {
-        adjustedRarity = "RARE";
+    if ((adjustedRarity === "UNKNOWN" || adjustedRarity === "COMMON") && missingRarity[itemId]) {
+        adjustedRarity = missingRarity[itemId];
     }
 
     const TMPBorderColorClass =
@@ -81,20 +59,11 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         }[adjustedRarity] ||
         "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
-    const { t } = useTranslation("museum");
+    const { t } = useTranslation(["museum", "items"]);
 
     const [src, setSrc] = useState(
         `/assets/media/museum/${category}/${itemId}.png`
     );
-
-    const [unobtainable, setUnobtainable] = useState<string[]>([]);
-
-    useEffect(() => {
-        fetch("/assets/data/items-unobtainable.json")
-            .then((res) => res.json())
-            .then((data) => setUnobtainable(data.unobtainable || []))
-            .catch((err) => console.error("Error loading JSON :", err));
-    }, []);
 
     const isUnobtainable =
         Array.isArray(unobtainable) && unobtainable.includes(itemId);
@@ -136,7 +105,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         >
             <img
                 style={{ imageRendering: "pixelated" }}
-                className={`w-16 h-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] ${
+                className={`w-16 h-16 mb-1  drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] ${
                     isOwned ? "grayscale" : ""
                 }`}
                 src={src}
@@ -148,7 +117,9 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                     isOwned ? "opacity-80 text-green-300" : ""
                 }`}
             >
-                {itemId
+                {t(`item.${itemId}`, {
+                    ns: "items",
+                    defaultValue: itemId
                     .replace(/_/g, " ")
                     .split(" ")
                     .map(
@@ -156,7 +127,17 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                             word.charAt(0).toUpperCase() +
                             word.slice(1).toLowerCase()
                     )
-                    .join(" ")}
+                    .join(" "),
+                })}
+                {/*{itemId
+                    .replace(/_/g, " ")
+                    .split(" ")
+                    .map(
+                        (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                    )
+                    .join(" ")}*/}
             </span>
 
             {isOwned && (

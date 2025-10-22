@@ -32,6 +32,17 @@ const isNearBottom = (top: string) => {
     return false;
 };
 
+const iconMap: Record<string, string> = {
+    HEALTH: "/assets/media/elemental/health.png",
+    AGILITY: "/assets/media/elemental/agility.png",
+    STRENGTH: "/assets/media/elemental/strength.png",
+    INTELLIGENCE: "/assets/media/elemental/intelligence.png",
+    WISDOM: "/assets/media/elemental/wisdom.png",
+    LUCK: "/assets/media/elemental/luck.png",
+    FORTUNE: "/assets/media/elemental/fortune.png",
+    DEFENSE: "/assets/media/elemental/defense.png",
+};
+
 type TooltipPos = { left: number; top: number; place: "bottom" | "top" };
 
 function useAnchorPosition(
@@ -146,13 +157,21 @@ export const EquipmentSlot: React.FC<Props> = ({
                                                 key={stat}
                                                 className="flex justify-between text-[11px] text-gray-300"
                                             >
-                                                
-                                                {t(
-                                                    `equip.stats.names.${stat}`,
-                                                    {
-                                                        defaultValue: stat,
-                                                    }
-                                                )}
+                                                <span className="font-semibold">
+                                                    <img
+                                                        src={
+                                                            iconMap[stat] || ""
+                                                        }
+                                                        alt={stat}
+                                                        className="w-3 h-3 inline-block mr-1"
+                                                    />
+                                                    {t(
+                                                        `equip.stats.names.${stat}`,
+                                                        {
+                                                            defaultValue: stat,
+                                                        }
+                                                    )}
+                                                </span>
                                                 <span className="text-gray-200">
                                                     {range[0] === range[1]
                                                         ? range[0]

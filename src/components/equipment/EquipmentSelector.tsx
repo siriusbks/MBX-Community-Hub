@@ -54,6 +54,17 @@ export const EquipmentSelector: React.FC<Props> = ({
         );
     };
 
+    const iconMap: Record<string, string> = {
+        HEALTH: "/assets/media/elemental/health.png",
+        AGILITY: "/assets/media/elemental/agility.png",
+        STRENGTH: "/assets/media/elemental/strength.png",
+        INTELLIGENCE: "/assets/media/elemental/intelligence.png",
+        WISDOM: "/assets/media/elemental/wisdom.png",
+        LUCK: "/assets/media/elemental/luck.png",
+        FORTUNE: "/assets/media/elemental/fortune.png",
+        DEFENSE: "/assets/media/elemental/defense.png",
+    };
+
     const filtered = equipment.filter(
         (it) =>
             it.category === category &&
@@ -266,6 +277,11 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                         key={stat}
                                                         className="flex justify-between"
                                                     >
+                                                        <span><img
+                                                            src={iconMap[stat] || ""}
+                                                            alt={stat}
+                                                            className="w-3 h-3 inline-block mr-1"
+                                                        />
                                                         {t(
                                                             `equip.stats.names.${stat}`,
                                                             {
@@ -273,6 +289,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                                     stat,
                                                             }
                                                         )}
+                                                        </span>
                                                         <span>
                                                             {range[0] ===
                                                             range[1]

@@ -334,7 +334,7 @@ const InteractiveMap: React.FC<
                             iconSize: [32, 32],
                             iconAnchor: [16, 16],
                             popupAnchor: [0, -16],
-                            className: "filter drop-shadow-[0_0_1px_#00000099]",
+                            className: `filter drop-shadow-[0_0_1px_#00000099] `,
                         })}
                     >
                         <Popup>
@@ -402,10 +402,10 @@ const InteractiveMap: React.FC<
                                         x: <b className="text-gray-300">{x}</b>
                                     </span>
                                     <span>
-                                        y: <b className="text-gray-300">{y}</b>
+                                        y: <b className="text-gray-300">{z}</b>
                                     </span>
                                     <span>
-                                        z: <b className="text-gray-300">{z}</b>
+                                        z: <b className="text-gray-300">{y}</b>
                                     </span>
                                 </span>
                             </span>

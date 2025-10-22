@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Church } from "lucide-react";
 import { BestiaryInfo, bestiaryData } from "./bestiaryData";
-import { it } from "node:test";
 
 export const mapNameTranslationKeys: Record<string, string> = {
     spawn: "mappage.maps.spawn_island.name",
