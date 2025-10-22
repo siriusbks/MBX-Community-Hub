@@ -42,25 +42,10 @@
         "logo": "https://cdn.modrinth.com/data/pgS7fqz5/2840877421f511a0d1ab05d7e4898958285e466b_96.webp",
         "type": "Minecraft Mod",
         "language": ["🇺🇸", "🇫🇷"],
-        "badge": "New"
-    },
-    {
-        "id": "3",
-        "name": "Notra",
-        "creator": "imjustprism",
-        "links": {
-            "website": "",
-            "modrinth": "https://modrinth.com/mod/notra",
-            "github": "https://github.com/imjustswaytooshy/Notra",
-            "curseforge": ""
-        },
-        "logo": "https://cdn.modrinth.com/data/2ZCi35uw/63d8c1bb82de88d78a0c1cb5d4cd1d7004d47804_96.webp",
-        "type": "Minecraft Mod",
-        "language": ["🇺🇸"],
         "badge": ""
     },
     {
-        "id": "4",
+        "id": "3",
         "name": "Minebox Atlas",
         "creator": "Nyx_031",
         "links": {
@@ -73,25 +58,10 @@
         "logo": "https://cdn.discordapp.com/icons/1407555576472535110/bc06d4317575655abdd1642c83815d93.png?size=100&quality=lossless",
         "type": "Discord",
         "language": ["🇫🇷"],
-        "badge": "New"
-    },
-    {
-        "id": "5",
-        "name": "Minebox Journeymap",
-        "creator": "ThirtyTwelveNor",
-        "links": {
-            "website": "",
-            "modrinth": "",
-            "github": "https://github.com/ThirtyTwelveNor/mineboxjourneymap",
-            "curseforge": ""
-        },
-        "logo": "https://i.imgur.com/t1mXmUW.png",
-        "type": "Minecraft Mod",
-        "language": ["🇺🇸"],
         "badge": ""
     },
     {
-        "id": "6",
+        "id": "4",
         "name": "Minebox Plus",
         "subname": "Missing Minebox Textures",
         "creator": "Tiny Slime Studio",
@@ -107,7 +77,7 @@
         "badge": ""
     },
     {
-        "id": "7",
+        "id": "5",
         "name": "Gray Crops",
         "subname": "Minebox Plus Addon",
         "creator": "Tiny Slime Studio",
@@ -123,7 +93,7 @@
         "badge": ""
     },
     {
-        "id": "8",
+        "id": "6",
         "name": "Remove Bushy Leaves",
         "subname": "Minebox Plus Addon",
         "creator": "Tiny Slime Studio",
