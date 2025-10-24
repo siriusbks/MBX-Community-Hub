@@ -471,7 +471,7 @@ export const MuseumApp: FC = () => {
                             className="h-8 w-8"
                             style={{ imageRendering: "pixelated" }}
                         />
-                        {group.category}
+                        {group.category.toUpperCase().replace("_", " ")}
                         <p className="opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
                         </p>
@@ -714,7 +714,7 @@ export const MuseumApp: FC = () => {
                                             />
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
-                                                    {group.category}
+                                                    {group.category.toUpperCase().replace("_", " ")}
                                                 </span>
                                                 <span className="text-xs opacity-50">
                                                     [{ownedCount} /{" "}
