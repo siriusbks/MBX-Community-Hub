@@ -135,7 +135,7 @@
         },
         {
             "geometry": {
-                "coordinates": [399, 66, 62],
+                "coordinates": [399, 66, -62],
                 "type": "Point"
             },
             "id": 13,
