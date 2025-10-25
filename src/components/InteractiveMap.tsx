@@ -334,7 +334,7 @@ const InteractiveMap: React.FC<
                             iconSize: [32, 32],
                             iconAnchor: [16, 16],
                             popupAnchor: [0, -16],
-                            className: `filter drop-shadow-[0_0_1px_#00000099] `,
+                            className: `filter drop-shadow-[0_0_1px_#00000099] ${marker.type.toString() === "Event" ? "filter drop-shadow-[0_0_4px_#ffa500] drop-shadow-[0_0_8px_#ffa500]" : ""}`,
                         })}
                     >
                         <Popup>

@@ -43,6 +43,10 @@ export const MuseumApp: FC = () => {
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
+    // used_in_recipes fetched from the item API for the currently opened craft modal
+    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(null);
+    const [itemUsedLoading, setItemUsedLoading] = useState(false);
+    const [itemUsedError, setItemUsedError] = useState<string | null>(null);
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -177,6 +181,52 @@ export const MuseumApp: FC = () => {
             );
         }
     };
+
+        // When a craft modal opens, fetch the item's details from the API to get
+        // its `used_in_recipes` array (we show the ids in the summary).
+        useEffect(() => {
+            if (!craftModalItem) {
+                setItemUsedInRecipes(null);
+                setItemUsedError(null);
+                setItemUsedLoading(false);
+                return;
+            }
+
+            let active = true;
+            const controller = new AbortController();
+
+            setItemUsedLoading(true);
+            setItemUsedError(null);
+            setItemUsedInRecipes(null);
+
+            fetch(`https://api.minebox.co/item/${craftModalItem}`, { signal: controller.signal })
+                .then((res) => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!active) return;
+                    // API shape varies; try a few common paths
+                    const used = data?.used_in_recipes ?? data?.item?.used_in_recipes ?? [];
+                    const ids: string[] = Array.isArray(used)
+                        ? used.map((u: any) => u?.id || u?.item?.id).filter(Boolean)
+                        : [];
+                    setItemUsedInRecipes(Array.from(new Set(ids)));
+                })
+                .catch((err: any) => {
+                    if (!active) return;
+                    if (err.name === "AbortError") return;
+                    setItemUsedError(err?.message ?? "Error fetching item data");
+                })
+                .finally(() => {
+                    if (active) setItemUsedLoading(false);
+                });
+
+            return () => {
+                active = false;
+                controller.abort();
+            };
+        }, [craftModalItem]);
 
     // Recursive function to aggregate the required resources from a given recipe
     const gatherResources = (recipe: any): { [key: string]: number } => {
@@ -988,6 +1038,34 @@ export const MuseumApp: FC = () => {
                                             detailsIndex={detailsIndex}
                                         />
                                     </div>
+
+                                    {/* Footer Placeholder */}
+                                    {/*<span className="bg-gray-700 text-white p-4 rounded-b-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] mt-auto">
+                                    {itemUsedLoading ? (
+                                        <div className="text-sm text-gray-300">Loading related recipes…</div>
+                                    ) : itemUsedError ? (
+                                        <div className="text-sm text-red-400">{itemUsedError}</div>
+                                    ) : itemUsedInRecipes && itemUsedInRecipes.length > 0 ? (
+                                        <div className="flex flex-col w-full">
+                                            <div className="text-sm font-semibold mb-2">{t("museum.usedInRecipes.title") ?? "Used in recipes"}</div>
+                                            <div className="flex flex-wrap gap-2">
+                                                {itemUsedInRecipes.map((id) => (
+                                                    <a
+                                                        key={id}
+                                                        href={`https://minebox.co/universe/items?id=${id}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-600 hover:bg-gray-700"
+                                                    >
+                                                        {id}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="text-sm text-gray-300">No related recipes found</div>
+                                    )}
+                                    </span>*/}
                                 </>
                             ) : (
                                 <>

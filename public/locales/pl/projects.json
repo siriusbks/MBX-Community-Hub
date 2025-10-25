@@ -3,12 +3,10 @@
     "0": "Pakiet modów kompilujący mody dozwolone przez zasady Minebox; wszelkie dodatkowe mody są poza moją odpowiedzialnością, jeśli napotkasz sankcje.",
     "1": "MineboxAdditions to mod, który dodaje oczywiste funkcje do Twojej rozgrywki w Minebox!",
     "2": "Zestaw narzędzi dla lepszego doświadczenia w Minebox.",
-    "3": "Notra to prosty mod narzędziowy stworzony z użyciem fabric specjalnie dla Minebox.",
-    "4": "Serwer Discord z atlasem i przewodnikiem po Minebox (tylko w języku francuskim).",
-    "5": "Wysoce konfigurowalny dodatek do JourneyMap, który tworzy punkty orientacyjne dla Minebox.",
-    "6": "Pakiet Minebox Plus uzupełnia brakujące tekstury dla Serwerowego Pakietu Zasobów dostępnego na minebox.co.",
-    "7": "Dodatek do Minebox Plus, który zmienia wygląd niedojrzałych upraw na odcienie szarości.",
-    "8": "Dodatek do Minebox Plus, który usuwa domyślny efekt Krzaczastych Liści z Minebox."
+    "3": "Serwer Discord z atlasem i przewodnikiem po Minebox (tylko w języku francuskim).",
+    "4": "Pakiet Minebox Plus uzupełnia brakujące tekstury dla Serwerowego Pakietu Zasobów dostępnego na minebox.co.",
+    "5": "Dodatek do Minebox Plus, który zmienia wygląd niedojrzałych upraw na odcienie szarości.",
+    "6": "Dodatek do Minebox Plus, który usuwa domyślny efekt Krzaczastych Liści z Minebox."
   },
   "badge": {
     "Recommended": "Polecane",

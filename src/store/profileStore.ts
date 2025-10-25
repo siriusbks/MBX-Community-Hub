@@ -113,6 +113,11 @@ const defaultDynamic = Object.keys(staticMap).map((id) => ({
     currentXP: 0,
 }));
 
+// Helper to build the full default professions with static metadata merged in.
+export function getDefaultProfessions(): Profession[] {
+    return defaultDynamic.map(mergeProfession);
+}
+
 function mergeProfession(dynamic: {
     id: string;
     level: number;
@@ -218,7 +223,23 @@ export const useProfileStore = create<ProfileState>()(
             }),
             onRehydrateStorage: () => (state) => {
                 if (state) {
-                    state.professions = state.professions.map(mergeProfession);
+                    // Persisted state may contain an older, shorter list of professions.
+                    // Rebuild the professions array from the STATIC_PROFESSIONS so any
+                    // newly added professions are present. For persisted entries
+                    // keep saved level/currentXP values.
+                    const persistedById: Record<string, { id: string; level: number; currentXP: number }> = {};
+                    if (Array.isArray(state.professions)) {
+                        for (const p of state.professions) {
+                            if (p && typeof p.id === "string") {
+                                persistedById[p.id] = p as any;
+                            }
+                        }
+                    }
+
+                    state.professions = Object.keys(staticMap).map((id) => {
+                        const dyn = persistedById[id] ?? { id, level: 1, currentXP: 0 };
+                        return mergeProfession(dyn);
+                    });
                 }
             },
         }

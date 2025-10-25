@@ -10,12 +10,11 @@ const spawnMarkers: Record<string, MarkerConfig> = {
     EVENT_TEST: {
         displayName: "EVENT_TEST",
         iconUrl: "assets/media/museum/not-found.png",
-        geoJsonFile: "assets/geo/spawn/EventTest.geojson",
-        category: "markers.category.woodcutting",
-        defaultChecked: false,
+        geoJsonFile: "assets/geo/spawn/halloween/test.geojson",
+        category: "markers.category.halloween2025",
+        defaultChecked: true,
         properties: {
-            level: "666",
-            showCount: true,
+            event: true
         },
     },
     log_banana: {

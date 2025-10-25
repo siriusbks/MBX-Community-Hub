@@ -63,7 +63,6 @@
     {
         "id": "4",
         "name": "Minebox Plus",
-        "subname": "Missing Minebox Textures",
         "creator": "Tiny Slime Studio",
         "links": {
             "website": "",
@@ -78,12 +77,11 @@
     },
     {
         "id": "5",
-        "name": "Gray Crops",
-        "subname": "Minebox Plus Addon",
+        "name": "Minebox Gray Crops",
         "creator": "Tiny Slime Studio",
         "links": {
             "website": "",
-            "modrinth": "https://modrinth.com/resourcepack/minebox-plus-gray-crops",
+            "modrinth": "https://modrinth.com/resourcepack/minebox-gray-crops",
             "github": "",
             "curseforge": ""
         },
@@ -94,12 +92,11 @@
     },
     {
         "id": "6",
-        "name": "Remove Bushy Leaves",
-        "subname": "Minebox Plus Addon",
+        "name": "Minebox Clear Leaves",
         "creator": "Tiny Slime Studio",
         "links": {
             "website": "",
-            "modrinth": "https://modrinth.com/resourcepack/minebox-plus-remove-bushy-leaves",
+            "modrinth": "https://modrinth.com/resourcepack/minebox-clear-leaves",
             "github": "",
             "curseforge": ""
         },
