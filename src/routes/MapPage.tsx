@@ -115,6 +115,7 @@ const MapPage: FC = () => {
             try {
                 const features: ExtendedFeature[] = [];
                 for (const key of mapConfig.markerRefs) {
+                    console.log("Loading marker:", key);
                     const config = markers[key];
                     if (!config) continue;
                     const res = await fetch(config.geoJsonFile);
