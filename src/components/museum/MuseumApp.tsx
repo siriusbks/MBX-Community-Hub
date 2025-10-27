@@ -278,7 +278,7 @@ export const MuseumApp: FC = () => {
                                 className="flex items-center mr-2 whitespace-nowrap"
                                 onClick={() => setIsExpanded(!isExpanded)}
                             >
-                                {/* Przycisk zwijania/rozwijania */}
+                                {/* Collapse/expand button */}
                                 {hasSubRecipe && (
                                     <button className="mr-0.5 text-xs text-gray-300 hover:text-white focus:outline-none">
                                         {isExpanded ? (
@@ -304,7 +304,7 @@ export const MuseumApp: FC = () => {
                     {summary}
                 </div>
 
-                {/* Renderuj poddrzewo tylko jeśli rozwinięte */}
+                {/* Render the subtree only if expanded */}
                 {hasSubRecipe && isExpanded && (
                     <div
                         style={{
@@ -327,6 +327,23 @@ export const MuseumApp: FC = () => {
     const openCraftModal = (itemId: string, category: string) => {
         setCraftModalItem(itemId);
         setCraftModalCategory(category);
+    };
+
+    // Function that returns the content of link of the wiki
+    const moreInformation = () => {
+        if (!craftModalItem || !craftModalCategory) return null;
+        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(craftModalCategory)}&item=${encodeURIComponent(craftModalItem)}`;
+        return (
+            <a
+                key={craftModalItem}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
+            >
+                ?
+            </a>
+        );
     };
 
     // Function that returns the content of the missing items recap
@@ -833,14 +850,7 @@ export const MuseumApp: FC = () => {
                                             </p>
                                         </span>
                                         <span className="ml-auto">
-                                            <a
-                                                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
-                                                href={`https://minebox.co/pl/universe/items?id=${craftModalItem}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                ?
-                                            </a>
+                                            {moreInformation()}
                                         </span>
                                     </span>
                                     <RecipeTree
