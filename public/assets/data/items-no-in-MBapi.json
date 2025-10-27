@@ -492,5 +492,815 @@
                 }
             ]
         }
+    },
+    {
+        "id": "basic_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 5
+                },
+                {
+                    "type": "custom",
+                    "id": "chapter_III",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_wheat",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_beetroot",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_potato",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_carrot",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_nether_wart",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_sugar_cane",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_cactus",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_pumpkin",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_melon_slice",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_cocoa_beans",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_bamboo",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_kelp",
+                    "amount": 2
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_sweet_berries",
+                    "amount": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "pineapple_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 15
+                },
+                {
+                    "type": "custom",
+                    "id": "pineapple",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "mango",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "fallen_star",
+                    "amount": 6
+                },
+                {
+                    "type": "custom",
+                    "id": "lux",
+                    "amount": 250000
+                },
+                {
+                    "type": "custom",
+                    "id": "alchemy_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "fishing_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "lumberjack_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "mining_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "blacksmithing_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "cooking_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "hunting_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "jeweling_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "shoemaking_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "tailoring_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "tinkering_level",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "treasure_hunter",
+                    "amount": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": "chad_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 55
+                },
+                {
+                    "type": "custom",
+                    "id": "lumberjack_level",
+                    "amount": 75
+                },
+                {
+                    "type": "custom",
+                    "id": "protein_meat_bar",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "divorce_potion",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "potion_strength",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "scorpion_bottle",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_log_laughing_tree",
+                    "amount": 650
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_log_walnut",
+                    "amount": 2500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_log_sacred_coconut",
+                    "amount": 2500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_log_mystic_hornbeam",
+                    "amount": 750
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_divorce_potion",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "mermaid",
+                    "amount": 30
+                },
+                {
+                    "type": "custom",
+                    "id": "time_played",
+                    "amount": 250
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 350
+                },
+                {
+                    "type": "custom",
+                    "id": "treasure_hunter",
+                    "amount": 30
+                },
+                {
+                    "type": "custom",
+                    "id": "lux",
+                    "amount": 100000000
+                },
+                {
+                    "type": "custom",
+                    "id": "love_potion_big",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_cocoa_beans",
+                    "amount": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "thunder_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 50
+                },
+                {
+                    "type": "custom",
+                    "id": "mermaid",
+                    "amount": 30
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_wheat",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_beetroot",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_potato",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_carrot",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_nether_wart",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_sugar_cane",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_cactus",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_pumpkin",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_melon_slice",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_cocoa_beans",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_bamboo",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_kelp",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_sweet_berries",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "candy_enchanted_fly",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 500
+                },
+                {
+                    "type": "custom",
+                    "id": "treasure_hunter",
+                    "amount": 30
+                }
+            ]
+        }
+    },
+    {
+        "id": "opal_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 80
+                },
+                {
+                    "type": "custom",
+                    "id": "jeweling_level",
+                    "amount": 90
+                },
+                {
+                    "type": "custom",
+                    "id": "tailoring_level",
+                    "amount": 90
+                },
+                {
+                    "type": "custom",
+                    "id": "shoemaking_level",
+                    "amount": 90
+                },
+                {
+                    "type": "custom",
+                    "id": "treasure_hunter",
+                    "amount": 60
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_opale",
+                    "amount": 48
+                },
+                {
+                    "type": "custom",
+                    "id": "ingot_rainbow_stone",
+                    "amount": 48
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_ore_powder",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_ore_opale",
+                    "amount": 7500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_ore_rainbow",
+                    "amount": 7500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_ore_liquid_diamonds",
+                    "amount": 7500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_ore_topaz",
+                    "amount": 7500
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 750
+                },
+                {
+                    "type": "custom",
+                    "id": "rainbow_stone_plate",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "harvester_royal_axe",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "harvester_royal_hoe",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "lux",
+                    "amount": 250000000
+                }
+            ]
+        }
+    },
+    {
+        "id": "grumpy_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 40
+                },
+                {
+                    "type": "custom",
+                    "id": "hunting_level",
+                    "amount": 60
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_dps",
+                    "amount": 1000000
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_poop",
+                    "amount": 100
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_clown_goofish",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_monkey",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_bamboo",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_desert",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_ice",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_pirate",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_swamp",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "essence_of_scavenger",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 350
+                },
+                {
+                    "type": "custom",
+                    "id": "time_played",
+                    "amount": 125
+                }
+            ]
+        }
+    },
+    {
+        "id": "crimson_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 1250
+                },
+                {
+                    "type": "custom",
+                    "id": "time_played",
+                    "amount": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": "jackpot_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 20
+                },
+                {
+                    "type": "custom",
+                    "id": "time_played",
+                    "amount": 50
+                },
+                {
+                    "type": "custom",
+                    "id": "lux",
+                    "amount": 777777777
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_common",
+                    "amount": 200
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_uncommon",
+                    "amount": 100
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_rare",
+                    "amount": 50
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_epic",
+                    "amount": 25
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_legendary",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_bundle_mythic",
+                    "amount": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": "sage_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 30
+                },
+                {
+                    "type": "custom",
+                    "id": "time_played",
+                    "amount": 30
+                },
+                {
+                    "type": "custom",
+                    "id": "alchemy_level",
+                    "amount": 40
+                },
+                {
+                    "type": "custom",
+                    "id": "herbal_soup",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_plant_lily",
+                    "amount": 1500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_plant_clover",
+                    "amount": 1500
+                },
+                {
+                    "type": "custom",
+                    "id": "butterfly_atlas_moth",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "butterfly_birdwing",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "butterfly_purple_emperor",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "butterfly_sunset_moth",
+                    "amount": 6
+                },
+                {
+                    "type": "custom",
+                    "id": "insect_wasp",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "insect_ladybug",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "butterfly_tiger",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_experience_pet",
+                    "amount": 150000
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_bamboo",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_cactus",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_kelp",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_sugar_cane",
+                    "amount": 8
+                }
+            ]
+        }
+    },
+    {
+        "id": "abyss_skull",
+        "category": "SKULL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "player_level",
+                    "amount": 40
+                },
+                {
+                    "type": "custom",
+                    "id": "fishing_level",
+                    "amount": 70
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_kraken",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_rainbow_sparkle_jelly",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "fish_moon_jellyfish",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "extra_smelly_fish_juice",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "enchanted_kelp",
+                    "amount": 3
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_puddle",
+                    "amount": 50000
+                },
+                {
+                    "type": "custom",
+                    "id": "mermaid",
+                    "amount": 60
+                },
+                {
+                    "type": "custom",
+                    "id": "treasure_hunter",
+                    "amount": 50
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_fish_sushi_crab",
+                    "amount": 40
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_fish_golden_shrimp",
+                    "amount": 40
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_fish_clownfish",
+                    "amount": 500
+                },
+                {
+                    "type": "custom",
+                    "id": "collection_fish_surgeonfish",
+                    "amount": 500
+                },
+                {
+                    "type": "custom",
+                    "id": "moorish_idol_sashimi",
+                    "amount": 10
+                },
+                {
+                    "type": "custom",
+                    "id": "bucket_water_royal",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "museum_items",
+                    "amount": 300
+                }
+            ]
+        }
     }
 ]
