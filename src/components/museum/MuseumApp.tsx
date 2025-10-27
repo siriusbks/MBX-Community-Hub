@@ -13,6 +13,9 @@ import {
     AlertTriangle,
     Plus,
     Minus,
+    List,
+    ListTodo,
+    X,
 } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
@@ -33,13 +36,17 @@ interface Details {
 }
 
 export const MuseumApp: FC = () => {
-    const { t } = useTranslation("museum");
+    const { t } = useTranslation(["museum", "items"]);
     const { username, setUsername } = useProfileStore();
 
     // States for storing data from the API and JSON files
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
+    // used_in_recipes fetched from the item API for the currently opened craft modal
+    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(null);
+    const [itemUsedLoading, setItemUsedLoading] = useState(false);
+    const [itemUsedError, setItemUsedError] = useState<string | null>(null);
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -52,6 +59,23 @@ export const MuseumApp: FC = () => {
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
     const [showDonated, setShowDonated] = useState(true);
+
+    // FIX: items-unobtainable.json loading 1.5K times :)
+    const [unobtainable, setUnobtainable] = useState<string[]>([]);
+    useEffect(() => {
+        fetch("/assets/data/items-unobtainable.json")
+            .then((res) => res.json())
+            .then((data) => setUnobtainable(data.unobtainable || []))
+            .catch((err) => console.error("Error loading JSON :", err));
+    }, []);
+
+    const [missingRarity, setMissingRarity] = useState<Record<string, string>>({});
+    useEffect(() => {
+        fetch("/assets/data/items-missing-rarity.json")
+            .then((res) => res.json())
+            .then((data) => setMissingRarity(data || {}))
+            .catch((err) => console.error("Error loading JSON:", err));
+    }, []);
 
     const totalStats =
         groupedItems && Array.isArray(groupedItems)
@@ -157,6 +181,52 @@ export const MuseumApp: FC = () => {
             );
         }
     };
+
+        // When a craft modal opens, fetch the item's details from the API to get
+        // its `used_in_recipes` array (we show the ids in the summary).
+        useEffect(() => {
+            if (!craftModalItem) {
+                setItemUsedInRecipes(null);
+                setItemUsedError(null);
+                setItemUsedLoading(false);
+                return;
+            }
+
+            let active = true;
+            const controller = new AbortController();
+
+            setItemUsedLoading(true);
+            setItemUsedError(null);
+            setItemUsedInRecipes(null);
+
+            fetch(`https://api.minebox.co/item/${craftModalItem}`, { signal: controller.signal })
+                .then((res) => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then((data) => {
+                    if (!active) return;
+                    // API shape varies; try a few common paths
+                    const used = data?.used_in_recipes ?? data?.item?.used_in_recipes ?? [];
+                    const ids: string[] = Array.isArray(used)
+                        ? used.map((u: any) => u?.id || u?.item?.id).filter(Boolean)
+                        : [];
+                    setItemUsedInRecipes(Array.from(new Set(ids)));
+                })
+                .catch((err: any) => {
+                    if (!active) return;
+                    if (err.name === "AbortError") return;
+                    setItemUsedError(err?.message ?? "Error fetching item data");
+                })
+                .finally(() => {
+                    if (active) setItemUsedLoading(false);
+                });
+
+            return () => {
+                active = false;
+                controller.abort();
+            };
+        }, [craftModalItem]);
 
     // Recursive function to aggregate the required resources from a given recipe
     const gatherResources = (recipe: any): { [key: string]: number } => {
@@ -278,7 +348,7 @@ export const MuseumApp: FC = () => {
                                 className="flex items-center mr-2 whitespace-nowrap"
                                 onClick={() => setIsExpanded(!isExpanded)}
                             >
-                                {/* Collapse/expand button */}
+                                {/* Przycisk zwijania/rozwijania */}
                                 {hasSubRecipe && (
                                     <button className="mr-0.5 text-xs text-gray-300 hover:text-white focus:outline-none">
                                         {isExpanded ? (
@@ -288,7 +358,19 @@ export const MuseumApp: FC = () => {
                                         )}
                                     </button>
                                 )}
-                                {ing.amount}x {ing.id}
+                                {ing.amount}x{" "}
+                                {t(`item.${ing.id}`, {
+                                    ns: "items",
+                                    defaultValue: ing.id
+                                        .replace(/_/g, " ")
+                                        .split(" ")
+                                        .map(
+                                            (word: string) =>
+                                                word.charAt(0).toUpperCase() +
+                                                word.slice(1).toLowerCase()
+                                        )
+                                        .join(" "),
+                                })}
                             </span>
 
                             {detailsIndex &&
@@ -304,7 +386,7 @@ export const MuseumApp: FC = () => {
                     {summary}
                 </div>
 
-                {/* Render the subtree only if expanded */}
+                {/* Renderuj poddrzewo tylko jeśli rozwinięte */}
                 {hasSubRecipe && isExpanded && (
                     <div
                         style={{
@@ -354,13 +436,6 @@ export const MuseumApp: FC = () => {
 
         return (
             <div>
-                <div className="text-2xl font-bold">
-                    {t("museum.recapMuseum.title")}
-                </div>
-                <div className="text-sm font-normal mb-4 opacity-60">
-                    {t("museum.recapMuseum.description")}
-                </div>
-
                 {groupedItems.map((group, index) => {
                     const missingItems = group.items.filter(
                         (item) => !museumItems.includes(item)
@@ -370,7 +445,7 @@ export const MuseumApp: FC = () => {
                     return (
                         <div key={index} className="mb-4">
                             <div className="text-2xl font-bold">
-                                {group.category}
+                                {t(`museum.category.${group.category}`)}
                             </div>
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
@@ -390,7 +465,22 @@ export const MuseumApp: FC = () => {
                                                 }}
                                             />
                                             <span className="text-sm font-semibold">
-                                                {itemId}
+                                                {t(`item.${itemId}`, {
+                                                    ns: "items",
+                                                    defaultValue: itemId
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </span>
                                         </li>
                                     );
@@ -431,12 +521,6 @@ export const MuseumApp: FC = () => {
         }
         return (
             <span>
-                <div className="text-2xl font-bold">
-                    {t("museum.resourceMuseum.title")}
-                </div>
-                <div className="text-sm font-normal mb-4 opacity-60">
-                    {t("museum.resourceMuseum.description")}
-                </div>
                 <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {sortedResourceIds.map((resId) => {
                         return (
@@ -452,7 +536,22 @@ export const MuseumApp: FC = () => {
                                         style={{ imageRendering: "pixelated" }}
                                     />
                                     <span className="font-bold text-sm">
-                                        {resId}
+                                        {t(`item.${resId}`, {
+                                            ns: "items",
+                                            defaultValue: resId
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}
                                     </span>
                                     <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
                                         {totalResources[resId].toLocaleString(
@@ -470,17 +569,43 @@ export const MuseumApp: FC = () => {
 
     // Function that returns the display of the items grid and the category navigation bar
     const renderItems = () => {
+        const [expandedGroups, setExpandedGroups] = useState<
+            Record<string, boolean>
+        >({});
+
+        const toggleGroup = (category: string) => {
+            setExpandedGroups((prev) => ({
+                ...prev,
+                [category]: !prev[category],
+            }));
+        };
+
+        useEffect(() => {
+            if (groupedItems) {
+                const allExpanded: Record<string, boolean> = {};
+                groupedItems.forEach((group) => {
+                    allExpanded[group.category] = true;
+                });
+                setExpandedGroups(allExpanded);
+            }
+        }, [groupedItems]);
+
         if (!groupedItems || !detailsIndex) return null;
+
         return groupedItems.map((group, index) => {
             const ownedCount = group.items.filter((item) =>
                 museumItems.includes(item)
             ).length;
             const categoryId =
                 "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
+            const isExpanded = expandedGroups[group.category];
+
             return (
                 <div key={index} className="category w-full" id={categoryId}>
-                    {/* Category Title with icon and owned count */}
-                    <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
+                    <div
+                        className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
+                        onClick={() => toggleGroup(group.category)}
+                    >
                         <MuseumItemImage
                             groupCategory={group.category}
                             itemId={group.category}
@@ -488,13 +613,24 @@ export const MuseumApp: FC = () => {
                             className="h-8 w-8"
                             style={{ imageRendering: "pixelated" }}
                         />
-                        {group.category.toUpperCase().replace("_", " ")}
-                        <p className="opacity-40 text-sm">
+                        <span className="flex items-center">
+                            {isExpanded ? (
+                                <Minus className="p-0.5 opacity-70" />
+                            ) : (
+                                <Plus className="p-0.5 opacity-70" />
+                            )}
+                            {t(`museum.category.${group.category}`)}
+                        </span>
+                        <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
                         </p>
                     </div>
-                    {/* Grid of items */}
-                    <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
+
+                    <div
+                        className={`groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between overflow-hidden ${
+                            isExpanded ? "opacity-100" : "max-h-0 opacity-0"
+                        }`}
+                    >
                         {group.items.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
@@ -517,8 +653,13 @@ export const MuseumApp: FC = () => {
                                         isOwned={isOwned}
                                         rarity={rarity}
                                         category={group.category}
+                                        unobtainable={unobtainable}
+                                        missingRarity={missingRarity}
                                         craftModalOpener={() =>
-                                            openCraftModal(itemId, group.category)
+                                            openCraftModal(
+                                                itemId,
+                                                group.category
+                                            )
                                         }
                                     />
                                 );
@@ -673,9 +814,9 @@ export const MuseumApp: FC = () => {
                         )}
                     </div>
                 </form>
-                <span className="flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6">
+                <span className={`${totalStats.total < 1 ? "hidden" : ""} flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6`}>
                     <span>
-                        <h3 className="text-lg font-bold">
+                        <h3 className="text-lg font-bold leading-none">
                             {t("museum.completion")}
                         </h3>
                         <span className="flex flex-row justify-between gap-2">
@@ -717,7 +858,7 @@ export const MuseumApp: FC = () => {
                                     <a
                                         key={i}
                                         href={"#" + categoryId}
-                                        className="block w-full bg-gray-700 text-white p-2 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
+                                        className="block w-full bg-gray-700 text-white p-2 rounded-t transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
                                     >
                                         <span className="flex flex-row items-center gap-2">
                                             <MuseumItemImage
@@ -731,7 +872,9 @@ export const MuseumApp: FC = () => {
                                             />
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
-                                                    {group.category.toUpperCase().replace("_", " ")}
+                                                    {t(
+                                                        `museum.category.${group.category}`
+                                                    )}
                                                 </span>
                                                 <span className="text-xs opacity-50">
                                                     [{ownedCount} /{" "}
@@ -740,6 +883,19 @@ export const MuseumApp: FC = () => {
                                             </span>
                                         </span>
                                     </a>
+                                    {/* Progress bar */}
+                                    <div className="w-full bg-gray-600 rounded-b h-1 overflow-hidden">
+                                        <div
+                                            className="bg-gray-500 h-full transition-all duration-300"
+                                            style={{
+                                                width: `${
+                                                    (ownedCount /
+                                                        group.items.length) *
+                                                    100
+                                                }%`,
+                                            }}
+                                        ></div>
+                                    </div>
                                 </li>
                             );
                         })}
@@ -747,14 +903,14 @@ export const MuseumApp: FC = () => {
             </nav>
 
             {/* Buttons to display the missing items and resources modals */}
-            <div className="bg-gray-800 bg-opacity-50 p-4 rounded-lg recap-buttons-container flex justify-between gap-4 mt-2">
+            <div className="bg-gray-800 bg-opacity-50 p-4 rounded-lg recap-buttons-container flex justify-between gap-4 mt-2 flex-col sm:flex-row">
                 <span className="flex flex-row gap-2 items-center text-sm font-medium text-gray-200">
                     {t("museum.options")}
                 </span>
-                <span className="flex gap-2">
+                <span className="flex gap-2 md:flex-row flex-col">
                     <button
                         id="hideDonated"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none  items-center"
                         onClick={() => setShowDonated(!showDonated)}
                     >
                         {showDonated ? (
@@ -769,17 +925,17 @@ export const MuseumApp: FC = () => {
                     </button>
                     <button
                         id="recapButton"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none items-center"
                         onClick={() => setShowRecapModal(true)}
                     >
-                        <Eye /> {t("museum.recapMuseum.button")}
+                        <ListTodo /> {t("museum.recapMuseum.button")}
                     </button>
                     <button
                         id="resourcesButton"
-                        className="flex font-medium flex-row gap-2 text-sm bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 whitespace-nowrap items-center"
+                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none  items-center"
                         onClick={() => setShowResourcesModal(true)}
                     >
-                        <Eye /> {t("museum.resourceMuseum.button")}
+                        <List /> {t("museum.resourceMuseum.button")}
                     </button>
                 </span>
             </div>
@@ -804,7 +960,7 @@ export const MuseumApp: FC = () => {
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="craftModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
@@ -812,7 +968,7 @@ export const MuseumApp: FC = () => {
                         setCraftModalCategory(null);
                     }}
                 >
-                    <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
+                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
                         <span
                             className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
                             onClick={() => {
@@ -822,11 +978,14 @@ export const MuseumApp: FC = () => {
                         >
                             &times;
                         </span>
-                        <div id="craftDetails">
+                        <div
+                            id="craftDetails"
+                            className="flex flex-col flex-1 max-h-[90vh]" // <--- ważne
+                        >
                             {detailsIndex[craftModalItem] &&
                             detailsIndex[craftModalItem].recipe ? (
                                 <>
-                                    <span className="flex flex-row gap-2 items-center mb-4">
+                                    <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
                                         <MuseumItemImage
                                             groupCategory={craftModalCategory!}
                                             itemId={craftModalItem}
@@ -836,10 +995,25 @@ export const MuseumApp: FC = () => {
                                                 imageRendering: "pixelated",
                                             }}
                                         />
-                                        <span>
+                                        <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {craftModalItem}
+                                                {t(`item.${craftModalItem}`, {
+                                                    ns: "items",
+                                                    defaultValue: craftModalItem
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
@@ -852,17 +1026,60 @@ export const MuseumApp: FC = () => {
                                         <span className="ml-auto">
                                             {moreInformation()}
                                         </span>
-                                    </span>
-                                    <RecipeTree
-                                        recipe={
-                                            detailsIndex[craftModalItem].recipe
-                                        }
-                                        detailsIndex={detailsIndex}
-                                    />
+                                        <span
+                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                            onClick={() =>
+                                                setCraftModalItem(null)
+                                            }
+                                        >
+                                            <X
+                                                strokeWidth={3}
+                                                className="h-5 w-5"
+                                            />
+                                        </span>
+                                    </div>
+
+                                    <div className="flex-1 overflow-y-auto p-4 pb-3 custom-scrollbar">
+                                        <RecipeTree
+                                            recipe={
+                                                detailsIndex[craftModalItem]
+                                                    .recipe
+                                            }
+                                            detailsIndex={detailsIndex}
+                                        />
+                                    </div>
+
+                                    {/* Footer Placeholder */}
+                                    {/*<span className="bg-gray-700 text-white p-4 rounded-b-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] mt-auto">
+                                    {itemUsedLoading ? (
+                                        <div className="text-sm text-gray-300">Loading related recipes…</div>
+                                    ) : itemUsedError ? (
+                                        <div className="text-sm text-red-400">{itemUsedError}</div>
+                                    ) : itemUsedInRecipes && itemUsedInRecipes.length > 0 ? (
+                                        <div className="flex flex-col w-full">
+                                            <div className="text-sm font-semibold mb-2">{t("museum.usedInRecipes.title") ?? "Used in recipes"}</div>
+                                            <div className="flex flex-wrap gap-2">
+                                                {itemUsedInRecipes.map((id) => (
+                                                    <a
+                                                        key={id}
+                                                        href={`https://minebox.co/universe/items?id=${id}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-600 hover:bg-gray-700"
+                                                    >
+                                                        {id}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="text-sm text-gray-300">No related recipes found</div>
+                                    )}
+                                    </span>*/}
                                 </>
                             ) : (
                                 <>
-                                    <span className="flex flex-row gap-2 items-center mb-4">
+                                    <div className="bg-gray-700 text-white p-4 rounded-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
                                         <MuseumItemImage
                                             groupCategory={craftModalCategory!}
                                             itemId={craftModalItem}
@@ -872,16 +1089,52 @@ export const MuseumApp: FC = () => {
                                                 imageRendering: "pixelated",
                                             }}
                                         />
-                                        <span>
+                                        <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {craftModalItem}
+                                                {t(`item.${craftModalItem}`, {
+                                                    ns: "items",
+                                                    defaultValue: craftModalItem
+                                                        .replace(/_/g, " ")
+                                                        .split(" ")
+                                                        .map(
+                                                            (word: string) =>
+                                                                word
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                word
+                                                                    .slice(1)
+                                                                    .toLowerCase()
+                                                        )
+                                                        .join(" "),
+                                                })}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.noRecipe")}
                                             </p>
                                         </span>
-                                    </span>
+                                        <a
+                                            className="ml-auto"
+                                            href={`https://minebox.co/universe/items?id=${craftModalItem}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <span className="close flex items-center justify-center text-xl font-semibold cursor-pointer h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600">
+                                                ?
+                                            </span>
+                                        </a>
+                                        <span
+                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                            onClick={() =>
+                                                setCraftModalItem(null)
+                                            }
+                                        >
+                                            <X
+                                                strokeWidth={3}
+                                                className="h-5 w-5"
+                                            />
+                                        </span>
+                                    </div>
                                 </>
                             )}
                         </div>
@@ -892,41 +1145,80 @@ export const MuseumApp: FC = () => {
             {/* Missing items recap modal */}
             {showRecapModal && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="recapModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setShowRecapModal(false);
                     }}
                 >
-                    <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
-                        <span
-                            className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
-                            onClick={() => setShowRecapModal(false)}
+                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
+                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
+                            <ListTodo
+                                strokeWidth={2.4}
+                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
+                            />
+                            <span className="flex flex-col">
+                                <div className="text-2xl font-bold">
+                                    {t("museum.recapMuseum.title")}
+                                </div>
+                                <div className="text-sm font-normal opacity-60">
+                                    {t("museum.recapMuseum.description")}
+                                </div>
+                            </span>
+                            <span
+                                className="ml-auto close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                onClick={() => setShowRecapModal(false)}
+                            >
+                                <X strokeWidth={3} className="h-5 w-5" />
+                            </span>
+                        </div>
+
+                        <div
+                            id="recapContent"
+                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
                         >
-                            &times;
-                        </span>
-                        <div id="recapContent">{renderRecapContent()}</div>
+                            {renderRecapContent()}
+                        </div>
                     </div>
                 </div>
             )}
             {showResourcesModal && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-8"
+                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="resourcesModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setShowResourcesModal(false);
                     }}
                 >
-                    <div className="modal-content bg-[rgb(31,41,55)] text-white p-6 rounded-lg max-w-[90%] max-h-[80vh] mx-auto shadow-lg overflow-y-auto relative">
-                        <span
-                            className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
-                            onClick={() => setShowResourcesModal(false)}
+                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
+                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
+                            <List
+                                strokeWidth={2.4}
+                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
+                            />
+                            <span className="flex flex-col">
+                                <div className="text-2xl font-bold">
+                                    {t("museum.resourceMuseum.title")}
+                                </div>
+                                <div className="text-sm font-normal opacity-60">
+                                    {t("museum.resourceMuseum.description")}
+                                </div>
+                            </span>
+
+                            <span
+                                className="ml-auto close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                onClick={() => setShowResourcesModal(false)}
+                            >
+                                <X strokeWidth={3} className="h-5 w-5" />
+                            </span>
+                        </div>
+
+                        <div
+                            id="resourcesContent"
+                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
                         >
-                            &times;
-                        </span>
-                        <div id="resourcesContent">
                             {renderResourcesContent()}
                         </div>
                     </div>
