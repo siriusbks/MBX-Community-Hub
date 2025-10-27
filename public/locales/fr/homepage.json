@@ -10,5 +10,7 @@
     "homepage.features.equipment.title": "Gestionnaire d'équipement",
     "homepage.features.equipment.description": "Construisez et optimisez l'équipement de votre personnage.",
     "homepage.features.museum.title": "Musée",
-    "homepage.features.museum.description": "Explorez votre musée sans être connecté, mais n'oubliez pas d'activer l'accès API aux tierces-parties en jeu."
+    "homepage.features.museum.description": "Explorez votre musée sans être connecté, mais n'oubliez pas d'activer l'accès API aux tierces-parties en jeu.",
+    "homepage.features.itemsNrecipes.title": "Objets & Recettes",
+    "homepage.features.itemsNrecipes.description": "Explorez l'intégralité des objets et les recettes qui leur sont associées."
 }
