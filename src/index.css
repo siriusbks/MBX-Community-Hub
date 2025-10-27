@@ -87,10 +87,83 @@
     cursor: pointer;
 }
 
+/** Leaflet Map Custom Styles */
+.leaflet-interactive:focus {
+    outline: none;
+}
+.leaflet-interactive:hover {
+    fill-opacity: 0.4;
+    stroke-width: 3;
+    transition: fill-opacity, stroke-width 0.1s ease-in-out;
+}
+.bestiary-polygon:hover {
+    fill-opacity: 0.6;
+    stroke-width: 5;
+    transition: fill-opacity, stroke-width 0.1s ease-in-out;
+}
+.leaflet-tooltip {
+    background-color: rgba(31, 41, 55, 1) !important;
+    border: none !important;
+    color: white !important;
+    font-size: 0.75rem !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+}
+.leaflet-tooltip-right:before {
+    border-right-color: rgba(31, 41, 55, 1) !important;
+}
+.leaflet-tooltip-left:before {
+    border-left-color: rgba(31, 41, 55, 1) !important;
+}
+.leaflet-tooltip-top:before {
+    border-top-color: rgba(31, 41, 55, 1) !important;
+}
+.leaflet-tooltip-bottom:before {
+    border-bottom-color: rgba(31, 41, 55, 1) !important;
+}
+.leaflet-popup-content-wrapper {
+    color: white !important;
+    background-color: rgba(31, 41, 55, 1) !important;
+    border: rgb(68, 74, 84) 1px solid !important;
+}
+.leaflet-popup-content {
+    margin: 0.5rem 1rem !important;
+}
+.leaflet-popup-tip {
+    background-color: rgba(31, 41, 55, 1) !important;
+    border: rgb(68, 74, 84) 1px solid !important;
+}
+.leaflet-popup-close-button{
+    display: none !important;
+
+}
+.leaflet-control-zoom {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: transparent !important;
+    transition: all 0.1s ease-in-out !important;
+}
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    background-color: rgba(31, 41, 55, 1) !important;
+    color: white !important;
+    font-size: 1rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    line-height: 2rem !important;
+    text-align: center !important;
+    border: none !important;
+    margin-bottom: 0.25rem;
+}
+.leaflet-disabled{
+    opacity: 0.5 !important;
+    transition: all 0.1s ease-in-out !important;
+}
+/** Leaflet Map Custom Styles */
+
 :root {
     --color-COMMON: #665466;
     --color-COMMON-50: #66546620;
-    --color-COMMON-BORDER: #55a0ac ;
+    --color-COMMON-BORDER: #55a0ac;
     --color-UNCOMMON: #00c06f;
     --color-UNCOMMON-50: #00c06f20;
     --color-RARE: #00a5fc;

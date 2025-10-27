@@ -1,27 +1,33 @@
 /*
  * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
+ * Copyright (c) 2024-2025 SiriusB_
  * SPDX-License-Identifier: MIT
  */
 
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { ArrowRightLeft, Undo2 } from "lucide-react";
+import { ArrowRightLeft, Undo2, MapPinned } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { LevelBG_Color, LevelTextColor } from "@components/editor/LevelBadge";
+import {
+    LevelBG_Color,
+    LevelBG_Gradient,
+    LevelTextColor,
+} from "@components/editor/LevelBadge";
 
 import InteractiveMap from "@components/InteractiveMap";
 
 import { MarkerConfig } from "@t/markerTypes";
 import { mapData } from "@components/map/mapData";
+import { fishData, spotNames } from "@components/map/fishData";
+import { insectData } from "@components/map/insectData";
+import { bestiaryData } from "@components/map/bestiaryData";
 import {
-    fishData,
-    spotNames,
     mapNameTranslationKeys,
-} from "@components/map/fishData";
-import { insectData, insectRegions } from "@components/map/insectData";
-import { bestiaryData, bestiaryRegions } from "@components/map/bestiaryData";
+    mapNameRegions,
+    regionsData,
+} from "@components/map/mapRegions";
 import { defaultSelectedPerMap } from "@components/map/markers/defaultMarkers";
+import { Check, EyeOff } from "lucide-react";
 
 import kokokoMarkers from "@components/map/markers/kokokoMarkers";
 import spawnMarkers from "@components/map/markers/spawnMarkers";
@@ -51,6 +57,7 @@ interface GeoJSONFeatureCollection {
 
 interface ExtendedFeature extends GeoJSONFeature {
     key: string;
+    event?: boolean;
 }
 
 const allMarkers: Record<string, Record<string, MarkerConfig>> = {
@@ -88,11 +95,19 @@ const MapPage: FC = () => {
     const [mapOpacity, setMapOpacity] = useState(1);
     const [fishingVisible, setFishingVisible] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [showRegions, setShowRegions] = useState(false);
+    const [showSpawnpoints, setShowSpawnpoints] = useState(false);
 
     const mapConfig = mapData[selectedMapKey];
     const markers = allMarkers[selectedMapKey] || {};
 
-    const { t } = useTranslation(["map", "fishing", "markers", "insects", "bestiary"]);
+    const { t } = useTranslation([
+        "map",
+        "fishing",
+        "markers",
+        "insects",
+        "bestiary",
+    ]);
 
     // Load markers
     useEffect(() => {
@@ -100,6 +115,7 @@ const MapPage: FC = () => {
             try {
                 const features: ExtendedFeature[] = [];
                 for (const key of mapConfig.markerRefs) {
+                    console.log("Loading marker:", key);
                     const config = markers[key];
                     if (!config) continue;
                     const res = await fetch(config.geoJsonFile);
@@ -196,11 +212,11 @@ const MapPage: FC = () => {
                         📍 {t("mappage.markersSelection")}
                     </h2>
 
-                    <label className="flex items-center gap-2 text-sm text-gray-300 font-medium">
+                    <label className="flex items-center gap-2 text-sm text-gray-300 font-medium cursor-pointer select-none">
                         {t("mappage.selectAllMarkers")}
+
                         <input
                             type="checkbox"
-                            className="form-checkbox accent-green-500 cursor-pointer"
                             checked={mapConfig.markerRefs.every((ref) =>
                                 selectedMarkers.includes(ref)
                             )}
@@ -211,7 +227,29 @@ const MapPage: FC = () => {
                                     setSelectedMarkers([]);
                                 }
                             }}
+                            className="hidden"
                         />
+
+                        <span
+                            className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                mapConfig.markerRefs.every((ref) =>
+                                    selectedMarkers.includes(ref)
+                                )
+                                    ? "bg-green-600 hover:bg-green-500"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            {mapConfig.markerRefs.every((ref) =>
+                                selectedMarkers.includes(ref)
+                            ) ? (
+                                <Check
+                                    strokeWidth={3}
+                                    className="w-3 h-3 text-white"
+                                />
+                            ) : (
+                                <EyeOff className="w-3 h-3 hidden text-white" />
+                            )}
+                        </span>
                     </label>
 
                     <div className="overflow-y-auto max-h-56 custom-scrollbar space-y-2">
@@ -235,50 +273,95 @@ const MapPage: FC = () => {
                                     })}
                                 </h3>
                                 <div className="space-y-1">
-                                    {items.map(({ ref, config }) => (
-                                        <label
-                                            key={ref}
-                                            className="flex items-center gap-1 text-sm text-gray-200"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                className="form-checkbox accent-green-500 cursor-pointer"
-                                                checked={selectedMarkers.includes(
-                                                    ref
-                                                )}
-                                                onChange={() =>
-                                                    toggleMarker(ref)
-                                                }
-                                            />
-                                            {config.iconUrl && (
-                                                <img
-                                                    src={config.iconUrl}
-                                                    alt={config.displayName}
-                                                    className="w-5 h-5"
+                                    {items.map(({ ref, config }) => {
+                                        const isSelected =
+                                            selectedMarkers.includes(ref);
+
+                                        return (
+                                            <label
+                                                key={ref}
+                                                className="flex items-center gap-1 text-sm text-gray-200 cursor-pointer select-none"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isSelected}
+                                                    onChange={() =>
+                                                        toggleMarker(ref)
+                                                    }
+                                                    className="hidden"
                                                 />
-                                            )}
-                                            <span className="flex-1 flex justify-between items-center">
-                                                <span className="flex items-center gap-1 truncate">
-                                                    {t(config.displayName, {
-                                                        ns: "markers",
-                                                    })}
+
+                                                <span
+                                                    className={`flex items-center justify-center w-4 h-4 min-w-4 min-h-4 rounded transition-colors duration-200 ${
+                                                        isSelected
+                                                            ? "bg-green-600 hover:bg-green-500"
+                                                            : "bg-gray-700 hover:bg-gray-600"
+                                                    }`}
+                                                >
+                                                    {isSelected ? (
+                                                        <Check
+                                                            strokeWidth={3}
+                                                            className="w-3 h-3 text-white"
+                                                        />
+                                                    ) : (
+                                                        <EyeOff className="w-3 h-3 hidden text-white" />
+                                                    )}
+                                                </span>
+
+                                                {/* Ikona markera */}
+                                                {config.iconUrl && (
+                                                    <img
+                                                        src={config.iconUrl}
+                                                        alt={config.displayName}
+                                                        className="w-6 h-6"
+                                                    />
+                                                )}
+
+                                                {/* Nazwa i level */}
+                                                <span className="flex flex gap-1 items-center">
                                                     {config.properties
                                                         ?.level !==
                                                         undefined && (
-                                                            <span className="text-xs text-gray-400 whitespace-nowrap">
-                                                                (lv.{" "}
-                                                                {
+                                                        <span
+                                                            className={`flex justify-center items-center text-center text-xs rounded ${LevelBG_Gradient(
+                                                                Number(
                                                                     config
                                                                         .properties
                                                                         .level
-                                                                }
                                                                 )
-                                                            </span>
-                                                        )}
+                                                            )} ${LevelTextColor(
+                                                                Number(
+                                                                    config
+                                                                        .properties
+                                                                        .level
+                                                                )
+                                                            )} min-w-10 whitespace-nowrap`}
+                                                        >
+                                                            lv.{" "}
+                                                            {
+                                                                config
+                                                                    .properties
+                                                                    .level
+                                                            }
+                                                        </span>
+                                                    )}
+                                                    <span
+                                                        className={`flex text-xs leading-none ${
+                                                            config.properties
+                                                                ?.level !==
+                                                            undefined
+                                                                ? "max-w-[80%]"
+                                                                : "max-w-[100%]"
+                                                        }  items-center gap-1`}
+                                                    >
+                                                        {t(config.displayName, {
+                                                            ns: "markers",
+                                                        })}
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </label>
-                                    ))}
+                                            </label>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         ))}
@@ -290,6 +373,88 @@ const MapPage: FC = () => {
                     <h2 className="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
                         🌗 {t("mappage.mapOpacity")}
                     </h2>
+
+                    {/* Show Regions Toggle */}
+                    {Object.keys(regionsData[selectedMapKey] || {}).length >
+                        0 && (
+                        <label
+                            key="showRegions"
+                            className="flex mb-1 text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
+                        >
+                            <input
+                                type="checkbox"
+                                checked={showRegions}
+                                onChange={() => {
+                                    setShowRegions((prev) => !prev);
+
+                                    setShowSpawnpoints((prev) => {
+                                        if (prev) {
+                                            setShowSpawnpoints(false);
+                                            setTimeout(
+                                                () => setShowSpawnpoints(true),
+                                                0
+                                            );
+                                        }
+                                        return prev;
+                                    });
+                                }}
+                                className="hidden"
+                            />
+                            <span
+                                className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                    showRegions
+                                        ? "bg-green-600 hover:bg-green-500"
+                                        : "bg-gray-700 hover:bg-gray-600"
+                                }`}
+                            >
+                                {showRegions ? (
+                                    <Check
+                                        strokeWidth={3}
+                                        className="w-3 h-3 text-white"
+                                    />
+                                ) : (
+                                    <EyeOff className="w-3 h-3 hidden text-white" />
+                                )}
+                            </span>
+                            {t("mappage.showMapRegions")}
+                        </label>
+                    )}
+
+                    {/* Show Spawnpoints Toggle */}
+                    {Object.keys(bestiaryData[selectedMapKey] || {}).length >
+                        0 && (
+                        <label
+                            key="showSpawnpoints"
+                            className="flex text-xs items-center gap-2 text-sm text-gray-200 cursor-pointer select-none"
+                        >
+                            <input
+                                type="checkbox"
+                                checked={showSpawnpoints}
+                                onChange={() =>
+                                    setShowSpawnpoints((prev) => !prev)
+                                }
+                                className="hidden"
+                            />
+                            <span
+                                className={`flex items-center justify-center w-4 h-4 rounded transition-colors duration-200 ${
+                                    showSpawnpoints
+                                        ? "bg-green-600 hover:bg-green-500"
+                                        : "bg-gray-700 hover:bg-gray-600"
+                                }`}
+                            >
+                                {showSpawnpoints ? (
+                                    <Check
+                                        strokeWidth={3}
+                                        className="w-3 h-3 text-white"
+                                    />
+                                ) : (
+                                    <EyeOff className="w-3 h-3 hidden text-white" />
+                                )}
+                            </span>
+                            {t("mappage.showBestiarySpawnpoints")}
+                        </label>
+                    )}
+
                     <input
                         type="range"
                         min="0.2"
@@ -316,14 +481,17 @@ const MapPage: FC = () => {
                         mapConfig={mapConfig}
                         markers={filteredMarkers}
                         opacity={mapOpacity}
+                        showRegions={showRegions}
+                        showSpawnpoints={showSpawnpoints}
                     />
                 </div>
 
                 {/* Sidebar Right = Fish Info */}
                 {fishData[selectedMapKey] && fishingVisible && (
                     <div
-                        className={`overflow-y-auto custom-scrollbar transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${isSidebarOpen ? "w-[22rem]" : "w-12"
-                            }`}
+                        className={`overflow-y-auto custom-scrollbar transition-all duration-300 ease-in-out h-full flex flex-col border-l border-gray-700 bg-gray-800 shadow-lg ${
+                            isSidebarOpen ? "w-80" : "w-12"
+                        }`}
                     >
                         {/* Fishing Info Header + Sidebar Toggle */}
                         <div className="flex items-center justify-between p-2 border-b border-gray-700">
@@ -394,36 +562,36 @@ const MapPage: FC = () => {
 
                                                         const rarityColor =
                                                             rarityColorMap[
-                                                            fish.rarity
+                                                                fish.rarity
                                                             ] || "text-white";
 
                                                         const timeLabel =
                                                             fish.time.includes(
                                                                 "fishing.time.day"
                                                             ) &&
-                                                                fish.time.includes(
-                                                                    "fishing.time.night"
-                                                                )
+                                                            fish.time.includes(
+                                                                "fishing.time.night"
+                                                            )
                                                                 ? t(
-                                                                    "fishing.time.day_night"
-                                                                )
+                                                                      "fishing.time.day_night"
+                                                                  )
                                                                 : fish.time
-                                                                    .map(
-                                                                        (
-                                                                            tKey
-                                                                        ) =>
-                                                                            t(
-                                                                                tKey,
-                                                                                {
-                                                                                    ns: "fishing",
-                                                                                    defaultValue:
-                                                                                        tKey,
-                                                                                }
-                                                                            )
-                                                                    )
-                                                                    .join(
-                                                                        " / "
-                                                                    );
+                                                                      .map(
+                                                                          (
+                                                                              tKey
+                                                                          ) =>
+                                                                              t(
+                                                                                  tKey,
+                                                                                  {
+                                                                                      ns: "fishing",
+                                                                                      defaultValue:
+                                                                                          tKey,
+                                                                                  }
+                                                                              )
+                                                                      )
+                                                                      .join(
+                                                                          " / "
+                                                                      );
 
                                                         return (
                                                             <div
@@ -493,31 +661,31 @@ const MapPage: FC = () => {
                                                                             {fish.condition?.includes(
                                                                                 "rain"
                                                                             ) && (
-                                                                                    <span title="Only when it rains">
-                                                                                        🌧️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only when it rains">
+                                                                                    🌧️
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "fullmoon"
                                                                             ) && (
-                                                                                    <span title="Only during full moon">
-                                                                                        🌕
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only during full moon">
+                                                                                    🌕
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "storm"
                                                                             ) && (
-                                                                                    <span title="Only at storm">
-                                                                                        🌩️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Only at storm">
+                                                                                    🌩️
+                                                                                </span>
+                                                                            )}
                                                                             {fish.condition?.includes(
                                                                                 "niceweather"
                                                                             ) && (
-                                                                                    <span title="Nice weather">
-                                                                                        🌤️
-                                                                                    </span>
-                                                                                )}
+                                                                                <span title="Nice weather">
+                                                                                    🌤️
+                                                                                </span>
+                                                                            )}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -533,7 +701,8 @@ const MapPage: FC = () => {
 
                         {/* Insect Info Header */}
                         {isSidebarOpen &&
-                            selectedMapKey != "frostbite_fortress" && (
+                            Object.keys(insectData[selectedMapKey] || {})
+                                .length > 0 && (
                                 <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                     <button
                                         onClick={() =>
@@ -547,7 +716,7 @@ const MapPage: FC = () => {
                                             🦋 {t("mappage.insectinfo.title")} -{" "}
                                             {t(
                                                 mapNameTranslationKeys[
-                                                selectedMapKey
+                                                    selectedMapKey
                                                 ],
                                                 {
                                                     defaultValue:
@@ -569,7 +738,7 @@ const MapPage: FC = () => {
                                             className="bg-gray-700 rounded-lg"
                                         >
                                             <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
-                                                {t(insectRegions[spotKey], {
+                                                {t(mapNameRegions[spotKey], {
                                                     ns: "map",
                                                     defaultValue: spotKey,
                                                 })}
@@ -609,36 +778,36 @@ const MapPage: FC = () => {
 
                                                         const rarityColor =
                                                             rarityColorMap[
-                                                            fish.rarity
+                                                                fish.rarity
                                                             ] || "text-white";
 
                                                         const timeLabel =
                                                             fish.time.includes(
                                                                 "fishing.time.day"
                                                             ) &&
-                                                                fish.time.includes(
-                                                                    "fishing.time.night"
-                                                                )
+                                                            fish.time.includes(
+                                                                "fishing.time.night"
+                                                            )
                                                                 ? t(
-                                                                    "fishing.time.day_night"
-                                                                )
+                                                                      "fishing.time.day_night"
+                                                                  )
                                                                 : fish.time
-                                                                    .map(
-                                                                        (
-                                                                            tKey
-                                                                        ) =>
-                                                                            t(
-                                                                                tKey,
-                                                                                {
-                                                                                    ns: "fishing",
-                                                                                    defaultValue:
-                                                                                        tKey,
-                                                                                }
-                                                                            )
-                                                                    )
-                                                                    .join(
-                                                                        " / "
-                                                                    );
+                                                                      .map(
+                                                                          (
+                                                                              tKey
+                                                                          ) =>
+                                                                              t(
+                                                                                  tKey,
+                                                                                  {
+                                                                                      ns: "fishing",
+                                                                                      defaultValue:
+                                                                                          tKey,
+                                                                                  }
+                                                                              )
+                                                                      )
+                                                                      .join(
+                                                                          " / "
+                                                                      );
 
                                                         return (
                                                             <div
@@ -691,41 +860,41 @@ const MapPage: FC = () => {
                                                                                 {!fish.time.includes(
                                                                                     "mappage.condition.time.day_night"
                                                                                 ) && (
-                                                                                        <>
-                                                                                            <span className="text-gray-300">
-                                                                                                {t(
-                                                                                                    fish.time,
-                                                                                                    {
-                                                                                                        ns: "map",
-                                                                                                        defaultValue:
-                                                                                                            fish.time,
-                                                                                                    }
-                                                                                                )}
-                                                                                            </span>
-
-                                                                                            {!fish.weather.includes(
-                                                                                                "mappage.condition.weather.any"
-                                                                                            ) && (
-                                                                                                    <span>
-                                                                                                        &
-                                                                                                    </span>
-                                                                                                )}
-                                                                                        </>
-                                                                                    )}
-                                                                                {!fish.weather.includes(
-                                                                                    "mappage.condition.weather.any"
-                                                                                ) && (
+                                                                                    <>
                                                                                         <span className="text-gray-300">
                                                                                             {t(
-                                                                                                fish.weather,
+                                                                                                fish.time,
                                                                                                 {
                                                                                                     ns: "map",
                                                                                                     defaultValue:
-                                                                                                        fish.weather,
+                                                                                                        fish.time,
                                                                                                 }
                                                                                             )}
                                                                                         </span>
-                                                                                    )}
+
+                                                                                        {!fish.weather.includes(
+                                                                                            "mappage.condition.weather.any"
+                                                                                        ) && (
+                                                                                            <span>
+                                                                                                &
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </>
+                                                                                )}
+                                                                                {!fish.weather.includes(
+                                                                                    "mappage.condition.weather.any"
+                                                                                ) && (
+                                                                                    <span className="text-gray-300">
+                                                                                        {t(
+                                                                                            fish.weather,
+                                                                                            {
+                                                                                                ns: "map",
+                                                                                                defaultValue:
+                                                                                                    fish.weather,
+                                                                                            }
+                                                                                        )}
+                                                                                    </span>
+                                                                                )}
                                                                                 {fish.weather.includes(
                                                                                     "mappage.condition.weather.any"
                                                                                 ) &&
@@ -752,11 +921,10 @@ const MapPage: FC = () => {
                             </div>
                         )}
 
-
-
                         {/* Bestiary Info Header */}
                         {isSidebarOpen &&
-                            selectedMapKey != "spawn" && (
+                            Object.keys(bestiaryData[selectedMapKey] || {})
+                                .length > 0 && (
                                 <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                     <button
                                         onClick={() =>
@@ -767,10 +935,11 @@ const MapPage: FC = () => {
                                     ></button>
                                     {isSidebarOpen && (
                                         <h2 className="text-sm font-semibold text-green-400 ml-2">
-                                            💀 {t("mappage.bestiaryinfo.title")} -{" "}
+                                            💀 {t("mappage.bestiaryinfo.title")}{" "}
+                                            -{" "}
                                             {t(
                                                 mapNameTranslationKeys[
-                                                selectedMapKey
+                                                    selectedMapKey
                                                 ],
                                                 {
                                                     defaultValue:
@@ -782,57 +951,64 @@ const MapPage: FC = () => {
                                 </div>
                             )}
 
-
-
                         {/* Bestiary Spots (Regions) List */}
                         {isSidebarOpen && (
                             <div className="p-4 space-y-4">
-                                {Object.entries(bestiaryData[selectedMapKey]).map(
-                                    ([spotKey, BestiaryList]) => (
-                                        <details
-                                            key={spotKey}
-                                            className="bg-gray-700 rounded-lg"
-                                        >
-                                            <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
-                                                {t(bestiaryRegions[spotKey], {
-                                                    ns: "map",
-                                                    defaultValue: spotKey,
-                                                })}
-                                            </summary>
+                                {Object.entries(
+                                    bestiaryData[selectedMapKey]
+                                ).map(([spotKey, BestiaryList]) => (
+                                    <details
+                                        key={spotKey}
+                                        className="bg-gray-700 rounded-lg"
+                                    >
+                                        <summary className="cursor-pointer select-none text-green-400 font-semibold text-sm px-3 py-2 hover:bg-gray-600 rounded-lg">
+                                            {t(mapNameRegions[spotKey], {
+                                                ns: "map",
+                                                defaultValue: spotKey,
+                                            })}
+                                        </summary>
 
-                                            <div className="px-3 pt-2 pb-4 space-y-2">
-                                                {[...BestiaryList]
-                                                    .map((fish, index) => {
+                                        <div className="px-3 pt-2 pb-4 space-y-2">
+                                            {[...BestiaryList].map(
+                                                (fish, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="bg-gray-800 rounded p-2 flex gap-3 items-center"
+                                                        >
+                                                            {fish.image ? (
+                                                                <img
+                                                                    src={
+                                                                        fish.image
+                                                                    }
+                                                                    className="w-10 h-10 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                />
+                                                            ) : (
+                                                                <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
+                                                                    🎣
+                                                                </div>
+                                                            )}
 
-
-
-
-                                                        return (
-                                                            <div
-                                                                key={index}
-                                                                className="bg-gray-800 rounded p-2 flex gap-3 items-center"
-                                                            >
-                                                                {fish.image ? (
-                                                                    <img
-                                                                        src={
-                                                                            fish.image
-                                                                        }
-                                                                        className="w-12 h-12 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-
-                                                                    />
-                                                                ) : (
-                                                                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
-                                                                        🎣
-                                                                    </div>
-                                                                )}
-
-                                                                <div className="flex-1">
-                                                                    <div className="flex justify-between items-center">
-                                                                        <div className="flex flex-col w-full">
-                                                                            <span className={` font-semibold text-white items-center align-middle flex  leading-none`}>
-                                                                                <span
-                                                                                    className={`${LevelBG_Color(fish.minlevel)} ${LevelTextColor(fish.minlevel)} px-1  mr-1 pb-0.5 rounded font-bold text-xs w-fit `}
-                                                                                >
+                                                            <div className="flex-1">
+                                                                <div className="flex justify-between items-center">
+                                                                    <div className="flex flex-col w-full">
+                                                                        {fish.halloween2025 && (
+                                                                            <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
+                                                                                Halloween
+                                                                                Event
+                                                                            </span>
+                                                                        )}
+                                                                        <span
+                                                                            className={` font-semibold text-white items-center align-middle flex  leading-none`}
+                                                                        >
+                                                                            <span
+                                                                                className={`${LevelBG_Gradient(
+                                                                                    fish.minlevel
+                                                                                )} ${LevelTextColor(
+                                                                                    fish.minlevel
+                                                                                )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[10px] w-fit overflow-hidden min-w-16 items-center flex justify-center`}
+                                                                            >
+                                                                                <span>
                                                                                     {t(
                                                                                         "bestiary.level",
                                                                                         {
@@ -840,51 +1016,97 @@ const MapPage: FC = () => {
                                                                                             defaultValue:
                                                                                                 "bestiary.level",
                                                                                         }
-                                                                                    )} {fish.minlevel}-{fish.maxlevel}
+                                                                                    )}{" "}
+                                                                                    {
+                                                                                        fish.minlevel
+                                                                                    }
+
+                                                                                    -
+                                                                                    {
+                                                                                        fish.maxlevel
+                                                                                    }
                                                                                 </span>
-                                                                                <span className='mb-0.5 text-sm'>
+                                                                            </span>
+                                                                            <span className="mb-0.5 text-[13px]">
+                                                                                {t(
+                                                                                    fish.name,
+                                                                                    {
+                                                                                        ns: "bestiary",
+                                                                                        defaultValue:
+                                                                                            fish.name,
+                                                                                    }
+                                                                                )}
+                                                                            </span>
+                                                                            {/*{fish.boss && (
+                                                                                <span
+                                                                                    className={`ml-auto bg-LEGENDARY px-2  mr-1 pt-0.5 pb-1 rounded font-bold text-[12px] w-fit `}
+                                                                                >
                                                                                     {t(
-                                                                                        fish.name,
+                                                                                        "bestiary.boss",
                                                                                         {
                                                                                             ns: "bestiary",
                                                                                             defaultValue:
-                                                                                                fish.name,
+                                                                                                "bestiary.boss",
                                                                                         }
                                                                                     )}
                                                                                 </span>
-                                                                                {fish.boss && (<span
-                                                                                    className={`ml-auto bg-LEGENDARY px-1  mr-1 pb-0.5 rounded font-bold text-xs w-fit `}>
-                                                                                    BOSS
-                                                                                </span>
-                                                                                )}
+                                                                            )}*/}
+                                                                        </span>
+                                                                        <span className=" mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
+                                                                            <span className="mx-auto">
+                                                                                {fish.minhealth.toLocaleString()}{" "}
+                                                                                -{" "}
+                                                                                {fish.maxhealth.toLocaleString()}
                                                                             </span>
-                                                                            <span className=" mt-0.5 bg-red-700/60 text-xs rounded items-center align-middle flex">
-                                                                                <span className="mx-auto">{fish.minhealth.toLocaleString()} - {fish.maxhealth.toLocaleString()}</span>
+                                                                        </span>
+                                                                        <span className="text-[11px] text-gray-300 flex justify-between">
+                                                                            <span className="flex items-center min-w-10">
+                                                                                {fish.fireResistant ??
+                                                                                    0}
+                                                                                %
+                                                                                <img
+                                                                                    src="assets/media/elemental/intelligence.png"
+                                                                                    className="h-3 w-3 inline ml-0.5"
+                                                                                />
                                                                             </span>
-                                                                            <span className="text-xs text-gray-300 flex justify-between">
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.fireResistant ?? 0}%<img src="assets/media/elemental/intelligence.png" className='h-3 w-3 inline ml-0.5' />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.waterResistant ?? 0}%<img src="assets/media/elemental/luck.png" className='h-3 w-3 inline ml-0.5' />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.airResistant ?? 0}%<img src="assets/media/elemental/agility.png" className='h-3 w-3 inline ml-0.5' />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.earthResistant ?? 0}%<img src="assets/media/elemental/strength.png" className='h-3 w-3 inline ml-0.5' />
-                                                                                </span>
+                                                                            <span className="flex items-center min-w-10">
+                                                                                {fish.waterResistant ??
+                                                                                    0}
+                                                                                %
+                                                                                <img
+                                                                                    src="assets/media/elemental/luck.png"
+                                                                                    className="h-3 w-3 inline ml-0.5"
+                                                                                />
                                                                             </span>
-                                                                        </div>
+                                                                            <span className="flex items-center min-w-10">
+                                                                                {fish.airResistant ??
+                                                                                    0}
+                                                                                %
+                                                                                <img
+                                                                                    src="assets/media/elemental/agility.png"
+                                                                                    className="h-3 w-3 inline ml-0.5"
+                                                                                />
+                                                                            </span>
+                                                                            <span className="flex items-center min-w-10">
+                                                                                {fish.earthResistant ??
+                                                                                    0}
+                                                                                %
+                                                                                <img
+                                                                                    src="assets/media/elemental/strength.png"
+                                                                                    className="h-3 w-3 inline ml-0.5"
+                                                                                />
+                                                                            </span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        );
-                                                    })}
-                                            </div>
-                                        </details>
-                                    )
-                                )}
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    </details>
+                                ))}
                             </div>
                         )}
                     </div>

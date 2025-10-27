@@ -1,18 +1,16 @@
 {
-  "description": {
-    "0": "Modpack compiling the mods permitted by the rules on Minebox; any additional mods are beyond my responsibility if you face sanctions.",
-    "1": "MineboxAdditions is a mod that adds blatant features to your average Minebox gameplay !",
-    "2": "A set of tools for a better experience on Minebox.",
-    "3": "Notra is a simple utility mod built with fabric specifically for Minebox.",
-    "4": "Discord server with an atlas and guide for Minebox (French only).",
-    "5": "A highly customizable JourneyMap addon that makes waypoints for MineBox.",
-    "6": "The Minebox Plus pack fills in the missing textures for the Server Resource Pack available at minebox.co.",
-    "7": "An add-on for Minebox Plus that changes the appearance of immature crops to grayscale.",
-    "8": "An add-on for Minebox Plus that removes the default Bushy Leaves effect from Minebox."
-  },
-  "badge": {
-    "Recommended": "Recommended",
-    "Popular": "Popular",
-    "New": "New"
-  }
+    "description": {
+        "0": "Modpack compiling the mods permitted by the rules on Minebox; any additional mods are beyond my responsibility if you face sanctions.",
+        "1": "MineboxAdditions is a mod that adds blatant features to your average Minebox gameplay !",
+        "2": "A set of tools for a better experience on Minebox.",
+        "3": "Discord server with an atlas and guide for Minebox (French only).",
+        "4": "A complete visual overhaul inspired by the Minebox world — enhanced caves, vegetation, redstone, and integrated add-ons with full Respackopts support",
+        "5": "Makes immature crops gray for easy field management. Includes Respackopts customization for selective crop appearance control.",
+        "6": "Restores classic Minecraft leaf visuals, adds seasonal leaf variants, and boosts performance by reducing FPS load."
+    },
+    "badge": {
+        "Recommended": "Recommended",
+        "Popular": "Popular",
+        "New": "New"
+    }
 }

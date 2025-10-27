@@ -99,6 +99,17 @@
             "properties": {
                 "map": "kokoko"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [308, 78, -329],
+                "type": "Point"
+            },
+            "id": 10,
+            "type": "Feature",
+            "properties": {
+                "map": "kokoko"
+            }
         }
     ]
 }

@@ -16,52 +16,28 @@ export interface BestiaryInfo {
     waterResistant?: number;
     airResistant?: number;
     earthResistant?: number;
+    // Events:
+    halloween2025?: boolean;
 }
 
-export const mapNameTranslationKeys: Record<string, string> = {
-    spawn: "mappage.maps.spawn_island.name",
-    kokoko: "mappage.maps.kokoko_island.name",
-    quadra_plains: "mappage.maps.quadra_plains.name",
-    bamboo_peak: "mappage.maps.bamboo_peak.name",
-    frostbite_fortress: "mappage.maps.frostbite_fortress.name",
-    sandwhisper_dunes: "mappage.maps.sandwhisper_dunes.name",
-};
-
-export const bestiaryRegions: Record<string, string> = {
-    universal: "mappage.maps.spawn.universal",
-    exploration_island: "mappage.maps.spawn.exploration_island",
-    italian_restaurant: "mappage.maps.spawn.italian_restaurant",
-    church: "mappage.maps.spawn.church",
-
-    beach: "mappage.maps.kokoko.beach",
-    jungle: "mappage.maps.kokoko.jungle",
-    dark_jungle: "mappage.maps.kokoko.dark_jungle",
-    burned_jungle: "mappage.maps.kokoko.burned_jungle",
-
-    plains: "mappage.maps.quadra_plains.plains",
-    swamp: "mappage.maps.quadra_plains.swamp",
-    savenna: "mappage.maps.quadra_plains.savenna",
-    mystic_forest: "mappage.maps.quadra_plains.mystic_forest",
-
-    bamboo_plains: "mappage.maps.bamboo_peak.bamboo_plains",
-    cherry_forest: "mappage.maps.bamboo_peak.cherry_forest",
-    bamboo_jungle: "mappage.maps.bamboo_peak.bamboo_jungle",
-    divine_mountains_low: "mappage.maps.bamboo_peak.divine_mountains_low",
-    divine_mountains_up: "mappage.maps.bamboo_peak.divine_mountains_up",
-
-    snow_plains: "mappage.maps.frostbite_fortress.snow_plains",
-    snow_forest: "mappage.maps.frostbite_fortress.snow_forest",
-    glacier: "mappage.maps.frostbite_fortress.glacier",
-    steampunk_village: "mappage.maps.frostbite_fortress.steampunk_village",
-
-    desert: "mappage.maps.sandwhisper_dunes.desert",
-    desert_village: "mappage.maps.sandwhisper_dunes.desert_village",
-    pyramid: "mappage.maps.sandwhisper_dunes.pyramid",
-    canyon: "mappage.maps.sandwhisper_dunes.canyon",
-};
-
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
-    spawn: {},
+    spawn: {
+        /*church: [
+            {
+                name: "TMP_EVENT_1",
+                image: "assets/media/museum/not-found.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 100,
+                maxhealth: 200,
+                earthResistant: 50,
+                fireResistant: 50,
+                waterResistant: 50,
+                airResistant: 50,
+                halloween2025: true,
+            },
+        ],*/
+    },
     kokoko: {
         beach: [
             {
@@ -72,7 +48,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 20,
                 maxhealth: 20,
                 waterResistant: 35, //20-50
-                fireResistant: 35 //20-50
+                fireResistant: 35, //20-50
             },
             {
                 name: "bestiary.orange_starfish",
@@ -81,7 +57,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 5,
                 minhealth: 20,
                 maxhealth: 25,
-                fireResistant: 35 //20 - 50
+                fireResistant: 35, //20 - 50
             },
             {
                 name: "bestiary.cat_goofish",
@@ -90,7 +66,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 5,
                 minhealth: 20,
                 maxhealth: 20,
-                fireResistant: 35 //20-50
+                fireResistant: 35, //20-50
             },
             {
                 name: "bestiary.clown_goofish",
@@ -99,7 +75,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 5,
                 minhealth: 20,
                 maxhealth: 25,
-                fireResistant: 35 // 20-50
+                fireResistant: 35, // 20-50
             },
             {
                 name: "bestiary.hammershark_goofish",
@@ -109,7 +85,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 25,
                 maxhealth: 30,
                 waterResistant: 35, // 20-50
-                fireResistant: 35 // 20-50
+                fireResistant: 35, // 20-50
             },
             {
                 name: "bestiary.crabician",
@@ -119,7 +95,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 30,
                 maxhealth: 40,
                 earthResistant: 90,
-                fireResistant: -15 // -20 - -10
+                fireResistant: -15, // -20 - -10
             },
             {
                 name: "bestiary.craboxer",
@@ -129,7 +105,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 40,
                 maxhealth: 50,
                 waterResistant: 90,
-                fireResistant: -15  // -10 - -20
+                fireResistant: -15, // -10 - -20
             },
             {
                 name: "bestiary.coconut_warrior",
@@ -139,7 +115,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 60,
                 maxhealth: 80,
                 earthResistant: 20,
-                fireResistant: -30
+                fireResistant: -30,
             },
             {
                 name: "bestiary.coconut_magician",
@@ -149,7 +125,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 70,
                 maxhealth: 85,
                 earthResistant: 20,
-                fireResistant: -30
+                fireResistant: -30,
             },
         ],
         jungle: [
@@ -161,7 +137,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 70,
                 maxhealth: 90,
                 earthResistant: 30,
-                fireResistant: 30
+                fireResistant: 30,
             },
             {
                 name: "bestiary.monkey_banana",
@@ -171,7 +147,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 110,
                 maxhealth: 130,
                 earthResistant: 50,
-                fireResistant: 50
+                fireResistant: 50,
             },
             {
                 name: "bestiary.monkey_barrel",
@@ -182,7 +158,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxhealth: 90,
                 earthResistant: 50,
                 waterResistant: -50,
-                fireResistant: 100
+                fireResistant: 100,
             },
             {
                 name: "bestiary.monkey_mage",
@@ -192,7 +168,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 135,
                 maxhealth: 160,
                 earthResistant: 50,
-                fireResistant: 50
+                fireResistant: 50,
             },
             {
                 name: "bestiary.moskitoko",
@@ -202,7 +178,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 80,
                 maxhealth: 95,
                 airResistant: 100,
-                earthResistant: 100
+                earthResistant: 100,
             },
             {
                 name: "bestiary.jungle_ogre",
@@ -215,7 +191,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 20,
                 earthResistant: 60,
                 waterResistant: 30,
-                fireResistant: -30
+                fireResistant: -30,
             },
         ],
         burned_jungle: [
@@ -227,7 +203,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 1000,
                 maxhealth: 1200,
                 earthResistant: 50,
-                fireResistant: 50
+                fireResistant: 50,
             },
             {
                 name: "bestiary.scavenger_vulture",
@@ -237,7 +213,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 800,
                 maxhealth: 900,
                 earthResistant: 50,
-                fireResistant: 50
+                fireResistant: 50,
             },
             {
                 name: "bestiary.spicy_lava_bucket",
@@ -247,7 +223,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 1000,
                 maxhealth: 1200,
                 earthResistant: 50,
-                fireResistant: 100
+                fireResistant: 100,
             },
             {
                 name: "bestiary.debris_golem",
@@ -257,7 +233,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 1400,
                 maxhealth: 1600,
                 earthResistant: 50,
-                fireResistant: 50
+                fireResistant: 50,
             },
         ],
     },
@@ -271,7 +247,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 150,
                 maxhealth: 225,
                 earthResistant: 50,
-                waterResistant: -25
+                waterResistant: -25,
             },
             {
                 name: "bestiary.venomous_spidey",
@@ -282,7 +258,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxhealth: 250,
                 airResistant: 10,
                 earthResistant: 65,
-                waterResistant: -25
+                waterResistant: -25,
             },
             {
                 name: "bestiary.scarecrow",
@@ -292,7 +268,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 500,
                 maxhealth: 600,
                 earthResistant: 50,
-                fireResistant: -25
+                fireResistant: -25,
             },
             {
                 name: "bestiary.pirate_farmer",
@@ -302,7 +278,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 200,
                 maxhealth: 300,
                 earthResistant: 50,
-                fireResistant: 25
+                fireResistant: 25,
             },
             {
                 name: "bestiary.old_pirate_farmer",
@@ -312,7 +288,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 350,
                 maxhealth: 400,
                 earthResistant: 50,
-                fireResistant: 25
+                fireResistant: 25,
             },
         ],
         swamp: [
@@ -326,7 +302,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 100,
                 earthResistant: 100,
                 waterResistant: -50,
-                fireResistant: 100
+                fireResistant: 100,
             },
             {
                 name: "bestiary.fungoo_dancer",
@@ -337,7 +313,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxhealth: 600,
                 earthResistant: 25,
                 waterResistant: 25,
-                fireResistant: -25
+                fireResistant: -25,
             },
             {
                 name: "bestiary.sporelord",
@@ -348,7 +324,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxhealth: 800,
                 airResistant: 60,
                 earthResistant: 40,
-                waterResistant: 60
+                waterResistant: 60,
             },
             {
                 name: "bestiary.logzilla",
@@ -361,7 +337,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: -15,
                 earthResistant: 50,
                 waterResistant: 50,
-                fireResistant: -30
+                fireResistant: -30,
             },
         ],
     },
@@ -377,18 +353,18 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 30,
                 earthResistant: 30,
                 waterResistant: 50,
-                fireResistant: -10
+                fireResistant: -10,
             },
             {
                 name: "bestiary.bambooboo",
                 image: "assets/media/bestiary/bamboo_peak/bambooboo.png",
-                minlevel:30,
+                minlevel: 30,
                 maxlevel: 40,
                 minhealth: 350,
                 maxhealth: 450,
                 airResistant: 30,
                 earthResistant: 30,
-                fireResistant: -10
+                fireResistant: -10,
             },
             {
                 name: "bestiary.pandaboo_warrior",
@@ -398,7 +374,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 300,
                 maxhealth: 400,
                 airResistant: 50,
-                fireResistant: 30
+                fireResistant: 30,
             },
             {
                 name: "bestiary.pandaboo_wizard",
@@ -408,7 +384,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 350,
                 maxhealth: 450,
                 airResistant: 50,
-                fireResistant: 30
+                fireResistant: 30,
             },
         ],
     },
@@ -422,7 +398,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 400,
                 maxhealth: 550,
                 waterResistant: 40,
-                fireResistant: -20
+                fireResistant: -20,
             },
             {
                 name: "bestiary.froztail_magus",
@@ -432,7 +408,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 300,
                 maxhealth: 450,
                 waterResistant: 40,
-                fireResistant: -20
+                fireResistant: -20,
             },
             {
                 name: "bestiary.frozehound",
@@ -442,7 +418,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 500,
                 maxhealth: 700,
                 waterResistant: 50,
-                fireResistant: -20
+                fireResistant: -20,
             },
             {
                 name: "bestiary.chillolith",
@@ -453,7 +429,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxhealth: 2500,
                 earthResistant: 90,
                 waterResistant: 90,
-                fireResistant: -50
+                fireResistant: -50,
             },
             {
                 name: "bestiary.snow_ogre",
@@ -466,7 +442,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 50,
                 earthResistant: 30,
                 waterResistant: 100,
-                fireResistant: -30
+                fireResistant: -30,
             },
         ],
     },
@@ -479,7 +455,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 500,
                 maxhealth: 650,
-                fireResistant: 25
+                fireResistant: 25,
             },
             {
                 name: "bestiary.scorchfang",
@@ -488,7 +464,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 300,
                 maxhealth: 450,
-                fireResistant: -20
+                fireResistant: -20,
             },
             {
                 name: "bestiary.pokeboo",
@@ -498,7 +474,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 750,
                 maxhealth: 1000,
                 waterResistant: 40,
-                fireResistant: 20
+                fireResistant: 20,
             },
             {
                 name: "bestiary.dunebeard",
@@ -507,7 +483,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 300,
                 maxhealth: 450,
-                fireResistant: -20
+                fireResistant: -20,
             },
             {
                 name: "bestiary.desert_ogre",
@@ -520,7 +496,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 100,
                 earthResistant: 60,
                 waterResistant: -30,
-                fireResistant: 100
+                fireResistant: 100,
             },
         ],
     },

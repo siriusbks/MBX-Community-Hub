@@ -13,7 +13,7 @@ export interface MapDataConfig {
     imageUrl: string;
     width: number;
     height: number;
-    name?: string;
+    name: string;
     mapProperties: MapProperties;
     requiredLevel?: number;
     description?: string;
@@ -37,6 +37,7 @@ export const mapData: Record<string, MapDataConfig> = {
         description: "",
         referencePoint: { x: 113, y: 290 },
         markerRefs: [
+            //"EVENT_TEST",
             "log_coconuts",
             "log_banana",
             "lily",

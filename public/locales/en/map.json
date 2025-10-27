@@ -3,6 +3,8 @@
     "mappage.hoverInfo1": "Hover over the",
     "mappage.hoverInfo2": "to view resources.",
     "mappage.tooltipTitle": "Available Resources",
+    "mappage.insectsTitle": "Available Insects",
+    "mappage.bestiaryTitle": "Available Bestiary",
     "mappage.buttonViewMap": "View Interactive Map",
     "mappage.requiredLevel": "Required Level:",
     "mappage.requiredLevelNone": "No required level",
@@ -21,6 +23,10 @@
     "mappage.selectAllMarkers": "Select/Unselect all:",
     "mappage.mapOpacity": "Adjust Visibility",
     "mappage.mapPercOpacity": "of visibility",
+    "mappage.showMapRegions": "Show Map Regions",
+    "mappage.showBestiarySpawnpoints": "Show Bestiary Spawnpoints",
+
+    "mappage.showMoreInfo": "Show More Info",
 
     "mappage.fishinginfo.title": "Fishing Info",
     "mappage.insectinfo.title": "Insect Info",
@@ -54,6 +60,7 @@
     "mappage.maps.spawn.church": "Church",
     "mappage.maps.spawn.italian_restaurant": "Italian Restaurant",
     "mappage.maps.spawn.exploration_island": "Exploration Island",
+    "mappage.maps.spawn.small_island": "Small Island",
     "mappage.maps.kokoko.beach": "Beach",
     "mappage.maps.kokoko.jungle": "Jungle",
     "mappage.maps.kokoko.dark_jungle": "Dark Jungle",

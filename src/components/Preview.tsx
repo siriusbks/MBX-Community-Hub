@@ -22,8 +22,17 @@ const BACKGROUND_TRANSITION = "filter 0.3s ease";
 
 export const Preview: FC = () => {
     const { t } = useTranslation("profile");
-    const { username, uuid, level, background, professions, playtime, daily, weekly, museum } =
-        useProfileStore();
+    const {
+        username,
+        uuid,
+        level,
+        background,
+        professions,
+        playtime,
+        daily,
+        weekly,
+        museum,
+    } = useProfileStore();
     const previewRef = useRef<HTMLDivElement>(null);
     const [isDownloading, setIsDownloading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -37,6 +46,28 @@ export const Preview: FC = () => {
                 reject(new Error(`Failed to load image: ${src}`));
             img.src = src;
         });
+    };
+
+    const cleanupHtml2Canvas = () => {
+        // Workaround for sporadic NotFoundError during html2canvas cleanup in Chrome
+        // We safely remove any leftover containers if present
+        try {
+            const containers = document.querySelectorAll(
+                ".html2canvas-container"
+            );
+            containers.forEach((el) => {
+                const parent = el.parentNode;
+                if (parent) {
+                    try {
+                        parent.removeChild(el);
+                    } catch {
+                        // ignore if already removed/moved
+                    }
+                }
+            });
+        } catch {
+            // no-op
+        }
     };
 
     const handleDownload = async () => {
@@ -67,12 +98,16 @@ export const Preview: FC = () => {
                 );
             }
 
+            await new Promise((r) => setTimeout(r, 100));
+
             const canvas = await html2canvas(previewRef.current, {
                 useCORS: true,
                 allowTaint: false,
                 scale: window.devicePixelRatio || 1,
                 backgroundColor: null,
                 logging: true,
+                // Avoid auto-removal race in Chrome; we'll clean up manually in finally
+                removeContainer: false,
                 onclone: (clonedDoc) => {
                     clonedDoc.body.className = document.body.className;
                     clonedDoc.body.style.fontFamily = getComputedStyle(
@@ -169,10 +204,12 @@ export const Preview: FC = () => {
             } else {
                 setError(
                     err.message ||
-                    "Failed to download the image. Please try again."
+                        "Failed to download the image. Please try again."
                 );
             }
         } finally {
+            // Best-effort cleanup to prevent leftover containers and avoid NotFoundError
+            cleanupHtml2Canvas();
             setIsDownloading(false);
         }
     };
@@ -193,10 +230,11 @@ export const Preview: FC = () => {
                     onClick={handleDownload}
                     disabled={isDownloading}
                     aria-label="Download Profile Image"
-                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${isDownloading
+                    className={`flex items-center gap-2 px-6 py-3 bg-green-600 rounded-md transition-colors duration-200 text-white border-none focus:outline-none ${
+                        isDownloading
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:bg-green-700"
-                        }`}
+                    }`}
                 >
                     <Download size={24} />
                     {isDownloading
@@ -237,8 +275,12 @@ export const Preview: FC = () => {
                             museum={museum}
                             relics={useProfileStore.getState().relics}
                             showRelics={useProfileStore.getState().showRelics}
-                            showStatistics={useProfileStore.getState().showStatistics}
-                            showJoinTime={useProfileStore.getState().showJoinTime}
+                            showStatistics={
+                                useProfileStore.getState().showStatistics
+                            }
+                            showJoinTime={
+                                useProfileStore.getState().showJoinTime
+                            }
                         />
                         <ProfessionsGrid professions={enabledProfessions} />
                     </div>

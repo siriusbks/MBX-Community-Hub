@@ -7,6 +7,16 @@
 import { MarkerConfig } from "@t/markerTypes";
 
 const spawnMarkers: Record<string, MarkerConfig> = {
+    EVENT_TEST: {
+        displayName: "EVENT_TEST",
+        iconUrl: "assets/media/museum/not-found.png",
+        geoJsonFile: "assets/geo/spawn/halloween/test.geojson",
+        category: "markers.category.halloween2025",
+        defaultChecked: true,
+        properties: {
+            event: true
+        },
+    },
     log_banana: {
         displayName: "markers.item.banana",
         iconUrl: "assets/media/tree/log_banana.png",
