@@ -5,7 +5,7 @@
 // - on 404 : user not found
 
 import { useCallback, useState } from "react";
-import { useProfileStore } from "@store/profileStore";
+import { useProfileStore, getDefaultProfessions } from "@store/profileStore";
 import { progressForJob, StoreProfessionId } from "@utils/xpCurve";
 import { CorsIfDev } from "@utils/helper";
 
@@ -73,15 +73,12 @@ export function useMineboxImport() {
                     throw new Error(`HTTP ${res.status}: ${await res.text()}`);
                 const json = (await res.json()) as MineboxResponse;
 
-                // reset everything first
+                // reset everything first — replace professions with the current
+                // canonical default list so any newly added professions are present.
                 useProfileStore.setState((state) => ({
                     ...state,
                     username,
-                    professions: state.professions.map((p) => ({
-                        ...p,
-                        level: 1,
-                        currentXP: 0,
-                    })),
+                    professions: getDefaultProfessions(),
                     level: 1,
                     playtime: 0,
                     daily: 0,

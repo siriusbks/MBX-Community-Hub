@@ -6,7 +6,7 @@
 
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 import {
     ImageOverlay,
@@ -16,10 +16,22 @@ import {
     useMap,
     useMapEvents,
     Polygon,
+    Tooltip,
 } from "react-leaflet";
 import { useTranslation } from "react-i18next";
 
 import { MapDataConfig } from "./map/mapData";
+import {
+    mapNameTranslationKeys,
+    mapNameRegions,
+    regionsData,
+    bestiaryRegionsData,
+    getMapNameKey,
+} from "./map/mapRegions";
+import { LevelBG_Gradient, LevelTextColor } from "./editor/LevelBadge";
+
+import { insectData } from "./map/insectData";
+import { bestiaryData } from "./map/bestiaryData";
 
 import kokokoMarkers from "./map/markers/kokokoMarkers";
 import quadraMarkers from "./map/markers/quadraMarkers";
@@ -126,11 +138,13 @@ interface InteractiveMapProps {
     markers: ExtendedFeature[];
 }
 
-const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
-    mapConfig,
-    markers,
-    opacity,
-}) => {
+const InteractiveMap: React.FC<
+    InteractiveMapProps & {
+        opacity: number;
+        showRegions: boolean;
+        showSpawnpoints: boolean;
+    }
+> = ({ mapConfig, markers, opacity, showRegions, showSpawnpoints }) => {
     const imageRef = React.useRef<L.ImageOverlay | null>(null);
 
     React.useEffect(() => {
@@ -140,6 +154,8 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
     }, [opacity]);
 
     const { t } = useTranslation(["markers", "npc"]);
+    const regionKey = getMapNameKey(mapConfig.name);
+    const test = React.useMemo(() => L.svg({ padding: 2 }), []);
 
     return (
         <MapContainer
@@ -162,38 +178,138 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
         >
             <SetCRS mapConfig={mapConfig} />
             <FixPopup />
-            <SetMapOpacity opacity={opacity} />{" "}
-            {/* Example polygon (uncomment to use) */}
-            {/*}
-            <Polygon
-                positions={[
-                    [339, 511],
-                    [505,480],
-                    [505, 390]
-                ]}
-                pathOptions={{
-                    color: "orange",
-                    fillColor: "orange",
-                    fillOpacity: 0.2,
-                }}
-            >
-                <Popup>
-                    <p className="font-bold !my-0">Kokoko Island</p>
-                    <p className="!my-0">Beach</p>
-                </Popup>
-            </Polygon>*/}
+            <SetMapOpacity opacity={opacity} />
+
+            {/* Map Regions */}
+            {showRegions &&
+                Object.entries(regionsData[regionKey] || {}).map(
+                    ([subregionName, positions]) => (
+                        <Polygon
+                            key={subregionName}
+                            positions={positions}
+                            renderer={test}
+                            pane="regionsPane"
+                            pathOptions={{
+                                color: "#33cc99",
+                                weight: 1,
+                                fillColor: "#33cc99",
+                                fillOpacity: 0.1,
+                            }}
+                        >
+                            <Tooltip sticky opacity={1}>
+                                <div className="font-bold text-sm">
+                                    {t(mapNameRegions[subregionName], {
+                                        ns: "map",
+                                    })}
+                                </div>
+                                <span className="text-xs text-gray-400">
+                                    {t(mapConfig.name, {
+                                        ns: "map",
+                                    })}
+                                </span>
+
+                                {/* Insects & Bestiary Section */}
+                                {/*<span>
+                                {(
+                                    insectData[regionKey]?.[subregionName] ?? []
+                                ).map((insect, index) => (
+                                    <img
+                                        src={insect.image}
+                                        alt={insect.name}
+                                        key={index}
+                                        className="inline w-3 h-3"
+                                    />
+                                ))}
+                                
+                            </span>*/}
+                            </Tooltip>
+                        </Polygon>
+                    )
+                )}
+
+            {/* Bestiary Regions */}
+            {showSpawnpoints &&
+                Object.entries(bestiaryRegionsData[regionKey] || {}).map(
+                    ([subregionName, subregionData]) =>
+                        subregionData.zones.map((zone, index) => (
+                            <Polygon
+                                key={`${subregionName}-${index}`}
+                                positions={zone.coords}
+                                renderer={test}
+                                pane="bestiaryPane"
+                                pathOptions={{
+                                    color: zone.color,
+                                    weight: 1,
+                                    fillColor: zone.color,
+                                    fillOpacity: 0.4,
+                                }}
+                                className="bestiary-polygon"
+                            >
+                                <Tooltip sticky opacity={1}>
+                                    <div className="font-bold text-sm">
+                                        {t(mapNameRegions[subregionName], {
+                                            ns: "map",
+                                        })}
+                                    </div>
+                                    <span className="text-xs text-gray-400">
+                                        {t(mapConfig.name, { ns: "map" })}
+                                    </span>
+
+                                    {/* 🧟 Bestiary section */}
+                                    <div
+                                        className="mt-1 text-xs text-gray-500"
+                                        style={{ width: "max-content" }}
+                                    >
+                                        {zone.mobs.map((mob, i) => (
+                                            <span
+                                                className="flex flex-row items-center align-middle mt-1"
+                                                key={i}
+                                            >
+                                                <img
+                                                    src={mob.image}
+                                                    alt={mob.name}
+                                                    className="inline w-10 h-10 mr-1"
+                                                />
+                                                <span className="flex flex-col">
+                                                    <span
+                                                        className={` ${LevelBG_Gradient(
+                                                            mob.minlevel
+                                                        )} ${LevelTextColor(
+                                                            mob.minlevel
+                                                        )} px-[4px] py-0 rounded text-[10px] mr-1 w-min`}
+                                                    >
+                                                        lvl. {mob.minlevel}
+                                                        {"-"}
+                                                        {mob.maxlevel}
+                                                    </span>
+                                                    <span className="text-xs text-gray-300">
+                                                        {t(mob.name, {
+                                                            ns: "bestiary",
+                                                        })}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </Tooltip>
+                            </Polygon>
+                        ))
+                )}
+
+            {/* Map Image Overlay */}
             <ImageOverlay
                 url={mapConfig.imageUrl}
                 bounds={[
                     [0, 0],
                     [mapConfig.height, mapConfig.width],
                 ]}
+                pane="overlayPane"
             />
             {markers.map((marker, index) => {
-                const [x, z, y] = marker.geometry.coordinates;
+                const [x, y, z] = marker.geometry.coordinates;
                 const position = toLeafletCoords(
                     x,
-                    y,
+                    z,
                     mapConfig.referencePoint
                 );
 
@@ -218,53 +334,96 @@ const InteractiveMap: React.FC<InteractiveMapProps & { opacity: number }> = ({
                             iconSize: [32, 32],
                             iconAnchor: [16, 16],
                             popupAnchor: [0, -16],
-                            className: "filter drop-shadow-[0_0_1px_#00000099]",
+                            className: `filter drop-shadow-[0_0_1px_#00000099] ${marker.type.toString() === "Event" ? "filter drop-shadow-[0_0_4px_#ffa500] drop-shadow-[0_0_8px_#ffa500]" : ""}`,
                         })}
                     >
                         <Popup>
                             <strong>
                                 {isNpc ? (
-                                    <>
+                                    <span className="text-sm items-center align-middle flex flex-col">
+                                        <img
+                                            src={markerIconUrl}
+                                            className="w-12 h-12 mb-1"
+                                        />
                                         {t(properties.name || "", {
                                             ns: "npc",
                                         })}
                                         {properties.description && (
                                             <span
+                                                className="bg-[#4b5563] px-1.5 py-0.5 rounded text-xs"
                                                 style={{
                                                     fontWeight: "normal",
-                                                    color: "#666",
+                                                    color: "#fff",
                                                 }}
                                             >
-                                                {" "}
-                                                (
                                                 {t(properties.description, {
                                                     ns: "npc",
                                                 })}
-                                                )
                                             </span>
                                         )}
-                                    </>
+                                    </span>
                                 ) : (
-                                    <>
-                                        {t(
-                                            config.displayName ??
-                                                "markers.unknown",
-                                            { ns: "markers" }
-                                        )}
-                                        {config.properties?.level && (
-                                            <>
-                                                {" "}
-                                                (lvl {config.properties.level})
-                                            </>
-                                        )}
-                                    </>
+                                    <span className="text-sm items-center align-middle flex flex-col">
+                                        <img
+                                            src={markerIconUrl}
+                                            className="w-12 h-12 mb-1"
+                                        />
+                                        <span className="flex flex-row gap-1">
+                                            {t(
+                                                config.displayName ??
+                                                    "markers.unknown",
+                                                { ns: "markers" }
+                                            )}
+                                            {config.properties?.level && (
+                                                <span
+                                                    className={`${LevelBG_Gradient(
+                                                        Number(
+                                                            config.properties
+                                                                .level
+                                                        )
+                                                    )} ${LevelTextColor(
+                                                        Number(
+                                                            config.properties
+                                                                .level
+                                                        )
+                                                    )} px-1.5 py-0.5 rounded text-xs`}
+                                                >
+                                                    lvl{" "}
+                                                    {config.properties.level}
+                                                </span>
+                                            )}
+                                        </span>
+                                    </span>
                                 )}
                             </strong>
-                            <br />
-                            <span>
-                                {x}, {z}, {y}
+                            <span className="w-full flex flex-row text-xs text-gray-400 mt-1 justify-center">
+                                <span className="flex flex-row gap-2">
+                                    <span>
+                                        x: <b className="text-gray-300">{x}</b>
+                                    </span>
+                                    <span>
+                                        y: <b className="text-gray-300">{y}</b>
+                                    </span>
+                                    <span>
+                                        z: <b className="text-gray-300">{z}</b>
+                                    </span>
+                                </span>
                             </span>
                         </Popup>
+                        <Tooltip sticky opacity={1}>
+                            <div className="font-bold text-sm">
+                                {t(config.displayName ?? "markers.unknown", {
+                                    ns: "markers",
+                                })}
+                            </div>
+                            <span className="text-xs text-gray-400">
+                                [
+                                {t("mappage.showMoreInfo", {
+                                    ns: "map",
+                                })}
+                                ]
+                            </span>
+                        </Tooltip>
                     </Marker>
                 );
             })}

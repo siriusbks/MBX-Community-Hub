@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Globe, Layers } from "lucide-react";
+import { Globe, Languages, Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SiModrinth, SiCurseforge, SiGithub, SiDiscord } from "react-icons/si";
 
@@ -20,6 +20,7 @@ interface ProjectProps {
         logo: string;
         type: string;
         badge?: string;
+        language: string[];
         links?: {
             website?: string;
             modrinth?: string;
@@ -96,11 +97,21 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
             </p>
 
             {/* Type */}
-            <div className="flex items-center gap-2 mt-3 text-gray-400 text-xs font-medium">
-                <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-full">
-                    <Layers size={14} /> {project.type}
-                </span>
-            </div>
+            <span className="flex flex-row gap-1">
+                <div className="flex items-center gap-2 mt-3 text-gray-400 text-xs font-medium">
+                    <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-full">
+                        <Layers size={14} /> {project.type}
+                    </span>
+                </div>
+                {project.language.length > 0 && (
+                    <div className="flex items-center gap-2  mt-3 text-gray-400 text-xs font-medium">
+                        <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-full">
+                            <Languages size={14} />{" "}
+                            {project.language.join(", ")}
+                        </span>
+                    </div>
+                )}
+            </span>
 
             {/* Links */}
             {links && (

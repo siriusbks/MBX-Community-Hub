@@ -6,6 +6,7 @@
 
 export const defaultSelectedPerMap: Record<string, string[]> = {
     spawn: [
+        "EVENT_TEST",
         "log_coconuts",
         "log_banana",
         "lily",

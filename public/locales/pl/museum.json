@@ -1,6 +1,8 @@
 {
   "museum.minecraftUsername": "Wpisz swoją nazwę użytkownika Minecraft",
   "museum.importMuseum.button": "Importuj muzeum",
+  "museum.hideDonated.button": "Pokaż Podarowane",
+  "museum.showDonated.button": "Ukryj Podarowane",
   "museum.recapMuseum.button": "Pokaż podsumowanie brakujących elementów",
   "museum.recapMuseum.title": "Brakujące Przedmioty",
   "museum.recapMuseum.description": "Oto przedmioty, których brakuje w Twoim muzeum.",
@@ -16,6 +18,7 @@
   "museum.options": "Opcje Muzeum",
   "museum.completion": "Ukończenie Muzeum",
   "museum.donated": "PODAROWANO",
+  "museum.unobtainable": "NIEOSIĄGALNE",
   "museum.rarity.COMMON": "Pospolity",
   "museum.rarity.UNCOMMON": "Niepospolity",
   "museum.rarity.RARE": "Rzadki",
