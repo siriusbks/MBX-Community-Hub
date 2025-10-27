@@ -27,23 +27,46 @@ export const AppRoutes: FC = () => (
 
         {/* Main Content */}
         <main className="flex-1 container mx-auto px-6 py-8">
-            <Suspense
-                fallback={
-                    <div className="text-center text-white">Loading...</div>
-                }
-            >
+                {/* LOOK WEIRD BUT MAYBE CAN HELP WITH CHROME ERRORS */}
                 <Routes>
                     <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                    <Route path="/map" element={<InfoMapPage />} />
-                    <Route path="/mappage" element={<MapPage />} />
-                    <Route path="/equipment" element={<EquipPage />} />
-                    <Route path="/community" element={<CommunityPage />} />
-                    <Route path="/museum" element={<MuseumPage />} />
-                    <Route path="/itemsNrecipes" element={<ItemsNRecipesPage />} />
+                    <Route path="/profile" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <ProfilePage />
+                        </Suspense>
+                        } />
+                    <Route path="/map" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <InfoMapPage />
+                        </Suspense>
+                        } />
+                    <Route path="/mappage" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <MapPage />
+                        </Suspense>
+                        } />
+                    <Route path="/equipment" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <EquipPage />
+                        </Suspense>
+                        } />
+                    <Route path="/community" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <CommunityPage />
+                        </Suspense>
+                        } />
+                    <Route path="/museum" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <MuseumPage />
+                        </Suspense>
+                        } />
+                    <Route path="/itemsNrecipes" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <ItemsNRecipesPage />
+                        </Suspense>
+                        } />
                 </Routes>
-            </Suspense>
         </main>
 
         {/* Footer */}
