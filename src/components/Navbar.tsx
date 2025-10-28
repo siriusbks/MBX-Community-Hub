@@ -12,7 +12,7 @@ import {
     ChevronDown,
     Shield,
     BookMarked,
-    Leaf
+    Leaf,
     BookAIcon,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -141,12 +141,12 @@ export const Navbar = () => {
                         {
                             to: "/museum",
                             icon: BookMarked,
-                          label: t("navbar.museum"),
+                            label: t("navbar.museum"),
                         },
                         {
                             to: "/itemsNrecipes",
                             icon: BookAIcon,
-                          label: t("navbar.itemsNrecipes"),
+                            label: t("navbar.itemsNrecipes"),
                         },
                         {
                             to: "/community",
@@ -171,18 +171,24 @@ export const Navbar = () => {
                                         ))
                                         ? "bg-green-500/20 text-green-400"
                                         : "text-gray-400 hover:text-white hover:bg-white/5"
-                                } ${to === "/halloween" && isActive ? "bg-orange-500/20 text-orange-400" : "text-gray-400 hover:text-white hover:bg-white/5"}`
+                                } ${
+                                    to === "/halloween" && isActive
+                                        ? "bg-orange-500/20 text-orange-400"
+                                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                                }`
                             }
                         >
                             <Icon className="h-5 w-5" />
                             <span className="items-center gap-1 hidden md:flex">
                                 <span className="hidden lg:flex">{label}</span>
-                                {(to === "/equipment" || to === "/museum" || to === "/itemsNrecipes") && (
+                                {(to === "/equipment" ||
+                                    to === "/museum" ||
+                                    to === "/itemsNrecipes") && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
                                         Beta
                                     </span>
                                 )}
-                                {(to === "/halloween") && (
+                                {to === "/halloween" && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500 text-black rounded">
                                         Event
                                     </span>
