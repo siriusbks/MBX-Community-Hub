@@ -219,6 +219,9 @@ const ItemsNRecipesApp: FC = () => {
     // State to control the display of the recap panel
     const [showRecap, setShowRecap] = useState<boolean>(false);
 
+    // State to store missing rarity information as a mapping where the key is the item ID and the value is the rarity string
+    const [missingRarity, setMissingRarity] = useState<Record<string, string>>({});
+
     // Asynchronous function to load data (API and JSON)
     const loadData = async () => {
         try {
@@ -247,6 +250,14 @@ const ItemsNRecipesApp: FC = () => {
             setErrorMsg(error instanceof Error ? error.message : "Unknown error");
         }
     };
+
+    // Effect to fetch missing rarity data from the JSON file on component mount
+    useEffect(() => {
+        fetch("/assets/data/items-missing-rarity.json")
+            .then((res) => res.json())
+            .then((data) => setMissingRarity(data || {}))
+            .catch((err) => console.error("Error loading JSON:", err));
+    }, []);
 
     // On mount, read URL query params to pre-select category and/or open the craft modal
     useEffect(() => {
@@ -412,6 +423,7 @@ const ItemsNRecipesApp: FC = () => {
                                 rarity={rarity}
                                 category={group.category}
                                 craftModalOpener={() => openCraftModal(itemId, group.category)}
+                                missingRarity={missingRarity}
                             />
                         );
                     })}

@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import INRItemImage from "./INRItemImage";
 
 interface ItemCardProps {
-  itemId: string;
-  category?: string;
-  rarity: string;
-  craftModalOpener?: (itemId: string) => void;
+    itemId: string;
+    category?: string;
+    rarity: string;
+    craftModalOpener?: (itemId: string) => void;
+    missingRarity: Record<string, string>;
 }
 
 const INRItemCard: React.FC<ItemCardProps> = ({
@@ -14,36 +15,11 @@ const INRItemCard: React.FC<ItemCardProps> = ({
     category,
     rarity,
     craftModalOpener,
+    missingRarity,
     }) => {
     let adjustedRarity = rarity;
-
-    if (itemId.startsWith("bag_") || itemId.startsWith("scroll_small_")) {
-        adjustedRarity = "UNCOMMON";
-    } else if (
-        itemId.startsWith("candy_enchanted_fly") ||
-        itemId.startsWith("candy_enchanted_crafting")
-    ) {
-        adjustedRarity = "MYTHIC";
-    } else if (
-        itemId.startsWith("barrel_") ||
-        itemId.startsWith("rune_enchanted_") ||
-        itemId.startsWith("scroll_enchanted_") ||
-        itemId.startsWith("candy_enchanted_")
-    ) {
-        adjustedRarity = "EPIC";
-    } else if (
-        itemId.startsWith("enchanted_") ||
-        itemId.startsWith("candy_fly") ||
-        itemId.startsWith("candy_crafting")
-    ) {
-        adjustedRarity = "LEGENDARY";
-    } else if (
-        itemId.startsWith("crate_") ||
-        itemId.startsWith("rune_big_") ||
-        itemId.startsWith("scroll_big_") ||
-        itemId.startsWith("candy_")
-    ) {
-        adjustedRarity = "RARE";
+    if ((adjustedRarity === "UNKNOWN" || adjustedRarity === "COMMON") && missingRarity[itemId]) {
+        adjustedRarity = missingRarity[itemId];
     }
 
     const TMPBorderColorClass =
