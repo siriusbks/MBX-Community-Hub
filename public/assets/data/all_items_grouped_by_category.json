@@ -246,8 +246,9 @@
     },
     {
         "category":  "RING",
-        "itemCount":  92,
+        "itemCount":  95,
         "items":  [
+                      "ring_multigem_pink",
                       "ring_feather",
                       "ring_improved",
                       "ring_silver",
@@ -272,6 +273,8 @@
                       "ring_fire_silver",
                       "ring_multigem_green",
                       "little_knight_ring",
+                      "xmas_hipster_ring",
+                      "lny_snake_ring",
                       "ring_multigem_blue",
                       "ring_plant_purple",
                       "ring_super_golden",
@@ -441,8 +444,9 @@
     },
     {
         "category":  "NECKLACE",
-        "itemCount":  70,
+        "itemCount":  73,
         "items":  [
+                      "necklace_improved",
                       "basic_agility_necklace",
                       "basic_intelligence_necklace",
                       "basic_luck_necklace",
@@ -458,6 +462,8 @@
                       "necklace_bagouze_yellow",
                       "gentle_ninja_necklace",
                       "little_knight_necklace",
+                      "xmas_hipster_necklace",
+                      "lny_snake_necklace",
                       "necklace_beautiful_blue",
                       "necklace_agility",
                       "necklace_plant_purple",
@@ -658,7 +664,7 @@
     },
     {
         "category":  "BELT",
-        "itemCount":  59,
+        "itemCount":  61,
         "items":  [
                       "belt_bronze",
                       "belt_improved",
@@ -677,6 +683,8 @@
                       "babyshark_belt",
                       "belt_plant_pink",
                       "little_knight_belt",
+                      "xmas_hipster_belt",
+                      "lny_snake_belt",
                       "belt_agility",
                       "belt_bagouze_blue",
                       "gentle_ninja_belt",
@@ -827,7 +835,7 @@
     },
     {
         "category":  "BOOTS",
-        "itemCount":  34,
+        "itemCount":  32,
         "items":  [
                       "basic_agility_boots",
                       "basic_intelligence_boots",
@@ -836,6 +844,8 @@
                       "babyshark_boots",
                       "little_knight_boots",
                       "gentle_ninja_boots",
+                      "xmas_hipster_boots",
+                      "lny_snake_boots",
                       "cactus_boots",
                       "candle_boots",
                       "lucky_jester_boots",
@@ -907,7 +917,7 @@
     },
     {
         "category":  "HELMET",
-        "itemCount":  33,
+        "itemCount":  36,
         "items":  [
                       "basic_agility_helmet",
                       "basic_intelligence_helmet",
@@ -918,6 +928,8 @@
                       "little_knight_helmet",
                       "sunflower_helmet",
                       "adventurer_helmet",
+                      "xmas_hipster_helmet",
+                      "lny_snake_helmet",
                       "cactus_helmet",
                       "candle_helmet",
                       "lucky_jester_helmet",
@@ -930,6 +942,7 @@
                       "wise_leatherhead_helmet",
                       "small_royale_helmet",
                       "puddle_helmet",
+                      "angel_helmet",
                       "very_heavy_helmet",
                       "superdyno_blue_helmet",
                       "mushroom_helmet",
@@ -1022,7 +1035,7 @@
     },
     {
         "category":  "CHESTPLATE",
-        "itemCount":  30,
+        "itemCount":  33,
         "items":  [
                       "basic_agility_chestplate",
                       "basic_intelligence_chestplate",
@@ -1031,8 +1044,11 @@
                       "babyshark_chestplate",
                       "gentle_ninja_chestplate",
                       "little_knight_chestplate",
+                      "xmas_hipster_chestplate",
+                      "lny_snake_chestplate",
                       "cactus_chestplate",
                       "candle_chestplate",
+                      "xmas_ugly_pullover",
                       "lucky_jester_chestplate",
                       "nimble_jester_chestplate",
                       "smart_jester_chestplate",
@@ -1058,7 +1074,7 @@
     },
     {
         "category":  "LEGGINGS",
-        "itemCount":  30,
+        "itemCount":  32,
         "items":  [
                       "basic_agility_leggings",
                       "basic_intelligence_leggings",
@@ -1067,6 +1083,8 @@
                       "babyshark_leggings",
                       "little_knight_leggings",
                       "gentle_ninja_leggings",
+                      "xmas_hipster_leggings",
+                      "lny_snake_leggings",
                       "cactus_leggings",
                       "candle_leggings",
                       "lucky_jester_leggings",
@@ -1094,9 +1112,10 @@
     },
     {
         "category":  "PET",
-        "itemCount":  26,
+        "itemCount":  32,
         "items":  [
                       "poop",
+                      "pet_founder_parrot",
                       "pet_skull",
                       "pet_polar_bear",
                       "pet_fat_shiba",
@@ -1110,6 +1129,7 @@
                       "pet_ginger_fox",
                       "pet_panda",
                       "pet_skull_crab",
+                      "pet_snowman",
                       "pet_mini_turtle",
                       "pet_puddle",
                       "pet_white_cat",
@@ -1117,6 +1137,10 @@
                       "pet_pot_golem",
                       "pet_trunky",
                       "pet_cheese_mouse",
+                      "pet_hipster_penguin",
+                      "pet_lny_snake",
+                      "pet_valentine_cupidon",
+                      "pet_valentine_heart",
                       "pet_fire_dog",
                       "pet_wyrmling",
                       "pet_slimy",
@@ -1292,12 +1316,16 @@
                       "candy_crafting_speed",
                       "candy_enchanted_crafting_speed",
                       "candy_fly",
-                      "candy_enchanted_fly"
+                      "candy_enchanted_fly",
+                      "xmas_orange_candy",
+                      "xmas_green_candy",
+                      "xmas_red_candy",
+                      "xmas_blue_candy"
                   ]
     },
     {
         "category":  "STAFF",
-        "itemCount":  19,
+        "itemCount":  21,
         "items":  [
                       "staff_balloon_boomstick",
                       "staff_bubble_bludgeon",
@@ -1306,9 +1334,11 @@
                       "staff_rubber_mallet",
                       "staff_traffic_stopper",
                       "smart_jester_wand",
+                      "staff_lny_snake",
                       "lucky_jester_wand",
                       "nimble_jester_wand",
                       "staff_broomstick_basher",
+                      "staff_valentine_heart",
                       "staff_microphone_maul",
                       "staff_carrot_whack",
                       "staff_pizza_paddle",
@@ -1407,9 +1437,10 @@
     },
     {
         "category":  "GUN",
-        "itemCount":  15,
+        "itemCount":  16,
         "items":  [
                       "musket_blunderblast",
+                      "xmas_confetti_cannon",
                       "musket_quackbuss",
                       "musket_banana_blaster",
                       "musket_bubble_trouble",
@@ -1508,7 +1539,7 @@
     },
     {
         "category":  "TREASURE",
-        "itemCount":  12,
+        "itemCount":  24,
         "items":  [
                       "key_common",
                       "treasure_common",
@@ -1521,18 +1552,36 @@
                       "treasure_legendary",
                       "key_legendary",
                       "treasure_mythic",
-                      "key_mythic"
+                      "key_mythic",
+                      "xmas_present_small_white",
+                      "xmas_present_small_purple",
+                      "xmas_present_small_pink",
+                      "xmas_present_small_orange",
+                      "xmas_present_small_cyan",
+                      "xmas_present_small_black",
+                      "xmas_present_medium_yellow",
+                      "xmas_present_medium_green",
+                      "xmas_present_medium_blue",
+                      "xmas_present_big_red",
+                      "lny_snake_crate",
+                      "lny_envelope_yellow",
+                      "lny_envelope_red",
+                      "lny_envelope_blue",
+                      "valentine_letter"
                   ]
     },
     {
         "category":  "BACK",
         "itemCount":  12,
         "items":  [
+                      "xmas_hipster_backpack",
                       "adventurer_backpack",
                       "cactus_backpack",
+                      "lny_snake_backpack",
                       "wedding_dress_back",
                       "steampunk_backpack",
                       "puddle_backpack",
+                      "angel_backpack",
                       "mushroom_backpack",
                       "snail_backpack",
                       "pineapple_cape",
@@ -1544,8 +1593,9 @@
     },
     {
         "category":  "MOUNT",
-        "itemCount":  12,
+        "itemCount":  17,
         "items":  [
+                      "mount_default",
                       "mount_broomstick",
                       "mount_rocket",
                       "mount_panda",
@@ -1553,8 +1603,12 @@
                       "mount_paperplane",
                       "mount_motorcycle",
                       "mount_shark",
+                      "mount_wooden_plane",
+                      "mount_valentine_pegasse",
+                      "mount_hipster_bike",
                       "mount_shopping_cart",
                       "mount_truck",
+                      "mount_lny_snake",
                       "mount_cloud",
                       "mount_flying_carpet",
                       "mount_ufo"
@@ -1594,6 +1648,22 @@
                       "jelly_epic",
                       "jelly_legendary",
                       "jelly_mythic"
+                  ]
+    },
+    {
+        "category": "SKULL",
+        "itemCount": 10,
+        "items":  [
+                      "basic_skull",
+                      "pineapple_skull",
+                      "chad_skull",
+                      "thunder_skull",
+                      "opal_skull",
+                      "grumpy_skull",
+                      "crimson_skull",
+                      "jackpot_skull",
+                      "sage_skull",
+                      "abyss_skull"
                   ]
     }
 ]

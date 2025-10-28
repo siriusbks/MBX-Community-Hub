@@ -10,5 +10,7 @@
     "homepage.features.equipment.title": "Gestor de equipamiento",
     "homepage.features.equipment.description": "Construye y optimiza el equipo de tu personaje.",
     "homepage.features.museum.title": "Museo",
-    "homepage.features.museum.description": "Explora tu museo sin estar conectado, pero no olvides habilitar el acceso a la API de terceros en el juego."
+    "homepage.features.museum.description": "Explora tu museo sin estar conectado, pero no olvides habilitar el acceso a la API de terceros en el juego.",
+    "homepage.features.itemsNrecipes.title": "Artículos & Recetas",
+    "homepage.features.itemsNrecipes.description": "Explora todos los objetos y las recetas asociadas a ellos."
 }
