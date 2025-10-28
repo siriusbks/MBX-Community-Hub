@@ -42,5 +42,12 @@
     "bestiary.scorchfang": "Scorchfang",
     "bestiary.pokeboo": "Pokeboo",
     "bestiary.dunebeard": "Dunebeard",
-    "bestiary.desert_ogre": "Desert Ogre"
+    "bestiary.desert_ogre": "Desert Ogre",
+
+    "bestiary.halloween_ghost": "Ghost",
+    "bestiary.halloween_pumpkin": "Pumpkin",
+    "bestiary.halloween_crow": "Crow",
+    "bestiary.halloween_albino_rat": "Albino Rat",
+    "bestiary.halloween_gray_rat": "Gray Rat",
+    "bestiary.halloween_brown_rat": "Brown Rat"
 }
