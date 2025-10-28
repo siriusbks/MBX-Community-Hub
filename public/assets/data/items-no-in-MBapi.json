@@ -1,7 +1,7 @@
 [
     {
         "id": "mm-auction_table",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -30,7 +30,7 @@
     },
     {
         "id": "mm-bazaar_table",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -59,7 +59,7 @@
     },
     {
         "id": "mm-shop_table",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -88,7 +88,7 @@
     },
     {
         "id": "mm-atm_green",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -117,7 +117,7 @@
     },
     {
         "id": "mm-workshop_farmer_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -141,7 +141,7 @@
     },
     {
         "id": "mm-workshop_miner_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -170,7 +170,7 @@
     },
     {
         "id": "mm-workshop_cooker_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -199,7 +199,7 @@
     },
     {
         "id": "mm-workshop_lumberjack_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -228,7 +228,7 @@
     },
     {
         "id": "mm-workshop_fisher_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -258,7 +258,7 @@
     },
     {
         "id": "mm-workshop_hunter_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -287,7 +287,7 @@
     },
     {
         "id": "mm-workshop_alchemist_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -316,7 +316,7 @@
     },
     {
         "id": "mm-workshop_blacksmith_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -345,7 +345,7 @@
     },
     {
         "id": "mm-workshop_tailor_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -374,7 +374,7 @@
     },
     {
         "id": "mm-workshop_shoemaker_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -402,8 +402,8 @@
         }
     },
     {
-        "id": "mm-workshop_jeweller_small",
-        "category": "UTILILTY_BLOCK",
+        "id": "mm-workshop_jewellerer_small",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -432,7 +432,7 @@
     },
     {
         "id": "mm-workshop_tinkerer_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
@@ -461,7 +461,7 @@
     },
     {
         "id": "mm-workshop_runeforger_small",
-        "category": "UTILILTY_BLOCK",
+        "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
             "ingredients": [
