@@ -6,7 +6,7 @@
 
 import { FC, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Info } from "lucide-react";
+import { Info, Map } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { mapData } from "@components/map/mapData";
@@ -44,15 +44,19 @@ const InfoMapPage: FC = () => {
 
     return (
         <div className="flex flex-col items-center min-h-screen text-white p-6">
-            {/* Header */}
-            <h1 className="text-4xl font-extrabold text-green-400 mb-4">
-                🌍 {t("mappage.title")}
-            </h1>
-            <p className="text-gray-300 text-lg mb-8 flex items-center gap-2">
-                {t("mappage.hoverInfo1")}{" "}
+                
+            <div className="text-center mb-12">
+                <Map className="mx-auto mb-2 h-16 w-16 text-green-500 bg-opacity-20 bg-green-500 p-3 rounded-lg" />
+                <h1 className="text-4xl font-bold text-white mb-1">
+                    {t("mappage.title")}
+                </h1>
+                <p className="text-gray-400 max-w-3xl mx-auto">
+                    {t("mappage.hoverInfo1")}{" "}
                 <Info className="w-5 h-5 text-white inline-block" />{" "}
                 {t("mappage.hoverInfo2")}
-            </p>
+                </p>
+                <div className="mt-4 h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
+            </div>
 
             {/* Grid card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">

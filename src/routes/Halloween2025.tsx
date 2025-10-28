@@ -6,7 +6,7 @@
 
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Leaf, Ticket, Calendar } from "lucide-react";
+import { Leaf, Ticket, Calendar, Box, Rat, LayoutList } from "lucide-react";
 import { bestiaryData } from "@components/map/bestiaryData";
 import {
     LevelBG_Gradient,
@@ -417,7 +417,7 @@ const HalloweenPage: FC = () => {
             {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
-                    <Ticket className="w-10 h-8 text-orange-400" />
+                    <Box className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
                         Halloween Treasure
                     </h1>
@@ -471,7 +471,7 @@ const HalloweenPage: FC = () => {
             {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
-                    <Ticket className="w-10 h-8 text-orange-400" />
+                    <Rat className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
                         New Mobs
                     </h1>
@@ -557,7 +557,7 @@ const HalloweenPage: FC = () => {
             {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
-                    <Ticket className="w-10 h-8 text-orange-400" />
+                    <LayoutList className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
                         New Content
                     </h1>

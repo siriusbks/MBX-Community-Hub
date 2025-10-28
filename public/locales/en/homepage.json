@@ -10,5 +10,7 @@
     "homepage.features.equipment.title": "Equipment Manager",
     "homepage.features.equipment.description": "Build and optimize your character’s gear.",
     "homepage.features.museum.title": "Museum",
-    "homepage.features.museum.description": "Explore your museum without being connected, but don't forget to enable third-parties API access in-game."
+    "homepage.features.museum.description": "Explore your museum without being connected, but don't forget to enable third-parties API access in-game.",
+    "homepage.features.halloween.title": "Halloween Event",
+    "homepage.features.halloween.description": "Join the Halloween festivities with special quests, items, and more!"
 }

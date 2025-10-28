@@ -7,6 +7,7 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ProjectCard from "@components/community/ProjectCard";
+import { Users } from "lucide-react";
 
 const CommunityPage: FC = () => {
     const { t } = useTranslation("community");
@@ -36,8 +37,9 @@ const CommunityPage: FC = () => {
         <div className="p-10 max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold text-white mb-4">
-                    🌟 {t("community.title")}
+                <Users className="mx-auto mb-2 h-16 w-16 text-green-500 bg-opacity-20 bg-green-500 p-3 rounded-lg" />
+                <h1 className="text-4xl font-bold text-white mb-1">
+                    {t("community.title")}
                 </h1>
                 <p className="text-gray-400 max-w-3xl mx-auto">
                     {t("community.subtitle")}

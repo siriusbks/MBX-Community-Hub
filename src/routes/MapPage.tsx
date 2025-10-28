@@ -6,7 +6,7 @@
 
 import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { ArrowRightLeft, Undo2, MapPinned } from "lucide-react";
+import { ArrowRightLeft, Undo2, MapPinned, Map } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
     LevelBG_Color,
@@ -996,6 +996,14 @@ const MapPage: FC = () => {
                                                                             <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
                                                                                 Halloween
                                                                                 Event
+                                                                            </span>
+                                                                        )}
+                                                                        {fish.boss && (
+                                                                            <span className="text-[10px] bg-yellow-600 bg-opacity-50 border font-semibold border-yellow-600 w-fit px-2 py-0 rounded mb-1">
+                                                                                {t(
+                                                                                    "bestiary.boss",
+                                                                                    { name: "Boss", ns: "bestiary"}
+                                                                                )}
                                                                             </span>
                                                                         )}
                                                                         <span
