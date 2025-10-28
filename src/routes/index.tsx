@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
 import NotFound from "./NotFound";
+import HalloweenPage from "./Halloween2025";
 
 const EquipPage = lazy(() => import("@routes/EquipPage"));
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
@@ -61,6 +62,9 @@ export const AppRoutes: FC = () => (
                         <MuseumPage />
                         </Suspense>
                         } />
+                    <Route path="/halloween" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <HalloweenPage />
                     <Route path="/itemsNrecipes" element={
                         <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
                         <ItemsNRecipesPage />

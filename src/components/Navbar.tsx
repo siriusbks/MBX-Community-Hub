@@ -12,6 +12,7 @@ import {
     ChevronDown,
     Shield,
     BookMarked,
+    Leaf
     BookAIcon,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -152,6 +153,11 @@ export const Navbar = () => {
                             icon: Users,
                             label: t("navbar.community"),
                         },
+                        {
+                            to: "/halloween",
+                            icon: Leaf,
+                            label: t("navbar.halloween"),
+                        },
                     ].map(({ to, icon: Icon, label }) => (
                         <NavLink
                             key={to}
@@ -165,7 +171,7 @@ export const Navbar = () => {
                                         ))
                                         ? "bg-green-500/20 text-green-400"
                                         : "text-gray-400 hover:text-white hover:bg-white/5"
-                                }`
+                                } ${to === "/halloween" && isActive ? "bg-orange-500/20 text-orange-400" : "text-gray-400 hover:text-white hover:bg-white/5"}`
                             }
                         >
                             <Icon className="h-5 w-5" />
@@ -174,6 +180,11 @@ export const Navbar = () => {
                                 {(to === "/equipment" || to === "/museum" || to === "/itemsNrecipes") && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
                                         Beta
+                                    </span>
+                                )}
+                                {(to === "/halloween") && (
+                                    <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500 text-black rounded">
+                                        Event
                                     </span>
                                 )}
                             </span>
