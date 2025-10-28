@@ -165,6 +165,17 @@
             "properties": {
                 "map": "quadra_plains"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [451, 66, -341],
+                "type": "Point"
+            },
+            "id": 16,
+            "type": "Feature",
+            "properties": {
+                "map": "quadra_plains"
+            }
         }
     ]
 }
