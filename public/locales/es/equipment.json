@@ -25,6 +25,7 @@
   "equip.stats.emptySubtitle": "¡Empieza seleccionando equipamiento para ver tus estadísticas!",
   "equip.stats.breakdownTitle": "Estadísticas detalladas por ranura",
   "equip.buttons.openInMinebox": "Abrir en Minebox",
+  "equip.buttons.openInItemsNRecipes": "Abrir en la página de Artículos & Recetas",
   "equip.recipeNotFound": "Ninguna receta disponible para este objeto.",
   "equip.title.job": "Trabajo:",
   "equip.craftingBySlot": "Fabricación por ranura",

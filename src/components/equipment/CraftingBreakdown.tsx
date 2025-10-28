@@ -18,6 +18,11 @@ interface Props {
     locale?: Locale;
 }
 
+interface ItemsNRecipesLink {
+    slotLabel: string;
+    id: string | number;
+}
+
 const MC_ITEM_BASE =
     "https://assets.mcasset.cloud/1.21.8/assets/minecraft/textures/item/";
 
@@ -62,7 +67,7 @@ const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
     );
 };
 
-const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
+/* const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
     if (id === undefined || id === null) return null;
     const href = `https://minebox.co/universe/items?id=${id}`;
     const { t } = useTranslation("equipment");
@@ -78,6 +83,27 @@ const MineboxLink: React.FC<{ id?: string | number }> = ({ id }) => {
             onClick={(e) => e.stopPropagation()}
         >
             ?
+        </a>
+    );
+}; */
+
+const ItemsNRecipesLink: React.FC<ItemsNRecipesLink> = ({ slotLabel, id }) => {
+    if (id === undefined || id === null) return null;
+    const typeOfSlotLabel = slotLabel.split(" ")[0].toUpperCase();
+    const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(typeOfSlotLabel)}&item=${encodeURIComponent(id)}`;
+    const { t } = useTranslation("equipment");
+
+    return (
+        <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center justify-center rounded-full border border-blue-400/60 text-blue-300 hover:text-white hover:border-blue-300 bg-blue-500/10 w-5 h-5 text-[10px] leading-none"
+        aria-label="Open in Items & Recipes"
+        title={t("equip.buttons.openInItemsNRecipes")}
+        onClick={(e) => e.stopPropagation()}
+        >
+        ?
         </a>
     );
 };
@@ -111,7 +137,10 @@ const CraftSection: React.FC<{
                 </span>
 
                 <span className="flex items-center gap-2 flex-shrink-0 ml-2">
-                    <MineboxLink id={item?.id} />
+                    <ItemsNRecipesLink 
+                        slotLabel={slotLabel}
+                        id={item?.id} 
+                    />
                     <ChevronDown
                         className={`w-4 h-4 transition-transform ${
                             open ? "rotate-180" : ""

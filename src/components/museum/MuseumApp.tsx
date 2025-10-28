@@ -411,6 +411,23 @@ export const MuseumApp: FC = () => {
         setCraftModalCategory(category);
     };
 
+    // Function that returns the content of link of the wiki
+    const moreInformation = () => {
+        if (!craftModalItem || !craftModalCategory) return null;
+        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(craftModalCategory)}&item=${encodeURIComponent(craftModalItem)}`;
+        return (
+            <a
+                key={craftModalItem}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
+            >
+                ?
+            </a>
+        );
+    };
+
     // Function that returns the content of the missing items recap
     const renderRecapContent = () => {
         if (!groupedItems || !detailsIndex || !museumItems) {
@@ -1006,16 +1023,9 @@ export const MuseumApp: FC = () => {
                                                 }
                                             </p>
                                         </span>
-                                        <a
-                                            className="ml-auto"
-                                            href={`https://minebox.co/universe/items?id=${craftModalItem}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <span className="close flex items-center justify-center text-xl font-semibold cursor-pointer h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600">
-                                                ?
-                                            </span>
-                                        </a>
+                                        <span className="ml-auto">
+                                            {moreInformation()}
+                                        </span>
                                         <span
                                             className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                             onClick={() =>

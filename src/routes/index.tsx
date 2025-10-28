@@ -18,6 +18,7 @@ const MapPage = lazy(() => import("@routes/MapPage"));
 const HomePage = lazy(() => import("@routes/HomePage"));
 const CommunityPage = lazy(() => import("@routes/CommunityPage"));
 const MuseumPage = lazy(() => import("@routes/MuseumPage"));
+const ItemsNRecipesPage = lazy(() => import("@routes/ItemsNRecipesPage"));
 
 export const AppRoutes: FC = () => (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
@@ -58,6 +59,11 @@ export const AppRoutes: FC = () => (
                     <Route path="/museum" element={
                         <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
                         <MuseumPage />
+                        </Suspense>
+                        } />
+                    <Route path="/itemsNrecipes" element={
+                        <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+                        <ItemsNRecipesPage />
                         </Suspense>
                         } />
                 </Routes>

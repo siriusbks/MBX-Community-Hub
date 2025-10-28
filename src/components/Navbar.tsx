@@ -12,6 +12,7 @@ import {
     ChevronDown,
     Shield,
     BookMarked,
+    BookAIcon,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -142,6 +143,11 @@ export const Navbar = () => {
                           label: t("navbar.museum"),
                         },
                         {
+                            to: "/itemsNrecipes",
+                            icon: BookAIcon,
+                          label: t("navbar.itemsNrecipes"),
+                        },
+                        {
                             to: "/community",
                             icon: Users,
                             label: t("navbar.community"),
@@ -165,7 +171,7 @@ export const Navbar = () => {
                             <Icon className="h-5 w-5" />
                             <span className="items-center gap-1 hidden md:flex">
                                 <span className="hidden lg:flex">{label}</span>
-                                {(to === "/equipment" || to === "/museum") && (
+                                {(to === "/equipment" || to === "/museum" || to === "/itemsNrecipes") && (
                                     <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
                                         Beta
                                     </span>
