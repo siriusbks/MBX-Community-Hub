@@ -35,7 +35,7 @@ const NAV_LINKS: Array<any> = [
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
-    { id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Beta" , event: true },
+    { id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
 ];
 
 const LanguageSelector = ({
@@ -179,7 +179,7 @@ export const Navbar = () => {
                                         {React.createElement(link.icon, { className: "h-5 w-5" })}
                                         <span className="items-center gap-1 hidden md:flex">
                                             <span className="hidden lg:flex">{t(link.labelKey) ?? link.labelKey}</span>
-                                            <ChevronDown className="w-4 h-4 text-gray-400 ml-1" />
+                                            <ChevronDown className="w-4 h-4  ml-1" />
                                         </span>
                                     </button>
 
@@ -191,7 +191,7 @@ export const Navbar = () => {
                                                     to={item.to}
                                                     onClick={() => setToolsOpen(false)}
                                                     className={({ isActive }) =>
-                                                        `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 ${isActive ? "bg-white/5" : ""}`
+                                                        `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-5 rounded transition ${isActive ? "bg-white/5" : ""}`
                                                     }
                                                 >
                                                     {React.createElement(item.icon, { className: "w-5 h-5 text-gray-300" })}
