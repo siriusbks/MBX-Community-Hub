@@ -10,6 +10,7 @@ import {
     AlertTriangle,
     ArrowUpFromLine,
     Boxes,
+    Calculator,
     ClipboardCopy,
     Eye,
     EyeOff,
@@ -85,8 +86,7 @@ const RecipeNode: FC<RecipeNodeProps> = ({
     const hasSubRecipe =
         detailsIndex &&
         detailsIndex[ing.id] &&
-        detailsIndex[ing.id].recipe &&
-        detailsIndex[ing.id].recipe.job !== "FARMER";
+        detailsIndex[ing.id].recipe
 
     let summary: JSX.Element | null = null;
     if (
@@ -99,22 +99,6 @@ const RecipeNode: FC<RecipeNodeProps> = ({
             detailsIndex[ing.id].recipe,
             detailsIndex,
             multiplier
-        );
-        summary = (
-            <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border border-gray-500 rounded p-0.5 px-2">
-                {Object.keys(subResources).map((key, index, arr) => (
-                    <span key={key} className="inline-flex items-center mr-1 text-xs">
-                        <span>{subResources[key].toLocaleString("fr-FR")}</span> x
-                        <INRItemImage
-                            itemId={key}
-                            detailsIndex={detailsIndex}
-                            className="h-4 w-4 ml-0.5"
-                            style={{ imageRendering: "pixelated" }}
-                        />
-                        {index < arr.length - 1 && <span className="ml-0.5"> </span>}
-                    </span>
-                ))}
-            </span>
         );
     }
 
@@ -207,6 +191,35 @@ const ItemsNRecipesApp: FC = () => {
 
     // State to filter items by selected category
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    // Multi-select categories for the "All" view: which categories should be shown
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+    // Initialize selectedCategories to all categories once groupedItems loads
+    useEffect(() => {
+        if (groupedItems && selectedCategories.length === 0) {
+            setSelectedCategories(groupedItems.map((g) => g.category));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [groupedItems]);
+
+    const toggleCategory = (category: string) => {
+        setSelectedCategories((prev) =>
+            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+        );
+        // ensure we're in the combined (All) view when toggling checkboxes
+        setSelectedCategory(null);
+    };
+
+    const toggleAllCategories = () => {
+        if (!groupedItems) return;
+        if (selectedCategories.length === groupedItems.length) {
+            setSelectedCategories([]);
+        } else {
+            setSelectedCategories(groupedItems.map((g) => g.category));
+        }
+        // show combined view
+        setSelectedCategory(null);
+    };
 
     // States for global collapse/expand (for re-mounting RecipeTree)
     const [globalExpanded, setGlobalExpanded] = useState<boolean>(false);
@@ -293,6 +306,37 @@ const ItemsNRecipesApp: FC = () => {
         window.history.pushState({}, "", "?" + params.toString());
     };
 
+    // Side panel state: when an item is clicked we show a right-side panel instead of directly opening modal
+    const [panelItem, setPanelItem] = useState<string | null>(null);
+    const [panelCategory, setPanelCategory] = useState<string | null>(null);
+
+    // Info panel state: displays full recipe/info in the `#infoPanel` element
+    const [infoPanelItem, setInfoPanelItem] = useState<string | null>(null);
+    const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(null);
+
+    const openSidePanel = (itemId: string, category: string) => {
+        setPanelItem(itemId);
+        setPanelCategory(category);
+    };
+
+    const openInfoPanel = (itemId: string, category: string) => {
+        // populate the left info panel and close the temporary side panel
+        setInfoPanelItem(itemId);
+        setInfoPanelCategory(category);
+        setPanelItem(null);
+        setPanelCategory(null);
+        // optionally scroll infoPanel into view
+        setTimeout(() => {
+            const el = document.getElementById("infoPanel");
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 50);
+    };
+
+    const closeSidePanel = () => {
+        setPanelItem(null);
+        setPanelCategory(null);
+    };
+
     // Function to close the craft modal and remove the "item" parameter from the URL
     const closeCraftModal = () => {
         setCraftModalItem(null);
@@ -302,14 +346,15 @@ const ItemsNRecipesApp: FC = () => {
         window.history.pushState({}, "", "?" + params.toString());
     };
 
-    // Function to render the resource recap for the current craft recipe
-    const renderResourcesContent = () => {
-        if (!craftModalItem || !detailsIndex) {
+    // Function to render the resource recap for a given item (defaults to craftModalItem)
+    const renderResourcesContent = (itemId?: string) => {
+        const target = itemId || craftModalItem;
+        if (!target || !detailsIndex) {
             return <p>{t("itemsNrecipes.noDataLoaded")}</p>;
         }
         // Compute resources using current craftQuantity multiplier
-        const totalResources = detailsIndex[craftModalItem].recipe
-            ? gatherResources(detailsIndex[craftModalItem].recipe, detailsIndex, craftQuantity)
+        const totalResources = detailsIndex[target].recipe
+            ? gatherResources(detailsIndex[target].recipe, detailsIndex, craftQuantity)
             : {};
 
         const sortedResourceIds = Object.keys(totalResources).sort();
@@ -344,10 +389,11 @@ const ItemsNRecipesApp: FC = () => {
     };
 
     // Function to render the "Used in recipes" footer using the new property "used_in_recipes"
-    const renderUsedInRecipesFooter = () => {
-        if (!craftModalItem || !detailsIndex) return null;
+    const renderUsedInRecipesFooter = (itemId?: string) => {
+        const target = itemId || craftModalItem;
+        if (!target || !detailsIndex) return null;
         // used_in_recipes is expected to be an array of objects { type, id, amount }
-        const usedInList = detailsIndex[craftModalItem].used_in_recipes || [];
+        const usedInList = detailsIndex[target].used_in_recipes || [];
         if (usedInList.length === 0) {
             return (
                 <p className="text-sm text-gray-300">
@@ -389,12 +435,36 @@ const ItemsNRecipesApp: FC = () => {
     // Render items for the selected category only
     const renderItems = () => {
         if (!groupedItems || !detailsIndex) return null;
-        if (!selectedCategory)
+        // If no specific category is selected, render all categories stacked vertically
+        if (!selectedCategory) {
+            // Flatten selected groups into a single list and render in one responsive grid (no category titles)
+            const categoriesToShow = selectedCategories; // if empty, show no categories
+            const allItems = groupedItems.flatMap((group) =>
+                categoriesToShow.includes(group.category) ? group.items.map((id) => ({ id, category: group.category })) : []
+            );
             return (
-                <div className="p-4 text-center text-gray-400">
-                    {t("itemsNrecipes.selectCategory")}
+                <div className="category w-full mb-6">
+                    <div className="groupItem grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-0">
+                        {allItems.map(({ id: itemId, category }) => {
+                            const rarity = detailsIndex[itemId]?.rarity ?? "UNKNOWN";
+                            return (
+                                <INRItemCard
+                                    key={itemId}
+                                    itemId={itemId}
+                                    rarity={rarity}
+                                    level={(detailsIndex[itemId] as any)?.level ?? 0}
+                                    category={category}
+                                    craftModalOpener={() => openSidePanel(itemId, category)}
+                                    missingRarity={missingRarity}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
             );
+        }
+
+        // Otherwise render single chosen category
         const group = groupedItems.find((g) => g.category === selectedCategory);
         if (!group) return null;
         const categoryId = "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
@@ -410,7 +480,7 @@ const ItemsNRecipesApp: FC = () => {
                     />
                     {group.category.toUpperCase().replace("_", " ")}
                 </div>
-                <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
+                <div className="groupItem grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 justify-between">
                     {group.items.map((itemId) => {
                         const rarity =
                             detailsIndex[itemId] && detailsIndex[itemId].rarity
@@ -421,8 +491,9 @@ const ItemsNRecipesApp: FC = () => {
                                 key={itemId}
                                 itemId={itemId}
                                 rarity={rarity}
+                                level={(detailsIndex[itemId] as any)?.level ?? 0}
                                 category={group.category}
-                                craftModalOpener={() => openCraftModal(itemId, group.category)}
+                                craftModalOpener={() => openSidePanel(itemId, group.category)}
                                 missingRarity={missingRarity}
                             />
                         );
@@ -500,15 +571,32 @@ const ItemsNRecipesApp: FC = () => {
             </section>
 
             {/* Navigation bar displaying item categories */}
-            <nav id="categoryNav" className="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
-                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
-                    {groupedItems &&
+
+<div className="flex flex-row h-[calc(100vh-340px)]">
+
+            <nav id="categoryNav" className="w-[360px] custom-scrollbar bg-gray-800 bg-opacity-50 p-4 rounded-lg overflow-auto max-h-[calc(100vh-200px)]">
+                <ul className="flex flex-col gap-2 p-0 m-0">
+                            <li className="w-full">
+                                <label className={`flex items-center gap-2 p-2 rounded mb-2 w-full cursor-pointer ${selectedCategories.length === (groupedItems?.length ?? 0) ? "bg-green-600 text-black" : "bg-gray-700 text-white"}`}>
+                                    <input
+                                        type="checkbox"
+                                        checked={groupedItems ? selectedCategories.length === groupedItems.length : false}
+                                        onChange={() => toggleAllCategories()}
+                                        className="form-checkbox h-4 w-4"
+                                    />
+                                    <span className="font-medium">{t("itemsNrecipes.allCategories") ?? "All"}</span>
+                                </label>
+                            </li>
+                            {groupedItems &&
                         groupedItems.map((group) => (
                             <li key={group.category} className="w-full">
-                                <button
-                                    onClick={() => setSelectedCategory(group.category)}
-                                    className="block w-full bg-gray-700 text-white p-2 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
-                                >
+                                <label className="flex items-center gap-2 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedCategories.includes(group.category)}
+                                        onChange={() => toggleCategory(group.category)}
+                                        className="form-checkbox h-4 w-4"
+                                    />
                                     <span className="flex flex-row items-center gap-2">
                                         <INRItemImage
                                             groupCategory={group.category}
@@ -523,15 +611,78 @@ const ItemsNRecipesApp: FC = () => {
                                             </span>
                                         </span>
                                     </span>
-                                </button>
+                                </label>
                             </li>
                         ))}
                 </ul>
             </nav>
 
-            {/* Display of the items list (only for selected category) */}
-            <div id="itemsContainer" className="flex flex-wrap gap-4 justify-start p-4">
+            {/* Display of the items list (single category or all categories) */}
+            <div id="itemsContainer" className="w-[calc(100%-240px)]  custom-scrollbar  flex flex-wrap gap-4 justify-start p-4 overflow-auto max-h-[calc(100vh-200px)]">
                 {renderItems()}
+            </div>
+
+
+
+            {/* Right-side item panel: appears when an item is clicked instead of opening the modal immediately */}
+            {panelItem && detailsIndex && (
+                <aside className="w-96 bg-gray-800 p-4 rounded-lg shadow-xl z-50 overflow-auto max-h-[calc(100vh-200px)]">
+                    <div className="flex items-start justify-between">
+                        <div>
+                            <div className="text-lg font-bold">
+                                {t(`item.${panelItem}`, {
+                                    ns: "items",
+                                    defaultValue: panelItem.replace(/_/g, " ")
+                                })}
+                            </div>
+                           <div className="text-lg font-bold">
+                                {detailsIndex?.[panelItem!]?.rarity ?? "UNKNOWN"}
+                            </div>
+                           <div className="text-lg font-bold">
+                                lvl. {(detailsIndex?.[panelItem!] as any)?.level ?? "??"}
+                            </div>
+                           <div className="text-xs font-bold">
+                                Desc.1
+                            </div>
+                           <div className="text-xs font-bold">
+                                Desc.2
+                            </div>
+                           <div className="text-xs font-bold">
+                                Desc.3
+                            </div>
+                        </div>
+                        <div className="ml-2">
+                            <button
+                                onClick={closeSidePanel}
+                                className="text-gray-200 hover:text-white bg-gray-700 p-1 rounded"
+                                aria-label={t("itemsNrecipes.closePanel")}
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <INRItemImage
+                            itemId={panelItem}
+                            detailsIndex={detailsIndex}
+                            className="w-24 h-24"
+                            style={{ imageRendering: "pixelated" }}
+                        />
+                    </div>
+                    <div className="mt-4 flex gap-2">
+                        <button
+                            onClick={() => {
+                                // Open the full craft modal for this item
+                                if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
+                            }}
+                            className="flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded"
+                        >
+                            {t("itemsNrecipes.openRecipes")}
+                        </button>
+                    </div>
+                </aside>
+            )}
+
             </div>
 
             {/* "Back to Top" button */}
@@ -587,6 +738,77 @@ const ItemsNRecipesApp: FC = () => {
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
+
+
+                                            {/* Left: Global collapse/expand button */}
+                                            {/* Center: Quantity selection */}
+                                            <div className="flex items-center gap-0 ml-2">
+                                                <label className="text-sm font-bold mr-1" htmlFor="craftQuantity">
+                                                    x
+                                                </label>
+                                                <input
+                                                    id="craftQuantity"
+                                                    type="number"
+                                                    min="1"
+                                                    className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
+                                                    value={tempQuantity}
+                                                    onChange={(e) => setTempQuantity(e.target.value)}
+                                                />
+                                                <button
+                                                    className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
+                                                    onClick={() => {
+                                                        const qty = parseInt(tempQuantity, 10);
+                                                        if (!isNaN(qty) && qty > 0) {
+                                                            setCraftQuantity(qty);
+                                                        }
+                                                    }}
+                                                >
+                                                    <Calculator className="w-5 h-5"/>
+                                                </button>
+                                            </div>
+                                            
+                                            <div className="flex items-center">
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={() => {
+                                                        setGlobalExpanded(!globalExpanded);
+                                                        setGlobalToggleVersion((prev) => prev + 1);
+                                                    }}
+                                                >
+                                                    {globalExpanded ? (
+                                                        <>
+                                                            <Minus className="w-4 h-4"/> {t("itemsNrecipes.collapseAll.button")}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Plus className="w-4 h-4"/> {t("itemsNrecipes.expandAll.button")}
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                            {/* Right: Recap toggle and CSV copy button */}
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={() => setShowRecap((prev) => !prev)}
+                                                >
+                                                    {showRecap ? (
+                                                        <>
+                                                            <EyeOff className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.hide")}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Eye className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.show")}
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={handleCopyCSV}
+                                                >
+                                                    <ClipboardCopy className="w-4 h-4" /> {t("itemsNrecipes.copyCSV.button")}
+                                                </button>
+                                            </div>
                                                 <a
                                                     href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                                     target="_blank"
@@ -600,77 +822,6 @@ const ItemsNRecipesApp: FC = () => {
                                                     className="flex items-center justify-center h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                                 >
                                                     <X strokeWidth={3} className="h-5 w-5" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        {/* Header 2: Controls */}
-                                        <div className="bg-gray-700 text-white p-4 flex flex-row items-center justify-between shadow-md">
-                                            {/* Left: Global collapse/expand button */}
-                                            <div className="flex items-center">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => {
-                                                        setGlobalExpanded(!globalExpanded);
-                                                        setGlobalToggleVersion((prev) => prev + 1);
-                                                    }}
-                                                >
-                                                    {globalExpanded ? (
-                                                        <>
-                                                            <Minus /> {t("itemsNrecipes.collapseAll.button")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Plus /> {t("itemsNrecipes.expandAll.button")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            {/* Center: Quantity selection */}
-                                            <div className="flex items-center gap-2">
-                                                <label className="text-sm font-bold" htmlFor="craftQuantity">
-                                                    {t("itemsNrecipes.quantity.title")}
-                                                </label>
-                                                <input
-                                                    id="craftQuantity"
-                                                    type="number"
-                                                    min="1"
-                                                    className="w-16 p-1 text-black rounded text-center"
-                                                    value={tempQuantity}
-                                                    onChange={(e) => setTempQuantity(e.target.value)}
-                                                />
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => {
-                                                        const qty = parseInt(tempQuantity, 10);
-                                                        if (!isNaN(qty) && qty > 0) {
-                                                            setCraftQuantity(qty);
-                                                        }
-                                                    }}
-                                                >
-                                                    <Boxes /> {t("itemsNrecipes.quantity.button")}
-                                                </button>
-                                            </div>
-                                            {/* Right: Recap toggle and CSV copy button */}
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => setShowRecap((prev) => !prev)}
-                                                >
-                                                    {showRecap ? (
-                                                        <>
-                                                            <EyeOff /> {t("itemsNrecipes.resourcesRequired.button.hide")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Eye /> {t("itemsNrecipes.resourcesRequired.button.show")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={handleCopyCSV}
-                                                >
-                                                    <ClipboardCopy /> {t("itemsNrecipes.copyCSV.button")}
                                                 </button>
                                             </div>
                                         </div>

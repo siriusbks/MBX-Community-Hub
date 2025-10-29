@@ -13,11 +13,32 @@ import {
     Shield,
     BookMarked,
     Leaf,
-    BookAIcon,
+    Wrench,
+    BookA
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
+
+// Navigation data driven consts — edit these to change links/menu items
+const NAV_LINKS: Array<any> = [
+    { id: "map", to: "/map", icon: Map, labelKey: "navbar.map", matchPrefix: "/mappage" },
+    {
+        id: "tools",
+        dropdown: true,
+        icon: Wrench,
+        labelKey: "navbar.tools",
+        items: [
+            { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
+            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
+            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
+            //{ id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
+        ],
+    },
+    { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
+    { id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+];
 
 const LanguageSelector = ({
     i18n,
@@ -107,6 +128,20 @@ const LanguageSelector = ({
 export const Navbar = () => {
     const { i18n } = useTranslation();
     const { t } = useTranslation("navbar");
+    const location = useLocation();
+
+    const [toolsOpen, setToolsOpen] = useState(false);
+    const toolsRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
+                setToolsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     const handleLanguageChange = (event: { target: { value: string } }) => {
         i18n.changeLanguage(event.target.value);
@@ -124,78 +159,81 @@ export const Navbar = () => {
                     />
                 </NavLink>
 
-                {/* Navigation Links */}
+                {/* Navigation Links (data-driven from NAV_LINKS) */}
                 <nav className="flex items-center gap-3 sm:gap-5">
-                    {[
-                        {
-                            to: "/profile",
-                            icon: User,
-                            label: t("navbar.profile"),
-                        },
-                        { to: "/map", icon: Map, label: t("navbar.map") },
-                        {
-                            to: "/equipment",
-                            icon: Shield,
-                            label: t("navbar.equipement"),
-                        },
-                        {
-                            to: "/museum",
-                            icon: BookMarked,
-                            label: t("navbar.museum"),
-                        },
-                        {
-                            to: "/itemsNrecipes",
-                            icon: BookAIcon,
-                            label: t("navbar.itemsNrecipes"),
-                        },
-                        {
-                            to: "/community",
-                            icon: Users,
-                            label: t("navbar.community"),
-                        },
-                        {
-                            to: "/halloween",
-                            icon: Leaf,
-                            label: t("navbar.halloween"),
-                        },
-                    ].map(({ to, icon: Icon, label }) => (
-                        <NavLink
-                            key={to}
-                            to={to}
-                            className={({ isActive }) =>
-                                `flex items-center gap-2 px-2 lg:px-4  py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
-                                    isActive ||
-                                    (to === "/map" &&
-                                        location.pathname.startsWith(
-                                            "/mappage"
-                                        ))
-                                        ? "bg-green-500/20 text-green-400"
-                                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                                } ${
-                                    to === "/halloween" && isActive
-                                        ? "bg-orange-500/20 text-orange-400"
-                                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                                }`
-                            }
-                        >
-                            <Icon className="h-5 w-5" />
-                            <span className="items-center gap-1 hidden md:flex">
-                                <span className="hidden lg:flex">{label}</span>
-                                {(to === "/equipment" ||
-                                    to === "/museum" ||
-                                    to === "/itemsNrecipes") && (
-                                    <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-green-500 text-black rounded">
-                                        Beta
-                                    </span>
+                    {NAV_LINKS.map((link) => {
+                        if (link.dropdown) {
+                            const dropdownActive = link.items?.some((item: any) =>
+                                location.pathname.startsWith(item.to)
+                            );
+                            return (
+                                <div className="relative" key={link.id} ref={toolsRef}>
+                                    <button
+                                        onClick={() => setToolsOpen((s) => !s)}
+                                        className={`flex items-center gap-2 px-2 lg:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
+                                            dropdownActive
+                                                ? "bg-green-500/20 text-green-400"
+                                                : "text-gray-400 hover:text-white hover:bg-white/5"
+                                        }`}
+                                        aria-haspopup="menu"
+                                        aria-expanded={toolsOpen}
+                                    >
+                                        {React.createElement(link.icon, { className: "h-5 w-5" })}
+                                        <span className="items-center gap-1 hidden md:flex">
+                                            <span className="hidden lg:flex">{t(link.labelKey) ?? link.labelKey}</span>
+                                            <ChevronDown className="w-4 h-4  ml-1" />
+                                        </span>
+                                    </button>
+
+                                    {toolsOpen && (
+                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 rounded shadow-xl z-50">
+                                            {link.items.map((item: any) => (
+                                                <NavLink
+                                                    key={item.id}
+                                                    to={item.to}
+                                                    onClick={() => setToolsOpen(false)}
+                                                    className={({ isActive }) =>
+                                                        `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-5 rounded transition ${isActive ? "bg-white/5" : ""}`
+                                                    }
+                                                >
+                                                    {React.createElement(item.icon, { className: "w-5 h-5 text-gray-300" })}
+                                                    <span>{t(item.labelKey)}</span>
+                                                    {item.badge && (
+                                                        <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${item.event ? "orange" : "green"}-500 text-black rounded`}>{item.badge}</span>
+                                                    )}
+                                                </NavLink>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        }
+
+                        // regular link
+                        return (
+                            <NavLink
+                                key={link.id}
+                                to={link.to}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-2 px-2 lg:px-4  py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
+                                        isActive || (link.matchPrefix && location.pathname.startsWith(link.matchPrefix))
+                                            ? link.event
+                                                ? "bg-orange-500/20 text-orange-400"
+                                                : "bg-green-500/20 text-green-400"
+                                            : "text-gray-400 hover:text-white hover:bg-white/5"
+                                    }`
+                                }
+                            >
+                                {React.createElement(link.icon, { className: "h-5 w-5" })}
+                                <span className="items-center gap-1 hidden md:flex">
+                                    <span className="hidden lg:flex">{t(link.labelKey)}</span>
+                                </span>
+                                {link.badge && (
+                                    <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${link.event ? "orange" : "green"}-500 text-black rounded`}>{link.badge}</span>
                                 )}
-                                {to === "/halloween" && (
-                                    <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-orange-500 text-black rounded">
-                                        Event
-                                    </span>
-                                )}
-                            </span>
-                        </NavLink>
-                    ))}
+                            </NavLink>
+                        );
+                    })}
                 </nav>
 
                 {/* Right Side: Lang + GitHub */}
