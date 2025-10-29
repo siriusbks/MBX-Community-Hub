@@ -174,6 +174,8 @@ const gatherResources = (
     return resources;
 };
 
+
+
 // ----------------- Main Component ----------------------
 
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
@@ -536,6 +538,8 @@ const ItemsNRecipesApp: FC = () => {
         alert(t("itemsNrecipes.copyCSV.alert"));
     };
 
+                        const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
+
     return (
         <div className="items-&-recipes-page">
             <section
@@ -626,7 +630,7 @@ const ItemsNRecipesApp: FC = () => {
 
             {/* Right-side item panel: appears when an item is clicked instead of opening the modal immediately */}
             {panelItem && detailsIndex && (
-                <aside className="w-96 bg-gray-800 p-4 rounded-lg shadow-xl z-50 overflow-auto max-h-[calc(100vh-200px)]">
+                <aside className="w-[32rem] bg-gray-800 p-4 rounded-lg shadow-xl z-50 overflow-auto max-h-[calc(100vh-200px)]">
                     <div className="flex items-start justify-between">
                         <div>
                             <div className="text-lg font-bold">
@@ -680,6 +684,48 @@ const ItemsNRecipesApp: FC = () => {
                             {t("itemsNrecipes.openRecipes")}
                         </button>
                     </div>
+    
+
+            
+        
+            <div className="flex flex-col w-full">
+                <div className="text-lg font-semibold mb-2">
+                    {t("itemsNrecipes.usedInRecipes.yes")}
+                </div>
+                            {usedInList.length === 0 ? (
+                <p className="text-sm text-gray-300 mt-auto">
+                    {t("itemsNrecipes.usedInRecipes.no")}
+                </p>
+            ) : null}
+                <div className="flex flex-wrap gap-0.5">
+                    {usedInList.map(
+                        (item: { type: string; id: string; amount: number }) => {
+                            const itemDetails = detailsIndex[item.id];
+                            const category = itemDetails?.category || "default";
+                            const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
+                                category
+                            )}&item=${encodeURIComponent(item.id)}`;
+                            return (
+                                <a
+                                    key={item.id}
+                                    href={url}
+                                    target="_self"
+                                    rel="noopener noreferrer"
+                                    className="text-sm bg-gray-800 p-1 rounded border border-gray-600 hover:bg-gray-700"
+                                >
+                                    <INRItemImage
+                                        itemId={item.id}
+                                        detailsIndex={detailsIndex}
+                                        className={`w-7 h-7 inline-block align-middle drop-shadow-[0_0px_2px_theme(colors.${detailsIndex[item.id].rarity}.DEFAULT)]`}
+                                        style={{ imageRendering: "pixelated" }}
+                                    />
+                                </a>
+                            );
+                        }
+                    )}
+                </div>
+            </div>
+        
                 </aside>
             )}
 
