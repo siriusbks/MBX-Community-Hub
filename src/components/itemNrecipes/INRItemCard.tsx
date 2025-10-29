@@ -44,18 +44,19 @@ const INRItemCard: React.FC<ItemCardProps> = ({
 
     const TMPShadowClass =
         {
-        COMMON: "shadow-[inset_0_0_4px_theme(colors.COMMON.BORDER)]",
-        UNCOMMON: "shadow-[inset_0_0_8px_theme(colors.UNCOMMON.DEFAULT)]",
-        RARE: "shadow-[inset_0_0_8px_theme(colors.RARE.DEFAULT)]",
-        EPIC: "shadow-[inset_0_0_8px_theme(colors.EPIC.DEFAULT)]",
-        LEGENDARY: "shadow-[inset_0_0_12px_theme(colors.LEGENDARY.DEFAULT)]",
-        MYTHIC: "shadow-[inset_0_0_16px_theme(colors.MYTHIC.DEFAULT)]",
-        }[adjustedRarity] || "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
+    // inner vertical band on the left only — use zero blur/spread so it doesn't bleed top/right/bottom
+    COMMON: "shadow-[inset_6px_0_0_theme(colors.COMMON.BORDER)]",
+    UNCOMMON: "shadow-[inset_8px_0_0_theme(colors.UNCOMMON.DEFAULT)]",
+    RARE: "shadow-[inset_8px_0_0_theme(colors.RARE.DEFAULT)]",
+    EPIC: "shadow-[inset_10px_0_0_theme(colors.EPIC.DEFAULT)]",
+    LEGENDARY: "shadow-[inset_12px_0_0_theme(colors.LEGENDARY.DEFAULT)]",
+    MYTHIC: "shadow-[inset_14px_0_0_theme(colors.MYTHIC.DEFAULT)]",
+    }[adjustedRarity] || "shadow-[inset_8px_0_0_theme(colors.UNKNOWN.DEFAULT)]"; 
 
     return (
         <div
         key={itemId}
-        className={`text-regal-blue min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 cursor-pointer ${TMPShadowClass}`}
+        className={`text-regal-blue min-h-24 item relative flex flex-row gap-2 items-center bg-gray-700 border-l-8 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 cursor-pointer`}
         onClick={() => {
             if (craftModalOpener) craftModalOpener(itemId);
         }}
@@ -69,7 +70,12 @@ const INRItemCard: React.FC<ItemCardProps> = ({
             alt={itemId}
         />
 
-        <span className="font-bold leading-none mt-auto">
+<span className="flex flex-col">
+        <RarityBadge
+            rarity={adjustedRarity}
+            color={TMPBackgroundColorClass}
+        />
+        <span className="font-bold text-left leading-none mt-auto">
             {itemId
             .replace(/_/g, " ")
             .split(" ")
@@ -79,11 +85,7 @@ const INRItemCard: React.FC<ItemCardProps> = ({
             )
             .join(" ")}
         </span>
-
-        <RarityBadge
-            rarity={adjustedRarity}
-            color={TMPBackgroundColorClass}
-        />
+        </span>
         </div>
     );
 };
@@ -94,9 +96,10 @@ const RarityBadge: React.FC<{ rarity: string; color: string }> = ({
     }) => {
     const { t } = useTranslation("itemsNrecipes");
     return (
-        <span className={`mt-auto text-xs py-0.5 px-2 rounded font-bold ${color}`}>
-        {t(`itemsNrecipes.rarity.${rarity.toUpperCase()}`)}
-        </span>
+        // prevent the badge from stretching horizontally inside the parent flex column
+        <span className={`mt-auto text-xs py-0.5 px-2 rounded font-bold ${color} self-start`}>{t(
+            `itemsNrecipes.rarity.${rarity.toUpperCase()}`
+        )}</span>
     );
 };
 

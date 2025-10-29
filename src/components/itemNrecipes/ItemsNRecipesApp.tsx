@@ -10,6 +10,7 @@ import {
     AlertTriangle,
     ArrowUpFromLine,
     Boxes,
+    Calculator,
     ClipboardCopy,
     Eye,
     EyeOff,
@@ -410,7 +411,7 @@ const ItemsNRecipesApp: FC = () => {
                     />
                     {group.category.toUpperCase().replace("_", " ")}
                 </div>
-                <div className="groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between">
+                <div className="groupItem grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-4 justify-between">
                     {group.items.map((itemId) => {
                         const rarity =
                             detailsIndex[itemId] && detailsIndex[itemId].rarity
@@ -500,8 +501,11 @@ const ItemsNRecipesApp: FC = () => {
             </section>
 
             {/* Navigation bar displaying item categories */}
-            <nav id="categoryNav" className="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
-                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
+
+<span className="flex flex-row">
+
+            <nav id="categoryNav" className="w-[240px] bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                <ul className="flex flex-col gap-2 p-0 m-0">
                     {groupedItems &&
                         groupedItems.map((group) => (
                             <li key={group.category} className="w-full">
@@ -530,9 +534,11 @@ const ItemsNRecipesApp: FC = () => {
             </nav>
 
             {/* Display of the items list (only for selected category) */}
-            <div id="itemsContainer" className="flex flex-wrap gap-4 justify-start p-4">
+            <div id="itemsContainer" className="w-[calc(100%-240px)] flex flex-wrap gap-4 justify-start p-4">
                 {renderItems()}
             </div>
+
+            </span>
 
             {/* "Back to Top" button */}
             <button
@@ -587,6 +593,77 @@ const ItemsNRecipesApp: FC = () => {
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
+
+
+                                            {/* Left: Global collapse/expand button */}
+                                            {/* Center: Quantity selection */}
+                                            <div className="flex items-center gap-0 ml-2">
+                                                <label className="text-sm font-bold mr-1" htmlFor="craftQuantity">
+                                                    x
+                                                </label>
+                                                <input
+                                                    id="craftQuantity"
+                                                    type="number"
+                                                    min="1"
+                                                    className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
+                                                    value={tempQuantity}
+                                                    onChange={(e) => setTempQuantity(e.target.value)}
+                                                />
+                                                <button
+                                                    className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
+                                                    onClick={() => {
+                                                        const qty = parseInt(tempQuantity, 10);
+                                                        if (!isNaN(qty) && qty > 0) {
+                                                            setCraftQuantity(qty);
+                                                        }
+                                                    }}
+                                                >
+                                                    <Calculator className="w-5 h-5"/>
+                                                </button>
+                                            </div>
+                                            
+                                            <div className="flex items-center">
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={() => {
+                                                        setGlobalExpanded(!globalExpanded);
+                                                        setGlobalToggleVersion((prev) => prev + 1);
+                                                    }}
+                                                >
+                                                    {globalExpanded ? (
+                                                        <>
+                                                            <Minus className="w-4 h-4"/> {t("itemsNrecipes.collapseAll.button")}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Plus className="w-4 h-4"/> {t("itemsNrecipes.expandAll.button")}
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                            {/* Right: Recap toggle and CSV copy button */}
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={() => setShowRecap((prev) => !prev)}
+                                                >
+                                                    {showRecap ? (
+                                                        <>
+                                                            <EyeOff className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.hide")}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Eye className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.show")}
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <button
+                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                    onClick={handleCopyCSV}
+                                                >
+                                                    <ClipboardCopy className="w-4 h-4" /> {t("itemsNrecipes.copyCSV.button")}
+                                                </button>
+                                            </div>
                                                 <a
                                                     href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                                     target="_blank"
@@ -600,77 +677,6 @@ const ItemsNRecipesApp: FC = () => {
                                                     className="flex items-center justify-center h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                                 >
                                                     <X strokeWidth={3} className="h-5 w-5" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        {/* Header 2: Controls */}
-                                        <div className="bg-gray-700 text-white p-4 flex flex-row items-center justify-between shadow-md">
-                                            {/* Left: Global collapse/expand button */}
-                                            <div className="flex items-center">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => {
-                                                        setGlobalExpanded(!globalExpanded);
-                                                        setGlobalToggleVersion((prev) => prev + 1);
-                                                    }}
-                                                >
-                                                    {globalExpanded ? (
-                                                        <>
-                                                            <Minus /> {t("itemsNrecipes.collapseAll.button")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Plus /> {t("itemsNrecipes.expandAll.button")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            {/* Center: Quantity selection */}
-                                            <div className="flex items-center gap-2">
-                                                <label className="text-sm font-bold" htmlFor="craftQuantity">
-                                                    {t("itemsNrecipes.quantity.title")}
-                                                </label>
-                                                <input
-                                                    id="craftQuantity"
-                                                    type="number"
-                                                    min="1"
-                                                    className="w-16 p-1 text-black rounded text-center"
-                                                    value={tempQuantity}
-                                                    onChange={(e) => setTempQuantity(e.target.value)}
-                                                />
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => {
-                                                        const qty = parseInt(tempQuantity, 10);
-                                                        if (!isNaN(qty) && qty > 0) {
-                                                            setCraftQuantity(qty);
-                                                        }
-                                                    }}
-                                                >
-                                                    <Boxes /> {t("itemsNrecipes.quantity.button")}
-                                                </button>
-                                            </div>
-                                            {/* Right: Recap toggle and CSV copy button */}
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={() => setShowRecap((prev) => !prev)}
-                                                >
-                                                    {showRecap ? (
-                                                        <>
-                                                            <EyeOff /> {t("itemsNrecipes.resourcesRequired.button.hide")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Eye /> {t("itemsNrecipes.resourcesRequired.button.show")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-3 rounded text-sm"
-                                                    onClick={handleCopyCSV}
-                                                >
-                                                    <ClipboardCopy /> {t("itemsNrecipes.copyCSV.button")}
                                                 </button>
                                             </div>
                                         </div>
