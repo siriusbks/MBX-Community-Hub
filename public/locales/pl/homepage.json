@@ -10,5 +10,7 @@
     "homepage.features.equipment.title": "Menedżer ekwipunku",
     "homepage.features.equipment.description": "Twórz i optymalizuj wyposażenie swojej postaci.",
     "homepage.features.museum.title": "Muzeum",
-    "homepage.features.museum.description": "Zwiedzaj muzeum bez połączenia z internetem, ale nie zapomnij włączyć dostępu do API stron trzecich w grze."
+    "homepage.features.museum.description": "Zwiedzaj muzeum bez połączenia z internetem, ale nie zapomnij włączyć dostępu do API stron trzecich w grze.",
+    "homepage.features.itemsNrecipes.title": "Przedmioty & Receptury",
+    "homepage.features.itemsNrecipes.description":"Zbadaj wszystkie przedmioty i związane z nimi przepisy."
 }

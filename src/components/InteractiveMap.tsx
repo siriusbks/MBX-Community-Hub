@@ -306,10 +306,10 @@ const InteractiveMap: React.FC<
                 pane="overlayPane"
             />
             {markers.map((marker, index) => {
-                const [x, z, y] = marker.geometry.coordinates;
+                const [x, y, z] = marker.geometry.coordinates;
                 const position = toLeafletCoords(
                     x,
-                    y,
+                    z,
                     mapConfig.referencePoint
                 );
 
@@ -402,10 +402,10 @@ const InteractiveMap: React.FC<
                                         x: <b className="text-gray-300">{x}</b>
                                     </span>
                                     <span>
-                                        y: <b className="text-gray-300">{z}</b>
+                                        y: <b className="text-gray-300">{y}</b>
                                     </span>
                                     <span>
-                                        z: <b className="text-gray-300">{y}</b>
+                                        z: <b className="text-gray-300">{z}</b>
                                     </span>
                                 </span>
                             </span>
@@ -417,9 +417,11 @@ const InteractiveMap: React.FC<
                                 })}
                             </div>
                             <span className="text-xs text-gray-400">
-                                [{t( "mappage.showMoreInfo", {
+                                [
+                                {t("mappage.showMoreInfo", {
                                     ns: "map",
-                                })}]
+                                })}
+                                ]
                             </span>
                         </Tooltip>
                     </Marker>

@@ -25,6 +25,7 @@
   "equip.stats.emptySubtitle": "Commencez à sélectionner un équipement pour voir vos statistiques !",
   "equip.stats.breakdownTitle": "Détails des statistiques par emplacement",
   "equip.buttons.openInMinebox": "Ouvrir dans Minebox",
+  "equip.buttons.openInItemsNRecipes": "Ouvrir dans la page des Objects & Recettes",
   "equip.recipeNotFound": "Aucune recette disponible pour cet objet.",
   "equip.title.job": "Métier :",
   "equip.craftingBySlot": "Artisanat par emplacement",

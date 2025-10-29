@@ -1,9 +1,9 @@
 {
     "navbar.profile": "Profile",
     "navbar.map": "Map",
-    "navbar.tools": "Tools",
     "navbar.equipement": "Equipment",
     "navbar.museum": "Museum",
     "navbar.community": "Community",
-    "navbar.halloween": "Halloween"
+    "navbar.halloween": "Halloween",
+    "navbar.itemsNrecipes": "Items & Recipes"
 }

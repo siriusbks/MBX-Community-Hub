@@ -25,6 +25,7 @@
   "equip.stats.emptySubtitle": "Start selecting equipment to see your stats!",
   "equip.stats.breakdownTitle": "Detailed Stats by Slot",
   "equip.buttons.openInMinebox": "Open in Minebox",
+  "equip.buttons.openInItemsNRecipes": "Open in Items & Recipes Page",
   "equip.recipeNotFound": "No recipe available for this item.",
   "equip.title.job": "Job:",
   "equip.craftingBySlot": "Crafting by Slot",

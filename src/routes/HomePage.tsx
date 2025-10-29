@@ -12,6 +12,7 @@ import {
     HandHelping,
     Shield,
     BookMarked,
+    BookAIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -167,6 +168,26 @@ export function HomePage() {
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.halloween.description")}
+                        </p>
+                    </Link>
+                    {/* Recipe */}
+                    <Link
+                        to="/itemsNrecipes"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-rose-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <span className="absolute top-3 right-3 bg-rose-500 text-black text-xs font-bold px-2 py-0.5 rounded">
+                            BETA
+                        </span>
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-rose-600/10 text-rose-500 group-hover:bg-rose-500/20 transition-colors">
+                                <BookAIcon size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                                {t("homepage.features.itemsNrecipes.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {t("homepage.features.itemsNrecipes.description")}
                         </p>
                     </Link>
                 </div>

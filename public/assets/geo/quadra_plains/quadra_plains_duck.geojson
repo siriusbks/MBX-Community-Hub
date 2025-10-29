@@ -135,7 +135,7 @@
         },
         {
             "geometry": {
-                "coordinates": [399, 66, 62],
+                "coordinates": [399, 66, -62],
                 "type": "Point"
             },
             "id": 13,
@@ -161,6 +161,17 @@
                 "type": "Point"
             },
             "id": 15,
+            "type": "Feature",
+            "properties": {
+                "map": "quadra_plains"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [451, 66, -341],
+                "type": "Point"
+            },
+            "id": 16,
             "type": "Feature",
             "properties": {
                 "map": "quadra_plains"
