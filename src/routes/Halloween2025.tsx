@@ -457,80 +457,59 @@ const HalloweenPage: FC = () => {
             </div>
 
             <p className="text-xs">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus lectus risus, sodales sit amet pharetra a, lacinia non
-                elit. Etiam sagittis, ex ultrices bibendum commodo, mi libero
-                laoreet massa, quis accumsan purus elit a sapien. Sed blandit
-                velit quis sapien euismod lacinia. Donec ac justo purus. Nullam
-                porttitor tellus sed arcu blandit hendrerit. Praesent pulvinar
-                velit congue dapibus euismod. Ut augue est, varius sed mi nec,
-                consequat sagittis sapien.
-                <br />
-                <br />
-                Integer sodales a mi eget tincidunt. Sed pharetra nisi ut turpis
-                ultricies molestie. Morbi ullamcorper pulvinar euismod.
-                Pellentesque sed rutrum augue, quis semper ante. Ut sodales, dui
-                ut tempus convallis, orci ipsum condimentum neque, vel accumsan
-                tellus metus vel lacus. Aliquam fringilla lorem nec nunc
-                elementum posuere. Vivamus arcu orci, luctus pretium ornare
-                porttitor, eleifend quis augue. Suspendisse sed finibus neque,
-                eget pretium nulla. Curabitur ornare dui eget justo pellentesque
-                interdum. Maecenas quis enim vel erat tempor tristique quis
-                scelerisque est. Etiam at justo eu ipsum viverra efficitur nec
-                quis nunc. Pellentesque interdum, justo at rhoncus maximus, ex
-                sem auctor nulla, a fringilla quam odio eget felis. Quisque sed
-                dictum ipsum. Maecenas dignissim odio in turpis placerat, non
-                posuere felis commodo. Sed in quam non arcu tincidunt eleifend
-                in convallis felis.
+                (Technically just an event but everyone is used to the term "battlepass")<br></br>
+This event comes with a freshly developed and reimagined BattlePass system. We are super excited for you to try this new feature and give us your feedback and how we could improve for the next event!
             </p>
+            <h4 className="text-sm text-orange-500 text-bold">⭐ Stars</h4>
+            <p className="text-xs">Stars or Pass Stars are the BattlePass' currency used to buy items from the Shop.
+You can earn free stars by completing missions and quests, there are more than 100 obtainable stars.
+They can also be bought with Vote Points or Gems</p>
+            <h4 className="text-sm text-orange-500 text-bold">🛒 Shop</h4>
+            <p className="text-xs">Spend your Stars at the Shop, there you can buy the Halloween Crate or directly buy some exclusive items.</p>
+            <h4 className="text-sm text-orange-500 text-bold">📜 Complete weekly missions</h4>
+            <p className="text-xs">Every week, you get to unlock and complete 6 different missions for Stars.
+Completing all missions grants you extra rewards.</p>
+            <h4 className="text-sm text-orange-500 text-bold">📖 Quests</h4>
+            <p className="text-xs">Complete questlines during the event for Stars and Candy sacks.</p>
+            <h4 className="text-sm text-orange-500 text-bold">⚒️ Workshop</h4>
+            <p className="text-xs">The BattlePass has it's own workshop where you can craft unique items such as the Candy Pet or the Candy Pumpkin armor set.
+You can also craft the Halloween Crate with your candies.</p>
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
                 <div className="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
                             <h3 className="text-2xl font-bold">Week 1</h3>
-                            <p className="text-xs text-orange-500">
-                                "NAME_TEMPLATE"
-                            </p>
                         </span>
                     </span>
-                    <p className="text-xs mt-2">XX.XX.XXXX - XX.XX.XXXX</p>
+                    <p className="text-xs mt-2">29.10.2025 - 05.11.2025</p>
                 </div>
                 <div className="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
                             <h3 className="text-2xl font-bold">Week 2</h3>
-                            <p className="text-xs text-orange-500">
-                                "NAME_TEMPLATE"
-                            </p>
                         </span>
                     </span>
-                    <p className="text-xs mt-2">XX.XX.XXXX - XX.XX.XXXX</p>
+                    <p className="text-xs mt-2">06.11.2025 - 12.11.2025</p>
                 </div>
                 <div className="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
                             <h3 className="text-2xl font-bold">Week 3</h3>
-                            <p className="text-xs text-orange-500">
-                                "NAME_TEMPLATE"
-                            </p>
                         </span>
                     </span>
-                    <p className="text-xs mt-2">XX.XX.XXXX - XX.XX.XXXX</p>
+                    <p className="text-xs mt-2">13.11.2025 - 19.11.2025</p>
                 </div>
                 <div className="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
-                            <h3 className="text-2xl font-bold">Week 4</h3>
-                            <p className="text-xs text-orange-500">
-                                "NAME_TEMPLATE"
-                            </p>
+                            <h3 className="text-2xl font-bold">Final Week</h3>
                         </span>
                     </span>
-                    <p className="text-xs mt-2">XX.XX.XXXX - XX.XX.XXXX</p>
+                    <p className="text-xs mt-2">20.11.2025 - 26.11.2025</p>
                 </div>
             </div>
 
@@ -545,14 +524,18 @@ const HalloweenPage: FC = () => {
             </div>
 
             <p className="text-xs">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus lectus risus, sodales sit amet pharetra a, lacinia non
-                elit. Etiam sagittis, ex ultrices bibendum commodo, mi libero
-                laoreet massa, quis accumsan purus elit a sapien. Sed blandit
-                velit quis sapien euismod lacinia. Donec ac justo purus. Nullam
-                porttitor tellus sed arcu blandit hendrerit. Praesent pulvinar
-                velit congue dapibus euismod. Ut augue est, varius sed mi nec,
-                consequat sagittis sapien.
+                Like every events on Minebox, this treasure is obtainable for
+                FREE by crafting it with candies or by exchanging Vote Points
+                for Pass Stars
+            </p>
+            <p className="text-xs">
+                Exclusive Ghostbuster armor set, Exclusive Spooky Pumpkin armor
+                set, Spooky Pumpkin Staff, Legendary pet: Bummy, Mythic flyable
+                mount: Turbo Broom, Halloween-themed furniture & decorations for
+                your island!
+            </p>
+            <p className="text-xs text-orange-500 font-bold">
+                1 Halloween Treasure = 15 Battle Pass Stars
             </p>
 
             <div className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 gap-2 mt-4">
