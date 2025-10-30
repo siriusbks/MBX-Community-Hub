@@ -464,9 +464,9 @@ const HalloweenPage: FC = () => {
                 feature and give us your feedback and how we could improve for
                 the next event!
             </p>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-5 gap-4 mt-4">
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
-                    <h4 className="text-xl text-orange-500 font-extrabold mb-2">
+                    <h4 className="text-xl text-orange-500 font-bold mb-2">
                         ⭐ Stars
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
@@ -474,7 +474,7 @@ const HalloweenPage: FC = () => {
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
-                    <h4 className="text-xl text-orange-500 font-extrabold mb-2">
+                    <h4 className="text-xl text-orange-500 font-bold mb-2">
                         🛒 Shop
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
@@ -483,7 +483,7 @@ const HalloweenPage: FC = () => {
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
-                    <h4 className="text-xl text-orange-500 font-extrabold mb-2">
+                    <h4 className="text-xl text-orange-500 font-bold mb-2 leading-none">
                         📜 Complete weekly missions
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
@@ -491,7 +491,7 @@ const HalloweenPage: FC = () => {
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
-                    <h4 className="text-xl text-orange-500 font-extrabold mb-2">
+                    <h4 className="text-xl text-orange-500 font-bold mb-2">
                         📖 Quests
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
@@ -499,7 +499,7 @@ const HalloweenPage: FC = () => {
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
-                    <h4 className="text-xl text-orange-500 font-extrabold mb-2">
+                    <h4 className="text-xl text-orange-500 font-bold mb-2">
                         ⚒️ Workshop
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
@@ -507,35 +507,6 @@ const HalloweenPage: FC = () => {
                     </p>
                 </div>
             </div>
-            <h4 className="text-sm text-orange-500 text-bold">⭐ Stars</h4>
-            <p className="text-xs">
-                Stars or Pass Stars are the BattlePass' currency used to buy
-                items from the Shop. You can earn free stars by completing
-                missions and quests, there are more than 100 obtainable stars.
-                They can also be bought with Vote Points or Gems
-            </p>
-            <h4 className="text-sm text-orange-500 text-bold">🛒 Shop</h4>
-            <p className="text-xs">
-                Spend your Stars at the Shop, there you can buy the Halloween
-                Crate or directly buy some exclusive items.
-            </p>
-            <h4 className="text-sm text-orange-500 text-bold">
-                📜 Complete weekly missions
-            </h4>
-            <p className="text-xs">
-                Every week, you get to unlock and complete 6 different missions
-                for Stars. Completing all missions grants you extra rewards.
-            </p>
-            <h4 className="text-sm text-orange-500 text-bold">📖 Quests</h4>
-            <p className="text-xs">
-                Complete questlines during the event for Stars and Candy sacks.
-            </p>
-            <h4 className="text-sm text-orange-500 text-bold">⚒️ Workshop</h4>
-            <p className="text-xs">
-                The BattlePass has it's own workshop where you can craft unique
-                items such as the Candy Pet or the Candy Pumpkin armor set. You
-                can also craft the Halloween Crate with your candies.
-            </p>
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
                 <div className="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
                     <span className="flex flex-col xl:flex-row items-center gap-3">
@@ -1002,6 +973,7 @@ const HalloweenPage: FC = () => {
             </div>
 
             {/* Battle Pass Section */}
+            {/*}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
                     <LayoutList className="w-10 h-8 text-orange-400" />
@@ -1039,7 +1011,7 @@ const HalloweenPage: FC = () => {
                         </span>
                     </a>
                 ))}
-            </div>
+            </div>*/}
         </div>
     );
 };

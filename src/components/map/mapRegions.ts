@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Church } from "lucide-react";
 import { BestiaryInfo, bestiaryData } from "./bestiaryData";
 
 export const mapNameTranslationKeys: Record<string, string> = {
@@ -24,6 +25,7 @@ export const mapNameRegions: Record<string, string> = {
     exploration_island: "mappage.maps.spawn.exploration_island",
     italian_restaurant: "mappage.maps.spawn.italian_restaurant",
     church: "mappage.maps.spawn.church",
+    sewers: "mappage.maps.spawn.sewers",
 
     beach: "mappage.maps.kokoko.beach",
     jungle: "mappage.maps.kokoko.jungle",
@@ -384,6 +386,69 @@ interface BestiaryRegionData {
 }
 
 export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
+    spawn: {
+        church: {
+            zones: [
+                {
+                    color: "#ff8800ff",
+                    coords: [
+                        [128, 190],
+                        [194, 190],
+                        [194, 246],
+                        [129, 246],
+                        [111, 219],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.church[0],
+                    ],
+                },
+            ],
+        },
+        sewers: {
+            zones: [
+                {
+                    color: "#ff00c8ff",
+                    coords: [
+                        [377,267],
+                        [376,306],
+                        [425,307],
+                        [425,268],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.sewers[0],
+                    ],
+                },
+            ],
+        },
+        workshop_island: {
+            zones: [
+                {
+                    color: "#73ff00ff",
+                    coords: [
+                        [315, 580],
+                        [316,620],
+                        [330, 618],
+                        [334,580],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.workshop_island[1],
+                    ],
+                },
+                {
+                    color: "#0099ffff",
+                    coords: [
+                        [336,574],
+                        [351,571],
+                        [352, 557],
+                        [335,555]
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.workshop_island[0],
+                    ],
+                },
+            ],
+        },
+    },
     kokoko: {
         beach: {
             zones: [
