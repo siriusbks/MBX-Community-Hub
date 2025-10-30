@@ -38,271 +38,308 @@ type HalloweenItemChange = {
         | "UNKNOWN";
     change: number;
 };
+type HalloweenItemBundle = {
+    image: string;
+    name: string;
+    rarity:
+        | "COMMON"
+        | "RARE"
+        | "EPIC"
+        | "LEGENDARY"
+        | "MYTHIC"
+        | "UNCOMMON"
+        | string;
+}
 
 const HalloweenContent: HalloweenItem[] = [
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.pet_mummy",
+        image: "/assets/media/EVENT/HALLOWEEN/pet_halloween_mummy.png",
+        name: "halloween.pet_halloween_mummy",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.pet_candy",
+        image: "/assets/media/EVENT/HALLOWEEN/pet_halloween_candy.png",
+        name: "halloween.pet_halloween_candy",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_corn",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_corn.png",
+        name: "halloween.halloween_candy_corn",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_gumdrop",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_gumdrop.png",
+        name: "halloween.halloween_candy_gumdrop",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_licorice",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_licorice.png",
+        name: "halloween.halloween_candy_licorice",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_peppermint",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_peppermint.png",
+        name: "halloween.halloween_candy_peppermint",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_pop",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_pop.png",
+        name: "halloween.halloween_candy_pop",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_twist",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_twist.png",
+        name: "halloween.halloween_candy_twist",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.pesticide",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_pesticide.png",
+        name: "halloween.halloween_pesticide",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.parasite",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_parasite.png",
+        name: "halloween.halloween_parasite",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.dirty_sheet",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_dirty_sheet.png",
+        name: "halloween.halloween_dirty_sheet",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.crow_feather",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_golden_dirty_sheet.png",
+        name: "halloween.halloween_golden_dirty_sheet",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_bag",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_crow_feather.png",
+        name: "halloween.halloween_crow_feather",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_sack",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_bag.png",
+        name: "halloween.halloween_candy_bag",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_sack.png",
+        name: "halloween.halloween_candy_sack",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_crate.png",
         name: "halloween.halloween_crate",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.vacuum",
+        image: "/assets/media/EVENT/HALLOWEEN/ghost_vacuum.png",
+        name: "halloween.ghost_vacuum",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_pumpkin_backpack",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_pumpkin_backpack.png",
+        name: "halloween.halloween_candy_pumpkin_backpack",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_pumpkin_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_pumpkin_hat.png",
+        name: "halloween.halloween_candy_pumpkin_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.crow_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_crow_hat.png",
+        name: "halloween.halloween_crow_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.demon_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_demon_hat.png",
+        name: "halloween.halloween_demon_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.demon_wings",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_demon_wings.png",
+        name: "halloween.halloween_demon_wings",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.demon_scythe",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_demon_scythe.png",
+        name: "halloween.halloween_demon_scythe",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghost_cloak.png",
         name: "halloween.ghost_cloak",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghost_hat.png",
         name: "halloween.ghost_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.jackolantern",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_jackolantern_hat.png",
+        name: "halloween.halloween_jackolantern_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.kitty_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_kitty_hat.png",
+        name: "halloween.halloween_kitty_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.kitty_tail",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_kitty_necklace.png",
+        name: "halloween.halloween_kitty_necklace",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.kitty_wand",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_kitty_tail.png",
+        name: "halloween.halloween_kitty_tail",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.old_witch_cloak",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_kitty_wand.png",
+        name: "halloween.halloween_kitty_wand",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.old_witch_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_old_witch_cloak.png",
+        name: "halloween.halloween_old_witch_cloak",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.old_witch_staff",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_old_witch_hat.png",
+        name: "halloween.halloween_old_witch_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_old_witch_staff.png",
+        name: "halloween.halloween_old_witch_staff",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_wings",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_hat.png",
+        name: "halloween.halloween_spooky_pumpkin_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_staff",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_wings.png",
+        name: "halloween.halloween_spooky_pumpkin_wings",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.witch_broom",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_staff.png",
+        name: "halloween.halloween_spooky_pumpkin_staff",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.witch_cauldron",
+        image: "/assets/media/EVENT/HALLOWEEN/mount_witch_broom.png",
+        name: "halloween.mount_witch_broom",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.witch_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_witch_belt.png",
+        name: "halloween.halloween_witch_belt",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_witch_cauldron.png",
+        name: "halloween.halloween_witch_cauldron",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_witch_hat.png",
+        name: "halloween.halloween_witch_hat",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_witch_ring.png",
+        name: "halloween.halloween_witch_ring",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_backpack.png",
         name: "halloween.ghostbuster_backpack",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_hat.png",
         name: "halloween.ghostbuster_hat",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_chestplate.png",
         name: "halloween.ghostbuster_chestplate",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_leggings.png",
         name: "halloween.ghostbuster_leggings",
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_boots.png",
         name: "halloween.ghostbuster_boots",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_emojis_pack_30_stars.png",
+        name: "halloween.halloween_emojis_pack_30_stars",
         rarity: "UNKNOWN",
     },
 ];
 
 const HalloweenContentChange: HalloweenItemChange[] = [
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_lit.png",
         name: "halloween.mm-halloween_pumpkin_lit",
         rarity: "EPIC",
         change: 4.5,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin.png",
         name: "halloween.mm-halloween_pumpkin",
         rarity: "EPIC",
         change: 4.5,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_stool.png",
         name: "halloween.mm-halloween_pumpkin_stool",
         rarity: "EPIC",
         change: 4.5,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_table_lamp.png",
         name: "halloween.mm-halloween_pumpkin_table_lamp",
         rarity: "EPIC",
         change: 4.5,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_carpet.png",
         name: "halloween.mm-halloween_pumpkin_carpet",
         rarity: "EPIC",
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_chandelier.png",
         name: "halloween.mm-halloween_pumpkin_chandelier",
         rarity: "EPIC",
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_couch.png",
         name: "halloween.mm-halloween_pumpkin_couch",
         rarity: "EPIC",
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_lamp.png",
         name: "halloween.mm-halloween_pumpkin_lamp",
         rarity: "EPIC",
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_pumpkin_table.png",
         name: "halloween.mm-halloween_pumpkin_table",
         rarity: "EPIC",
         change: 3.85,
@@ -314,112 +351,145 @@ const HalloweenContentChange: HalloweenItemChange[] = [
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.candy_sack",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_sack.png",
+        name: "halloween.halloween_candy_sack",
         rarity: "EPIC",
         change: 3.85,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.mm-halloween_pumpkin_lit_big",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_big_pumpkin_lit.png",
+        name: "halloween.mm-halloween_big_pumpkin_lit",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.mm-halloween_pumpkin_big",
+        image: "/assets/media/EVENT/HALLOWEEN/mm-halloween_big_pumpkin.png",
+        name: "halloween.mm-halloween_big_pumpkin",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_backpack.png",
         name: "halloween.ghostbuster_backpack",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_belt.png",
         name: "halloween.ghostbuster_belt",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_boots.png",
         name: "halloween.ghostbuster_boots",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_chestplate.png",
         name: "halloween.ghostbuster_chestplate",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_hat.png",
         name: "halloween.ghostbuster_hat",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_leggings.png",
         name: "halloween.ghostbuster_leggings",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_hat.png",
+        name: "halloween.halloween_spooky_pumpkin_hat",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_chestplate",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_chestplate.png",
+        name: "halloween.halloween_spooky_pumpkin_chestplate",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_leggings",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_leggings.png",
+        name: "halloween.halloween_spooky_pumpkin_leggings",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_boots",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_boots.png",
+        name: "halloween.halloween_spooky_pumpkin_boots",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_wings",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_wings.png",
+        name: "halloween.halloween_spooky_pumpkin_wings",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_staff",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_staff.png",
+        name: "halloween.halloween_spooky_pumpkin_staff",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.spooky_pumpkin_ring",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_ring.png",
+        name: "halloween.halloween_spooky_pumpkin_ring",
         rarity: "LEGENDARY",
         change: 3.53,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.pet_mummy",
+        image: "/assets/media/EVENT/HALLOWEEN/pet_halloween_mummy.png",
+        name: "halloween.pet_halloween_mummy",
         rarity: "LEGENDARY",
         change: 1.28,
     },
     {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.witch_broom",
+        image: "/assets/media/EVENT/HALLOWEEN/mount_witch_broom.png",
+        name: "halloween.mount_witch_broom",
         rarity: "MYTHIC",
         change: 0.64,
+    },
+];
+
+const HalloweenContentBunble: HalloweenItemBundle[] = [
+    {
+        image: "assets/media/museum/EDIBLE/star_sub_plus_enchanted.png",
+        name: "halloween.bundle.star_sub_plus_enchanted",
+        rarity: "MYTHIC",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_crate.png",
+        name: "halloween.bundle.halloween_crate",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_tag_sbooky.png",
+        name: "halloween.bundle.halloween_tag_sbooky",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_candy_sack.png",
+        name: "halloween.bundle.halloween_candy_sack",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_ballon_candy_pumpkin.png",
+        name: "halloween.bundle.halloween_ballon_candy_pumpkin",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/museum/not_found.png",
+        name: "halloween.bundle.halloween_tag",
+        rarity: "UNKNOWN",
     },
 ];
 
@@ -647,7 +717,7 @@ const HalloweenPage: FC = () => {
                     </span>
                     <span className="flex flex-row px-4">
                         <img
-                            src="assets/media/halloween/Locations.png"
+                            src="assets/media/EVENT/HALLOWEEN/Locations.png"
                             alt="Quest Locations"
                             className="h-96 rounded"
                         />
