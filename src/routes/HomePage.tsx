@@ -167,6 +167,7 @@ export function HomePage() {
                         </p>
                     </Link>
                     {/* Recipe */}
+                    {/*
                     <Link
                         to="/itemsNrecipes"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -185,7 +186,7 @@ export function HomePage() {
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.itemsNrecipes.description")}
                         </p>
-                    </Link>
+                    </Link>*/}
                 </div>
             </div>
         </>
