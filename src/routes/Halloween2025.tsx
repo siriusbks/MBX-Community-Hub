@@ -255,51 +255,171 @@ const HalloweenContent: HalloweenItem[] = [
 const HalloweenContentChange: HalloweenItemChange[] = [
     {
         image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
-        rarity: "COMMON",
-        change: 12.34,
-    },
-    {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
-        rarity: "UNCOMMON",
-        change: 12.34,
-    },
-    {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
-        rarity: "RARE",
-        change: 12.34,
-    },
-    {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
+        name: "halloween.mm-halloween_pumpkin_lit",
         rarity: "EPIC",
-        change: 12.34,
+        change: 4.5,
     },
     {
         image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
+        name: "halloween.mm-halloween_pumpkin",
+        rarity: "EPIC",
+        change: 4.5,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_stool",
+        rarity: "EPIC",
+        change: 4.5,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_table_lamp",
+        rarity: "EPIC",
+        change: 4.5,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_carpet",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_chandelier",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_couch",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_lamp",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_table",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/JELLY/jelly_legendary.png",
+        name: "halloween.legendary_jelly",
         rarity: "LEGENDARY",
-        change: 12.34,
+        change: 3.85,
     },
     {
         image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
+        name: "halloween.candy_sack",
+        rarity: "EPIC",
+        change: 3.85,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_lit_big",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.mm-halloween_pumpkin_big",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_backpack",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_belt",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_boots",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_chestplate",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_hat",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.ghostbuster_leggings",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_hat",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_chestplate",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_leggings",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_boots",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_wings",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_staff",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.spooky_pumpkin_ring",
+        rarity: "LEGENDARY",
+        change: 3.53,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.pet_mummy",
+        rarity: "LEGENDARY",
+        change: 1.28,
+    },
+    {
+        image: "/assets/media/museum/not-found.png",
+        name: "halloween.witch_broom",
         rarity: "MYTHIC",
-        change: 12.34,
-    },
-    {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
-        rarity: "UNKNOWN",
-        change: 12.34,
-    },
-    {
-        image: "/assets/media/museum/not-found.png",
-        name: "halloween.example",
-        rarity: "UNKNOWN",
-        change: 12.34,
+        change: 0.64,
     },
 ];
 
@@ -450,13 +570,13 @@ const HalloweenPage: FC = () => {
                                     imageRendering: "pixelated",
                                 }}
                             />
-                            <span className="flex flex-col items-center leading-tight">
+                            <span className="w-full flex flex-col items-center leading-tight">
                                 <span
                                     className={`text-xs bg-${item.rarity} px-2 rounded`}
                                 >
                                     {item.rarity}
                                 </span>
-                                <span className={`font-bold text-sm`}>
+                                <span className={`font-bold text-sm w-full`}>
                                     {t(item.name)}
                                 </span>
                                 <span className={`text-xs`}>
