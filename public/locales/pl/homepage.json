@@ -11,6 +11,8 @@
     "homepage.features.equipment.description": "Twórz i optymalizuj wyposażenie swojej postaci.",
     "homepage.features.museum.title": "Muzeum",
     "homepage.features.museum.description": "Zwiedzaj muzeum bez połączenia z internetem, ale nie zapomnij włączyć dostępu do API stron trzecich w grze.",
-    "homepage.features.itemsNrecipes.title": "Przedmioty & Receptury",
-    "homepage.features.itemsNrecipes.description":"Zbadaj wszystkie przedmioty i związane z nimi przepisy."
+    "homepage.features.halloween.title": "Halloween",
+    "homepage.features.halloween.description": "Dołącz do halloweenowych uroczystości, w których czekają na Ciebie specjalne zadania, przedmioty i wiele więcej!",
+    "homepage.features.itemsNrecipes.title": "Przedmioty i Receptury",
+    "homepage.features.itemsNrecipes.description": "Zapoznaj się ze wszystkimi przedmiotami i przepisami z nimi związanymi."
 }

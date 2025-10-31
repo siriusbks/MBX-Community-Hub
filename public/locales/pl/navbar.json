@@ -1,8 +1,10 @@
 {
     "navbar.profile": "Profil",
     "navbar.map": "Mapa",
+    "navbar.tools": "Narzędzia",
     "navbar.equipement": "Ekwipunek",
     "navbar.museum": "Muzeum",
-    "navbar.itemsNrecipes": "Przedmioty & Receptury",
-    "navbar.community": "Społeczność"
+    "navbar.community": "Społeczność",
+    "navbar.halloween": "Halloween",
+    "navbar.itemsNrecipes": "Przedmioty i Receptury"
 }

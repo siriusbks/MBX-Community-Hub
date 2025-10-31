@@ -42,5 +42,11 @@
     "bestiary.scorchfang": "Calcicroc",
     "bestiary.pokeboo": "Pique-à-bouh",
     "bestiary.dunebeard": "Barbesable",
-    "bestiary.desert_ogre": "Ogre du Désert"
+    "bestiary.desert_ogre": "Ogre du Désert",
+    "bestiary.halloween_ghost": "Fantôme",
+    "bestiary.halloween_pumpkin": "Citrouille",
+    "bestiary.halloween_crow": "Corbeau",
+    "bestiary.halloween_albino_rat": "Rat Albinos",
+    "bestiary.halloween_gray_rat": "Rat Gris",
+    "bestiary.halloween_brown_rat": "Rat Brun"
 }
