@@ -451,59 +451,56 @@ const HalloweenPage: FC = () => {
                 <div className="flex items-center gap-2">
                     <Ticket className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
-                        Battle Pass
+                        {t("halloween.battle_pass.title")}
                     </h1>
                 </div>
             </div>
 
             <p className="text-xs">
-                (Technically just an event but everyone is used to the term
-                "battlepass")<br></br>
-                This event comes with a freshly developed and reimagined
-                BattlePass system. We are super excited for you to try this new
-                feature and give us your feedback and how we could improve for
-                the next event!
+                {t("halloween.battle_pass.description1")}
+            </p>
+            <p className="text-xs">
+                {t("halloween.battle_pass.description2")}
             </p>
             <div className="grid grid-cols-5 gap-4 mt-4">
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
                     <h4 className="text-xl text-orange-500 font-bold mb-2">
-                        ⭐ Stars
+                        {t("halloween.stars.title")}
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
-                        Stars or Pass Stars are the BattlePass' currency used to buy items from the Shop. You can earn free stars by completing missions and quests, there are more than 100 obtainable stars. They can also be bought with Vote Points or Gems
+                        {t("halloween.stars.description")}
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
                     <h4 className="text-xl text-orange-500 font-bold mb-2">
-                        🛒 Shop
+                        {t("halloween.shop.title")}
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
-                        Spend your Stars at the Shop, there you can buy the Halloween
-                        Crate or directly buy some exclusive items.
+                        {t("halloween.shop.description")}
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
                     <h4 className="text-xl text-orange-500 font-bold mb-2 leading-none">
-                        📜 Complete weekly missions
+                        {t("halloween.missions.title")}
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
-                        Every week, you get to unlock and complete 6 different missions for Stars. Completing all missions grants you extra rewards.
+                        {t("halloween.missions.description")}
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
                     <h4 className="text-xl text-orange-500 font-bold mb-2">
-                        📖 Quests
+                        {t("halloween.quest.title")}
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
-                        Complete questlines during the event for Stars and Candy sacks.
+                        {t("halloween.quest.description")}
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center bg-gray-700 rounded p-2">
                     <h4 className="text-xl text-orange-500 font-bold mb-2">
-                        ⚒️ Workshop
+                        {t("halloween.workshop.title")}
                     </h4>
                     <p className="text-xs leading-tight text-gray-300">
-                        The BattlePass has it's own workshop where you can craft unique items such as the Candy Pet or the Candy Pumpkin armor set. You can also craft the Halloween Crate with your candies.
+                        {t("halloween.workshop.description")}
                     </p>
                 </div>
             </div>
@@ -512,7 +509,7 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
-                            <h3 className="text-2xl font-bold">Week 1</h3>
+                            <h3 className="text-2xl font-bold">{t("halloween.week1")}</h3>
                         </span>
                     </span>
                     <p className="text-xs mt-2">29.10.2025 - 05.11.2025</p>
@@ -521,7 +518,7 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
-                            <h3 className="text-2xl font-bold">Week 2</h3>
+                            <h3 className="text-2xl font-bold">{t("halloween.week2")}</h3>
                         </span>
                     </span>
                     <p className="text-xs mt-2">06.11.2025 - 12.11.2025</p>
@@ -530,7 +527,7 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
-                            <h3 className="text-2xl font-bold">Week 3</h3>
+                            <h3 className="text-2xl font-bold">{t("halloween.week3")}</h3>
                         </span>
                     </span>
                     <p className="text-xs mt-2">13.11.2025 - 19.11.2025</p>
@@ -539,7 +536,7 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col xl:flex-row items-center gap-3">
                         <Calendar className="h-10 w-10 text-orange-500 mb-0 xl:mb-0 xl:mr-0 bg-orange-500 bg-opacity-20 p-2 rounded-lg" />
                         <span className="text-center xl:text-left">
-                            <h3 className="text-2xl font-bold">Final Week</h3>
+                            <h3 className="text-2xl font-bold">{t("halloween.week4")}</h3>
                         </span>
                     </span>
                     <p className="text-xs mt-2">20.11.2025 - 26.11.2025</p>
@@ -551,7 +548,7 @@ const HalloweenPage: FC = () => {
                 <div className="flex items-center gap-2">
                     <Calendar className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
-                        Halloween Quest's
+                        {t("halloween.quests.title")}
                     </h1>
                 </div>
             </div>
@@ -560,61 +557,58 @@ const HalloweenPage: FC = () => {
                 {/** Webina Quest Section **/}
                 <div className="w-1/4 bg-gray-700 rounded-lg  flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
-                        Llowee Quest
+                        {t("halloween.quests.llowee.title")}
                     </h2>
 
                     <span className="w-full p-1 px-2 text-xs">
-                        1. Talk to Llowee
+                        1. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        2. Find Candy Basket
+                        2. {t("halloween.quests.llowee.findnest")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Location:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-400">146 85 -95</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        3. Talk to Llowee
+                        3. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        4. Kill 10 Gray Rats
+                        4. {t("halloween.quests.llowee.killrats")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Location:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-400">473 75 -51</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        5. Talk to Llowee
+                        5. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        6. Find Rat Nest
+                        6. {t("halloween.quests.llowee.findnest")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        7. Kill Albino Rat
+                        7. {t("halloween.quests.llowee.killalbino")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        8. Talk to Llowee
-                    </span>
-                    <span className="w-full p-1 px-2 text-xs">
-                        8. Talk to Llowee
+                        8. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
-                        Reward:{" "}
-                        <span className="text-LEGENDARY">1 BP Star</span>,{" "}
-                        <span className="text-RARE">Candy Bag</span>,{" "}
-                        <span className="text-RARE">2x Candy Sack</span>
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">1 {t("halloween.quests.universal.bp_star")}</span>,{" "}
+                        <span className="text-RARE">{t("halloween.candy_bag")}</span>,{" "}
+                        <span className="text-RARE">2x {t("halloween.candy_sack")}</span>
                     </span>
                 </div>
                 {/** Webina Quest Section **/}
                 <div className="w-1/2 bg-gray-700 gap-1 rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
-                        Webina Quest
+                        {t("halloween.quests.webina.title")}
                     </h2>
                     <span className="w-full text-center text-xs">
-                        1. Talk to Webina
+                        1. {t("halloween.quests.webina.talk")}
                     </span>
                     <span className="w-full text-center text-xs">
-                        2. Find 23 Her Children's
+                        2. {t("halloween.quests.webina.collectspiders")}
                     </span>
                     <span className="flex flex-row px-4">
                         <img
@@ -773,57 +767,57 @@ const HalloweenPage: FC = () => {
                         </table>
                     </span>
                     <span className="w-full text-center text-xs">
-                        3. Talk to Webina
+                        3. {t("halloween.quests.webina.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500 text-center mb-1">
-                        Reward:{" "}
-                        <span className="text-LEGENDARY ">4 BP Star</span>,{" "}
-                        <span className="text-RARE">4x Candy Sack</span>
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY ">4 {t("halloween.quests.universal.bp_star")}</span>,{" "}
+                        <span className="text-RARE">4x {t("halloween.candy_sack")}</span>
                     </span>
                 </div>
                 {/** Webina Quest Section **/}
                 <div className="w-1/4 bg-gray-700 rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
-                        Bony McBones Quest
+                        {t("halloween.quests.mcbones.title")}
                     </h2>
                     <span className="w-full p-1 px-2 text-xs">
-                        1. Talk to Bony McBones
+                        1. {t("halloween.quests.mcbones.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        2. Kill 10 Ghosts
+                        2. {t("halloween.quests.mcbones.killghosts")}
                     </span>
                     <span className="w-full p-0 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Time:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.time")}:{" "}
                         <span className="text-orange-500">19:00 - 06:00</span>
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Location:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-400">108 110 127</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        3. Talk to Bony McBones
+                        3. {t("halloween.quests.mcbones.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        4. Loot: x64{" "}
-                        <span className="text-RARE">Dirty Sheets</span>
+                        4. {t("halloween.quests.universal.loot")}: {" "}
+                        <span className="text-RARE">64x Dirty Sheets</span>
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Craft:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
                         <span className="text-LEGENDARY">Ghost Vaccum</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        5. Bring Vaccum to Talk to Bony McBones
+                        5. {t("halloween.quests.mcbones.bring")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        6. Slurp 20 Ghost's
+                        6. {t("halloween.quests.mcbones.slurp")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        7. Talk to Bony McBones
+                        7. {t("halloween.quests.mcbones.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
-                        Reward:{" "}
-                        <span className="text-LEGENDARY">10 BP Star</span>,{" "}
-                        <span className="text-RARE">6x Candy Sack</span>
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">10 {t("halloween.quests.universal.bp_star")}</span>,{" "}
+                        <span className="text-RARE">6x {t("halloween.candy_sack")}</span>
                     </span>
                 </div>
             </div>
@@ -833,24 +827,20 @@ const HalloweenPage: FC = () => {
                 <div className="flex items-center gap-2">
                     <Box className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
-                        Halloween Treasure
+                        {t("halloween.treasure.title")}
                     </h1>
                 </div>
             </div>
 
             <p className="text-xs">
-                Like every events on Minebox, this treasure is obtainable for
-                FREE by crafting it with candies or by exchanging Vote Points
-                for Pass Stars
+                {t("halloween.treasure.description1")}
             </p>
             <p className="text-xs">
-                Exclusive Ghostbuster armor set, Exclusive Spooky Pumpkin armor
-                set, Spooky Pumpkin Staff, Legendary pet: Bummy, Mythic flyable
-                mount: Turbo Broom, Halloween-themed furniture & decorations for
-                your island!
+                {t("halloween.treasure.description2")}
             </p>
             <p className="text-xs text-orange-500 font-bold">
-                1 Halloween Treasure = 15 Battle Pass Stars
+                
+                {t("halloween.treasure.description3")}
             </p>
 
             <div className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 gap-2 mt-4">
@@ -891,7 +881,7 @@ const HalloweenPage: FC = () => {
                 <div className="flex items-center gap-2">
                     <Rat className="w-10 h-8 text-orange-400" />
                     <h1 className="text-2xl font-semibold text-gray-100">
-                        New Mobs
+                        {t("halloween.new_mobs.title")}
                     </h1>
                 </div>
             </div>
