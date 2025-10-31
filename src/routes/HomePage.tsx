@@ -113,6 +113,7 @@ export function HomePage() {
                         to="/equipment"
                         className="relative group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
+
                         <div className="flex items-center gap-4 mb-4">
                             <div className="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 group-hover:bg-yellow-400/20 transition-colors">
                                 <Shield size={28} />
@@ -185,8 +186,7 @@ export function HomePage() {
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.itemsNrecipes.description")}
                         </p>
-                    </Link>
-                    */}
+                    </Link>*/}
                 </div>
             </div>
         </>

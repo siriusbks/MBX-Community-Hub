@@ -36,7 +36,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 50,
                 halloween2025: true,
             },
-            {
+            /*{
                 name: "bestiary.halloween_pumpkin",
                 image: "assets/media/museum/not-found.png",
                 minlevel: 0,
@@ -61,9 +61,16 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 0,
                 airResistant: 0,
                 halloween2025: true,
-            },
+            },*/
+           
+            
+
+
+        ],
+        sewers: [
+            
             {
-                name: "bestiary.halloween_albino_rat",
+                name: "bestiary.halloween_gray_rat",
                 image: "assets/media/museum/not-found.png",
                 minlevel: 0,
                 maxlevel: 0,
@@ -75,8 +82,11 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 0,
                 halloween2025: true,
             },
+        ],
+        workshop_island: [
+            
             {
-                name: "bestiary.halloween_gray_rat",
+                name: "bestiary.halloween_albino_rat",
                 image: "assets/media/museum/not-found.png",
                 minlevel: 0,
                 maxlevel: 0,
