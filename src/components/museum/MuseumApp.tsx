@@ -16,6 +16,7 @@ import {
     List,
     ListTodo,
     X,
+    ClipboardCopy,
 } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
@@ -229,7 +230,7 @@ export const MuseumApp: FC = () => {
         }, [craftModalItem]);
 
     // Recursive function to aggregate the required resources from a given recipe
-    const gatherResources = (recipe: any): { [key: string]: number } => {
+    const gatherResources = (recipe: any, detailsIndex: Details,): { [key: string]: number } => {
         const resources: { [key: string]: number } = {};
         recipe.ingredients.forEach((ing: any) => {
             if (
@@ -239,7 +240,8 @@ export const MuseumApp: FC = () => {
                 detailsIndex[ing.id].recipe.job !== "FARMER"
             ) {
                 const subResources = gatherResources(
-                    detailsIndex[ing.id].recipe
+                    detailsIndex[ing.id].recipe,
+                    detailsIndex
                 );
                 for (const resId in subResources) {
                     resources[resId] =
@@ -289,7 +291,7 @@ export const MuseumApp: FC = () => {
             detailsIndex[ing.id] &&
             detailsIndex[ing.id].recipe
         ) {
-            const subResources = gatherResources(detailsIndex[ing.id].recipe);
+            const subResources = gatherResources(detailsIndex[ing.id].recipe, detailsIndex);
             summary = (
                 <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
                     {Object.keys(subResources).map((key, index, arr) => {
@@ -428,6 +430,39 @@ export const MuseumApp: FC = () => {
         );
     };
 
+    // Function to copy resource recap as CSV to clipboard
+    const handleCopyCSV = async () => {
+        if (!groupedItems || !detailsIndex || !museumItems) return;
+        const totalResources: { [key: string]: number } = {};
+        groupedItems.forEach((group) => {
+            const missingItems = group.items.filter(
+            (item) => !museumItems.includes(item)
+            );
+            missingItems.forEach((itemId) => {
+            if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
+                const itemResources = gatherResources(detailsIndex[itemId].recipe, detailsIndex);
+                for (const resId in itemResources) {
+                totalResources[resId] =
+                    (totalResources[resId] || 0) + itemResources[resId];
+                }
+            }
+            });
+        });
+
+        const csvLines = Object.keys(totalResources).map(
+            (resId) => `${totalResources[resId]},${resId}`
+        );
+        const csvText = csvLines.join("\n");
+
+        try {
+            await navigator.clipboard.writeText(csvText);
+            alert(t("museum.copyCSV.alert"));
+        } catch (err) {
+            console.error("Copy CSV failed:", err);
+        }
+    };
+
+
     // Function that returns the content of the missing items recap
     const renderRecapContent = () => {
         if (!groupedItems || !detailsIndex || !museumItems) {
@@ -506,7 +541,8 @@ export const MuseumApp: FC = () => {
             missingItems.forEach((itemId) => {
                 if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
                     const itemResources = gatherResources(
-                        detailsIndex[itemId].recipe
+                        detailsIndex[itemId].recipe,
+                        detailsIndex
                     );
                     for (const resId in itemResources) {
                         totalResources[resId] =
@@ -1206,13 +1242,19 @@ export const MuseumApp: FC = () => {
                                     {t("museum.resourceMuseum.description")}
                                 </div>
                             </span>
-
+                            <button
+                                className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                onClick={handleCopyCSV}
+                            >
+                                <ClipboardCopy className="w-4 h-4" /> {t("museum.copyCSV.button")}
+                            </button>
                             <span
-                                className="ml-auto close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                 onClick={() => setShowResourcesModal(false)}
                             >
                                 <X strokeWidth={3} className="h-5 w-5" />
                             </span>
+                            
                         </div>
 
                         <div

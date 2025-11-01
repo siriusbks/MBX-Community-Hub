@@ -28,6 +28,8 @@
   "museum.rarity.UNKNOWN": "UNKNOWN",
   "museum.beta.title": "Museum Manager is in the early stages of development",
   "museum.beta.description": "Some features may not work as expected or be unavailable. If you encounter any issues, please report them on the Discord Forum",
+  "museum.copyCSV.button": "Copy Recap in CSV",
+  "museum.copyCSV.alert": "CSV copied to clipboard!",
 
   "museum.category.RESOURCE": "Resources",
   "museum.category.LOOT": "Loot",
