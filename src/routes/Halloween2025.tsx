@@ -1200,7 +1200,7 @@ const HalloweenPage: FC = () => {
                 {t("halloween.treasure.description3")}
             </p>
 
-            <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-4 gap-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-2 gap-2 mt-4">
                 {HalloweenContentChange.map((item, index) => (
                     <a
                         key={item.name + index}
