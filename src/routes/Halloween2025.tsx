@@ -894,8 +894,8 @@ const HalloweenPage: FC = () => {
 
             <div className="flex-row flex gap-2 mt-4">
                 {/** Webina Quest Section **/}
-                <div className="w-1/4 bg-gray-700 rounded-lg  flex flex-col items-center">
-                    <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
+                <div className="w-1/4 bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg  flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
                         {t("halloween.quests.llowee.title")}
                     </h2>
 
@@ -940,17 +940,17 @@ const HalloweenPage: FC = () => {
                         </span>
                         ,{" "}
                         <span className="text-RARE">
-                            {t("halloween.candy_bag")}
+                            {t("halloween.halloween_candy_bag")}
                         </span>
                         ,{" "}
                         <span className="text-RARE">
-                            2x {t("halloween.candy_sack")}
+                            2x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
                 </div>
                 {/** Webina Quest Section **/}
-                <div className="w-1/2 bg-gray-700 gap-1 rounded-lg flex flex-col items-center">
-                    <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
+                <div className="w-1/2 bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border gap-1 rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
                         {t("halloween.quests.webina.title")}
                     </h2>
                     <span className="w-full text-center text-xs">
@@ -965,9 +965,9 @@ const HalloweenPage: FC = () => {
                             alt="Quest Locations"
                             className="h-96 rounded"
                         />
-                        <table className="text-xs bg-gray-600 ml-4 rounded-lg table-auto overflow-hidden">
+                        <table className="text-xs bg-gray-800 ml-4 rounded-lg table-auto overflow-hidden">
                             <thead>
-                                <tr className="bg-gray-700">
+                                <tr>
                                     <th className="px-2 py-1 text-center bg-orange-500/20 text-orange-500 font-semibold text-left">
                                         X
                                     </th>
@@ -1042,9 +1042,9 @@ const HalloweenPage: FC = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <table className="text-xs bg-gray-600 ml-4 rounded-lg table-auto overflow-hidden">
+                        <table className="text-xs bg-gray-800 ml-4 rounded-lg table-auto overflow-hidden">
                             <thead>
-                                <tr className="bg-gray-700">
+                                <tr >
                                     <th className="px-2 py-1 text-center bg-orange-500/20 text-orange-500 font-semibold text-left">
                                         X
                                     </th>
@@ -1125,13 +1125,13 @@ const HalloweenPage: FC = () => {
                         </span>
                         ,{" "}
                         <span className="text-RARE">
-                            4x {t("halloween.candy_sack")}
+                            4x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
                 </div>
                 {/** Webina Quest Section **/}
-                <div className="w-1/4 bg-gray-700 rounded-lg flex flex-col items-center">
-                    <h2 className="w-full text-center bg-gray-600 rounded-lg p-3 font-bold">
+                <div className="w-1/4 bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
                         {t("halloween.quests.mcbones.title")}
                     </h2>
                     <span className="w-full p-1 px-2 text-xs">
@@ -1178,7 +1178,7 @@ const HalloweenPage: FC = () => {
                         </span>
                         ,{" "}
                         <span className="text-RARE">
-                            6x {t("halloween.candy_sack")}
+                            6x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
                 </div>

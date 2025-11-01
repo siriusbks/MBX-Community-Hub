@@ -186,7 +186,7 @@ export const Navbar = () => {
                                     </button>
 
                                     {toolsOpen && (
-                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 rounded shadow-xl z-50">
+                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 rounded shadow-xl" >
                                             {link.items.map((item: any) => (
                                                 <NavLink
                                                     key={item.id}
