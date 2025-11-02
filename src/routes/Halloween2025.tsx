@@ -1178,12 +1178,16 @@ const HalloweenPage: FC = () => {
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
                         4. {t("halloween.quests.universal.loot")}:{" "}
-                        <span className="text-RARE">64x Dirty Sheets</span>
+                        <span className="text-RARE">
+                            64x {t("halloween.halloween_dirty_sheet")}
+                        </span>
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         {t("halloween.quests.universal.craft")}:{" "}
-                        <span className="text-LEGENDARY">Ghost Vaccum</span>
+                        <span className="text-LEGENDARY">
+                            {t("halloween.ghost_vacuum")}
+                        </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         5. {t("halloween.quests.mcbones.bring")}
