@@ -658,7 +658,13 @@ const HalloweenPage: FC = () => {
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("halloween.week1.mission5")} [32]</span>
+                            <span>
+                                {t("halloween.week1.mission5")}
+                                <span className="text-LEGENDARY">
+                                    {t("halloween.halloween_candy_sack")}
+                                </span>{" "}
+                                [32]
+                            </span>
                             <span className="text-LEGENDARY">
                                 2x {t("halloween.quests.universal.bp_star")}
                             </span>
@@ -1044,7 +1050,7 @@ const HalloweenPage: FC = () => {
                         </table>
                         <table className="text-xs bg-gray-800 ml-4 rounded-lg table-auto overflow-hidden">
                             <thead>
-                                <tr >
+                                <tr>
                                     <th className="px-2 py-1 text-center bg-orange-500/20 text-orange-500 font-semibold text-left">
                                         X
                                     </th>
@@ -1115,9 +1121,22 @@ const HalloweenPage: FC = () => {
                             </tbody>
                         </table>
                     </span>
-                    
+
                     <span className="w-full text-center text-xs text-orange-500">
-                        Map and Location are from <a href="https://discord.gg/ZcYajnQ8at" className="font-bold">Minebox Atlas</a> by <a href="https://discord.gg/ZcYajnQ8at" className="font-bold">Nyx_031</a>
+                        Map and Location are from{" "}
+                        <a
+                            href="https://discord.gg/ZcYajnQ8at"
+                            className="font-bold"
+                        >
+                            Minebox Atlas
+                        </a>{" "}
+                        by{" "}
+                        <a
+                            href="https://discord.gg/ZcYajnQ8at"
+                            className="font-bold"
+                        >
+                            Nyx_031
+                        </a>
                     </span>
                     <span className="w-full text-center text-xs">
                         3. {t("halloween.quests.webina.talk")}
@@ -1220,16 +1239,19 @@ const HalloweenPage: FC = () => {
                                 }}
                             />
                             <span className="w-full flex flex-col items-center leading-tight">
-                                <span className="flex flex-row justify-between w-full"><span
-                                    className={`text-xs bg-${item.rarity} px-2 rounded`}
+                                <span className="flex flex-row justify-between w-full">
+                                    <span
+                                        className={`text-xs bg-${item.rarity} px-2 rounded`}
+                                    >
+                                        {item.rarity}
+                                    </span>
+                                    <span className={`text-xs`}>
+                                        {item.change}%
+                                    </span>
+                                </span>
+                                <span
+                                    className={`font-bold text-sm w-full text-left`}
                                 >
-                                    {item.rarity}
-                                </span>
-                                <span className={`text-xs`}>
-                                    {item.change}%
-                                </span>
-                                </span>
-                                <span className={`font-bold text-sm w-full text-left`}>
                                     {t(item.name)}
                                 </span>
                             </span>
