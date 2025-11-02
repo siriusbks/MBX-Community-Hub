@@ -21,7 +21,7 @@
     "halloween.week1.mission2": "Craft ",
     "halloween.week1.mission3": "Craft ",
     "halloween.week1.mission4": "Candy Donation to the Sugarpit",
-    "halloween.week1.mission5": "Open ",
+    "halloween.week1.mission5": "Open Candy Sack",
     "halloween.week1.mission6": "Play Hours",
     "halloween.week2": "Week 2",
     "halloween.week3": "Week 3",
@@ -54,13 +54,12 @@
     "halloween.quests.universal.reward": "Reward",
     "halloween.quests.universal.bp_star": "BP Star",
 
-    
     "halloween.treasure.title": "Halloween Treasure",
     "halloween.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies or by exchanging Vote Points for Pass Stars",
     "halloween.treasure.description2": "Exclusive Ghostbuster armor set, Exclusive Spooky Pumpkin armor set, Spooky Pumpkin Staff, Legendary pet: Bummy, Mythic flyable mount: Turbo Broom, Halloween-themed furniture & decorations for your island!",
     "halloween.treasure.description3": "1 Halloween Treasure = 15 Battle Pass Stars",
 
-        "halloween.new_mobs.title": "New Mobs",
+    "halloween.new_mobs.title": "New Mobs",
 
     "halloween.pet_halloween_mummy": "Bummy",
     "halloween.pet_halloween_candy": "Can'tdy",
