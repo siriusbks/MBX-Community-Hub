@@ -160,6 +160,10 @@
 }
 /** Leaflet Map Custom Styles */
 
+.leaflet-overlay-pane, .leaflet-pane{
+    z-index: 0 !important;
+}
+
 :root {
     --color-COMMON: #665466;
     --color-COMMON-50: #66546620;
