@@ -1,6 +1,7 @@
 [
     {
         "id": "mm-auction_table",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -30,6 +31,7 @@
     },
     {
         "id": "mm-bazaar_table",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -59,6 +61,7 @@
     },
     {
         "id": "mm-shop_table",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -88,6 +91,7 @@
     },
     {
         "id": "mm-atm_green",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -117,6 +121,7 @@
     },
     {
         "id": "mm-workshop_farmer_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -141,6 +146,7 @@
     },
     {
         "id": "mm-workshop_miner_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -170,6 +176,7 @@
     },
     {
         "id": "mm-workshop_cooker_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -199,6 +206,7 @@
     },
     {
         "id": "mm-workshop_lumberjack_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -228,6 +236,7 @@
     },
     {
         "id": "mm-workshop_fisher_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -258,6 +267,7 @@
     },
     {
         "id": "mm-workshop_hunter_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -287,6 +297,7 @@
     },
     {
         "id": "mm-workshop_alchemist_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -316,6 +327,7 @@
     },
     {
         "id": "mm-workshop_blacksmith_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -345,6 +357,7 @@
     },
     {
         "id": "mm-workshop_tailor_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -374,6 +387,7 @@
     },
     {
         "id": "mm-workshop_shoemaker_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -403,6 +417,7 @@
     },
     {
         "id": "mm-workshop_jewellerer_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -432,6 +447,7 @@
     },
     {
         "id": "mm-workshop_tinkerer_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",
@@ -461,6 +477,7 @@
     },
     {
         "id": "mm-workshop_runeforger_small",
+        "rarity": "RARE",
         "category": "UTILITY_BLOCK",
         "recipe": {
             "job": "TINKERER",

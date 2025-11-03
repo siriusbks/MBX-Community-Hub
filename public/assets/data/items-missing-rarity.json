@@ -123,29 +123,13 @@
     "scroll_enchanted_fortune": "EPIC",
     "scroll_enchanted_defense": "EPIC",
 
-    "mm-auction_table": "RARE",
-    "mm-bazaar_table": "RARE",
-    "mm-shop_table": "RARE",
-    "mm-atm_green": "RARE",
-    "mm-workshop_farmer_small": "RARE",
-    "mm-workshop_miner_small": "RARE",
-    "mm-workshop_cooker_small": "RARE",
-    "mm-workshop_lumberjack_small": "RARE",
-    "mm-workshop_fisher_small": "RARE",
-    "mm-workshop_hunter_small": "RARE",
-    "mm-workshop_alchemist_small": "RARE",
-    "mm-workshop_blacksmith_small": "RARE",
-    "mm-workshop_tailor_small": "RARE",
-    "mm-workshop_shoemaker_small": "RARE",
-    "mm-workshop_jewellerer_small": "RARE",
-    "mm-workshop_tinkerer_small": "RARE",
-    "mm-workshop_runeforger_small": "RARE",
-
     "mm-small_paint_1": "LEGENDARY",
     "mm-paint_son_of_man": "LEGENDARY",
     "mm-paint_scream": "LEGENDARY",
     "mm-paint_pearl_girl": "LEGENDARY",
     "mm-paint_last_supper": "LEGENDARY",
     "mm-paint_mona_lisa": "MYTHIC",
-    "mm-paint_guernica": "MYTHIC"
+    "mm-paint_guernica": "MYTHIC",
+
+    "xmas_present_big_red": "MYTHIC"
 }
