@@ -248,7 +248,6 @@
         "category":  "RING",
         "itemCount":  95,
         "items":  [
-                      "ring_multigem_pink",
                       "ring_feather",
                       "ring_improved",
                       "ring_silver",
@@ -446,7 +445,6 @@
         "category":  "NECKLACE",
         "itemCount":  73,
         "items":  [
-                      "necklace_improved",
                       "basic_agility_necklace",
                       "basic_intelligence_necklace",
                       "basic_luck_necklace",
