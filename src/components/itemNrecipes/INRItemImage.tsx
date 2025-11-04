@@ -41,6 +41,7 @@ const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex,
   fallbackChain.push(`/assets/media/jobs/${cleanedItemId}.png`);
   fallbackChain.push(`/assets/media/icons/${cleanedItemId}.png`);
   fallbackChain.push(`/assets/media/skulls/${cleanedItemId}.png`);
+  fallbackChain.push(`/assets/media/EVENT/HALLOWEEN/${cleanedItemId}.png`);
   fallbackChain.push(
     detailsIndex &&
       detailsIndex[cleanedItemId] &&
