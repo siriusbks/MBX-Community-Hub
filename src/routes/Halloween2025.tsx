@@ -1148,20 +1148,7 @@ const HalloweenPage: FC = () => {
                     </span>
 
                     <span className="w-full text-center text-xs text-orange-500">
-                        Map and Location are from{" "}
-                        <a
-                            href="https://discord.gg/ZcYajnQ8at"
-                            className="font-bold"
-                        >
-                            Minebox Atlas
-                        </a>{" "}
-                        by{" "}
-                        <a
-                            href="https://discord.gg/ZcYajnQ8at"
-                            className="font-bold"
-                        >
-                            Nyx_031
-                        </a>
+                        Map and Location are from Minebox Atlas by Nyx_031
                     </span>
                     <span className="w-full text-center text-xs">
                         3. {t("halloween.quests.webina.talk")}
