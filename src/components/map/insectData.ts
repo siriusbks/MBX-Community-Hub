@@ -28,6 +28,8 @@ type InsectWeather =
     | "mappage.condition.weather.rain"
     | "mappage.condition.weather.storm"
     | "mappage.condition.weather.full_moon"
+    | "mappage.condition.weather.new_moon"
+    | "mappage.condition.weather.full_new_moon"
     | "mappage.condition.weather.noclear"
     | "mappage.condition.weather.any"
     | string;
@@ -302,7 +304,7 @@ export const insectData: Record<string, Record<string, InsectInfo[]>> = {
                 rarity: "fishing.rarity.legendary",
                 image: "assets/media/museum/INSECT/butterfly_purple_emperor.png",
                 time: ["mappage.condition.time.night"],
-                weather: ["mappage.condition.weather.full_moon"],
+                weather: ["mappage.condition.weather.full_new_moon"],
             },
             {
                 name: "insect.insect_locust",

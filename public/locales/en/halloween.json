@@ -24,11 +24,14 @@
     "halloween.week1.mission5": "Open ",
     "halloween.week1.mission6": "Play Hours",
     "halloween.week2": "Week 2",
+    "halloween.week2.mission4": "Use ",
+    "halloween.week2.mission6": "Apply Spooked (Effect) to a Player",
     "halloween.week3": "Week 3",
     "halloween.week4": "Final Week",
     "halloween.week.active": "Active Now",
     "halloween.week.reward": "Weekly Reward",
     "halloween.week.mission_soon": "Mission coming soon...",
+    
 
     "halloween.quests.title": "Halloween Quest's",
     "halloween.quests.llowee.title": "Llowee Quest",
@@ -53,6 +56,7 @@
     "halloween.quests.universal.loot": "Loot",
     "halloween.quests.universal.reward": "Reward",
     "halloween.quests.universal.bp_star": "BP Star",
+    "halloween.quests.universal.shiny": "Shiny",
 
     "halloween.treasure.title": "Halloween Treasure",
     "halloween.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies or by exchanging Vote Points for Pass Stars",

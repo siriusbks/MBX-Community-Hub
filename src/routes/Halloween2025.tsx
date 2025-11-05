@@ -612,12 +612,12 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week1")}
                             </h3>
-                            <p className="text-xs ">30.10.2025 - 05.11.2025</p>
+                            <p className="text-xs ">30.10.2025 - 04.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
-                            const start = new Date(2025, 9, 3); // months are 0-based: 9 = October
-                            const end = new Date(2025, 10, 5, 23, 59, 59, 999); // 10 = November
+                            const start = new Date(2025, 9, 30); // months are 0-based: 9 = October
+                            const end = new Date(2025, 10, 4, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-600 py-1 px-2">
                                     {t("halloween.week.active")}
@@ -703,12 +703,12 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week2")}
                             </h3>
-                            <p className="text-xs ">06.11.2025 - 12.11.2025</p>
+                            <p className="text-xs ">05.11.2025 - 11.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
-                            const start = new Date(2025, 10, 6); // months are 0-based: 9 = October
-                            const end = new Date(2025, 10, 12, 23, 59, 59, 999); // 10 = November
+                            const start = new Date(2025, 10, 5); // months are 0-based: 9 = October
+                            const end = new Date(2025, 10, 11, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-500 py-1 px-2">
                                     {t("halloween.week.active")}
@@ -719,45 +719,51 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission1")} <span className="text-LEGENDARY">{t("halloween.quests.universal.shiny")}</span> [20]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission2")} <span className="text-MYTHIC">{t("halloween.treasure.title")}</span> [4]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission4")} [16]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week2.mission4")} %s [128]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission6")} [4]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week2.mission6")} [10]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                            <span>???</span>
+                            <span><span className="text-LEGENDARY">
+                                    5x {t("halloween.quests.universal.bp_star")}
+                                </span>
+                                ,{" "}
+                                <span className="text-EPIC">
+                                    {t("halloween.halloween_witch_ring")}
+                                </span></span>
                         </div>
                     </span>
                 </span>
@@ -768,12 +774,12 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week3")}
                             </h3>
-                            <p className="text-xs ">13.11.2025 - 19.11.2025</p>
+                            <p className="text-xs ">12.11.2025 - 18.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
-                            const start = new Date(2025, 10, 13); // months are 0-based: 9 = October
-                            const end = new Date(2025, 10, 19, 23, 59, 59, 999); // 10 = November
+                            const start = new Date(2025, 10, 12); // months are 0-based: 9 = October
+                            const end = new Date(2025, 10, 18, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-500 py-1 px-2">
                                     {t("halloween.week.active")}
@@ -833,11 +839,11 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week4")}
                             </h3>
-                            <p className="text-xs ">20.11.2025 - 26.11.2025</p>
+                            <p className="text-xs ">19.11.2025 - 26.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
-                            const start = new Date(2025, 10, 20); // months are 0-based: 9 = October
+                            const start = new Date(2025, 10, 19); // months are 0-based: 9 = October
                             const end = new Date(2025, 10, 26, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-500 py-1 px-2">
@@ -1215,6 +1221,56 @@ const HalloweenPage: FC = () => {
                     </span>
                 </div>
             </div>
+
+            {/* Battle Pass Section */}
+            {/*}
+            <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
+                <div className="flex items-center gap-2">
+                    <Box className="w-10 h-8 text-orange-400" />
+                    <h1 className="text-2xl font-semibold text-gray-100">
+                        {t("halloween.eventworkshop.title")}
+                    </h1>
+                </div>
+            </div>
+            <p className="text-xs">
+                {t("halloween.eventworkshop.description")}
+            </p>
+
+            <div className="grid grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-2 gap-2 mt-4">
+                    <a
+                        
+                        className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-EPIC`}
+                    >
+                        <span className="flex flex-row items-center gap-2">
+                            <img
+                                src="/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_hat.png"
+                                className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                style={{
+                                    imageRendering: "pixelated",
+                                }}
+                            />
+                            <span className="w-full flex flex-col items-center leading-tight">
+                                <span className="flex flex-row justify-between w-full">
+                                    <span
+                                        className={`text-xs bg-EPIC px-2 rounded`}
+                                    >
+                                        ddd
+                                    </span>
+                                    <span className={`text-xs`}>
+                                        dddd%
+                                    </span>
+                                </span>
+                                <span
+                                    className={`font-bold text-sm w-full text-left`}
+                                >
+                                    ddd
+                                </span>
+                            </span>
+                        </span>
+                        </a>
+            </div>*/}
+
+
 
             {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
