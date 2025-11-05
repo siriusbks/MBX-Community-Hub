@@ -45,6 +45,8 @@
     "mappage.condition.weather.rain": "Rain",
     "mappage.condition.weather.storm": "Storm",
     "mappage.condition.weather.full_moon": "Full Moon",
+    "mappage.condition.weather.full_new_moon": "Full and New Moon",
+    "mappage.condition.weather.new_moon": "New Moon",
     "mappage.condition.weather.any": "Any Weather",
     "mappage.condition.no_condition": "No Conditions",
 
