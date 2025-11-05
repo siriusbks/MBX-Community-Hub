@@ -413,7 +413,7 @@ const HalloweenContentChange: HalloweenItemChange[] = [
         change: 3.53,
     },
     {
-        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_hat.png",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_helmet.png",
         name: "halloween.ghostbuster_hat",
         rarity: "LEGENDARY",
         change: 3.53,
@@ -648,7 +648,7 @@ const HalloweenPage: FC = () => {
                             <span>
                                 {t("halloween.week1.mission3")}
                                 <span className="text-LEGENDARY">
-                                    {t("halloween.ghost_vacuum")}
+                                    {t("halloween.halloween_ghost_vacuum")}
                                 </span>{" "}
                                 [1]
                             </span>
@@ -719,51 +719,65 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week1.mission1")} <span className="text-LEGENDARY">({t("halloween.quests.universal.shiny")})</span> [20]
+                                {t("halloween.week1.mission1")}{" "}
+                                <span className="text-LEGENDARY">
+                                    ({t("halloween.quests.universal.shiny")})
+                                </span>{" "}
+                                [20]
                             </span>
-                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
+                            <span className="text-LEGENDARY">
+                                3x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week1.mission2")} <span className="text-MYTHIC">{t("halloween.treasure.title")}</span> [4]
+                                {t("halloween.week1.mission2")}{" "}
+                                <span className="text-MYTHIC">
+                                    {t("halloween.treasure.title")}
+                                </span>{" "}
+                                [4]
                             </span>
-                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
+                            <span className="text-LEGENDARY">
+                                3x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week1.mission4")} [16]
+                            <span>{t("halloween.week1.mission4")} [16]</span>
+                            <span className="text-LEGENDARY">
+                                2x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week2.mission4")} %s [128]
+                            <span>{t("halloween.week2.mission4")} [128]</span>
+                            <span className="text-LEGENDARY">
+                                2x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week1.mission6")} [4]
+                            <span>{t("halloween.week1.mission6")} [4]</span>
+                            <span className="text-LEGENDARY">
+                                2x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">2x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week2.mission6")} [10]
+                            <span>{t("halloween.week2.mission6")} [10]</span>
+                            <span className="text-LEGENDARY">
+                                3x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                            <span><span className="text-LEGENDARY">
+                            <span>
+                                <span className="text-LEGENDARY">
                                     5x {t("halloween.quests.universal.bp_star")}
                                 </span>
                                 ,{" "}
                                 <span className="text-EPIC">
                                     {t("halloween.halloween_witch_ring")}
-                                </span></span>
+                                </span>
+                            </span>
                         </div>
                     </span>
                 </span>
@@ -1269,8 +1283,6 @@ const HalloweenPage: FC = () => {
                         </span>
                         </a>
             </div>*/}
-
-
 
             {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
