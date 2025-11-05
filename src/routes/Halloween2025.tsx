@@ -714,7 +714,7 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week1.mission1")} <span className="text-LEGENDARY">{t("halloween.quests.universal.shiny")}</span> [20]
+                                {t("halloween.week1.mission1")} <span className="text-LEGENDARY">({t("halloween.quests.universal.shiny")})</span> [20]
                             </span>
                             <span className="text-LEGENDARY">3x {t("halloween.quests.universal.bp_star")}</span>
                         </div>

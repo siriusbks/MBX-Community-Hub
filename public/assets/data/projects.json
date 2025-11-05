@@ -3,6 +3,7 @@
         "id": "0",
         "name": "Minebox ModPack",
         "creator": "lupusarctos9747",
+        "modrinthId": "mineboxmodpack",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/modpack/mineboxmodpack",
@@ -10,6 +11,7 @@
             "curseforge": ""
         },
         "logo": "https://cdn.modrinth.com/data/6mE2lByQ/36b2e5420ef2dfe80fa642ed9b1a5ab4ab18020e_96.webp",
+        "banner": "https://cdn.modrinth.com/data/6mE2lByQ/images/cfc256bf42b0a13279dc44c0b38ba5c05f212ddd.png",
         "type": "Modpack",
         "language": [],
         "badge": "Recommended"
@@ -18,6 +20,7 @@
         "id": "1",
         "name": "MineboxAdditions",
         "creator": "Dampen59",
+        "modrinthId": "mineboxadditions",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/mod/mineboxadditions",
@@ -25,6 +28,7 @@
             "curseforge": "https://www.curseforge.com/minecraft/mc-mods/mineboxadditions"
         },
         "logo": "https://cdn.modrinth.com/data/HFGMc58X/b23b00e294318cd70f7f44263d49eecf7134e624_96.webp",
+        "banner": "https://mineboxcommunity.com/assets/media/profile/background/mineboxcover.webp",
         "type": "Minecraft Mod",
         "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": "Popular"
@@ -33,6 +37,7 @@
         "id": "2",
         "name": "MineboxTools",
         "creator": "Silv04",
+        "modrinthId": "mineboxtools",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/mod/mineboxtools",
@@ -40,6 +45,7 @@
             "curseforge": ""
         },
         "logo": "https://cdn.modrinth.com/data/pgS7fqz5/2840877421f511a0d1ab05d7e4898958285e466b_96.webp",
+        "banner": "https://mineboxcommunity.com/assets/media/profile/background/mineboxcover.webp",
         "type": "Minecraft Mod",
         "language": ["🇺🇸", "🇫🇷"],
         "badge": ""
@@ -48,6 +54,7 @@
         "id": "4",
         "name": "Minebox Plus",
         "creator": "Tiny Slime Studio",
+        "modrinthId": "minebox-plus",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-plus",
@@ -55,6 +62,7 @@
             "curseforge": "https://www.curseforge.com/minecraft/texture-packs/minebox-plus"
         },
         "logo": "https://cdn.modrinth.com/data/SiyJSGns/7352eb4713d9da6bf026026b27a1112f932741df_96.webp",
+        "banner": "https://cdn.modrinth.com/data/SiyJSGns/images/19989fe8d8e1671c7d2200f4ccc45a8ff2194197.png",
         "type": "Resource Pack",
         "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
@@ -63,6 +71,7 @@
         "id": "5",
         "name": "Minebox Gray Crops",
         "creator": "Tiny Slime Studio",
+        "modrinthId": "minebox-gray-crops",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-gray-crops",
@@ -70,6 +79,7 @@
             "curseforge": "https://www.curseforge.com/minecraft/texture-packs/minebox-gray-crops"
         },
         "logo": "https://cdn.modrinth.com/data/3NQofyGp/8f91bbf5cef3cff67fa847abff15ecab93f526bd_96.webp",
+        "banner": "https://cdn.modrinth.com/data/3NQofyGp/images/9602b784bfb0b0d765f41a6e46d2caf4f9362a98.png",
         "type": "Resource Pack",
         "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
@@ -78,6 +88,7 @@
         "id": "6",
         "name": "Minebox Clear Leaves",
         "creator": "Tiny Slime Studio",
+        "modrinthId": "minebox-clear-leaves",
         "links": {
             "website": "",
             "modrinth": "https://modrinth.com/resourcepack/minebox-clear-leaves",
@@ -85,6 +96,7 @@
             "curseforge": "https://www.curseforge.com/minecraft/texture-packs/minebox-clear-leaves"
         },
         "logo": "https://cdn.modrinth.com/data/Kb8wWhwz/0cb0b10ccd5e1a9a335ff0cf865ae0a6d209c41c_96.webp",
+        "banner": "https://cdn.modrinth.com/data/Kb8wWhwz/images/c06f44d31807fc8e9a80dd9d642ba07a2ba66eee.png",
         "type": "Resource Pack",
         "language": ["🇺🇸", "🇫🇷", "🇵🇱"],
         "badge": ""
