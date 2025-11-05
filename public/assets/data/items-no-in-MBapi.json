@@ -510,6 +510,10 @@
             ]
         }
     },
+
+
+
+
     {
         "id": "basic_skull",
         "category": "SKULL",
@@ -1319,5 +1323,769 @@
                 }
             ]
         }
+    },
+
+
+
+
+    {
+        "id": "halloween_old_witch_hat",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "HELMET",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "UNKNOWN",
+                    "amount": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_crow_hat",
+        "rarity": "RARE",
+        "level": 1,
+        "category": "HELMET",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "UNKNOWN",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "UNKNOWN",
+                    "amount": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "ghost_cloak",
+        "rarity": "RARE",
+        "set": "ghost",
+        "level": 10,
+        "category": "BACK",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_dirty_sheet",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_golden_dirty_sheet",
+                    "amount": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "ghost_hat",
+        "rarity": "RARE",
+        "set": "ghost",
+        "level": 10,
+        "category": "HELMET"
+    },
+    {
+        "id": "ghost_necklace",
+        "rarity": "RARE",
+        "set": "ghost",
+        "level": 10,
+        "category": "NECKLACE"
+    },
+    {
+        "id": "ghost_ring",
+        "rarity": "RARE",
+        "set": "ghost",
+        "level": 10,
+        "category": "RING"
+    },
+    {
+        "id": "halloween_old_witch_cloak",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "BACK",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "UNKNOWN",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "UNKNOWN",
+                    "amount": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_ghost_vacuum",
+        "rarity": "LEGENDARY",
+        "level": 10,
+        "category": "TOOL",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "ingot_silver",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_dirty_sheet",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "clover_bottle",
+                    "amount": 64
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_pumpkin_hat",
+        "rarity": "EPIC",
+        "set": "candy_pumpkin",
+        "level": 15,
+        "category": "HELMET",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_corn",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_peppermint",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 64
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_pumpkin_chestplate",
+        "rarity": "EPIC",
+        "set": "candy_pumpkin",
+        "level": 15,
+        "category": "CHESTPLATE",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_licorice",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_pop",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_corn",
+                    "amount": 64
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_pumpkin_leggings",
+        "rarity": "EPIC",
+        "set": "candy_pumpkin",
+        "level": 15,
+        "category": "LEGGINGS",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_corn",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_licorice",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 8
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_pumpkin_boots",
+        "rarity": "EPIC",
+        "set": "candy_pumpkin",
+        "level": 15,
+        "category": "BOOTS",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_peppermint",
+                    "amount": 48
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 48
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 4
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_twist",
+                    "amount": 48
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_pumpkin_backpack",
+        "rarity": "EPIC",
+        "set": "candy_pumpkin",
+        "level": 15,
+        "category": "BACK",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_peppermint",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_pop",
+                    "amount": 64
+                },
+                {
+                    "type": "custom",
+                    "id": "crate_pumpkin",
+                    "amount": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_spookler",
+        "rarity": "EPIC",
+        "level": 5,
+        "category": "STAFF",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "ingot_ashstone",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_golden_dirty_sheet",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "banana_engraved_skull",
+                    "amount": 16
+                },
+                {
+                    "type": "custom",
+                    "id": "grilling_planks",
+                    "amount": 32
+                },
+                {
+                    "type": "custom",
+                    "id": "belladonna_elixir",
+                    "amount": 8
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_crate",
+        "rarity": "MYTHIC",
+        "category": "TREASURE",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_corn",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_licorice",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_peppermint",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_pop",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_twist",
+                    "amount": 99
+                }
+            ]
+        }
+    },
+    {
+        "id": "pet_halloween_candy",
+        "rarity": "LEGENDARY",
+        "level": 10,
+        "category": "PET",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_corn",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_gumdrop",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_licorice",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_peppermint",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_pop",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_candy_twist",
+                    "amount": 99
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_golden_dirty_sheet",
+                    "amount": 64
+                }
+            ]
+        }
+    },
+    {
+        "id": "halloween_candy_corn",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_chestplate",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_hat",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_leggings",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_gumdrop",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_backpack",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_boot",
+                "amount": 48
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_hat",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_leggings",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_licorice",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_chestplate",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_leggings",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_peppermint",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_backpack",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_boot",
+                "amount": 48
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_hat",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_pop",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_backpack",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_chestplate",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_twist",
+        "rarity": "RARE",
+        "level": 5,
+        "category": "EDIBLE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_crate",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 99
+            },
+            {
+                "type": "custom",
+                "id": "halloween_candy_pumpkin_boots",
+                "amount": 48
+            }
+        ]
+    },
+    {
+        "id": "halloween_dirty_sheet",
+        "rarity": "RARE",
+        "level": 10,
+        "category": "LOOT",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_ghost_vacuum",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "ghost_cloak",
+                "amount": 64
+            }
+        ]
+    },
+    {
+        "id": "halloween_golden_dirty_sheet",
+        "rarity": "LEGENDARY",
+        "level": 10,
+        "category": "LOOT",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "pet_halloween_candy",
+                "amount": 64
+            },
+            {
+                "type": "custom",
+                "id": "halloween_spookler",
+                "amount": 32
+            },
+            {
+                "type": "custom",
+                "id": "ghost_cloak",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": "halloween_candy_bag",
+        "rarity": "RARE",
+        "category": "INFINITE_BAG"
+    },
+    {
+        "id": "pet_halloween_mommy",
+        "rarity": "LEGENDARY",
+        "level": 20,
+        "category": "PET"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_hat",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 37,
+        "category": "HELMET"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_chestplate",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 36,
+        "category": "CHESTPLATE"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_leggings",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 34,
+        "category": "LEGGINGS"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_boots",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 31,
+        "category": "BOOTS"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_backpack",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 35,
+        "category": "BACK"
+    },
+    {
+        "id": "halloween_spooky_pumpkin_ring",
+        "rarity": "LEGENDARY",
+        "set": "spooky_pumpkin",
+        "level": 34,
+        "category": "RING"
+    },
+    {
+        "id": "ghostbuster_helmet",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 27,
+        "category": "HELMET"
+    },
+    {
+        "id": "ghostbuster_chestplate",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 26,
+        "category": "CHESTPLATE"
+    },
+    {
+        "id": "ghostbuster_leggings",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 29,
+        "category": "LEGGINGS"
+    },
+    {
+        "id": "ghostbuster_boots",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 23,
+        "category": "BOOTS"
+    },
+    {
+        "id": "ghostbuster_backpack",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 25,
+        "category": "BACK"
+    },
+    {
+        "id": "ghostbuster_belt",
+        "rarity": "LEGENDARY",
+        "set": "ghostbuster",
+        "level": 23,
+        "category": "BELT"
+    },
+    {
+        "id": "mount_witch_broom",
+        "rarity": "MYTHIC",
+        "level": 1,
+        "category": "MOUNT",
+        "mount": {
+            "speed": 3.0,
+            "jump_height": 0.35,
+            "flyable": true
+        }
+    },
+    {
+        "id": "halloween_spooky_pumpkin_staff",
+        "rarity": "LEGENDARY",
+        "level": 33,
+        "category": "STAFF"
+    },
+    {
+        "id": "halloween_witch_hat",
+        "rarity": "EPIC",
+        "set": "witch",
+        "level": 19,
+        "category": "HELMET"
+    },
+    {
+        "id": "halloween_witch_cauldron",
+        "rarity": "EPIC",
+        "set": "witch",
+        "level": 22,
+        "category": "BACK"
+    },
+    {
+        "id": "halloween_witch_belt",
+        "rarity": "EPIC",
+        "set": "witch",
+        "level": 20,
+        "category": "BELT"
+    },
+    {
+        "id": "halloween_witch_ring",
+        "rarity": "EPIC",
+        "set": "witch",
+        "level": 19,
+        "category": "RING"
     }
 ]

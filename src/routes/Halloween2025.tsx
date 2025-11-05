@@ -148,8 +148,8 @@ const HalloweenContent: HalloweenItem[] = [
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/EVENT/HALLOWEEN/ghost_vacuum.png",
-        name: "halloween.ghost_vacuum",
+        image: "/assets/media/EVENT/HALLOWEEN/halloween_ghost_vacuum.png",
+        name: "halloween.halloween_ghost_vacuum",
         rarity: "UNKNOWN",
     },
     {
@@ -278,8 +278,13 @@ const HalloweenContent: HalloweenItem[] = [
         rarity: "UNKNOWN",
     },
     {
-        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_hat.png",
-        name: "halloween.ghostbuster_hat",
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_belt.png",
+        name: "halloween.ghostbuster_belt",
+        rarity: "UNKNOWN",
+    },
+    {
+        image: "/assets/media/EVENT/HALLOWEEN/ghostbuster_helmet.png",
+        name: "halloween.ghostbuster_helmet",
         rarity: "UNKNOWN",
     },
     {
