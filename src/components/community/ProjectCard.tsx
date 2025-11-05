@@ -75,17 +75,19 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                         <Layers size={14} /> {project.type}
                     </span>
                     {project.modrinthId && (
-                    <span className="w-fit flex items-center gap-1 bg-gray-800/50 border border-gray-200/40 px-2 py-1 rounded-full backdrop-blur-sm">
-                        <Layers2 size={14} /> {version ? `v${version}` : "..."}
-                    </span>
+                        <span className="w-fit flex items-center gap-1 bg-gray-800/50 border border-gray-200/40 px-2 py-1 rounded-full backdrop-blur-sm">
+                            <Layers2 size={14} />{" "}
+                            {version ? `v${version}` : "..."}
+                        </span>
                     )}
                 </div>
 
                 <div className="absolute bottom-2 right-2 z-10 flex  gap-0.5 text-gray-200 text-xs font-medium flex flex-col">
                     {project.language.length > 0 && (
-                    <span className="w-fit flex items-center gap-1 bg-gray-800  px-2 py-1 rounded-full ">
-                        {project.language.join(" ")}<Languages size={14} />
-                    </span>
+                        <span className="w-fit flex items-center gap-1 bg-gray-800  px-2 py-1 rounded-full ">
+                            {project.language.join(" ")}
+                            <Languages size={14} />
+                        </span>
                     )}
                 </div>
             </span>
@@ -140,10 +142,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                         {!project.subname && (
                             <p className="text-gray-400 text-xs leading-none">
                                 by{" "}
-                                <span
-                                    className="text-green-400 hover:underline font-medium"
-                                    title={`Created by ${project.creator}`}
-                                >
+                                <span className="text-green-400 hover:underline font-medium">
                                     {project.creator}
                                 </span>
                             </p>
