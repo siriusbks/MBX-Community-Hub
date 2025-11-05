@@ -996,7 +996,7 @@ export const MuseumApp: FC = () => {
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="craftModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
@@ -1181,7 +1181,7 @@ export const MuseumApp: FC = () => {
             {/* Missing items recap modal */}
             {showRecapModal && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="recapModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
@@ -1221,7 +1221,7 @@ export const MuseumApp: FC = () => {
             )}
             {showResourcesModal && (
                 <div
-                    className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
                     id="resourcesModal"
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
