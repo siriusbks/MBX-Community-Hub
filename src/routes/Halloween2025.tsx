@@ -1315,13 +1315,20 @@ const HalloweenPage: FC = () => {
                         <span className="text-orange-500">330 92 60</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        12. ...
+                        12. {t("halloween.quests.llowee.talkJacko")}
+                    </span>
+                    <span className="w-full pt-1 px-2 text-xs">
+                        13. {t("halloween.quests.llowee.openWorkshop")}
+                    </span>
+                    <span className="w-full  px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.llowee.slurpShiny")}
+                    </span>
+                    <span className="w-full pb-1 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-EPIC">{t("halloween.halloween_spookler")}</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        13. ...
-                    </span>
-                    <span className="w-full p-1 px-2 text-xs">
-                        14. ...
+                        14. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
@@ -1340,13 +1347,23 @@ const HalloweenPage: FC = () => {
                         {t("halloween.quests.webina2.title")}
                     </h2>
                     <span className="w-full p-1 px-2 text-xs">
-                        1. ...
+                        1. {t("halloween.quests.webina.talk")}
+                    </span>
+                    <span className="w-full pt-1 px-2 text-xs">
+                        2. {t("halloween.quests.webina.twolegged")}
+                    </span>
+                    <span className="w-full pb-0 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        <span className="text-orange-500">200 78 -140</span>
+                    </span>
+                    <span className="w-full pb-1 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.webina.twolegged.help")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        2. ...
+                        3. {t("halloween.quests.webina.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        3. ...
+                        4. {t("halloween.quests.webina.protectEgg")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
