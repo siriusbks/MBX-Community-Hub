@@ -1489,7 +1489,7 @@ const HalloweenPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
                     <a
                         key={(mob.name || "mob") + index}

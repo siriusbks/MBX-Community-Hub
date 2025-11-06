@@ -420,6 +420,22 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
                 },
             ],
         },
+        central_island: {
+            zones: [
+                {
+                    color: "#71df0bff",
+                    coords: [
+                        [372,303],
+                        [372,317],
+                        [358,317],
+                        [358,303],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.central_island[0],
+                    ],
+                },
+            ],
+        },
         workshop_island: {
             zones: [
                 {

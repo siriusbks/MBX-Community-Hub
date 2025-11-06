@@ -22,11 +22,11 @@ export interface BestiaryInfo {
 
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
     spawn: {
-        central: [
+        central_island: [
             
             {
                 name: "bestiary.halloween_crow",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Crow.png",
                 minlevel: 1,
                 maxlevel: 5,
                 minhealth: 5,
@@ -41,7 +41,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
         church: [
             {
                 name: "bestiary.halloween_ghost",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Ghost.png",
                 minlevel: 5,
                 maxlevel: 15,
                 minhealth: 50,
@@ -74,7 +74,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             
             {
                 name: "bestiary.halloween_brown_rat",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Brown_Rat.png",
                 minlevel: 15,
                 maxlevel: 25,
                 minhealth: 470,
@@ -90,7 +90,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             
             {
                 name: "bestiary.halloween_albino_rat",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Albino_Rat.png",
                 minlevel: 30,
                 maxlevel: 30,
                 minhealth: 2000,
@@ -103,7 +103,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
             {
                 name: "bestiary.halloween_gray_rat",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Gray_Rat.png",
                 minlevel: 5,
                 maxlevel: 10,
                 minhealth: 40,
