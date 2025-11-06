@@ -1414,13 +1414,18 @@
             "ingredients": [
                 {
                     "type": "custom",
-                    "id": "UNKNOWN",
-                    "amount": 1
+                    "id": "halloween_crow_feather",
+                    "amount": 64
                 },
                 {
                     "type": "custom",
-                    "id": "UNKNOWN",
-                    "amount": 1
+                    "id": "fishing_rod_plank",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "halloween_dirty_sheet",
+                    "amount": 64
                 }
             ]
         }
