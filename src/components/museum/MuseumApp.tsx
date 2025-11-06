@@ -17,10 +17,12 @@ import {
     ListTodo,
     X,
     ClipboardCopy,
+    Square,
+    SquareAsterisk,
 } from "lucide-react";
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
-import MuseumItemImage from "./MuseumItemImage"; // Nouvelle importation
+import MuseumItemImage from "./MuseumItemImage";
 
 // Definition of interfaces
 interface Group {
@@ -50,6 +52,10 @@ export const MuseumApp: FC = () => {
     const [itemUsedError, setItemUsedError] = useState<string | null>(null);
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
+
+    // State for the missing items filter in the missing items summary
+    const [missingSelection, setMissingSelection] = useState<Record<string, boolean>>({});
+    const [selectedItems, setSelectedItems] = useState(true);
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
@@ -100,6 +106,36 @@ export const MuseumApp: FC = () => {
         totalStats.total > 0
             ? ((totalStats.owned / totalStats.total) * 100).toFixed(1)
             : "0.0";
+
+    // Initialization of the filter for missing items, mark it as seleted by default
+    useEffect(() => {
+        if (groupedItems && museumItems) {
+            const newSelection: Record<string, boolean> = {};
+            groupedItems.forEach((group) => {
+                group.items.forEach((item) => {
+                    if (!museumItems.includes(item)) {
+                        newSelection[item] = true;
+                    }
+                });
+            });
+            setMissingSelection(newSelection);
+        }
+    }, [groupedItems, museumItems]);
+
+    // Function to toggle the selection of a missing item
+    const toggleMissingSelection = (itemId: string) => {
+        setMissingSelection((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
+    };
+
+    // Button to select/unselect all missing items
+    const toggleSelectAllMissing = () => {
+        const allSelected = Object.values(missingSelection).every((val) => val);
+        const newSelection = Object.keys(missingSelection).reduce((acc, key) => {
+            acc[key] = !allSelected;
+            return acc;
+        }, {} as Record<string, boolean>);
+        setMissingSelection(newSelection);
+    };
 
     // Asynchronous function to load data (API and JSON)
     const loadData = async (pseudo: string) => {
@@ -183,54 +219,57 @@ export const MuseumApp: FC = () => {
         }
     };
 
-        // When a craft modal opens, fetch the item's details from the API to get
-        // its `used_in_recipes` array (we show the ids in the summary).
-        useEffect(() => {
-            if (!craftModalItem) {
-                setItemUsedInRecipes(null);
-                setItemUsedError(null);
-                setItemUsedLoading(false);
-                return;
-            }
-
-            let active = true;
-            const controller = new AbortController();
-
-            setItemUsedLoading(true);
-            setItemUsedError(null);
+    // When a craft modal opens, fetch the item's details from the API to get
+    // its `used_in_recipes` array (we show the ids in the summary).
+    useEffect(() => {
+        if (!craftModalItem) {
             setItemUsedInRecipes(null);
+            setItemUsedError(null);
+            setItemUsedLoading(false);
+            return;
+        }
 
-            fetch(`https://api.minebox.co/item/${craftModalItem}`, { signal: controller.signal })
-                .then((res) => {
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    return res.json();
-                })
-                .then((data) => {
-                    if (!active) return;
-                    // API shape varies; try a few common paths
-                    const used = data?.used_in_recipes ?? data?.item?.used_in_recipes ?? [];
-                    const ids: string[] = Array.isArray(used)
-                        ? used.map((u: any) => u?.id || u?.item?.id).filter(Boolean)
-                        : [];
-                    setItemUsedInRecipes(Array.from(new Set(ids)));
-                })
-                .catch((err: any) => {
-                    if (!active) return;
-                    if (err.name === "AbortError") return;
-                    setItemUsedError(err?.message ?? "Error fetching item data");
-                })
-                .finally(() => {
-                    if (active) setItemUsedLoading(false);
-                });
+        let active = true;
+        const controller = new AbortController();
 
-            return () => {
-                active = false;
-                controller.abort();
-            };
-        }, [craftModalItem]);
+        setItemUsedLoading(true);
+        setItemUsedError(null);
+        setItemUsedInRecipes(null);
+
+        fetch(`https://api.minebox.co/item/${craftModalItem}`, { signal: controller.signal })
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then((data) => {
+                if (!active) return;
+                // API shape varies; try a few common paths
+                const used = data?.used_in_recipes ?? data?.item?.used_in_recipes ?? [];
+                const ids: string[] = Array.isArray(used)
+                    ? used.map((u: any) => u?.id || u?.item?.id).filter(Boolean)
+                    : [];
+                setItemUsedInRecipes(Array.from(new Set(ids)));
+            })
+            .catch((err: any) => {
+                if (!active) return;
+                if (err.name === "AbortError") return;
+                setItemUsedError(err?.message ?? "Error fetching item data");
+            })
+            .finally(() => {
+                if (active) setItemUsedLoading(false);
+            });
+
+        return () => {
+            active = false;
+            controller.abort();
+        };
+    }, [craftModalItem]);
 
     // Recursive function to aggregate the required resources from a given recipe
-    const gatherResources = (recipe: any, detailsIndex: Details,): { [key: string]: number } => {
+    const gatherResources = (
+        recipe: any,
+        detailsIndex: Details
+    ): { [key: string]: number } => {
         const resources: { [key: string]: number } = {};
         recipe.ingredients.forEach((ing: any) => {
             if (
@@ -291,7 +330,10 @@ export const MuseumApp: FC = () => {
             detailsIndex[ing.id] &&
             detailsIndex[ing.id].recipe
         ) {
-            const subResources = gatherResources(detailsIndex[ing.id].recipe, detailsIndex);
+            const subResources = gatherResources(
+                detailsIndex[ing.id].recipe,
+                detailsIndex
+            );
             summary = (
                 <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
                     {Object.keys(subResources).map((key, index, arr) => {
@@ -388,7 +430,7 @@ export const MuseumApp: FC = () => {
                     {summary}
                 </div>
 
-                {/* Renderuj poddrzewo tylko jeśli rozwinięte */}
+                {/* Renderuj poddrzewo seulement si développé */}
                 {hasSubRecipe && isExpanded && (
                     <div
                         style={{
@@ -416,7 +458,9 @@ export const MuseumApp: FC = () => {
     // Function that returns the content of link of the wiki
     const moreInformation = () => {
         if (!craftModalItem || !craftModalCategory) return null;
-        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(craftModalCategory)}&item=${encodeURIComponent(craftModalItem)}`;
+        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
+            craftModalCategory
+        )}&item=${encodeURIComponent(craftModalItem)}`;
         return (
             <a
                 key={craftModalItem}
@@ -435,21 +479,28 @@ export const MuseumApp: FC = () => {
         if (!groupedItems || !detailsIndex || !museumItems) return;
         const totalResources: { [key: string]: number } = {};
         groupedItems.forEach((group) => {
+            // On ne prend en compte que les items manquants et sélectionnés via le filtre
             const missingItems = group.items.filter(
-            (item) => !museumItems.includes(item)
+                (item) => !museumItems.includes(item) && missingSelection[item]
             );
             missingItems.forEach((itemId) => {
-            if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                const itemResources = gatherResources(detailsIndex[itemId].recipe, detailsIndex);
-                for (const resId in itemResources) {
-                totalResources[resId] =
-                    (totalResources[resId] || 0) + itemResources[resId];
+                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
+                    const itemResources = gatherResources(
+                        detailsIndex[itemId].recipe,
+                        detailsIndex
+                    );
+                    for (const resId in itemResources) {
+                        totalResources[resId] =
+                            (totalResources[resId] || 0) + itemResources[resId];
+                    }
                 }
-            }
             });
         });
 
-        const csvLines = Object.keys(totalResources).map(
+        const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
+            a.localeCompare(b, "en", { sensitivity: "base" })
+        );
+        const csvLines = sortedResourceIds.map(
             (resId) => `${totalResources[resId]},${resId}`
         );
         const csvText = csvLines.join("\n");
@@ -462,7 +513,6 @@ export const MuseumApp: FC = () => {
         }
     };
 
-
     // Function that returns the content of the missing items recap
     const renderRecapContent = () => {
         if (!groupedItems || !detailsIndex || !museumItems) {
@@ -471,6 +521,9 @@ export const MuseumApp: FC = () => {
 
         return (
             <div>
+                <div className="mb-4 flex items-center">
+                    
+                </div>
                 {groupedItems.map((group, index) => {
                     const missingItems = group.items.filter(
                         (item) => !museumItems.includes(item)
@@ -490,6 +543,12 @@ export const MuseumApp: FC = () => {
                                             key={itemId}
                                             className="flex items-center bg-gray-700 p-2 rounded-lg"
                                         >
+                                            <input
+                                                type="checkbox"
+                                                checked={!!missingSelection[itemId]}
+                                                onChange={() => toggleMissingSelection(itemId)}
+                                                className="mr-2"
+                                            />
                                             <MuseumItemImage
                                                 groupCategory={group.category}
                                                 itemId={itemId}
@@ -507,12 +566,8 @@ export const MuseumApp: FC = () => {
                                                         .split(" ")
                                                         .map(
                                                             (word: string) =>
-                                                                word
-                                                                    .charAt(0)
-                                                                    .toUpperCase() +
-                                                                word
-                                                                    .slice(1)
-                                                                    .toLowerCase()
+                                                                word.charAt(0).toUpperCase() +
+                                                                word.slice(1).toLowerCase()
                                                         )
                                                         .join(" "),
                                                 })}
@@ -535,8 +590,9 @@ export const MuseumApp: FC = () => {
         }
         const totalResources: { [key: string]: number } = {};
         groupedItems.forEach((group) => {
+            // On ne considère que les items manquants sélectionnés
             const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item)
+                (item) => !museumItems.includes(item) && missingSelection[item]
             );
             missingItems.forEach((itemId) => {
                 if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
@@ -579,12 +635,8 @@ export const MuseumApp: FC = () => {
                                                 .split(" ")
                                                 .map(
                                                     (word: string) =>
-                                                        word
-                                                            .charAt(0)
-                                                            .toUpperCase() +
-                                                        word
-                                                            .slice(1)
-                                                            .toLowerCase()
+                                                        word.charAt(0).toUpperCase() +
+                                                        word.slice(1).toLowerCase()
                                                 )
                                                 .join(" "),
                                         })}
@@ -968,7 +1020,7 @@ export const MuseumApp: FC = () => {
                     </button>
                     <button
                         id="resourcesButton"
-                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none  items-center"
+                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none items-center"
                         onClick={() => setShowResourcesModal(true)}
                     >
                         <List /> {t("museum.resourceMuseum.button")}
@@ -1016,7 +1068,7 @@ export const MuseumApp: FC = () => {
                         </span>
                         <div
                             id="craftDetails"
-                            className="flex flex-col flex-1 max-h-[90vh]" // <--- ważne
+                            className="flex flex-col flex-1 max-h-[90vh]"
                         >
                             {detailsIndex[craftModalItem] &&
                             detailsIndex[craftModalItem].recipe ? (
@@ -1041,12 +1093,8 @@ export const MuseumApp: FC = () => {
                                                         .split(" ")
                                                         .map(
                                                             (word: string) =>
-                                                                word
-                                                                    .charAt(0)
-                                                                    .toUpperCase() +
-                                                                word
-                                                                    .slice(1)
-                                                                    .toLowerCase()
+                                                                word.charAt(0).toUpperCase() +
+                                                                word.slice(1).toLowerCase()
                                                         )
                                                         .join(" "),
                                                 })}
@@ -1084,34 +1132,6 @@ export const MuseumApp: FC = () => {
                                             detailsIndex={detailsIndex}
                                         />
                                     </div>
-
-                                    {/* Footer Placeholder */}
-                                    {/*<span className="bg-gray-700 text-white p-4 rounded-b-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] mt-auto">
-                                    {itemUsedLoading ? (
-                                        <div className="text-sm text-gray-300">Loading related recipes…</div>
-                                    ) : itemUsedError ? (
-                                        <div className="text-sm text-red-400">{itemUsedError}</div>
-                                    ) : itemUsedInRecipes && itemUsedInRecipes.length > 0 ? (
-                                        <div className="flex flex-col w-full">
-                                            <div className="text-sm font-semibold mb-2">{t("museum.usedInRecipes.title") ?? "Used in recipes"}</div>
-                                            <div className="flex flex-wrap gap-2">
-                                                {itemUsedInRecipes.map((id) => (
-                                                    <a
-                                                        key={id}
-                                                        href={`https://minebox.co/universe/items?id=${id}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-600 hover:bg-gray-700"
-                                                    >
-                                                        {id}
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-sm text-gray-300">No related recipes found</div>
-                                    )}
-                                    </span>*/}
                                 </>
                             ) : (
                                 <>
@@ -1135,12 +1155,8 @@ export const MuseumApp: FC = () => {
                                                         .split(" ")
                                                         .map(
                                                             (word: string) =>
-                                                                word
-                                                                    .charAt(0)
-                                                                    .toUpperCase() +
-                                                                word
-                                                                    .slice(1)
-                                                                    .toLowerCase()
+                                                                word.charAt(0).toUpperCase() +
+                                                                word.slice(1).toLowerCase()
                                                         )
                                                         .join(" "),
                                                 })}
@@ -1202,8 +1218,29 @@ export const MuseumApp: FC = () => {
                                     {t("museum.recapMuseum.description")}
                                 </div>
                             </span>
+                            {/* Selection of Items */}
+                            <div className="ml-auto flex items-center">
+                                <button
+                                    id="selectedItems"
+                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                    onClick={() => {
+                                        setSelectedItems(!selectedItems);
+                                        toggleSelectAllMissing();
+                                    }}
+                                >
+                                    {selectedItems ? (
+                                        <>
+                                            <SquareAsterisk className="w-5 h-5" /> {t("museum.filterRecapItems.selectAll")}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Square className="w-5 h-5" /> {t("museum.filterRecapItems.unselectAll")}
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                             <span
-                                className="ml-auto close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                className="ml-1 close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                 onClick={() => setShowRecapModal(false)}
                             >
                                 <X strokeWidth={3} className="h-5 w-5" />
@@ -1242,19 +1279,19 @@ export const MuseumApp: FC = () => {
                                     {t("museum.resourceMuseum.description")}
                                 </div>
                             </span>
+                            {/* CSV copy button */}
                             <button
-                                className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
                                 onClick={handleCopyCSV}
                             >
-                                <ClipboardCopy className="w-4 h-4" /> {t("museum.copyCSV.button")}
+                                <ClipboardCopy className="w-5 h-5" /> {t("museum.copyCSV.button")}
                             </button>
                             <span
                                 className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                 onClick={() => setShowResourcesModal(false)}
                             >
-                                <X strokeWidth={3} className="h-5 w-5" />
+                                <X strokeWidth={3} className="w-5 h-5" />
                             </span>
-                            
                         </div>
 
                         <div
