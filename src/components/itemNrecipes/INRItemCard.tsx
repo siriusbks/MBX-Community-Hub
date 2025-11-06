@@ -77,7 +77,7 @@ const INRItemCard: React.FC<ItemCardProps> = ({
                 alt={itemId}
             />
 
-            <span className="flex flex-col">
+            <span className="flex flex-col w-full">
                 <span className="font-bold text-left leading-none mt-auto mb-1">
                     {itemId
                         .replace(/_/g, " ")
@@ -89,14 +89,15 @@ const INRItemCard: React.FC<ItemCardProps> = ({
                         )
                         .join(" ")}
                 </span>
-
+                        <span className="flex flex-row justify-between align-center justify-center">
                 <RarityBadge
                     rarity={adjustedRarity}
                     color={TMPBackgroundColorClass}
                 />
-                <div className="text-xs font-bold">
+                <div className="text-xs text-gray-300 my-auto mr-2">
                     lvl. {level == 0 ? "??" : level}
                 </div>
+                </span>
             </span>
         </div>
     );

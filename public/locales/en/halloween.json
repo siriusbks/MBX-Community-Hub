@@ -33,21 +33,36 @@
     "halloween.week.mission_soon": "Mission coming soon...",
 
     "halloween.quests.title": "Halloween Quest's",
-    "halloween.quests.llowee.title": "Llowee Quest",
+
+    "halloween.quests.llowee.title": "Rats in my Candies!",
+    "halloween.quests.llowee2.title": "Find Llowee's Candy Bag",
+    "halloween.quests.llowee3.title": "The Unexpected Events",
     "halloween.quests.llowee.talk": "Talk to Llowee",
     "halloween.quests.llowee.killrats": "Kill 10 Gray Rats",
     "halloween.quests.llowee.findnest": "Find Rat Nest",
     "halloween.quests.llowee.killalbino": "Kill Albino Rat",
 
-    "halloween.quests.webina.title": "Webina Quest",
+    "halloween.quests.llowee.findbucket": "Find ",
+    "halloween.quests.llowee.bringbucket": "Bring Bucket to Llowee",
+
+    "halloween.quests.llowee.talksugarpit": "Talk to Sugarpit",
+    "halloween.quests.llowee.donate": "Make a Candy Donation to The Sugarpit",
+    "halloween.quests.llowee.locateCrow": "Locate Crow Nest",
+    "halloween.quests.llowee.findHat": "Find Llowee's Hat",
+    "halloween.quests.llowee.openWorkshop": "Open Halloween Workshop Recipe Menu",
+    "halloween.quests.llowee.findJacko": "Find Jacko",
+
+    "halloween.quests.webina.title": "Find Webina's Kids",
+    "halloween.quests.webina2.title": "A Thief on the Island!",
     "halloween.quests.webina.talk": "Talk to Webina",
     "halloween.quests.webina.collectspiders": "Find 23 Her Children's",
 
-    "halloween.quests.mcbones.title": "Bony McBones Quest",
+    "halloween.quests.mcbones.title": "Peace at the Cemetary",
     "halloween.quests.mcbones.talk": "Talk to Bony McBones",
     "halloween.quests.mcbones.killghosts": "Kill 10 Ghosts",
     "halloween.quests.mcbones.bring": "Bring Vacuum to Talk to Bony McBones",
     "halloween.quests.mcbones.slurp": "Slurp 20 Ghost's",
+
 
     "halloween.quests.universal.location": "Location",
     "halloween.quests.universal.time": "Time",
@@ -56,6 +71,8 @@
     "halloween.quests.universal.reward": "Reward",
     "halloween.quests.universal.bp_star": "BP Star",
     "halloween.quests.universal.shiny": "Shiny",
+    "halloween.quests.universal.slain": "Slain",
+    "halloween.quests.universal.collect": "Collect",
 
     "halloween.treasure.title": "Halloween Treasure",
     "halloween.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies or by exchanging Vote Points for Pass Stars",

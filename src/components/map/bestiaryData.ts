@@ -22,6 +22,22 @@ export interface BestiaryInfo {
 
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
     spawn: {
+        central: [
+            
+            {
+                name: "bestiary.halloween_crow",
+                image: "assets/media/museum/not-found.png",
+                minlevel: 1,
+                maxlevel: 5,
+                minhealth: 5,
+                maxhealth: 15,
+                earthResistant: 0,
+                fireResistant: 0,
+                waterResistant: 0,
+                airResistant: 0,
+                halloween2025: true,
+            },
+        ],
         church: [
             {
                 name: "bestiary.halloween_ghost",
@@ -38,19 +54,6 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
             /*{
                 name: "bestiary.halloween_pumpkin",
-                image: "assets/media/museum/not-found.png",
-                minlevel: 0,
-                maxlevel: 0,
-                minhealth: 0,
-                maxhealth: 0,
-                earthResistant: 0,
-                fireResistant: 0,
-                waterResistant: 0,
-                airResistant: 0,
-                halloween2025: true,
-            },
-            {
-                name: "bestiary.halloween_crow",
                 image: "assets/media/museum/not-found.png",
                 minlevel: 0,
                 maxlevel: 0,

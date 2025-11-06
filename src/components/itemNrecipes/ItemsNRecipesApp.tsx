@@ -16,7 +16,7 @@ import {
     EyeOff,
     Minus,
     Plus,
-    X
+    X,
 } from "lucide-react";
 
 // Definition of interfaces
@@ -55,7 +55,7 @@ const RecipeTree: FC<RecipeTreeProps> = ({
     recipe,
     detailsIndex,
     initialExpanded,
-    multiplier
+    multiplier,
 }) => {
     if (!recipe || !recipe.ingredients) return <></>;
     return (
@@ -78,22 +78,16 @@ const RecipeNode: FC<RecipeNodeProps> = ({
     ing,
     detailsIndex,
     initialExpanded,
-    multiplier
+    multiplier,
 }) => {
     // Use initialExpanded only at mounting; thereafter, each node is togglable
     const [isExpanded, setIsExpanded] = useState(initialExpanded);
 
     const hasSubRecipe =
-        detailsIndex &&
-        detailsIndex[ing.id] &&
-        detailsIndex[ing.id].recipe
+        detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe;
 
     let summary: JSX.Element | null = null;
-    if (
-        detailsIndex &&
-        detailsIndex[ing.id] &&
-        detailsIndex[ing.id].recipe
-    ) {
+    if (detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe) {
         // Calculate aggregated resources for the sub-recipe
         const subResources = gatherResources(
             detailsIndex[ing.id].recipe,
@@ -115,7 +109,11 @@ const RecipeNode: FC<RecipeNodeProps> = ({
                             }}
                             className="mr-1 text-xs text-gray-300 hover:text-white focus:outline-none"
                         >
-                            {isExpanded ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                            {isExpanded ? (
+                                <Minus className="h-4 w-4" />
+                            ) : (
+                                <Plus className="h-4 w-4" />
+                            )}
                         </button>
                     )}
                     <INRItemImage
@@ -165,7 +163,8 @@ const gatherResources = (
                 currentAmount
             );
             for (const resId in subResources) {
-                resources[resId] = (resources[resId] || 0) + subResources[resId];
+                resources[resId] =
+                    (resources[resId] || 0) + subResources[resId];
             }
         } else {
             resources[ing.id] = (resources[ing.id] || 0) + currentAmount;
@@ -173,8 +172,6 @@ const gatherResources = (
     });
     return resources;
 };
-
-
 
 // ----------------- Main Component ----------------------
 
@@ -189,10 +186,14 @@ const ItemsNRecipesApp: FC = () => {
 
     // States for controlling modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
+        null
+    );
 
     // State to filter items by selected category
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(
+        null
+    );
     // Multi-select categories for the "All" view: which categories should be shown
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -206,7 +207,9 @@ const ItemsNRecipesApp: FC = () => {
 
     const toggleCategory = (category: string) => {
         setSelectedCategories((prev) =>
-            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+            prev.includes(category)
+                ? prev.filter((c) => c !== category)
+                : [...prev, category]
         );
         // ensure we're in the combined (All) view when toggling checkboxes
         setSelectedCategory(null);
@@ -235,22 +238,30 @@ const ItemsNRecipesApp: FC = () => {
     const [showRecap, setShowRecap] = useState<boolean>(false);
 
     // State to store missing rarity information as a mapping where the key is the item ID and the value is the rarity string
-    const [missingRarity, setMissingRarity] = useState<Record<string, string>>({});
+    const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
+        {}
+    );
 
     // Asynchronous function to load data (API and JSON)
     const loadData = async () => {
         try {
-            const itemsGroupedResponse = await fetch("/assets/data/all_items_grouped_by_category.json");
+            const itemsGroupedResponse = await fetch(
+                "/assets/data/all_items_grouped_by_category.json"
+            );
             const itemsGrouped: Group[] = await itemsGroupedResponse.json();
 
-            const itemsDetailsResponse = await fetch("https://cdn2.minebox.co/data/items.json");
+            const itemsDetailsResponse = await fetch(
+                "https://cdn2.minebox.co/data/items.json"
+            );
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
                 details[item.id] = item;
             });
 
-            const itemsNoRecipeResponse = await fetch("/assets/data/items-no-in-MBapi.json");
+            const itemsNoRecipeResponse = await fetch(
+                "/assets/data/items-no-in-MBapi.json"
+            );
             const itemsNoRecipeData = await itemsNoRecipeResponse.json();
             itemsNoRecipeData.forEach((item: any) => {
                 if (!details[item.id] || !details[item.id].recipe) {
@@ -262,7 +273,9 @@ const ItemsNRecipesApp: FC = () => {
             setDetailsIndex(details);
             setErrorMsg("");
         } catch (error) {
-            setErrorMsg(error instanceof Error ? error.message : "Unknown error");
+            setErrorMsg(
+                error instanceof Error ? error.message : "Unknown error"
+            );
         }
     };
 
@@ -312,14 +325,59 @@ const ItemsNRecipesApp: FC = () => {
     const [panelItem, setPanelItem] = useState<string | null>(null);
     const [panelCategory, setPanelCategory] = useState<string | null>(null);
 
+    // Lore fetched from external API for the panel (some items are not present in the API)
+    const [panelLore, setPanelLore] = useState<string | null>(null);
+    const [panelLoreLoading, setPanelLoreLoading] = useState<boolean>(false);
+    const [panelLoreError, setPanelLoreError] = useState<string | null>(null);
+
     // Info panel state: displays full recipe/info in the `#infoPanel` element
     const [infoPanelItem, setInfoPanelItem] = useState<string | null>(null);
-    const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(null);
+    const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(
+        null
+    );
 
     const openSidePanel = (itemId: string, category: string) => {
         setPanelItem(itemId);
         setPanelCategory(category);
     };
+
+    // Fetch lore from external API when a panel item is selected
+    useEffect(() => {
+        let cancelled = false;
+        if (!panelItem) {
+            setPanelLore(null);
+            setPanelLoreError(null);
+            setPanelLoreLoading(false);
+            return;
+        }
+
+        setPanelLoreLoading(true);
+        setPanelLore(null);
+        setPanelLoreError(null);
+
+        fetch(`https://api.minebox.co/item/${panelItem}`)
+            .then((res) => {
+                if (!res.ok) throw new Error(`API ${res.status}`);
+                return res.json();
+            })
+            .then((data) => {
+                if (cancelled) return;
+                // prefer `lore`, fall back to `description` if available
+                setPanelLore(data?.lore ?? data?.description ?? null);
+            })
+            .catch((err) => {
+                if (cancelled) return;
+                setPanelLore(null);
+                setPanelLoreError(err instanceof Error ? err.message : String(err));
+            })
+            .finally(() => {
+                if (!cancelled) setPanelLoreLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [panelItem]);
 
     const openInfoPanel = (itemId: string, category: string) => {
         // populate the left info panel and close the temporary side panel
@@ -356,7 +414,11 @@ const ItemsNRecipesApp: FC = () => {
         }
         // Compute resources using current craftQuantity multiplier
         const totalResources = detailsIndex[target].recipe
-            ? gatherResources(detailsIndex[target].recipe, detailsIndex, craftQuantity)
+            ? gatherResources(
+                  detailsIndex[target].recipe,
+                  detailsIndex,
+                  craftQuantity
+              )
             : {};
 
         const sortedResourceIds = Object.keys(totalResources).sort();
@@ -378,9 +440,13 @@ const ItemsNRecipesApp: FC = () => {
                                     className="w-8 h-8 mr-2 rounded"
                                     style={{ imageRendering: "pixelated" }}
                                 />
-                                <span className="font-bold text-sm">{resId}</span>
+                                <span className="font-bold text-sm">
+                                    {resId}
+                                </span>
                                 <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                                    {totalResources[resId].toLocaleString("fr-FR")}
+                                    {totalResources[resId].toLocaleString(
+                                        "fr-FR"
+                                    )}
                                 </span>
                             </div>
                         </div>
@@ -410,10 +476,16 @@ const ItemsNRecipesApp: FC = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                     {usedInList.map(
-                        (item: { type: string; id: string; amount: number }) => {
+                        (item: {
+                            type: string;
+                            id: string;
+                            amount: number;
+                        }) => {
                             const itemDetails = detailsIndex[item.id];
                             const category = itemDetails?.category || "default";
-                            const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
+                            const url = `${
+                                window.location.origin
+                            }/itemsNrecipes?category=${encodeURIComponent(
                                 category
                             )}&item=${encodeURIComponent(item.id)}`;
                             return (
@@ -442,21 +514,32 @@ const ItemsNRecipesApp: FC = () => {
             // Flatten selected groups into a single list and render in one responsive grid (no category titles)
             const categoriesToShow = selectedCategories; // if empty, show no categories
             const allItems = groupedItems.flatMap((group) =>
-                categoriesToShow.includes(group.category) ? group.items.map((id) => ({ id, category: group.category })) : []
+                categoriesToShow.includes(group.category)
+                    ? group.items.map((id) => ({
+                          id,
+                          category: group.category,
+                      }))
+                    : []
             );
             return (
                 <div className="category w-full mb-6">
-                    <div className="groupItem grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-0">
+                    <div className="groupItem grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-0">
                         {allItems.map(({ id: itemId, category }) => {
-                            const rarity = detailsIndex[itemId]?.rarity ?? "UNKNOWN";
+                            const rarity =
+                                detailsIndex[itemId]?.rarity ?? "UNKNOWN";
                             return (
                                 <INRItemCard
                                     key={itemId}
                                     itemId={itemId}
                                     rarity={rarity}
-                                    level={(detailsIndex[itemId] as any)?.level ?? 0}
+                                    level={
+                                        (detailsIndex[itemId] as any)?.level ??
+                                        0
+                                    }
                                     category={category}
-                                    craftModalOpener={() => openSidePanel(itemId, category)}
+                                    craftModalOpener={() =>
+                                        openSidePanel(itemId, category)
+                                    }
                                     missingRarity={missingRarity}
                                 />
                             );
@@ -469,9 +552,14 @@ const ItemsNRecipesApp: FC = () => {
         // Otherwise render single chosen category
         const group = groupedItems.find((g) => g.category === selectedCategory);
         if (!group) return null;
-        const categoryId = "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
+        const categoryId =
+            "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
         return (
-            <div key={group.category} className="category w-full" id={categoryId}>
+            <div
+                key={group.category}
+                className="category w-full"
+                id={categoryId}
+            >
                 <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
                     <INRItemImage
                         groupCategory={group.category}
@@ -482,7 +570,7 @@ const ItemsNRecipesApp: FC = () => {
                     />
                     {group.category.toUpperCase().replace("_", " ")}
                 </div>
-                <div className="groupItem grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 justify-between">
+                <div className="groupItem grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 justify-between">
                     {group.items.map((itemId) => {
                         const rarity =
                             detailsIndex[itemId] && detailsIndex[itemId].rarity
@@ -493,9 +581,13 @@ const ItemsNRecipesApp: FC = () => {
                                 key={itemId}
                                 itemId={itemId}
                                 rarity={rarity}
-                                level={(detailsIndex[itemId] as any)?.level ?? 0}
+                                level={
+                                    (detailsIndex[itemId] as any)?.level ?? 0
+                                }
                                 category={group.category}
-                                craftModalOpener={() => openSidePanel(itemId, group.category)}
+                                craftModalOpener={() =>
+                                    openSidePanel(itemId, group.category)
+                                }
                                 missingRarity={missingRarity}
                             />
                         );
@@ -510,7 +602,8 @@ const ItemsNRecipesApp: FC = () => {
         const backToTopBtn = document.getElementById("backToTop");
         const handleScroll = () => {
             if (backToTopBtn) {
-                backToTopBtn.style.display = window.pageYOffset > 300 ? "block" : "none";
+                backToTopBtn.style.display =
+                    window.pageYOffset > 300 ? "block" : "none";
             }
         };
         const handleBackToTop = () => {
@@ -532,13 +625,15 @@ const ItemsNRecipesApp: FC = () => {
             detailsIndex,
             craftQuantity
         );
-        const csvLines = Object.keys(recap).map((key) => `${recap[key]},${key}`);
+        const csvLines = Object.keys(recap).map(
+            (key) => `${recap[key]},${key}`
+        );
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
         alert(t("itemsNrecipes.copyCSV.alert"));
     };
 
-                        const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
+    const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
 
     return (
         <div className="items-&-recipes-page">
@@ -548,9 +643,15 @@ const ItemsNRecipesApp: FC = () => {
                 aria-live="assertive"
             >
                 <div className="flex items-start gap-3">
-                    <AlertTriangle className="text-yellow-500 flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                    <AlertTriangle
+                        className="text-yellow-500 flex-shrink-0 mt-0.5"
+                        size={20}
+                        aria-hidden="true"
+                    />
                     <div className="text-sm text-yellow-200/90">
-                        <p className="font-medium mb-1">{t("itemsNrecipes.beta.title")}</p>
+                        <p className="font-medium mb-1">
+                            {t("itemsNrecipes.beta.title")}
+                        </p>
                         <p className="text-yellow-200/70">
                             {t("itemsNrecipes.beta.description")}{" "}
                             <a
@@ -568,7 +669,8 @@ const ItemsNRecipesApp: FC = () => {
                                 rel="noopener noreferrer"
                             >
                                 [FR]
-                            </a>.
+                            </a>
+                            .
                         </p>
                     </div>
                 </div>
@@ -576,159 +678,216 @@ const ItemsNRecipesApp: FC = () => {
 
             {/* Navigation bar displaying item categories */}
 
-<div className="flex flex-row h-[calc(100vh-340px)]">
-
-            <nav id="categoryNav" className="w-[360px] custom-scrollbar bg-gray-800 bg-opacity-50 p-4 rounded-lg overflow-auto max-h-[calc(100vh-200px)]">
-                <ul className="flex flex-col gap-2 p-0 m-0">
-                            <li className="w-full">
-                                <label className={`flex items-center gap-2 p-2 rounded mb-2 w-full cursor-pointer ${selectedCategories.length === (groupedItems?.length ?? 0) ? "bg-green-600 text-black" : "bg-gray-700 text-white"}`}>
-                                    <input
-                                        type="checkbox"
-                                        checked={groupedItems ? selectedCategories.length === groupedItems.length : false}
-                                        onChange={() => toggleAllCategories()}
-                                        className="form-checkbox h-4 w-4"
-                                    />
-                                    <span className="font-medium">{t("itemsNrecipes.allCategories") ?? "All"}</span>
-                                </label>
-                            </li>
-                            {groupedItems &&
-                        groupedItems.map((group) => (
-                            <li key={group.category} className="w-full">
-                                <label className="flex items-center gap-2 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedCategories.includes(group.category)}
-                                        onChange={() => toggleCategory(group.category)}
-                                        className="form-checkbox h-4 w-4"
-                                    />
-                                    <span className="flex flex-row items-center gap-2">
-                                        <INRItemImage
-                                            groupCategory={group.category}
-                                            itemId={group.category}
-                                            detailsIndex={detailsIndex}
-                                            className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            style={{ imageRendering: "pixelated" }}
+            <div className="flex flex-row h-[calc(100vh-340px)]">
+                <nav
+                    id="categoryNav"
+                    className="w-[360px] custom-scrollbar bg-gray-800 bg-opacity-50 p-4 rounded-lg overflow-auto max-h-[calc(100vh-200px)]"
+                >
+                    <ul className="flex flex-col gap-2 p-0 m-0">
+                        <li className="w-full">
+                            <label
+                                className={`flex items-center gap-2 p-2 rounded mb-2 w-full cursor-pointer ${
+                                    selectedCategories.length ===
+                                    (groupedItems?.length ?? 0)
+                                        ? "bg-green-600 text-black"
+                                        : "bg-gray-700 text-white"
+                                }`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={
+                                        groupedItems
+                                            ? selectedCategories.length ===
+                                              groupedItems.length
+                                            : false
+                                    }
+                                    onChange={() => toggleAllCategories()}
+                                    className="form-checkbox h-4 w-4"
+                                />
+                                <span className="font-medium">
+                                    {t("itemsNrecipes.allCategories") ?? "All"}
+                                </span>
+                            </label>
+                        </li>
+                        {groupedItems &&
+                            groupedItems.map((group) => (
+                                <li key={group.category} className="w-full">
+                                    <label className="flex items-center gap-2 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedCategories.includes(
+                                                group.category
+                                            )}
+                                            onChange={() =>
+                                                toggleCategory(group.category)
+                                            }
+                                            className="form-checkbox h-4 w-4"
                                         />
-                                        <span className="flex flex-col items-start leading-tight">
-                                            <span className="font-bold text-sm">
-                                                {group.category.toUpperCase().replace("_", " ")}
+                                        <span className="flex flex-row items-center gap-2">
+                                            <INRItemImage
+                                                groupCategory={group.category}
+                                                itemId={group.category}
+                                                detailsIndex={detailsIndex}
+                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
+                                            />
+                                            <span className="flex flex-col items-start leading-tight">
+                                                <span className="font-bold text-sm">
+                                                    {group.category
+                                                        .toUpperCase()
+                                                        .replace("_", " ")}
+                                                </span>
                                             </span>
                                         </span>
-                                    </span>
-                                </label>
-                            </li>
-                        ))}
-                </ul>
-            </nav>
+                                    </label>
+                                </li>
+                            ))}
+                    </ul>
+                </nav>
 
-            {/* Display of the items list (single category or all categories) */}
-            <div id="itemsContainer" className="w-[calc(100%-240px)]  custom-scrollbar  flex flex-wrap gap-4 justify-start p-4 overflow-auto max-h-[calc(100vh-200px)]">
-                {renderItems()}
-            </div>
-
-
-
-            {/* Right-side item panel: appears when an item is clicked instead of opening the modal immediately */}
-            {panelItem && detailsIndex && (
-                <aside className="w-[32rem] bg-gray-800 p-4 rounded-lg shadow-xl z-50 overflow-auto max-h-[calc(100vh-200px)]">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <div className="text-lg font-bold">
-                                {t(`item.${panelItem}`, {
-                                    ns: "items",
-                                    defaultValue: panelItem.replace(/_/g, " ")
-                                })}
-                            </div>
-                           <div className="text-lg font-bold">
-                                {detailsIndex?.[panelItem!]?.rarity ?? "UNKNOWN"}
-                            </div>
-                           <div className="text-lg font-bold">
-                                lvl. {(detailsIndex?.[panelItem!] as any)?.level ?? "??"}
-                            </div>
-                           <div className="text-xs font-bold">
-                                Desc.1
-                            </div>
-                           <div className="text-xs font-bold">
-                                Desc.2
-                            </div>
-                           <div className="text-xs font-bold">
-                                Desc.3
-                            </div>
-                        </div>
-                        <div className="ml-2">
-                            <button
-                                onClick={closeSidePanel}
-                                className="text-gray-200 hover:text-white bg-gray-700 p-1 rounded"
-                                aria-label={t("itemsNrecipes.closePanel")}
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <INRItemImage
-                            itemId={panelItem}
-                            detailsIndex={detailsIndex}
-                            className="w-24 h-24"
-                            style={{ imageRendering: "pixelated" }}
-                        />
-                    </div>
-                    <div className="mt-4 flex gap-2">
-                        <button
-                            onClick={() => {
-                                // Open the full craft modal for this item
-                                if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
-                            }}
-                            className="flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded"
-                        >
-                            {t("itemsNrecipes.openRecipes")}
-                        </button>
-                    </div>
-    
-
-            
-        
-            <div className="flex flex-col w-full">
-                <div className="text-lg font-semibold mb-2">
-                    {t("itemsNrecipes.usedInRecipes.yes")}
+                {/* Display of the items list (single category or all categories) */}
+                <div
+                    id="itemsContainer"
+                    className="w-[calc(100%-240px)]  custom-scrollbar  flex flex-wrap gap-4 justify-start p-4 overflow-auto max-h-[calc(100vh-200px)]"
+                >
+                    {renderItems()}
                 </div>
-                            {usedInList.length === 0 ? (
-                <p className="text-sm text-gray-300 mt-auto">
-                    {t("itemsNrecipes.usedInRecipes.no")}
-                </p>
-            ) : null}
-                <div className="flex flex-wrap gap-0.5">
-                    {usedInList.map(
-                        (item: { type: string; id: string; amount: number }) => {
-                            const itemDetails = detailsIndex[item.id];
-                            const category = itemDetails?.category || "default";
-                            const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
-                                category
-                            )}&item=${encodeURIComponent(item.id)}`;
-                            return (
-                                <a
-                                    key={item.id}
-                                    href={url}
-                                    target="_self"
-                                    rel="noopener noreferrer"
-                                    className="text-sm bg-gray-800 p-1 rounded border border-gray-600 hover:bg-gray-700"
+
+                {/* Right-side item panel: appears when an item is clicked instead of opening the modal immediately */}
+                {panelItem && detailsIndex && (
+                    <aside className="w-[32rem] bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden flex flex-col max-h-[calc(100vh-200px)]">
+                        <div className="overflow-auto">
+                            <div className="flex items-start justify-between">
+                                <div>
+                                    <div className="text-lg font-bold">
+                                        {t(`item.${panelItem}`, {
+                                            ns: "items",
+                                            defaultValue: panelItem.replace(
+                                                /_/g,
+                                                " "
+                                            ),
+                                        })}
+                                    </div>
+                                    <div className="text-lg font-bold">
+                                        {detailsIndex?.[panelItem!]?.rarity ??
+                                            "UNKNOWN"}
+                                    </div>
+                                    <div className="text-lg font-bold">
+                                        lvl.{" "}
+                                        {(detailsIndex?.[panelItem!] as any)
+                                            ?.level ?? "??"}
+                                    </div>
+                                    <div className="text-xs">
+                                        {panelLoreLoading ? (
+                                            <div className="text-gray-400">Loading...</div>
+                                        ) : panelLore ? (
+                                            <div className="text-sm text-gray-200 whitespace-pre-line">{panelLore}</div>
+                                        ) : panelLoreError ? (
+                                            <div className="text-sm text-gray-400">{panelLoreError}</div>
+                                        ) : (detailsIndex?.[panelItem!] as any)?.description ? (
+                                            <div className="text-sm text-gray-200 whitespace-pre-line">{(detailsIndex[panelItem!] as any).description}</div>
+                                        ) : (
+                                            <div className="text-xs font-bold">No Description</div>
+                                        )}
+                                    </div>
+                                <div className="flex flex-col">
+                                        <span className="w-full text-xs">STAT 00 - 00</span> 
+                                </div>
+                                <div className="flex flex-col">
+                                        <span className="w-full text-xs">DAMAGE 00 - 00</span> 
+                                </div>
+                                </div>
+                                <div className="ml-2">
+                                    <button
+                                        onClick={closeSidePanel}
+                                        className="text-gray-200 hover:text-white bg-gray-700 p-1 rounded"
+                                        aria-label={t("itemsNrecipes.closePanel")}
+                                    >
+                                        <X className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <INRItemImage
+                                    itemId={panelItem}
+                                    detailsIndex={detailsIndex}
+                                    className="w-24 h-24"
+                                    style={{ imageRendering: "pixelated" }}
+                                />
+                            </div>
+                            <div className="mt-4 flex gap-2">
+                                <button
+                                    onClick={() => {
+                                        // Open the full craft modal for this item
+                                        if (panelItem && panelCategory)
+                                            openCraftModal(
+                                                panelItem,
+                                                panelCategory
+                                            );
+                                    }}
+                                    className="flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded"
                                 >
-                                    <INRItemImage
-                                        itemId={item.id}
-                                        detailsIndex={detailsIndex}
-                                        className={`w-7 h-7 inline-block align-middle drop-shadow-[0_0px_2px_theme(colors.${detailsIndex[item.id].rarity}.DEFAULT)]`}
-                                        style={{ imageRendering: "pixelated" }}
-                                    />
-                                </a>
-                            );
-                        }
-                    )}
-                </div>
-            </div>
-        
-                </aside>
-            )}
+                                    {t("itemsNrecipes.openRecipes")}
+                                </button>
+                            </div>
+                        </div>
 
+                        <div className="flex flex-col w-full bg-gray-700 rounded mt-auto p-2 ">
+                            <div className="text-sm font-semibold mb-2 text-center">
+                                {t("itemsNrecipes.usedInRecipes.yes")}
+                            </div>
+                            {usedInList.length === 0 ? (
+                                <p className="text-sm text-gray-300 mt-auto text-center">
+                                    {t("itemsNrecipes.usedInRecipes.no")}
+                                </p>
+                            ) : null}
+                            <div className="flex flex-wrap gap-0.5 justify-center">
+                                {usedInList.map(
+                                    (item: {
+                                        type: string;
+                                        id: string;
+                                        amount: number;
+                                    }) => {
+                                        const itemDetails =
+                                            detailsIndex[item.id];
+                                        const category =
+                                            itemDetails?.category || "default";
+                                        const url = `${
+                                            window.location.origin
+                                        }/itemsNrecipes?category=${encodeURIComponent(
+                                            category
+                                        )}&item=${encodeURIComponent(item.id)}`;
+                                        return (
+                                            <a
+                                                key={item.id}
+                                                //href={url}
+                                                target="_self"
+                                                rel="noopener noreferrer"
+                                                className="text-sm bg-gray-800 p-1 rounded border border-gray-600 hover:bg-gray-700"
+                                            >
+                                                <INRItemImage
+                                                    itemId={item.id}
+                                                    detailsIndex={detailsIndex}
+                                                    className={`w-7 h-7 inline-block align-middle drop-shadow-[0_0px_2px_theme(colors.${
+                                                        detailsIndex[item.id]
+                                                            .rarity
+                                                    }.DEFAULT)]`}
+                                                    style={{
+                                                        imageRendering:
+                                                            "pixelated",
+                                                    }}
+                                                />
+                                            </a>
+                                        );
+                                    }
+                                )}
+                            </div>
+                        </div>
+                    </aside>
+                )}
+                
             </div>
 
             {/* "Back to Top" button */}
@@ -743,7 +902,8 @@ const ItemsNRecipesApp: FC = () => {
             {/* Craft modal */}
             {craftModalItem && detailsIndex && (
                 <>
-                    {detailsIndex[craftModalItem] && detailsIndex[craftModalItem].recipe ? (
+                    {detailsIndex[craftModalItem] &&
+                    detailsIndex[craftModalItem].recipe ? (
                         <>
                             <div
                                 className="modal fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 p-[2.49%]"
@@ -756,105 +916,179 @@ const ItemsNRecipesApp: FC = () => {
                                 }}
                             >
                                 <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative overflow-hidden">
-                                    <div id="craftDetails" className="flex flex-col flex-1 max-h-[90vh]">
+                                    <div
+                                        id="craftDetails"
+                                        className="flex flex-col flex-1 max-h-[90vh]"
+                                    >
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
                                             <INRItemImage
-                                                groupCategory={craftModalCategory!}
+                                                groupCategory={
+                                                    craftModalCategory!
+                                                }
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
                                                 className="h-16 w-16 drop-shadow"
-                                                style={{ imageRendering: "pixelated" }}
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                             />
                                             <div className="flex flex-col">
                                                 <div className="text-2xl font-bold">
-                                                    {t("itemsNrecipes.craftFor")}{" "}
-                                                    {t(`item.${craftModalItem}`, {
-                                                        ns: "items",
-                                                        defaultValue: craftModalItem
-                                                            .replace(/_/g, " ")
-                                                            .split(" ")
-                                                            .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                                                            .join(" "),
-                                                    })}
+                                                    {t(
+                                                        "itemsNrecipes.craftFor"
+                                                    )}{" "}
+                                                    {t(
+                                                        `item.${craftModalItem}`,
+                                                        {
+                                                            ns: "items",
+                                                            defaultValue:
+                                                                craftModalItem
+                                                                    .replace(
+                                                                        /_/g,
+                                                                        " "
+                                                                    )
+                                                                    .split(" ")
+                                                                    .map(
+                                                                        (
+                                                                            word: string
+                                                                        ) =>
+                                                                            word
+                                                                                .charAt(
+                                                                                    0
+                                                                                )
+                                                                                .toUpperCase() +
+                                                                            word
+                                                                                .slice(
+                                                                                    1
+                                                                                )
+                                                                                .toLowerCase()
+                                                                    )
+                                                                    .join(" "),
+                                                        }
+                                                    )}
                                                 </div>
                                                 <p className="text-sm opacity-60">
-                                                    {t("itemsNrecipes.jobRequired")}{" "}
-                                                    {detailsIndex[craftModalItem].recipe.job}
+                                                    {t(
+                                                        "itemsNrecipes.jobRequired"
+                                                    )}{" "}
+                                                    {
+                                                        detailsIndex[
+                                                            craftModalItem
+                                                        ].recipe.job
+                                                    }
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
-
-
-                                            {/* Left: Global collapse/expand button */}
-                                            {/* Center: Quantity selection */}
-                                            <div className="flex items-center gap-0 ml-2">
-                                                <label className="text-sm font-bold mr-1" htmlFor="craftQuantity">
-                                                    x
-                                                </label>
-                                                <input
-                                                    id="craftQuantity"
-                                                    type="number"
-                                                    min="1"
-                                                    className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
-                                                    value={tempQuantity}
-                                                    onChange={(e) => setTempQuantity(e.target.value)}
-                                                />
-                                                <button
-                                                    className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
-                                                    onClick={() => {
-                                                        const qty = parseInt(tempQuantity, 10);
-                                                        if (!isNaN(qty) && qty > 0) {
-                                                            setCraftQuantity(qty);
+                                                {/* Left: Global collapse/expand button */}
+                                                {/* Center: Quantity selection */}
+                                                <div className="flex items-center gap-0 ml-2">
+                                                    <label
+                                                        className="text-sm font-bold mr-1"
+                                                        htmlFor="craftQuantity"
+                                                    >
+                                                        x
+                                                    </label>
+                                                    <input
+                                                        id="craftQuantity"
+                                                        type="number"
+                                                        min="1"
+                                                        className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
+                                                        value={tempQuantity}
+                                                        onChange={(e) =>
+                                                            setTempQuantity(
+                                                                e.target.value
+                                                            )
                                                         }
-                                                    }}
-                                                >
-                                                    <Calculator className="w-5 h-5"/>
-                                                </button>
-                                            </div>
-                                            
-                                            <div className="flex items-center">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={() => {
-                                                        setGlobalExpanded(!globalExpanded);
-                                                        setGlobalToggleVersion((prev) => prev + 1);
-                                                    }}
-                                                >
-                                                    {globalExpanded ? (
-                                                        <>
-                                                            <Minus className="w-4 h-4"/> {t("itemsNrecipes.collapseAll.button")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Plus className="w-4 h-4"/> {t("itemsNrecipes.expandAll.button")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            {/* Right: Recap toggle and CSV copy button */}
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={() => setShowRecap((prev) => !prev)}
-                                                >
-                                                    {showRecap ? (
-                                                        <>
-                                                            <EyeOff className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.hide")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Eye className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.show")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={handleCopyCSV}
-                                                >
-                                                    <ClipboardCopy className="w-4 h-4" /> {t("itemsNrecipes.copyCSV.button")}
-                                                </button>
-                                            </div>
+                                                    />
+                                                    <button
+                                                        className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
+                                                        onClick={() => {
+                                                            const qty =
+                                                                parseInt(
+                                                                    tempQuantity,
+                                                                    10
+                                                                );
+                                                            if (
+                                                                !isNaN(qty) &&
+                                                                qty > 0
+                                                            ) {
+                                                                setCraftQuantity(
+                                                                    qty
+                                                                );
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Calculator className="w-5 h-5" />
+                                                    </button>
+                                                </div>
+
+                                                <div className="flex items-center">
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                        onClick={() => {
+                                                            setGlobalExpanded(
+                                                                !globalExpanded
+                                                            );
+                                                            setGlobalToggleVersion(
+                                                                (prev) =>
+                                                                    prev + 1
+                                                            );
+                                                        }}
+                                                    >
+                                                        {globalExpanded ? (
+                                                            <>
+                                                                <Minus className="w-4 h-4" />{" "}
+                                                                {t(
+                                                                    "itemsNrecipes.collapseAll.button"
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Plus className="w-4 h-4" />{" "}
+                                                                {t(
+                                                                    "itemsNrecipes.expandAll.button"
+                                                                )}
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                                {/* Right: Recap toggle and CSV copy button */}
+                                                <div className="flex items-center gap-2">
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                        onClick={() =>
+                                                            setShowRecap(
+                                                                (prev) => !prev
+                                                            )
+                                                        }
+                                                    >
+                                                        {showRecap ? (
+                                                            <>
+                                                                <EyeOff className="w-4 h-4" />{" "}
+                                                                {t(
+                                                                    "itemsNrecipes.resourcesRequired.button.hide"
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Eye className="w-4 h-4" />{" "}
+                                                                {t(
+                                                                    "itemsNrecipes.resourcesRequired.button.show"
+                                                                )}
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
+                                                        onClick={handleCopyCSV}
+                                                    >
+                                                        <ClipboardCopy className="w-4 h-4" />{" "}
+                                                        {t(
+                                                            "itemsNrecipes.copyCSV.button"
+                                                        )}
+                                                    </button>
+                                                </div>
                                                 <a
                                                     href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                                     target="_blank"
@@ -867,7 +1101,10 @@ const ItemsNRecipesApp: FC = () => {
                                                     onClick={closeCraftModal}
                                                     className="flex items-center justify-center h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                                 >
-                                                    <X strokeWidth={3} className="h-5 w-5" />
+                                                    <X
+                                                        strokeWidth={3}
+                                                        className="h-5 w-5"
+                                                    />
                                                 </button>
                                             </div>
                                         </div>
@@ -876,13 +1113,20 @@ const ItemsNRecipesApp: FC = () => {
                                             <div className="p-4">
                                                 <RecipeTree
                                                     key={globalToggleVersion}
-                                                    recipe={detailsIndex[craftModalItem].recipe}
+                                                    recipe={
+                                                        detailsIndex[
+                                                            craftModalItem
+                                                        ].recipe
+                                                    }
                                                     detailsIndex={detailsIndex}
-                                                    initialExpanded={globalExpanded}
+                                                    initialExpanded={
+                                                        globalExpanded
+                                                    }
                                                     multiplier={craftQuantity}
                                                 />
                                                 {/* Content resources recap */}
-                                                {showRecap && renderResourcesContent()}
+                                                {showRecap &&
+                                                    renderResourcesContent()}
                                             </div>
                                             {/* Footer: Used in recipes info */}
                                             <div className="bg-gray-700 text-white p-4 rounded-b-lg flex flex-col gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.25)]">
@@ -905,30 +1149,62 @@ const ItemsNRecipesApp: FC = () => {
                                 }}
                             >
                                 <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative overflow-hidden">
-                                    <div id="craftDetails" className="flex flex-col flex-1 max-h-[90vh]">
+                                    <div
+                                        id="craftDetails"
+                                        className="flex flex-col flex-1 max-h-[90vh]"
+                                    >
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
                                             <INRItemImage
-                                                groupCategory={craftModalCategory!}
+                                                groupCategory={
+                                                    craftModalCategory!
+                                                }
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
                                                 className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{ imageRendering: "pixelated" }}
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
                                             />
                                             <div className="flex flex-col">
                                                 <div className="text-2xl font-bold">
-                                                    {t("itemsNrecipes.craftFor")}{" "}
-                                                    {t(`item.${craftModalItem}`, {
-                                                        ns: "items",
-                                                        defaultValue: craftModalItem
-                                                            .replace(/_/g, " ")
-                                                            .split(" ")
-                                                            .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                                                            .join(" "),
-                                                    })}
+                                                    {t(
+                                                        "itemsNrecipes.craftFor"
+                                                    )}{" "}
+                                                    {t(
+                                                        `item.${craftModalItem}`,
+                                                        {
+                                                            ns: "items",
+                                                            defaultValue:
+                                                                craftModalItem
+                                                                    .replace(
+                                                                        /_/g,
+                                                                        " "
+                                                                    )
+                                                                    .split(" ")
+                                                                    .map(
+                                                                        (
+                                                                            word: string
+                                                                        ) =>
+                                                                            word
+                                                                                .charAt(
+                                                                                    0
+                                                                                )
+                                                                                .toUpperCase() +
+                                                                            word
+                                                                                .slice(
+                                                                                    1
+                                                                                )
+                                                                                .toLowerCase()
+                                                                    )
+                                                                    .join(" "),
+                                                        }
+                                                    )}
                                                 </div>
                                                 <p className="text-sm opacity-60">
-                                                    {t("itemsNrecipes.recipe.no")}
+                                                    {t(
+                                                        "itemsNrecipes.recipe.no"
+                                                    )}
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
@@ -944,7 +1220,10 @@ const ItemsNRecipesApp: FC = () => {
                                                     onClick={closeCraftModal}
                                                     className="flex items-center justify-center h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                                 >
-                                                    <X strokeWidth={3} className="h-5 w-5" />
+                                                    <X
+                                                        strokeWidth={3}
+                                                        className="h-5 w-5"
+                                                    />
                                                 </button>
                                             </div>
                                         </div>
