@@ -639,7 +639,7 @@ const ItemsNRecipesApp: FC = () => {
     }, [craftModalItem]);
 
     // Function to copy resource recap as CSV to clipboard
-    const handleCopyCSV = () => {
+    const handleCopyCSV = async () => {
         if (!detailsIndex || !craftModalItem) return;
         const recap = gatherResources(
             detailsIndex[craftModalItem].recipe,
@@ -651,7 +651,13 @@ const ItemsNRecipesApp: FC = () => {
         );
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
-        alert(t("itemsNrecipes.copyCSV.alert"));
+        try {
+            await navigator.clipboard.writeText(csvText);
+            alert(t("itemsNrecipes.copyCSV.alert"));
+        } catch (err) {
+            console.error("Copy CSV failed:", err);
+        }
+        
     };
 
     const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
