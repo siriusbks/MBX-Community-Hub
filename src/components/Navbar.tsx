@@ -14,7 +14,8 @@ import {
     BookMarked,
     Leaf,
     Wrench,
-    BookA
+    BookA,
+    Bone
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -24,6 +25,7 @@ import { useState, useEffect, useRef } from "react";
 // Navigation data driven consts — edit these to change links/menu items
 const NAV_LINKS: Array<any> = [
     { id: "map", to: "/map", icon: Map, labelKey: "navbar.map", matchPrefix: "/mappage" },
+    //{ id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary", matchPrefix: "/bestiary" },
     {
         id: "tools",
         dropdown: true,
