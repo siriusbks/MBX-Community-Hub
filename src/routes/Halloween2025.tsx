@@ -1337,7 +1337,7 @@ const HalloweenPage: FC = () => {
                         </span>
                         ,{" "}
                         <span className="text-RARE">
-                            6x {t("halloween.halloween_candy_sack")}
+                            8x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
                 </div>
@@ -1368,7 +1368,7 @@ const HalloweenPage: FC = () => {
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
                         <span className="text-LEGENDARY">
-                            10 {t("halloween.quests.universal.bp_star")}
+                            6 {t("halloween.quests.universal.bp_star")}
                         </span>
                         ,{" "}
                         <span className="text-RARE">
