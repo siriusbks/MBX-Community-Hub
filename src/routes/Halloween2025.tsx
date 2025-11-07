@@ -1291,7 +1291,7 @@ const HalloweenPage: FC = () => {
                         7. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        8. {t("halloween.quests.universal.slain")} 12x {t("bestiary.halloween_crow")}
+                        8. {t("halloween.quests.universal.slain")} 12x {t("bestiary.halloween_crow",  { ns: "bestiary" })}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
                         &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.collect")}:{" "}
