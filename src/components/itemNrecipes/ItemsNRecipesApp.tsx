@@ -659,8 +659,8 @@ const ItemsNRecipesApp: FC = () => {
         }
         
     };
-
     const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
+    const noRecipeAvailable = !detailsIndex?.[panelItem!]?.recipe;
 
     return (
         <div className="items-&-recipes-page">
@@ -856,19 +856,25 @@ const ItemsNRecipesApp: FC = () => {
                                     style={{ imageRendering: "pixelated" }}
                                 />
                             </div>
-                            <div className="mt-4 flex gap-2">
+                            <div className={`mt-4 flex gap-2 ${(usedInList.length === 0 || noRecipeAvailable) ? 'opacity-60' : ''}`}>
                                 <button
                                     onClick={() => {
-                                        // Open the full craft modal for this item
-                                        if (panelItem && panelCategory)
-                                            openCraftModal(
-                                                panelItem,
-                                                panelCategory
-                                            );
+                                        // Prevent opening when item is used in other recipes or no recipe exists
+                                        if (usedInList.length === 0 || noRecipeAvailable) return;
+                                        if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
                                     }}
-                                    className="flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded"
+                                    disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    aria-disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    title={
+                                        noRecipeAvailable
+                                            ? t("itemsNrecipes.noRecipeAvailable")
+                                            : usedInList.length > 0
+                                            ? t("itemsNrecipes.usedInRecipes.no")
+                                            : t("itemsNrecipes.openRecipes")
+                                    }
+                                    className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
                                 >
-                                    {t("itemsNrecipes.openRecipes")}
+                                    {noRecipeAvailable ? t("itemsNrecipes.noRecipeAvailable") : t("itemsNrecipes.openRecipes")}
                                 </button>
                             </div>
                         </div>
