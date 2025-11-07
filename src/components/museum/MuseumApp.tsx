@@ -403,7 +403,7 @@ export const MuseumApp: FC = () => {
                                     </button>
                                 )}
                                 {ing.amount}x{" "}
-                                {t(`item.${ing.id}`, {
+                                {t(`${ing.id}`, {
                                     ns: "items",
                                     defaultValue: ing.id
                                         .replace(/_/g, " ")
@@ -559,7 +559,7 @@ export const MuseumApp: FC = () => {
                                                 }}
                                             />
                                             <span className="text-sm font-semibold">
-                                                {t(`item.${itemId}`, {
+                                                {t(`${itemId}`, {
                                                     ns: "items",
                                                     defaultValue: itemId
                                                         .replace(/_/g, " ")
@@ -628,7 +628,7 @@ export const MuseumApp: FC = () => {
                                         style={{ imageRendering: "pixelated" }}
                                     />
                                     <span className="font-bold text-sm">
-                                        {t(`item.${resId}`, {
+                                        {t(`${resId}`, {
                                             ns: "items",
                                             defaultValue: resId
                                                 .replace(/_/g, " ")
@@ -1086,7 +1086,7 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {t(`item.${craftModalItem}`, {
+                                                {t(`${craftModalItem}`, {
                                                     ns: "items",
                                                     defaultValue: craftModalItem
                                                         .replace(/_/g, " ")
@@ -1148,7 +1148,7 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {t(`item.${craftModalItem}`, {
+                                                {t(`${craftModalItem}`, {
                                                     ns: "items",
                                                     defaultValue: craftModalItem
                                                         .replace(/_/g, " ")

@@ -117,7 +117,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                     isOwned ? "opacity-80 text-green-300" : ""
                 }`}
             >
-                {t(`item.${itemId}`, {
+                {t(`${itemId}`, {
                     ns: "items",
                     defaultValue: itemId
                     .replace(/_/g, " ")

@@ -235,7 +235,23 @@ export const EquipmentSelector: React.FC<Props> = ({
 
                                         <div className="min-w-0">
                                             <h3 className="font-semibold text-white truncate">
-                                                {item.name}
+                                                
+                                                          {t(`${item.id}`, {
+                                            ns: "items",
+                                            defaultValue: item.name
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}
                                             </h3>{" "}
                                             <span className="flex flex-row gap-1 items-center align-center">
                                                 <p
