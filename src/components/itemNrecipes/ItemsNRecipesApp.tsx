@@ -525,17 +525,28 @@ const ItemsNRecipesApp: FC = () => {
     }, [craftModalItem]);
 
     // Function to copy resource recap as CSV to clipboard
-    const handleCopyCSV = () => {
+    const handleCopyCSV = async () => {
         if (!detailsIndex || !craftModalItem) return;
         const recap = gatherResources(
             detailsIndex[craftModalItem].recipe,
             detailsIndex,
             craftQuantity
         );
-        const csvLines = Object.keys(recap).map((key) => `${recap[key]},${key}`);
+        const sortedResourceIds = Object.keys(recap).sort((a, b) =>
+            a.localeCompare(b, "en", { sensitivity: "base" })
+        );
+        const csvLines = sortedResourceIds.map(
+            (resId) => `${recap[resId]},${resId}`
+        );
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
-        alert(t("itemsNrecipes.copyCSV.alert"));
+        try {
+            await navigator.clipboard.writeText(csvText);
+            alert(t("itemsNrecipes.copyCSV.alert"));
+        } catch (err) {
+            console.error("Copy CSV failed:", err);
+        }
+        
     };
 
                         const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
@@ -784,77 +795,77 @@ const ItemsNRecipesApp: FC = () => {
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
-
-
-                                            {/* Left: Global collapse/expand button */}
-                                            {/* Center: Quantity selection */}
-                                            <div className="flex items-center gap-0 ml-2">
-                                                <label className="text-sm font-bold mr-1" htmlFor="craftQuantity">
-                                                    x
-                                                </label>
-                                                <input
-                                                    id="craftQuantity"
-                                                    type="number"
-                                                    min="1"
-                                                    className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
-                                                    value={tempQuantity}
-                                                    onChange={(e) => setTempQuantity(e.target.value)}
-                                                />
-                                                <button
-                                                    className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
-                                                    onClick={() => {
-                                                        const qty = parseInt(tempQuantity, 10);
-                                                        if (!isNaN(qty) && qty > 0) {
-                                                            setCraftQuantity(qty);
-                                                        }
-                                                    }}
-                                                >
-                                                    <Calculator className="w-5 h-5"/>
-                                                </button>
-                                            </div>
-                                            
-                                            <div className="flex items-center">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={() => {
-                                                        setGlobalExpanded(!globalExpanded);
-                                                        setGlobalToggleVersion((prev) => prev + 1);
-                                                    }}
-                                                >
-                                                    {globalExpanded ? (
-                                                        <>
-                                                            <Minus className="w-4 h-4"/> {t("itemsNrecipes.collapseAll.button")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Plus className="w-4 h-4"/> {t("itemsNrecipes.expandAll.button")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            {/* Right: Recap toggle and CSV copy button */}
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={() => setShowRecap((prev) => !prev)}
-                                                >
-                                                    {showRecap ? (
-                                                        <>
-                                                            <EyeOff className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.hide")}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <Eye className="w-4 h-4" /> {t("itemsNrecipes.resourcesRequired.button.show")}
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button
-                                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-xs"
-                                                    onClick={handleCopyCSV}
-                                                >
-                                                    <ClipboardCopy className="w-4 h-4" /> {t("itemsNrecipes.copyCSV.button")}
-                                                </button>
-                                            </div>
+                                                {/* Quantity selection */}
+                                                <div className="flex items-center gap-0 ml-2">
+                                                    <label className="text-sm font-bold mr-1" htmlFor="craftQuantity">
+                                                        x
+                                                    </label>
+                                                    <input
+                                                        id="craftQuantity"
+                                                        type="number"
+                                                        min="1"
+                                                        className="w-12 p-1 text-white rounded-l text-center bg-gray-600"
+                                                        value={tempQuantity}
+                                                        onChange={(e) => setTempQuantity(e.target.value)}
+                                                    />
+                                                    <button
+                                                        className="text-xs flex font-medium flex-row gap-2 bg-gray-500 hover:bg-gray-400 transition text-white p-1.5 rounded-r text-sm"
+                                                        onClick={() => {
+                                                            const qty = parseInt(tempQuantity, 10);
+                                                            if (!isNaN(qty) && qty > 0) {
+                                                                setCraftQuantity(qty);
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Calculator className="w-5 h-5"/>
+                                                    </button>
+                                                </div>
+                                                {/* Global collapse/expand button */}
+                                                <div className="flex items-center">
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                                        onClick={() => {
+                                                            setGlobalExpanded(!globalExpanded);
+                                                            setGlobalToggleVersion((prev) => prev + 1);
+                                                        }}
+                                                    >
+                                                        {globalExpanded ? (
+                                                            <>
+                                                                <Minus className="w-5 h-5"/> {t("itemsNrecipes.collapseAll.button")}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Plus className="w-5 h-5"/> {t("itemsNrecipes.expandAll.button")}
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                                {/* Recap toggle */}
+                                                <div className="flex items-center">
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                                        onClick={() => setShowRecap((prev) => !prev)}
+                                                    >
+                                                        {showRecap ? (
+                                                            <>
+                                                                <EyeOff className="w-5 h-5" /> {t("itemsNrecipes.resourcesRequired.button.hide")}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Eye className="w-5 h-5" /> {t("itemsNrecipes.resourcesRequired.button.show")}
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                                {/* CSV copy button */}
+                                                <div className="flex items-center">
+                                                    <button
+                                                        className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                                        onClick={handleCopyCSV}
+                                                    >
+                                                        <ClipboardCopy className="w-5 h-5" /> {t("itemsNrecipes.copyCSV.button")}
+                                                    </button>
+                                                </div>
                                                 <a
                                                     href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                                     target="_blank"
@@ -868,7 +879,7 @@ const ItemsNRecipesApp: FC = () => {
                                                     className="flex items-center justify-center h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                                 >
                                                     <X strokeWidth={3} className="h-5 w-5" />
-                                                </button>
+                                                    </button>
                                             </div>
                                         </div>
                                         {/* Content area scrollable */}
