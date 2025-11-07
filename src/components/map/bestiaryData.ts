@@ -7,23 +7,33 @@
 export interface BestiaryInfo {
     image?: string;
     name: string;
+
     minlevel: number;
     maxlevel: number;
     minhealth: number;
     maxhealth: number;
     boss?: boolean;
+
     fireResistant?: number;
     waterResistant?: number;
     airResistant?: number;
     earthResistant?: number;
+
+    family?: string[];
+    drop?: BestiaryLoot[];
+
     // Events:
     halloween2025?: boolean;
+}
+
+export interface BestiaryLoot{
+    itemId: string;
+    dropChance: number; 
 }
 
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
     spawn: {
         central_island: [
-            
             {
                 name: "bestiary.halloween_crow",
                 image: "assets/media/EVENT/HALLOWEEN/Bestiary/Crow.png",
@@ -65,13 +75,8 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 0,
                 halloween2025: true,
             },*/
-           
-            
-
-
         ],
         sewers: [
-            
             {
                 name: "bestiary.halloween_brown_rat",
                 image: "assets/media/EVENT/HALLOWEEN/Bestiary/Brown_Rat.png",
@@ -87,7 +92,6 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
         ],
         workshop_island: [
-            
             {
                 name: "bestiary.halloween_albino_rat",
                 image: "assets/media/EVENT/HALLOWEEN/Bestiary/Albino_Rat.png",
@@ -324,8 +328,18 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 30,
                 minhealth: 150,
                 maxhealth: 225,
+
                 earthResistant: 50,
                 waterResistant: -25,
+
+                family: ["bestiary.venomous_spidey"],
+                drop: [
+                    { itemId: "spider_leg", dropChance: 70.12 },
+                    { itemId: "ring_super_golden", dropChance: 0.7 },
+                    { itemId: "ring_multigen_red", dropChance: 0.7 },
+                    { itemId: "necklace_beatiful_orange", dropChance: 0.42 },
+                    { itemId: "spider_fang", dropChance: 28.05 },
+                ],
             },
             {
                 name: "bestiary.venomous_spidey",

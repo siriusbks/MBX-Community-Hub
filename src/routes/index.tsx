@@ -10,6 +10,7 @@ import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
 import NotFound from "./NotFound";
 import HalloweenPage from "./Halloween2025";
+import BestiaryPage from "./BestiaryPage";
 
 const EquipPage = lazy(() => import("@routes/EquipPage"));
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
@@ -37,11 +38,15 @@ export const AppRoutes: FC = () => {
                         <Route path="/equipment" element={<EquipPage />} />
                         <Route path="/community" element={<CommunityPage />} />
                         <Route path="/museum" element={<MuseumPage />} />
-                        <Route path="/halloween" element={<HalloweenPage />} />
+                        <Route path="/bestiary" element={<BestiaryPage />} />
                         <Route
                             path="/itemsNrecipes"
                             element={<ItemsNRecipesPage />}
                         />
+
+                        {/* Special Pages */}
+                        {/* Add archive/ to URL for past events */}
+                        <Route path="/halloween" element={<HalloweenPage />} />
                     </Routes>
                 </Suspense>
             </main>
