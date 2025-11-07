@@ -177,7 +177,7 @@ const gatherResources = (
 
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
 const ItemsNRecipesApp: FC = () => {
-    const { t } = useTranslation("itemsNrecipes");
+    const { t } = useTranslation(["itemsNrecipes", "items", "museum"]);
 
     // States for storing API and JSON data
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
@@ -355,7 +355,25 @@ const ItemsNRecipesApp: FC = () => {
         setPanelLore(null);
         setPanelLoreError(null);
 
-        fetch(`https://api.minebox.co/item/${panelItem}`)
+        (async () => {
+            // try to get current locale from react-i18next if available,
+            // fallback to navigator.language and finally "en"
+            let locale = "en";
+            try {
+            const i18nModule = await import("i18next");
+            locale =
+                i18nModule?.default?.language ||
+                navigator.language?.split("-")[0] ||
+                "en";
+            } catch {
+            locale = navigator.language?.split("-")[0] || "en";
+            }
+
+            fetch(
+            `https://api.minebox.co/item/${encodeURIComponent(
+                panelItem!
+            )}?locale=${encodeURIComponent(locale)}`
+            )
             .then((res) => {
                 if (!res.ok) throw new Error(`API ${res.status}`);
                 return res.json();
@@ -368,11 +386,14 @@ const ItemsNRecipesApp: FC = () => {
             .catch((err) => {
                 if (cancelled) return;
                 setPanelLore(null);
-                setPanelLoreError(err instanceof Error ? err.message : String(err));
+                setPanelLoreError(
+                err instanceof Error ? err.message : String(err)
+                );
             })
             .finally(() => {
                 if (!cancelled) setPanelLoreLoading(false);
             });
+        })();
 
         return () => {
             cancelled = true;
@@ -681,9 +702,9 @@ const ItemsNRecipesApp: FC = () => {
             <div className="flex flex-row h-[calc(100vh-340px)]">
                 <nav
                     id="categoryNav"
-                    className="w-[360px] custom-scrollbar bg-gray-800 bg-opacity-50 p-4 rounded-lg overflow-auto max-h-[calc(100vh-200px)]"
+                    className="w-[400px] custom-scrollbar bg-gray-800 bg-opacity-50 p-4 rounded-lg overflow-auto max-h-[calc(100vh-200px)]"
                 >
-                    <ul className="flex flex-col gap-2 p-0 m-0">
+                    <ul className="flex flex-col gap-2 p-0 m-0 grid grid-cols-2 ">
                         <li className="w-full">
                             <label
                                 className={`flex items-center gap-2 p-2 rounded mb-2 w-full cursor-pointer ${
@@ -712,7 +733,15 @@ const ItemsNRecipesApp: FC = () => {
                         {groupedItems &&
                             groupedItems.map((group) => (
                                 <li key={group.category} className="w-full">
-                                    <label className="flex items-center gap-2 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 cursor-pointer">
+                                    <label
+                                        className={`flex items-center gap-2 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 cursor-pointer ${
+                                            selectedCategories.includes(
+                                                group.category
+                                            )
+                                                ? "border-2 border-green-600"
+                                                : "border border-transparent"
+                                        }`}
+                                    >
                                         <input
                                             type="checkbox"
                                             checked={selectedCategories.includes(
@@ -721,9 +750,10 @@ const ItemsNRecipesApp: FC = () => {
                                             onChange={() =>
                                                 toggleCategory(group.category)
                                             }
-                                            className="form-checkbox h-4 w-4"
+                                            className="sr-only"
+                                            aria-hidden="false"
                                         />
-                                        <span className="flex flex-row items-center gap-2">
+                                        <span className="flex flex-row items-center gap-1.5">
                                             <INRItemImage
                                                 groupCategory={group.category}
                                                 itemId={group.category}
@@ -733,11 +763,14 @@ const ItemsNRecipesApp: FC = () => {
                                                     imageRendering: "pixelated",
                                                 }}
                                             />
-                                            <span className="flex flex-col items-start leading-tight">
-                                                <span className="font-bold text-sm">
-                                                    {group.category
-                                                        .toUpperCase()
-                                                        .replace("_", " ")}
+                                            <span className="flex flex-col items-start leading-none">
+                                                <span className="font-semibold text-xs leading-none">
+                                                    {t(`museum.category.${group.category}`, {
+                                            ns: "museum",
+                                            defaultValue: group.category
+                                                .toUpperCase()
+                                                        .replace("_", " "),
+                                        })}
                                                 </span>
                                             </span>
                                         </span>
@@ -750,7 +783,7 @@ const ItemsNRecipesApp: FC = () => {
                 {/* Display of the items list (single category or all categories) */}
                 <div
                     id="itemsContainer"
-                    className="w-[calc(100%-240px)]  custom-scrollbar  flex flex-wrap gap-4 justify-start p-4 overflow-auto max-h-[calc(100vh-200px)]"
+                    className="w-[calc(100%-400px)] custom-scrollbar  flex flex-wrap gap-4 justify-start p-4 overflow-auto max-h-[calc(100vh-200px)]"
                 >
                     {renderItems()}
                 </div>

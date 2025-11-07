@@ -129,11 +129,41 @@ const CraftSection: React.FC<{
                 <span
                     className="truncate pr-2"
                     title={
-                        item?.name ? `${slotLabel} – ${item.name}` : slotLabel
+                        item?.name ? `${slotLabel} – ${t(`${item.id}`, {
+                                            ns: "items",
+                                            defaultValue: item.name
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}` : slotLabel
                     }
                 >
                     <span className="text-gray-400">{slotLabel}</span>
-                    {item?.name ? ` – ${item.name}` : ""}
+                    {item?.name ? ` – ${t(`${item.id}`, {
+                                            ns: "items",
+                                            defaultValue: item.name
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}` : ""}
                 </span>
 
                 <span className="flex items-center gap-2 flex-shrink-0 ml-2">
@@ -186,7 +216,7 @@ const CraftSection: React.FC<{
                                         const amount = ing.amount ?? 1;
                                         const name =
                                             type === "custom"
-                                                ? ing.item?.name ??
+                                                ? //ing.item?.name ??
                                                   ing.item?.id ??
                                                   ing.id ??
                                                   "Unknown"
@@ -214,7 +244,23 @@ const CraftSection: React.FC<{
                                                     />
                                                     <div className="flex flex-col">
                                                         <span className="text-sm text-white">
-                                                            {name}
+                                                            
+                                                                      {t(`${name}`, {
+                                            ns: "items",
+                                            defaultValue: name
+                                                .replace(/_/g, " ")
+                                                .split(" ")
+                                                .map(
+                                                    (word: string) =>
+                                                        word
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        word
+                                                            .slice(1)
+                                                            .toLowerCase()
+                                                )
+                                                .join(" "),
+                                        })}
                                                         </span>
                                                         <span className="text-xs text-gray-400">
                                                             {type
