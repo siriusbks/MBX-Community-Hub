@@ -1194,7 +1194,7 @@ const HalloweenPage: FC = () => {
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         {t("halloween.quests.universal.craft")}:{" "}
                         <span className="text-LEGENDARY">
-                            {t("halloween.ghost_vacuum")}
+                            {t("halloween.halloween_ghost_vacuum")}
                         </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
