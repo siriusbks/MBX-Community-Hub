@@ -62,11 +62,17 @@
     "halloween.quests.webina.twolegged.help": "You Need Pay 25K Lux and Select: Scissor, Rock, Scissor",
     "halloween.quests.webina.protectEgg": "Give 256 Dirty Sheets to Webina to Protect Her Egg",
 
-    "halloween.quests.mcbones.title": "Peace at the Cemetary",
+    "halloween.quests.mcbones.title": "Peace at the Cemetery",
+    "halloween.quests.mcbones2.title": "Graveyard Investigation",
+    "halloween.quests.mcbones3.title": "A Personal Consumption",
     "halloween.quests.mcbones.talk": "Talk to Bony McBones",
     "halloween.quests.mcbones.killghosts": "Kill 10 Ghosts",
     "halloween.quests.mcbones.bring": "Bring Vacuum to Talk to Bony McBones",
     "halloween.quests.mcbones.slurp": "Slurp 20 Ghost's",
+    "halloween.quests.mcbones.findTomb": "Find 24 Tomb",
+    "halloween.quests.mcbones.slurpSingleGhost": "Slurp 1 Ghost",
+    "halloween.quests.mcbones.giveVaccum": "Give Vacuum to Bony McBones",
+    "halloween.quests.mcbones.giveSheet": "Give 1024 Dirty Sheets to Bony McBones",
 
 
     "halloween.quests.universal.location": "Location",

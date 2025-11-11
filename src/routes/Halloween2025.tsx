@@ -1376,6 +1376,62 @@ const HalloweenPage: FC = () => {
                         </span>
                     </span>
                 </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.mcbones2.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.mcbones.findTomb")}
+                    </span>
+                    <span className="w-full pb-0 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        <span className="text-orange-500">110 110 125</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.mcbones.slurpSingleGhost")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        5. {t("halloween.quests.mcbones.giveVaccum")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            6 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            8x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.mcbones3.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.mcbones.giveSheet")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            5 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            6x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
             </div>
 
             {/* Battle Pass Section */}
