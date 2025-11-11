@@ -181,3 +181,9 @@
     --color-UNKNOWN: #ff0095;
     --color-UNKNOWN-50: #ff009520;
 }
+
+/* Bestiary preview map image: grayscale by default */
+.bestiary-image-overlay {
+    filter: grayscale(50%);
+    opacity: 0.6;
+}

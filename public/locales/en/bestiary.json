@@ -1,7 +1,12 @@
 {
     "bestiary.title": "Bestiary",
     "bestiary.subtitle": "Discover the diverse creatures that inhabit the Minebox world.",
-
+    "bestiary.mapPreview": "Mob Spawnpoints Map Preview",
+    "bestiary.family": "Mob Family",
+    "bestiary.noFamily": "This Mob has no family...",
+    "bestiary.drop": "Drops List",
+    "bestiary.noDrop": "This mob does not drop any loot",
+    "bestiary.openInteractiveMap": "Open Interactive Map",
 
 
     "bestiary.level": "lv.",

@@ -336,9 +336,9 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [
                     { itemId: "spider_leg", dropChance: 70.12 },
                     { itemId: "ring_super_golden", dropChance: 0.7 },
-                    { itemId: "ring_multigen_red", dropChance: 0.7 },
-                    { itemId: "necklace_beatiful_orange", dropChance: 0.42 },
-                    { itemId: "spider_fang", dropChance: 28.05 },
+                    { itemId: "ring_multigem_red", dropChance: 0.7 },
+                    { itemId: "necklace_beautiful_orange", dropChance: 0.42 },
+                    { itemId: "cute_eye_spider", dropChance: 28.05 },
                 ],
             },
             {
@@ -348,9 +348,19 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 30,
                 minhealth: 180,
                 maxhealth: 250,
+
                 airResistant: 10,
                 earthResistant: 65,
                 waterResistant: -25,
+                
+                family: ["bestiary.spidey"],
+                drop: [
+                    { itemId: "spider_leg", dropChance: 70.12 },
+                    { itemId: "ring_super_golden", dropChance: 0.7 },
+                    { itemId: "ring_multigem_red", dropChance: 0.7 },
+                    { itemId: "necklace_beautiful_orange", dropChance: 0.42 },
+                    { itemId: "spider_venum", dropChance: 28.05 },
+                ],
             },
             {
                 name: "bestiary.scarecrow",
@@ -359,8 +369,22 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 30,
                 minhealth: 500,
                 maxhealth: 600,
+
                 earthResistant: 50,
                 fireResistant: -25,
+
+                drop: [
+                    { itemId: "bow_arrowplane", dropChance: 0.26 },
+                    { itemId: "dagger_pencil_point", dropChance: 0.26 },
+                    { itemId: "musket_corn_cannon", dropChance: 0.52 },
+                    { itemId: "staff_broomstick_basher", dropChance: 0.42 },
+                    { itemId: "ring_simple_silver", dropChance: 0.31 },
+                    { itemId: "necklace_beautiful_purple", dropChance: 0.47 },
+                    { itemId: "ring_simple_luck", dropChance: 0.26 },
+                    { itemId: "scarecrow_wood_leg", dropChance: 52.68 },
+                    { itemId: "crow_wing", dropChance: 26.34 },
+                    { itemId: "crow_s_beak", dropChance: 18.44 },
+                ],
             },
             {
                 name: "bestiary.pirate_farmer",
@@ -369,8 +393,22 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 30,
                 minhealth: 200,
                 maxhealth: 300,
+
                 earthResistant: 50,
                 fireResistant: 25,
+
+                family: ["bestiary.old_pirate_farmer"],
+                drop: [
+                    { itemId: "bow_foam_bow", dropChance: 0.37 },
+                    { itemId: "dagger_jesters_jest", dropChance: 0.11 },
+                    { itemId: "staff_rubber_mallet", dropChance: 0.94 },
+                    { itemId: "sunflower_helmet", dropChance: 0.18 },
+                    { itemId: "sunflower_wand", dropChance: 0.37 },
+                    { itemId: "necklace_big_gem_green", dropChance: 0.37 },
+                    { itemId: "ring_pearl_blue", dropChance: 0.75 },
+                    { itemId: "adventurer_sword", dropChance: 1.89 },
+                    { itemId: "pirate_farmer_bandana", dropChance: 94.94 },
+                ],
             },
             {
                 name: "bestiary.old_pirate_farmer",
@@ -379,8 +417,23 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 30,
                 minhealth: 350,
                 maxhealth: 400,
+
                 earthResistant: 50,
                 fireResistant: 25,
+
+                family: ["bestiary.pirate_farmer"],
+                drop: [
+                    { itemId: "bow_foam_bow", dropChance: 0.37 },
+                    { itemId: "dagger_jesters_jest", dropChance: 0.11 },
+                    { itemId: "staff_rubber_mallet", dropChance: 0.94 },
+                    { itemId: "sunflower_helmet", dropChance: 0.18 },
+                    { itemId: "sunflower_wand", dropChance: 0.37 },
+                    { itemId: "necklace_big_gem_green", dropChance: 0.37 },
+                    { itemId: "ring_pearl_blue", dropChance: 0.75 },
+                    { itemId: "adventurer_sword", dropChance: 1.88 },
+                    { itemId: "pirate_farmer_bandana", dropChance: 94.055 },
+                    { itemId: "musket_featherweight_firearm", dropChance: 0.94 },
+                ],
             },
         ],
         swamp: [
@@ -391,10 +444,15 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 300,
                 maxhealth: 400,
+
                 airResistant: 100,
                 earthResistant: 100,
                 waterResistant: -50,
                 fireResistant: 100,
+
+                drop: [
+                    { itemId: "mud_mask", dropChance: 100 },
+                ],
             },
             {
                 name: "bestiary.fungoo_dancer",
@@ -403,9 +461,17 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 500,
                 maxhealth: 600,
+
                 earthResistant: 25,
                 waterResistant: 25,
                 fireResistant: -25,
+
+                family: ["bestiary.sporelord"],
+                drop: [
+                    { itemId: "bow_rubber_bandler", dropChance: 0.13 },
+                    { itemId: "mushroom_helmet", dropChance: 0.00099 },
+                    { itemId: "spicy_spore_bomb", dropChance: 99.85 },
+                ]
             },
             {
                 name: "bestiary.sporelord",
@@ -414,9 +480,18 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 50,
                 minhealth: 700,
                 maxhealth: 800,
+
                 airResistant: 60,
                 earthResistant: 40,
                 waterResistant: 60,
+
+                family: ["bestiary.fungoo_dancer"],
+                drop: [
+                    { itemId: "bow_rubber_bandler", dropChance: 0.046 },
+                    { itemId: "mushroom_helmet", dropChance: 0.00033 },
+                    { itemId: "venomous_mushroom_juice", dropChance: 66.63 },
+                    { itemId: "toxic_cap", dropChance: 33.31 },
+                ]   
             },
             {
                 name: "bestiary.logzilla",
@@ -426,10 +501,24 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 maxlevel: 60,
                 minhealth: 90000,
                 maxhealth: 100000,
+
                 airResistant: -15,
                 earthResistant: 50,
                 waterResistant: 50,
                 fireResistant: -30,
+
+                drop: [
+                    
+                    { itemId: "bow_guffaw_gauntlet", dropChance: 0.037 },
+                    { itemId: "musket_pepper_popper", dropChance: 0.029 },
+                    { itemId: "key_uncommon", dropChance: 0.37 },
+                    { itemId: "treasure_uncommon", dropChance: 0.74 },
+                    { itemId: "key_common", dropChance: 7.48 },
+                    { itemId: "treasure_common", dropChance: 14.97 },
+                    { itemId: "root", dropChance: 74.85 },
+                    { itemId: "candy_strength", dropChance: 0.74 },
+                    { itemId: "candy_wisdom", dropChance: 0.74 },
+                ],
             },
         ],
     },
