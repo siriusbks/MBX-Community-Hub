@@ -42,14 +42,14 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 5,
                 maxhealth: 15,
 
-                /*drop: [
+                drop: [
                     { itemId: "halloween_candy_pop", dropChance: 0 },
                     { itemId: "halloween_candy_corn", dropChance: 0 },
                     { itemId: "halloween_candy_gumdrop", dropChance: 0 },
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 earthResistant: 0,
                 fireResistant: 0,
@@ -72,7 +72,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: -20,
                 airResistant: 90,
 
-                /*drop: [
+                drop: [
                     { itemId: "halloween_candy_sack", dropChance: 0 },
                     { itemId: "halloween_candy_pop", dropChance: 0 },
                     { itemId: "halloween_candy_corn", dropChance: 0 },
@@ -80,7 +80,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 halloween2025: true,
             },
@@ -94,7 +94,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 900,
                 maxhealth: 1100,
 
-                /*drop: [
+                drop: [
                     { itemId: "halloween_parasite", dropChance: 0 },
                     { itemId: "halloween_candy_sack", dropChance: 0 },
                     { itemId: "halloween_candy_pop", dropChance: 0 },
@@ -103,7 +103,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 earthResistant: 0,
                 fireResistant: -20,
@@ -125,14 +125,14 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     "bestiary.halloween_gray_rat",
                     "bestiary.halloween_albino_rat",
                 ],
-                /*drop: [
+                drop: [
                     { itemId: "halloween_candy_pop", dropChance: 0 },
                     { itemId: "halloween_candy_corn", dropChance: 0 },
                     { itemId: "halloween_candy_gumdrop", dropChance: 0 },
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 earthResistant: -30,
                 fireResistant: 0,
@@ -154,14 +154,14 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     "bestiary.halloween_gray_rat",
                     "bestiary.halloween_brown_rat",
                 ],
-                /*drop: [
+                drop: [
                     { itemId: "halloween_candy_pop", dropChance: 0 },
                     { itemId: "halloween_candy_corn", dropChance: 0 },
                     { itemId: "halloween_candy_gumdrop", dropChance: 0 },
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 earthResistant: 50,
                 fireResistant: 50,
@@ -181,14 +181,14 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     "bestiary.halloween_brown_rat",
                     "bestiary.halloween_albino_rat",
                 ],
-                /*drop: [
+                drop: [
                     { itemId: "halloween_candy_pop", dropChance: 0 },
                     { itemId: "halloween_candy_corn", dropChance: 0 },
                     { itemId: "halloween_candy_gumdrop", dropChance: 0 },
                     { itemId: "halloween_candy_licorice", dropChance: 0 },
                     { itemId: "halloween_candy_twist", dropChance: 0 },
                     { itemId: "halloween_candy_peppermint", dropChance: 0 },
-                ],*/
+                ],
 
                 earthResistant: 20,
                 fireResistant: -15,

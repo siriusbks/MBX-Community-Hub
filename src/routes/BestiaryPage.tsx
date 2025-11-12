@@ -26,7 +26,7 @@ import {
 } from "@components/editor/LevelBadge";
 
 const BestiaryPage: FC = () => {
-    const { t } = useTranslation(["bestiary", "map", "items"]);
+    const { t } = useTranslation(["bestiary", "map", "items", "halloween"]);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -609,14 +609,37 @@ const BestiaryPage: FC = () => {
                                                 ) : "bg-UNKNOWN";
 
                                                 return (
-                                                    <div key={i} className="bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 flex flex-col items-center text-center">
-                                                        <MuseumItemImage detailsIndex={null} itemId={d.itemId} alt={d.itemId} className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]  h-16 w-16 object-contain my-1 mb-2" style={{ imageRendering: "pixelated" }} />
+                                                    <div
+                                                        key={i}
+                                                        className="bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 flex flex-col items-center text-center"
+                                                    >
+                                                        {(() => {
+                                                            const id = (d.itemId || "").toString().toLowerCase();
+                                                            const isHalloween = id.includes("halloween");
+                                                            return (
+                                                                <MuseumItemImage
+                                                                    detailsIndex={null}
+                                                                    itemId={d.itemId}
+                                                                    {...(isHalloween ? { groupCategory: "EVENT\\HALLOWEEN" } : {})}
+                                                                    alt={d.itemId}
+                                                                    className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]  h-16 w-16 object-contain my-1 mb-2"
+                                                                    style={{ imageRendering: "pixelated" }}
+                                                                />
+                                                            );
+                                                        })()}
                                                         {rarityLabel && (
                                                             <div className={`text-[10px] px-2 py-0.5 rounded ${rarityBg} text-white mb-1`}>
                                                                 {rarityLabel}
                                                             </div>
                                                         )}
-                                                        <div className="text-xs text-gray-200 leading-none font-bold w-full mb-1">{t(d.itemId, { ns: "items", defaultValue: d.itemId })}</div>
+                                                        <div className="text-xs text-gray-200 leading-none font-bold w-full mb-1">
+                                                            {(() => {
+                                                                const fromItems = t(d.itemId, { ns: "items", defaultValue: "" });
+                                                                if (fromItems) return fromItems;
+                                                                const fromHalloween = t(`halloween.${d.itemId}`, { ns: "halloween", defaultValue: "" });
+                                                                return fromHalloween || d.itemId;
+                                                            })()}
+                                                        </div>
                                                         <div className="text-[11px] text-gray-300 mt-auto">{chance}%</div>
                                                     </div>
                                                 );
