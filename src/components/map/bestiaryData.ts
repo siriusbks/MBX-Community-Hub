@@ -118,7 +118,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 image: "assets/media/EVENT/HALLOWEEN/Bestiary/Brown_Rat.png",
                 minlevel: 15,
                 maxlevel: 25,
-                minhealth: 470,
+                minhealth: 70,
                 maxhealth: 140,
 
                 family: [
@@ -620,7 +620,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                     { itemId: "necklace_caramelized", dropChance: 0.019 },
                     { itemId: "ring_eyed_pink", dropChance: 0.0099 },
                     { itemId: "rattling_bones", dropChance: 99.97 },
-                ]
+                ],
             },
             {
                 name: "bestiary.scavenger_vulture",
