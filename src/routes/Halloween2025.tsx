@@ -1383,23 +1383,26 @@ const HalloweenPage: FC = () => {
                         {t("halloween.quests.mcbones2.title")}
                     </h2>
                     <span className="w-full p-1 px-2 text-xs">
-                        1. {t("halloween.quests.mcbones.findTomb")}
+                        1. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.mcbones.findTomb")}
                     </span>
                     <span className="w-full pb-0 px-2 text-xs">
                         &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">110 110 125</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        2. {t("halloween.quests.mcbones.talk")}
+                        3. {t("halloween.quests.mcbones.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        3. {t("halloween.quests.mcbones.slurpSingleGhost")}
+                        4. {t("halloween.quests.mcbones.slurpSingleGhost")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        4. {t("halloween.quests.mcbones.talk")}
+                        5. {t("halloween.quests.mcbones.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        5. {t("halloween.quests.mcbones.giveVaccum")}
+                        6. {t("halloween.quests.mcbones.giveVaccum")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
@@ -1419,7 +1422,10 @@ const HalloweenPage: FC = () => {
                         {t("halloween.quests.mcbones3.title")}
                     </h2>
                     <span className="w-full p-1 px-2 text-xs">
-                        1. {t("halloween.quests.mcbones.giveSheet")}
+                        1. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.mcbones.giveSheet")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
