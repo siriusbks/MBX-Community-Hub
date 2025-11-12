@@ -819,7 +819,7 @@ const HalloweenPage: FC = () => {
                             <span>
                                 {t("halloween.week3.mission3")} [32]
                             </span>
-                            <span className="text-gray-400">None</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
