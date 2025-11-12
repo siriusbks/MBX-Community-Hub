@@ -163,7 +163,7 @@ const BestiaryPage: FC = () => {
 
         return (
             <>
-                <div className="rounded overflow-hidden w-[90%] mx-auto relative bg-gray-400 max-h-none" style={{ aspectRatio: "1 / 1", maxHeight: 'none' }}>
+                <div className="rounded-xl overflow-hidden w-[90%] mx-auto relative bg-gray-400 max-h-none" style={{ aspectRatio: "1 / 1", maxHeight: 'none' }}>
                     <MapContainer
                         crs={L.CRS.Simple}
                         center={[mapConfig.height / 2, mapConfig.width / 2]}
@@ -418,9 +418,9 @@ const BestiaryPage: FC = () => {
                             &times;
                         </span>
 
-                        <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex flex-col md:flex-row gap-4 flex-1 overflow-hidden">
                             {/* Left column: image, name, region, health, stats, family, drops */}
-                            <div className="w-full md:w-1/2 flex flex-col gap-4">
+                            <div className="w-full md:w-1/2 flex flex-col gap-4 pr-2">
                                 <div className="flex items-start gap-4">
                                     <div className="w-48 h-48 flex-shrink-0 rounded overflow-hidden bg-gray-900 p-3 flex items-center justify-center">
                                         {selectedMob.mob.image ? (
@@ -433,7 +433,11 @@ const BestiaryPage: FC = () => {
                                     <div className="flex-1 my-auto">
                                         <span className="flex flex-row justify-between align-center items-center">
                                         <h3 className="text-2xl font-bold text-white">{t(selectedMob.mob.name)}</h3>
-                                        <h3 className="text-2xl font-semibold text-white">{t("MAP_NAME")}</h3>
+                                        {selectedMob.islandKey ? (
+                                            <h3 className="text-2xl font-semibold text-white">
+                                                {t(mapNameTranslationKeys[selectedMob.islandKey] ?? selectedMob.islandKey, { ns: "map", defaultValue: selectedMob.islandKey })}
+                                            </h3>
+                                        ) : null}
                                         </span>
 
                                         <div className="flex items-center gap-3 justify-between align-center items-center">
@@ -509,7 +513,8 @@ const BestiaryPage: FC = () => {
                                 <div>
                                     <div className="text-sm text-gray-200 font-semibold mb-2">{t("bestiary.drop", { ns: "bestiary", defaultValue: "Drops" })}</div>
                                     {selectedMob.mob.drop && selectedMob.mob.drop.length > 0 ? (
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                                        <div className="max-h-[40vh] overflow-y-auto custom-scrollbar pr-1">
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
                                             {selectedMob.mob.drop.slice().sort((a, b) => (b.dropChance ?? 0) - (a.dropChance ?? 0)).map((d, i) => {
                                                 const chance = formatChance(d.dropChance ?? 0);
                                                 const rarity = itemsRarity?.[d.itemId] ?? undefined;
@@ -537,6 +542,7 @@ const BestiaryPage: FC = () => {
                                                     </div>
                                                 );
                                             })}
+                                            </div>
                                         </div>
                                     ) : (
                                         <div className="text-xs text-gray-400 italic">{t("bestiary.noDrop", { ns: "bestiary", defaultValue: "No drops" })}</div>
