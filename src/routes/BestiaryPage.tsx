@@ -26,7 +26,7 @@ import {
 } from "@components/editor/LevelBadge";
 
 const BestiaryPage: FC = () => {
-    const { t } = useTranslation(["bestiary", "map", "items"]);
+    const { t } = useTranslation(["bestiary", "map", "items", "halloween"]);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -475,7 +475,7 @@ const BestiaryPage: FC = () => {
                                         ) => (
                                             <div
                                                 key={`${regionKey}-${idx}`}
-                                                className="relative bg-gray-800 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
+                                                className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
                                                 onClick={() =>
                                                     setSelectedMob({
                                                         mob,
@@ -484,8 +484,8 @@ const BestiaryPage: FC = () => {
                                                     })
                                                 }
                                             >
-                                                <div className="flex items-center gap-1 text-white text-xs font-semibold">
-                                                    <Eye className="h-4 w-4" />
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
+                                                    <Eye className="h-4 w-4 rounded" />
                                                     {t("bestiary.clickToView")}
                                                 </div>
 
@@ -848,22 +848,18 @@ const BestiaryPage: FC = () => {
                                                                 key={i}
                                                                 className="bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 flex flex-col items-center text-center"
                                                             >
+{(() => {
+                                                            const id = (d.itemId || "").toString().toLowerCase();
+                                                            return (
                                                                 <MuseumItemImage
-                                                                    detailsIndex={
-                                                                        null
-                                                                    }
-                                                                    itemId={
-                                                                        d.itemId
-                                                                    }
-                                                                    alt={
-                                                                        d.itemId
-                                                                    }
+                                                                    detailsIndex={null}
+                                                                    itemId={d.itemId}
+                                                                    alt={d.itemId}
                                                                     className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]  h-16 w-16 object-contain my-1 mb-2"
-                                                                    style={{
-                                                                        imageRendering:
-                                                                            "pixelated",
-                                                                    }}
+                                                                    style={{ imageRendering: "pixelated" }}
                                                                 />
+                                                            );
+                                                        })()}
                                                                 {rarityLabel && (
                                                                     <div
                                                                         className={`text-[10px] px-2 py-0.5 rounded ${rarityBg} text-white mb-1`}
@@ -874,17 +870,16 @@ const BestiaryPage: FC = () => {
                                                                     </div>
                                                                 )}
                                                                 <div className="text-xs text-gray-200 leading-none font-bold w-full mb-1">
-                                                                    {t(
-                                                                        d.itemId,
-                                                                        {
-                                                                            ns: "items",
-                                                                            defaultValue:
-                                                                                d.itemId,
-                                                                        }
-                                                                    )}
+                                                                    {(() => {
+                                                                        const id = d.itemId;
+                                                                        const fromItems = t(id, { ns: "items", defaultValue: id });
+                                                                        if (fromItems !== id) return fromItems;
+                                                                        const fromBestiary = t(`halloween.${id}`, { ns: "halloween", defaultValue: id });
+                                                                        return fromBestiary !== id ? fromBestiary : id;
+                                                                    })()}
                                                                 </div>
                                                                 <div className="text-[11px] text-gray-300 mt-auto">
-                                                                    {chance}%
+                                                                    {( (d.dropChance ?? 0) === 0 ? "???" : `${chance}%` )}
                                                                 </div>
                                                             </div>
                                                         );

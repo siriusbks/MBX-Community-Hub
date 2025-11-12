@@ -21,7 +21,8 @@ const MuseumItemImage: React.FC<MuseumItemImageProps> = ({
     useEffect(() => {
         if (!groupCategory) {
             // Charge le JSON et recherche la catégorie associée à l'itemId
-            fetch("/assets/data/items_museum_grouped_by_category.json")
+            fetch("/assets/data/all_items_grouped_by_category.json")
+            //fetch("/assets/data/items_museum_grouped_by_category.json")
                 .then((res) => res.json())
                 .then((groups: Array<{ category: string; items: string[] }>) => {
                     const found = groups.find((group) => group.items.includes(itemId));
@@ -48,6 +49,8 @@ const MuseumItemImage: React.FC<MuseumItemImageProps> = ({
     const primarySrc = effectiveCategory
         ? `assets/media/museum/${effectiveCategory}/${itemId}.png`
         : fallbackImage;
+
+        console.log("MuseumItemImage - itemId:", itemId, "effectiveCategory:", effectiveCategory, "primarySrc:", primarySrc, "fallbackImage:", fallbackImage);
 
     const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const currentSrc = (e.target as HTMLImageElement).src;
