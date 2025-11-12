@@ -62,19 +62,23 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 90,
                 halloween2025: true,
             },
-            /*{
+        ],
+        small_island: [
+            
+
+            {
                 name: "bestiary.halloween_pumpkin",
                 image: "assets/media/museum/not-found.png",
-                minlevel: 0,
-                maxlevel: 0,
-                minhealth: 0,
-                maxhealth: 0,
+                minlevel: 35,
+                maxlevel: 40,
+                minhealth:900,
+                maxhealth: 1100,
                 earthResistant: 0,
-                fireResistant: 0,
-                waterResistant: 0,
+                fireResistant: -20,
+                waterResistant:50,
                 airResistant: 0,
                 halloween2025: true,
-            },*/
+            },
         ],
         sewers: [
             {

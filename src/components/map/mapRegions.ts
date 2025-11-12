@@ -419,6 +419,22 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
                 },
             ],
         },
+        small_island: {
+            zones: [
+                {
+                    color: "#ff8800ff",
+                    coords: [
+                        [238, 400],
+                        [258, 450],
+                        [218, 450],
+                        [218, 420],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.small_island[0],
+                    ],
+                },
+            ],
+        },
         sewers: {
             zones: [
                 {

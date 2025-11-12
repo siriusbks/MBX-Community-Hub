@@ -1471,10 +1471,26 @@ const HalloweenPage: FC = () => {
                         7. {t("halloween.quests.jacko.killPumpkins")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        7. {t("halloween.quests.jacko.talk")}
+                        8. {t("halloween.quests.jacko.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        8. {t("halloween.quests.jacko.lootParasites")} 7x <span className="text-RARE">{t("halloween.halloween_parasite")}</span>  
+                        9. {t("halloween.quests.jacko.lootParasites")} 7x <span className="text-RARE">{t("halloween.halloween_parasite")}</span>  
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        10. {t("halloween.quests.llowee.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        11. {t("halloween.quests.llowee.openWorkshop")}
+                    </span>
+                    <span className="w-full pb-0 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-EPIC">{t("halloween.halloween_pesticide")}</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        12. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        13. {t("halloween.quests.jacko.givePesticide")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
                         {t("halloween.quests.universal.reward")}:{" "}
@@ -1600,7 +1616,7 @@ const HalloweenPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
                     <a
                         key={(mob.name || "mob") + index}
