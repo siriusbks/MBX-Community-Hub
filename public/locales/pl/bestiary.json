@@ -1,6 +1,13 @@
 {
     "bestiary.title": "Bestiariusz",
     "bestiary.subtitle": "Odkryj różnorodne stworzenia zamieszkujące świat Minebox.",
+    "bestiary.mapPreview": "Strefy występowania Moba",
+    "bestiary.family": "Rodzina Moba",
+    "bestiary.clickToView": "Kliknij, aby zobaczyć",
+    "bestiary.noFamily": "Ten Mob nie ma rodziny...",
+    "bestiary.drop": "Lista Dropów",
+    "bestiary.noDrop": "Ten Mob nie ma żadnym Dropów",
+    "bestiary.openInteractiveMap": "Otwórz Interaktywną mapę",
     "bestiary.level": "Poz.",
     "bestiary.boss": "Boss",
     "bestiary.blue_starfish": "Niebieska Rozgwiazda",
