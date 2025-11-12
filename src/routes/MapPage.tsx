@@ -968,10 +968,15 @@ const MapPage: FC = () => {
                                             })}
                                         </summary>
 
-                                        <div className="px-3 pt-2 pb-4 space-y-2">
+                                        <div className="px-3 pt-2 pb-4 space-y-2 gap-1 flex flex-col">
                                             {[...BestiaryList].map(
                                                 (fish, index) => {
                                                     return (
+                                                        <Link
+                                                                            to={`/bestiary?mob=${encodeURIComponent(fish.name)}`}
+                                                                            className=""
+                                                                            title={t("bestiary.share", { ns: "bestiary", defaultValue: "Share" })}
+                                                                        >
                                                         <div
                                                             key={index}
                                                             className="bg-gray-800 rounded p-2 flex gap-3 items-center"
@@ -1107,8 +1112,9 @@ const MapPage: FC = () => {
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>                     
                                                         </div>
+                                                        </Link>
                                                     );
                                                 }
                                             )}

@@ -6,7 +6,7 @@
 
 import React, { FC, useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Bone, Eye, Package, Star } from "lucide-react";
 import MuseumItemImage from "@components/museum/MuseumItemImage";
@@ -27,6 +27,8 @@ import {
 
 const BestiaryPage: FC = () => {
     const { t } = useTranslation(["bestiary", "map", "items"]);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     // Selected mob for modal popup: includes optional regionKey and islandKey for map
     const [selectedMob, setSelectedMob] = useState<{
@@ -84,6 +86,83 @@ const BestiaryPage: FC = () => {
         load();
         return () => { mounted = false; };
     }, []);
+
+    // If the page is opened with ?mob=<mobName>, auto-open that mob's modal
+    useEffect(() => {
+        const tryFind = (param: string | null) => {
+            if (!param) return null;
+            // exact
+            let found = findMobByName(param);
+            if (found) return found;
+
+            // try with bestiary. prefix
+            const pref = param.startsWith("bestiary.") ? param : `bestiary.${param}`;
+            found = findMobByName(pref);
+            if (found) return found;
+
+            // normalized (underscores, decoded)
+            const normalized = param.replace(/\s+/g, "_");
+            found = findMobByName(normalized) || findMobByName(`bestiary.${normalized}`);
+            if (found) return found;
+
+            // fallback: search by last segment or substring
+            const needle = param.toLowerCase();
+            for (const [islandKey, regions] of Object.entries(bestiaryData)) {
+                for (const [regionKey, mobs] of Object.entries(regions as any)) {
+                    for (const mob of mobs as BestiaryInfo[]) {
+                        const last = mob.name.split('.').pop() || mob.name;
+                        if (last.toLowerCase() === needle) return { mob, regionKey, islandKey };
+                        if (mob.name.toLowerCase().includes(needle)) return { mob, regionKey, islandKey };
+                    }
+                }
+            }
+            return null;
+        };
+
+        try {
+            const params = new URLSearchParams(location.search);
+            const mobParam = params.get("mob");
+            let found = tryFind(mobParam);
+            if (!found && mobParam) {
+                try {
+                    const decoded = decodeURIComponent(mobParam);
+                    found = tryFind(decoded);
+                } catch (e) {
+                    // ignore
+                }
+            }
+            if (found) setSelectedMob(found);
+        } catch (e) {
+            // ignore
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.search]);
+
+    // Reflect selected mob in the URL (?mob=...), remove when modal closed
+    useEffect(() => {
+        try {
+            const params = new URLSearchParams(location.search);
+            const current = params.get("mob");
+            if (selectedMob) {
+                const want = selectedMob.mob.name;
+                if (current !== want) {
+                    params.set("mob", want);
+                    const search = params.toString();
+                    navigate(`${location.pathname}?${search}`, { replace: true });
+                }
+            } else {
+                if (current) {
+                    params.delete("mob");
+                    const search = params.toString();
+                    const suffix = search ? `?${search}` : "";
+                    navigate(`${location.pathname}${suffix}`, { replace: true });
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
+    }, [selectedMob, location.pathname, location.search, navigate]);
 
     // (No per-region view or interaction helpers — preview shows the whole map)
 
@@ -493,7 +572,7 @@ const BestiaryPage: FC = () => {
                                                         className="flex flex-col items-center text-center bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 hover:bg-gray-700/60 focus:outline-none"
                                                         title={t(f)}
                                                     >
-                                                        <img src={icon} alt={f} className="h-20 w-20 object-contain rounded-md p-1 mb-1" />
+                                                        <img src={icon} alt={f} className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-20 w-20 object-contain rounded-md p-1 mb-1" />
                                                         {levelText && (
                                                             <div className="w-full flex justify-center">
                                                                 <span className={levelClass}>{levelText}</span>
@@ -531,7 +610,7 @@ const BestiaryPage: FC = () => {
 
                                                 return (
                                                     <div key={i} className="bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 flex flex-col items-center text-center">
-                                                        <MuseumItemImage detailsIndex={null} itemId={d.itemId} alt={d.itemId} className="h-16 w-16 object-contain my-1 mb-2" style={{ imageRendering: "pixelated" }} />
+                                                        <MuseumItemImage detailsIndex={null} itemId={d.itemId} alt={d.itemId} className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]  h-16 w-16 object-contain my-1 mb-2" style={{ imageRendering: "pixelated" }} />
                                                         {rarityLabel && (
                                                             <div className={`text-[10px] px-2 py-0.5 rounded ${rarityBg} text-white mb-1`}>
                                                                 {rarityLabel}

@@ -27,6 +27,7 @@ import {
     LevelBG_Gradient,
     LevelTextColor,
 } from "@components/editor/LevelBadge";
+import { Link } from "react-router-dom";
 
 type HalloweenItem = {
     image: string;
@@ -1618,6 +1619,11 @@ const HalloweenPage: FC = () => {
 
             <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
+                    <Link
+                                                                            to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
+                                                                            className=""
+                                                                            title={t("bestiary.share", { ns: "bestiary", defaultValue: "Share" })}
+                                                                        >
                     <a
                         key={(mob.name || "mob") + index}
                         className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
@@ -1689,6 +1695,7 @@ const HalloweenPage: FC = () => {
                             </span>
                         </span>
                     </a>
+                    </Link>
                 ))}
             </div>
 
