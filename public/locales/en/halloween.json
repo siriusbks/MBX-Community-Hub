@@ -27,6 +27,8 @@
     "halloween.week2.mission4": "Eat Halloween Candy",
     "halloween.week2.mission6": "Apply Spooked (Effect) to a Player",
     "halloween.week3": "Week 3",
+    "halloween.week3.mission3": "Slain Haunted Pumpkin",
+    "halloween.week3.mission6": "Collect Pumpkin",
     "halloween.week4": "Final Week",
     "halloween.week.active": "Active Now",
     "halloween.week.reward": "Weekly Reward",
@@ -74,6 +76,11 @@
     "halloween.quests.mcbones.giveVaccum": "Give Vacuum to Bony McBones",
     "halloween.quests.mcbones.giveSheet": "Give 1024 Dirty Sheets to Bony McBones",
 
+    "halloween.quests.jacko.title": "Haunted Pumpkins?!",
+    "halloween.quests.jacko.talk": "Talk to Jacko",
+    "halloween.quests.jacko.babyPumpkin": "Caught 14 Baby Pumpkins",
+    "halloween.quests.jacko.killPumpkins": "Kill 6 Pumpkins Monsters",
+    "halloween.quests.jacko.lootParasites": "Loot ",
 
     "halloween.quests.universal.location": "Location",
     "halloween.quests.universal.time": "Time",

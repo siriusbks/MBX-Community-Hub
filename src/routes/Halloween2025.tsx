@@ -804,45 +804,53 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission1")} [128]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">8x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission4")} [24]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week3.mission3")} [32]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-gray-400">None</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission5")} <span className="text-RARE">{t("halloween.halloween_candy_sack")}</span> [64]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission6")} [5]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week3.mission6")} [8192]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                            <span>???</span>
+                                                        <span>
+                                <span className="text-LEGENDARY">
+                                    6x {t("halloween.quests.universal.bp_star")}
+                                </span>
+                                ,{" "}
+                                <span className="text-EPIC">
+                                    {t("halloween.halloween_witch_cauldron")}
+                                </span>
+                            </span>
                         </div>
                     </span>
                 </span>
@@ -1435,6 +1443,47 @@ const HalloweenPage: FC = () => {
                         ,{" "}
                         <span className="text-RARE">
                             6x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.jacko.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.jacko.babyPumpkin")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.llowee.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        5. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        7. {t("halloween.quests.jacko.killPumpkins")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        7. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        8. {t("halloween.quests.jacko.lootParasites")} 7x <span className="text-RARE">{t("halloween.halloween_parasite")}</span>  
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            8 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            12x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
                     </div>
