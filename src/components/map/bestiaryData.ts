@@ -64,11 +64,10 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
         ],
         small_island: [
-            
-
+        
             {
                 name: "bestiary.halloween_pumpkin",
-                image: "assets/media/museum/not-found.png",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Haunted_Pumpkin.png",
                 minlevel: 35,
                 maxlevel: 40,
                 minhealth:900,

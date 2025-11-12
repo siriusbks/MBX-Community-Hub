@@ -1616,13 +1616,13 @@ const HalloweenPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
                     <a
                         key={(mob.name || "mob") + index}
                         className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
                     >
-                        <span className="flex flex-row items-center gap-2">
+                        <span className="flex flex-col items-center gap-2">
                             <img
                                 src={
                                     mob.image ??

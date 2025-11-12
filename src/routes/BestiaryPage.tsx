@@ -219,10 +219,10 @@ const BestiaryPage: FC = () => {
                     </div>
                 </div>
 
-                <div className="mt-2 flex justify-end">
+                <div className="mx-auto mt-2 flex justify-end">
                     <Link
                         to={`/mappage?selectedMap=${encodeURIComponent(island)}`}
-                        className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm max-w-full break-words"
+                        className="mx-auto inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm max-w-full break-words"
                     >
                         <Eye/> {t("bestiary.openInteractiveMap", { ns: "bestiary", defaultValue: "Open Interactive Map" })}
                     </Link>
@@ -430,19 +430,14 @@ const BestiaryPage: FC = () => {
                                         )}
                                     </div>
 
-                                    <div className="flex-1">
+                                    <div className="flex-1 my-auto">
                                         <span className="flex flex-row justify-between align-center items-center">
                                         <h3 className="text-2xl font-bold text-white">{t(selectedMob.mob.name)}</h3>
-                                        <h3 className="text-2xl font-bold text-white">{t(selectedMob.mob.name)}</h3>
+                                        <h3 className="text-2xl font-semibold text-white">{t("MAP_NAME")}</h3>
                                         </span>
-                                        {
-                                        selectedMob.regionKey && (
-                                            <div className="text-sm text-gray-300 mt-1">
-                                                {t(mapNameRegions[selectedMob.regionKey] ?? selectedMob.regionKey, { ns: "map", defaultValue: selectedMob.regionKey })}
-                                            </div>
-                                        )}
 
-                                        <div className="mt-2 flex items-center gap-3">
+                                        <div className="flex items-center gap-3 justify-between align-center items-center">
+                                            <span className="flex flex-row gap-1">
                                             <span className={`${LevelBG_Gradient(selectedMob.mob.minlevel)} ${LevelTextColor(selectedMob.mob.minlevel)} px-2 py-0 rounded-sm text-[11px] font-semibold`}>
                                                 Lvl {selectedMob.mob.minlevel}-{selectedMob.mob.maxlevel}
                                             </span>
@@ -452,10 +447,18 @@ const BestiaryPage: FC = () => {
                                             {selectedMob.mob.boss && (
                                                 <span className="uppercase px-2 py-0 rounded text-[10px] bg-yellow-600 bg-opacity-50 border font-bold border-yellow-600 w-fit">{t("boss", { ns: "bestiary" })}</span>
                                             )}
+                                            </span>
+                                            
+                                        {
+                                        selectedMob.regionKey && (
+                                            <div className="text-sm text-gray-300 mt-1">
+                                                {t(mapNameRegions[selectedMob.regionKey] ?? selectedMob.regionKey, { ns: "map", defaultValue: selectedMob.regionKey })}
+                                            </div>
+                                        )}
                                         </div>
 
-                                        <div className="mt-2">
-                                            <div className="text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium w-max">
+                                        <div className="mt-2 w-full">
+                                            <div className="w-full text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium">
                                                 {selectedMob.mob.minhealth?.toLocaleString?.() ?? 0} - {selectedMob.mob.maxhealth?.toLocaleString?.() ?? 0}
                                             </div>
                                             <div className="mt-2 text-[12px] text-gray-300">
