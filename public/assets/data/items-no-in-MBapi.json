@@ -1733,7 +1733,7 @@
         "id": "halloween_candy_corn",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1766,7 +1766,7 @@
         "id": "halloween_candy_gumdrop",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1804,7 +1804,7 @@
         "id": "halloween_candy_licorice",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1832,7 +1832,7 @@
         "id": "halloween_candy_peppermint",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1865,7 +1865,7 @@
         "id": "halloween_candy_pop",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1893,7 +1893,7 @@
         "id": "halloween_candy_twist",
         "rarity": "RARE",
         "level": 5,
-        "category": "EDIBLE",
+        "category": "CANDY",
         "used_in_recipes": [
             {
                 "type": "custom",
@@ -1993,7 +1993,7 @@
         "category": "BOOTS"
     },
     {
-        "id": "halloween_spooky_pumpkin_backpack",
+        "id": "halloween_spooky_pumpkin_wings",
         "rarity": "LEGENDARY",
         "set": "spooky_pumpkin",
         "level": 35,

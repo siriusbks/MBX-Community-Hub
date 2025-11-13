@@ -443,13 +443,7 @@
             "owner_remover_legendary",
             "owner_remover_mythic",
             "star_sub_plus",
-            "star_sub_plus_enchanted",
-            "halloween_candy_corn",
-            "halloween_candy_gumdrop",
-            "halloween_candy_licorice",
-            "halloween_candy_peppermint",
-            "halloween_candy_pop",
-            "halloween_candy_twist"
+            "star_sub_plus_enchanted"
         ]
     },
     {
@@ -1170,7 +1164,7 @@
             "pet_valentine_cupidon",
             "pet_valentine_heart",
             "pet_halloween_candy",
-            "pet_halloween_mommy",
+            "pet_halloween_mummy",
             "pet_fire_dog",
             "pet_wyrmling",
             "pet_slimy",
@@ -1347,10 +1341,16 @@
             "candy_enchanted_crafting_speed",
             "candy_fly",
             "candy_enchanted_fly",
-            "xmas_orange_candy",
+            "xmas_yellow_candy",
             "xmas_green_candy",
             "xmas_red_candy",
-            "xmas_blue_candy"
+            "xmas_blue_candy",
+            "halloween_candy_corn",
+            "halloween_candy_gumdrop",
+            "halloween_candy_licorice",
+            "halloween_candy_peppermint",
+            "halloween_candy_pop",
+            "halloween_candy_twist"
         ]
     },
     {
@@ -1619,7 +1619,7 @@
             "ghostbuster_backpack",
             "steampunk_backpack",
             "puddle_backpack",
-            "halloween_spooky_pumpkin_backpack",
+            "halloween_spooky_pumpkin_wings",
             "angel_backpack",
             "mushroom_backpack",
             "snail_backpack",
@@ -1643,7 +1643,7 @@
             "mount_motorcycle",
             "mount_shark",
             "mount_wooden_plane",
-            "mount_valentine_pegasse",
+            "mount_valentine_pegase",
             "mount_hipster_bike",
             "mount_shopping_cart",
             "mount_truck",
@@ -1683,7 +1683,11 @@
     {
         "category": "JELLY",
         "itemCount": 4,
-        "items": ["jelly_rare", "jelly_epic", "jelly_legendary", "jelly_mythic"]
+        "items": [
+            "jelly_rare", 
+            "jelly_epic", 
+            "jelly_legendary", 
+            "jelly_mythic"]
     },
     {
         "category": "SKULL",
@@ -1702,81 +1706,81 @@
         ]
     },
     {
-        "category": "PLATES",
+        "category": "PROFILE_PLATE",
         "itemCount": 8,
         "items": [
-            "profile_plate_sub",
-            "profile_plate_tropical",
-            "profile_plate_royal",
-            "profile_plate_plant",
-            "profile_plate_evi",
-            "profile_plate_love",
-            "profile_plate_temple",
-            "profile_plate_rainbow"
+            "sub",
+            "tropical",
+            "royal",
+            "plant",
+            "evil",
+            "love",
+            "temple",
+            "rainbow"
         ]
     },
     {
-        "category": "BALLONS",
+        "category": "BALLOON",
         "itemCount": 5,
         "items": [
-            "balloon_lny_snake",
-            "balloon_valentine_heart",
-            "balloon_candy_pumpkin",
-            "balloon_pack_alpha_full",
-            "balloon_xmas_tree"
+            "lny_snake",
+            "valentine_heart",
+            "halloween_candy_pumpkin",
+            "pack_alpha_full",
+            "xmas_tree"
         ]
     },
     {
-        "category": "ORNAMENTS",
+        "category": "NAMEPLATE",
         "itemCount": 11,
         "items": [
-            "nameplate_skull",
-            "nameplate_sword",
-            "nameplate_golden_devileyes",
-            "nameplate_golden_skull",
-            "nameplate_hammer",
-            "nameplate_map",
-            "nameplate_skull_upgrade",
-            "nameplate_demonic_azure",
-            "nameplate_golden_flag",
-            "nameplate_heart",
-            "nameplate_volcan"
+            "skull",
+            "sword",
+            "golden_devileyes",
+            "golden_skull",
+            "hammer",
+            "map",
+            "skull_upgrade",
+            "demonic_azure",
+            "golden_flag",
+            "heart",
+            "volcan"
         ]
     },
     {
-        "category": "EMOTES",
+        "category": "EMOTE",
         "itemCount": 26,
         "items": [
-            "emote_wave",
-            "emote_crossed_arms",
-            "emote_flip",
-            "emote_handstand",
-            "emote_large_gap",
-            "emote_sit",
-            "emote_tpose",
-            "emote_box",
-            "emote_cooking",
-            "emote_kiss",
-            "emote_marry_me",
-            "emote_possessed",
-            "emote_puddle",
-            "emote_spinner",
-            "emote_flying_head",
-            "emote_gnome",
-            "emote_guitar",
-            "emote_meditation",
-            "emote_military_walk",
-            "emote_nature_aura",
-            "emote_rock_aura",
-            "emote_slavic_dance",
-            "emote_zombie",
-            "emote_rat_dance",
-            "emote_rich",
-            "emote_skull_aura"
+            "wave",
+            "crossed_arms",
+            "flip",
+            "handstand",
+            "large_gap",
+            "sit",
+            "tpose",
+            "box",
+            "cooking",
+            "kiss",
+            "marry_me",
+            "possessed",
+            "puddle",
+            "spinner",
+            "flying_head",
+            "gnome",
+            "guitar",
+            "meditation",
+            "military_walk",
+            "nature_aura",
+            "rock_aura",
+            "slavic_dance",
+            "zombie",
+            "rat_dance",
+            "rich",
+            "skull_aura"
         ]
     },
     {
-        "category": "FURNITURES",
+        "category": "FURNITURE",
         "itemCount": 171,
         "items": [
             "mm-pebbles_01",
