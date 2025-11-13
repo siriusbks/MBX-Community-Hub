@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import INRItemImage from "./INRItemImage";
+import ItemTranslation from "../ItemTranslation";
 
 interface ItemCardProps {
     itemId: string;
@@ -27,7 +28,7 @@ const INRItemCard: React.FC<ItemCardProps> = ({
         adjustedRarity = missingRarity[itemId];
     }
     
-        const { t } = useTranslation(["itemsNrecipes", "items", "museum"]);
+    // const { t } = useTranslation(["itemsNrecipes"]);
 
     const TMPBorderColorClass =
         {
@@ -81,19 +82,11 @@ const INRItemCard: React.FC<ItemCardProps> = ({
 
             <span className="flex flex-col w-full">
                 <span className="font-bold text-left leading-none mt-auto mb-1">
-                    
-                        {t(`${itemId}`, {
-                                    ns: "items",
-                                    defaultValue: itemId
-                                        .replace(/_/g, " ")
-                                        .split(" ")
-                                        .map(
-                                            (word: string) =>
-                                                word.charAt(0).toUpperCase() +
-                                                word.slice(1).toLowerCase()
-                                        )
-                                        .join(" "),
-                                })}
+                    <ItemTranslation
+                        mbxId={itemId}
+                        category={category!}
+                        type="name"
+                    />
                 </span>
                         <span className="flex flex-row justify-between align-center justify-center">
                 <RarityBadge

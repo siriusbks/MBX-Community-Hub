@@ -11,7 +11,7 @@ interface ItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex, ...imgProps }) => {
-  const cleanedItemId = itemId.replace(/^collection_/, "").replace(/_level$/, "").replace(/_skull$/, "");
+  const cleanedItemId = itemId.replace(/^collection_/, "").replace(/_level$/, "");
   
   const [computedCategory, setComputedCategory] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex,
   fallbackChain.push(`/assets/media/museum/TREASURE/${cleanedItemId}.png`);
   fallbackChain.push(`/assets/media/jobs/${cleanedItemId}.png`);
   fallbackChain.push(`/assets/media/icons/${cleanedItemId}.png`);
-  fallbackChain.push(`/assets/media/skulls/${cleanedItemId}.png`);
+  fallbackChain.push(`/assets/media/skulls/${cleanedItemId.replace(/_skull$/, "")}.png`);
   fallbackChain.push(`/assets/media/EVENT/HALLOWEEN/${cleanedItemId}.png`);
   fallbackChain.push(
     detailsIndex &&
