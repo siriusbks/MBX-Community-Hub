@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import ItemTranslation from "../ItemTranslation";
 
 interface MuseumCard {
     itemId: string;
@@ -59,7 +60,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         }[adjustedRarity] ||
         "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
-    const { t } = useTranslation(["museum", "items"]);
+    const { t } = useTranslation("museum");
 
     const [src, setSrc] = useState(
         `/assets/media/museum/${category}/${itemId}.png`
@@ -117,27 +118,11 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                     isOwned ? "opacity-80 text-green-300" : ""
                 }`}
             >
-                {t(`${itemId}`, {
-                    ns: "items",
-                    defaultValue: itemId
-                    .replace(/_/g, " ")
-                    .split(" ")
-                    .map(
-                        (word) =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                    )
-                    .join(" "),
-                })}
-                {/*{itemId
-                    .replace(/_/g, " ")
-                    .split(" ")
-                    .map(
-                        (word) =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                    )
-                    .join(" ")}*/}
+                <ItemTranslation
+                        mbxId={itemId}
+                        category={category!}
+                        type="name"
+                    />
             </span>
 
             {isOwned && (

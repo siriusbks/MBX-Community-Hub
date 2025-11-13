@@ -23,6 +23,8 @@ import {
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage";
+import ItemTranslation from "../ItemTranslation";
+import { redirect } from "react-router-dom";
 
 // Definition of interfaces
 interface Group {
@@ -39,7 +41,7 @@ interface Details {
 }
 
 export const MuseumApp: FC = () => {
-    const { t } = useTranslation(["museum", "items"]);
+    const { t } = useTranslation("museum");
     const { username, setUsername } = useProfileStore();
 
     // States for storing data from the API and JSON files
@@ -56,6 +58,9 @@ export const MuseumApp: FC = () => {
     // State for the missing items filter in the missing items summary
     const [missingSelection, setMissingSelection] = useState<Record<string, boolean>>({});
     const [selectedItems, setSelectedItems] = useState(true);
+
+    // State for the Category
+    const [computedCategory, setComputedCategory] = useState<string | null>(null);
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
@@ -265,6 +270,23 @@ export const MuseumApp: FC = () => {
         };
     }, [craftModalItem]);
 
+    const setCategory = (itemId: string) => {
+        fetch("/assets/data/items_museum_grouped_by_category.json")
+            .then((res) => res.json())
+            .then((groups: Array<{ category: string; items: string[] }>) => {
+                const found = groups.find((group) => group.items.includes(itemId));
+                if (found) {
+                    setComputedCategory(found.category);
+                } else {
+                    setComputedCategory(""); // ou laissez la chaîne vide si non trouvé
+                }
+            })
+            .catch(() => {
+                setComputedCategory("");
+            });
+        return computedCategory;
+    };
+
     // Recursive function to aggregate the required resources from a given recipe
     const gatherResources = (
         recipe: any,
@@ -403,18 +425,11 @@ export const MuseumApp: FC = () => {
                                     </button>
                                 )}
                                 {ing.amount}x{" "}
-                                {t(`${ing.id}`, {
-                                    ns: "items",
-                                    defaultValue: ing.id
-                                        .replace(/_/g, " ")
-                                        .split(" ")
-                                        .map(
-                                            (word: string) =>
-                                                word.charAt(0).toUpperCase() +
-                                                word.slice(1).toLowerCase()
-                                        )
-                                        .join(" "),
-                                })}
+                                <ItemTranslation
+                                    mbxId={ing.id}
+                                    category={setCategory(ing.id)!}
+                                    type="name"
+                                />
                             </span>
 
                             {detailsIndex &&
@@ -422,9 +437,14 @@ export const MuseumApp: FC = () => {
                                 detailsIndex[ing.id].recipe &&
                                 detailsIndex[ing.id].recipe.job && (
                                     <span className="text-xs font-normal text-green-500">
-                                        {detailsIndex[ing.id].recipe.job}
+                                        <ItemTranslation
+                                            mbxId={detailsIndex[ing.id].recipe.job}
+                                            category={"SKILL"}
+                                            type="name"
+                                        />
                                     </span>
-                                )}
+                                )
+                            }
                         </span>
                     </div>
                     {summary}
@@ -533,7 +553,12 @@ export const MuseumApp: FC = () => {
                     return (
                         <div key={index} className="mb-4">
                             <div className="text-2xl font-bold">
-                                {t(`museum.category.${group.category}`)}
+                                {/* {t(`museum.category.${group.category}`)} */}
+                                <ItemTranslation
+                                    mbxId="null"
+                                    category={group.category}
+                                    type="name"
+                                />
                             </div>
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
@@ -559,18 +584,11 @@ export const MuseumApp: FC = () => {
                                                 }}
                                             />
                                             <span className="text-sm font-semibold">
-                                                {t(`${itemId}`, {
-                                                    ns: "items",
-                                                    defaultValue: itemId
-                                                        .replace(/_/g, " ")
-                                                        .split(" ")
-                                                        .map(
-                                                            (word: string) =>
-                                                                word.charAt(0).toUpperCase() +
-                                                                word.slice(1).toLowerCase()
-                                                        )
-                                                        .join(" "),
-                                                })}
+                                                <ItemTranslation
+                                                    mbxId={itemId}
+                                                    category={group.category}
+                                                    type="name"
+                                                />
                                             </span>
                                         </li>
                                     );
@@ -628,18 +646,11 @@ export const MuseumApp: FC = () => {
                                         style={{ imageRendering: "pixelated" }}
                                     />
                                     <span className="font-bold text-sm">
-                                        {t(`${resId}`, {
-                                            ns: "items",
-                                            defaultValue: resId
-                                                .replace(/_/g, " ")
-                                                .split(" ")
-                                                .map(
-                                                    (word: string) =>
-                                                        word.charAt(0).toUpperCase() +
-                                                        word.slice(1).toLowerCase()
-                                                )
-                                                .join(" "),
-                                        })}
+                                        <ItemTranslation
+                                            mbxId={resId}
+                                            category={setCategory(resId)}
+                                            type="name"
+                                        />
                                     </span>
                                     <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
                                         {totalResources[resId].toLocaleString(
@@ -707,7 +718,12 @@ export const MuseumApp: FC = () => {
                             ) : (
                                 <Plus className="p-0.5 opacity-70" />
                             )}
-                            {t(`museum.category.${group.category}`)}
+                            {/* {t(`museum.category.${group.category}`)} */}
+                            <ItemTranslation
+                                mbxId="null"
+                                category={group.category}
+                                type="name"
+                            />
                         </span>
                         <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
@@ -737,7 +753,7 @@ export const MuseumApp: FC = () => {
                                     <MuseumItemCard
                                         key={itemId}
                                         itemId={itemId}
-                                        imageSrc={imageSrc}
+                                        imageSrc={imageSrc} // we can use MuseumItemImage but I think, we will have to rewrite the code
                                         isOwned={isOwned}
                                         rarity={rarity}
                                         category={group.category}
@@ -1086,25 +1102,19 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {t(`${craftModalItem}`, {
-                                                    ns: "items",
-                                                    defaultValue: craftModalItem
-                                                        .replace(/_/g, " ")
-                                                        .split(" ")
-                                                        .map(
-                                                            (word: string) =>
-                                                                word.charAt(0).toUpperCase() +
-                                                                word.slice(1).toLowerCase()
-                                                        )
-                                                        .join(" "),
-                                                })}
+                                                <ItemTranslation
+                                                    mbxId={craftModalItem}
+                                                    category={craftModalCategory!}
+                                                    type="name"
+                                                />
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
-                                                {
-                                                    detailsIndex[craftModalItem]
-                                                        .recipe.job
-                                                }
+                                                <ItemTranslation
+                                                    mbxId={detailsIndex[craftModalItem].recipe.job}
+                                                    category={"SKILL"}
+                                                    type="name"
+                                                />
                                             </p>
                                         </span>
                                         <span className="ml-auto">
@@ -1148,18 +1158,11 @@ export const MuseumApp: FC = () => {
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
                                                 {t("museum.craftFor")}{" "}
-                                                {t(`${craftModalItem}`, {
-                                                    ns: "items",
-                                                    defaultValue: craftModalItem
-                                                        .replace(/_/g, " ")
-                                                        .split(" ")
-                                                        .map(
-                                                            (word: string) =>
-                                                                word.charAt(0).toUpperCase() +
-                                                                word.slice(1).toLowerCase()
-                                                        )
-                                                        .join(" "),
-                                                })}
+                                                <ItemTranslation
+                                                    mbxId={craftModalItem}
+                                                    category={craftModalCategory}
+                                                    type="name"
+                                                />
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.noRecipe")}
