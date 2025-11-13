@@ -1953,6 +1953,22 @@
             }
         ]
     },
+    
+    {
+        "id": "halloween_crow_feather",
+        "rarity": "COMMON",
+        "category": "RESOURCE"
+    },
+    {
+        "id": "halloween_parasite",
+        "rarity": "RARE",
+        "category": "RESOURCE"
+    },
+    {
+        "id": "halloween_candy_sack",
+        "rarity": "RARE",
+        "category": "TREASURE"
+    },
     {
         "id": "halloween_candy_bag",
         "rarity": "RARE",
