@@ -27,6 +27,7 @@ import {
     LevelBG_Gradient,
     LevelTextColor,
 } from "@components/editor/LevelBadge";
+import { Link } from "react-router-dom";
 
 type HalloweenItem = {
     image: string;
@@ -804,45 +805,53 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission1")} [128]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">8x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission4")} [24]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week3.mission3")} [32]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission5")} <span className="text-RARE">{t("halloween.halloween_candy_sack")}</span> [64]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission6")} [5]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week3.mission6")} [8192]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                            <span>???</span>
+                                                        <span>
+                                <span className="text-LEGENDARY">
+                                    6x {t("halloween.quests.universal.bp_star")}
+                                </span>
+                                ,{" "}
+                                <span className="text-EPIC">
+                                    {t("halloween.halloween_witch_cauldron")}
+                                </span>
+                            </span>
                         </div>
                     </span>
                 </span>
@@ -1376,6 +1385,125 @@ const HalloweenPage: FC = () => {
                         </span>
                     </span>
                 </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.mcbones2.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.mcbones.findTomb")}
+                    </span>
+                    <span className="w-full pb-0 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        <span className="text-orange-500">110 110 125</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.mcbones.slurpSingleGhost")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        5. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        6. {t("halloween.quests.mcbones.giveVaccum")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            6 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            8x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.mcbones3.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.mcbones.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.mcbones.giveSheet")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            5 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            6x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
+                
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.jacko.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        2. {t("halloween.quests.jacko.babyPumpkin")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.llowee.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        5. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        7. {t("halloween.quests.jacko.killPumpkins")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        8. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        9. {t("halloween.quests.jacko.lootParasites")} 7x <span className="text-RARE">{t("halloween.halloween_parasite")}</span>  
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        10. {t("halloween.quests.llowee.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        11. {t("halloween.quests.llowee.openWorkshop")}
+                    </span>
+                    <span className="w-full pb-0 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-EPIC">{t("halloween.halloween_pesticide")}</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        12. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        13. {t("halloween.quests.jacko.givePesticide")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            8 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            12x {t("halloween.halloween_candy_sack")}
+                        </span>
+                    </span>
+                    </div>
             </div>
 
             {/* Battle Pass Section */}
@@ -1489,13 +1617,18 @@ const HalloweenPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
+                    <Link
+                                                                            to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
+                                                                            className=""
+                                                                            title={t("bestiary.share", { ns: "bestiary", defaultValue: "Share" })}
+                                                                        >
                     <a
                         key={(mob.name || "mob") + index}
                         className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
                     >
-                        <span className="flex flex-row items-center gap-2">
+                        <span className="flex flex-col items-center gap-2">
                             <img
                                 src={
                                     mob.image ??
@@ -1562,6 +1695,7 @@ const HalloweenPage: FC = () => {
                             </span>
                         </span>
                     </a>
+                    </Link>
                 ))}
             </div>
 

@@ -13,6 +13,7 @@ import {
     Shield,
     BookMarked,
     BookAIcon,
+    Bone,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -48,7 +49,7 @@ export function HomePage() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-4">
                     {/* Player Profile */}
                     <Link
                         to="/profile"
@@ -82,6 +83,25 @@ export function HomePage() {
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.interactiveMap.description")}
+                        </p>
+                    </Link>
+                    
+
+                    {/* Interactive Map */}
+                    <Link
+                        to="/bestiary"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-pink-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-pink-500/10 text-pink-400 group-hover:bg-pink-400/20 transition-colors">
+                                <Bone size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                                {t("homepage.features.bestiary.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            {t("homepage.features.bestiary.description")}
                         </p>
                     </Link>
 
@@ -167,7 +187,7 @@ export function HomePage() {
                         </p>
                     </Link>
                     {/* Recipe */}
-                    {/*
+                    {/*}
                     <Link
                         to="/itemsNrecipes"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"

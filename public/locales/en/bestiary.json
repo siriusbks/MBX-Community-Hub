@@ -1,6 +1,13 @@
 {
     "bestiary.title": "Bestiary",
     "bestiary.subtitle": "Discover the diverse creatures that inhabit the Minebox world.",
+    "bestiary.mapPreview": "Mob Spawnpoints Map Preview",
+    "bestiary.family": "Mob Family",
+    "bestiary.clickToView": "Click to view",
+    "bestiary.noFamily": "This Mob has no family...",
+    "bestiary.drop": "Drops List",
+    "bestiary.noDrop": "This mob does not drop any loot",
+    "bestiary.openInteractiveMap": "Open Interactive Map",
 
     "bestiary.vanilla.chicken": "Chicken",
     "bestiary.vanilla.rabbit": "Rabbit",
@@ -72,7 +79,7 @@
     "bestiary.desert_ogre": "Desert Ogre",
 
     "bestiary.halloween_ghost": "Ghost",
-    "bestiary.halloween_pumpkin": "Pumpkin",
+    "bestiary.halloween_pumpkin": "Haunted Pumpkin",
     "bestiary.halloween_crow": "Crow",
     "bestiary.halloween_albino_rat": "Albino Rat",
     "bestiary.halloween_gray_rat": "Gray Rat",

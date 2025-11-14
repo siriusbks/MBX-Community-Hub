@@ -1,6 +1,13 @@
 {
     "bestiary.title": "Bestiaire",
     "bestiary.subtitle": "Découvrez les différentes créatures qui vivent dans le monde de Minebox.",
+    "bestiary.mapPreview": "Aperçu des points d'apparition du mob sur la carte",
+    "bestiary.family": "Famille du Mob",
+    "bestiary.clickToView": "Voir les détails",
+    "bestiary.noFamily": "Ce Mob n'a pas de famille...",
+    "bestiary.drop": "Liste des Drops",
+    "bestiary.noDrop": "Ce mob ne lâche aucun butin",
+    "bestiary.openInteractiveMap": "Ouvrir la carte interactive",
     "bestiary.level": "lv.",
     "bestiary.boss": "Boss",
     "bestiary.blue_starfish": "Étoile de mer Bleue",
