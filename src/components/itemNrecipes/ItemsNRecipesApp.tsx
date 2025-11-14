@@ -6,6 +6,7 @@ import React, { FC, useEffect, useState, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import INRItemCard from "./INRItemCard";
 import INRItemImage from "./INRItemImage";
+import ItemTranslation from "../ItemTranslation";
 import {
     AlertTriangle,
     ArrowUpFromLine,
@@ -177,7 +178,7 @@ const gatherResources = (
 
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
 const ItemsNRecipesApp: FC = () => {
-    const { t } = useTranslation(["itemsNrecipes", "items", "museum"]);
+    const { t } = useTranslation(["itemsNrecipes", "items", "museum", "mbx"]);
 
     // States for storing API and JSON data
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
@@ -325,11 +326,6 @@ const ItemsNRecipesApp: FC = () => {
     const [panelItem, setPanelItem] = useState<string | null>(null);
     const [panelCategory, setPanelCategory] = useState<string | null>(null);
 
-    // Lore fetched from external API for the panel (some items are not present in the API)
-    const [panelLore, setPanelLore] = useState<string | null>(null);
-    const [panelLoreLoading, setPanelLoreLoading] = useState<boolean>(false);
-    const [panelLoreError, setPanelLoreError] = useState<string | null>(null);
-
     // Info panel state: displays full recipe/info in the `#infoPanel` element
     const [infoPanelItem, setInfoPanelItem] = useState<string | null>(null);
     const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(
@@ -340,65 +336,6 @@ const ItemsNRecipesApp: FC = () => {
         setPanelItem(itemId);
         setPanelCategory(category);
     };
-
-    // Fetch lore from external API when a panel item is selected
-    useEffect(() => {
-        let cancelled = false;
-        if (!panelItem) {
-            setPanelLore(null);
-            setPanelLoreError(null);
-            setPanelLoreLoading(false);
-            return;
-        }
-
-        setPanelLoreLoading(true);
-        setPanelLore(null);
-        setPanelLoreError(null);
-
-        (async () => {
-            // try to get current locale from react-i18next if available,
-            // fallback to navigator.language and finally "en"
-            let locale = "en";
-            try {
-            const i18nModule = await import("i18next");
-            locale =
-                i18nModule?.default?.language ||
-                navigator.language?.split("-")[0] ||
-                "en";
-            } catch {
-            locale = navigator.language?.split("-")[0] || "en";
-            }
-
-            fetch(
-            `https://api.minebox.co/item/${encodeURIComponent(
-                panelItem!
-            )}?locale=${encodeURIComponent(locale)}`
-            )
-            .then((res) => {
-                if (!res.ok) throw new Error(`API ${res.status}`);
-                return res.json();
-            })
-            .then((data) => {
-                if (cancelled) return;
-                // prefer `lore`, fall back to `description` if available
-                setPanelLore(data?.lore ?? data?.description ?? null);
-            })
-            .catch((err) => {
-                if (cancelled) return;
-                setPanelLore(null);
-                setPanelLoreError(
-                err instanceof Error ? err.message : String(err)
-                );
-            })
-            .finally(() => {
-                if (!cancelled) setPanelLoreLoading(false);
-            });
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [panelItem]);
 
     const openInfoPanel = (itemId: string, category: string) => {
         // populate the left info panel and close the temporary side panel
@@ -732,7 +669,7 @@ const ItemsNRecipesApp: FC = () => {
                                     className="form-checkbox h-4 w-4"
                                 />
                                 <span className="font-medium">
-                                    {t("itemsNrecipes.allCategories") ?? "All"}
+                                    {t("itemsNrecipes.allCategories")}
                                 </span>
                             </label>
                         </li>
@@ -771,12 +708,11 @@ const ItemsNRecipesApp: FC = () => {
                                             />
                                             <span className="flex flex-col items-start leading-none">
                                                 <span className="font-semibold text-xs leading-none">
-                                                    {t(`museum.category.${group.category}`, {
-                                            ns: "museum",
-                                            defaultValue: group.category
-                                                .toUpperCase()
-                                                        .replace("_", " "),
-                                        })}
+                                                    <ItemTranslation
+                                                        mbxId="null"
+                                                        category={group.category}
+                                                        type="name"
+                                                    />
                                                 </span>
                                             </span>
                                         </span>
@@ -801,13 +737,11 @@ const ItemsNRecipesApp: FC = () => {
                             <div className="flex items-start justify-between">
                                 <div>
                                     <div className="text-lg font-bold">
-                                        {t(`item.${panelItem}`, {
-                                            ns: "items",
-                                            defaultValue: panelItem.replace(
-                                                /_/g,
-                                                " "
-                                            ),
-                                        })}
+                                        <ItemTranslation 
+                                            mbxId={panelItem}
+                                            category={panelCategory!}
+                                            type="name"
+                                        />
                                     </div>
                                     <div className="text-lg font-bold">
                                         {detailsIndex?.[panelItem!]?.rarity ??
@@ -819,17 +753,13 @@ const ItemsNRecipesApp: FC = () => {
                                             ?.level ?? "??"}
                                     </div>
                                     <div className="text-xs">
-                                        {panelLoreLoading ? (
-                                            <div className="text-gray-400">Loading...</div>
-                                        ) : panelLore ? (
-                                            <div className="text-sm text-gray-200 whitespace-pre-line">{panelLore}</div>
-                                        ) : panelLoreError ? (
-                                            <div className="text-sm text-gray-400">{panelLoreError}</div>
-                                        ) : (detailsIndex?.[panelItem!] as any)?.description ? (
-                                            <div className="text-sm text-gray-200 whitespace-pre-line">{(detailsIndex[panelItem!] as any).description}</div>
-                                        ) : (
-                                            <div className="text-xs font-bold">No Description</div>
-                                        )}
+                                        <div className="text-sm text-gray-200 whitespace-pre-line">
+                                            <ItemTranslation 
+                                                mbxId={panelItem}
+                                                category={panelCategory!}
+                                                type="description&lore"
+                                            />
+                                        </div>
                                     </div>
                                 <div className="flex flex-col">
                                         <span className="w-full text-xs">STAT 00 - 00</span> 
@@ -851,6 +781,7 @@ const ItemsNRecipesApp: FC = () => {
                             <div className="mt-4">
                                 <INRItemImage
                                     itemId={panelItem}
+                                    groupCategory={panelCategory!}
                                     detailsIndex={detailsIndex}
                                     className="w-24 h-24"
                                     style={{ imageRendering: "pixelated" }}
@@ -867,14 +798,14 @@ const ItemsNRecipesApp: FC = () => {
                                     aria-disabled={usedInList.length === 0 || noRecipeAvailable}
                                     title={
                                         noRecipeAvailable
-                                            ? t("itemsNrecipes.noRecipeAvailable")
+                                            ? t("itemsNrecipes.recipe.no")
                                             : usedInList.length > 0
                                             ? t("itemsNrecipes.usedInRecipes.no")
-                                            : t("itemsNrecipes.openRecipes")
+                                            : t("itemsNrecipes.recipe.open")
                                     }
                                     className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
                                 >
-                                    {noRecipeAvailable ? t("itemsNrecipes.noRecipeAvailable") : t("itemsNrecipes.openRecipes")}
+                                    {noRecipeAvailable ? t("itemsNrecipes.recipe.no") : t("itemsNrecipes.recipe.open")}
                                 </button>
                             </div>
                         </div>
@@ -968,9 +899,7 @@ const ItemsNRecipesApp: FC = () => {
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
                                             <INRItemImage
-                                                groupCategory={
-                                                    craftModalCategory!
-                                                }
+                                                groupCategory={craftModalCategory!}
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
                                                 className="h-16 w-16 drop-shadow"
@@ -983,45 +912,21 @@ const ItemsNRecipesApp: FC = () => {
                                                     {t(
                                                         "itemsNrecipes.craftFor"
                                                     )}{" "}
-                                                    {t(
-                                                        `item.${craftModalItem}`,
-                                                        {
-                                                            ns: "items",
-                                                            defaultValue:
-                                                                craftModalItem
-                                                                    .replace(
-                                                                        /_/g,
-                                                                        " "
-                                                                    )
-                                                                    .split(" ")
-                                                                    .map(
-                                                                        (
-                                                                            word: string
-                                                                        ) =>
-                                                                            word
-                                                                                .charAt(
-                                                                                    0
-                                                                                )
-                                                                                .toUpperCase() +
-                                                                            word
-                                                                                .slice(
-                                                                                    1
-                                                                                )
-                                                                                .toLowerCase()
-                                                                    )
-                                                                    .join(" "),
-                                                        }
-                                                    )}
+                                                    <ItemTranslation
+                                                        mbxId={craftModalItem}
+                                                        category={craftModalCategory!}
+                                                        type="name"
+                                                    />
                                                 </div>
                                                 <p className="text-sm opacity-60">
                                                     {t(
                                                         "itemsNrecipes.jobRequired"
                                                     )}{" "}
-                                                    {
-                                                        detailsIndex[
-                                                            craftModalItem
-                                                        ].recipe.job
-                                                    }
+                                                    <ItemTranslation
+                                                        mbxId={detailsIndex[craftModalItem].recipe.job}
+                                                        category={"SKILL"}
+                                                        type="name"
+                                                    />
                                                 </p>
                                             </div>
                                             <div className="ml-auto flex items-center gap-2">
@@ -1216,35 +1121,11 @@ const ItemsNRecipesApp: FC = () => {
                                                     {t(
                                                         "itemsNrecipes.craftFor"
                                                     )}{" "}
-                                                    {t(
-                                                        `item.${craftModalItem}`,
-                                                        {
-                                                            ns: "items",
-                                                            defaultValue:
-                                                                craftModalItem
-                                                                    .replace(
-                                                                        /_/g,
-                                                                        " "
-                                                                    )
-                                                                    .split(" ")
-                                                                    .map(
-                                                                        (
-                                                                            word: string
-                                                                        ) =>
-                                                                            word
-                                                                                .charAt(
-                                                                                    0
-                                                                                )
-                                                                                .toUpperCase() +
-                                                                            word
-                                                                                .slice(
-                                                                                    1
-                                                                                )
-                                                                                .toLowerCase()
-                                                                    )
-                                                                    .join(" "),
-                                                        }
-                                                    )}
+                                                    <ItemTranslation
+                                                        mbxId={craftModalItem}
+                                                        category={craftModalCategory}
+                                                        type="name"
+                                                    />
                                                 </div>
                                                 <p className="text-sm opacity-60">
                                                     {t(
