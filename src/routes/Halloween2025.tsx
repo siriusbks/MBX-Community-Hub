@@ -1504,6 +1504,47 @@ const HalloweenPage: FC = () => {
                         </span>
                     </span>
                     </div>
+                    {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.jacko2.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full pt-1 px-2 text-xs">
+                        2. {t("halloween.quests.jacko2.HarvesterPlace")}
+                    </span>
+                    <span className="w-full pb-1 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
+                        <span className="text-orange-500">147 85 -94</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.jacko2.KillBoss")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            4 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            {t("halloween.halloween_candy_bag")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            8x {t("halloween.halloween_candy_sack")}
+                        </span>
+                        ,{" "}
+                        <span className="text-MYTHIC">
+                            1x {t("halloween.treasure.title")}
+                        </span>
+                    </span>
+                </div>
             </div>
 
             {/* Battle Pass Section */}
