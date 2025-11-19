@@ -112,6 +112,22 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 airResistant: 0,
                 halloween2025: true,
             },
+            {
+                name: "bestiary.halloween_boss",
+                image: "assets/media/EVENT/HALLOWEEN/Bestiary/The_Harvester.png",
+                minlevel: 46,
+                maxlevel: 46,
+                minhealth: 14000,
+                maxhealth: 14000,
+
+                boss: true,
+
+                earthResistant: 50,
+                fireResistant: -50,
+                waterResistant: 50,
+                airResistant: 0,
+                halloween2025: true,
+            },
         ],
         sewers: [
             {

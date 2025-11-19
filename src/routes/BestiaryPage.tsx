@@ -517,14 +517,14 @@ const BestiaryPage: FC = () => {
                                                                 {mob.minlevel}-
                                                                 {mob.maxlevel}
                                                             </span>
-                                                            <div className=" text-xs text-gray-300 flex gap-2">
+                                                            <div className=" text-xs text-gray-300 flex gap-1">
                                                                 {mob.halloween2025 && (
-                                                                    <span className="uppercase px-2 py-0 rounded text-[10px] bg-orange-600 bg-opacity-50 border font-bold border-orange-600 w-fit">
+                                                                    <span className="uppercase px-1 py-0 rounded text-[10px] bg-orange-600 bg-opacity-50 border font-bold border-orange-600 w-fit">
                                                                         Halloween
                                                                     </span>
                                                                 )}
                                                                 {mob.boss && (
-                                                                    <span className="uppercase px-2 py-0 rounded text-[10px] bg-yellow-600 bg-opacity-50 border font-bold border-yellow-600 w-fit">
+                                                                    <span className="uppercase px-1 py-0 rounded text-[10px] bg-yellow-600 bg-opacity-50 border font-bold border-yellow-600 w-fit">
                                                                         {t(
                                                                             "boss",
                                                                             {
