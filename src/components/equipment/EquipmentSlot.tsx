@@ -10,6 +10,7 @@ import { Equipment, EquipmentSlot as SlotType } from "@t/equip";
 import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 import { Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import ItemTranslation from "@components/ItemTranslation";
 
 const srcFromBase64 = (b64: string) =>
     `data:image/png;base64,${b64.replace(/\s/g, "")}`;
@@ -136,7 +137,12 @@ export const EquipmentSlot: React.FC<Props> = ({
                         <>
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-semibold truncate">
-                                    {equippedItem.name}
+                                    {/* {equippedItem.name} */}
+                                    <ItemTranslation
+                                        mbxId={equippedItem.id}
+                                        category={equippedItem.category}
+                                        type="name"
+                                    />
                                 </span>
                                 {rarityLabel && (
                                     <span
@@ -165,12 +171,17 @@ export const EquipmentSlot: React.FC<Props> = ({
                                                         alt={stat}
                                                         className="w-3 h-3 inline-block mr-1"
                                                     />
-                                                    {t(
+                                                    {/* {t(
                                                         `equip.stats.names.${stat}`,
                                                         {
                                                             defaultValue: stat,
                                                         }
-                                                    )}
+                                                    )} */}
+                                                    <ItemTranslation
+                                                        mbxId={stat}
+                                                        category="STATS"
+                                                        type="name"
+                                                    />
                                                 </span>
                                                 <span className="text-gray-200">
                                                     {range[0] === range[1]

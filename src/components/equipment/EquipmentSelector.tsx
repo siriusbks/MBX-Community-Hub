@@ -9,6 +9,7 @@ import { Equipment } from "@t/equip";
 import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 import { Search, X, Trash2, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import ItemTranslation from "@components/ItemTranslation";
 
 const imgFromB64 = (b64: string) =>
     `data:image/png;base64,${b64.replace(/\s/g, "")}`;
@@ -235,23 +236,27 @@ export const EquipmentSelector: React.FC<Props> = ({
 
                                         <div className="min-w-0">
                                             <h3 className="font-semibold text-white truncate">
-                                                
-                                                          {t(`${item.id}`, {
-                                            ns: "items",
-                                            defaultValue: item.name
-                                                .replace(/_/g, " ")
-                                                .split(" ")
-                                                .map(
-                                                    (word: string) =>
-                                                        word
-                                                            .charAt(0)
-                                                            .toUpperCase() +
-                                                        word
-                                                            .slice(1)
-                                                            .toLowerCase()
-                                                )
-                                                .join(" "),
-                                        })}
+                                            {/* {t(`${item.id}`, {
+                                                ns: "items",
+                                                defaultValue: item.name
+                                                    .replace(/_/g, " ")
+                                                    .split(" ")
+                                                    .map(
+                                                        (word: string) =>
+                                                            word
+                                                                .charAt(0)
+                                                                .toUpperCase() +
+                                                            word
+                                                                .slice(1)
+                                                                .toLowerCase()
+                                                    )
+                                                    .join(" "),
+                                            })} */}
+                                            <ItemTranslation
+                                                mbxId={item.id}
+                                                category={item.category}
+                                                type="name"
+                                            />
                                             </h3>{" "}
                                             <span className="flex flex-row gap-1 items-center align-center">
                                                 <p
@@ -298,13 +303,18 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                             alt={stat}
                                                             className="w-3 h-3 inline-block mr-1"
                                                         />
-                                                        {t(
+                                                        {/* {t(
                                                             `equip.stats.names.${stat}`,
                                                             {
                                                                 defaultValue:
                                                                     stat,
                                                             }
-                                                        )}
+                                                        )} */}
+                                                        <ItemTranslation
+                                                            mbxId={stat}
+                                                            category="stats"
+                                                            type="name"
+                                                        />
                                                         </span>
                                                         <span>
                                                             {range[0] ===
