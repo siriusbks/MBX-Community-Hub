@@ -789,12 +789,12 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week3")}
                             </h3>
-                            <p className="text-xs ">12.11.2025 - 18.11.2025</p>
+                            <p className="text-xs ">12.11.2025 - 17.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
                             const start = new Date(2025, 10, 12); // months are 0-based: 9 = October
-                            const end = new Date(2025, 10, 18, 23, 59, 59, 999); // 10 = November
+                            const end = new Date(2025, 10, 17, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-500 py-1 px-2">
                                     {t("halloween.week.active")}
@@ -804,46 +804,52 @@ const HalloweenPage: FC = () => {
                     </div>
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week1.mission1")} [128]
+                            <span>{t("halloween.week1.mission1")} [128]</span>
+                            <span className="text-LEGENDARY">
+                                8x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">8x {t("halloween.quests.universal.bp_star")}</span>
+                        </div>
+                        <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
+                            <span>{t("halloween.week1.mission4")} [24]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
+                            </span>
+                        </div>
+                        <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
+                            <span>{t("halloween.week3.mission3")} [32]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week1.mission4")} [24]
+                                {t("halloween.week1.mission5")}{" "}
+                                <span className="text-RARE">
+                                    {t("halloween.halloween_candy_sack")}
+                                </span>{" "}
+                                [64]
                             </span>
-                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week3.mission3")} [32]
+                            <span>{t("halloween.week1.mission6")} [5]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week1.mission5")} <span className="text-RARE">{t("halloween.halloween_candy_sack")}</span> [64]
+                            <span>{t("halloween.week3.mission6")} [8192]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
-                        </div>
-                        <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week1.mission6")} [5]
-                            </span>
-                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
-                        </div>
-                        <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week3.mission6")} [8192]
-                            </span>
-                            <span className="text-LEGENDARY">4x {t("halloween.quests.universal.bp_star")}</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                                                        <span>
+                            <span>
                                 <span className="text-LEGENDARY">
                                     6x {t("halloween.quests.universal.bp_star")}
                                 </span>
@@ -862,11 +868,11 @@ const HalloweenPage: FC = () => {
                             <h3 className="text-2xl font-bold">
                                 {t("halloween.week4")}
                             </h3>
-                            <p className="text-xs ">19.11.2025 - 26.11.2025</p>
+                            <p className="text-xs ">18.11.2025 - 26.11.2025</p>
                         </span>
                         {(() => {
                             const now = new Date();
-                            const start = new Date(2025, 10, 19); // months are 0-based: 9 = October
+                            const start = new Date(2025, 10, 18); // months are 0-based: 9 = October
                             const end = new Date(2025, 10, 26, 23, 59, 59, 999); // 10 = November
                             return now >= start && now <= end ? (
                                 <span className="font-bold absolute right-0 top-0 z-10 text-xs rounded-tr-lg rounded-bl-lg bg-orange-500 py-1 px-2">
@@ -878,45 +884,68 @@ const HalloweenPage: FC = () => {
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission1")}{" "}
+                                <span className="text-LEGENDARY">
+                                    ({t("halloween.quests.universal.shiny")})
+                                </span>{" "}
+                                [32]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">
+                                6x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.week1.mission5")}{" "}
+                                <span className="text-MYTHIC">
+                                    {t("halloween.treasure.title")}
+                                </span>{" "}
+                                [8]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">
+                                6x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
-                                {t("halloween.week.mission_soon")} [???]
+                                {t("halloween.quests.jacko2.KillBoss")} [2]
                             </span>
-                            <span className="text-LEGENDARY">???</span>
+                            <span className="text-LEGENDARY">
+                                5x {t("halloween.quests.universal.bp_star")}
+                            </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week.mission_soon")} [???]
+                            <span>{t("halloween.week3.mission3")} [64]</span>
+                            <span className="text-LEGENDARY">
+                                6x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">???</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week.mission_soon")} [???]
+                            <span>{t("halloween.week1.mission6")} [5]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">???</span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>
-                                {t("halloween.week.mission_soon")} [???]
+                            <span>{t("halloween.week2.mission6")} [32]</span>
+                            <span className="text-LEGENDARY">
+                                4x {t("halloween.quests.universal.bp_star")}
                             </span>
-                            <span className="text-LEGENDARY">???</span>
                         </div>
                         <div className=" w-full justify-between flex">
                             <span className="text-orange-500 font-bold">
                                 {t("halloween.week.reward")}:
                             </span>
-                            <span>???</span>
+                            <span>
+                                <span className="text-LEGENDARY">
+                                    10x{" "}
+                                    {t("halloween.quests.universal.bp_star")}
+                                </span>
+                                ,{" "}
+                                <span className="text-EPIC">
+                                    {t("halloween.halloween_witch_belt")}
+                                </span>
+                            </span>
                         </div>
                     </span>
                 </span>
@@ -1017,64 +1046,136 @@ const HalloweenPage: FC = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-700">
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">199</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">82</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-184</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        199
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        82
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -184
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">204</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">82</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-155</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        204
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        82
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -155
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">185</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">82</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-160</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        185
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        82
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -160
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">169</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">82</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-149</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        169
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        82
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -149
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">176</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">75</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-184</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        176
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        75
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -184
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">135</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">84</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-187</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        135
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        84
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -187
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">128</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">78</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-179</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        128
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        78
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -179
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">143</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">81</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-144</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        143
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        81
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -144
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">145</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">80</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-138</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        145
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        80
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -138
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">151</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">79</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-130</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        151
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        79
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -130
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">133</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">87</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-128</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        133
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        87
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -128
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">132</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">78</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-109</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        132
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        78
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -109
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1094,59 +1195,125 @@ const HalloweenPage: FC = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-700">
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">129</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">81</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-67</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        129
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        81
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -67
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">155</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">80</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-73</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        155
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        80
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -73
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">135</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">87</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-85</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        135
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        87
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -85
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">163</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">78</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-94</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        163
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        78
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -94
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">160</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">86</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-101</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        160
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        86
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -101
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">180</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">79</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-121</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        180
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        79
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -121
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">200</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">79</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-126</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        200
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        79
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -126
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">217</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">83</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-133</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        217
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        83
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -133
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">213</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">77</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-108</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        213
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        77
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -108
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">200</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">83</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-94</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        200
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        83
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -94
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">208</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">89</td>
-                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">-70</td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        208
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        89
+                                    </td>
+                                    <td className="px-1.5 py-0.5 text-gray-300 text-[10px]">
+                                        -70
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1227,7 +1394,6 @@ const HalloweenPage: FC = () => {
                     </span>
                 </div>
 
-
                 {/** Webina Quest Section **/}
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
@@ -1237,7 +1403,10 @@ const HalloweenPage: FC = () => {
                         1. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        2. {t("halloween.quests.llowee.findbucket")} <span className="text-RARE">{t("halloween.halloween_candy_bag")}</span>
+                        2. {t("halloween.quests.llowee.findbucket")}{" "}
+                        <span className="text-RARE">
+                            {t("halloween.halloween_candy_bag")}
+                        </span>
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -1271,7 +1440,8 @@ const HalloweenPage: FC = () => {
                         1. {t("halloween.quests.llowee.talksugarpit")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.llowee.donate")}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.llowee.donate")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         2. {t("halloween.quests.llowee.talk")}
@@ -1280,7 +1450,8 @@ const HalloweenPage: FC = () => {
                         3. {t("halloween.quests.llowee.locateCrow")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">198 96 -78</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
@@ -1290,7 +1461,8 @@ const HalloweenPage: FC = () => {
                         5. {t("halloween.quests.llowee.findHat")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">192 87 -90</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
@@ -1300,18 +1472,26 @@ const HalloweenPage: FC = () => {
                         7. {t("halloween.quests.llowee.talk")}
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
-                        8. {t("halloween.quests.universal.slain")} 12x {t("bestiary.halloween_crow",  { ns: "bestiary" })}
+                        8. {t("halloween.quests.universal.slain")} 12x{" "}
+                        {t("bestiary.halloween_crow", { ns: "bestiary" })}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.collect")}:{" "}
-                        <span className="text-COMMON-BORDER">64x {t("halloween.halloween_crow_feather")}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.collect")}:{" "}
+                        <span className="text-COMMON-BORDER">
+                            64x {t("halloween.halloween_crow_feather")}
+                        </span>
                     </span>
                     <span className="w-full pt-1 px-2 text-xs">
                         9. {t("halloween.quests.llowee.openWorkshop")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
-                        <span className="text-RARE"> {t("halloween.halloween_old_witch_cloak")}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-RARE">
+                            {" "}
+                            {t("halloween.halloween_old_witch_cloak")}
+                        </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         10. {t("halloween.quests.llowee.talk")}
@@ -1320,7 +1500,8 @@ const HalloweenPage: FC = () => {
                         11. {t("halloween.quests.llowee.findJacko")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">330 92 60</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
@@ -1330,11 +1511,15 @@ const HalloweenPage: FC = () => {
                         13. {t("halloween.quests.llowee.openWorkshop")}
                     </span>
                     <span className="w-full  px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.llowee.slurpShiny")}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.llowee.slurpShiny")}
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
-                        <span className="text-EPIC">{t("halloween.halloween_spookler")}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-EPIC">
+                            {t("halloween.halloween_spookler")}
+                        </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         14. {t("halloween.quests.llowee.talk")}
@@ -1362,11 +1547,13 @@ const HalloweenPage: FC = () => {
                         2. {t("halloween.quests.webina.twolegged")}
                     </span>
                     <span className="w-full pb-0 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">200 78 -140</span>
                     </span>
                     <span className="w-full pb-1 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.webina.twolegged.help")}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.webina.twolegged.help")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         3. {t("halloween.quests.webina.talk")}
@@ -1385,7 +1572,7 @@ const HalloweenPage: FC = () => {
                         </span>
                     </span>
                 </div>
-                
+
                 {/** Webina Quest Section **/}
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
@@ -1398,7 +1585,8 @@ const HalloweenPage: FC = () => {
                         2. {t("halloween.quests.mcbones.findTomb")}
                     </span>
                     <span className="w-full pb-0 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.location")}:{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
                         <span className="text-orange-500">110 110 125</span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
@@ -1423,8 +1611,8 @@ const HalloweenPage: FC = () => {
                             8x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
-                    </div>
-                
+                </div>
+
                 {/** Webina Quest Section **/}
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
@@ -1446,8 +1634,8 @@ const HalloweenPage: FC = () => {
                             6x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
-                    </div>
-                
+                </div>
+
                 {/** Webina Quest Section **/}
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
                     <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
@@ -1475,7 +1663,10 @@ const HalloweenPage: FC = () => {
                         8. {t("halloween.quests.jacko.talk")}
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
-                        9. {t("halloween.quests.jacko.lootParasites")} 7x <span className="text-RARE">{t("halloween.halloween_parasite")}</span>  
+                        9. {t("halloween.quests.jacko.lootParasites")} 7x{" "}
+                        <span className="text-RARE">
+                            {t("halloween.halloween_parasite")}
+                        </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         10. {t("halloween.quests.llowee.talk")}
@@ -1484,8 +1675,11 @@ const HalloweenPage: FC = () => {
                         11. {t("halloween.quests.llowee.openWorkshop")}
                     </span>
                     <span className="w-full pb-0 px-2 text-xs">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("halloween.quests.universal.craft")}:{" "}
-                        <span className="text-EPIC">{t("halloween.halloween_pesticide")}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.craft")}:{" "}
+                        <span className="text-EPIC">
+                            {t("halloween.halloween_pesticide")}
+                        </span>
                     </span>
                     <span className="w-full p-1 px-2 text-xs">
                         12. {t("halloween.quests.jacko.talk")}
@@ -1503,7 +1697,48 @@ const HalloweenPage: FC = () => {
                             12x {t("halloween.halloween_candy_sack")}
                         </span>
                     </span>
-                    </div>
+                </div>
+                {/** Webina Quest Section **/}
+                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-lg flex flex-col items-center">
+                    <h2 className="w-full text-center bg-gray-800 rounded-t-lg p-3 font-bold">
+                        {t("halloween.quests.jacko2.title")}
+                    </h2>
+                    <span className="w-full p-1 px-2 text-xs">
+                        1. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full pt-1 px-2 text-xs">
+                        2. {t("halloween.quests.jacko2.HarvesterPlace")}
+                    </span>
+                    <span className="w-full pb-1 px-2 text-xs">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {t("halloween.quests.universal.location")}:{" "}
+                        <span className="text-orange-500">334 74 29</span>
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        3. {t("halloween.quests.jacko2.KillBoss")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs">
+                        4. {t("halloween.quests.jacko.talk")}
+                    </span>
+                    <span className="w-full p-1 px-2 text-xs font-bold text-orange-500">
+                        {t("halloween.quests.universal.reward")}:{" "}
+                        <span className="text-LEGENDARY">
+                            4 {t("halloween.quests.universal.bp_star")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            {t("halloween.halloween_candy_bag")}
+                        </span>
+                        ,{" "}
+                        <span className="text-RARE">
+                            8x {t("halloween.halloween_candy_sack")}
+                        </span>
+                        ,{" "}
+                        <span className="text-MYTHIC">
+                            1x {t("halloween.treasure.title")}
+                        </span>
+                    </span>
+                </div>
             </div>
 
             {/* Battle Pass Section */}
@@ -1620,81 +1855,84 @@ const HalloweenPage: FC = () => {
             <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
                 {halloweenMobs.map((mob, index) => (
                     <Link
-                                                                            to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
-                                                                            className=""
-                                                                            title={t("bestiary.share", { ns: "bestiary", defaultValue: "Share" })}
-                                                                        >
-                    <a
-                        key={(mob.name || "mob") + index}
-                        className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
+                        to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
+                        className=""
+                        title={t("bestiary.share", {
+                            ns: "bestiary",
+                            defaultValue: "Share",
+                        })}
                     >
-                        <span className="flex flex-col items-center gap-2">
-                            <img
-                                src={
-                                    mob.image ??
-                                    "/assets/media/museum/not-found.png"
-                                }
-                                alt={mob.name}
-                                className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                style={{
-                                    imageRendering: "pixelated",
-                                }}
-                            />
-                            <span className="w-full ml-4 mr-2 flex flex-col items-center leading-tight">
-                                <span className="flex gap-1 items-center justify-center">
-                                    <span
-                                        className={`text-xs px-2 rounded ${LevelBG_Gradient(
-                                            mob.minlevel
-                                        )} ${LevelTextColor(mob.minlevel)}`}
-                                    >{`LVL ${mob.minlevel}-${mob.maxlevel}`}</span>
-                                    <span className={`font-bold text-sm`}>
-                                        {t(mob.name, { ns: "bestiary" })}
+                        <a
+                            key={(mob.name || "mob") + index}
+                            className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
+                        >
+                            <span className="flex flex-col items-center gap-2">
+                                <img
+                                    src={
+                                        mob.image ??
+                                        "/assets/media/museum/not-found.png"
+                                    }
+                                    alt={mob.name}
+                                    className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                    style={{
+                                        imageRendering: "pixelated",
+                                    }}
+                                />
+                                <span className="w-full ml-4 mr-2 flex flex-col items-center leading-tight">
+                                    <span className="flex gap-1 items-center justify-center">
+                                        <span
+                                            className={`text-xs px-2 rounded ${LevelBG_Gradient(
+                                                mob.minlevel
+                                            )} ${LevelTextColor(mob.minlevel)}`}
+                                        >{`LVL ${mob.minlevel}-${mob.maxlevel}`}</span>
+                                        <span className={`font-bold text-sm`}>
+                                            {t(mob.name, { ns: "bestiary" })}
+                                        </span>
                                     </span>
-                                </span>
 
-                                <span className="w-full mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
-                                    <span className="mx-auto">
-                                        {mob.minhealth.toLocaleString()} -{" "}
-                                        {mob.maxhealth.toLocaleString()}
+                                    <span className="w-full mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
+                                        <span className="mx-auto">
+                                            {mob.minhealth.toLocaleString()} -{" "}
+                                            {mob.maxhealth.toLocaleString()}
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="text-[11px] text-gray-300 flex justify-between w-full ">
-                                    <span className="flex items-center min-w-10">
-                                        {mob.fireResistant ?? 0}
-                                        %
-                                        <img
-                                            src="assets/media/elemental/intelligence.png"
-                                            className="h-3 w-3 inline ml-0.5"
-                                        />
-                                    </span>
-                                    <span className="flex items-center min-w-10">
-                                        {mob.waterResistant ?? 0}
-                                        %
-                                        <img
-                                            src="assets/media/elemental/luck.png"
-                                            className="h-3 w-3 inline ml-0.5"
-                                        />
-                                    </span>
-                                    <span className="flex items-center min-w-10">
-                                        {mob.airResistant ?? 0}
-                                        %
-                                        <img
-                                            src="assets/media/elemental/agility.png"
-                                            className="h-3 w-3 inline ml-0.5"
-                                        />
-                                    </span>
-                                    <span className="flex items-center min-w-10">
-                                        {mob.earthResistant ?? 0}
-                                        %
-                                        <img
-                                            src="assets/media/elemental/strength.png"
-                                            className="h-3 w-3 inline ml-0.5"
-                                        />
+                                    <span className="text-[11px] text-gray-300 flex justify-between w-full ">
+                                        <span className="flex items-center min-w-10">
+                                            {mob.fireResistant ?? 0}
+                                            %
+                                            <img
+                                                src="assets/media/elemental/intelligence.png"
+                                                className="h-3 w-3 inline ml-0.5"
+                                            />
+                                        </span>
+                                        <span className="flex items-center min-w-10">
+                                            {mob.waterResistant ?? 0}
+                                            %
+                                            <img
+                                                src="assets/media/elemental/luck.png"
+                                                className="h-3 w-3 inline ml-0.5"
+                                            />
+                                        </span>
+                                        <span className="flex items-center min-w-10">
+                                            {mob.airResistant ?? 0}
+                                            %
+                                            <img
+                                                src="assets/media/elemental/agility.png"
+                                                className="h-3 w-3 inline ml-0.5"
+                                            />
+                                        </span>
+                                        <span className="flex items-center min-w-10">
+                                            {mob.earthResistant ?? 0}
+                                            %
+                                            <img
+                                                src="assets/media/elemental/strength.png"
+                                                className="h-3 w-3 inline ml-0.5"
+                                            />
+                                        </span>
                                     </span>
                                 </span>
                             </span>
-                        </span>
-                    </a>
+                        </a>
                     </Link>
                 ))}
             </div>
