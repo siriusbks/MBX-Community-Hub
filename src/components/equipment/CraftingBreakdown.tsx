@@ -148,7 +148,7 @@ const CraftSection: React.FC<{
                                         })}` : slotLabel
                     }
                 >
-                    <span className="text-gray-400">{slotLabel}</span>
+                    <span className="text-gray-400">{slotLabel} - </span>
                     {/* {item?.name ? ` – ${t(`${item.id}`, {
                                             ns: "items",
                                             defaultValue: item.name
@@ -272,8 +272,8 @@ const CraftSection: React.FC<{
                                                                     .join(" "),
                                                             })} */}
                                                             <ItemTranslation
-                                                                mbxId={ing.item.id}
-                                                                category={ing.item.category}
+                                                                mbxId={name}
+                                                                category={data.category}
                                                                 type="name"
                                                             />
                                                         </span>

@@ -775,68 +775,78 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
                     break;
             }
         }
-
-        return <span>{translation}</span>;
     }
     
-    let cancelled=false;
-    let backupTranslation: string = "";
-    let paramLoading = false;
-    let paramError = null;
-    (async () => {
-        // Retrieve the locale from i18next, then navigator, or default to "en"
-        let locale = "en";
-        try {
-            const i18nModule = await import("i18next");
-            locale =
-                i18nModule?.default?.language ||
-                navigator.language?.split("-")[0] ||
-                "en";
-        } catch {
-            locale = navigator.language?.split("-")[0] || "en";
-        }
+    if (translation !== "") {
+        return <span>{translation}</span>;
+    } else {
+        let cancelled=false;
+        let backupTranslation: string = "";
+        let lastBackupTranslation = 
+            mbxId
+                .replace(/[-_]/g, " ")
+                .split(" ")
+                .map(word =>
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                )
+                .join(" ");
+        let paramLoading = false;
+        let paramError = null;
+        (async () => {
+            // Retrieve the locale from i18next, then navigator, or default to "en"
+            let locale = "en";
+            try {
+                const i18nModule = await import("i18next");
+                locale =
+                    i18nModule?.default?.language ||
+                    navigator.language?.split("-")[0] ||
+                    "en";
+            } catch {
+                locale = navigator.language?.split("-")[0] || "en";
+            }
 
-        fetch(
-            `https://api.minebox.co/item/${encodeURIComponent(
-                mbxId
-            )}?locale=${encodeURIComponent(locale)}`
-        )
-            .then((res) => {
-                if (!res.ok) throw new Error(`API ${res.status}`);
-                return res.json();
-            })
-            .then((data) => {
-                if (cancelled) return;
-                backupTranslation=(data?.type ?? null);
-            })
-            .catch((err) => {
-                if (cancelled) return;
-                backupTranslation = "";
-                paramError=(err instanceof Error ? err.message : String(err));
-            })
-            .finally(() => {
-                if (!cancelled) {
-                    paramLoading = false;
-                }
-            });
-        }
-    )();
-    cancelled = true;
-    return (
-        <span>
-            {paramLoading ? (
-                // Display a single loading message if either is loading
-                <div className="text-gray-400">Loading...</div>
-            ) : backupTranslation ? (
-                <div className="text-sm whitespace-pre-line">{backupTranslation}</div>
-            ) : paramError ? (
-                <div className="text-sm text-gray-400">{paramError}</div>
-            ) : (
-                // If nothing is available, show fallback message
-                <div className="text-xs font-bold">No Information</div>
-            )}
-        </span>
-    );
+            fetch(
+                `https://api.minebox.co/item/${encodeURIComponent(
+                    mbxId
+                )}?locale=${encodeURIComponent(locale)}`
+            )
+                .then((res) => {
+                    if (!res.ok) throw new Error(`API ${res.status}`);
+                    return res.json();
+                })
+                .then((data) => {
+                    if (cancelled) return;
+                    backupTranslation=(data?.type ?? null);
+                })
+                .catch((err) => {
+                    if (cancelled) return;
+                    backupTranslation = "";
+                    paramError=(err instanceof Error ? err.message : String(err));
+                })
+                .finally(() => {
+                    if (!cancelled) {
+                        paramLoading = false;
+                    }
+                });
+            }
+        )();
+        cancelled = true;
+        return (
+            <span>
+                {paramLoading ? (
+                    // Display a single loading message if either is loading
+                    <div className="text-gray-400">Loading...</div>
+                ) : backupTranslation ? (
+                    <div className="text-sm whitespace-pre-line">{backupTranslation}</div>
+                ) : paramError ? (
+                    <div className="text-sm text-gray-400">{paramError}</div>
+                ) : (
+                    // If nothing is available, show fallback message
+                    <div className="text-xs font-bold">{lastBackupTranslation}</div>
+                )}
+            </span>
+        );
+    }
 }
 
 export default ItemTranslation;
