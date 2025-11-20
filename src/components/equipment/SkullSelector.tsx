@@ -8,6 +8,7 @@ import React, { useMemo, useState } from "react";
 import { X, Check, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SKULLS } from "../../constants/skulls";
+import ItemTranslation from "@components/ItemTranslation";
 
 interface Props {
     open: boolean;
@@ -92,10 +93,10 @@ export const SkullSelector: React.FC<Props> = ({
                 <div className="max-h-[60vh] overflow-y-auto p-3 space-y-2 custom-scrollbar">
                     {filtered.map((sk) => {
                         const active = selected.includes(sk.id);
-                        const skullLabel = t(`skulls.names.${sk.id}`, {
+                        /* const skullLabel = t(`skulls.names.${sk.id}`, {
                             ns: "skulls",
                             defaultValue: sk.name,
-                        });
+                        }); */
 
                         return (
                             <button
@@ -109,7 +110,12 @@ export const SkullSelector: React.FC<Props> = ({
                                     <img src ={sk.icon} alt={sk.name} className="w-12 h-12" style={{ imageRendering: "pixelated" }} />
                                     <span>
                                     <div className="font-bold text-xl">
-                                        {skullLabel}
+                                        {/* {skullLabel} */}
+                                        <ItemTranslation 
+                                            mbxId={sk.id} 
+                                            category="skull" 
+                                            type="name" 
+                                        />
                                     </div>
                                     <div className="text-xs text-gray-300 mb-0.5">
                                         {Object.entries(sk.stats).map(

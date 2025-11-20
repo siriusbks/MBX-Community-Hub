@@ -2,9 +2,17 @@
  * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
  */
 
-import { escape } from "querystring";
 import React from "react";
 import { useTranslation } from "react-i18next";
+
+/*
+Example of use
+    <ItemTranslation
+        mbxId={item.id}
+        category={item.category}
+        type="name"
+    />
+*/
 
 interface ItemTranslationProps {
     mbxId: string | "null"; // items, skills, stats, traits, creature
@@ -449,6 +457,10 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
         } else {
             // 2. If mbxId is not "null", determine the path based on the category
             switch (lowerCategory) {
+                case "stats":
+                    const lowerMbxId = mbxId ? mbxId.toLowerCase() : "";
+                    translation = t(`mbx.stats.${lowerMbxId}`, { defaultValue: "" });
+                    break;
                 case "skill":
                     translation = t(`mbx.skills.${mbxId.toLowerCase()}.name`, { defaultValue: "" });
                     break;

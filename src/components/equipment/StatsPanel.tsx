@@ -10,6 +10,7 @@ import { formatStatRange } from "@utils/statsCalculator";
 import { TrendingUp, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SKULLS } from "../../constants/skulls";
+import ItemTranslation from "@components/ItemTranslation";
 
 interface Props {
     stats: PlayerStats;
@@ -26,9 +27,9 @@ export const StatsPanel: React.FC<Props> = ({
     onOpenSkulls,
 }) => {
     const { t: tEquip } = useTranslation("equipment");
-    const { t: tSkulls } = useTranslation("skulls", {
+    /* const { t: tSkulls } = useTranslation("skulls", {
         keyPrefix: "skulls.names",
-    });
+    }); */
 
     const color: Record<string, string> = {
         HEALTH: "#e02044",
@@ -52,7 +53,7 @@ export const StatsPanel: React.FC<Props> = ({
         DEFENSE: "/assets/media/elemental/defense.png",
     };
 
-    const selectedSkullLabels = useMemo(() => {
+    /* const selectedSkullLabels = useMemo(() => {
         if (skullIds?.length) {
             return skullIds.map((id) =>
                 tSkulls(id, {
@@ -72,7 +73,37 @@ export const StatsPanel: React.FC<Props> = ({
             });
         }
         return [];
-    }, [skullIds, skullNames, tSkulls]);
+    }, [skullIds, skullNames, tSkulls]); */
+    const selectedSkullLabels = useMemo(() => {
+        if (skullIds?.length) {
+            return skullIds.map((id) => (
+                <ItemTranslation 
+                    key={id} 
+                    mbxId={id} 
+                    category="skull" 
+                    type="name" 
+                />
+            ));
+        }
+        if (skullNames.length) {
+            return skullNames.map((raw, index) => {
+                // On essaie de retrouver l'id correspondant
+                const match = SKULLS.find(
+                    (s) => s.name.toLowerCase() === raw.toLowerCase()
+                );
+                return (
+                    <ItemTranslation
+                        key={index}
+                        mbxId={match?.id || raw}
+                        category="skull"
+                        type="name"
+                    />
+                );
+            });
+        }
+        return [];
+    }, [skullIds, skullNames]);
+
 
     const allZero = Object.values(stats).every(([a, b]) => a + b === 0);
 
@@ -103,9 +134,9 @@ export const StatsPanel: React.FC<Props> = ({
 
             {selectedSkullLabels.length > 0 && (
                 <div className="mb-3 -mt-1">
-                    {selectedSkullLabels.map((label) => (
+                    {selectedSkullLabels.map((label, index) => (
                         <span
-                            key={label}
+                            key={index}
                             className="inline-block text-[10px] mr-2 mb-2 px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-200"
                         >
                             {label}
@@ -135,9 +166,14 @@ export const StatsPanel: React.FC<Props> = ({
                                             className="w-5 h-5"
                                         />
                                     )}
-                                    {tEquip(`equip.stats.names.${name}`, {
+                                    {/* {tEquip(`equip.stats.names.${name}`, {
                                         defaultValue: name,
-                                    })}
+                                    })} */}
+                                    <ItemTranslation
+                                        mbxId={name} 
+                                        category="stats" 
+                                        type="name" 
+                                    />
                                 </span>
                                 <span className="font-bold text-white">
                                     {formatStatRange(range)}

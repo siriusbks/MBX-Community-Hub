@@ -1333,13 +1333,10 @@
         "rarity": "RARE",
         "level": 5,
         "category": "HELMET",
-        "recipe": {
-            "ingredients": [
-                {
-                    "type": "custom",
-                    "id": "UNKNOWN",
-                    "amount": 1
-                }
+        "stats": {
+            "WISDOM": [
+                5,
+                11
             ]
         }
     },
@@ -1348,17 +1345,23 @@
         "rarity": "RARE",
         "level": 1,
         "category": "HELMET",
+        "stats": {
+            "INTELLIGENCE": [
+                7,
+                14
+            ]
+        },
         "recipe": {
             "ingredients": [
                 {
                     "type": "custom",
-                    "id": "UNKNOWN",
-                    "amount": 1
+                    "id": "halloween_crow_feather",
+                    "amount": 64
                 },
                 {
-                    "type": "custom",
-                    "id": "UNKNOWN",
-                    "amount": 1
+                    "type": "vanilla",
+                    "id": "sponge",
+                    "amount": 2
                 }
             ]
         }
@@ -1962,7 +1965,14 @@
     {
         "id": "halloween_parasite",
         "rarity": "RARE",
-        "category": "RESOURCE"
+        "category": "RESOURCE",
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "halloween_pesticide",
+                "amount": 8
+            }
+        ]
     },
     {
         "id": "halloween_candy_sack",
@@ -2108,5 +2118,30 @@
         "set": "witch",
         "level": 19,
         "category": "RING"
+    },
+    {
+        "id": "halloween_pesticide",
+        "rarity": "EPIC",
+        "level": 25,
+        "category": "RESOURCE",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type": "custom",
+                    "id": "halloween_parasite",
+                    "amount": 8
+                },
+                {
+                    "type": "custom",
+                    "id": "potion_resistance",
+                    "amount": 1
+                },
+                {
+                    "type": "custom",
+                    "id": "transformed_cactus",
+                    "amount": 8
+                }
+            ]
+        }
     }
 ]
