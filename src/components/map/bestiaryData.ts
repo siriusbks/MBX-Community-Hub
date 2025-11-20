@@ -115,10 +115,10 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             {
                 name: "bestiary.halloween_boss",
                 image: "assets/media/EVENT/HALLOWEEN/Bestiary/The_Harvester.png",
-                minlevel: 46,
-                maxlevel: 46,
-                minhealth: 14000,
-                maxhealth: 14000,
+                minlevel: 40,
+                maxlevel: 50,
+                minhealth: 17500,
+                maxhealth: 25000,
 
                 boss: true,
 
