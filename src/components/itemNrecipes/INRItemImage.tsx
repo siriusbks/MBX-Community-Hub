@@ -54,6 +54,8 @@ const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex,
   const [fallbackIndex, setFallbackIndex] = useState(0);
   const primarySrc = fallbackChain[fallbackIndex];
 
+  console.log("MuseumItemImage - itemId:", itemId, "effectiveCategory:", effectiveCategory, "primarySrc:", primarySrc);
+
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;
     if (fallbackIndex < fallbackChain.length - 1) {
