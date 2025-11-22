@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Bone, Eye, Package, Star } from "lucide-react";
 import MuseumItemImage from "@components/museum/MuseumItemImage";
+import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 
 import { bestiaryData, BestiaryInfo } from "@components/map/bestiaryData";
 import {
@@ -456,6 +457,7 @@ const BestiaryPage: FC = () => {
                                 defaultValue: islandKey,
                             })}
                         </h2>
+            <div className="hidden bg-COMMON bg-UNCOMMON bg-RARE bg-EPIC bg-LEGENDARY bg-MYTHIC bg-UNKNOWN"></div>
 
                         {/* Combined grid for all regions in this island */}
                         <div className="mb-6">
@@ -846,7 +848,7 @@ const BestiaryPage: FC = () => {
                                                         return (
                                                             <div
                                                                 key={i}
-                                                                className="bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 flex flex-col items-center text-center"
+                                                                className={`${getRarityColor(rarity)} bg-opacity-30 border  rounded p-2 flex flex-col items-center text-center`}
                                                             >
 {(() => {
                                                             const id = (d.itemId || "").toString().toLowerCase();
@@ -879,7 +881,7 @@ const BestiaryPage: FC = () => {
                                                                     })()}
                                                                 </div>
                                                                 <div className="text-[11px] text-gray-300 mt-auto">
-                                                                    {( (d.dropChance ?? 0) === 0 ? "???" : `${chance}%` )}
+                                                                    {( (d.dropChance ?? 0) === 0 ? "??.?? %" : `${chance}%` )}
                                                                 </div>
                                                             </div>
                                                         );
