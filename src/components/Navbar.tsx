@@ -39,7 +39,7 @@ const NAV_LINKS: Array<any> = [
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
-    { id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+    //{ id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
 ];
 
 const LanguageSelector = ({

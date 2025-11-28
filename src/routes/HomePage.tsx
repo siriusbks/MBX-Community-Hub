@@ -49,7 +49,7 @@ export function HomePage() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
                     {/* Player Profile */}
                     <Link
                         to="/profile"
@@ -105,6 +105,10 @@ export function HomePage() {
                         </p>
                     </Link>
 
+                </div>
+
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                     {/* Community Projects */}
                     <Link
                         to="/community"
@@ -124,11 +128,7 @@ export function HomePage() {
                             )}
                         </p>
                     </Link>
-                </div>
-
-                {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                    {/* Equipment Manager  */}
+                                        {/* Equipment Manager  */}
                     <Link
                         to="/equipment"
                         className="relative group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -166,7 +166,7 @@ export function HomePage() {
                             {t("homepage.features.museum.description")}
                         </p>
                     </Link>
-
+{/*
                     <Link
                         to="/halloween"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -185,7 +185,7 @@ export function HomePage() {
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                             {t("homepage.features.halloween.description")}
                         </p>
-                    </Link>
+                    </Link>*/}
                     {/* Recipe */}
                     {/*}
                     <Link
