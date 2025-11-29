@@ -273,7 +273,11 @@ const InfoMapPage: FC = () => {
 
                                     {/* Bestiary List */}
                                     {Object.values(bestiaryData[mapKey] || {})
-                                        .length > 0 && (
+                                        .flat()
+                                        .length > 0 &&
+                                      Object.values(bestiaryData[mapKey] || {})
+                                        .flat()
+                                        .some((bestiary) => bestiary.available !== false) && (
                                         <>
                                             <h3 className="pt-6 text-green-400 font-semibold mb-2 text-center">
                                                 {t("mappage.bestiaryTitle")}
@@ -295,6 +299,11 @@ const InfoMapPage: FC = () => {
                                                                     i.name ===
                                                                     bestiary.name
                                                             )
+                                                    )
+                                                    .filter(
+                                                        (bestiary) =>
+                                                            bestiary.available !==
+                                                            false
                                                     )
                                                     .map((bestiary, index) => (
                                                         <div

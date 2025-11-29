@@ -46,7 +46,7 @@ export const AppRoutes: FC = () => {
 
                         {/* Special Pages */}
                         {/* Add archive/ to URL for past events */}
-                        <Route path="/halloween" element={<HalloweenPage />} />
+                        <Route path="archive/halloween" element={<HalloweenPage />} />
                     </Routes>
                 </Suspense>
             </main>

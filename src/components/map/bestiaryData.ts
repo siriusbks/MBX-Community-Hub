@@ -24,6 +24,8 @@ export interface BestiaryInfo {
 
     // Events:
     halloween2025?: boolean;
+
+    available? : boolean;
 }
 
 export interface BestiaryLoot {
@@ -57,6 +59,8 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 0,
                 airResistant: 0,
                 halloween2025: true,
+
+                available: false,
             },
         ],
         church: [
@@ -84,6 +88,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 ],
 
                 halloween2025: true,
+                available: false,
             },
         ],
         small_island: [
@@ -112,6 +117,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 50,
                 airResistant: 0,
                 halloween2025: true,
+                available: false,
             },
             {
                 name: "bestiary.halloween_boss",
@@ -140,6 +146,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 50,
                 airResistant: 0,
                 halloween2025: true,
+                available: false,
             },
         ],
         sewers: [
@@ -169,6 +176,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 50,
                 airResistant: 50,
                 halloween2025: true,
+                available: false,
             },
         ],
         workshop_island: [
@@ -198,6 +206,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 50,
                 airResistant: 50,
                 halloween2025: true,
+                available: false,
             },
             {
                 name: "bestiary.halloween_gray_rat",
@@ -225,6 +234,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: -0,
                 airResistant: 20,
                 halloween2025: true,
+                available: false,
             },
         ],
     },

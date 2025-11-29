@@ -443,11 +443,19 @@ const BestiaryPage: FC = () => {
                 <div className="mt-4 h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
             </div>
 
+            {/* Unavailable mobs section (available === false) - moved below island lists */}
+
             {/* Iterate islands */}
             {Object.entries(bestiaryData).map(([islandKey, regions]) => {
-                // skip empty
-                const regionKeys = Object.keys(regions || {});
-                if (regionKeys.length === 0) return null;
+                // Build a flat list of available mobs for this island
+                const availableMobs = Object.entries(regions || {}).flatMap(([regionKey, mobs]) =>
+                    (mobs || [])
+                        .filter((m) => m.available !== false)
+                        .map((mob) => ({ mob, regionKey, islandKey }))
+                );
+
+                // If no available mobs on this island, skip rendering the island header/section
+                if (availableMobs.length === 0) return null;
 
                 return (
                     <section key={islandKey} className="mb-10">
@@ -462,119 +470,84 @@ const BestiaryPage: FC = () => {
                         {/* Combined grid for all regions in this island */}
                         <div className="mb-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                                {Object.entries(regions)
-                                    .flatMap(([regionKey, mobs]) =>
-                                        mobs.map((mob) => ({
-                                            mob,
-                                            regionKey,
-                                            islandKey,
-                                        }))
-                                    )
-                                    .map(
-                                        (
-                                            { mob, regionKey, islandKey },
-                                            idx
-                                        ) => (
-                                            <div
-                                                key={`${regionKey}-${idx}`}
-                                                className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
-                                                onClick={() =>
-                                                    setSelectedMob({
-                                                        mob,
-                                                        regionKey,
-                                                        islandKey,
-                                                    })
-                                                }
-                                            >
-                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
-                                                    <Eye className="h-4 w-4 rounded" />
-                                                    {t("bestiary.clickToView")}
-                                                </div>
+                                {availableMobs.map(({ mob, regionKey, islandKey }, idx) => (
+                                    <div
+                                        key={`${regionKey}-${idx}`}
+                                        className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
+                                        onClick={() =>
+                                            setSelectedMob({ mob, regionKey, islandKey })
+                                        }
+                                    >
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
+                                            <Eye className="h-4 w-4 rounded" />
+                                            {t("bestiary.clickToView")}
+                                        </div>
 
-                                                <div className=" flex flex-col items-start gap-3">
-                                                    <div className="mx-auto w-32 h-32 flex-shrink-0 rounded overflow-hidden flex items-center justify-center p-2">
-                                                        {mob.image ? (
-                                                            <img
-                                                                src={mob.image}
-                                                                alt={mob.name}
-                                                                className="drop-shadow-[0_8px_8px_rgba(0,0,0,0.4)] w-full h-full object-contain"
-                                                            />
-                                                        ) : (
-                                                            <div className="text-gray-400">
-                                                                ?
-                                                            </div>
+                                        <div className=" flex flex-col items-start gap-3">
+                                            <div className="mx-auto w-32 h-32 flex-shrink-0 rounded overflow-hidden flex items-center justify-center p-2">
+                                                {mob.image ? (
+                                                    <img
+                                                        src={mob.image}
+                                                        alt={mob.name}
+                                                        className="drop-shadow-[0_8px_8px_rgba(0,0,0,0.4)] w-full h-full object-contain"
+                                                    />
+                                                ) : (
+                                                    <div className="text-gray-400">?</div>
+                                                )}
+                                            </div>
+
+                                            <div className="flex-1 w-full">
+                                                <div className="flex items-start gap-1 flex-row justify-between align-center items-center">
+                                                    <span
+                                                        className={`${LevelBG_Gradient(mob.minlevel)} ${LevelTextColor(mob.minlevel)} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
+                                                    >
+                                                        Lvl {mob.minlevel}-{mob.maxlevel}
+                                                    </span>
+                                                    <div className=" text-xs text-gray-300 flex gap-1">
+                                                        {mob.halloween2025 && (
+                                                            <span className="uppercase px-1 py-0 rounded text-[10px] bg-orange-600 bg-opacity-50 border font-bold border-orange-600 w-fit">
+                                                                Halloween
+                                                            </span>
+                                                        )}
+                                                        {mob.boss && (
+                                                            <span className="uppercase px-1 py-0 rounded text-[10px] bg-yellow-600 bg-opacity-50 border font-bold border-yellow-600 w-fit">
+                                                                {t(
+                                                                    "boss",
+                                                                    {
+                                                                        ns: "bestiary",
+                                                                    }
+                                                                )}
+                                                            </span>
                                                         )}
                                                     </div>
-
-                                                    <div className="flex-1 w-full">
-                                                        <div className="flex items-start gap-1 flex-row justify-between align-center items-center">
-                                                            <span
-                                                                className={`${LevelBG_Gradient(
-                                                                    mob.minlevel
-                                                                )} ${LevelTextColor(
-                                                                    mob.minlevel
-                                                                )} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
-                                                            >
-                                                                Lvl{" "}
-                                                                {mob.minlevel}-
-                                                                {mob.maxlevel}
-                                                            </span>
-                                                            <div className=" text-xs text-gray-300 flex gap-1">
-                                                                {mob.halloween2025 && (
-                                                                    <span className="uppercase px-1 py-0 rounded text-[10px] bg-orange-600 bg-opacity-50 border font-bold border-orange-600 w-fit">
-                                                                        Halloween
-                                                                    </span>
-                                                                )}
-                                                                {mob.boss && (
-                                                                    <span className="uppercase px-1 py-0 rounded text-[10px] bg-yellow-600 bg-opacity-50 border font-bold border-yellow-600 w-fit">
-                                                                        {t(
-                                                                            "boss",
-                                                                            {
-                                                                                ns: "bestiary",
-                                                                            }
-                                                                        )}
-                                                                    </span>
-                                                                )}
-                                                            </div>
+                                                </div>
+                                                <div className="mt-0.5 flex items-start gap-1 flex-row justify-between align-center items-center">
+                                                    <div className="flex-1 leading-none">
+                                                        <div className="font-semibold text-white text-sm leading-none">
+                                                            {t(mob.name)}
                                                         </div>
-                                                        <div className="mt-0.5 flex items-start gap-1 flex-row justify-between align-center items-center">
-                                                            <div className="flex-1 leading-none">
-                                                                <div className="font-semibold text-white text-sm leading-none">
-                                                                    {t(
-                                                                        mob.name
-                                                                    )}
-                                                                </div>
-                                                                <div className="hidden text-xs text-gray-400 leading-none">
-                                                                    {t(
-                                                                        mapNameRegions[
-                                                                            regionKey
-                                                                        ] ??
-                                                                            regionKey,
-                                                                        {
-                                                                            ns: "map",
-                                                                            defaultValue:
-                                                                                regionKey,
-                                                                        }
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="mt-1">
-                                                            <div className="text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium">
-                                                                {mob.minhealth?.toLocaleString?.() ??
-                                                                    0}{" "}
-                                                                -{" "}
-                                                                {mob.maxhealth?.toLocaleString?.() ??
-                                                                    0}
-                                                            </div>
-                                                            {renderResists(mob)}
+                                                        <div className="hidden text-xs text-gray-400 leading-none">
+                                                            {t(
+                                                                mapNameRegions[regionKey] ?? regionKey,
+                                                                {
+                                                                    ns: "map",
+                                                                    defaultValue: regionKey,
+                                                                }
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div className="mt-1">
+                                                    <div className="text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium">
+                                                        {mob.minhealth?.toLocaleString?.() ?? 0} - {mob.maxhealth?.toLocaleString?.() ?? 0}
+                                                    </div>
+                                                    {renderResists(mob)}
+                                                </div>
                                             </div>
-                                        )
-                                    )}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>
@@ -582,6 +555,85 @@ const BestiaryPage: FC = () => {
             })}
 
             {/* Modal popup for selected mob */}
+            {(() => {
+                const unavailable = Object.entries(bestiaryData)
+                    .flatMap(([islandKey, regions]) =>
+                        Object.entries(regions || {}).flatMap(([regionKey, mobs]) =>
+                            (mobs || []).map((mob) => ({ mob, regionKey, islandKey }))
+                        )
+                    )
+                    .filter(({ mob }) => mob.available === false);
+
+                if (unavailable.length === 0) return null;
+
+                return (
+                    <section className="mb-10">
+                        <h2 className="text-2xl font-semibold text-white mb-4">
+                            {t("bestiary.unavailableMobs", {
+                                ns: "bestiary",
+                                defaultValue: "Unavailable Mobs",
+                            })}
+                        </h2>
+
+                        <div className="mb-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                                {unavailable.map(({ mob, regionKey, islandKey }, idx) => (
+                                    <div
+                                        key={`unavail-${regionKey}-${idx}`}
+                                        className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
+                                        onClick={() =>
+                                            setSelectedMob({ mob, regionKey, islandKey })
+                                        }
+                                    >
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
+                                            <Eye className="h-4 w-4 rounded" />
+                                            {t("bestiary.clickToView")}
+                                        </div>
+
+                                        <div className=" flex flex-col items-start gap-3">
+                                            <div className="mx-auto w-32 h-32 flex-shrink-0 rounded overflow-hidden flex items-center justify-center p-2">
+                                                {mob.image ? (
+                                                    <img
+                                                        src={mob.image}
+                                                        alt={mob.name}
+                                                        className="drop-shadow-[0_8px_8px_rgba(0,0,0,0.4)] w-full h-full object-contain"
+                                                    />
+                                                ) : (
+                                                    <div className="text-gray-400">?</div>
+                                                )}
+                                            </div>
+
+                                            <div className="flex-1 w-full">
+                                                <div className="flex items-start gap-1 flex-row justify-between align-center items-center">
+                                                    <span
+                                                        className={`${LevelBG_Gradient(mob.minlevel)} ${LevelTextColor(mob.minlevel)} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
+                                                    >
+                                                        Lvl {mob.minlevel}-{mob.maxlevel}
+                                                    </span>
+                                                </div>
+                                                <div className="mt-0.5 flex items-start gap-1 flex-row justify-between align-center items-center">
+                                                    <div className="flex-1 leading-none">
+                                                        <div className="font-semibold text-white text-sm leading-none">
+                                                            {t(mob.name)}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-1">
+                                                    <div className="text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium">
+                                                        {mob.minhealth?.toLocaleString?.() ?? 0} - {mob.maxhealth?.toLocaleString?.() ?? 0}
+                                                    </div>
+                                                    {renderResists(mob)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                );
+            })()}
             {selectedMob && (
                 <div
                     className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
