@@ -625,9 +625,9 @@ const MapPage: FC = () => {
                                                                     <div className="flex justify-between items-center">
                                                                         {/* Left */}
                                                                         <div className="flex flex-col">
-                                                                            <span className="font-semibold text-white items-center flex  leading-none">
+                                                                            <span className="font-semibold text-white items-center flex leading-none">
                                                                                 <span
-                                                                                    className={`${rarityColor} px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
+                                                                                    className={`${rarityColor} px-1 mr-1 pb-0.5 rounded font-normal text-xs w-fit whitespace-nowrap`}
                                                                                 >
                                                                                     {t(
                                                                                         fish.rarity,
@@ -836,7 +836,7 @@ const MapPage: FC = () => {
                                                                         <div className="flex flex-col">
                                                                             <span className="font-semibold text-white items-center flex leading-none">
                                                                                 <span
-                                                                                    className={`${rarityColor} px-1  mr-1 pb-0.5 rounded font-normal text-xs w-fit `}
+                                                                                    className={`${rarityColor} px-1 mr-1 pb-0.5 rounded font-normal text-xs w-fit whitespace-nowrap`}
                                                                                 >
                                                                                     {t(
                                                                                         fish.rarity,
