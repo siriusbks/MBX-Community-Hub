@@ -191,9 +191,10 @@ export const MuseumApp: FC = () => {
             );
             const itemsGrouped: Group[] = await itemsGroupedResponse.json();
 
-            const itemsDetailsResponse = await fetch(
+            /* const itemsDetailsResponse = await fetch(
                 "https://cdn2.minebox.co/data/items.json"
-            );
+            ); */
+            const itemsDetailsResponse = await fetch('assets/data/items.json');
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
@@ -226,7 +227,7 @@ export const MuseumApp: FC = () => {
 
     // When a craft modal opens, fetch the item's details from the API to get
     // its `used_in_recipes` array (we show the ids in the summary).
-    useEffect(() => {
+    /* useEffect(() => {
         if (!craftModalItem) {
             setItemUsedInRecipes(null);
             setItemUsedError(null);
@@ -268,7 +269,7 @@ export const MuseumApp: FC = () => {
             active = false;
             controller.abort();
         };
-    }, [craftModalItem]);
+    }, [craftModalItem]); */
 
     const setCategory = (itemId: string) => {
         fetch("/assets/data/items_museum_grouped_by_category.json")

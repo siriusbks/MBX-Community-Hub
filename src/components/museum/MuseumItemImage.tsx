@@ -38,19 +38,23 @@ const MuseumItemImage: React.FC<MuseumItemImageProps> = ({
         }
     }, [groupCategory, itemId]);
 
-    const effectiveCategory = groupCategory ? groupCategory : computedCategory || "";
-    const fallbackImage =
+    const effectiveCategory = groupCategory 
+        ? groupCategory 
+        : computedCategory || "";
+        
+    /* const fallbackImage =
         detailsIndex &&
         detailsIndex[itemId] &&
         detailsIndex[itemId].image
             ? "data:image/png;base64," + detailsIndex[itemId].image
-            : `assets/media/item/textures/${itemId}.png`;
+            : `assets/media/item/textures/${itemId}.png`; */
+    const fallbackImage = `assets/media/item/textures/${itemId}.png`;
 
     const primarySrc = effectiveCategory
         ? `assets/media/museum/${effectiveCategory}/${itemId}.png`
         : fallbackImage;
 
-        console.log("MuseumItemImage - itemId:", itemId, "effectiveCategory:", effectiveCategory, "primarySrc:", primarySrc, "fallbackImage:", fallbackImage);
+    console.log("MuseumItemImage - itemId:", itemId, "effectiveCategory:", effectiveCategory, "primarySrc:", primarySrc, "fallbackImage:", fallbackImage);
 
     const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const currentSrc = (e.target as HTMLImageElement).src;
