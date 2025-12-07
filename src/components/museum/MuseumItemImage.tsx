@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from "react";
 
 interface MuseumItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-    groupCategory?: string;
+    groupCategory: string;
     itemId: string;
     detailsIndex: { [key: string]: { image?: string } } | null;
 }

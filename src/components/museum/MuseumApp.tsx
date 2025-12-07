@@ -67,9 +67,7 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
-        null
-    );
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
