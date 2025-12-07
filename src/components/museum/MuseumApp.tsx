@@ -60,7 +60,10 @@ export const MuseumApp: FC = () => {
     const [selectedItems, setSelectedItems] = useState(true);
 
     // State for the Category
-    const [computedCategory, setComputedCategory] = useState<string | null>(null);
+    /* const [computedCategory, setComputedCategory] = useState<string | null>(null); */
+
+    // State for the grouped Items to find the category of any items
+    const [groupedItemsForResearch, setGroupedItemsForResearch] = useState<Group[] | null>(null);
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
@@ -271,21 +274,24 @@ export const MuseumApp: FC = () => {
         };
     }, [craftModalItem]); */
 
-    const setCategory = (itemId: string) => {
+    // Function to find the category of any items
+    useEffect(() => {
         fetch("/assets/data/items_museum_grouped_by_category.json")
-            .then((res) => res.json())
-            .then((groups: Array<{ category: string; items: string[] }>) => {
-                const found = groups.find((group) => group.items.includes(itemId));
-                if (found) {
-                    setComputedCategory(found.category);
-                } else {
-                    setComputedCategory(""); // ou laissez la chaîne vide si non trouvé
-                }
-            })
-            .catch(() => {
-                setComputedCategory("");
-            });
-        return computedCategory;
+        .then((res) => res.json())
+        .then((groups: Group[]) => {
+            setGroupedItemsForResearch(groups);
+        })
+        .catch(() => {
+            setGroupedItemsForResearch([]);
+        });
+    }, []);
+    const setCategory = (itemId: string): string => {
+        if (groupedItemsForResearch) {
+            const found = groupedItemsForResearch.find((group) => group.items.includes(itemId));
+            const category = found ? found.category : "";
+            return category;
+        }
+        return "";
     };
 
     // Recursive function to aggregate the required resources from a given recipe
@@ -371,6 +377,7 @@ export const MuseumApp: FC = () => {
                                 </span>
                                 x
                                 <MuseumItemImage
+                                    groupCategory={setCategory(key)}
                                     itemId={key}
                                     detailsIndex={detailsIndex}
                                     className="h-4 w-4 ml-0.5"
@@ -398,6 +405,7 @@ export const MuseumApp: FC = () => {
                 >
                     <div className="flex items-center">
                         <MuseumItemImage
+                            groupCategory={setCategory(ing.id)}
                             itemId={ing.id}
                             detailsIndex={detailsIndex}
                             style={{
@@ -641,6 +649,7 @@ export const MuseumApp: FC = () => {
                             >
                                 <div className="flex items-center">
                                     <MuseumItemImage
+                                        groupCategory={setCategory(resId)}
                                         itemId={resId}
                                         detailsIndex={detailsIndex}
                                         className="w-8 h-8 mr-2 rounded"
@@ -1070,7 +1079,7 @@ export const MuseumApp: FC = () => {
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setCraftModalItem(null);
-                        setCraftModalCategory(null);
+                            setCraftModalCategory(null);
                     }}
                 >
                     <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
@@ -1169,7 +1178,7 @@ export const MuseumApp: FC = () => {
                                                 {t("museum.noRecipe")}
                                             </p>
                                         </span>
-                                        <a
+                                        {/* <a
                                             className="ml-auto"
                                             href={`https://minebox.co/universe/items?id=${craftModalItem}`}
                                             target="_blank"
@@ -1178,7 +1187,10 @@ export const MuseumApp: FC = () => {
                                             <span className="close flex items-center justify-center text-xl font-semibold cursor-pointer h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600">
                                                 ?
                                             </span>
-                                        </a>
+                                        </a> */}
+                                        <span className="ml-auto">
+                                            {moreInformation()}
+                                        </span>
                                         <span
                                             className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
                                             onClick={() =>
