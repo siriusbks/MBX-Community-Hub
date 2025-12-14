@@ -857,7 +857,7 @@ const BestiaryPage: FC = () => {
                                                                     </span>
                                                                 </div>
                                                             )}
-                                                            <div className="text-xs text-gray-200 truncate">
+                                                            <div className="text-xs text-gray-200 text-center leading-tight break-words line-clamp-3">
                                                                 {t(f)}
                                                             </div>
                                                         </button>
