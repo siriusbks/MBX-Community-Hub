@@ -682,7 +682,7 @@ const BestiaryPage: FC = () => {
                         if (e.target === e.currentTarget) setSelectedMob(null);
                     }}
                 >
-                    <div className="modal-content flex flex-col bg-gray-900 text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative p-4 overflow-hidden">
+                    <div className="modal-content flex flex-col bg-gray-900 text-white rounded-lg max-w-[90%] max-h-[91vh] mx-auto shadow-2xl relative p-4 overflow-hidden">
                         <span
                             className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
                             onClick={() => setSelectedMob(null)}
@@ -692,7 +692,7 @@ const BestiaryPage: FC = () => {
 
                         <div className="flex flex-col md:flex-row gap-4 flex-1 overflow-hidden">
                             {/* Left column: image, name, region, health, stats, family, drops */}
-                            <div className="w-full md:w-1/2 flex flex-col gap-4 pr-2">
+                            <div className="w-full md:w-1/2 flex flex-col gap-4 pr-2 min-h-0">
                                 <div className="flex items-start gap-4">
                                     <div className="w-48 h-48 flex-shrink-0 rounded overflow-hidden bg-gray-900 p-3 flex items-center justify-center">
                                         {selectedMob.mob.image ? (
@@ -876,16 +876,17 @@ const BestiaryPage: FC = () => {
                                 </div>
 
                                 {/* Drops */}
-                                <div>
+                                <div className="flex flex-col min-h-0">
                                     <div className="text-sm text-gray-200 font-semibold mb-2">
                                         {t("bestiary.drop", {
                                             ns: "bestiary",
                                             defaultValue: "Drops",
                                         })}
                                     </div>
+
                                     {selectedMob.mob.drop &&
                                     selectedMob.mob.drop.length > 0 ? (
-                                        <div className="max-h-[40vh] overflow-y-auto custom-scrollbar pr-1 pb-6">
+                                        <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-1 pb-6">
                                             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
                                                 {selectedMob.mob.drop
                                                     .slice()
@@ -916,6 +917,7 @@ const BestiaryPage: FC = () => {
                                                                       }
                                                                   )
                                                                 : null;
+
                                                         const rarityBg = rarity
                                                             ? rarity ===
                                                               "COMMON"
@@ -1016,8 +1018,6 @@ const BestiaryPage: FC = () => {
                                                             </div>
                                                         );
                                                     })}
-
-                                                <div className="col-span-full h-12" />
                                             </div>
                                         </div>
                                     ) : (
@@ -1034,7 +1034,7 @@ const BestiaryPage: FC = () => {
                             {/* Right column: map preview */}
                             <div className="w-full md:w-1/2">
                                 <div className="mt-0 md:mt-0">
-                                    <div className="text-sm text-gray-200 font-semibold text-center mb-2">
+                                    <div className="text-xs text-gray-400 text-center mb-1 font-semibold">
                                         {t("bestiary.mapPreview", {
                                             ns: "bestiary",
                                             defaultValue: "Map preview",
