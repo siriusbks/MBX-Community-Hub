@@ -8,6 +8,7 @@
     "bestiary.drop": "Drops List",
     "bestiary.noDrop": "This mob does not drop any loot",
     "bestiary.openInteractiveMap": "Open Interactive Map",
+    "bestiary.unavailableMobs": "Unavailable Mobs",
 
     "bestiary.vanilla.chicken": "Chicken",
     "bestiary.vanilla.rabbit": "Rabbit",

@@ -592,7 +592,7 @@ const BestiaryPage: FC = () => {
 
                 return (
                     <section className="mb-10">
-                        <h2 className="text-2xl font-semibold text-white mb-4">
+                        <h2 className="text-2xl font-semibold text-white-400 mb-4">
                             {t("bestiary.unavailableMobs", {
                                 ns: "bestiary",
                                 defaultValue: "Unavailable Mobs",
@@ -1034,7 +1034,7 @@ const BestiaryPage: FC = () => {
                             {/* Right column: map preview */}
                             <div className="w-full md:w-1/2">
                                 <div className="mt-0 md:mt-0">
-                                    <div className="text-xs text-gray-400 text-center mb-1 font-semibold">
+                                    <div className="text-xs text-white-400 text-center mb-1 font-semibold">
                                         {t("bestiary.mapPreview", {
                                             ns: "bestiary",
                                             defaultValue: "Map preview",
