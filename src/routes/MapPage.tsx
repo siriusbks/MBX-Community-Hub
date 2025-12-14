@@ -625,7 +625,7 @@ const MapPage: FC = () => {
                                                                     <div className="flex justify-between items-center">
                                                                         {/* Left */}
                                                                         <div className="flex flex-col">
-                                                                            <span className="font-semibold text-white items-center flex leading-none">
+                                                                            <span className="font-semibold text-white text-sm items-center flex leading-none">
                                                                                 <span
                                                                                     className={`${rarityColor} px-1 mr-1 pb-0.5 rounded font-normal text-xs w-fit whitespace-nowrap`}
                                                                                 >
@@ -923,11 +923,16 @@ const MapPage: FC = () => {
 
                         {/* Bestiary Info Header */}
                         {isSidebarOpen &&
-                            Object.keys(bestiaryData[selectedMapKey] || {}).length > 0 &&
-                            Object.values(bestiaryData[selectedMapKey] || {}).some(
+                            Object.keys(bestiaryData[selectedMapKey] || {})
+                                .length > 0 &&
+                            Object.values(
+                                bestiaryData[selectedMapKey] || {}
+                            ).some(
                                 (list: any) =>
                                     Array.isArray(list) &&
-                                    list.some((item: any) => item.available !== false)
+                                    list.some(
+                                        (item: any) => item.available !== false
+                                    )
                             ) && (
                                 <div className="flex items-center justify-between p-2 border-y border-gray-700">
                                     <button
@@ -961,7 +966,9 @@ const MapPage: FC = () => {
                                 {Object.entries(
                                     bestiaryData[selectedMapKey]
                                 ).map(([spotKey, BestiaryList]) => {
-                                    const visibleList = [...BestiaryList].filter(
+                                    const visibleList = [
+                                        ...BestiaryList,
+                                    ].filter(
                                         (item) => item.available !== false
                                     );
                                     if (visibleList.length === 0) return null;
@@ -979,106 +986,151 @@ const MapPage: FC = () => {
                                             </summary>
 
                                             <div className="px-3 pt-2 pb-4 space-y-2 gap-1 flex flex-col">
-                                                {visibleList.map((fish, index) => {
-                                                    return (
-                                                        <Link
-                                                            to={`/bestiary?mob=${encodeURIComponent(
-                                                                fish.name
-                                                            )}`}
-                                                            className=""
-                                                            title={t("bestiary.share", {
-                                                                ns: "bestiary",
-                                                                defaultValue: "Share",
-                                                            })}
-                                                            key={fish.name ?? index}
-                                                        >
-                                                            <div className="bg-gray-800 rounded p-2 flex gap-3 items-center">
-                                                                {fish.image ? (
-                                                                    <img
-                                                                        src={fish.image}
-                                                                        className="w-10 h-10 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                                    />
-                                                                ) : (
-                                                                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
-                                                                        🎣
-                                                                    </div>
+                                                {visibleList.map(
+                                                    (fish, index) => {
+                                                        return (
+                                                            <Link
+                                                                to={`/bestiary?mob=${encodeURIComponent(
+                                                                    fish.name
+                                                                )}`}
+                                                                className=""
+                                                                title={t(
+                                                                    "bestiary.share",
+                                                                    {
+                                                                        ns: "bestiary",
+                                                                        defaultValue:
+                                                                            "Share",
+                                                                    }
                                                                 )}
+                                                                key={
+                                                                    fish.name ??
+                                                                    index
+                                                                }
+                                                            >
+                                                                <div className="bg-gray-800 rounded p-2 flex gap-3 items-center">
+                                                                    {fish.image ? (
+                                                                        <img
+                                                                            src={
+                                                                                fish.image
+                                                                            }
+                                                                            className="w-10 h-10 pointer-events-none drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center text-xs text-white">
+                                                                            🎣
+                                                                        </div>
+                                                                    )}
 
-                                                                <div className="flex-1">
-                                                                    <div className="flex justify-between items-center">
-                                                                        <div className="flex flex-col w-full">
-                                                                            {fish.halloween2025 && (
-                                                                                <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
-                                                                                    Halloween
-                                                                                    Event
-                                                                                </span>
-                                                                            )}
-                                                                            {fish.boss && (
-                                                                                <span className="text-[10px] bg-yellow-600 bg-opacity-50 border font-semibold border-yellow-600 w-fit px-2 py-0 rounded mb-1">
-                                                                                    {t(
-                                                                                        "bestiary.boss",
-                                                                                        { name: "Boss", ns: "bestiary" }
-                                                                                    )}
-                                                                                </span>
-                                                                            )}
-                                                                            <span className=" font-semibold text-white items-center align-middle flex  leading-none">
-                                                                                <span
-                                                                                    className={`${LevelBG_Gradient(
-                                                                                        fish.minlevel
-                                                                                    )} ${LevelTextColor(
-                                                                                        fish.minlevel
-                                                                                    )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[10px] w-fit overflow-hidden min-w-16 items-center flex justify-center`}
-                                                                                >
-                                                                                    <span>
+                                                                    <div className="flex-1">
+                                                                        <div className="flex justify-between items-center">
+                                                                            <div className="flex flex-col w-full">
+                                                                                {fish.halloween2025 && (
+                                                                                    <span className="text-[10px] bg-orange-600 bg-opacity-50 border font-semibold border-orange-600 w-fit px-2 py-0 rounded mb-1">
+                                                                                        Halloween
+                                                                                        Event
+                                                                                    </span>
+                                                                                )}
+                                                                                {fish.boss && (
+                                                                                    <span className="text-[10px] bg-yellow-600 bg-opacity-50 border font-semibold border-yellow-600 w-fit px-2 py-0 rounded mb-1">
                                                                                         {t(
-                                                                                            "bestiary.level",
+                                                                                            "bestiary.boss",
+                                                                                            {
+                                                                                                name: "Boss",
+                                                                                                ns: "bestiary",
+                                                                                            }
+                                                                                        )}
+                                                                                    </span>
+                                                                                )}
+                                                                                <span className=" font-semibold text-white items-center align-middle flex  leading-none">
+                                                                                    <span
+                                                                                        className={`${LevelBG_Gradient(
+                                                                                            fish.minlevel
+                                                                                        )} ${LevelTextColor(
+                                                                                            fish.minlevel
+                                                                                        )} px-1.5 mr-1 pb-1 pt-0.5 rounded font-bold text-[10px] w-fit overflow-hidden min-w-16 items-center flex justify-center`}
+                                                                                    >
+                                                                                        <span>
+                                                                                            {t(
+                                                                                                "bestiary.level",
+                                                                                                {
+                                                                                                    ns: "bestiary",
+                                                                                                    defaultValue:
+                                                                                                        "bestiary.level",
+                                                                                                }
+                                                                                            )}{" "}
+                                                                                            {
+                                                                                                fish.minlevel
+                                                                                            }{" "}
+                                                                                            -{" "}
+                                                                                            {
+                                                                                                fish.maxlevel
+                                                                                            }
+                                                                                        </span>
+                                                                                    </span>
+                                                                                    <span className="mb-0.5 text-[13px]">
+                                                                                        {t(
+                                                                                            fish.name,
                                                                                             {
                                                                                                 ns: "bestiary",
-                                                                                                defaultValue: "bestiary.level",
+                                                                                                defaultValue:
+                                                                                                    fish.name,
                                                                                             }
-                                                                                        )}{" "}
-                                                                                        {fish.minlevel} - {fish.maxlevel}
+                                                                                        )}
                                                                                     </span>
                                                                                 </span>
-                                                                                <span className="mb-0.5 text-[13px]">
-                                                                                    {t(fish.name, {
-                                                                                        ns: "bestiary",
-                                                                                        defaultValue: fish.name,
-                                                                                    })}
+                                                                                <span className=" mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
+                                                                                    <span className="mx-auto">
+                                                                                        {fish.minhealth.toLocaleString()}{" "}
+                                                                                        -{" "}
+                                                                                        {fish.maxhealth.toLocaleString()}
+                                                                                    </span>
                                                                                 </span>
-                                                                            </span>
-                                                                            <span className=" mt-1 mb-0.5 bg-red-700/60 border-red-700/80 border text-[10px] rounded items-center align-middle flex">
-                                                                                <span className="mx-auto">
-                                                                                    {fish.minhealth.toLocaleString()}{" "}
-                                                                                    -{" "}
-                                                                                    {fish.maxhealth.toLocaleString()}
+                                                                                <span className="text-[11px] text-gray-300 flex justify-between">
+                                                                                    <span className="flex items-center min-w-10">
+                                                                                        {fish.fireResistant ??
+                                                                                            0}
+                                                                                        %
+                                                                                        <img
+                                                                                            src="assets/media/elemental/intelligence.png"
+                                                                                            className="h-3 w-3 inline ml-0.5"
+                                                                                        />
+                                                                                    </span>
+                                                                                    <span className="flex items-center min-w-10">
+                                                                                        {fish.waterResistant ??
+                                                                                            0}
+                                                                                        %
+                                                                                        <img
+                                                                                            src="assets/media/elemental/luck.png"
+                                                                                            className="h-3 w-3 inline ml-0.5"
+                                                                                        />
+                                                                                    </span>
+                                                                                    <span className="flex items-center min-w-10">
+                                                                                        {fish.airResistant ??
+                                                                                            0}
+                                                                                        %
+                                                                                        <img
+                                                                                            src="assets/media/elemental/agility.png"
+                                                                                            className="h-3 w-3 inline ml-0.5"
+                                                                                        />
+                                                                                    </span>
+                                                                                    <span className="flex items-center min-w-10">
+                                                                                        {fish.earthResistant ??
+                                                                                            0}
+                                                                                        %
+                                                                                        <img
+                                                                                            src="assets/media/elemental/strength.png"
+                                                                                            className="h-3 w-3 inline ml-0.5"
+                                                                                        />
+                                                                                    </span>
                                                                                 </span>
-                                                                            </span>
-                                                                            <span className="text-[11px] text-gray-300 flex justify-between">
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.fireResistant ?? 0}%
-                                                                                    <img src="assets/media/elemental/intelligence.png" className="h-3 w-3 inline ml-0.5" />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.waterResistant ?? 0}%
-                                                                                    <img src="assets/media/elemental/luck.png" className="h-3 w-3 inline ml-0.5" />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.airResistant ?? 0}%
-                                                                                    <img src="assets/media/elemental/agility.png" className="h-3 w-3 inline ml-0.5" />
-                                                                                </span>
-                                                                                <span className="flex items-center min-w-10">
-                                                                                    {fish.earthResistant ?? 0}%
-                                                                                    <img src="assets/media/elemental/strength.png" className="h-3 w-3 inline ml-0.5" />
-                                                                                </span>
-                                                                            </span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </Link>
-                                                    );
-                                                })}
+                                                            </Link>
+                                                        );
+                                                    }
+                                                )}
                                             </div>
                                         </details>
                                     );
