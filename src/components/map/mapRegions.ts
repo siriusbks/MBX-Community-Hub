@@ -70,22 +70,20 @@ export type RegionShape =
 
 export const regionsData: Record<string, Record<string, RegionShape>> = {
     spawn: {
-        central_island: {
-            coords: [
-                [360, 230],
-                [371, 236],
-                [469, 235],
-                [464, 324],
-                [447, 345],
-                [428, 346],
-                [400, 335],
-                [371, 340],
-                [347, 322],
-                [351, 286],
-                [348, 242],
-                [351, 230],
-            ],
-        },
+        central_island: [
+            [360, 230],
+            [371, 236],
+            [469, 235],
+            [464, 324],
+            [447, 345],
+            [428, 346],
+            [400, 335],
+            [371, 340],
+            [347, 322],
+            [351, 286],
+            [348, 242],
+            [351, 230],
+        ],
         trade_island: [
             [469, 236],
             [502, 231],
@@ -178,21 +176,19 @@ export const regionsData: Record<string, Record<string, RegionShape>> = {
         ],
     },
     kokoko: {
-        beach: {
-            coords: [
-                [0, 0],
-                [0, 265],
-                [75, 255],
-                [130, 250],
-                [200, 265],
-                [265, 235],
-                [255, 200],
-                [255, 155],
-                [255, 125],
-                [255, 45],
-                [255, 0],
-            ],
-        },
+        beach: [
+            [0, 0],
+            [0, 265],
+            [75, 255],
+            [130, 250],
+            [200, 265],
+            [265, 235],
+            [255, 200],
+            [255, 155],
+            [255, 125],
+            [255, 45],
+            [255, 0],
+        ],
         jungle: [
             [265, 235],
             [255, 200],
@@ -232,14 +228,12 @@ export const regionsData: Record<string, Record<string, RegionShape>> = {
         ],
     },
     quadra_plains: {
-        plains: {
-            coords: [
-                [0, 608],
-                [275, 608],
-                [275, 345],
-                [0, 345],
-            ],
-        },
+        plains: [
+            [0, 608],
+            [275, 608],
+            [275, 345],
+            [0, 345],
+        ],
         swamp: [
             [275, 608],
             [275, 345],
@@ -260,14 +254,12 @@ export const regionsData: Record<string, Record<string, RegionShape>> = {
         ],
     },
     bamboo_peak: {
-        bamboo_plains: {
-            coords: [
-                [608, 110],
-                [450, 110],
-                [450, 675],
-                [608, 675],
-            ],
-        },
+        bamboo_plains: [
+            [608, 110],
+            [450, 110],
+            [450, 675],
+            [608, 675],
+        ],
         cherry_forest: [
             [450, 25],
             [290, 25],
@@ -307,14 +299,12 @@ export const regionsData: Record<string, Record<string, RegionShape>> = {
         ],
     },
     frostbite_fortress: {
-        snow_plains: {
-            coords: [
-                [0, 720],
-                [360, 720],
-                [360, 330],
-                [0, 330],
-            ],
-        },
+        snow_plains: [
+            [0, 720],
+            [360, 720],
+            [360, 330],
+            [0, 330],
+        ],
         snow_forest: [
             [0, 0],
             [360, 0],
@@ -338,17 +328,15 @@ export const regionsData: Record<string, Record<string, RegionShape>> = {
         ],
     },
     sandwhisper_dunes: {
-        desert: {
-            coords: [
-                [330, 0],
-                [330, 170],
-                [220, 225],
-                [370, 380],
-                [752, 380],
-                [752, 150],
-                [450, 0],
-            ],
-        },
+        desert: [
+            [330, 0],
+            [330, 170],
+            [220, 225],
+            [370, 380],
+            [752, 380],
+            [752, 150],
+            [450, 0],
+        ],
         desert_village: [
             [0, 0],
             [330, 0],
@@ -402,6 +390,34 @@ interface BestiaryRegionData {
 
 export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
     spawn: {
+        universal: {
+            zones: [
+                {
+                    color: "#ff0088ff",
+                    coords: [
+                        [0, 0],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.universal[0],
+                        bestiaryData.spawn.universal[1],
+                        bestiaryData.spawn.universal[2],
+                        bestiaryData.spawn.universal[3],
+                    ],
+                },
+                {
+                    color: "#ff0088ff",
+                    coords: [
+                        [0, 0],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.universal[0],
+                        bestiaryData.spawn.universal[1],
+                        bestiaryData.spawn.universal[2],
+                        bestiaryData.spawn.universal[3],
+                    ],
+                },
+            ],
+        },
         church: {
             zones: [
                 {
@@ -504,6 +520,15 @@ export const bestiaryRegionsData: Record<string, BestiaryRegionData> = {
                         bestiaryData.spawn.workshop_island[0],
                     ],
                 },
+                {
+                    color: "#ff00ffff",
+                    coords: [
+                        [0, 0],
+                    ],
+                    mobs: [
+                        bestiaryData.spawn.workshop_island[2],
+                    ],
+                }
             ],
         },
     },
