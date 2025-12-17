@@ -5,7 +5,9 @@
     "navbar.equipement": "Equipment",
     "navbar.museum": "Museum",
     "navbar.community": "Community",
-    "navbar.halloween": "Halloween",
     "navbar.itemsNrecipes": "Items & Recipes",
-    "navbar.bestiary": "Bestiary"
+    "navbar.bestiary": "Bestiary",
+
+    "navbar.halloween": "Halloween",
+    "navbar.christmas": "Christmas"
 }
