@@ -18,10 +18,27 @@
     "christmas.info.big": "Big Gifts",
     "christmas.info.big.description": "Contain huge surprises like exclusive items, mounts, pets and more!",
 
-    "christmas.treasure.title": "Christmas Treasure (Big Red Present)",
+    "christmas.treasure.title": "Christmas Treasures",
     "christmas.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies and gifts or by exchanging Vote Points for Pass Stars",
     "christmas.treasure.description2": "Exclusive Hipster Santa armor set, The Hipster Penguin, The Snowman, The Hipster Bike, The Wooden Plane",
     "christmas.treasure.description3": "1 Big Red Present = 15 Battle Pass Stars",
+    "christmas.treasure.big": "Big Presents Drops",    
+    "christmas.treasure.medium": "Medium Presents Drops",  
+    "christmas.treasure.small": "Small Presents Drops",
+    "mbx.items.xmas_red_present_big.name": "Big Red Present",
 
-    "christmas.mobs.title": "Christmas Event Mobs"
+    "christmas.mobs.title": "Christmas Event Mobs",
+
+    "christmas.week1": "Week 1 Missions",
+    "christmas.week2": "Week 2 Missions",
+    "christmas.week3": "Week 3 Missions",
+    "christmas.week.active": "Active Now!",
+    "christmas.bpStars": "Battle Pass Stars",
+    "christmas.mission.missing": "Coming Soon!",
+    "christmas.mission.reward": "Weekly Reward",
+    "christmas.mission.craft": "Craft: ",
+    "christmas.mission.opengifts": "Open Xmas Presents",
+    "christmas.mission.kill": "Kill: ",
+    "christmas.mission.play": "Play Hours",
+    "christmas.mission.takegifts": "Take Gifts From Santa"
 }
