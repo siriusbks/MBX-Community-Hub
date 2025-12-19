@@ -395,7 +395,8 @@ const ChristmasPage: FC = () => {
                     </h1>
                 </div>
             </div>
-            <p className="text-xs">{t("christmas.battlepass.description")}</p>
+            <p className="text-xs">{t("christmas.battlepass.description1")}</p>
+            <p className="text-xs">{t("christmas.battlepass.description2")}</p>
             <div className="grid grid-cols-3 xl:grid-cols-6 gap-4 mt-4">
                 <div className="flex flex-col items-start justify-center text-center bg-gradient-to-br from-gray-800/50 to-rose-900/5 border-gray-800 border rounded-lg p-4">
                     <h4 className="text-xl text-gray-200 font-bold mb-2 flex flex-col items-center justify-center w-full">
