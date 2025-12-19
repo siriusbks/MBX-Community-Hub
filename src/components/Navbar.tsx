@@ -15,7 +15,8 @@ import {
     Leaf,
     Wrench,
     BookA,
-    Bone
+    Bone,
+    Snowflake
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -39,6 +40,7 @@ const NAV_LINKS: Array<any> = [
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
+    { id: "christmas", to: "/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true },
     //{ id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
 ];
 
@@ -201,7 +203,7 @@ export const Navbar = () => {
                                                     {React.createElement(item.icon, { className: "w-5 h-5 text-gray-300" })}
                                                     <span>{t(item.labelKey)}</span>
                                                     {item.badge && (
-                                                        <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${item.event ? "orange" : "green"}-500 text-black rounded`}>{item.badge}</span>
+                                                        <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${item.event ? "white" : "green-500"} text-black rounded`}>{item.badge}</span>
                                                     )}
                                                 </NavLink>
                                             ))}
@@ -220,7 +222,7 @@ export const Navbar = () => {
                                     `flex items-center gap-2 px-2 lg:px-4  py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
                                         isActive || (link.matchPrefix && location.pathname.startsWith(link.matchPrefix))
                                             ? link.event
-                                                ? "bg-orange-500/20 text-orange-400"
+                                                ? "bg-white/20 text-white"
                                                 : "bg-green-500/20 text-green-400"
                                             : "text-gray-400 hover:text-white hover:bg-white/5"
                                     }`
@@ -231,7 +233,7 @@ export const Navbar = () => {
                                     <span className="hidden lg:flex">{t(link.labelKey)}</span>
                                 </span>
                                 {link.badge && (
-                                    <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${link.event ? "orange" : "green"}-500 text-black rounded`}>{link.badge}</span>
+                                    <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${link.event ? "white" : "green-500"} text-black rounded`}>{link.badge}</span>
                                 )}
                             </NavLink>
                         );

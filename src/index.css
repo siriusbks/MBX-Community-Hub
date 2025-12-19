@@ -165,21 +165,30 @@
 }
 
 :root {
+    --color-VANILLA: #55a0ac;
+    --color-VANILLA-50: #55a0ac20;
+    --color-VANILLA-BORDER: #55a0ac;
     --color-COMMON: #665466;
     --color-COMMON-50: #66546620;
     --color-COMMON-BORDER: #55a0ac;
     --color-UNCOMMON: #00c06f;
     --color-UNCOMMON-50: #00c06f20;
+    --color-UNCOMMON-BORDER: #00c06f;
     --color-RARE: #00a5fc;
     --color-RARE-50: #00a5fc20;
+    --color-RARE-BORDER: #00a5fc;
     --color-EPIC: #c507ff;
     --color-EPIC-50: #c507ff20;
+    --color-EPIC-BORDER: #c507ff;
     --color-LEGENDARY: #cc982a;
     --color-LEGENDARY-50: #cc982a20;
+    --color-LEGENDARY-BORDER: #cc982a;
     --color-MYTHIC: #c6070c;
     --color-MYTHIC-50: #c6070c20;
+    --color-MYTHIC-BORDER: #c6070c;
     --color-UNKNOWN: #ff0095;
     --color-UNKNOWN-50: #ff009520;
+    --color-UNKNOWN-BORDER: #ff0095;
 }
 
 /* Bestiary preview map image: grayscale by default */
