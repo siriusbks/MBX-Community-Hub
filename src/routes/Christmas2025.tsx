@@ -35,32 +35,42 @@ import { Link } from "react-router-dom";
 type TreasureDropChange = {
     image: string;
     name: string;
-    rarity:
-        | "VANILLA"
-        | "COMMON"
-        | "RARE"
-        | "EPIC"
-        | "LEGENDARY"
-        | "MYTHIC"
-        | "UNCOMMON"
-        | "UNKNOWN";
+    rarity: Rarity;
     change: number;
 };
 type GiftsDropChange = {
     image: string;
     name: string;
-    rarity:
-        | "VANILLA"
-        | "COMMON"
-        | "RARE"
-        | "EPIC"
-        | "LEGENDARY"
-        | "MYTHIC"
-        | "UNCOMMON"
-        | "UNKNOWN";
+    rarity: Rarity;
     count: number;
     change: number;
 };
+
+type Rarity =
+    | "VANILLA"
+    | "COMMON"
+    | "UNCOMMON"
+    | "RARE"
+    | "EPIC"
+    | "LEGENDARY"
+    | "MYTHIC"
+    | "UNKNOWN";
+
+const RarityKey: Record<Rarity, string> = {
+    VANILLA: "christmas.rarity.vanilla",
+    COMMON: "christmas.rarity.common",
+    UNCOMMON: "christmas.rarity.uncommon",
+    RARE: "christmas.rarity.rare",
+    EPIC: "christmas.rarity.epic",
+    LEGENDARY: "christmas.rarity.legendary",
+    MYTHIC: "christmas.rarity.mythic",
+    UNKNOWN: "christmas.rarity.unknown",
+};
+
+const getRarityLabel = (
+    t: (key: string, options?: any) => string,
+    rarity: Rarity
+) => t(RarityKey[rarity], { defaultValue: rarity });
 
 const BigPresentDrops: TreasureDropChange[] = [
     {
@@ -476,7 +486,9 @@ const ChristmasPage: FC = () => {
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
                             <span>
                                 {t("christmas.mission.craft")}{" "}
-                                <span className="text-MYTHIC font-bold">{t("mbx.items.xmas_red_present_big.name")}{" "}</span>
+                                <span className="text-MYTHIC font-bold">
+                                    {t("mbx.items.xmas_red_present_big.name")}{" "}
+                                </span>
                                 [2]
                             </span>
                             <span className="text-LEGENDARY">
@@ -484,15 +496,29 @@ const ChristmasPage: FC = () => {
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.kill")}
-                                <span className="text-VANILLA font-bold">{t("bestiary.xmas_penguin_green", {ns: "bestiary"})}</span>{" "}[32]</span>
+                            <span>
+                                {t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_penguin_green", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [32]
+                            </span>
                             <span className="text-LEGENDARY">
                                 7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.kill")}
-                                <span className="text-VANILLA font-bold">{t("bestiary.xmas_penguin_red", {ns: "bestiary"})}</span>{" "}[32]</span>
+                            <span>
+                                {t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_penguin_red", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [32]
+                            </span>
                             <span className="text-LEGENDARY">
                                 7x {t("christmas.bpStars")}
                             </span>
@@ -704,7 +730,7 @@ const ChristmasPage: FC = () => {
                                 <span
                                     className={`text-xs bg-${item.rarity} px-2 font-semibold text-[9px] rounded`}
                                 >
-                                    {item.rarity}
+                                    {getRarityLabel(t, item.rarity)}
                                 </span>
 
                                 <span
@@ -743,7 +769,7 @@ const ChristmasPage: FC = () => {
                                 <span
                                     className={`text-xs bg-${item.rarity} px-2 font-semibold text-[9px] rounded`}
                                 >
-                                    {item.rarity}
+                                    {getRarityLabel(t, item.rarity)}
                                 </span>
 
                                 <span

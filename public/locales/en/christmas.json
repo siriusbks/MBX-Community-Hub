@@ -22,8 +22,8 @@
     "christmas.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies and gifts or by exchanging Vote Points for Pass Stars",
     "christmas.treasure.description2": "Exclusive Hipster Santa armor set, The Hipster Penguin, The Snowman, The Hipster Bike, The Wooden Plane",
     "christmas.treasure.description3": "1 Big Red Present = 15 Battle Pass Stars",
-    "christmas.treasure.big": "Big Presents Drops",    
-    "christmas.treasure.medium": "Medium Presents Drops",  
+    "christmas.treasure.big": "Big Presents Drops",
+    "christmas.treasure.medium": "Medium Presents Drops",
     "christmas.treasure.small": "Small Presents Drops",
     "mbx.items.xmas_red_present_big.name": "Big Red Present",
 
@@ -40,5 +40,14 @@
     "christmas.mission.opengifts": "Open Xmas Presents",
     "christmas.mission.kill": "Kill: ",
     "christmas.mission.play": "Play Hours",
-    "christmas.mission.takegifts": "Take Gifts From Santa"
+    "christmas.mission.takegifts": "Take Gifts From Santa",
+
+    "christmas.rarity.unknown": "UNKNOWN",
+    "christmas.rarity.vanilla": "VANILLA",
+    "christmas.rarity.common": "COMMON",
+    "christmas.rarity.uncommon": "UNCOMMON",
+    "christmas.rarity.rare": "RARE",
+    "christmas.rarity.epic": "EPIC",
+    "christmas.rarity.legendary": "LEGENDARY",
+    "christmas.rarity.mythic": "MYTHIC"
 }
