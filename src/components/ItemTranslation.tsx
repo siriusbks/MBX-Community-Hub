@@ -46,6 +46,12 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
             case "nameplate":
             case "emote":
             case "balloon":
+                // TODO
+                // TODO
+                // TODO
+                // TODO
+                // TODO
+                // TODO
                 // For these categories, use key "mbx.attributes.{category}.{mbxId}"
                 translationLore = t(`mbx.attributes.${lowerCategory}.${mbxId}.lore`, { defaultValue: "" });
                 translationDescription = t(`mbx.attributes.${lowerCategory}.${mbxId}.description`, { defaultValue: "" });
