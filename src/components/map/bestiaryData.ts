@@ -36,6 +36,96 @@ export interface BestiaryLoot {
 
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
     spawn: {
+        global: [
+            {
+                name: "bestiary.xmas_penguin_blue",
+                image: "assets/media/EVENT/XMAS/Penguin_Blue.png",
+                minlevel: 15,
+                maxlevel: 30,
+                minhealth: 250,
+                maxhealth: 400,
+
+                earthResistant: 0,
+                fireResistant: 0,
+                waterResistant: 80,
+                airResistant: 0,
+
+                family: [
+                    "bestiary.xmas_penguin_yellow",
+                    "bestiary.xmas_penguin_red",
+                    "bestiary.xmas_penguin_green",
+                ],
+                drop: [{ itemId: "xmas_bandana_blue", dropChance: 0 }],
+
+                christmas2025: true,
+            },
+            {
+                name: "bestiary.xmas_penguin_red",
+                image: "assets/media/EVENT/XMAS/Penguin_Red.png",
+                minlevel: 15,
+                maxlevel: 30,
+                minhealth: 250,
+                maxhealth: 400,
+
+                earthResistant: 0,
+                fireResistant: 80,
+                waterResistant: 0,
+                airResistant: 0,
+
+                family: [
+                    "bestiary.xmas_penguin_blue",
+                    "bestiary.xmas_penguin_yellow",
+                    "bestiary.xmas_penguin_green",
+                ],
+                drop: [{ itemId: "xmas_bandana_red", dropChance: 0 }],
+
+                christmas2025: true,
+            },
+            {
+                name: "bestiary.xmas_penguin_green",
+                image: "assets/media/EVENT/XMAS/Penguin_Green.png",
+                minlevel: 15,
+                maxlevel: 30,
+                minhealth: 250,
+                maxhealth: 400,
+
+                earthResistant: 0,
+                fireResistant: 0,
+                waterResistant: 0,
+                airResistant: 80,
+
+                family: [
+                    "bestiary.xmas_penguin_blue",
+                    "bestiary.xmas_penguin_red",
+                    "bestiary.xmas_penguin_yellow",
+                ],
+                drop: [{ itemId: "xmas_bandana_green", dropChance: 0 }],
+
+                christmas2025: true,
+            },
+            {
+                name: "bestiary.xmas_penguin_yellow",
+                image: "assets/media/EVENT/XMAS/Penguin_Yellow.png",
+                minlevel: 15,
+                maxlevel: 30,
+                minhealth: 250,
+                maxhealth: 400,
+
+                earthResistant: 80,
+                fireResistant: 0,
+                waterResistant: 0,
+                airResistant: 0,
+
+                family: [
+                    "bestiary.xmas_penguin_blue",
+                    "bestiary.xmas_penguin_red",
+                    "bestiary.xmas_penguin_green",
+                ],
+                drop: [{ itemId: "xmas_bandana_yellow", dropChance: 0 }],
+
+                christmas2025: true,
+            },
+        ],
         central_island: [
             {
                 name: "bestiary.halloween_crow",
@@ -62,102 +152,6 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 halloween2025: true,
 
                 available: false,
-            },
-            {
-                name: "bestiary.xmas_penguin_blue",
-                image: "assets/media/EVENT/XMAS/Penguin_Blue.png",
-                minlevel: 25,
-                maxlevel: 35,
-                minhealth: 250,
-                maxhealth: 360,
-
-                earthResistant: 0,
-                fireResistant: 0,
-                waterResistant: 80,
-                airResistant: 0,
-
-                family: [
-                    "bestiary.xmas_penguin_yellow",
-                    "bestiary.xmas_penguin_red",
-                    "bestiary.xmas_penguin_green",
-                ],
-                drop: [
-                    { itemId: "xmas_bandana_blue", dropChance: 0 },
-                ],
-
-                christmas2025: true,
-            },
-            {
-                name: "bestiary.xmas_penguin_red",
-                image: "assets/media/EVENT/XMAS/Penguin_Red.png",
-                minlevel: 25,
-                maxlevel: 35,
-                minhealth: 250,
-                maxhealth: 360,
-
-                earthResistant: 0,
-                fireResistant: 80,
-                waterResistant: 0,
-                airResistant: 0,
-
-                family: [
-                    "bestiary.xmas_penguin_blue",
-                    "bestiary.xmas_penguin_yellow",
-                    "bestiary.xmas_penguin_green",
-                ],
-                drop: [
-                    { itemId: "xmas_bandana_red", dropChance: 0 },
-                ],
-
-                christmas2025: true,
-            },
-            {
-                name: "bestiary.xmas_penguin_green",
-                image: "assets/media/EVENT/XMAS/Penguin_Green.png",
-                minlevel: 25,
-                maxlevel: 35,
-                minhealth: 250,
-                maxhealth: 360,
-
-                earthResistant: 0,
-                fireResistant: 0,
-                waterResistant: 0,
-                airResistant: 80,
-
-                family: [
-                    "bestiary.xmas_penguin_blue",
-                    "bestiary.xmas_penguin_red",
-                    "bestiary.xmas_penguin_yellow",
-                ],
-                drop: [
-                    { itemId: "xmas_bandana_green", dropChance: 0 },
-                ],
-
-                christmas2025: true,
-            },
-            {
-                name: "bestiary.xmas_penguin_yellow",
-                image: "assets/media/EVENT/XMAS/Penguin_Yellow.png",
-                minlevel: 25,
-                maxlevel: 35,
-                minhealth: 250,
-                maxhealth: 360,
-
-                earthResistant: 80,
-                fireResistant: 0,
-                waterResistant: 0,
-                airResistant: 0,
-
-                family: [
-                    "bestiary.xmas_penguin_blue",
-                    "bestiary.xmas_penguin_red",
-                    "bestiary.xmas_penguin_green",
-                ],
-                drop: [
-                    { itemId: "xmas_bandana_yellow", dropChance: 0 },
-                ],
-
-                christmas2025: true,
             },
         ],
         church: [
@@ -340,15 +334,15 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 minhealth: 10,
                 maxhealth: 20,
 
-                drop: [
-                    { itemId: "xmas_sugarcane", dropChance: 0 },
-                    { itemId: "xmas_gingerbread", dropChance: 0 },
-                ],
-
                 earthResistant: 0,
                 fireResistant: -50,
                 waterResistant: 0,
                 airResistant: 0,
+
+                drop: [
+                    { itemId: "xmas_sugarcane", dropChance: 0 },
+                    { itemId: "xmas_gingerbread", dropChance: 0 },
+                ],
 
                 christmas2025: true,
             },

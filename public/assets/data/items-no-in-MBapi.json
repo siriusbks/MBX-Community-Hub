@@ -2143,5 +2143,419 @@
                 }
             ]
         }
+    },
+    {
+        "id": "xmas_present_big_red",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_present_medium_blue",
+                    "amount":8
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_present_medium_green",
+                    "amount":8
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_present_medium_yellow",
+                    "amount":8
+                }
+            ]
+        }
+    },
+    {
+        "id": "xmas_present_medium_blue",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_black",
+                    "amount":16
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_cyan",
+                    "amount":16
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_big_red",
+                "amount": 8
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_medium_green",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_purple",
+                    "amount":16
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_pink",
+                    "amount":16
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_big_red",
+                "amount": 8
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_medium_yellow",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_orange",
+                    "amount":16
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_present_small_white",
+                    "amount":16
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_big_red",
+                "amount": 8
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_black",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_green_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_red",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_blue",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_cyan",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_blue_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_blue",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_blue",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_orange",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_yellow_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_yellow",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_yellow",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_pink",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_red_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_green",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_green",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_purple",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_green_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_blue",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_green",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_present_small_white",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"xmas_red_candy",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_gingerbread",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_yellow",
+                    "amount":2
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_medium_yellow",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_yellow_candy",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"transformed_wheat",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"transformed_sugar_cane",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_yellow",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_sugarcane",
+                    "amount":1
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_small_orange",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_red_candy",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"transformed_beetroot",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"transformed_sugar_cane",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_red",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_sugarcane",
+                    "amount":1
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_small_pink",
+                "amount": 16
+            },
+            {
+                "type": "custom",
+                "id": "xmas_present_small_white",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_green_candy",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"transformed_kelp",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"transformed_sugar_cane",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_green",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_sugarcane",
+                    "amount":1
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_small_black",
+                "amount": 16
+            },
+            {
+                "type": "custom",
+                "id": "xmas_present_small_purple",
+                "amount": 16
+            }
+        ]
+    },
+    {
+        "id": "xmas_blue_candy",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id":"transformed_sweet_berries",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"transformed_sugar_cane",
+                    "amount":1
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_bandana_blue",
+                    "amount":4
+                },
+                {
+                    "type":"custom",
+                    "id":"xmas_sugarcane",
+                    "amount":1
+                }
+            ]
+        },
+        "used_in_recipes": [
+            {
+                "type": "custom",
+                "id": "xmas_present_small_cyan",
+                "amount": 16
+            }
+        ]
     }
 ]
