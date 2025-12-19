@@ -36,7 +36,7 @@ export interface BestiaryLoot {
 
 export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
     spawn: {
-        universal: [
+        global: [
             {
                 name: "bestiary.xmas_penguin_blue",
                 image: "assets/media/EVENT/XMAS/Penguin_Blue.png",
