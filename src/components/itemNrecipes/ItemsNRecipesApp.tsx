@@ -583,9 +583,17 @@ const ItemsNRecipesApp: FC = () => {
             detailsIndex,
             craftQuantity
         );
-        const csvLines = Object.keys(recap).map(
-            (key) => `${recap[key]},${key}`
-        );
+        const csvLines = Object.keys(recap).map((itemId) => {
+            const quantity = recap[itemId];
+            const label = <ItemTranslation
+                              mbxId={key}
+                              category={setCategory(itemId)}
+                              type="name"
+                          />;
+            
+            return `${quantity},${label},${itemId}`; // For debugging
+            // return `${quantity},${label}`;
+        });
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
         try {
