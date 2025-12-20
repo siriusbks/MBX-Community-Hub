@@ -23,7 +23,7 @@ export const SkullSelector: React.FC<Props> = ({
     onChange,
     onClose,
 }) => {
-    const { t } = useTranslation(["equipment", "skulls"]);
+    const { t } = useTranslation(["equipment", "skulls", "common"]);
     const [q, setQ] = useState("");
 
     const filtered = useMemo(() => {
@@ -107,33 +107,45 @@ export const SkullSelector: React.FC<Props> = ({
                                 }`}
                             >
                                 <div className="flex items-center gap-4">
-                                    <img src ={sk.icon} alt={sk.name} className="w-12 h-12" style={{ imageRendering: "pixelated" }} />
+                                    <img
+                                        src={sk.icon}
+                                        alt={sk.name}
+                                        className="w-12 h-12"
+                                        style={{ imageRendering: "pixelated" }}
+                                    />
                                     <span>
-                                    <div className="font-bold text-xl">
-                                        {/* {skullLabel} */}
-                                        <ItemTranslation 
-                                            mbxId={sk.id} 
-                                            category="skull" 
-                                            type="name" 
-                                        />
-                                    </div>
-                                    <div className="text-xs text-gray-300 mb-0.5">
-                                        {Object.entries(sk.stats).map(
-                                            ([stat, val]) => (
-                                                <span
-                                                    key={stat}
-                                                    className={`inline-block mr-2  rounded px-1`}
-                                                >
-                                                                                                        +{val}{" "}
-                                                    <img src={iconMap[stat]} alt={stat} className="inline-block w-3 h-3 mb-[2px] mr-0.5" />                                                    
-                                                    {t(
-                                                        `equipment:equip.stats.names.${stat}`,
-                                                        { defaultValue: stat }
-                                                    )}
-                                                </span>
-                                            )
-                                        )}
-                                    </div>
+                                        <div className="font-bold text-xl">
+                                            {/* {skullLabel} */}
+                                            <ItemTranslation
+                                                mbxId={sk.id}
+                                                category="skull"
+                                                type="name"
+                                            />
+                                        </div>
+                                        <div className="text-xs text-gray-300 mb-0.5">
+                                            {Object.entries(sk.stats).map(
+                                                ([stat, val]) => (
+                                                    <span
+                                                        key={stat}
+                                                        className={`inline-block mr-2  rounded px-1`}
+                                                    >
+                                                        +{val}{" "}
+                                                        <img
+                                                            src={iconMap[stat]}
+                                                            alt={stat}
+                                                            className="inline-block w-3 h-3 mb-[2px] mr-0.5"
+                                                        />
+                                                        {t(
+                                                            `equipment:equip.stats.names.${stat}`,
+                                                            {
+                                                                defaultValue:
+                                                                    stat,
+                                                            }
+                                                        )}
+                                                    </span>
+                                                )
+                                            )}
+                                        </div>
                                     </span>
                                 </div>
                                 {active && (
@@ -155,7 +167,7 @@ export const SkullSelector: React.FC<Props> = ({
                         onClick={onClose}
                         className="px-4 py-2 text-sm bg-green-900/40 hover:bg-green-900/60 border border-green-700/50 rounded text-green-200"
                     >
-                        {t("equipment:equip.buttons.skulls.close")}
+                        {t("common:actions.close")}
                     </button>
                 </div>
             </div>

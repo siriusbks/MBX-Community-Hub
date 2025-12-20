@@ -91,8 +91,12 @@ const Img: React.FC<{ src?: string; alt: string; size?: number }> = ({
 const ItemsNRecipesLink: React.FC<ItemsNRecipesLink> = ({ slotLabel, id }) => {
     if (id === undefined || id === null) return null;
     const typeOfSlotLabel = slotLabel.split(" ")[0].toUpperCase();
-    const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(typeOfSlotLabel)}&item=${encodeURIComponent(id)}`;
-    const { t } = useTranslation("equipment");
+    const url = `${
+        window.location.origin
+    }/itemsNrecipes?category=${encodeURIComponent(
+        typeOfSlotLabel
+    )}&item=${encodeURIComponent(id)}`;
+    const { t } = useTranslation(["equipment", "common"]);
 
     return (
         <a
@@ -101,10 +105,10 @@ const ItemsNRecipesLink: React.FC<ItemsNRecipesLink> = ({ slotLabel, id }) => {
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-full border border-blue-400/60 text-blue-300 hover:text-white hover:border-blue-300 bg-blue-500/10 w-5 h-5 text-[10px] leading-none"
             aria-label="Open in Items & Recipes"
-            title={t("equip.buttons.openInItemsNRecipes")}
+            title={t("common:actions.openInItemsNRecipes")}
             onClick={(e) => e.stopPropagation()}
         >
-        ?
+            ?
         </a>
     );
 };
@@ -130,22 +134,20 @@ const CraftSection: React.FC<{
                 <span
                     className="truncate pr-2"
                     title={
-                        item?.name ? `${slotLabel} – ${t(`${item.id}`, {
-                                            ns: "items",
-                                            defaultValue: item.name
-                                                .replace(/_/g, " ")
-                                                .split(" ")
-                                                .map(
-                                                    (word: string) =>
-                                                        word
-                                                            .charAt(0)
-                                                            .toUpperCase() +
-                                                        word
-                                                            .slice(1)
-                                                            .toLowerCase()
-                                                )
-                                                .join(" "),
-                                        })}` : slotLabel
+                        item?.name
+                            ? `${slotLabel} – ${t(`${item.id}`, {
+                                  ns: "items",
+                                  defaultValue: item.name
+                                      .replace(/_/g, " ")
+                                      .split(" ")
+                                      .map(
+                                          (word: string) =>
+                                              word.charAt(0).toUpperCase() +
+                                              word.slice(1).toLowerCase()
+                                      )
+                                      .join(" "),
+                              })}`
+                            : slotLabel
                     }
                 >
                     <span className="text-gray-400">{slotLabel} - </span>
@@ -173,10 +175,7 @@ const CraftSection: React.FC<{
                 </span>
 
                 <span className="flex items-center gap-2 flex-shrink-0 ml-2">
-                    <ItemsNRecipesLink 
-                        slotLabel={slotLabel}
-                        id={item?.id} 
-                    />
+                    <ItemsNRecipesLink slotLabel={slotLabel} id={item?.id} />
                     <ChevronDown
                         className={`w-4 h-4 transition-transform ${
                             open ? "rotate-180" : ""
@@ -199,7 +198,7 @@ const CraftSection: React.FC<{
                         !error &&
                         !data?.recipe?.ingredients?.length && (
                             <p className="text-sm text-gray-400">
-                                {t("equip.recipeNotFound")}
+                                {t("common.infos.recipeNotFound")}
                             </p>
                         )}
 
@@ -273,7 +272,9 @@ const CraftSection: React.FC<{
                                                             })} */}
                                                             <ItemTranslation
                                                                 mbxId={name}
-                                                                category={data.category}
+                                                                category={
+                                                                    data.category
+                                                                }
                                                                 type="name"
                                                             />
                                                         </span>

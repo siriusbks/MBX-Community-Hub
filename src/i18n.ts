@@ -26,6 +26,7 @@ i18n.use(HttpBackend)
         },
         ns: [
             "bestiary",
+            "common",
             "community",
             "equipment",
             "fishing",

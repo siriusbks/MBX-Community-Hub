@@ -27,7 +27,7 @@ const INRItemCard: React.FC<ItemCardProps> = ({
     ) {
         adjustedRarity = missingRarity[itemId];
     }
-    
+
     // const { t } = useTranslation(["itemsNrecipes"]);
 
     const TMPBorderColorClass =
@@ -88,14 +88,14 @@ const INRItemCard: React.FC<ItemCardProps> = ({
                         type="name"
                     />
                 </span>
-                        <span className="flex flex-row justify-between align-center justify-center">
-                <RarityBadge
-                    rarity={adjustedRarity}
-                    color={TMPBackgroundColorClass}
-                />
-                <div className="text-xs text-gray-300 my-auto mr-2">
-                    lvl. {level == 0 ? "??" : level}
-                </div>
+                <span className="flex flex-row justify-between align-center justify-center">
+                    <RarityBadge
+                        rarity={adjustedRarity}
+                        color={TMPBackgroundColorClass}
+                    />
+                    <div className="text-xs text-gray-300 my-auto mr-2">
+                        lvl. {level == 0 ? "??" : level}
+                    </div>
                 </span>
             </span>
         </div>
@@ -106,13 +106,13 @@ const RarityBadge: React.FC<{ rarity: string; color: string }> = ({
     rarity,
     color,
 }) => {
-    const { t } = useTranslation("itemsNrecipes");
+    const { t } = useTranslation(["itemsNrecipes", "common"]);
     return (
         // prevent the badge from stretching horizontally inside the parent flex column
         <span
             className={`mt-auto text-xs py-0.5 px-2 rounded font-bold ${color} self-start`}
         >
-            {t(`itemsNrecipes.rarity.${rarity.toUpperCase()}`)}
+            {t(`common:${rarity.toUpperCase()}`)}
         </span>
     );
 };

@@ -41,14 +41,5 @@
     "christmas.mission.opengifts": "Open Xmas Presents",
     "christmas.mission.kill": "Kill: ",
     "christmas.mission.play": "Play Hours",
-    "christmas.mission.takegifts": "Take Gifts From Santa",
-
-    "christmas.rarity.unknown": "UNKNOWN",
-    "christmas.rarity.vanilla": "VANILLA",
-    "christmas.rarity.common": "COMMON",
-    "christmas.rarity.uncommon": "UNCOMMON",
-    "christmas.rarity.rare": "RARE",
-    "christmas.rarity.epic": "EPIC",
-    "christmas.rarity.legendary": "LEGENDARY",
-    "christmas.rarity.mythic": "MYTHIC"
+    "christmas.mission.takegifts": "Take Gifts From Santa"
 }

@@ -57,14 +57,14 @@ type Rarity =
     | "UNKNOWN";
 
 const RarityKey: Record<Rarity, string> = {
-    VANILLA: "christmas.rarity.vanilla",
-    COMMON: "christmas.rarity.common",
-    UNCOMMON: "christmas.rarity.uncommon",
-    RARE: "christmas.rarity.rare",
-    EPIC: "christmas.rarity.epic",
-    LEGENDARY: "christmas.rarity.legendary",
-    MYTHIC: "christmas.rarity.mythic",
-    UNKNOWN: "christmas.rarity.unknown",
+    UNKNOWN: "common:rarity.unknown",
+    VANILLA: "common:rarity.vanilla",
+    COMMON: "common:rarity.common",
+    UNCOMMON: "common:rarity.uncommon",
+    RARE: "common:rarity.rare",
+    EPIC: "common:rarity.epic",
+    LEGENDARY: "common:rarity.legendary",
+    MYTHIC: "common:rarity.mythic",
 };
 
 const getRarityLabel = (
@@ -363,7 +363,7 @@ const SmallPresentDrops: GiftsDropChange[] = [
 ];
 
 const ChristmasPage: FC = () => {
-    const { t } = useTranslation(["christmas", "bestiary"]);
+    const { t } = useTranslation(["christmas", "bestiary", "common"]);
 
     // Flatten bestiaryData and keep only entries marked for halloween2025
     const halloweenMobs = Object.values(bestiaryData)

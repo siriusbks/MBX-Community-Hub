@@ -38,7 +38,12 @@ export const SKULLS: Skull[] = [
         icon: "assets/media/skulls/pineapple.png",
         stats: { LUCK: 50, HEALTH: 25 },
     },
-    { id: "chad", name: "Chad skull", icon: "assets/media/skulls/chad.png", stats: { STRENGTH: 250 } },
+    {
+        id: "chad",
+        name: "Chad skull",
+        icon: "assets/media/skulls/chad.png",
+        stats: { STRENGTH: 250 },
+    },
     {
         id: "thunder",
         name: "Thunder skull",
@@ -102,6 +107,6 @@ export function getSkullLabel(id: string, t: TFunction<"skulls">): string {
     return t(`skulls.names.${id}`, { defaultValue: fallback });
 }
 
-export function getStatLabel(stat: StatKey, t: TFunction<"equipment">): string {
-    return t(`equip.stats.names.${stat}`, { defaultValue: stat });
+export function getStatLabel(stat: StatKey, t: TFunction<"common">): string {
+    return t(`common:stats.${stat}`, { defaultValue: stat });
 }

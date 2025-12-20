@@ -27,7 +27,13 @@ import {
 } from "@components/editor/LevelBadge";
 
 const BestiaryPage: FC = () => {
-    const { t } = useTranslation(["bestiary", "map", "items", "halloween"]);
+    const { t } = useTranslation([
+        "bestiary",
+        "map",
+        "items",
+        "halloween",
+        "common",
+    ]);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -376,11 +382,7 @@ const BestiaryPage: FC = () => {
                         )}`}
                         className="mx-auto inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm max-w-full break-words"
                     >
-                        <Eye />{" "}
-                        {t("bestiary.openInteractiveMap", {
-                            ns: "bestiary",
-                            defaultValue: "Open Interactive Map",
-                        })}
+                        <Eye /> {t("common:actions.openInteractiveMap")}
                     </Link>
                 </div>
             </>
@@ -486,7 +488,9 @@ const BestiaryPage: FC = () => {
                                         >
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
                                                 <Eye className="h-4 w-4 rounded" />
-                                                {t("bestiary.clickToView")}
+                                                {t(
+                                                    "common:actions.clickToView"
+                                                )}
                                             </div>
 
                                             <div className=" flex flex-col items-start gap-3">
@@ -616,7 +620,9 @@ const BestiaryPage: FC = () => {
                                         >
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
                                                 <Eye className="h-4 w-4 rounded" />
-                                                {t("bestiary.clickToView")}
+                                                {t(
+                                                    "common:actions.clickToView"
+                                                )}
                                             </div>
 
                                             <div className=" flex flex-col items-start gap-3">

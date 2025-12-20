@@ -24,7 +24,10 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     craftModalOpener,
 }) => {
     let adjustedRarity = rarity;
-    if ((adjustedRarity === "UNKNOWN" || adjustedRarity === "COMMON") && missingRarity[itemId]) {
+    if (
+        (adjustedRarity === "UNKNOWN" || adjustedRarity === "COMMON") &&
+        missingRarity[itemId]
+    ) {
         adjustedRarity = missingRarity[itemId];
     }
 
@@ -60,7 +63,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
         }[adjustedRarity] ||
         "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
-    const { t } = useTranslation("museum");
+    const { t } = useTranslation(["museum", "common"]);
 
     const [src, setSrc] = useState(
         `/assets/media/museum/${category}/${itemId}.png`
@@ -119,10 +122,10 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                 }`}
             >
                 <ItemTranslation
-                        mbxId={itemId}
-                        category={category!}
-                        type="name"
-                    />
+                    mbxId={itemId}
+                    category={category!}
+                    type="name"
+                />
             </span>
 
             {isOwned && (
@@ -156,7 +159,7 @@ const RarityBadge: React.FC<{ rarity: string; color: string }> = ({
         <span
             className={`mt-auto text-xs py-0.5 px-2 rounded font-bold ${color}`}
         >
-            {t(`museum.rarity.${rarity.toUpperCase()}`)}
+            {t(`common:${rarity.toUpperCase()}`)}
         </span>
     );
 };

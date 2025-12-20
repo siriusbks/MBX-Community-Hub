@@ -41,7 +41,7 @@ interface Details {
 }
 
 export const MuseumApp: FC = () => {
-    const { t } = useTranslation("museum");
+    const { t } = useTranslation(["museum", "common"]);
     const { username, setUsername } = useProfileStore();
 
     // States for storing data from the API and JSON files
@@ -49,25 +49,33 @@ export const MuseumApp: FC = () => {
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
     // used_in_recipes fetched from the item API for the currently opened craft modal
-    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(null);
+    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(
+        null
+    );
     const [itemUsedLoading, setItemUsedLoading] = useState(false);
     const [itemUsedError, setItemUsedError] = useState<string | null>(null);
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
     // State for the missing items filter in the missing items summary
-    const [missingSelection, setMissingSelection] = useState<Record<string, boolean>>({});
+    const [missingSelection, setMissingSelection] = useState<
+        Record<string, boolean>
+    >({});
     const [selectedItems, setSelectedItems] = useState(true);
 
     // State for the Category
     /* const [computedCategory, setComputedCategory] = useState<string | null>(null); */
 
     // State for the grouped Items to find the category of any items
-    const [groupedItemsForResearch, setGroupedItemsForResearch] = useState<Group[] | null>(null);
+    const [groupedItemsForResearch, setGroupedItemsForResearch] = useState<
+        Group[] | null
+    >(null);
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
+        null
+    );
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
 
@@ -82,7 +90,9 @@ export const MuseumApp: FC = () => {
             .catch((err) => console.error("Error loading JSON :", err));
     }, []);
 
-    const [missingRarity, setMissingRarity] = useState<Record<string, string>>({});
+    const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
+        {}
+    );
     useEffect(() => {
         fetch("/assets/data/items-missing-rarity.json")
             .then((res) => res.json())
@@ -136,10 +146,13 @@ export const MuseumApp: FC = () => {
     // Button to select/unselect all missing items
     const toggleSelectAllMissing = () => {
         const allSelected = Object.values(missingSelection).every((val) => val);
-        const newSelection = Object.keys(missingSelection).reduce((acc, key) => {
-            acc[key] = !allSelected;
-            return acc;
-        }, {} as Record<string, boolean>);
+        const newSelection = Object.keys(missingSelection).reduce(
+            (acc, key) => {
+                acc[key] = !allSelected;
+                return acc;
+            },
+            {} as Record<string, boolean>
+        );
         setMissingSelection(newSelection);
     };
 
@@ -195,7 +208,7 @@ export const MuseumApp: FC = () => {
             /* const itemsDetailsResponse = await fetch(
                 "https://cdn2.minebox.co/data/items.json"
             ); */
-            const itemsDetailsResponse = await fetch('assets/data/items.json');
+            const itemsDetailsResponse = await fetch("assets/data/items.json");
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
@@ -275,17 +288,19 @@ export const MuseumApp: FC = () => {
     // Function to find the category of any items
     useEffect(() => {
         fetch("/assets/data/items_museum_grouped_by_category.json")
-        .then((res) => res.json())
-        .then((groups: Group[]) => {
-            setGroupedItemsForResearch(groups);
-        })
-        .catch(() => {
-            setGroupedItemsForResearch([]);
-        });
+            .then((res) => res.json())
+            .then((groups: Group[]) => {
+                setGroupedItemsForResearch(groups);
+            })
+            .catch(() => {
+                setGroupedItemsForResearch([]);
+            });
     }, []);
     const setCategory = (itemId: string): string => {
         if (groupedItemsForResearch) {
-            const found = groupedItemsForResearch.find((group) => group.items.includes(itemId));
+            const found = groupedItemsForResearch.find((group) =>
+                group.items.includes(itemId)
+            );
             const category = found ? found.category : "";
             return category;
         }
@@ -445,13 +460,14 @@ export const MuseumApp: FC = () => {
                                 detailsIndex[ing.id].recipe.job && (
                                     <span className="text-xs font-normal text-green-500">
                                         <ItemTranslation
-                                            mbxId={detailsIndex[ing.id].recipe.job}
+                                            mbxId={
+                                                detailsIndex[ing.id].recipe.job
+                                            }
                                             category={"SKILL"}
                                             type="name"
                                         />
                                     </span>
-                                )
-                            }
+                                )}
                         </span>
                     </div>
                     {summary}
@@ -485,7 +501,9 @@ export const MuseumApp: FC = () => {
     // Function that returns the content of link of the wiki
     const moreInformation = () => {
         if (!craftModalItem || !craftModalCategory) return null;
-        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
+        const url = `${
+            window.location.origin
+        }/itemsNrecipes?category=${encodeURIComponent(
             craftModalCategory
         )}&item=${encodeURIComponent(craftModalItem)}`;
         return (
@@ -548,9 +566,7 @@ export const MuseumApp: FC = () => {
 
         return (
             <div>
-                <div className="mb-4 flex items-center">
-                    
-                </div>
+                <div className="mb-4 flex items-center"></div>
                 {groupedItems.map((group, index) => {
                     const missingItems = group.items.filter(
                         (item) => !museumItems.includes(item)
@@ -577,8 +593,14 @@ export const MuseumApp: FC = () => {
                                         >
                                             <input
                                                 type="checkbox"
-                                                checked={!!missingSelection[itemId]}
-                                                onChange={() => toggleMissingSelection(itemId)}
+                                                checked={
+                                                    !!missingSelection[itemId]
+                                                }
+                                                onChange={() =>
+                                                    toggleMissingSelection(
+                                                        itemId
+                                                    )
+                                                }
                                                 className="mr-2"
                                             />
                                             <MuseumItemImage
@@ -926,7 +948,11 @@ export const MuseumApp: FC = () => {
                         )}
                     </div>
                 </form>
-                <span className={`${totalStats.total < 1 ? "hidden" : ""} flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6`}>
+                <span
+                    className={`${
+                        totalStats.total < 1 ? "hidden" : ""
+                    } flex h-24 w-full md:w-96 bg-gray-800 bg-opacity-50 rounded-md p-4 items-center justify-center gap-6`}
+                >
                     <span>
                         <h3 className="text-lg font-bold leading-none">
                             {t("museum.completion")}
@@ -1077,7 +1103,7 @@ export const MuseumApp: FC = () => {
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setCraftModalItem(null);
-                            setCraftModalCategory(null);
+                        setCraftModalCategory(null);
                     }}
                 >
                     <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
@@ -1112,14 +1138,20 @@ export const MuseumApp: FC = () => {
                                                 {t("museum.craftFor")}{" "}
                                                 <ItemTranslation
                                                     mbxId={craftModalItem}
-                                                    category={craftModalCategory!}
+                                                    category={
+                                                        craftModalCategory!
+                                                    }
                                                     type="name"
                                                 />
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
                                                 <ItemTranslation
-                                                    mbxId={detailsIndex[craftModalItem].recipe.job}
+                                                    mbxId={
+                                                        detailsIndex[
+                                                            craftModalItem
+                                                        ].recipe.job
+                                                    }
                                                     category={"SKILL"}
                                                     type="name"
                                                 />
@@ -1168,12 +1200,16 @@ export const MuseumApp: FC = () => {
                                                 {t("museum.craftFor")}{" "}
                                                 <ItemTranslation
                                                     mbxId={craftModalItem}
-                                                    category={craftModalCategory}
+                                                    category={
+                                                        craftModalCategory
+                                                    }
                                                     type="name"
                                                 />
                                             </div>
                                             <p className="text-sm opacity-60">
-                                                {t("museum.noRecipe")}
+                                                {t(
+                                                    "common:infos.recipeNotFound"
+                                                )}
                                             </p>
                                         </span>
                                         {/* <a
@@ -1244,11 +1280,17 @@ export const MuseumApp: FC = () => {
                                 >
                                     {selectedItems ? (
                                         <>
-                                            <SquareAsterisk className="w-5 h-5" /> {t("museum.filterRecapItems.selectAll")}
+                                            <SquareAsterisk className="w-5 h-5" />{" "}
+                                            {t(
+                                                "museum.filterRecapItems.selectAll"
+                                            )}
                                         </>
                                     ) : (
                                         <>
-                                            <Square className="w-5 h-5" /> {t("museum.filterRecapItems.unselectAll")}
+                                            <Square className="w-5 h-5" />{" "}
+                                            {t(
+                                                "museum.filterRecapItems.unselectAll"
+                                            )}
                                         </>
                                     )}
                                 </button>
@@ -1298,7 +1340,8 @@ export const MuseumApp: FC = () => {
                                 className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
                                 onClick={handleCopyCSV}
                             >
-                                <ClipboardCopy className="w-5 h-5" /> {t("museum.copyCSV.button")}
+                                <ClipboardCopy className="w-5 h-5" />{" "}
+                                {t("museum.copyCSV.button")}
                             </button>
                             <span
                                 className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
