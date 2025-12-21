@@ -2144,6 +2144,10 @@
             ]
         }
     },
+
+
+
+
     {
         "id": "xmas_present_big_red",
         "recipe": {
@@ -2557,5 +2561,113 @@
                 "amount": 16
             }
         ]
+    },
+
+
+
+
+    {
+        "id": "profile_plate_sub",
+        "rarity": "RARE",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_tropical",
+        "rarity": "EPIC",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 200
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_royal",
+        "rarity": "LEGENDARY",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 500
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_plant",
+        "rarity": "EPIC",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_evil",
+        "rarity": "LEGENDARY",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 500
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_love",
+        "rarity": "EPIC",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_temple",
+        "rarity": "LEGENDARY",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 400
+                }
+            ]
+        }
+    },
+    {
+        "id": "profile_plate_rainbow",
+        "rarity": "LEGENDARY",
+        "recipe": {
+            "ingredients": [
+                {
+                    "type":"custom",
+                    "id": "gem",
+                    "amount": 400
+                }
+            ]
+        }
     }
 ]

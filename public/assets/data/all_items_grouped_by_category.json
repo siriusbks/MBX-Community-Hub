@@ -1717,11 +1717,11 @@
         "items": [
             "profile_plate_sub",
             "profile_plate_tropical",
-            "profile_plate_royal",
             "profile_plate_plant",
-            "profile_plate_evil",
             "profile_plate_love",
             "profile_plate_temple",
+            "profile_plate_royal",
+            "profile_plate_evil",
             "profile_plate_rainbow"
         ]
     },
