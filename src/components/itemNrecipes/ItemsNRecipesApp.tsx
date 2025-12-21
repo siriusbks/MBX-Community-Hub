@@ -51,131 +51,6 @@ interface RecipeNodeProps {
     multiplier: number;
 }
 
-// RecipeTree: Renders a list of RecipeNode components based on the recipe object
-const RecipeTree: FC<RecipeTreeProps> = ({
-    recipe,
-    detailsIndex,
-    initialExpanded,
-    multiplier,
-}) => {
-    if (!recipe || !recipe.ingredients) return <></>;
-    return (
-        <ul>
-            {recipe.ingredients.map((ing: any, i: number) => (
-                <RecipeNode
-                    key={i}
-                    ing={ing}
-                    detailsIndex={detailsIndex}
-                    initialExpanded={initialExpanded}
-                    multiplier={multiplier}
-                />
-            ))}
-        </ul>
-    );
-};
-
-// RecipeNode: Renders an individual ingredient with potential sub-recipes
-const RecipeNode: FC<RecipeNodeProps> = ({
-    ing,
-    detailsIndex,
-    initialExpanded,
-    multiplier,
-}) => {
-    // Use initialExpanded only at mounting; thereafter, each node is togglable
-    const [isExpanded, setIsExpanded] = useState(initialExpanded);
-
-    const hasSubRecipe =
-        detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe;
-
-    let summary: JSX.Element | null = null;
-    if (detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe) {
-        // Calculate aggregated resources for the sub-recipe
-        const subResources = gatherResources(
-            detailsIndex[ing.id].recipe,
-            detailsIndex,
-            multiplier
-        );
-    }
-
-    return (
-        <li className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border border-gray-500">
-            <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                    {hasSubRecipe && (
-                        <button
-                            // Toggle node expansion without propagating the click event
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                                e.stopPropagation();
-                                setIsExpanded((prev) => !prev);
-                            }}
-                            className="mr-1 text-xs text-gray-300 hover:text-white focus:outline-none"
-                        >
-                            {isExpanded ? (
-                                <Minus className="h-4 w-4" />
-                            ) : (
-                                <Plus className="h-4 w-4" />
-                            )}
-                        </button>
-                    )}
-                    <INRItemImage
-                        itemId={ing.id}
-                        detailsIndex={detailsIndex}
-                        className="w-8 h-8 mr-1 align-middle"
-                        style={{ imageRendering: "pixelated" }}
-                    />
-                    <span className="font-bold text-sm">
-                        {ing.amount}x {ing.id}
-                    </span>
-                </div>
-                {summary}
-            </div>
-            {hasSubRecipe && isExpanded && (
-                <div className="ml-6 pl-2 mt-2">
-                    <RecipeTree
-                        recipe={detailsIndex[ing.id].recipe}
-                        detailsIndex={detailsIndex}
-                        initialExpanded={initialExpanded}
-                        multiplier={multiplier}
-                    />
-                </div>
-            )}
-        </li>
-    );
-};
-
-// Modified recursive function to multiply ingredient amounts by the given multiplier
-const gatherResources = (
-    recipe: any,
-    detailsIndex: Details,
-    multiplier: number = 1
-): { [key: string]: number } => {
-    const resources: { [key: string]: number } = {};
-    recipe.ingredients.forEach((ing: any) => {
-        const currentAmount = ing.amount * multiplier;
-        if (
-            detailsIndex &&
-            detailsIndex[ing.id] &&
-            detailsIndex[ing.id].recipe &&
-            detailsIndex[ing.id].recipe.job !== "FARMER"
-        ) {
-            const subResources = gatherResources(
-                detailsIndex[ing.id].recipe,
-                detailsIndex,
-                currentAmount
-            );
-            for (const resId in subResources) {
-                resources[resId] =
-                    (resources[resId] || 0) + subResources[resId];
-            }
-        } else {
-            resources[ing.id] = (resources[ing.id] || 0) + currentAmount;
-        }
-    });
-    return resources;
-};
-
-// ----------------- Main Component ----------------------
-
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
 const ItemsNRecipesApp: FC = () => {
     const { t } = useTranslation(["itemsNrecipes", "items", "museum", "mbx"]);
@@ -187,15 +62,23 @@ const ItemsNRecipesApp: FC = () => {
 
     // States for controlling modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
-        null
-    );
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
+
+    // State of side panel: when an item is clicked we show a right-side panel instead of directly opening modal
+    const [panelItem, setPanelItem] = useState<string | null>(null);
+    const [panelCategory, setPanelCategory] = useState<string | null>(null);
+
+    // State of info panel: displays full recipe/info in the `#infoPanel` element
+    const [infoPanelItem, setInfoPanelItem] = useState<string | null>(null);
+    const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(null);
+
+    // State for the grouped Items to find the category of any items
+    const [groupedItemsForResearch, setGroupedItemsForResearch] = useState<Group[] | null>(null);
 
     // State to filter items by selected category
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(
-        null
-    );
-    // Multi-select categories for the "All" view: which categories should be shown
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+    // State of multi-select categories for the "All" view: which categories should be shown
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // Initialize selectedCategories to all categories once groupedItems loads
@@ -251,9 +134,10 @@ const ItemsNRecipesApp: FC = () => {
             );
             const itemsGrouped: Group[] = await itemsGroupedResponse.json();
 
-            const itemsDetailsResponse = await fetch(
+            /* const itemsDetailsResponse = await fetch(
                 "https://cdn2.minebox.co/data/items.json"
-            );
+            ); */
+            const itemsDetailsResponse = await fetch("assets/data/items.json");
             const itemsDetails = await itemsDetailsResponse.json();
             const details: Details = {};
             itemsDetails.forEach((item: any) => {
@@ -278,6 +162,150 @@ const ItemsNRecipesApp: FC = () => {
                 error instanceof Error ? error.message : "Unknown error"
             );
         }
+    };
+
+    // Function to find the category of any items
+    useEffect(() => {
+        fetch("/assets/data/items_museum_grouped_by_category.json")
+        .then((res) => res.json())
+        .then((groups: Group[]) => {
+            setGroupedItemsForResearch(groups);
+        })
+        .catch(() => {
+            setGroupedItemsForResearch([]);
+        });
+    }, []);
+    const setCategory = (itemId: string): string => {
+        if (groupedItemsForResearch) {
+            const found = groupedItemsForResearch.find((group) => group.items.includes(itemId));
+            const category = found ? found.category : "";
+            return category;
+        }
+        return "";
+    };
+
+    // Recursive function to multiply ingredient amounts by the given multiplier
+    const gatherResources = (
+        recipe: any,
+        detailsIndex: Details,
+        multiplier: number = 1
+    ): { [key: string]: number } => {
+        const resources: { [key: string]: number } = {};
+        recipe.ingredients.forEach((ing: any) => {
+            const currentAmount = ing.amount * multiplier;
+            if (
+                detailsIndex &&
+                detailsIndex[ing.id] &&
+                detailsIndex[ing.id].recipe &&
+                detailsIndex[ing.id].recipe.job !== "FARMER"
+            ) {
+                const subResources = gatherResources(
+                    detailsIndex[ing.id].recipe,
+                    detailsIndex,
+                    currentAmount
+                );
+                for (const resId in subResources) {
+                    resources[resId] =
+                        (resources[resId] || 0) + subResources[resId];
+                }
+            } else {
+                resources[ing.id] = (resources[ing.id] || 0) + currentAmount;
+            }
+        });
+        return resources;
+    };
+
+    // RecipeTree: Renders a list of RecipeNode components based on the recipe object
+    const RecipeTree: FC<RecipeTreeProps> = ({
+        recipe,
+        detailsIndex,
+        initialExpanded,
+        multiplier,
+    }) => {
+        if (!recipe || !recipe.ingredients) return <></>;
+        return (
+            <ul>
+                {recipe.ingredients.map((ing: any, i: number) => (
+                    <RecipeNode
+                        key={i}
+                        ing={ing}
+                        detailsIndex={detailsIndex}
+                        initialExpanded={initialExpanded}
+                        multiplier={multiplier}
+                    />
+                ))}
+            </ul>
+        );
+    };
+
+    // RecipeNode: Renders an individual ingredient with potential sub-recipes
+    const RecipeNode: FC<RecipeNodeProps> = ({
+        ing,
+        detailsIndex,
+        initialExpanded,
+        multiplier,
+    }) => {
+        // Use initialExpanded only at mounting; thereafter, each node is togglable
+        const [isExpanded, setIsExpanded] = useState(initialExpanded);
+
+        const hasSubRecipe =
+            detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe;
+
+        let summary: JSX.Element | null = null;
+        if (detailsIndex && detailsIndex[ing.id] && detailsIndex[ing.id].recipe) {
+            // Calculate aggregated resources for the sub-recipe
+            const subResources = gatherResources(
+                detailsIndex[ing.id].recipe,
+                detailsIndex,
+                multiplier
+            );
+        }
+
+        return (
+            <li className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border border-gray-500">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                        {hasSubRecipe && (
+                            <button
+                                // Toggle node expansion without propagating the click event
+                                onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                                    e.stopPropagation();
+                                    setIsExpanded((prev) => !prev);
+                                }}
+                                className="mr-1 text-xs text-gray-300 hover:text-white focus:outline-none"
+                            >
+                                {isExpanded ? (
+                                    <Minus className="h-4 w-4" />
+                                ) : (
+                                    <Plus className="h-4 w-4" />
+                                )}
+                            </button>
+                        )}
+                        <INRItemImage
+                            groupCategory={setCategory(ing.id)}
+                            itemId={ing.id}
+                            detailsIndex={detailsIndex}
+                            className="w-8 h-8 mr-1 align-middle"
+                            style={{ imageRendering: "pixelated" }}
+                        />
+                        <span className="font-bold text-sm">
+                            {ing.amount}x {ing.id}
+                        </span>
+                    </div>
+                    {summary}
+                </div>
+                {hasSubRecipe && isExpanded && (
+                    <div className="ml-6 pl-2 mt-2">
+                        <RecipeTree
+                            recipe={detailsIndex[ing.id].recipe}
+                            detailsIndex={detailsIndex}
+                            initialExpanded={initialExpanded}
+                            multiplier={multiplier}
+                        />
+                    </div>
+                )}
+            </li>
+        );
     };
 
     // Effect to fetch missing rarity data from the JSON file on component mount
@@ -321,16 +349,6 @@ const ItemsNRecipesApp: FC = () => {
         params.set("item", itemId);
         window.history.pushState({}, "", "?" + params.toString());
     };
-
-    // Side panel state: when an item is clicked we show a right-side panel instead of directly opening modal
-    const [panelItem, setPanelItem] = useState<string | null>(null);
-    const [panelCategory, setPanelCategory] = useState<string | null>(null);
-
-    // Info panel state: displays full recipe/info in the `#infoPanel` element
-    const [infoPanelItem, setInfoPanelItem] = useState<string | null>(null);
-    const [infoPanelCategory, setInfoPanelCategory] = useState<string | null>(
-        null
-    );
 
     const openSidePanel = (itemId: string, category: string) => {
         setPanelItem(itemId);
@@ -393,6 +411,7 @@ const ItemsNRecipesApp: FC = () => {
                         <div key={resId} className="bg-gray-700 p-2 rounded-lg">
                             <div className="flex items-center">
                                 <INRItemImage
+                                    groupCategory={setCategory(resId)}
                                     itemId={resId}
                                     detailsIndex={detailsIndex}
                                     className="w-8 h-8 mr-2 rounded"
@@ -788,8 +807,8 @@ const ItemsNRecipesApp: FC = () => {
                             </div>
                             <div className="mt-4">
                                 <INRItemImage
-                                    itemId={panelItem}
                                     groupCategory={panelCategory!}
+                                    itemId={panelItem}
                                     detailsIndex={detailsIndex}
                                     className="w-24 h-24"
                                     style={{ imageRendering: "pixelated" }}
@@ -852,6 +871,7 @@ const ItemsNRecipesApp: FC = () => {
                                                 className="text-sm bg-gray-800 p-1 rounded border border-gray-600 hover:bg-gray-700"
                                             >
                                                 <INRItemImage
+                                                    groupCategory={setCategory(item.id)}
                                                     itemId={item.id}
                                                     detailsIndex={detailsIndex}
                                                     className={`w-7 h-7 inline-block align-middle drop-shadow-[0_0px_2px_theme(colors.${
@@ -1114,9 +1134,7 @@ const ItemsNRecipesApp: FC = () => {
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
                                             <INRItemImage
-                                                groupCategory={
-                                                    craftModalCategory!
-                                                }
+                                                groupCategory={craftModalCategory!}
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
                                                 className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"

@@ -5,36 +5,19 @@
 import React, { FC, useEffect, useState } from "react";
 
 interface ItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-    groupCategory?: string;
+    groupCategory: string;
     itemId: string;
     detailsIndex: { [key: string]: { image?: string } } | null;
 }
 
 const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex, ...imgProps }) => {
   const cleanedItemId = itemId.replace(/^collection_/, "").replace(/_level$/, "");
-  
-  const [computedCategory, setComputedCategory] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!groupCategory) {
-      fetch("/assets/data/all_items_grouped_by_category.json")
-        .then((res) => res.json())
-        .then((groups: Array<{ category: string; items: string[] }>) => {
-          const found = groups.find(g => g.items.includes(cleanedItemId));
-          setComputedCategory(found ? found.category : "");
-        })
-        .catch(() => setComputedCategory(""));
-    }
-  }, [groupCategory, cleanedItemId]);
-
-  // Use the found category (or an empty string if none) to possibly build the museum URL
-  const effectiveCategory = groupCategory || computedCategory || "";
 
   // Build a fallback chain array with image URLs in order of preference
   const fallbackChain: string[] = [];
-  if (effectiveCategory) {
+  if (groupCategory) {
     // First option: image from the museum folder
-    fallbackChain.push(`/assets/media/museum/${effectiveCategory}/${cleanedItemId}.png`);
+    fallbackChain.push(`/assets/media/museum/${groupCategory}/${cleanedItemId}.png`);
   }
   // Then, alternative directories
   fallbackChain.push(`/assets/media/museum/TREASURE/${cleanedItemId}.png`);
@@ -53,6 +36,8 @@ const INRItemImage: FC<ItemImageProps> = ({ groupCategory, itemId, detailsIndex,
   // Keep the current fallback index in state
   const [fallbackIndex, setFallbackIndex] = useState(0);
   const primarySrc = fallbackChain[fallbackIndex];
+
+  console.log("INRItemImage - itemId:", itemId, "groupCategory:", groupCategory, "primarySrc:", primarySrc);
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;

@@ -51,6 +51,7 @@
     "mappage.condition.no_condition": "No Conditions",
 
     "mappage.maps.spawn.universal": "All Regions",
+    "mappage.maps.spawn.global": "Global",
     "mappage.maps.spawn.central_island": "Central Island",
     "mappage.maps.spawn.workshop_island": "Workshop Island",
     "mappage.maps.spawn.workshop_avenue": "Workshop Avenue",

@@ -85,7 +85,6 @@ export function HomePage() {
                             {t("homepage.features.interactiveMap.description")}
                         </p>
                     </Link>
-                    
 
                     {/* Interactive Map */}
                     <Link
@@ -104,7 +103,6 @@ export function HomePage() {
                             {t("homepage.features.bestiary.description")}
                         </p>
                     </Link>
-
                 </div>
 
                 {/* Features Grid */}
@@ -128,11 +126,14 @@ export function HomePage() {
                             )}
                         </p>
                     </Link>
-                                        {/* Equipment Manager  */}
+                    {/* Equipment Manager  */}
                     <Link
                         to="/equipment"
                         className="relative group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
+                        <span className="absolute top-3 right-3 bg-yellow-500 text-black text-xs font-bold px-2 py-0.5 rounded">
+                            BETA
+                        </span>
 
                         <div className="flex items-center gap-4 mb-4">
                             <div className="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 group-hover:bg-yellow-400/20 transition-colors">
@@ -166,7 +167,7 @@ export function HomePage() {
                             {t("homepage.features.museum.description")}
                         </p>
                     </Link>
-{/*
+                    {/*
                     <Link
                         to="/halloween"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"

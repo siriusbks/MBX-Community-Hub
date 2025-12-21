@@ -788,17 +788,9 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
     } else {
         let cancelled=false;
         let backupTranslation: string = "";
-        let lastBackupTranslation = 
-            mbxId
-                .replace(/[-_]/g, " ")
-                .split(" ")
-                .map(word =>
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                )
-                .join(" ");
         let paramLoading = false;
         let paramError = null;
-        (async () => {
+        /* (async () => {
             // Retrieve the locale from i18next, then navigator, or default to "en"
             let locale = "en";
             try {
@@ -835,8 +827,17 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
                     }
                 });
             }
-        )();
+        )(); */
         cancelled = true;
+
+        let lastBackupTranslation = 
+            mbxId
+                .replace(/[-_]/g, " ")
+                .split(" ")
+                .map(word =>
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                )
+                .join(" ");
         return (
             <span>
                 {paramLoading ? (

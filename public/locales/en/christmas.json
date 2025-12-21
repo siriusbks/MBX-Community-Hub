@@ -1,0 +1,45 @@
+{
+    "christmas.title": "Christmas Event 2025",
+    "christmas.subtitle": "Join us for a festive celebration this Christmas!",
+
+    "christmas.battlepass.title": "Christmas Battle Pass",
+    "christmas.battlepass.description1": "(Technically just an event but everyone is used to the term \"battlepass\").",
+    "christmas.battlepass.description2": "This event comes with a freshly developed and reimagined BattlePass system. We are super excited for you to try this new feature and give us your feedback and how we could improve for the next event!",
+
+    "christmas.info.stars": "Stars",
+    "christmas.info.stars.description": "There are 3 weeks, each one of them gives you 50 Stars when completing the whole week. A total of 150 Stars are available for free.",
+    "christmas.info.shop": "Shop",
+    "christmas.info.shop.description": "Spend your Stars at the Shop, there you can buy the Big Red Present or directly buy some exclusive items.",
+    "christmas.info.workshop": "Workshop",
+    "christmas.info.workshop.description": "The BattlePass has it's own workshop where you can craft unique candies and gifts, all of the resources are farmable.",
+    "christmas.info.small": "Small Gifts",
+    "christmas.info.small.description": "Opened directly for rewards with a right-click, or Used to craft Medium Gifts.",
+    "christmas.info.medium": "Medium Gifts",
+    "christmas.info.medium.description": "Contain surprises of their own, or Used to craft Big Gifts.",
+    "christmas.info.big": "Big Gifts",
+    "christmas.info.big.description": "Contain huge surprises like exclusive items, mounts, pets and more!",
+
+    "christmas.treasure.title": "Christmas Treasures",
+    "christmas.treasure.description1": "Like every events on Minebox, this treasure is obtainable for FREE by crafting it with candies and gifts or by exchanging Vote Points for Pass Stars",
+    "christmas.treasure.description2": "Exclusive Hipster Santa armor set, The Hipster Penguin, The Snowman, The Hipster Bike, The Wooden Plane",
+    "christmas.treasure.description3": "1 Big Red Present = 15 Battle Pass Stars",
+    "christmas.treasure.big": "Big Presents Drops",
+    "christmas.treasure.medium": "Medium Presents Drops",
+    "christmas.treasure.small": "Small Presents Drops",
+    "mbx.items.xmas_red_present_big.name": "Big Red Present",
+
+    "christmas.mobs.title": "Christmas Event Mobs",
+
+    "christmas.week1": "Week 1 Missions",
+    "christmas.week2": "Week 2 Missions",
+    "christmas.week3": "Week 3 Missions",
+    "christmas.week.active": "Active Now!",
+    "christmas.bpStars": "Battle Pass Stars",
+    "christmas.mission.missing": "Coming Soon!",
+    "christmas.mission.reward": "Weekly Reward",
+    "christmas.mission.craft": "Craft: ",
+    "christmas.mission.opengifts": "Open Xmas Presents",
+    "christmas.mission.kill": "Kill: ",
+    "christmas.mission.play": "Play Hours",
+    "christmas.mission.takegifts": "Take Gifts From Santa"
+}

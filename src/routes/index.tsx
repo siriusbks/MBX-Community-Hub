@@ -11,6 +11,7 @@ import { Footer } from "@components/Footer";
 import NotFound from "./NotFound";
 import HalloweenPage from "./Halloween2025";
 import BestiaryPage from "./BestiaryPage";
+import ChristmasPage from "./Christmas2025";
 
 const EquipPage = lazy(() => import("@routes/EquipPage"));
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
@@ -44,6 +45,9 @@ export const AppRoutes: FC = () => {
                             element={<ItemsNRecipesPage />}
                         />
 
+
+
+                        <Route path="/christmas" element={<ChristmasPage />} />
                         {/* Special Pages */}
                         {/* Add archive/ to URL for past events */}
                         <Route path="archive/halloween" element={<HalloweenPage />} />
