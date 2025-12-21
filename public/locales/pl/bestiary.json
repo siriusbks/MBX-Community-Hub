@@ -3,11 +3,10 @@
     "bestiary.subtitle": "Odkryj różnorodne stworzenia zamieszkujące świat Minebox.",
     "bestiary.mapPreview": "Strefy występowania Moba",
     "bestiary.family": "Rodzina Moba",
-    "bestiary.clickToView": "Kliknij, aby zobaczyć",
     "bestiary.noFamily": "Ten Mob nie ma rodziny...",
     "bestiary.drop": "Lista Dropów",
     "bestiary.noDrop": "Ten Mob nie ma żadnym Dropów",
-    "bestiary.openInteractiveMap": "Otwórz Interaktywną mapę",
+    "bestiary.unavailableMobs": "Unavailable Mobs",
     "bestiary.vanilla.chicken": "Kurczak",
     "bestiary.vanilla.rabbit": "Królik",
     "bestiary.vanilla.pig": "Świnia",
@@ -81,5 +80,10 @@
     "bestiary.halloween_albino_rat": "Szczur Albinos",
     "bestiary.halloween_gray_rat": "Szary Szczur",
     "bestiary.halloween_brown_rat": "Brązowy Szczur",
-    "bestiary.halloween_boss": "Żniwiarz"
+    "bestiary.halloween_boss": "Żniwiarz",
+    "bestiary.xmas_penguin_blue": "Blue Ninja Penguin",
+    "bestiary.xmas_penguin_red": "Red Ninja Penguin",
+    "bestiary.xmas_penguin_green": "Green Ninja Penguin",
+    "bestiary.xmas_penguin_yellow": "Yellow Ninja Penguin",
+    "bestiary.xmas_gingerbread": "Bad Gingerbread"
 }

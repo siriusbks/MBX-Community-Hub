@@ -47,6 +47,7 @@
     "mappage.condition.weather.any": "Dowolna Pogoda",
     "mappage.condition.no_condition": "Brak Wymagań",
     "mappage.maps.spawn.universal": "Wszystkie Regiony",
+    "mappage.maps.spawn.global": "Global",
     "mappage.maps.spawn.central_island": "Wyspa Centralna",
     "mappage.maps.spawn.workshop_island": "Wyspa Warsztatowa",
     "mappage.maps.spawn.workshop_avenue": "Aleja Warsztatowa",

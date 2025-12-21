@@ -1,8 +1,12 @@
 {
     "navbar.profile": "Perfil",
     "navbar.map": "Mapa",
+    "navbar.tools": "Herramientas",
     "navbar.equipement": "Equipamiento",
     "navbar.museum": "Museo",
-    "navbar.itemsNrecipes": "Artículos & Recetas",
-    "navbar.community": "Comunidad"
+    "navbar.community": "Comunidad",
+    "navbar.itemsNrecipes": "Objetos y Recetas",
+    "navbar.bestiary": "Bestiario",
+    "navbar.halloween": "Halloween",
+    "navbar.christmas": "Christmas"
 }
