@@ -3,6 +3,7 @@
  */
 
 import React, { FC, useEffect, useState, MouseEvent } from "react";
+import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import INRItemCard from "./INRItemCard";
 import INRItemImage from "./INRItemImage";
@@ -79,6 +80,10 @@ const ItemsNRecipesApp: FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     // State of multi-select categories for the "All" view: which categories should be shown
+    // State for the Category
+    const [computedCategory, setComputedCategory] = useState<string | null>(null);
+    
+    // Multi-select categories for the "All" view: which categories should be shown
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // Initialize selectedCategories to all categories once groupedItems loads
@@ -604,14 +609,18 @@ const ItemsNRecipesApp: FC = () => {
         );
         const csvLines = Object.keys(recap).map((itemId) => {
             const quantity = recap[itemId];
-            const label = <ItemTranslation
-                              mbxId={key}
-                              category={setCategory(itemId)}
-                              type="name"
-                          />;
-            
-            return `${quantity},${label},${itemId}`; // For debugging
-            // return `${quantity},${label}`;
+            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
+                <ItemTranslation
+                    mbxId={itemId}
+                    category={setCategory(itemId)}
+                    type="name"
+                />
+            );
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = labelMarkup;
+            const labelText = tempDiv.textContent || tempDiv.innerText || "";
+            //return `${quantity},${labelText},${itemId}`; // For debugging
+            return `${quantity},${labelText}`;
         });
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
@@ -621,7 +630,6 @@ const ItemsNRecipesApp: FC = () => {
         } catch (err) {
             console.error("Copy CSV failed:", err);
         }
-        
     };
     const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
     const noRecipeAvailable = !detailsIndex?.[panelItem!]?.recipe;

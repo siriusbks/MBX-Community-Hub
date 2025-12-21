@@ -3,6 +3,7 @@
  */
 
 import React, { FC, useEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import {
     User,
@@ -241,6 +242,7 @@ export const MuseumApp: FC = () => {
 
     // When a craft modal opens, fetch the item's details from the API to get
     // its `used_in_recipes` array (we show the ids in the summary).
+    // LupusArctos4 : We do not display used_in_recipes in the museum, but only in INR. To avoid unnecessary API calls, I disable it.
     /* useEffect(() => {
         if (!craftModalItem) {
             setItemUsedInRecipes(null);
@@ -524,7 +526,7 @@ export const MuseumApp: FC = () => {
         if (!groupedItems || !detailsIndex || !museumItems) return;
         const totalResources: { [key: string]: number } = {};
         groupedItems.forEach((group) => {
-            // On ne prend en compte que les items manquants et sélectionnés via le filtre
+            // Only missing items selected via the filter are taken into account
             const missingItems = group.items.filter(
                 (item) => !museumItems.includes(item) && missingSelection[item]
             );
@@ -545,9 +547,21 @@ export const MuseumApp: FC = () => {
         const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
             a.localeCompare(b, "en", { sensitivity: "base" })
         );
-        const csvLines = sortedResourceIds.map(
-            (resId) => `${totalResources[resId]},${resId}`
-        );
+        const csvLines = sortedResourceIds.map((resId) => {
+            const quantity = totalResources[resId];
+            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
+                <ItemTranslation 
+                    mbxId={resId} 
+                    category={setCategory(resId)} 
+                    type="name" 
+                />
+            );
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = labelMarkup;
+            const labelText = tempDiv.textContent || tempDiv.innerText || "";
+            //return `${quantity},${labelText},${resId}`; // For debugging
+            return `${quantity},${labelText}`; 
+        });
         const csvText = csvLines.join("\n");
 
         try {
