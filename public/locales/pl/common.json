@@ -1,32 +1,32 @@
 {
     "actions": {
-        "close": "Close",
-        "clickToView": "Click to view",
-        "openInteractiveMap": "Open Interactive Map",
-        "openInMinebox": "Open in Minebox",
-        "openInItemsNRecipes": "Open in Items & Recipes Page"
+        "close": "Zamknij",
+        "clickToView": "Kliknij, aby zobaczyć",
+        "openInteractiveMap": "Otwórz Interaktywną mapę",
+        "openInMinebox": "Otwórz w Minebox",
+        "openInItemsNRecipes": "Otwórz w Przedmioty i Receptury"
     },
     "infos": {
-        "recipeNotFound": "No recipe available for this item."
+        "recipeNotFound": "Brak receptury dla tego przedmiotu."
     },
     "stats": {
-        "AGILITY": "Agility",
-        "HEALTH": "Health",
-        "LUCK": "Luck",
-        "WISDOM": "Wisdom",
-        "STRENGTH": "Strength",
-        "FORTUNE": "Fortune",
-        "DEFENSE": "Defense",
-        "INTELLIGENCE": "Intelligence"
+        "AGILITY": "Zwinność",
+        "HEALTH": "Zdrowie",
+        "LUCK": "Szczęście",
+        "WISDOM": "Mądrość",
+        "STRENGTH": "Siła",
+        "FORTUNE": "Fortuna",
+        "DEFENSE": "Ochrona",
+        "INTELLIGENCE": "Inteligencja"
     },
     "rarity": {
-        "unknown": "Unknown",
-        "vanilla": "Vanilla",
-        "common": "Common",
-        "uncommon": "Uncommon",
-        "rare": "Rare",
-        "epic": "Epic",
-        "legendary": "Legendary",
-        "mythic": "Mythic"
+        "unknown": "Nieznane",
+        "vanilla": "Wanilia",
+        "common": "Zwykły",
+        "uncommon": "Niezwykły",
+        "rare": "Rzadki",
+        "epic": "Epicki",
+        "legendary": "Legendarny",
+        "mythic": "Mityczny"
     }
 }
