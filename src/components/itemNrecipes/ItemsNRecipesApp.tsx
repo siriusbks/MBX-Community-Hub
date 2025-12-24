@@ -5,7 +5,7 @@
 import React, { FC, useEffect, useState, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import INRItemCard from "./INRItemCard";
-import INRItemImage from "./INRItemImage";
+import ItemImage from "../ItemImage";
 import ItemTranslation from "../ItemTranslation";
 import {
     AlertTriangle,
@@ -166,7 +166,7 @@ const ItemsNRecipesApp: FC = () => {
 
     // Function to find the category of any items
     useEffect(() => {
-        fetch("/assets/data/items_museum_grouped_by_category.json")
+        fetch("/assets/data/all_items_grouped_by_category.json")
         .then((res) => res.json())
         .then((groups: Group[]) => {
             setGroupedItemsForResearch(groups);
@@ -281,7 +281,7 @@ const ItemsNRecipesApp: FC = () => {
                                 )}
                             </button>
                         )}
-                        <INRItemImage
+                        <ItemImage
                             groupCategory={setCategory(ing.id)}
                             itemId={ing.id}
                             detailsIndex={detailsIndex}
@@ -410,7 +410,7 @@ const ItemsNRecipesApp: FC = () => {
                     {sortedResourceIds.map((resId) => (
                         <div key={resId} className="bg-gray-700 p-2 rounded-lg">
                             <div className="flex items-center">
-                                <INRItemImage
+                                <ItemImage
                                     groupCategory={setCategory(resId)}
                                     itemId={resId}
                                     detailsIndex={detailsIndex}
@@ -538,7 +538,7 @@ const ItemsNRecipesApp: FC = () => {
                 id={categoryId}
             >
                 <div className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2">
-                    <INRItemImage
+                    <ItemImage
                         groupCategory={group.category}
                         itemId={group.category}
                         detailsIndex={detailsIndex}
@@ -716,7 +716,7 @@ const ItemsNRecipesApp: FC = () => {
                                             aria-hidden="false"
                                         />
                                         <span className="flex flex-row items-center gap-1.5">
-                                            <INRItemImage
+                                            <ItemImage
                                                 groupCategory={group.category}
                                                 itemId={group.category}
                                                 detailsIndex={detailsIndex}
@@ -798,7 +798,7 @@ const ItemsNRecipesApp: FC = () => {
                                 </div>
                             </div>
                             <div className="mt-4">
-                                <INRItemImage
+                                <ItemImage
                                     groupCategory={panelCategory!}
                                     itemId={panelItem}
                                     detailsIndex={detailsIndex}
@@ -862,7 +862,7 @@ const ItemsNRecipesApp: FC = () => {
                                                 rel="noopener noreferrer"
                                                 className="text-sm bg-gray-800 p-1 rounded border border-gray-600 hover:bg-gray-700"
                                             >
-                                                <INRItemImage
+                                                <ItemImage
                                                     groupCategory={setCategory(item.id)}
                                                     itemId={item.id}
                                                     detailsIndex={detailsIndex}
@@ -918,7 +918,7 @@ const ItemsNRecipesApp: FC = () => {
                                     >
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
-                                            <INRItemImage
+                                            <ItemImage
                                                 groupCategory={craftModalCategory!}
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
@@ -1125,7 +1125,7 @@ const ItemsNRecipesApp: FC = () => {
                                     >
                                         {/* Header 1: Item image and title */}
                                         <div className="bg-gray-700 text-white p-4 flex flex-row gap-3 items-center shadow-md">
-                                            <INRItemImage
+                                            <ItemImage
                                                 groupCategory={craftModalCategory!}
                                                 itemId={craftModalItem}
                                                 detailsIndex={detailsIndex}
