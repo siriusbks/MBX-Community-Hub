@@ -121,6 +121,28 @@
             "properties": {
                 "map": "sandwhisper_dunes"
             }
+        },
+        {
+            "geometry": {
+                "coordinates": [453, 140, 195],
+                "type": "Point"
+            },
+            "id": 12,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
+        },
+        {
+            "geometry": {
+                "coordinates": [505, 73, 115],
+                "type": "Point"
+            },
+            "id": 13,
+            "type": "Feature",
+            "properties": {
+                "map": "sandwhisper_dunes"
+            }
         }
     ]
 }
