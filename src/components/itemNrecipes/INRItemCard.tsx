@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import INRItemImage from "./INRItemImage";
+import INRItemImage from "../ItemImage";
 import ItemTranslation from "../ItemTranslation";
 
 interface ItemCardProps {

@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Bone, Eye, Package, Star } from "lucide-react";
-import MuseumItemImage from "@components/museum/MuseumItemImage";
+import ItemImage from "@components/ItemImage";
 import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 
 import { bestiaryData, BestiaryInfo } from "@components/map/bestiaryData";
@@ -953,16 +953,10 @@ const BestiaryPage: FC = () => {
                                                                     rarity
                                                                 )} bg-opacity-30 border rounded p-2 flex flex-col items-center text-center`}
                                                             >
-                                                                <MuseumItemImage
-                                                                    detailsIndex={
-                                                                        null
-                                                                    }
-                                                                    itemId={
-                                                                        d.itemId
-                                                                    }
-                                                                    alt={
-                                                                        d.itemId
-                                                                    }
+                                                                <ItemImage
+                                                                    detailsIndex={null}
+                                                                    itemId={d.itemId}
+                                                                    alt={d.itemId}
                                                                     className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-contain my-1 mb-2"
                                                                     style={{
                                                                         imageRendering:
