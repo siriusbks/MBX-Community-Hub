@@ -147,7 +147,7 @@
     },
     {
         "category": "LOOT",
-        "itemCount": 93,
+        "itemCount": 101,
         "items": [
             "clown_goofish_bone",
             "clown_goofish_tooth",
@@ -254,7 +254,7 @@
     },
     {
         "category": "RING",
-        "itemCount": 95,
+        "itemCount": 97,
         "items": [
             "ring_feather",
             "ring_improved",
@@ -674,7 +674,7 @@
     },
     {
         "category": "BELT",
-        "itemCount": 61,
+        "itemCount": 63,
         "items": [
             "belt_bronze",
             "belt_improved",
@@ -798,7 +798,7 @@
     },
     {
         "category": "TOOL",
-        "itemCount": 42,
+        "itemCount": 43,
         "items": [
             "bug_net",
             "leaf_blower",
@@ -847,7 +847,7 @@
     },
     {
         "category": "BOOTS",
-        "itemCount": 32,
+        "itemCount": 39,
         "items": [
             "basic_agility_boots",
             "basic_intelligence_boots",
@@ -932,7 +932,7 @@
     },
     {
         "category": "HELMET",
-        "itemCount": 36,
+        "itemCount": 43,
         "items": [
             "halloween_crow_hat",
             "basic_agility_helmet",
@@ -1057,7 +1057,7 @@
     },
     {
         "category": "CHESTPLATE",
-        "itemCount": 33,
+        "itemCount": 36,
         "items": [
             "basic_agility_chestplate",
             "basic_intelligence_chestplate",
@@ -1099,7 +1099,7 @@
     },
     {
         "category": "LEGGINGS",
-        "itemCount": 32,
+        "itemCount": 35,
         "items": [
             "basic_agility_leggings",
             "basic_intelligence_leggings",
@@ -1140,7 +1140,7 @@
     },
     {
         "category": "PET",
-        "itemCount": 32,
+        "itemCount": 34,
         "items": [
             "poop",
             "pet_founder_parrot",
@@ -1325,7 +1325,7 @@
     },
     {
         "category": "CANDY",
-        "itemCount": 20,
+        "itemCount": 30,
         "items": [
             "candy_health",
             "candy_enchanted_health",
@@ -1361,7 +1361,7 @@
     },
     {
         "category": "STAFF",
-        "itemCount": 21,
+        "itemCount": 23,
         "items": [
             "staff_balloon_boomstick",
             "staff_bubble_bludgeon",
@@ -1577,7 +1577,7 @@
     },
     {
         "category": "TREASURE",
-        "itemCount": 24,
+        "itemCount": 28,
         "items": [
             "key_common",
             "treasure_common",
@@ -1611,7 +1611,7 @@
     },
     {
         "category": "BACK",
-        "itemCount": 12,
+        "itemCount": 21,
         "items": [
             "halloween_old_witch_cloak",
             "ghost_cloak",
@@ -1638,7 +1638,7 @@
     },
     {
         "category": "MOUNT",
-        "itemCount": 17,
+        "itemCount": 18,
         "items": [
             "mount_default",
             "mount_broomstick",
@@ -1786,8 +1786,72 @@
         ]
     },
     {
+        "category": "TAG",
+        "itemCount": 6,
+        "items": [
+            "halloween_ghost",
+            "lny_snake",
+            "pack_alpha_basic",
+            "retro_ticket",
+            "valentine",
+            "xmas_hipster"
+        ]
+    },
+    {
+        "category": "TITLE",
+        "itemCount": 46,
+        "items": [
+            "puddle_addict",
+            "abyss_explorer",
+            "aspiring_adventurer",
+            "crazy_voter",
+            "newbie",
+            "puddle_master",
+            "cool_pirate",
+            "curious_collector",
+            "minebox_addict",
+            "puddle_genius",
+            "single",
+            "the_brawler",
+            "the_encyclopedist",
+            "xmas_hipster",
+            "lny_snake",
+            "charmer",
+            "ghostbuster",
+            "wheat",
+            "beetroots",
+            "potatoes",
+            "carrot",
+            "nether_wart",
+            "sugar_cane",
+            "cactus",
+            "pumpkin",
+            "melon",
+            "cocoa_beans",
+            "bamboo",
+            "kelp",
+            "sweet_berries",
+            "mushroom",
+            "alpha_og",
+            "crowned_head",
+            "day_zero_hero",
+            "master_of_evil",
+            "mega_brain",
+            "pack_alpha_basic",
+            "pro_player",
+            "puddle_god",
+            "the_machine",
+            "the_dps",
+            "the_collector",
+            "legend_of_the_sea",
+            "legend",
+            "no_life",
+            "retro_ticket"
+        ]
+    },
+    {
         "category": "FURNITURE",
-        "itemCount": 171,
+        "itemCount": 170,
         "items": [
             "mm-pebbles_01",
             "mm-pebbles_02",
