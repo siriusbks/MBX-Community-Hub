@@ -1,0 +1,32 @@
+{
+    "actions": {
+        "close": "Fermer",
+        "clickToView": "Voir les détails",
+        "openInteractiveMap": "Ouvrir la carte interactive",
+        "openInMinebox": "Ouvrir dans Minebox",
+        "openInItemsNRecipes": "Ouvrir dans la page Items et Recettes"
+    },
+    "infos": {
+        "recipeNotFound": "Aucune recette disponible pour cet objet."
+    },
+    "stats": {
+        "AGILITY": "Agilité",
+        "HEALTH": "Vitalité",
+        "LUCK": "Chance",
+        "WISDOM": "Sagesse",
+        "STRENGTH": "Force",
+        "FORTUNE": "Fortune",
+        "DEFENSE": "Défense",
+        "INTELLIGENCE": "Intelligence"
+    },
+    "rarity": {
+        "unknown": "Inconnu",
+        "vanilla": "Vanilla",
+        "common": "Commun",
+        "uncommon": "Peu Commun",
+        "rare": "Rare",
+        "epic": "Épique",
+        "legendary": "Légendaire",
+        "mythic": "Mythique"
+    }
+}

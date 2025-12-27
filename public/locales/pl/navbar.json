@@ -5,7 +5,8 @@
     "navbar.equipement": "Ekwipunek",
     "navbar.museum": "Muzeum",
     "navbar.community": "Społeczność",
-    "navbar.halloween": "Halloween",
     "navbar.itemsNrecipes": "Przedmioty i Receptury",
-    "navbar.bestiary": "Bestariusz"
+    "navbar.bestiary": "Bestariusz",
+    "navbar.halloween": "Halloween",
+    "navbar.christmas": "Święta"
 }

@@ -5,12 +5,16 @@
     "homepage.features.playerProfile.description": "Personaliza tu perfil con estadísticas, logros y más para mostrar tu viaje por Minebox.",
     "homepage.features.interactiveMap.title": "Mapa Interactivo",
     "homepage.features.interactiveMap.description": "Explora el mundo de Minebox con mapas interactivos detallados mostrando lugares y recursos.",
+    "homepage.features.bestiary.title": "Bestiary",
+    "homepage.features.bestiary.description": "Descubre información detallada sobre las diversas criaturas que habitan el mundo de Minebox.",
     "homepage.features.communityProjects.title": "Proyectos Comunitarios",
     "homepage.features.communityProjects.description": "Descubre y explora mods, herramientas y sitios web impulsados por la comunidad para Minebox.",
     "homepage.features.equipment.title": "Gestor de equipamiento",
     "homepage.features.equipment.description": "Construye y optimiza el equipo de tu personaje.",
     "homepage.features.museum.title": "Museo",
     "homepage.features.museum.description": "Explora tu museo sin estar conectado, pero no olvides habilitar el acceso a la API de terceros en el juego.",
-    "homepage.features.itemsNrecipes.title": "Artículos & Recetas",
+    "homepage.features.halloween.title": "Halloween Event",
+    "homepage.features.halloween.description": "Join the Halloween festivities with special quests, items, and more!",
+    "homepage.features.itemsNrecipes.title": "Objetos y Recetas",
     "homepage.features.itemsNrecipes.description": "Explora todos los objetos y las recetas asociadas a ellos."
 }

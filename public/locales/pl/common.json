@@ -1,0 +1,32 @@
+{
+    "actions": {
+        "close": "Zamknij",
+        "clickToView": "Kliknij, aby zobaczyć",
+        "openInteractiveMap": "Otwórz Interaktywną mapę",
+        "openInMinebox": "Otwórz w Minebox",
+        "openInItemsNRecipes": "Otwórz w Przedmioty i Receptury"
+    },
+    "infos": {
+        "recipeNotFound": "Brak receptury dla tego przedmiotu."
+    },
+    "stats": {
+        "AGILITY": "Zwinność",
+        "HEALTH": "Zdrowie",
+        "LUCK": "Szczęście",
+        "WISDOM": "Mądrość",
+        "STRENGTH": "Siła",
+        "FORTUNE": "Fortuna",
+        "DEFENSE": "Ochrona",
+        "INTELLIGENCE": "Inteligencja"
+    },
+    "rarity": {
+        "unknown": "Nieznane",
+        "vanilla": "Wanilia",
+        "common": "Zwykły",
+        "uncommon": "Niezwykły",
+        "rare": "Rzadki",
+        "epic": "Epicki",
+        "legendary": "Legendarny",
+        "mythic": "Mityczny"
+    }
+}

@@ -10,6 +10,7 @@ import ReactGA from "react-ga4";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import "./i18n";
 
+import Snowfall from "@components/effects/Snowfall";
 import ErrorBoundary from "@components/preview/ErrorBoundary";
 import { isDev } from "@utils/helper";
 
@@ -54,6 +55,7 @@ export default function App() {
         <BrowserRouter>
             <ErrorBoundary>
                 <GA4Tracking />
+                <Snowfall enabled count={70} zIndex={60} />
                 <div className="max-w-screen w-full overflow-x-hidden">
                     <AppRoutes />
                 </div>

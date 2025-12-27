@@ -3,11 +3,10 @@
     "bestiary.subtitle": "Découvrez les différentes créatures qui vivent dans le monde de Minebox.",
     "bestiary.mapPreview": "Aperçu des points d'apparition du mob sur la carte",
     "bestiary.family": "Famille du Mob",
-    "bestiary.clickToView": "Voir les détails",
     "bestiary.noFamily": "Ce Mob n'a pas de famille...",
     "bestiary.drop": "Liste des Drops",
     "bestiary.noDrop": "Ce mob ne lâche aucun butin",
-    "bestiary.openInteractiveMap": "Ouvrir la carte interactive",
+    "bestiary.unavailableMobs": "Mobs indisponibles",
     "bestiary.vanilla.chicken": "Poule",
     "bestiary.vanilla.rabbit": "Lapin",
     "bestiary.vanilla.pig": "Cochon",
@@ -81,5 +80,10 @@
     "bestiary.halloween_albino_rat": "Rat Albinos",
     "bestiary.halloween_gray_rat": "Rat Gris",
     "bestiary.halloween_brown_rat": "Rat Brun",
-    "bestiary.halloween_boss": "Le Moissonneur"
+    "bestiary.halloween_boss": "Le Moissonneur",
+    "bestiary.xmas_penguin_blue": "Pingouin Ninja Bleu",
+    "bestiary.xmas_penguin_red": "Pingouin Ninja Rouge",
+    "bestiary.xmas_penguin_green": "Pingouin Ninja Vert",
+    "bestiary.xmas_penguin_yellow": "Pingouin Ninja Jaune",
+    "bestiary.xmas_gingerbread": "Pain d'épices"
 }
