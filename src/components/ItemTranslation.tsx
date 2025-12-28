@@ -30,6 +30,10 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
     let translationLore: string ="";
     let translationDescription: string ="";
     const lowerCategory = category ? category.toLowerCase() : "";
+    const cleanedItemId = mbxId.replace(
+        new RegExp(`^${lowerCategory}_`),
+        ""
+    );
 
     /* Type Description and Lore */
     if (type === "description&lore") {
@@ -46,15 +50,9 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
             case "nameplate":
             case "emote":
             case "balloon":
-                // TODO
-                // TODO
-                // TODO
-                // TODO
-                // TODO
-                // TODO
                 // For these categories, use key "mbx.attributes.{category}.{mbxId}"
-                translationLore = t(`mbx.attributes.${lowerCategory}.${mbxId}.lore`, { defaultValue: "" });
-                translationDescription = t(`mbx.attributes.${lowerCategory}.${mbxId}.description`, { defaultValue: "" });
+                translationLore = t(`mbx.attributes.${lowerCategory}.${cleanedItemId}.lore`, { defaultValue: "" });
+                translationDescription = t(`mbx.attributes.${lowerCategory}.${cleanedItemId}.description`, { defaultValue: "" });
                 break;
             case "utility_block":
                 // For "utility_block", check the beginning of mbxId
@@ -481,7 +479,7 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
                 case "emote":
                 case "balloon":
                     // For these categories, use key "mbx.attributes.{category}.{mbxId}"
-                    translation = t(`mbx.attributes.${lowerCategory}.${mbxId}.title`, { defaultValue: "" });
+                    translation = t(`mbx.attributes.${lowerCategory}.${cleanedItemId}.title`, { defaultValue: "" });
                     break;
                 case "utility_block":
                     // For "utility_block", check the beginning of mbxId
@@ -849,6 +847,7 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
                     <div className="text-sm text-gray-400">{paramError}</div>
                 ) : (
                     // If nothing is available, show fallback message
+                    // className="text-xs" => for debugging
                     <div className="text-xs font-bold">{lastBackupTranslation}</div>
                 )}
             </span>
