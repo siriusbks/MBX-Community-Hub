@@ -815,9 +815,10 @@ const ItemsNRecipesApp: FC = () => {
                             </div>
                             <div className="mt-4">
                                 <ItemImage
-                                    groupCategory={panelCategory!}
+                                    groupCategory={panelCategory}
                                     itemId={panelItem}
                                     detailsIndex={detailsIndex}
+                                    extra={true}
                                     className="w-24 h-24"
                                     style={{ imageRendering: "pixelated" }}
                                 />
@@ -826,11 +827,14 @@ const ItemsNRecipesApp: FC = () => {
                                 <button
                                     onClick={() => {
                                         // Prevent opening when item is used in other recipes or no recipe exists
-                                        if (usedInList.length === 0 || noRecipeAvailable) return;
+                                        //if (usedInList.length === 0 || noRecipeAvailable) return;
+                                        if (noRecipeAvailable) return;
                                         if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
                                     }}
-                                    disabled={usedInList.length === 0 || noRecipeAvailable}
-                                    aria-disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    //disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    disabled={noRecipeAvailable}
+                                    //aria-disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    aria-disabled={noRecipeAvailable}
                                     title={
                                         noRecipeAvailable
                                             ? t("itemsNrecipes.recipe.no")
@@ -838,7 +842,8 @@ const ItemsNRecipesApp: FC = () => {
                                             ? t("itemsNrecipes.usedInRecipes.no")
                                             : t("itemsNrecipes.recipe.open")
                                     }
-                                    className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
+                                    //className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
+                                    className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
                                 >
                                     {noRecipeAvailable ? t("itemsNrecipes.recipe.no") : t("itemsNrecipes.recipe.open")}
                                 </button>
