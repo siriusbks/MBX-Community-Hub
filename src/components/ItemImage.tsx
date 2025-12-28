@@ -1,86 +1,117 @@
 /*
  * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
  */
+import React, { FC, useEffect, useMemo, useState } from "react";
 
-import React, { FC, useEffect, useState } from "react";
-import { GrUbuntu } from "react-icons/gr";
-
-interface ItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ItemImageProps
+    extends React.ImgHTMLAttributes<HTMLImageElement> {
     groupCategory?: string | null;
     itemId: string;
     detailsIndex: { [key: string]: { image?: string } } | null;
+    extra?: boolean;
 }
+
 interface Group {
     category: string;
     items: string[];
 }
 
-const ItemImage: FC<ItemImageProps> = ({ groupCategory:initialCategory, itemId, detailsIndex, ...imgProps }) => {
-    const cleanedItemId = itemId.replace(/^collection_/, "").replace(/_level$/, "");
+const ItemImage: FC<ItemImageProps> = ({
+    groupCategory: initialCategory,
+    itemId,
+    detailsIndex,
+    extra = false,
+    ...imgProps
+}) => {
+    const cleanedItemId = useMemo(
+        () => itemId.replace(/^collection_/, "").replace(/_level$/, ""),
+        [itemId]
+    );
 
     // State for the category
     const [category, setCategory] = useState<string>(
-        initialCategory && initialCategory !== "null"
-            ? initialCategory
-            : ""
+        initialCategory && initialCategory !== "null" ? initialCategory : ""
     );
+    // State for the grouped Items
+    const [groups, setGroups] = useState<Group[] | null>(null);
 
-    // State for the grouped Items to find the category of any items
-    const [groupedItemsForResearch, setgroupedItemsForResearch] = useState<Group[] | null>(null);
     useEffect(() => {
         fetch("/assets/data/all_items_grouped_by_category.json")
-            .then(res => res.json())
-            .then((groups: Group[]) => setgroupedItemsForResearch(groups))
-            .catch(() => setgroupedItemsForResearch([]));
+            .then((r) => r.json())
+            .then((g: Group[]) => setGroups(g))
+            .catch(() => setGroups([]));
     }, []);
 
     useEffect(() => {
         if (
-            (initialCategory === null ||
-              initialCategory === undefined ||
-              initialCategory === "null" ||
-              initialCategory === "") &&
-            Array.isArray(groupedItemsForResearch) &&
-            groupedItemsForResearch.length > 0
+            (!initialCategory || initialCategory === "null" || initialCategory === "") &&
+            Array.isArray(groups) &&
+            groups.length > 0
         ) {
-            const found = groupedItemsForResearch.find((group) => group.items.includes(cleanedItemId));
+            const found = groups.find((gg) =>
+                gg.items.includes(cleanedItemId)
+            );
             setCategory(found ? found.category : "");
         }
-    }, [initialCategory, groupedItemsForResearch, cleanedItemId]);
+    }, [initialCategory, groups, cleanedItemId]);
 
-    const fallbackChain = [
+    const extraId = `${cleanedItemId}_extra`;
+
+    const baseChain = useMemo<string[]>(() => [
         `/assets/media/museum/${category}/${cleanedItemId}.png`,
         `/assets/media/museum/TREASURE/${cleanedItemId}.png`,
         `/assets/media/jobs/${cleanedItemId}.png`,
         `/assets/media/icons/${cleanedItemId}.png`,
         `/assets/media/skulls/${cleanedItemId.replace(/_skull$/, "")}.png`,
         `/assets/media/EVENT/HALLOWEEN/${cleanedItemId}.png`,
-        detailsIndex &&
-            detailsIndex[cleanedItemId] &&
-            detailsIndex[cleanedItemId].image
-            ? "data:image/png;base64," + detailsIndex[cleanedItemId].image
+        detailsIndex?.[cleanedItemId]?.image
+            ? `data:image/png;base64,${detailsIndex[cleanedItemId]!.image}`
             : `/assets/media/item/textures/${cleanedItemId}.png`,
         `/assets/media/museum/not-found.png`,
-    ];
+    ], [category, cleanedItemId, detailsIndex]);
 
-    const [idx, setIdx] = useState(0);
-    const src = fallbackChain[idx];
+    const extraChain = useMemo<string[]>(() => [
+        `/assets/media/museum/${category}/${extraId}.png`,
+        `/assets/media/museum/TREASURE/${extraId}.png`,
+        `/assets/media/jobs/${extraId}.png`,
+        `/assets/media/icons/${extraId}.png`,
+        `/assets/media/skulls/${extraId.replace(/_skull$/, "")}.png`,
+        `/assets/media/EVENT/HALLOWEEN/${extraId}.png`,
+        detailsIndex?.[extraId]?.image
+            ? `data:image/png;base64,${detailsIndex[extraId]!.image}`
+            : `/assets/media/item/textures/${extraId}.png`
+    ], [category, extraId, detailsIndex]);
+
+    const concatChain = useMemo<string[]>(
+        () => (extra ? [...extraChain, ...baseChain] : baseChain),
+        [extra, extraChain, baseChain]
+    );
+
+    const [fallbackChain, setFallbackChain] = useState<string[]>(concatChain);
+    const [index, setIndex] = useState<number>(0);
+
+    useEffect(() => {
+        setFallbackChain(concatChain);
+        setIndex(0);
+        // console.log("ConcatChain:", concatChain);
+    }, [concatChain]);
+
+    const src = fallbackChain[index] ?? fallbackChain[0];
+
     const onError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-        if (idx < fallbackChain.length - 1) {
-            const next = idx + 1;
-            setIdx(next);
-            e.currentTarget.src = fallbackChain[next];
+        if (index < fallbackChain.length - 1) {
+            setIndex((i) => i + 1);
         }
     };
 
-    console.log("INRItemImage - itemId:", itemId, "groupCategory:", category, "fallback:", fallbackChain[idx]);
+    console.log("INRItemImage - itemId:", itemId, "groupCategory:", category, "index", index, "src:", src, "extra:", extra, "cleanedItemId:", cleanedItemId);
 
     return (
-        <img 
-            {...imgProps} 
-            src={src} 
-            onError={onError} 
-            alt={cleanedItemId} 
+        <img
+            {...imgProps}
+            src={src}
+            onError={onError}
+            alt={cleanedItemId}
         />
     );
 };

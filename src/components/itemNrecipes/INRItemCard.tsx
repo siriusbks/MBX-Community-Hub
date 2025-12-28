@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import INRItemImage from "../ItemImage";
+import ItemImage from "../ItemImage";
 import ItemTranslation from "../ItemTranslation";
 
 interface ItemCardProps {
@@ -71,7 +71,7 @@ const INRItemCard: React.FC<ItemCardProps> = ({
                 if (craftModalOpener) craftModalOpener(itemId);
             }}
         >
-            <INRItemImage
+            <ItemImage
                 groupCategory={category}
                 itemId={itemId}
                 detailsIndex={null}
