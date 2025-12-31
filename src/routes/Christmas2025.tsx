@@ -198,13 +198,6 @@ const MediumPresentDrops: GiftsDropChange[] = [
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/treasure_uncommon.png",
-        name: "mbx.items.treasure_uncommon.name",
-        rarity: "UNCOMMON",
-        count: 1,
-        change: 0,
-    },
-    {
         image: "assets/media/museum/TREASURE/key_uncommon.png",
         name: "mbx.items.key_uncommon.name",
         rarity: "UNCOMMON",
@@ -212,9 +205,9 @@ const MediumPresentDrops: GiftsDropChange[] = [
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/treasure_common.png",
-        name: "mbx.items.treasure_common.name",
-        rarity: "COMMON",
+        image: "assets/media/museum/TREASURE/treasure_uncommon.png",
+        name: "mbx.items.treasure_uncommon.name",
+        rarity: "UNCOMMON",
         count: 1,
         change: 0,
     },
@@ -226,9 +219,9 @@ const MediumPresentDrops: GiftsDropChange[] = [
         change: 0,
     },
     {
-        image: "assets/media/item/textures/netherite_ingot.png",
-        name: "Netherite Ingot",
-        rarity: "VANILLA",
+        image: "assets/media/museum/TREASURE/treasure_common.png",
+        name: "mbx.items.treasure_common.name",
+        rarity: "COMMON",
         count: 1,
         change: 0,
     },
@@ -236,7 +229,14 @@ const MediumPresentDrops: GiftsDropChange[] = [
         image: "assets/media/item/textures/netherite_scrap.png",
         name: "Netherite Scrap",
         rarity: "VANILLA",
-        count: 2,
+        count: 1,
+        change: 0,
+    },
+    {
+        image: "assets/media/item/textures/netherite_ingot.png",
+        name: "Netherite Ingot",
+        rarity: "VANILLA",
+        count: 1,
         change: 0,
     },
     {
@@ -285,14 +285,14 @@ const MediumPresentDrops: GiftsDropChange[] = [
         image: "assets/media/item/textures/amethyst_shard.png",
         name: "Amethyst Shard",
         rarity: "VANILLA",
-        count: 64,
+        count: 16,
         change: 0,
     },
     {
         image: "assets/media/item/textures/amethyst_shard.png",
         name: "Amethyst Shard",
         rarity: "VANILLA",
-        count: 16,
+        count: 64,
         change: 0,
     },
     {
@@ -304,6 +304,13 @@ const MediumPresentDrops: GiftsDropChange[] = [
     },
 ];
 const SmallPresentDrops: GiftsDropChange[] = [
+    {
+        image: "assets/media/museum/TREASURE/key_common.png",
+        name: "mbx.items.key_common.name",
+        rarity: "COMMON",
+        count: 1,
+        change: 0,
+    },
     {
         image: "assets/media/museum/FRUIT/banana.png",
         name: "mbx.items.banana.name",
@@ -326,17 +333,17 @@ const SmallPresentDrops: GiftsDropChange[] = [
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/key_common.png",
-        name: "mbx.items.key_common.name",
-        rarity: "COMMON",
-        count: 1,
-        change: 0,
-    },
-    {
         image: "assets/media/museum/FRUIT/coconut.png",
         name: "mbx.items.coconut.name",
         rarity: "COMMON",
         count: 8,
+        change: 0,
+    },
+    {
+        image: "assets/media/item/textures/netherite_scrap.png",
+        name: "Netherite Scrap",
+        rarity: "VANILLA",
+        count: 2,
         change: 0,
     },
     {
@@ -665,39 +672,59 @@ const ChristmasPage: FC = () => {
                     </div>
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_gingerbread", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [128]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_penguin_blue", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [128]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>
+                                {t("christmas.mission.open")}{" "}
+                                <span className="text-MYTHIC font-bold">
+                                    {t("mbx.items.xmas_red_present_big.name")}{" "}
+                                </span>
+                                [4]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.opengifts")} [64]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.play")} [4]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.takegifts")} [24]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className=" w-full justify-between flex">
@@ -706,7 +733,7 @@ const ChristmasPage: FC = () => {
                             </span>
                             <span>
                                 <span className="text-LEGENDARY">
-                                    ?x {t("christmas.bpStars")}
+                                    8x {t("christmas.bpStars")}
                                 </span>
                             </span>
                         </div>
