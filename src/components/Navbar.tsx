@@ -16,7 +16,8 @@ import {
     Wrench,
     BookA,
     Bone,
-    Snowflake
+    Snowflake,
+    FolderClosed
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -40,8 +41,16 @@ const NAV_LINKS: Array<any> = [
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
-    { id: "christmas", to: "/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true },
-    //{ id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+    { 
+        id: "Archives",
+        dropdown: true,
+        icon: FolderClosed,
+        labelKey: "navbar.archives",
+        items: [
+            { id: "christmas", to: "archives/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true},
+            { id: "halloween", to: "archives/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+        ],
+    },
 ];
 
 const LanguageSelector = ({
@@ -136,11 +145,16 @@ export const Navbar = () => {
 
     const [toolsOpen, setToolsOpen] = useState(false);
     const toolsRef = useRef<HTMLDivElement>(null);
+    const [archivesOpen, setArchivesOpen] = useState(false);
+    const archivesRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
                 setToolsOpen(false);
+            }
+            if (archivesRef.current && !archivesRef.current.contains(event.target as Node)) {
+                setArchivesOpen(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -170,17 +184,23 @@ export const Navbar = () => {
                             const dropdownActive = link.items?.some((item: any) =>
                                 location.pathname.startsWith(item.to)
                             );
+                            const isTools = link.id === "tools";
+                            const isOpen = isTools ? toolsOpen : archivesOpen;
+                            const toggleOpen = isTools
+                                ? () => setToolsOpen((v) => !v)
+                                : () => setArchivesOpen((v) => !v);
+                            const ref = isTools ? toolsRef : archivesRef;
                             return (
-                                <div className="relative" key={link.id} ref={toolsRef}>
+                                <div className="relative" key={link.id} ref={ref}>
                                     <button
-                                        onClick={() => setToolsOpen((s) => !s)}
+                                        onClick={toggleOpen}
                                         className={`flex items-center gap-2 px-2 lg:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
                                             dropdownActive
                                                 ? "bg-green-500/20 text-green-400"
                                                 : "text-gray-400 hover:text-white hover:bg-white/5"
                                         }`}
                                         aria-haspopup="menu"
-                                        aria-expanded={toolsOpen}
+                                        aria-expanded={isOpen}
                                     >
                                         {React.createElement(link.icon, { className: "h-5 w-5" })}
                                         <span className="items-center gap-1 hidden md:flex">
@@ -189,13 +209,12 @@ export const Navbar = () => {
                                         </span>
                                     </button>
 
-                                    {toolsOpen && (
+                                    {isOpen && (
                                         <div className="absolute left-0 mt-2 w-52 bg-gray-800 rounded shadow-xl" >
                                             {link.items.map((item: any) => (
                                                 <NavLink
                                                     key={item.id}
                                                     to={item.to}
-                                                    onClick={() => setToolsOpen(false)}
                                                     className={({ isActive }) =>
                                                         `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-5 rounded transition ${isActive ? "bg-white/5" : ""}`
                                                     }
