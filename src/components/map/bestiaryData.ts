@@ -58,6 +58,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_blue", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_red",
@@ -80,6 +81,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_red", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_green",
@@ -102,6 +104,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_green", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_yellow",
@@ -124,6 +127,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_yellow", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
         ],
         central_island: [
@@ -150,7 +154,6 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 0,
                 airResistant: 0,
                 halloween2025: true,
-
                 available: false,
             },
         ],
@@ -345,6 +348,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 ],
 
                 christmas2025: true,
+                available: false,
             },
         ],
     },

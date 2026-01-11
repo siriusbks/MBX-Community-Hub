@@ -47,10 +47,8 @@ export const AppRoutes: FC = () => {
 
 
 
-                        <Route path="/christmas" element={<ChristmasPage />} />
-                        {/* Special Pages */}
-                        {/* Add archive/ to URL for past events */}
-                        <Route path="archive/halloween" element={<HalloweenPage />} />
+                        <Route path="archives/christmas" element={<ChristmasPage />} />
+                        <Route path="archives/halloween" element={<HalloweenPage />} />
                     </Routes>
                 </Suspense>
             </main>
