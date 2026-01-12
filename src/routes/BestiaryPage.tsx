@@ -57,7 +57,8 @@ const BestiaryPage: FC = () => {
                 // Fetch the canonical items.json from CDN (contains most items + rarities),
                 // then merge local files for items missing from the CDN and any overrides.
                 const [itemsRes, noInMbRes, missingRes] = await Promise.all([
-                    fetch("https://cdn2.minebox.co/data/items.json")
+                    //fetch("https://cdn2.minebox.co/data/items.json")
+                    fetch("/assets/data/items.json")
                         .then((r) => r.json())
                         .catch(() => []),
                     fetch("/assets/data/items-no-in-MBapi.json")
