@@ -74,11 +74,10 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
-        null
-    );
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
+    const [showCraftingResourcesModal, setShowCraftingResourcesModal] = useState(false);
 
     const [showDonated, setShowDonated] = useState(true);
 
@@ -710,6 +709,112 @@ export const MuseumApp: FC = () => {
         );
     };
 
+    /**
+     * Récupère uniquement les "crafts" requis (items craftables),
+     * en excluant complètement les recettes FARMER.
+     *
+     * Règles :
+     * - si un ingrédient a une recipe et job !== "FARMER" => c'est un craft => on le compte
+     * - si job === "FARMER" => ignoré (ni lui, ni ses ingrédients)
+     * - si pas de recipe => ressource de base => ignorée
+     */
+    const gatherCraftsOnly = (
+        recipe: any,
+        detailsIndex: Details,
+        multiplier = 1,
+        acc: Record<string, number> = {},
+        visiting: Set<string> = new Set() // anti-boucle (sécurité)
+    ): Record<string, number> => {
+        if (!recipe?.ingredients) return acc;
+    
+        for (const ing of recipe.ingredients) {
+        const ingDetails = detailsIndex?.[ing.id];
+        const ingRecipe = ingDetails?.recipe;
+    
+        // Pas de recette => ressource de base => ignorée
+        if (!ingRecipe) continue;
+    
+        // FARMER => ignoré totalement
+        if (ingRecipe.job === "FARMER") continue;
+    
+        // Craft "valide"
+        const qty = (ing.amount ?? 0) * multiplier;
+        acc[ing.id] = (acc[ing.id] || 0) + qty;
+    
+        // Descendre récursivement dans ses sous-crafts (si boucle, on stoppe)
+        if (!visiting.has(ing.id)) {
+            visiting.add(ing.id);
+            gatherCraftsOnly(ingRecipe, detailsIndex, qty, acc, visiting);
+            visiting.delete(ing.id);
+        }
+        }
+    
+        return acc;
+    };
+    
+    const renderCraftsOnlyContent = () => {
+        if (!groupedItems || !detailsIndex || !museumItems) {
+        return <p>{t("museum.noDataLoaded")}</p>;
+        }
+    
+        const totalCrafts: Record<string, number> = {};
+    
+        groupedItems.forEach((group) => {
+        const missingItems = group.items.filter(
+            (itemId) => !museumItems.includes(itemId) && missingSelection[itemId]
+        );
+    
+        missingItems.forEach((itemId) => {
+            const recipe = detailsIndex[itemId]?.recipe;
+            if (!recipe) return;
+    
+            const crafts = gatherCraftsOnly(recipe, detailsIndex);
+            for (const craftId in crafts) {
+            totalCrafts[craftId] = (totalCrafts[craftId] || 0) + crafts[craftId];
+            }
+        });
+        });
+    
+        const sortedCraftIds = Object.keys(totalCrafts).sort((a, b) =>
+        a.localeCompare(b, "en", { sensitivity: "base" })
+        );
+    
+        if (sortedCraftIds.length === 0) {
+        return <p>{t("museum.noResourceRquired")}</p>;
+        }
+    
+        return (
+        <span>
+            <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            {sortedCraftIds.map((craftId) => (
+                <li key={craftId} className="block bg-gray-700 p-2 rounded-lg">
+                <div className="flex items-center">
+                    <MuseumItemImage
+                    groupCategory={setCategory(craftId)}
+                    itemId={craftId}
+                    detailsIndex={detailsIndex}
+                    className="w-8 h-8 mr-2 rounded"
+                    style={{ imageRendering: "pixelated" }}
+                    />
+                    <span className="font-bold text-sm">
+                    <ItemTranslation
+                        mbxId={craftId}
+                        category={setCategory(craftId)}
+                        type="name"
+                    />
+                    </span>
+    
+                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
+                    {totalCrafts[craftId].toLocaleString("fr-FR")}
+                    </span>
+                </div>
+                </li>
+            ))}
+            </span>
+        </span>
+        );
+    };
+
     // Function that returns the display of the items grid and the category navigation bar
     const renderItems = () => {
         const [expandedGroups, setExpandedGroups] = useState<
@@ -1089,6 +1194,13 @@ export const MuseumApp: FC = () => {
                     >
                         <List /> {t("museum.resourceMuseum.button")}
                     </button>
+                    <button
+                        id="resourcesButton"
+                        className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none items-center"
+                        onClick={() => setShowCraftingResourcesModal(true)}
+                    >
+                        <List /> {t("museum.craftingResourceMuseum.button")}
+                    </button>
                 </span>
             </div>
 
@@ -1326,6 +1438,7 @@ export const MuseumApp: FC = () => {
                     </div>
                 </div>
             )}
+            {/* Basic Resources recap modal */}
             {showResourcesModal && (
                 <div
                     className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
@@ -1370,6 +1483,55 @@ export const MuseumApp: FC = () => {
                             className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
                         >
                             {renderResourcesContent()}
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Crafting Resources recap modal */}
+            {showCraftingResourcesModal && (
+                <div
+                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    id="craftingResourcesModal"
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget)
+                            setShowCraftingResourcesModal(false);
+                    }}
+                >
+                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
+                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
+                            <List
+                                strokeWidth={2.4}
+                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
+                            />
+                            <span className="flex flex-col">
+                                <div className="text-2xl font-bold">
+                                    {t("museum.craftingResourceMuseum.title")}
+                                </div>
+                                <div className="text-sm font-normal opacity-60">
+                                    {t("museum.craftingResourceMuseum.description")}
+                                </div>
+                            </span>
+                            {/* CSV copy button */}
+                            <button
+                                className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                onClick={handleCopyCSVCraftingResources}
+                            >
+                                <ClipboardCopy className="w-5 h-5" />{" "}
+                                {t("museum.copyCSV.button")}
+                            </button>
+                            <span
+                                className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
+                                onClick={() => setShowCraftingResourcesModal(false)}
+                            >
+                                <X strokeWidth={3} className="w-5 h-5" />
+                            </span>
+                        </div>
+
+                        <div
+                            id="craftingResourcesContent"
+                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
+                        >
+                            {renderCraftsOnlyContent()}
                         </div>
                     </div>
                 </div>
