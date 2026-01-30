@@ -21,6 +21,7 @@ interface ItemTranslationProps {
 }
 
 const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type }) => {
+    if (!mbxId) return <span className="text-s text-red-500 font-bold">ERROR: mbxId:{mbxId} | category:{category} | type:{type}</span>;
     const { t } = useTranslation("mbx");
     const { t:mob } = useTranslation("bestiary");
     const { t:inr } = useTranslation("itemsNrecipes")
