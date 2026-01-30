@@ -14,9 +14,9 @@ import {
     BookMarked,
     Leaf,
     Wrench,
-    BookA,
     Bone,
-    Snowflake
+    Snowflake,
+    FolderClosed
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -40,8 +40,16 @@ const NAV_LINKS: Array<any> = [
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
-    { id: "christmas", to: "/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true },
-    //{ id: "halloween", to: "/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+    { 
+        id: "Archives",
+        dropdown: true,
+        icon: FolderClosed,
+        labelKey: "navbar.archives",
+        items: [
+            { id: "christmas", to: "archives/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true},
+            { id: "halloween", to: "archives/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
+        ],
+    },
 ];
 
 const LanguageSelector = ({
@@ -86,20 +94,24 @@ const LanguageSelector = ({
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="bg-gray-800 border border-gray-700 text-sm text-white px-3 py-1.5 rounded w-16 h-8 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                className={`group flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg border transition-all duration-300 ${
+                    isOpen 
+                        ? "bg-gray-800 border-gray-700 text-white shadow-sm" 
+                        : "bg-gray-800 border-gray-700 text-gray-100 hover:bg-gray-700"
+                }`}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
             >
                 <img
                     src={selected.flag}
                     alt={selected.label}
-                    className="w-5 h-3.5 object-cover pointer-events-none"
+                    className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
                 />
-                <ChevronDown className="w-5 h-5 text-gray-400 ml-2 pointer-events-none" />
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-white" : "text-gray-400 group-hover:text-gray-300"}`} />
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 z-50 mt-2 bg-gray-800 border border-gray-700 rounded shadow-md w-40">
+                <div className="absolute right-0 z-50 mt-2 w-44 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-200">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}
@@ -109,8 +121,10 @@ const LanguageSelector = ({
                                 });
                                 setIsOpen(false);
                             }}
-                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-white hover:bg-gray-700 ${
-                                lang.code === currentCode ? "bg-white/5" : ""
+                            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                                lang.code === currentCode 
+                                    ? "bg-white/5 text-white" 
+                                    : "text-gray-300 hover:bg-gray-700 hover:text-white"
                             }`}
                             role="option"
                             aria-selected={lang.code === currentCode}
@@ -118,9 +132,12 @@ const LanguageSelector = ({
                             <img
                                 src={lang.flag}
                                 alt={lang.label}
-                                className="w-5 h-3.5 object-cover"
+                                className="w-5 h-3.5 object-cover rounded-[2px]"
                             />
-                            <span>{lang.label}</span>
+                            <span className="font-medium">{lang.label}</span>
+                            {lang.code === currentCode && (
+                                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+                            )}
                         </button>
                     ))}
                 </div>
@@ -136,11 +153,16 @@ export const Navbar = () => {
 
     const [toolsOpen, setToolsOpen] = useState(false);
     const toolsRef = useRef<HTMLDivElement>(null);
+    const [archivesOpen, setArchivesOpen] = useState(false);
+    const archivesRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
                 setToolsOpen(false);
+            }
+            if (archivesRef.current && !archivesRef.current.contains(event.target as Node)) {
+                setArchivesOpen(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -170,40 +192,63 @@ export const Navbar = () => {
                             const dropdownActive = link.items?.some((item: any) =>
                                 location.pathname.startsWith(item.to)
                             );
+                            const isTools = link.id === "tools";
+                            const isOpen = isTools ? toolsOpen : archivesOpen;
+                            const toggleOpen = isTools
+                                ? () => setToolsOpen((v) => !v)
+                                : () => setArchivesOpen((v) => !v);
+                            const ref = isTools ? toolsRef : archivesRef;
                             return (
-                                <div className="relative" key={link.id} ref={toolsRef}>
+                                <div className="relative" key={link.id} ref={ref}>
                                     <button
-                                        onClick={() => setToolsOpen((s) => !s)}
+                                        onClick={toggleOpen}
                                         className={`flex items-center gap-2 px-2 lg:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
                                             dropdownActive
                                                 ? "bg-green-500/20 text-green-400"
                                                 : "text-gray-400 hover:text-white hover:bg-white/5"
                                         }`}
                                         aria-haspopup="menu"
-                                        aria-expanded={toolsOpen}
+                                        aria-expanded={isOpen}
                                     >
                                         {React.createElement(link.icon, { className: "h-5 w-5" })}
                                         <span className="items-center gap-1 hidden md:flex">
                                             <span className="hidden lg:flex">{t(link.labelKey) ?? link.labelKey}</span>
-                                            <ChevronDown className="w-4 h-4  ml-1" />
+                                            <ChevronDown className={`w-4 h-4 ml-1 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                                         </span>
                                     </button>
 
-                                    {toolsOpen && (
-                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 rounded shadow-xl" >
+                                    {isOpen && (
+                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden p-1 animate-in fade-in slide-in-from-top-2 duration-200 origin-top-left" >
                                             {link.items.map((item: any) => (
                                                 <NavLink
                                                     key={item.id}
                                                     to={item.to}
-                                                    onClick={() => setToolsOpen(false)}
+                                                    onClick={() => {
+                                                        if (isTools) setToolsOpen(false);
+                                                        else setArchivesOpen(false);
+                                                    }}
                                                     className={({ isActive }) =>
-                                                        `w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-5 rounded transition ${isActive ? "bg-white/5" : ""}`
+                                                        `group w-full flex items-center gap-3 px-3 py-2 text-sm transition-all relative rounded-md ${
+                                                            isActive 
+                                                                ? "text-gray-300 bg-white/5" 
+                                                                : "text-gray-300 hover:text-white hover:bg-white/5"
+                                                        }`
                                                     }
                                                 >
-                                                    {React.createElement(item.icon, { className: "w-5 h-5 text-gray-300" })}
-                                                    <span>{t(item.labelKey)}</span>
-                                                    {item.badge && (
-                                                        <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${item.event ? "white" : "green-500"} text-black rounded`}>{item.badge}</span>
+                                                    {({ isActive }) => (
+                                                        <>
+                                                            <div className={`p-1.5 rounded-md transition-colors ${isActive ? "bg-white/5 text-gray-200" : "bg-white/5 text-gray-300 group-hover:text-white group-hover:bg-white/10"}`}>
+                                                                {React.createElement(item.icon, { className: "w-4 h-4" })}
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <span className="font-medium">{t(item.labelKey)}</span>
+                                                                {item.badge && (
+                                                                    <span className={`text-[10px] uppercase font-bold tracking-wider ${item.event ? "text-white" : "text-green-400"}`}>
+                                                                        {item.badge}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        </>
                                                     )}
                                                 </NavLink>
                                             ))}

@@ -196,3 +196,18 @@
     filter: grayscale(50%);
     opacity: 0.6;
 }
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-in {
+    animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

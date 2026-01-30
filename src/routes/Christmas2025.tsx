@@ -74,109 +74,109 @@ const getRarityLabel = (
 
 const BigPresentDrops: TreasureDropChange[] = [
     {
-        image: "assets/media/museum/EDIBLE/cheese_reset.png",
+        image: "/assets/media/museum/EDIBLE/cheese_reset.png",
         name: "mbx.items.cheese_reset.name",
         rarity: "MYTHIC",
         change: 8.51,
     },
     {
-        image: "assets/media/museum/BELT/xmas_hipster_belt.png",
+        image: "/assets/media/museum/BELT/xmas_hipster_belt.png",
         name: "mbx.items.xmas_hipster_belt.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/BACK/xmas_hipster_backpack.png",
+        image: "/assets/media/museum/BACK/xmas_hipster_backpack.png",
         name: "mbx.items.xmas_hipster_backpack.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/BOOTS/xmas_hipster_boots.png",
+        image: "/assets/media/museum/BOOTS/xmas_hipster_boots.png",
         name: "mbx.items.xmas_hipster_boots.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/CHESTPLATE/xmas_hipster_chestplate.png",
+        image: "/assets/media/museum/CHESTPLATE/xmas_hipster_chestplate.png",
         name: "mbx.items.xmas_hipster_chestplate.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/HELMET/xmas_hipster_helmet.png",
+        image: "/assets/media/museum/HELMET/xmas_hipster_helmet.png",
         name: "mbx.items.xmas_hipster_helmet.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/LEGGINGS/xmas_hipster_leggings.png",
+        image: "/assets/media/museum/LEGGINGS/xmas_hipster_leggings.png",
         name: "mbx.items.xmas_hipster_leggings.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/NECKLACE/xmas_hipster_necklace.png",
+        image: "/assets/media/museum/NECKLACE/xmas_hipster_necklace.png",
         name: "mbx.items.xmas_hipster_necklace.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/RING/xmas_hipster_ring.png",
+        image: "/assets/media/museum/RING/xmas_hipster_ring.png",
         name: "mbx.items.xmas_hipster_ring.name",
         rarity: "LEGENDARY",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/EDIBLE/owner_remover_mythic.png",
+        image: "/assets/media/museum/EDIBLE/owner_remover_mythic.png",
         name: "Mythic Forgetfulness Candy",
         rarity: "MYTHIC",
         change: 7.09,
     },
     {
-        image: "assets/media/museum/CHESTPLATE/xmas_ugly_pullover.png",
+        image: "/assets/media/museum/CHESTPLATE/xmas_ugly_pullover.png",
         name: "mbx.items.xmas_ugly_pullover.name",
         rarity: "LEGENDARY",
         change: 5.67,
     },
     {
-        image: "assets/media/museum/EDIBLE/star_sub_plus_enchanted.png",
+        image: "/assets/media/museum/EDIBLE/star_sub_plus_enchanted.png",
         name: "mbx.items.star_sub_plus_enchanted.name",
         rarity: "MYTHIC",
         change: 5.67,
     },
     {
-        image: "assets/media/museum/HARVESTER/harvester_royal_axe.png",
+        image: "/assets/media/museum/HARVESTER/harvester_royal_axe.png",
         name: "mbx.items.harvester_royal_axe.name",
         rarity: "MYTHIC",
         change: 4.25,
     },
     {
-        image: "assets/media/museum/HARVESTER/harvester_royal_hoe.png",
+        image: "/assets/media/museum/HARVESTER/harvester_royal_hoe.png",
         name: "mbx.items.harvester_royal_hoe.name",
         rarity: "MYTHIC",
         change: 4.25,
     },
     {
-        image: "assets/media/museum/MOUNT/mount_wooden_plane.png",
+        image: "/assets/media/museum/MOUNT/mount_wooden_plane.png",
         name: "mbx.items.mount_wooden_plane.name",
         rarity: "LEGENDARY",
         change: 2.83,
     },
     {
-        image: "assets/media/museum/PET/pet_snowman.png",
+        image: "/assets/media/museum/PET/pet_snowman.png",
         name: "mbx.items.pet_snowman.name",
         rarity: "EPIC",
         change: 2.12,
     },
     {
-        image: "assets/media/museum/PET/pet_hipster_penguin.png",
+        image: "/assets/media/museum/PET/pet_hipster_penguin.png",
         name: "mbx.items.pet_hipster_penguin.name",
         rarity: "LEGENDARY",
         change: 2.12,
     },
     {
-        image: "assets/media/museum/MOUNT/mount_hipster_bike.png",
+        image: "/assets/media/museum/MOUNT/mount_hipster_bike.png",
         name: "mbx.items.mount_hipster_bike.name",
         rarity: "MYTHIC",
         change: 0.7,
@@ -184,119 +184,119 @@ const BigPresentDrops: TreasureDropChange[] = [
 ];
 const MediumPresentDrops: GiftsDropChange[] = [
     {
-        image: "assets/media/museum/TREASURE/key_rare.png",
+        image: "/assets/media/museum/TREASURE/key_rare.png",
         name: "mbx.items.key_rare.name",
         rarity: "RARE",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/treasure_rare.png",
+        image: "/assets/media/museum/TREASURE/treasure_rare.png",
         name: "mbx.items.treasure_rare.name",
         rarity: "RARE",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/treasure_uncommon.png",
-        name: "mbx.items.treasure_uncommon.name",
-        rarity: "UNCOMMON",
-        count: 1,
-        change: 0,
-    },
-    {
-        image: "assets/media/museum/TREASURE/key_uncommon.png",
+        image: "/assets/media/museum/TREASURE/key_uncommon.png",
         name: "mbx.items.key_uncommon.name",
         rarity: "UNCOMMON",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/treasure_common.png",
-        name: "mbx.items.treasure_common.name",
-        rarity: "COMMON",
+        image: "/assets/media/museum/TREASURE/treasure_uncommon.png",
+        name: "mbx.items.treasure_uncommon.name",
+        rarity: "UNCOMMON",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/museum/TREASURE/key_common.png",
+        image: "/assets/media/museum/TREASURE/key_common.png",
         name: "mbx.items.key_common.name",
         rarity: "COMMON",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/netherite_ingot.png",
+        image: "/assets/media/museum/TREASURE/treasure_common.png",
+        name: "mbx.items.treasure_common.name",
+        rarity: "COMMON",
+        count: 1,
+        change: 0,
+    },
+    {
+        image: "/assets/media/item/textures/netherite_scrap.png",
+        name: "Netherite Scrap",
+        rarity: "VANILLA",
+        count: 1,
+        change: 0,
+    },
+    {
+        image: "/assets/media/item/textures/netherite_ingot.png",
         name: "Netherite Ingot",
         rarity: "VANILLA",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/netherite_scrap.png",
-        name: "Netherite Scrap",
-        rarity: "VANILLA",
-        count: 2,
-        change: 0,
-    },
-    {
-        image: "assets/media/item/textures/diamond.png",
+        image: "/assets/media/item/textures/diamond.png",
         name: "Diamond",
         rarity: "VANILLA",
         count: 8,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/diamond_block.png",
+        image: "/assets/media/item/textures/diamond_block.png",
         name: "Diamond Block",
         rarity: "VANILLA",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/gold_ingot.png",
+        image: "/assets/media/item/textures/gold_ingot.png",
         name: "Gold Ingot",
         rarity: "VANILLA",
         count: 16,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/gold_block.png",
+        image: "/assets/media/item/textures/gold_block.png",
         name: "Gold Block",
         rarity: "VANILLA",
         count: 2,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/iron_ingot.png",
+        image: "/assets/media/item/textures/iron_ingot.png",
         name: "Iron Ingot",
         rarity: "VANILLA",
         count: 16,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/iron_block.png",
+        image: "/assets/media/item/textures/iron_block.png",
         name: "Iron Block",
         rarity: "VANILLA",
         count: 2,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/amethyst_shard.png",
-        name: "Amethyst Shard",
-        rarity: "VANILLA",
-        count: 64,
-        change: 0,
-    },
-    {
-        image: "assets/media/item/textures/amethyst_shard.png",
+        image: "/assets/media/item/textures/amethyst_shard.png",
         name: "Amethyst Shard",
         rarity: "VANILLA",
         count: 16,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/bone.png",
+        image: "/assets/media/item/textures/amethyst_shard.png",
+        name: "Amethyst Shard",
+        rarity: "VANILLA",
+        count: 64,
+        change: 0,
+    },
+    {
+        image: "/assets/media/item/textures/bone.png",
         name: "Bone",
         rarity: "VANILLA",
         count: 32,
@@ -305,56 +305,63 @@ const MediumPresentDrops: GiftsDropChange[] = [
 ];
 const SmallPresentDrops: GiftsDropChange[] = [
     {
-        image: "assets/media/museum/FRUIT/banana.png",
-        name: "mbx.items.banana.name",
-        rarity: "UNCOMMON",
-        count: 4,
-        change: 0,
-    },
-    {
-        image: "assets/media/museum/PLANT/plant_clover.png",
-        name: "mbx.items.plant_clover.name",
-        rarity: "UNCOMMON",
-        count: 4,
-        change: 0,
-    },
-    {
-        image: "assets/media/museum/PLANT/plant_lily.png",
-        name: "mbx.items.plant_lily.name",
-        rarity: "UNCOMMON",
-        count: 8,
-        change: 0,
-    },
-    {
-        image: "assets/media/museum/TREASURE/key_common.png",
+        image: "/assets/media/museum/TREASURE/key_common.png",
         name: "mbx.items.key_common.name",
         rarity: "COMMON",
         count: 1,
         change: 0,
     },
     {
-        image: "assets/media/museum/FRUIT/coconut.png",
+        image: "/assets/media/museum/FRUIT/banana.png",
+        name: "mbx.items.banana.name",
+        rarity: "UNCOMMON",
+        count: 4,
+        change: 0,
+    },
+    {
+        image: "/assets/media/museum/PLANT/plant_clover.png",
+        name: "mbx.items.plant_clover.name",
+        rarity: "UNCOMMON",
+        count: 4,
+        change: 0,
+    },
+    {
+        image: "/assets/media/museum/PLANT/plant_lily.png",
+        name: "mbx.items.plant_lily.name",
+        rarity: "UNCOMMON",
+        count: 8,
+        change: 0,
+    },
+    {
+        image: "/assets/media/museum/FRUIT/coconut.png",
         name: "mbx.items.coconut.name",
         rarity: "COMMON",
         count: 8,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/bone.png",
+        image: "/assets/media/item/textures/netherite_scrap.png",
+        name: "Netherite Scrap",
+        rarity: "VANILLA",
+        count: 2,
+        change: 0,
+    },
+    {
+        image: "/assets/media/item/textures/bone.png",
         name: "Bone",
         rarity: "VANILLA",
         count: 16,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/snowball.png",
+        image: "/assets/media/item/textures/snowball.png",
         name: "Snowball",
         rarity: "VANILLA",
         count: 16,
         change: 0,
     },
     {
-        image: "assets/media/item/textures/egg.png",
+        image: "/assets/media/item/textures/egg.png",
         name: "Chicken Egg",
         rarity: "VANILLA",
         count: 16,
@@ -363,10 +370,10 @@ const SmallPresentDrops: GiftsDropChange[] = [
 ];
 
 const ChristmasPage: FC = () => {
-    const { t } = useTranslation(["christmas", "bestiary", "common"]);
+    const { t } = useTranslation(["christmas", "bestiary", "mbx", "common"]);
 
     // Flatten bestiaryData and keep only entries marked for halloween2025
-    const halloweenMobs = Object.values(bestiaryData)
+    const ChristmasMobs = Object.values(bestiaryData)
         .flatMap((areaRecord) => Object.values(areaRecord))
         .flatMap((list) => list)
         .filter((info) => info.christmas2025);
@@ -576,7 +583,8 @@ const ChristmasPage: FC = () => {
                     </div>
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.kill")}
+                            <span>
+                                {t("christmas.mission.kill")}
                                 <span className="text-VANILLA font-bold">
                                     {t("bestiary.xmas_gingerbread", {
                                         ns: "bestiary",
@@ -589,7 +597,8 @@ const ChristmasPage: FC = () => {
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.kill")}
+                            <span>
+                                {t("christmas.mission.kill")}
                                 <span className="text-VANILLA font-bold">
                                     {t("bestiary.xmas_penguin_yellow", {
                                         ns: "bestiary",
@@ -665,39 +674,61 @@ const ChristmasPage: FC = () => {
                     </div>
                     <span className="flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/60 border-gray-800 border rounded-b-lg w-full text-xs p-2 flex ">
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>
+                                {t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_gingerbread", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [128]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>
+                                {t("christmas.mission.kill")}
+                                <span className="text-VANILLA font-bold">
+                                    {t("bestiary.xmas_penguin_blue", {
+                                        ns: "bestiary",
+                                    })}
+                                </span>{" "}
+                                [128]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>
+                                {t("christmas.mission.open")}{" "}
+                                <span className="text-MYTHIC font-bold">
+                                    {t("mbx.items.xmas_red_present_big.name")}{" "}
+                                </span>
+                                [4]
+                            </span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.opengifts")} [64]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.play")} [4]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className="border-b border-gray-800 mb-1 pb-0.5 w-full justify-between flex">
-                            <span>{t("christmas.mission.missing")} [??]</span>
+                            <span>{t("christmas.mission.takegifts")} [24]</span>
                             <span className="text-LEGENDARY">
-                                ?x {t("christmas.bpStars")}
+                                7x {t("christmas.bpStars")}
                             </span>
                         </div>
                         <div className=" w-full justify-between flex">
@@ -706,7 +737,7 @@ const ChristmasPage: FC = () => {
                             </span>
                             <span>
                                 <span className="text-LEGENDARY">
-                                    ?x {t("christmas.bpStars")}
+                                    8x {t("christmas.bpStars")}
                                 </span>
                             </span>
                         </div>
@@ -871,19 +902,21 @@ const ChristmasPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
-                {halloweenMobs.map((mob, index) => (
-                    <Link
-                        to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
-                        className=""
-                        title={t("bestiary.share", {
-                            ns: "mbx",
-                            defaultValue: "Open Bestiary",
-                        })}
-                    >
-                        <a
-                            key={(mob.name || "mob") + index}
-                            className={`block w-full text-white p-3 whitespace-nowrap text-center bg-gradient-to-br from-gray-800/50 to-rose-900/5  hover:to-rose-500/10 rounded-lg transition-colors transition-all duration-300 border border-gray-800`}
+            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 mt-4">
+                {ChristmasMobs.map((mob, index) => {
+                    const mobKey = `${mob.name ?? "mob"}-${index}`;
+
+                    return (
+                        <Link
+                            key={mobKey}
+                            to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
+                            title={t("bestiary.share", {
+                                ns: "mbx",
+                                defaultValue: "Open Bestiary",
+                            })}
+                            className="block w-full text-white p-3 whitespace-nowrap text-center
+                   bg-gradient-to-br from-gray-800/50 to-emerald-900/5 hover:to-emerald-500/10
+                   rounded-lg transition-all duration-300 border border-gray-800"
                         >
                             <span className="flex flex-col items-center gap-2">
                                 <img
@@ -893,9 +926,7 @@ const ChristmasPage: FC = () => {
                                     }
                                     alt={mob.name}
                                     className="h-32 w-32 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                    style={{
-                                        imageRendering: "pixelated",
-                                    }}
+                                    style={{ imageRendering: "pixelated" }}
                                 />
                                 <span className="w-full ml-4 mr-2 flex flex-col items-center leading-tight">
                                     <span className="flex gap-1 items-center ">
@@ -920,7 +951,7 @@ const ChristmasPage: FC = () => {
                                             {mob.fireResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/intelligence.png"
+                                                src="/assets/media/elemental/intelligence.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -928,7 +959,7 @@ const ChristmasPage: FC = () => {
                                             {mob.waterResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/luck.png"
+                                                src="/assets/media/elemental/luck.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -936,7 +967,7 @@ const ChristmasPage: FC = () => {
                                             {mob.airResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/agility.png"
+                                                src="/assets/media/elemental/agility.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -944,58 +975,17 @@ const ChristmasPage: FC = () => {
                                             {mob.earthResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/strength.png"
+                                                src="/assets/media/elemental/strength.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
                                     </span>
                                 </span>
                             </span>
-                        </a>
-                    </Link>
-                ))}
+                        </Link>
+                    );
+                })}
             </div>
-
-            {/* Battle Pass Section */}
-            {/*}
-            <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
-                <div className="flex items-center gap-2">
-                    <LayoutList className="w-10 h-8 text-rose-400" />
-                    <h1 className="text-2xl font-semibold text-gray-100">
-                        New Content
-                    </h1>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 gap-2 mt-4">
-                {HalloweenContent.map((item, index) => (
-                    <a
-                        key={item.name + index}
-                        className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-${item.rarity}`}
-                    >
-                        <span className="flex flex-col items-center gap-2">
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                style={{
-                                    imageRendering: "pixelated",
-                                }}
-                            />
-                            <span className="flex flex-col items-center leading-tight">
-                                <span
-                                    className={`text-xs bg-${item.rarity} px-2 rounded`}
-                                >
-                                    {item.rarity}
-                                </span>
-                                <span className={`font-bold text-sm`}>
-                                    {t(item.name)}
-                                </span>
-                            </span>
-                        </span>
-                    </a>
-                ))}
-            </div>*/}
         </div>
     );
 };

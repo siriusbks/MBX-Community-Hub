@@ -1742,54 +1742,6 @@ const HalloweenPage: FC = () => {
             </div>
 
             {/* Battle Pass Section */}
-            {/*}
-            <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
-                <div className="flex items-center gap-2">
-                    <Box className="w-10 h-8 text-orange-400" />
-                    <h1 className="text-2xl font-semibold text-gray-100">
-                        {t("halloween.eventworkshop.title")}
-                    </h1>
-                </div>
-            </div>
-            <p className="text-xs">
-                {t("halloween.eventworkshop.description")}
-            </p>
-
-            <div className="grid grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-2 gap-2 mt-4">
-                    <a
-                        
-                        className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-EPIC`}
-                    >
-                        <span className="flex flex-row items-center gap-2">
-                            <img
-                                src="/assets/media/EVENT/HALLOWEEN/halloween_spooky_pumpkin_hat.png"
-                                className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                style={{
-                                    imageRendering: "pixelated",
-                                }}
-                            />
-                            <span className="w-full flex flex-col items-center leading-tight">
-                                <span className="flex flex-row justify-between w-full">
-                                    <span
-                                        className={`text-xs bg-EPIC px-2 rounded`}
-                                    >
-                                        ddd
-                                    </span>
-                                    <span className={`text-xs`}>
-                                        dddd%
-                                    </span>
-                                </span>
-                                <span
-                                    className={`font-bold text-sm w-full text-left`}
-                                >
-                                    ddd
-                                </span>
-                            </span>
-                        </span>
-                        </a>
-            </div>*/}
-
-            {/* Battle Pass Section */}
             <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
                     <Box className="w-10 h-8 text-orange-400" />
@@ -1852,19 +1804,21 @@ const HalloweenPage: FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 gap-2 mt-4">
-                {halloweenMobs.map((mob, index) => (
-                    <Link
-                        to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
-                        className=""
-                        title={t("bestiary.share", {
-                            ns: "bestiary",
-                            defaultValue: "Share",
-                        })}
-                    >
-                        <a
-                            key={(mob.name || "mob") + index}
-                            className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-gray-600 `}
+            <div className="grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 gap-2 mt-4">
+                {halloweenMobs.map((mob, index) => {
+                    const mobKey = `${mob.name ?? "mob"}-${index}`;
+
+                    return (
+                        <Link
+                            key={mobKey}
+                            to={`/bestiary?mob=${encodeURIComponent(mob.name)}`}
+                            title={t("bestiary.share", {
+                                ns: "mbx",
+                                defaultValue: "Open Bestiary",
+                            })}
+                            className="block w-full text-white p-3 whitespace-nowrap text-center
+                   bg-gradient-to-br from-gray-800/50 to-emerald-900/5 hover:to-emerald-500/10
+                   rounded-lg transition-all duration-300 border border-gray-800"
                         >
                             <span className="flex flex-col items-center gap-2">
                                 <img
@@ -1873,10 +1827,8 @@ const HalloweenPage: FC = () => {
                                         "/assets/media/museum/not-found.png"
                                     }
                                     alt={mob.name}
-                                    className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                    style={{
-                                        imageRendering: "pixelated",
-                                    }}
+                                    className="h-32 w-32 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                    style={{ imageRendering: "pixelated" }}
                                 />
                                 <span className="w-full ml-4 mr-2 flex flex-col items-center leading-tight">
                                     <span className="flex gap-1 items-center justify-center">
@@ -1901,7 +1853,7 @@ const HalloweenPage: FC = () => {
                                             {mob.fireResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/intelligence.png"
+                                                src="/assets/media/elemental/intelligence.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -1909,7 +1861,7 @@ const HalloweenPage: FC = () => {
                                             {mob.waterResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/luck.png"
+                                                src="/assets/media/elemental/luck.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -1917,7 +1869,7 @@ const HalloweenPage: FC = () => {
                                             {mob.airResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/agility.png"
+                                                src="/assets/media/elemental/agility.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
@@ -1925,58 +1877,17 @@ const HalloweenPage: FC = () => {
                                             {mob.earthResistant ?? 0}
                                             %
                                             <img
-                                                src="assets/media/elemental/strength.png"
+                                                src="/assets/media/elemental/strength.png"
                                                 className="h-3 w-3 inline ml-0.5"
                                             />
                                         </span>
                                     </span>
                                 </span>
                             </span>
-                        </a>
-                    </Link>
-                ))}
+                        </Link>
+                    );
+                })}
             </div>
-
-            {/* Battle Pass Section */}
-            {/*}
-            <div className="mb-3 mt-9 flex items-center justify-between gap-3  py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
-                <div className="flex items-center gap-2">
-                    <LayoutList className="w-10 h-8 text-orange-400" />
-                    <h1 className="text-2xl font-semibold text-gray-100">
-                        New Content
-                    </h1>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 gap-2 mt-4">
-                {HalloweenContent.map((item, index) => (
-                    <a
-                        key={item.name + index}
-                        className={`block w-full bg-gray-700 text-white p-3 rounded transition-colors hover:bg-gray-600 whitespace-nowrap text-center border-l-4 border-${item.rarity}`}
-                    >
-                        <span className="flex flex-col items-center gap-2">
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="h-16 w-16 mb-1 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                style={{
-                                    imageRendering: "pixelated",
-                                }}
-                            />
-                            <span className="flex flex-col items-center leading-tight">
-                                <span
-                                    className={`text-xs bg-${item.rarity} px-2 rounded`}
-                                >
-                                    {item.rarity}
-                                </span>
-                                <span className={`font-bold text-sm`}>
-                                    {t(item.name)}
-                                </span>
-                            </span>
-                        </span>
-                    </a>
-                ))}
-            </div>*/}
         </div>
     );
 };

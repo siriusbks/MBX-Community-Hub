@@ -12,7 +12,6 @@ import {
     HandHelping,
     Shield,
     BookMarked,
-    BookAIcon,
     Bone,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +20,6 @@ export function HomePage() {
     const { t } = useTranslation("homepage");
     return (
         <>
-            {/* 🤝 Community Call */}
             {/* 🤝 Community Call */}
             <div className="bg-emerald-600/90 text-white text-center p-4 rounded-lg mx-6 mt-6 shadow-lg">
                 <HandHelping className="inline-block mr-2" size={22} />
@@ -86,7 +84,7 @@ export function HomePage() {
                         </p>
                     </Link>
 
-                    {/* Interactive Map */}
+                    {/* Bestiary */}
                     <Link
                         to="/bestiary"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-pink-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -147,7 +145,7 @@ export function HomePage() {
                             {t("homepage.features.equipment.description")}
                         </p>
                     </Link>
-
+                    {/* Museum */}
                     <Link
                         to="/museum"
                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-purple-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
@@ -167,47 +165,6 @@ export function HomePage() {
                             {t("homepage.features.museum.description")}
                         </p>
                     </Link>
-                    {/*
-                    <Link
-                        to="/halloween"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <span className="absolute top-3 right-3 bg-orange-500 text-black text-xs font-bold px-2 py-0.5 rounded">
-                            EVENT
-                        </span>
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-orange-600/10 text-orange-500 group-hover:bg-orange-500/20 transition-colors">
-                                <BookMarked size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.halloween.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t("homepage.features.halloween.description")}
-                        </p>
-                    </Link>*/}
-                    {/* Recipe */}
-                    {/*}
-                    <Link
-                        to="/itemsNrecipes"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <span className="absolute top-3 right-3 bg-teal-500 text-black text-xs font-bold px-2 py-0.5 rounded">
-                            BETA
-                        </span>
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-teal-600/10 text-teal-500 group-hover:bg-teal-500/20 transition-colors">
-                                <BookAIcon size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.itemsNrecipes.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t("homepage.features.itemsNrecipes.description")}
-                        </p>
-                    </Link>*/}
                 </div>
             </div>
         </>

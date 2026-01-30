@@ -425,7 +425,7 @@ const BestiaryPage: FC = () => {
         );
     };
 
-    const formatChance = (value) => {
+    const formatChance = (value: number) => {
         if (typeof value !== "number") return value;
         const str = value.toString();
         if (!str.includes(".")) return str + ".00";
@@ -951,13 +951,20 @@ const BestiaryPage: FC = () => {
                                                             <div
                                                                 key={i}
                                                                 className={`${getRarityColor(
-                                                                    rarity
+                                                                    rarity ??
+                                                                        "UNKNOWN"
                                                                 )} bg-opacity-30 border rounded p-2 flex flex-col items-center text-center`}
                                                             >
                                                                 <ItemImage
-                                                                    detailsIndex={null}
-                                                                    itemId={d.itemId}
-                                                                    alt={d.itemId}
+                                                                    detailsIndex={
+                                                                        null
+                                                                    }
+                                                                    itemId={
+                                                                        d.itemId
+                                                                    }
+                                                                    alt={
+                                                                        d.itemId
+                                                                    }
                                                                     className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-contain my-1 mb-2"
                                                                     style={{
                                                                         imageRendering:

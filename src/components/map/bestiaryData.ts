@@ -39,7 +39,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
         global: [
             {
                 name: "bestiary.xmas_penguin_blue",
-                image: "assets/media/EVENT/XMAS/Penguin_Blue.png",
+                image: "/assets/media/EVENT/XMAS/Penguin_Blue.png",
                 minlevel: 15,
                 maxlevel: 30,
                 minhealth: 75,
@@ -58,10 +58,11 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_blue", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_red",
-                image: "assets/media/EVENT/XMAS/Penguin_Red.png",
+                image: "/assets/media/EVENT/XMAS/Penguin_Red.png",
                 minlevel: 15,
                 maxlevel: 30,
                 minhealth: 75,
@@ -80,10 +81,11 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_red", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_green",
-                image: "assets/media/EVENT/XMAS/Penguin_Green.png",
+                image: "/assets/media/EVENT/XMAS/Penguin_Green.png",
                 minlevel: 15,
                 maxlevel: 30,
                 minhealth: 75,
@@ -102,10 +104,11 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_green", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
             {
                 name: "bestiary.xmas_penguin_yellow",
-                image: "assets/media/EVENT/XMAS/Penguin_Yellow.png",
+                image: "/assets/media/EVENT/XMAS/Penguin_Yellow.png",
                 minlevel: 15,
                 maxlevel: 30,
                 minhealth: 75,
@@ -124,12 +127,13 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 drop: [{ itemId: "xmas_bandana_yellow", dropChance: 0 }],
 
                 christmas2025: true,
+                available: false,
             },
         ],
         central_island: [
             {
                 name: "bestiary.halloween_crow",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Crow.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Crow.png",
                 minlevel: 1,
                 maxlevel: 5,
                 minhealth: 5,
@@ -150,14 +154,13 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 waterResistant: 0,
                 airResistant: 0,
                 halloween2025: true,
-
                 available: false,
             },
         ],
         church: [
             {
                 name: "bestiary.halloween_ghost",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Ghost.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Ghost.png",
                 minlevel: 5,
                 maxlevel: 15,
                 minhealth: 50,
@@ -185,7 +188,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
         small_island: [
             {
                 name: "bestiary.halloween_pumpkin",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Haunted_Pumpkin.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Haunted_Pumpkin.png",
                 minlevel: 35,
                 maxlevel: 40,
                 minhealth: 900,
@@ -212,7 +215,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
             {
                 name: "bestiary.halloween_boss",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/The_Harvester.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/The_Harvester.png",
                 minlevel: 40,
                 maxlevel: 50,
                 minhealth: 17500,
@@ -242,7 +245,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
         sewers: [
             {
                 name: "bestiary.halloween_brown_rat",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Brown_Rat.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Brown_Rat.png",
                 minlevel: 15,
                 maxlevel: 25,
                 minhealth: 70,
@@ -272,7 +275,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
         workshop_island: [
             {
                 name: "bestiary.halloween_albino_rat",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Albino_Rat.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Albino_Rat.png",
                 minlevel: 30,
                 maxlevel: 30,
                 minhealth: 2000,
@@ -300,7 +303,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
             {
                 name: "bestiary.halloween_gray_rat",
-                image: "assets/media/EVENT/HALLOWEEN/Bestiary/Gray_Rat.png",
+                image: "/assets/media/EVENT/HALLOWEEN/Bestiary/Gray_Rat.png",
                 minlevel: 5,
                 maxlevel: 10,
                 minhealth: 40,
@@ -328,7 +331,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
             },
             {
                 name: "bestiary.xmas_gingerbread",
-                image: "assets/media/EVENT/XMAS/Gingerbread.png",
+                image: "/assets/media/EVENT/XMAS/Gingerbread.png",
                 minlevel: 5,
                 maxlevel: 10,
                 minhealth: 15,
@@ -345,6 +348,7 @@ export const bestiaryData: Record<string, Record<string, BestiaryInfo[]>> = {
                 ],
 
                 christmas2025: true,
+                available: false,
             },
         ],
     },
