@@ -16,7 +16,8 @@ import {
     Wrench,
     Bone,
     Snowflake,
-    FolderClosed
+    FolderClosed,
+    BookA
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -36,7 +37,7 @@ const NAV_LINKS: Array<any> = [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
             { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
             { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
-            //{ id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
+            { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
