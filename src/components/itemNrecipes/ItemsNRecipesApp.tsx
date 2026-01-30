@@ -3,6 +3,7 @@
  */
 
 import React, { FC, useEffect, useState, MouseEvent } from "react";
+import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import INRItemCard from "./INRItemCard";
 import ItemImage from "../ItemImage";
@@ -79,15 +80,20 @@ const ItemsNRecipesApp: FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     // State of multi-select categories for the "All" view: which categories should be shown
+    // State for the Category
+    const [computedCategory, setComputedCategory] = useState<string | null>(null);
+    
+    // Multi-select categories for the "All" view: which categories should be shown
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // Initialize selectedCategories to all categories once groupedItems loads
-    useEffect(() => {
+    // LupusArctos : I don’t want this, it takes too long to load the page
+    /* useEffect(() => {
         if (groupedItems && selectedCategories.length === 0) {
             setSelectedCategories(groupedItems.map((g) => g.category));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [groupedItems]);
+    }, [groupedItems]); */
 
     const toggleCategory = (category: string) => {
         setSelectedCategories((prev) =>
@@ -355,7 +361,7 @@ const ItemsNRecipesApp: FC = () => {
         setPanelCategory(category);
     };
 
-    const openInfoPanel = (itemId: string, category: string) => {
+    /* const openInfoPanel = (itemId: string, category: string) => {
         // populate the left info panel and close the temporary side panel
         setInfoPanelItem(itemId);
         setInfoPanelCategory(category);
@@ -366,7 +372,7 @@ const ItemsNRecipesApp: FC = () => {
             const el = document.getElementById("infoPanel");
             if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 50);
-    };
+    }; */
 
     const closeSidePanel = () => {
         setPanelItem(null);
@@ -602,9 +608,21 @@ const ItemsNRecipesApp: FC = () => {
             detailsIndex,
             craftQuantity
         );
-        const csvLines = Object.keys(recap).map(
-            (key) => `${recap[key]},${key}`
-        );
+        const csvLines = Object.keys(recap).map((itemId) => {
+            const quantity = recap[itemId];
+            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
+                <ItemTranslation
+                    mbxId={itemId}
+                    category={setCategory(itemId)}
+                    type="name"
+                />
+            );
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = labelMarkup;
+            const labelText = tempDiv.textContent || tempDiv.innerText || "";
+            //return `${quantity},${labelText},${itemId}`; // For debugging
+            return `${quantity},${labelText}`;
+        });
         const csvText = csvLines.join("\n");
         navigator.clipboard.writeText(csvText);
         try {
@@ -613,7 +631,6 @@ const ItemsNRecipesApp: FC = () => {
         } catch (err) {
             console.error("Copy CSV failed:", err);
         }
-        
     };
     const usedInList = detailsIndex?.[panelItem!]?.used_in_recipes || [];
     const noRecipeAvailable = !detailsIndex?.[panelItem!]?.recipe;
@@ -799,9 +816,10 @@ const ItemsNRecipesApp: FC = () => {
                             </div>
                             <div className="mt-4">
                                 <ItemImage
-                                    groupCategory={panelCategory!}
+                                    groupCategory={panelCategory}
                                     itemId={panelItem}
                                     detailsIndex={detailsIndex}
+                                    extra={true}
                                     className="w-24 h-24"
                                     style={{ imageRendering: "pixelated" }}
                                 />
@@ -810,11 +828,16 @@ const ItemsNRecipesApp: FC = () => {
                                 <button
                                     onClick={() => {
                                         // Prevent opening when item is used in other recipes or no recipe exists
-                                        if (usedInList.length === 0 || noRecipeAvailable) return;
-                                        if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
+                                        //if (usedInList.length === 0 || noRecipeAvailable) return;
+                                        if (noRecipeAvailable) return;
+                                        if (panelItem && panelCategory) {
+                                            openCraftModal(panelItem, panelCategory);
+                                        };
                                     }}
-                                    disabled={usedInList.length === 0 || noRecipeAvailable}
-                                    aria-disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    //disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    disabled={noRecipeAvailable}
+                                    //aria-disabled={usedInList.length === 0 || noRecipeAvailable}
+                                    aria-disabled={noRecipeAvailable}
                                     title={
                                         noRecipeAvailable
                                             ? t("itemsNrecipes.recipe.no")
@@ -822,7 +845,8 @@ const ItemsNRecipesApp: FC = () => {
                                             ? t("itemsNrecipes.usedInRecipes.no")
                                             : t("itemsNrecipes.recipe.open")
                                     }
-                                    className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
+                                    //className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(usedInList.length === 0 || noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
+                                    className={`flex-1 bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-3 rounded ${(noRecipeAvailable) ? 'cursor-not-allowed' : ''}`}
                                 >
                                     {noRecipeAvailable ? t("itemsNrecipes.recipe.no") : t("itemsNrecipes.recipe.open")}
                                 </button>
