@@ -518,6 +518,7 @@
         "id": "basic_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -601,6 +602,7 @@
         "id": "pineapple_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -699,6 +701,7 @@
         "id": "chad_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -797,6 +800,7 @@
         "id": "thunder_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -895,6 +899,7 @@
         "id": "opal_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -988,6 +993,7 @@
         "id": "grumpy_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1066,6 +1072,7 @@
         "id": "crimson_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1084,6 +1091,7 @@
         "id": "jackpot_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1137,6 +1145,7 @@
         "id": "sage_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1235,6 +1244,7 @@
         "id": "abyss_skull",
         "category": "SKULL",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1352,6 +1362,7 @@
             ]
         },
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1373,6 +1384,7 @@
         "level": 10,
         "category": "BACK",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1414,6 +1426,7 @@
         "level": 5,
         "category": "BACK",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1439,6 +1452,7 @@
         "level": 10,
         "category": "TOOL",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1465,6 +1479,7 @@
         "level": 15,
         "category": "HELMET",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1496,6 +1511,7 @@
         "level": 15,
         "category": "CHESTPLATE",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1527,6 +1543,7 @@
         "level": 15,
         "category": "LEGGINGS",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1558,6 +1575,7 @@
         "level": 15,
         "category": "BOOTS",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1589,6 +1607,7 @@
         "level": 15,
         "category": "BACK",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1619,6 +1638,7 @@
         "level": 5,
         "category": "STAFF",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1653,6 +1673,7 @@
         "rarity": "MYTHIC",
         "category": "TREASURE",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -1693,6 +1714,7 @@
         "level": 10,
         "category": "PET",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -2125,6 +2147,7 @@
         "level": 25,
         "category": "RESOURCE",
         "recipe": {
+            "job": "HALLOWEEN_WORKBENCH",
             "ingredients": [
                 {
                     "type": "custom",
@@ -2151,6 +2174,7 @@
     {
         "id": "xmas_present_big_red",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2173,6 +2197,7 @@
     {
         "id": "xmas_present_medium_blue",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2197,6 +2222,7 @@
     {
         "id": "xmas_present_medium_green",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2221,6 +2247,7 @@
     {
         "id": "xmas_present_medium_yellow",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2245,6 +2272,7 @@
     {
         "id": "xmas_present_small_black",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2274,6 +2302,7 @@
     {
         "id": "xmas_present_small_cyan",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2303,6 +2332,7 @@
     {
         "id": "xmas_present_small_orange",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2332,6 +2362,7 @@
     {
         "id": "xmas_present_small_pink",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2361,6 +2392,7 @@
     {
         "id": "xmas_present_small_purple",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2390,6 +2422,7 @@
     {
         "id": "xmas_present_small_white",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2419,6 +2452,7 @@
     {
         "id": "xmas_yellow_candy",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2453,6 +2487,7 @@
     {
         "id": "xmas_red_candy",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2492,6 +2527,7 @@
     {
         "id": "xmas_green_candy",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2531,6 +2567,7 @@
     {
         "id": "xmas_blue_candy",
         "recipe": {
+            "job": "XMAS_WORKBENCH",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2570,6 +2607,7 @@
         "id": "profile_plate_sub",
         "rarity": "RARE",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2583,6 +2621,7 @@
         "id": "profile_plate_tropical",
         "rarity": "EPIC",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2596,6 +2635,7 @@
         "id": "profile_plate_royal",
         "rarity": "LEGENDARY",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2609,6 +2649,7 @@
         "id": "profile_plate_plant",
         "rarity": "EPIC",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2622,6 +2663,7 @@
         "id": "profile_plate_evil",
         "rarity": "LEGENDARY",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2635,6 +2677,7 @@
         "id": "profile_plate_love",
         "rarity": "EPIC",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2648,6 +2691,7 @@
         "id": "profile_plate_temple",
         "rarity": "LEGENDARY",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",
@@ -2661,6 +2705,7 @@
         "id": "profile_plate_rainbow",
         "rarity": "LEGENDARY",
         "recipe": {
+            "job": "NONE",
             "ingredients": [
                 {
                     "type":"custom",

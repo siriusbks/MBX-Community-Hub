@@ -87,12 +87,13 @@ const ItemsNRecipesApp: FC = () => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // Initialize selectedCategories to all categories once groupedItems loads
-    useEffect(() => {
+    // LupusArctos : I don’t want this, it takes too long to load the page
+    /* useEffect(() => {
         if (groupedItems && selectedCategories.length === 0) {
             setSelectedCategories(groupedItems.map((g) => g.category));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [groupedItems]);
+    }, [groupedItems]); */
 
     const toggleCategory = (category: string) => {
         setSelectedCategories((prev) =>
@@ -360,7 +361,7 @@ const ItemsNRecipesApp: FC = () => {
         setPanelCategory(category);
     };
 
-    const openInfoPanel = (itemId: string, category: string) => {
+    /* const openInfoPanel = (itemId: string, category: string) => {
         // populate the left info panel and close the temporary side panel
         setInfoPanelItem(itemId);
         setInfoPanelCategory(category);
@@ -371,7 +372,7 @@ const ItemsNRecipesApp: FC = () => {
             const el = document.getElementById("infoPanel");
             if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 50);
-    };
+    }; */
 
     const closeSidePanel = () => {
         setPanelItem(null);
@@ -829,7 +830,9 @@ const ItemsNRecipesApp: FC = () => {
                                         // Prevent opening when item is used in other recipes or no recipe exists
                                         //if (usedInList.length === 0 || noRecipeAvailable) return;
                                         if (noRecipeAvailable) return;
-                                        if (panelItem && panelCategory) openCraftModal(panelItem, panelCategory);
+                                        if (panelItem && panelCategory) {
+                                            openCraftModal(panelItem, panelCategory);
+                                        };
                                     }}
                                     //disabled={usedInList.length === 0 || noRecipeAvailable}
                                     disabled={noRecipeAvailable}
