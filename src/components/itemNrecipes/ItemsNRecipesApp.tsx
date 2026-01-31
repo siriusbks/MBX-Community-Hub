@@ -768,7 +768,7 @@ const ItemsNRecipesApp: FC = () => {
 
                 {/* Right-side item panel: appears when an item is clicked instead of opening the modal immediately */}
                 {panelItem && detailsIndex && (
-                    <aside className="w-[32rem] bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden flex flex-col max-h-[calc(100vh-200px)]">
+                    <aside className="w-[32rem] bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden flex flex-col max-h-[calc(100vh-200px)] custom-scrollbar">
                         <div className="overflow-auto">
                             <div className="flex items-start justify-between">
                                 <div>
