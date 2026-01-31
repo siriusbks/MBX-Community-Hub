@@ -2,7 +2,7 @@
  * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
  */
 
-import React, { FC, useEffect, useState, MouseEvent } from "react";
+import { FC, useEffect, useState, MouseEvent } from "react";
 import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import INRItemCard from "./INRItemCard";
@@ -11,7 +11,6 @@ import ItemTranslation from "../ItemTranslation";
 import {
     AlertTriangle,
     ArrowUpFromLine,
-    Boxes,
     Calculator,
     ClipboardCopy,
     Eye,
