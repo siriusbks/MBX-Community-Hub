@@ -12,7 +12,6 @@ import "./i18n";
 
 import ErrorBoundary from "@components/preview/ErrorBoundary";
 import { isDev } from "@utils/helper";
-import NewYear2026 from "@components/effects/NewYear2026";
 
 const GA_MEASUREMENT_ID = "G-1E5DGV7ZFK";
 
@@ -55,7 +54,6 @@ export default function App() {
         <BrowserRouter>
             <ErrorBoundary>
                 <GA4Tracking />
-                {/* <NewYear2026 /> */}
                 <div className="max-w-screen w-full overflow-x-hidden">
                     <AppRoutes />
                 </div>
