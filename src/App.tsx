@@ -55,7 +55,7 @@ export default function App() {
         <BrowserRouter>
             <ErrorBoundary>
                 <GA4Tracking />
-                <NewYear2026 />
+                {/* <NewYear2026 /> */}
                 <div className="max-w-screen w-full overflow-x-hidden">
                     <AppRoutes />
                 </div>

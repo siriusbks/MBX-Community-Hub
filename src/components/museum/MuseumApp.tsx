@@ -3,6 +3,7 @@
  */
 
 import React, { FC, useEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import {
     User,
@@ -73,13 +74,28 @@ export const MuseumApp: FC = () => {
 
     // States for controlling the display of the modals
     const [craftModalItem, setCraftModalItem] = useState<string | null>(null);
-    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(
-        null
-    );
+    const [craftModalCategory, setCraftModalCategory] = useState<string | null>(null);
     const [showRecapModal, setShowRecapModal] = useState(false);
     const [showResourcesModal, setShowResourcesModal] = useState(false);
+    const [showBasicSection, setShowBasicSection] = useState(false);
+    const [showCraftSection, setShowCraftSection] = useState(false);
 
     const [showDonated, setShowDonated] = useState(true);
+
+    const NO_DECOMPOSE_PREFIXES = [
+        "transformed_",
+        "bag_",
+        "crate_",
+        "barrel_",
+        "enchanted_b",
+        "enchanted_c",
+        "enchanted_k",
+        "enchanted_m",
+        "enchanted_n",
+        "enchanted_p",
+        "enchanted_s",
+        "enchanted_w",
+    ];
 
     // FIX: items-unobtainable.json loading 1.5K times :)
     const [unobtainable, setUnobtainable] = useState<string[]>([]);
@@ -241,6 +257,7 @@ export const MuseumApp: FC = () => {
 
     // When a craft modal opens, fetch the item's details from the API to get
     // its `used_in_recipes` array (we show the ids in the summary).
+    // LupusArctos4 : We do not display used_in_recipes in the museum, but only in INR. To avoid unnecessary API calls, I disable it.
     /* useEffect(() => {
         if (!craftModalItem) {
             setItemUsedInRecipes(null);
@@ -314,11 +331,10 @@ export const MuseumApp: FC = () => {
     ): { [key: string]: number } => {
         const resources: { [key: string]: number } = {};
         recipe.ingredients.forEach((ing: any) => {
+            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
             if (
-                detailsIndex &&
-                detailsIndex[ing.id] &&
-                detailsIndex[ing.id].recipe &&
-                detailsIndex[ing.id].recipe.job !== "FARMER"
+                detailsIndex[ing.id]?.recipe &&
+                !isNoDecomp
             ) {
                 const subResources = gatherResources(
                     detailsIndex[ing.id].recipe,
@@ -363,7 +379,7 @@ export const MuseumApp: FC = () => {
             detailsIndex &&
             detailsIndex[ing.id] &&
             detailsIndex[ing.id].recipe &&
-            detailsIndex[ing.id].recipe.job !== "FARMER";
+            !NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p))
 
         let summary: JSX.Element | null = null;
 
@@ -453,21 +469,20 @@ export const MuseumApp: FC = () => {
                                     type="name"
                                 />
                             </span>
-
-                            {detailsIndex &&
+                            {
+                                detailsIndex &&
                                 detailsIndex[ing.id] &&
                                 detailsIndex[ing.id].recipe &&
                                 detailsIndex[ing.id].recipe.job && (
                                     <span className="text-xs font-normal text-green-500">
                                         <ItemTranslation
-                                            mbxId={
-                                                detailsIndex[ing.id].recipe.job
-                                            }
+                                            mbxId={detailsIndex[ing.id].recipe.job}
                                             category={"SKILL"}
                                             type="name"
                                         />
                                     </span>
-                                )}
+                                )
+                            }
                         </span>
                     </div>
                     {summary}
@@ -517,45 +532,6 @@ export const MuseumApp: FC = () => {
                 ?
             </a>
         );
-    };
-
-    // Function to copy resource recap as CSV to clipboard
-    const handleCopyCSV = async () => {
-        if (!groupedItems || !detailsIndex || !museumItems) return;
-        const totalResources: { [key: string]: number } = {};
-        groupedItems.forEach((group) => {
-            // On ne prend en compte que les items manquants et sélectionnés via le filtre
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item) && missingSelection[item]
-            );
-            missingItems.forEach((itemId) => {
-                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                    const itemResources = gatherResources(
-                        detailsIndex[itemId].recipe,
-                        detailsIndex
-                    );
-                    for (const resId in itemResources) {
-                        totalResources[resId] =
-                            (totalResources[resId] || 0) + itemResources[resId];
-                    }
-                }
-            });
-        });
-
-        const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
-            a.localeCompare(b, "en", { sensitivity: "base" })
-        );
-        const csvLines = sortedResourceIds.map(
-            (resId) => `${totalResources[resId]},${resId}`
-        );
-        const csvText = csvLines.join("\n");
-
-        try {
-            await navigator.clipboard.writeText(csvText);
-            alert(t("museum.copyCSV.alert"));
-        } catch (err) {
-            console.error("Copy CSV failed:", err);
-        }
     };
 
     // Function that returns the content of the missing items recap
@@ -631,7 +607,7 @@ export const MuseumApp: FC = () => {
     };
 
     // Function that returns the content of the missing resources
-    const renderResourcesContent = () => {
+    const renderBasicResourcesContent = () => {
         if (!groupedItems || !detailsIndex || !museumItems) {
             return <p>{t("museum.noDataLoaded")}</p>;
         }
@@ -695,6 +671,174 @@ export const MuseumApp: FC = () => {
             </span>
         );
     };
+
+    const gatherCraftsOnly = (
+        recipe: any,
+        detailsIndex: Details,
+        multiplier = 1,
+        acc: Record<string, number> = {},
+        visiting: Set<string> = new Set() // anti-boucle (sécurité)
+    ): Record<string, number> => {
+        if (!recipe?.ingredients) return acc;
+    
+        for (const ing of recipe.ingredients) {
+            const ingRecipe = detailsIndex[ing.id]?.recipe;
+            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
+        
+            // Pas de recette => ressource de base => ignorée
+            if (!ingRecipe || isNoDecomp) continue;
+        
+            // Craft "valide"
+            const qty = (ing.amount ?? 0) * multiplier;
+            acc[ing.id] = (acc[ing.id] || 0) + qty;
+        
+            // Descendre récursivement dans ses sous-crafts (si boucle, on stoppe)
+            if (
+                !isNoDecomp &&
+                !visiting.has(ing.id)
+            ) {
+                visiting.add(ing.id);
+                gatherCraftsOnly(ingRecipe, detailsIndex, qty, acc, visiting);
+                visiting.delete(ing.id);
+            }
+        }
+        return acc;
+    };
+    
+    const renderCraftsOnlyContent = () => {
+        if (!groupedItems || !detailsIndex || !museumItems) {
+        return <p>{t("museum.noDataLoaded")}</p>;
+        }
+    
+        const totalCrafts: Record<string, number> = {};
+    
+        groupedItems.forEach((group) => {
+        const missingItems = group.items.filter(
+            (itemId) => !museumItems.includes(itemId) && missingSelection[itemId]
+        );
+    
+        missingItems.forEach((itemId) => {
+            const recipe = detailsIndex[itemId]?.recipe;
+            if (!recipe) return;
+    
+            const crafts = gatherCraftsOnly(recipe, detailsIndex);
+            for (const craftId in crafts) {
+            totalCrafts[craftId] = (totalCrafts[craftId] || 0) + crafts[craftId];
+            }
+        });
+        });
+    
+        const sortedCraftIds = Object.keys(totalCrafts).sort((a, b) =>
+        a.localeCompare(b, "en", { sensitivity: "base" })
+        );
+    
+        if (sortedCraftIds.length === 0) {
+        return <p>{t("museum.noResourceRquired")}</p>;
+        }
+    
+        return (
+        <span>
+            <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            {sortedCraftIds.map((craftId) => (
+                <li key={craftId} className="block bg-gray-700 p-2 rounded-lg">
+                <div className="flex items-center">
+                    <MuseumItemImage
+                    groupCategory={setCategory(craftId)}
+                    itemId={craftId}
+                    detailsIndex={detailsIndex}
+                    className="w-8 h-8 mr-2 rounded"
+                    style={{ imageRendering: "pixelated" }}
+                    />
+                    <span className="font-bold text-sm">
+                    <ItemTranslation
+                        mbxId={craftId}
+                        category={setCategory(craftId)}
+                        type="name"
+                    />
+                    </span>
+    
+                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
+                    {totalCrafts[craftId].toLocaleString("fr-FR")}
+                    </span>
+                </div>
+                </li>
+            ))}
+            </span>
+        </span>
+        );
+    };
+
+    // Function to copy resource recap as CSV to clipboard
+    const handleCopyCSV = async () => {
+        if (!groupedItems || !detailsIndex || !museumItems) return;
+
+        if (!showBasicSection && !showCraftSection) {
+            alert(t("museum.copyCSV.alert.noSectionSelected"));
+            return;
+        }
+
+        const totalResources: { [key: string]: number } = {};
+        groupedItems.forEach((group) => {
+            // Only missing items selected via the filter are taken into account
+            const missingItems = group.items.filter(
+                (item) => !museumItems.includes(item) && missingSelection[item]
+            );
+            missingItems.forEach((itemId) => {
+                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
+                    const resourcesForThisItem: Record<string, number> = {};
+                    if (showCraftSection) {
+                        const craftResources = gatherCraftsOnly(
+                            detailsIndex[itemId].recipe,
+                            detailsIndex
+                        );
+                        Object.entries(craftResources).forEach(([resId, qty]) => {
+                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
+                        });
+                    }
+                    if (showBasicSection) {
+                        const basicResources = gatherResources(
+                            detailsIndex[itemId].recipe,
+                            detailsIndex
+                        );
+                        Object.entries(basicResources).forEach(([resId, qty]) => {
+                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
+                        });
+                    } 
+                    
+                    Object.entries(resourcesForThisItem).forEach(([resId, qty]) => {
+                        totalResources[resId] = (totalResources[resId] || 0) + qty;
+                    });
+                }
+            });
+        });
+        
+        const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
+            a.localeCompare(b, "en", { sensitivity: "base" })
+        );
+        const csvLines = sortedResourceIds.map((resId) => {
+            const quantity = totalResources[resId];
+            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
+                <ItemTranslation 
+                    mbxId={resId} 
+                    category={setCategory(resId)} 
+                    type="name" 
+                />
+            );
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = labelMarkup;
+            const labelText = tempDiv.textContent || tempDiv.innerText || "";
+            //return `${quantity},${labelText},${resId}`; // For debugging
+            return `${quantity},${labelText}`; 
+        });
+        const csvText = csvLines.join("\n");
+
+        try {
+            await navigator.clipboard.writeText(csvText);
+            alert(t("museum.copyCSV.alert.copied"));
+        } catch (err) {
+            console.error("Copy CSV failed:", err);
+        }
+    }
 
     // Function that returns the display of the items grid and the category navigation bar
     const renderItems = () => {
@@ -1073,7 +1217,7 @@ export const MuseumApp: FC = () => {
                         className="flex text-sm font-medium flex-row gap-2 bg-green-600 text-white rounded-lg py-2 px-4 transition-colors hover:bg-green-700 leading-none items-center"
                         onClick={() => setShowResourcesModal(true)}
                     >
-                        <List /> {t("museum.resourceMuseum.button")}
+                        <List /> {t("museum.resourcesMuseum.button")}
                     </button>
                 </span>
             </div>
@@ -1103,19 +1247,9 @@ export const MuseumApp: FC = () => {
                     onClick={(e) => {
                         if (e.target === e.currentTarget)
                             setCraftModalItem(null);
-                        setCraftModalCategory(null);
                     }}
                 >
                     <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        <span
-                            className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
-                            onClick={() => {
-                                setCraftModalItem(null);
-                                setCraftModalCategory(null);
-                            }}
-                        >
-                            &times;
-                        </span>
                         <div
                             id="craftDetails"
                             className="flex flex-col flex-1 max-h-[90vh]"
@@ -1312,6 +1446,7 @@ export const MuseumApp: FC = () => {
                     </div>
                 </div>
             )}
+            {/* Resources recap modal */}
             {showResourcesModal && (
                 <div
                     className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
@@ -1322,6 +1457,7 @@ export const MuseumApp: FC = () => {
                     }}
                 >
                     <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
+                        {/* HEADER */}
                         <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
                             <List
                                 strokeWidth={2.4}
@@ -1329,16 +1465,40 @@ export const MuseumApp: FC = () => {
                             />
                             <span className="flex flex-col">
                                 <div className="text-2xl font-bold">
-                                    {t("museum.resourceMuseum.title")}
+                                    {t("museum.resourcesMuseum.title")}
                                 </div>
                                 <div className="text-sm font-normal opacity-60">
-                                    {t("museum.resourceMuseum.description")}
+                                    {t("museum.resourcesMuseum.description")}
                                 </div>
                             </span>
+                            {/* TOGGLES */}
+                            <div className="ml-auto flex items-center">
+                                <button
+                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                    onClick={() => setShowCraftSection(!showCraftSection)}
+                                >
+                                    {showCraftSection
+                                    ? <SquareAsterisk className="w-5 h-5"/>
+                                    : <Square className="w-5 h-5"/>}
+                                    {t("museum.craftingResourcesMuseum.title")}
+                                </button>
+
+                                <button
+                                    className="ml-4 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                    onClick={() => setShowBasicSection(!showBasicSection)}
+                                >
+                                    {showBasicSection
+                                    ? <SquareAsterisk className="w-5 h-5"/>
+                                    : <Square className="w-5 h-5"/>}
+                                    {t("museum.basicResourcesMuseum.title")}
+                                </button>
+                            </div>
                             {/* CSV copy button */}
                             <button
-                                className="ml-auto flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                onClick={handleCopyCSV}
+                                className="ml-1 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
+                                onClick={() => {
+                                    handleCopyCSV()
+                                }}
                             >
                                 <ClipboardCopy className="w-5 h-5" />{" "}
                                 {t("museum.copyCSV.button")}
@@ -1351,11 +1511,32 @@ export const MuseumApp: FC = () => {
                             </span>
                         </div>
 
-                        <div
+                        {/* CONTENT */}
+                        <div 
                             id="resourcesContent"
-                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
+                            className="flex-1 overflow-y-auto p-4 custom-scrollbar"
                         >
-                            {renderResourcesContent()}
+                            {showCraftSection && (
+                            <>
+                                <div className="text-lg font-semibold mb-2">
+                                    {t("museum.craftingResourcesMuseum.title")}
+                                </div>
+                                {renderCraftsOnlyContent()}
+                            </>
+                            )}
+                            {showBasicSection && (
+                            <>
+                                <div className="text-lg font-semibold mt-4 mb-2">
+                                    {t("museum.resourcesMuseum.title")}
+                                </div>
+                                {renderBasicResourcesContent()}
+                            </>
+                            )}
+                            {!showCraftSection && !showBasicSection && (
+                                <div className="text-center opacity-50">
+                                    {t("museum.resourcesMuseum.noSectionSelected")}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
