@@ -50,6 +50,165 @@ const BestiaryPage: FC = () => {
         string
     > | null>(null);
 
+    // API bestiary (v3) pagination
+    type ApiCreature = {
+        id: string;
+        name: string;
+        family?: string | string[];
+        type?: string;
+        level?: number;
+        level_max?: number;
+        health?: [number, number];
+        image?: string;
+    };
+
+    const [apiCreatures, setApiCreatures] = useState<ApiCreature[]>([]);
+    const [apiPage, setApiPage] = useState(1);
+    const apiPageSize = 50;
+    const [apiTotal, setApiTotal] = useState<number | null>(null);
+    const [apiLoading, setApiLoading] = useState(false);
+    const [apiError, setApiError] = useState<string | null>(null);
+
+    // API creature details modal
+    type ApiCreatureDetails = {
+        id: string;
+        name: string;
+        family?: string | string[];
+        type?: string;
+        level?: number;
+        level_max?: number;
+        health?: [number, number];
+        image?: string;
+        drops?: Array<{
+            item_id: string;
+            amount?: [number, number];
+            chance?: number;
+        }>;
+        stats?: Record<string, [number, number]>;
+        resistances?: Record<string, [number, number]>;
+        zones?: string[];
+    };
+
+    const [apiSelectedId, setApiSelectedId] = useState<string | null>(null);
+    const [apiSelectedDetails, setApiSelectedDetails] =
+        useState<ApiCreatureDetails | null>(null);
+    const [apiDetailsLoading, setApiDetailsLoading] = useState(false);
+    const [apiDetailsError, setApiDetailsError] = useState<string | null>(null);
+    // family list fetched from API
+    const [apiFamilyCreatures, setApiFamilyCreatures] = useState<
+        ApiCreature[] | null
+    >(null);
+    const [apiFamilyLoading, setApiFamilyLoading] = useState(false);
+    const [apiFamilyError, setApiFamilyError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!apiSelectedId) {
+            setApiSelectedDetails(null);
+            setApiDetailsError(null);
+            setApiDetailsLoading(false);
+            return;
+        }
+
+        let mounted = true;
+        const load = async () => {
+            setApiDetailsLoading(true);
+            setApiDetailsError(null);
+            try {
+                const res = await fetch(
+                    `https://api.minebox.co/bestiary/${encodeURIComponent(apiSelectedId)}`,
+                );
+                if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+                const json = await res.json();
+                if (!mounted) return;
+                setApiSelectedDetails(json as ApiCreatureDetails);
+            } catch (e: any) {
+                if (!mounted) return;
+                setApiDetailsError(
+                    e?.message ?? "Failed to load creature details",
+                );
+            } finally {
+                if (mounted) setApiDetailsLoading(false);
+            }
+        };
+        load();
+        return () => {
+            mounted = false;
+        };
+    }, [apiSelectedId]);
+
+    // fetch family creatures when selected details has a family
+    useEffect(() => {
+        const family = apiSelectedDetails?.family;
+        const familyKey = Array.isArray(family) ? family[0] : family;
+        if (!familyKey) {
+            setApiFamilyCreatures(null);
+            setApiFamilyError(null);
+            setApiFamilyLoading(false);
+            return;
+        }
+
+        let mounted = true;
+        const loadFamily = async () => {
+            setApiFamilyLoading(true);
+            setApiFamilyError(null);
+            try {
+                const res = await fetch(
+                    `https://api.minebox.co/bestiary?family=${encodeURIComponent(String(familyKey))}`,
+                );
+                if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+                const json = await res.json();
+                const creatures = Array.isArray(json.creatures)
+                    ? (json.creatures as ApiCreature[])
+                    : [];
+                if (!mounted) return;
+                setApiFamilyCreatures(creatures);
+            } catch (e: any) {
+                if (!mounted) return;
+                setApiFamilyError(e?.message ?? "Failed to load family");
+                setApiFamilyCreatures(null);
+            } finally {
+                if (mounted) setApiFamilyLoading(false);
+            }
+        };
+        loadFamily();
+        return () => {
+            mounted = false;
+        };
+    }, [apiSelectedDetails]);
+
+    useEffect(() => {
+        let mounted = true;
+        const load = async () => {
+            setApiLoading(true);
+            setApiError(null);
+            try {
+                const res = await fetch(
+                    `https://api.minebox.co/bestiary/?page=${apiPage}&pageSize=${apiPageSize}`,
+                );
+                if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+                const json = await res.json();
+                const creatures = Array.isArray(json.creatures)
+                    ? (json.creatures as ApiCreature[])
+                    : [];
+                if (!mounted) return;
+                setApiCreatures((prev) =>
+                    apiPage === 1 ? creatures : [...prev, ...creatures],
+                );
+                setApiTotal(typeof json.total === "number" ? json.total : null);
+            } catch (e: any) {
+                if (!mounted) return;
+                setApiError(e?.message ?? "Failed to load API bestiary");
+            } finally {
+                if (mounted) setApiLoading(false);
+            }
+        };
+        load();
+        return () => {
+            mounted = false;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiPage]);
+
     useEffect(() => {
         let mounted = true;
         const load = async () => {
@@ -137,7 +296,7 @@ const BestiaryPage: FC = () => {
             const needle = param.toLowerCase();
             for (const [islandKey, regions] of Object.entries(bestiaryData)) {
                 for (const [regionKey, mobs] of Object.entries(
-                    regions as any
+                    regions as any,
                 )) {
                     for (const mob of mobs as BestiaryInfo[]) {
                         const last = mob.name.split(".").pop() || mob.name;
@@ -220,7 +379,7 @@ const BestiaryPage: FC = () => {
 
     // Find a mob by its name across the bestiary dataset (returns mob + region + island)
     const findMobByName = (
-        name: string
+        name: string,
     ): { mob: BestiaryInfo; regionKey?: string; islandKey?: string } | null => {
         for (const [islandKey, regions] of Object.entries(bestiaryData)) {
             for (const [regionKey, mobs] of Object.entries(regions as any)) {
@@ -270,7 +429,7 @@ const BestiaryPage: FC = () => {
         Object.values(regionGroups).forEach((group: any) => {
             (group.zones || []).forEach((zone: any) => {
                 const has = (zone.mobs || []).some(
-                    (m: any) => m && m.name === mobName
+                    (m: any) => m && m.name === mobName,
                 );
                 if (has)
                     matchingZones.push({
@@ -379,7 +538,7 @@ const BestiaryPage: FC = () => {
                 <div className="mx-auto mt-2 flex justify-end">
                     <Link
                         to={`/mappage?selectedMap=${encodeURIComponent(
-                            island
+                            island,
                         )}`}
                         className="mx-auto inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm max-w-full break-words"
                     >
@@ -425,6 +584,43 @@ const BestiaryPage: FC = () => {
         );
     };
 
+    const apiResistIconMap: Record<string, string> = {
+        fire: "assets/media/elemental/intelligence.png",
+        water: "assets/media/elemental/luck.png",
+        air: "assets/media/elemental/agility.png",
+        earth: "assets/media/elemental/strength.png",
+        cold: "assets/media/elemental/intelligence.png",
+        poison: "assets/media/elemental/luck.png",
+        physical: "assets/media/elemental/strength.png",
+        magic: "assets/media/elemental/agility.png",
+    };
+
+    const renderApiResists = (
+        res: Record<string, [number, number]> | undefined,
+    ) => {
+        if (!res) return null;
+        const entries = Object.entries(res);
+        if (entries.length === 0) return null;
+        return (
+            <div className="text-[11px] text-gray-300 flex flex-wrap gap-3 mt-2">
+                {entries.map(([k, v]) => (
+                    <span key={k} className="flex items-center gap-1">
+                        <img
+                            src={
+                                apiResistIconMap[k] ??
+                                "assets/media/elemental/intelligence.png"
+                            }
+                            className="h-4 w-4 inline"
+                        />
+                        <span className="text-xs">
+                            {v?.[0] ?? 0}% - {v?.[1] ?? 0}%
+                        </span>
+                    </span>
+                ))}
+            </div>
+        );
+    };
+
     const formatChance = (value: number) => {
         if (typeof value !== "number") return value;
         const str = value.toString();
@@ -446,6 +642,93 @@ const BestiaryPage: FC = () => {
                 <div className="mt-4 h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
             </div>
 
+            <div className="bg-gray-800 rounded-lg p-4 mb-10">
+                <h2>DEV NOTE: V3 API TEST</h2>
+                <p className="text-gray-400">
+                    This is a development note for the bestiary page.
+                </p>
+            </div>
+
+            {/* API Bestiary: fetched from https://api.minebox.co/bestiary/ */}
+            <div className="">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {apiCreatures.map((c) => (
+                        <div
+                            key={c.id}
+                            className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
+                            onClick={() => setApiSelectedId(c.id)}
+                        >
+                            <div className="mt-2">
+                                <span className="flex items-start flex-row justify-center ">
+                                    <div
+                                        className={`${LevelBG_Gradient(
+                                            c.level ?? 0,
+                                        )} ${LevelTextColor(
+                                            c.level ?? 0,
+                                        )} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
+                                    >
+                                        {c.level ?? 0} - {c.level_max ?? 0}
+                                    </div>
+                                    <div className="font-semibold text-white text-sm">
+                                        {c.name}
+                                    </div>
+                                </span>
+
+                                <div className="text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium mt-2">
+                                    {Array.isArray(c.health)
+                                        ? `${c.health[0]} - ${c.health[1]}`
+                                        : "0 - 0"}
+                                </div>
+                            </div>
+
+                            <div className="mx-auto w-32 h-32 flex-shrink-0 rounded overflow-hidden flex items-center justify-center p-2">
+                                {c.image ? (
+                                    <img
+                                        src={c.image}
+                                        alt={c.name}
+                                        className="drop-shadow-[0_8px_8px_rgba(0,0,0,0.4)] w-full h-full object-contain"
+                                    />
+                                ) : (
+                                    <div className="text-gray-400">?</div>
+                                )}
+                            </div>
+
+                            {c.type == "BOSS" && (
+                                <div className="absolute bottom-2 left-2 right-2 text-center text-xs bg-yellow-600 bg-opacity-50 border border-yellow-600 rounded text-white w-fit px-2">
+                                    {c.type}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                <div className="flex justify-center mt-4 gap-3">
+                    {apiError && <div className="text-red-400">{apiError}</div>}
+                    {apiLoading && (
+                        <button
+                            className="px-4 py-2 bg-gray-600 text-white rounded"
+                            disabled
+                        >
+                            Loading...
+                        </button>
+                    )}
+                    {!apiLoading &&
+                        apiTotal !== null &&
+                        apiCreatures.length < apiTotal && (
+                            <button
+                                onClick={() => setApiPage((p) => p + 1)}
+                                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
+                            >
+                                Load more
+                            </button>
+                        )}
+                </div>
+            </div>
+
+            {/* Test Version */}
+
+            <div className="min-h-96 w-full"></div>
+
             {/* Unavailable mobs section (available === false) - moved below island lists */}
 
             {/* Iterate islands */}
@@ -455,7 +738,7 @@ const BestiaryPage: FC = () => {
                     ([regionKey, mobs]) =>
                         (mobs || [])
                             .filter((m) => m.available !== false)
-                            .map((mob) => ({ mob, regionKey, islandKey }))
+                            .map((mob) => ({ mob, regionKey, islandKey })),
                 );
 
                 // If no available mobs on this island, skip rendering the island header/section
@@ -490,7 +773,7 @@ const BestiaryPage: FC = () => {
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
                                                 <Eye className="h-4 w-4 rounded" />
                                                 {t(
-                                                    "common:actions.clickToView"
+                                                    "common:actions.clickToView",
                                                 )}
                                             </div>
 
@@ -513,9 +796,9 @@ const BestiaryPage: FC = () => {
                                                     <div className="flex items-start gap-1 flex-row justify-between align-center items-center">
                                                         <span
                                                             className={`${LevelBG_Gradient(
-                                                                mob.minlevel
+                                                                mob.minlevel,
                                                             )} ${LevelTextColor(
-                                                                mob.minlevel
+                                                                mob.minlevel,
                                                             )} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
                                                         >
                                                             Lvl {mob.minlevel}-
@@ -551,7 +834,7 @@ const BestiaryPage: FC = () => {
                                                                         ns: "map",
                                                                         defaultValue:
                                                                             regionKey,
-                                                                    }
+                                                                    },
                                                                 )}
                                                             </div>
                                                         </div>
@@ -570,7 +853,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    )
+                                    ),
                                 )}
                             </div>
                         </div>
@@ -579,6 +862,362 @@ const BestiaryPage: FC = () => {
             })}
 
             {/* Modal popup for selected mob */}
+            {/* API creature details modal */}
+            {apiSelectedId && (
+                <div
+                    className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget)
+                            setApiSelectedId(null);
+                    }}
+                >
+                    <div className="modal-content flex flex-col bg-gray-900 text-white rounded-lg max-w-[90%] h-[91vh] mx-auto shadow-2xl relative p-4 overflow-hidden">
+                        <span
+                            className="close absolute top-2 right-4 text-2xl font-bold text-white cursor-pointer hover:text-emerald-500"
+                            onClick={() => setApiSelectedId(null)}
+                        >
+                            &times;
+                        </span>
+
+                        <div className="grid grid-cols-1 w-full h-full">
+                            {apiDetailsLoading ? (
+                                <div className="text-center text-gray-300">
+                                    Loading...
+                                </div>
+                            ) : apiDetailsError ? (
+                                <div className="text-center text-red-400">
+                                    {apiDetailsError}
+                                </div>
+                            ) : apiSelectedDetails ? (
+                                <div className="flex flex-row gap-4 h-full">
+                                    <div className="w-1/3">
+                                        <div className="flex items-center    flex-col gap-4">
+                                            <div className="w-full my-auto">
+                                                <div className="flex justify-center gap-2 items-center">
+                                                    <div className="text-sm text-gray-300 bg-blue-700/60 border-blue-700/80 border rounded px-2 py-0 text-[11px] font-semibold">
+                                                        Lvl{" "}
+                                                        {apiSelectedDetails.level ??
+                                                            0}
+                                                        -
+                                                        {apiSelectedDetails.level_max ??
+                                                            0}
+                                                    </div>
+                                                    <h3 className="text-2xl font-bold text-white">
+                                                        {
+                                                            apiSelectedDetails.name
+                                                        }
+                                                    </h3>
+                                                </div>
+                                                <div className="mt-2 w-full">
+                                                    <div className="w-full text-xs bg-red-700/60 border-red-700/80 border rounded text-center py-1 text-white font-medium">
+                                                        {Array.isArray(
+                                                            apiSelectedDetails.health,
+                                                        )
+                                                            ? `${apiSelectedDetails.health[0].toLocaleString?.() ?? apiSelectedDetails.health[0]} - ${apiSelectedDetails.health[1].toLocaleString?.() ?? apiSelectedDetails.health[1]}`
+                                                            : "0 - 0"}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="size-2/3 flex-shrink-0 rounded overflow-hidden bg-gray-900 p-3 flex items-center justify-center">
+                                                {apiSelectedDetails.image ? (
+                                                    <img
+                                                        src={
+                                                            apiSelectedDetails.image
+                                                        }
+                                                        alt={
+                                                            apiSelectedDetails.name
+                                                        }
+                                                        className="w-full h-full object-contain"
+                                                    />
+                                                ) : (
+                                                    <div className="text-gray-400">
+                                                        ?
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {/* Stats, Resistances and Zones placed below in single column */}
+                                        {apiSelectedDetails && (
+                                            <div>
+                                                <div className="flex items-center justify-between">
+                                                    <div className="text-sm text-gray-200 font-semibold mb-2">
+                                                        Stats & Resistances
+                                                    </div>
+                                                </div>
+
+                                                <div className="mb-3">
+                                                    <div className="relative inline-block group">
+                                                        <button className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
+                                                            Stats
+                                                        </button>
+                                                        <div className="absolute left-0 top-full mt-2 w-72 bg-gray-800 border border-gray-700 p-3 rounded text-xs text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-50">
+                                                            {apiSelectedDetails.stats ? (
+                                                                <div className="grid grid-cols-1 gap-1 text-xs">
+                                                                    {Object.entries(
+                                                                        apiSelectedDetails.stats,
+                                                                    ).map(
+                                                                        ([
+                                                                            k,
+                                                                            v,
+                                                                        ]) => (
+                                                                            <div
+                                                                                key={
+                                                                                    k
+                                                                                }
+                                                                                className="flex justify-between"
+                                                                            >
+                                                                                <span className="capitalize">
+                                                                                    {
+                                                                                        k
+                                                                                    }
+                                                                                </span>
+                                                                                <span>
+                                                                                    {
+                                                                                        v[0]
+                                                                                    }{" "}
+                                                                                    -{" "}
+                                                                                    {
+                                                                                        v[1]
+                                                                                    }
+                                                                                </span>
+                                                                            </div>
+                                                                        ),
+                                                                    )}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="text-xs text-gray-400 italic">
+                                                                    No stats
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div className="font-semibold text-white mb-1">
+                                                        Resistances
+                                                    </div>
+                                                    {renderApiResists(
+                                                        apiSelectedDetails.resistances,
+                                                    ) ?? (
+                                                        <div className="text-xs text-gray-400 italic">
+                                                            No resistances
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div className="mt-4">
+                                                    <div className="font-semibold text-white mb-1">
+                                                        Zones
+                                                    </div>
+                                                    {apiSelectedDetails.zones &&
+                                                    apiSelectedDetails.zones
+                                                        .length > 0 ? (
+                                                        <div className="text-xs text-gray-300">
+                                                            {apiSelectedDetails.zones.join(
+                                                                ", ",
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-xs text-gray-400 italic">
+                                                            No zones
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="w-2/3">
+                                        {/* Family (from API) */}
+                                        <div className="mt-4">
+                                            <div className="text-sm text-gray-200 font-semibold mb-2">
+                                                Family
+                                            </div>
+                                            {apiFamilyLoading ? (
+                                                <div className="text-xs text-gray-300">
+                                                    Loading family...
+                                                </div>
+                                            ) : apiFamilyError ? (
+                                                <div className="text-xs text-red-400">
+                                                    {apiFamilyError}
+                                                </div>
+                                            ) : apiFamilyCreatures &&
+                                              apiFamilyCreatures.length > 0 ? (
+                                                <div className="grid grid-cols-8 gap-3">
+                                                    {apiFamilyCreatures.map(
+                                                        (fc) => (
+                                                            <button
+                                                                key={fc.id}
+                                                                onClick={() =>
+                                                                    setApiSelectedId(
+                                                                        fc.id,
+                                                                    )
+                                                                }
+                                                                className="flex flex-col items-center text-center bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 hover:bg-gray-700/60 focus:outline-none"
+                                                                title={fc.name}
+                                                            >
+                                                                <img
+                                                                    src={
+                                                                        fc.image ??
+                                                                        "/assets/media/skulls/basic.png"
+                                                                    }
+                                                                    alt={
+                                                                        fc.name
+                                                                    }
+                                                                    className="h-20 w-20 object-contain mb-1"
+                                                                />
+                                                                <div className="text-xs text-gray-200 font-bold">
+                                                                    {fc.name}
+                                                                </div>
+                                                                <div className="text-[11px] text-gray-400">
+                                                                    Lvl{" "}
+                                                                    {fc.level ??
+                                                                        0}
+                                                                    -
+                                                                    {fc.level_max ??
+                                                                        0}
+                                                                </div>
+                                                            </button>
+                                                        ),
+                                                    )}
+                                                </div>
+                                            ) : apiSelectedDetails?.family ? (
+                                                <div className="text-xs text-gray-300">
+                                                    {Array.isArray(
+                                                        apiSelectedDetails.family,
+                                                    )
+                                                        ? apiSelectedDetails.family.join(
+                                                              ", ",
+                                                          )
+                                                        : apiSelectedDetails.family}
+                                                </div>
+                                            ) : (
+                                                <div className="text-xs text-gray-400 italic">
+                                                    No family
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Drops */}
+                                        <div>
+                                            <div className="text-sm text-gray-200 font-semibold mb-2">
+                                                Drops
+                                            </div>
+                                            {apiSelectedDetails.drops &&
+                                            apiSelectedDetails.drops.length >
+                                                0 ? (
+                                                <div className="grid grid-cols-8 gap-3">
+                                                    {apiSelectedDetails.drops
+                                                        .slice()
+                                                        .map((d, i) => {
+                                                            const chance =
+                                                                formatChance(
+                                                                    (d.chance ??
+                                                                        0) *
+                                                                        100,
+                                                                );
+                                                            const rarity =
+                                                                itemsRarity?.[
+                                                                    d.item_id
+                                                                ];
+                                                            const rarityLabel =
+                                                                rarity
+                                                                    ? t(
+                                                                          `museum.rarity.${rarity}`,
+                                                                          {
+                                                                              ns: "museum",
+                                                                              defaultValue:
+                                                                                  rarity,
+                                                                          },
+                                                                      )
+                                                                    : null;
+                                                            const rarityBg =
+                                                                rarity
+                                                                    ? rarity ===
+                                                                      "COMMON"
+                                                                        ? "bg-COMMON"
+                                                                        : rarity ===
+                                                                            "UNCOMMON"
+                                                                          ? "bg-UNCOMMON"
+                                                                          : rarity ===
+                                                                              "RARE"
+                                                                            ? "bg-RARE"
+                                                                            : rarity ===
+                                                                                "EPIC"
+                                                                              ? "bg-EPIC"
+                                                                              : rarity ===
+                                                                                  "LEGENDARY"
+                                                                                ? "bg-LEGENDARY"
+                                                                                : rarity ===
+                                                                                    "MYTHIC"
+                                                                                  ? "bg-MYTHIC"
+                                                                                  : "bg-UNKNOWN"
+                                                                    : "bg-UNKNOWN";
+                                                            return (
+                                                                <div
+                                                                    key={i}
+                                                                    className={`${getRarityColor(rarity ?? "UNKNOWN")} bg-opacity-30 border rounded p-2 flex flex-col items-center text-center`}
+                                                                >
+                                                                    <ItemImage
+                                                                        detailsIndex={
+                                                                            null
+                                                                        }
+                                                                        itemId={
+                                                                            d.item_id
+                                                                        }
+                                                                        alt={
+                                                                            d.item_id
+                                                                        }
+                                                                        className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-contain my-1 mb-2"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
+                                                                    />
+                                                                    {rarityLabel && (
+                                                                        <div
+                                                                            className={`text-[10px] px-2 py-0.5 rounded ${rarityBg} text-white mb-1`}
+                                                                        >
+                                                                            {
+                                                                                rarityLabel
+                                                                            }
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="text-xs text-gray-200 leading-none font-bold w-full mb-1">
+                                                                        {t(
+                                                                            d.item_id,
+                                                                            {
+                                                                                ns: "items",
+                                                                                defaultValue:
+                                                                                    d.item_id,
+                                                                            },
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="text-[11px] text-gray-300 mt-auto">
+                                                                        {(d.chance ??
+                                                                            0) ===
+                                                                        0
+                                                                            ? "??.?? %"
+                                                                            : `${chance}%`}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                </div>
+                                            ) : (
+                                                <div className="text-xs text-gray-400 italic">
+                                                    No drops
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                </div>
+            )}
             {(() => {
                 const unavailable = Object.entries(bestiaryData)
                     .flatMap(([islandKey, regions]) =>
@@ -588,8 +1227,8 @@ const BestiaryPage: FC = () => {
                                     mob,
                                     regionKey,
                                     islandKey,
-                                }))
-                        )
+                                })),
+                        ),
                     )
                     .filter(({ mob }) => mob.available === false);
 
@@ -622,7 +1261,7 @@ const BestiaryPage: FC = () => {
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute z-10 text-shadow-xl top-2 left-2 flex items-center gap-1 text-gray-300 text-[10px] font-semibold">
                                                 <Eye className="h-4 w-4 rounded" />
                                                 {t(
-                                                    "common:actions.clickToView"
+                                                    "common:actions.clickToView",
                                                 )}
                                             </div>
 
@@ -645,9 +1284,9 @@ const BestiaryPage: FC = () => {
                                                     <div className="flex items-start gap-1 flex-row justify-between align-center items-center">
                                                         <span
                                                             className={`${LevelBG_Gradient(
-                                                                mob.minlevel
+                                                                mob.minlevel,
                                                             )} ${LevelTextColor(
-                                                                mob.minlevel
+                                                                mob.minlevel,
                                                             )} px-2 py-0 rounded-sm text-[11px] font-semibold mr-2`}
                                                         >
                                                             Lvl {mob.minlevel}-
@@ -675,7 +1314,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    )
+                                    ),
                                 )}
                             </div>
                         </div>
@@ -732,7 +1371,7 @@ const BestiaryPage: FC = () => {
                                                             ns: "map",
                                                             defaultValue:
                                                                 selectedMob.islandKey,
-                                                        }
+                                                        },
                                                     )}
                                                 </h3>
                                             ) : null}
@@ -742,9 +1381,11 @@ const BestiaryPage: FC = () => {
                                             <span className="flex flex-row gap-1">
                                                 <span
                                                     className={`${LevelBG_Gradient(
-                                                        selectedMob.mob.minlevel
+                                                        selectedMob.mob
+                                                            .minlevel,
                                                     )} ${LevelTextColor(
-                                                        selectedMob.mob.minlevel
+                                                        selectedMob.mob
+                                                            .minlevel,
                                                     )} px-2 py-0 rounded-sm text-[11px] font-semibold`}
                                                 >
                                                     Lvl{" "}
@@ -778,7 +1419,7 @@ const BestiaryPage: FC = () => {
                                                             ns: "map",
                                                             defaultValue:
                                                                 selectedMob.regionKey,
-                                                        }
+                                                        },
                                                     )}
                                                 </div>
                                             )}
@@ -823,10 +1464,10 @@ const BestiaryPage: FC = () => {
                                                         familyInfo
                                                             ? `${LevelBG_Gradient(
                                                                   familyInfo.mob
-                                                                      .minlevel
+                                                                      .minlevel,
                                                               )} ${LevelTextColor(
                                                                   familyInfo.mob
-                                                                      .minlevel
+                                                                      .minlevel,
                                                               )} text-[10px] px-2 py-0 rounded-sm font-semibold mb-1`
                                                             : "";
 
@@ -836,11 +1477,11 @@ const BestiaryPage: FC = () => {
                                                             onClick={() => {
                                                                 const found =
                                                                     findMobByName(
-                                                                        f
+                                                                        f,
                                                                     );
                                                                 if (found)
                                                                     setSelectedMob(
-                                                                        found
+                                                                        found,
                                                                     );
                                                             }}
                                                             className="flex flex-col items-center text-center bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 hover:bg-gray-700/60 focus:outline-none"
@@ -869,7 +1510,7 @@ const BestiaryPage: FC = () => {
                                                             </div>
                                                         </button>
                                                     );
-                                                }
+                                                },
                                             )}
                                         </div>
                                     ) : (
@@ -901,13 +1542,13 @@ const BestiaryPage: FC = () => {
                                                         (a, b) =>
                                                             (b.dropChance ??
                                                                 0) -
-                                                            (a.dropChance ?? 0)
+                                                            (a.dropChance ?? 0),
                                                     )
                                                     .map((d, i) => {
                                                         const chance =
                                                             formatChance(
                                                                 d.dropChance ??
-                                                                    0
+                                                                    0,
                                                             );
                                                         const rarity =
                                                             itemsRarity?.[
@@ -921,7 +1562,7 @@ const BestiaryPage: FC = () => {
                                                                           ns: "museum",
                                                                           defaultValue:
                                                                               rarity,
-                                                                      }
+                                                                      },
                                                                   )
                                                                 : null;
 
@@ -930,21 +1571,21 @@ const BestiaryPage: FC = () => {
                                                               "COMMON"
                                                                 ? "bg-COMMON"
                                                                 : rarity ===
-                                                                  "UNCOMMON"
-                                                                ? "bg-UNCOMMON"
-                                                                : rarity ===
-                                                                  "RARE"
-                                                                ? "bg-RARE"
-                                                                : rarity ===
-                                                                  "EPIC"
-                                                                ? "bg-EPIC"
-                                                                : rarity ===
-                                                                  "LEGENDARY"
-                                                                ? "bg-LEGENDARY"
-                                                                : rarity ===
-                                                                  "MYTHIC"
-                                                                ? "bg-MYTHIC"
-                                                                : "bg-UNKNOWN"
+                                                                    "UNCOMMON"
+                                                                  ? "bg-UNCOMMON"
+                                                                  : rarity ===
+                                                                      "RARE"
+                                                                    ? "bg-RARE"
+                                                                    : rarity ===
+                                                                        "EPIC"
+                                                                      ? "bg-EPIC"
+                                                                      : rarity ===
+                                                                          "LEGENDARY"
+                                                                        ? "bg-LEGENDARY"
+                                                                        : rarity ===
+                                                                            "MYTHIC"
+                                                                          ? "bg-MYTHIC"
+                                                                          : "bg-UNKNOWN"
                                                             : "bg-UNKNOWN";
 
                                                         return (
@@ -952,7 +1593,7 @@ const BestiaryPage: FC = () => {
                                                                 key={i}
                                                                 className={`${getRarityColor(
                                                                     rarity ??
-                                                                        "UNKNOWN"
+                                                                        "UNKNOWN",
                                                                 )} bg-opacity-30 border rounded p-2 flex flex-col items-center text-center`}
                                                             >
                                                                 <ItemImage
@@ -993,7 +1634,7 @@ const BestiaryPage: FC = () => {
                                                                                     ns: "items",
                                                                                     defaultValue:
                                                                                         id,
-                                                                                }
+                                                                                },
                                                                             );
                                                                         if (
                                                                             fromItems !==
@@ -1008,7 +1649,7 @@ const BestiaryPage: FC = () => {
                                                                                     ns: "halloween",
                                                                                     defaultValue:
                                                                                         id,
-                                                                                }
+                                                                                },
                                                                             );
                                                                         return fromBestiary !==
                                                                             id
