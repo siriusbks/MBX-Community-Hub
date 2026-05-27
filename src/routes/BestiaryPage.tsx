@@ -589,10 +589,12 @@ const BestiaryPage: FC = () => {
         water: "assets/media/elemental/luck.png",
         air: "assets/media/elemental/agility.png",
         earth: "assets/media/elemental/strength.png",
-        cold: "assets/media/elemental/intelligence.png",
-        poison: "assets/media/elemental/luck.png",
-        physical: "assets/media/elemental/strength.png",
-        magic: "assets/media/elemental/agility.png",
+    };
+    const apiResistNameMap: Record<string, string> = {
+        fire: "Fire",
+        water: "Water",
+        air: "Air",
+        earth: "Earth",
     };
 
     const renderApiResists = (
@@ -602,7 +604,7 @@ const BestiaryPage: FC = () => {
         const entries = Object.entries(res);
         if (entries.length === 0) return null;
         return (
-            <div className="text-[11px] text-gray-300 flex flex-wrap gap-3 mt-2">
+            <div className="text-[11px] text-gray-300 flex flex-col flex-wrap gap-3 mt-2">
                 {entries.map(([k, v]) => (
                     <span key={k} className="flex items-center gap-1">
                         <img
@@ -612,8 +614,9 @@ const BestiaryPage: FC = () => {
                             }
                             className="h-4 w-4 inline"
                         />
-                        <span className="text-xs">
-                            {v?.[0] ?? 0}% - {v?.[1] ?? 0}%
+                        <p className="font-bold">{apiResistNameMap[k]}</p>
+                        <span className="ml-auto text-xs">
+                            {v?.[0] ?? 0}% to {v?.[1] ?? 0}%
                         </span>
                     </span>
                 ))}
@@ -890,8 +893,8 @@ const BestiaryPage: FC = () => {
                                 </div>
                             ) : apiSelectedDetails ? (
                                 <div className="flex flex-row gap-4 h-full">
-                                    <div className="w-1/3">
-                                        <div className="flex items-center    flex-col gap-4">
+                                    <div className="w-1/4 bg-gray-800 rounded-lg p-4">
+                                        <div className="flex items-center flex-col gap-4">
                                             <div className="w-full my-auto">
                                                 <div className="flex justify-center gap-2 items-center">
                                                     <div className="text-sm text-gray-300 bg-blue-700/60 border-blue-700/80 border rounded px-2 py-0 text-[11px] font-semibold">
@@ -919,7 +922,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="size-2/3 flex-shrink-0 rounded overflow-hidden bg-gray-900 p-3 flex items-center justify-center">
+                                            <div className="size-2/3 flex-shrink-0 rounded overflow-hidden flex items-center justify-center">
                                                 {apiSelectedDetails.image ? (
                                                     <img
                                                         src={
@@ -939,60 +942,37 @@ const BestiaryPage: FC = () => {
                                         </div>
                                         {/* Stats, Resistances and Zones placed below in single column */}
                                         {apiSelectedDetails && (
-                                            <div>
+                                            <div className="gap-4 flex flex-col">
                                                 <div className="flex items-center justify-between">
                                                     <div className="text-sm text-gray-200 font-semibold mb-2">
-                                                        Stats & Resistances
+                                                        Mob Stats
                                                     </div>
                                                 </div>
 
-                                                <div className="mb-3">
-                                                    <div className="relative inline-block group">
-                                                        <button className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
-                                                            Stats
-                                                        </button>
-                                                        <div className="absolute left-0 top-full mt-2 w-72 bg-gray-800 border border-gray-700 p-3 rounded text-xs text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-50">
-                                                            {apiSelectedDetails.stats ? (
-                                                                <div className="grid grid-cols-1 gap-1 text-xs">
-                                                                    {Object.entries(
-                                                                        apiSelectedDetails.stats,
-                                                                    ).map(
-                                                                        ([
-                                                                            k,
-                                                                            v,
-                                                                        ]) => (
-                                                                            <div
-                                                                                key={
-                                                                                    k
-                                                                                }
-                                                                                className="flex justify-between"
-                                                                            >
-                                                                                <span className="capitalize">
-                                                                                    {
-                                                                                        k
-                                                                                    }
-                                                                                </span>
-                                                                                <span>
-                                                                                    {
-                                                                                        v[0]
-                                                                                    }{" "}
-                                                                                    -{" "}
-                                                                                    {
-                                                                                        v[1]
-                                                                                    }
-                                                                                </span>
-                                                                            </div>
-                                                                        ),
-                                                                    )}
-                                                                </div>
-                                                            ) : (
-                                                                <div className="text-xs text-gray-400 italic">
-                                                                    No stats
-                                                                </div>
-                                                            )}
-                                                        </div>
+                                                {apiSelectedDetails.stats ? (
+                                                    <div className="grid grid-cols-1 gap-1 text-xs">
+                                                        {Object.entries(
+                                                            apiSelectedDetails.stats,
+                                                        ).map(([k, v]) => (
+                                                            <div
+                                                                key={k}
+                                                                className="flex justify-between"
+                                                            >
+                                                                <span className="capitalize">
+                                                                    {k}
+                                                                </span>
+                                                                <span>
+                                                                    {v[0]} -{" "}
+                                                                    {v[1]}
+                                                                </span>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                </div>
+                                                ) : (
+                                                    <div className="text-xs text-gray-400 italic">
+                                                        No stats
+                                                    </div>
+                                                )}
 
                                                 <div>
                                                     <div className="font-semibold text-white mb-1">
@@ -1028,7 +1008,7 @@ const BestiaryPage: FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="w-2/3">
+                                    <div className="w-2/4">
                                         {/* Family (from API) */}
                                         <div className="mt-4">
                                             <div className="text-sm text-gray-200 font-semibold mb-2">
@@ -1044,7 +1024,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             ) : apiFamilyCreatures &&
                                               apiFamilyCreatures.length > 0 ? (
-                                                <div className="grid grid-cols-8 gap-3">
+                                                <div className="grid grid-cols-6 gap-3">
                                                     {apiFamilyCreatures.map(
                                                         (fc) => (
                                                             <button
@@ -1107,7 +1087,7 @@ const BestiaryPage: FC = () => {
                                             {apiSelectedDetails.drops &&
                                             apiSelectedDetails.drops.length >
                                                 0 ? (
-                                                <div className="grid grid-cols-8 gap-3">
+                                                <div className="grid grid-cols-6 gap-3">
                                                     {apiSelectedDetails.drops
                                                         .slice()
                                                         .map((d, i) => {
@@ -1211,6 +1191,31 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             )}
                                         </div>
+                                    </div>
+
+                                    <div className="w-1/4 bg-gray-800 rounded-lg p-4 gap-2 flex flex-col">
+                                        <div className="text-sm text-gray-200 font-semibold mb-2">
+                                            Collection
+                                        </div>
+                                        <div className="grid grid-cols-4 gap-2">
+                                            {Array.from({ length: 28 }).map(
+                                                (_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className=" p-1.5 border border-gray-600 bg-gray-700/50 text-xs rounded items-center justify-between flex flex-col"
+                                                    >
+                                                        <p>Level X</p>
+                                                        <p>0000</p>
+                                                        <p className="font-bold text-sm">5000 <span className="bg-white px-1  rounded-sm text-black text-xs">XP</span></p>
+                                                    </div>
+                                                ),
+                                            )}
+                                        </div>
+                                        <div className="text-sm text-gray-200 font-semibold mb-2 mt-auto">
+                                            Map
+                                        </div>
+                                        {/* Map Placeholder */}
+                                        <div className="aspect-video  bg-gray-700 rounded"></div>
                                     </div>
                                 </div>
                             ) : null}
