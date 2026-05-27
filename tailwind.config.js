@@ -14,6 +14,11 @@ export default {
                     BORDER: "var(--color-COMMON-BORDER)",
                     50: "var(--color-COMMON-50)",
                 },
+                TRASH: {
+                    DEFAULT: "var(--color-TRASH)",
+                    BORDER: "var(--color-TRASH-BORDER)",
+                    50: "var(--color-TRASH-50)",
+                },
                 UNCOMMON: {
                     DEFAULT: "var(--color-UNCOMMON)",
                     BORDER: "var(--color-UNCOMMON-BORDER)",
@@ -38,6 +43,11 @@ export default {
                     DEFAULT: "var(--color-MYTHIC)",
                     BORDER: "var(--color-MYTHIC-BORDER)",
                     50: "var(--color-MYTHIC-50)",
+                },
+                CONTRABAND: {
+                    DEFAULT: "var(--color-CONTRABAND)",
+                    BORDER: "var(--color-CONTRABAND-BORDER)",
+                    50: "var(--color-CONTRABAND-50)",
                 },
                 UNKNOWN: {
                     DEFAULT: "var(--color-UNKNOWN)",
