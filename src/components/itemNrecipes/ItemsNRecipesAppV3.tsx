@@ -54,6 +54,136 @@ interface RecipeNodeProps {
     multiplier: number;
 }
 
+export const itemTypes = [
+
+  "BACK",
+
+  "BAG",
+
+  "BASKET_SEEDS",
+
+  "BELT",
+
+  "BLOCK_STICK",
+
+  "BLOWER",
+
+  "BOOTS",
+
+  "BOW",
+
+  "BUCKET",
+
+  "CANDY",
+
+  "CHESTPLATE",
+
+  "CHRISTMAS_PRESENT",
+
+  "CLASS",
+
+  "COMPACTOR",
+
+  "CONSUMABLE",
+
+  "DAGGER",
+
+  "DIVORCE_POTION",
+
+  "EDIBLE",
+
+  "EGG_INCUBATOR",
+
+  "EXPERIENCE_TOME",
+
+  "FISHING_ROD",
+
+  "GHOST_VACUUM",
+
+  "GLOVES",
+
+  "GUN",
+
+  "HAMMER",
+
+  "HARVESTER",
+
+  "HELMET",
+
+  "INFINITE_BAG",
+
+  "INFINITE_BAG_MODULE",
+
+  "INFINITE_CHEST",
+
+  "INGREDIENT",
+
+  "JELLY",
+
+  "JUKEBOX",
+
+  "JUMP_PAD",
+
+  "KIBBLE",
+
+  "LABORER",
+
+  "LEGGINGS",
+
+  "LONG_SWORD",
+
+  "LUNAR_ENVELOPE",
+
+  "MOUNT",
+
+  "MUSIC_DISC",
+
+  "NECKLACE",
+
+  "OWNER_REMOVER",
+
+  "PET",
+
+  "PROFILE_ATTRIBUTE",
+
+  "RING",
+
+  "RUNE",
+
+  "SCROLL",
+
+  "SHIP",
+
+  "SHIP_COMPONENT",
+
+  "SKILL_EXPERIENCE_TOME",
+
+  "SOUL",
+
+  "SPAWNER",
+
+  "SPELL",
+
+  "SPONGE",
+
+  "STAFF",
+
+  "SUBSCRIPTION",
+
+  "SWORD",
+
+  "TELEPORTER",
+
+  "VANILLA_TOOL",
+
+  "VEIN",
+
+  "VILLAGE",
+
+  "WATERING_CAN",
+
+] as const;
+
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
 const ItemsNRecipesApp: FC = () => {
     const { t } = useTranslation(["itemsNrecipes", "items", "museum", "mbx"]);
@@ -367,9 +497,11 @@ const ItemsNRecipesApp: FC = () => {
             setApiItemsLoading(true);
             setApiItemsError(null);
             try {
-                const res = await fetch(
-                    `https://api.minebox.co/items?page=${apiItemsPage}&pageSize=${apiItemsPageSize}`,
-                );
+                const baseUrl = `https://api.minebox.co/items?page=${apiItemsPage}&pageSize=${apiItemsPageSize}`;
+                const url = selectedCategory
+                    ? `${baseUrl}&category=${encodeURIComponent(selectedCategory)}`
+                    : baseUrl;
+                const res = await fetch(url);
                 if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
                 const json = await res.json();
                 const items = Array.isArray(json.items)
@@ -406,7 +538,7 @@ const ItemsNRecipesApp: FC = () => {
         return () => {
             mounted = false;
         };
-    }, [apiItemsPage]);
+    }, [apiItemsPage, selectedCategory]);
 
     // Observe the sentinel inside the items container and load next page when visible
     useEffect(() => {
@@ -831,10 +963,54 @@ const ItemsNRecipesApp: FC = () => {
             {/* Navigation bar displaying item categories */}
 
             <div className="flex flex-row h-[calc(100vh-340px)] gap-4 ">
-                <div className="w-1/4 bg-gray-800 p-4 rounded-lg overflow-y-auto custom-scrollbar"></div>
+                <div className="w-1/4 bg-gray-800 p-4 rounded-lg overflow-y-auto custom-scrollbar">
+                    {/* Clear filter button when a category is selected */}
+                    {selectedCategory && (
+                        <div className="mb-3">
+                            <button
+                                className="text-sm text-gray-200 bg-red-600 hover:bg-red-700 px-2 py-1 rounded"
+                                onClick={() => {
+                                    setSelectedCategory(null);
+                                    setApiItemsPage(1);
+                                    setApiItems([]);
+                                    setApiItemsTotal(null);
+                                }}
+                            >
+                                {t("itemsNrecipes.clearFilter") || "Clear filter"}
+                            </button>
+                        </div>
+                    )}
+
+                    {itemTypes.map((type) => (
+                        <div
+                            key={type}
+                            className={`text-sm cursor-pointer mb-2 px-1 py-0.5 rounded ${selectedCategory === type ? "text-white bg-gray-700 font-semibold" : "text-gray-300 hover:text-white"}`}
+                            onClick={() => {
+                                // single-category filter: set selected category and reset pagination
+                                if (selectedCategory === type) {
+                                    // toggle off if clicking the same category
+                                    setSelectedCategory(null);
+                                    setApiItemsPage(1);
+                                    setApiItems([]);
+                                    setApiItemsTotal(null);
+                                } else {
+                                    setSelectedCategory(type);
+                                    setApiItemsPage(1);
+                                    setApiItems([]);
+                                    setApiItemsTotal(null);
+                                }
+                            }}
+                        >
+                            {type}
+                        </div>
+                    ))}
+                </div>
+
+
+
                 <div
                     ref={apiItemsContainerRef}
-                    className="w-2/4 rounded-lg overflow-y-auto custom-scrollbar gap-4 p-2 grid grid-cols-3"
+                    className="w-2/4 rounded-lg overflow-y-auto custom-scrollbar p-2 grid grid-cols-3 gap-x-4 gap-y-4 content-start auto-rows-max"
                 >
                     {apiItemsError && (
                         <div className="col-span-4 text-red-400 text-sm">
