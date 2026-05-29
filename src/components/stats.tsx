@@ -1,0 +1,49 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2026 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
+import type { TFunction } from "i18next";
+
+export const STATS = [
+  { key: "HEALTH", color: "#e32045" },
+  { key: "AGILITY", color: "#87c263" },
+  { key: "STRENGTH", color: "#59360b" },
+  { key: "INTELLIGENCE", color: "#e2402a" },
+  { key: "WISDOM", color: "#866df3" },
+  { key: "LUCK", color: "#7dcdfc" },
+  { key: "FORTUNE", color: "#f4923f" },
+  { key: "DEFENSE", color: "#cccccc" },
+
+  // New Stats
+  { key: "ATTACK_SPEED", color: "#d7bf71" },
+  { key: "ENDURANCE", color: "#28a12c" },
+  { key: "CHARISMA", color: "#d15fb4" },
+  { key: "MOVEMENT_SPEED", color: "#87ceeb" },
+  { key: "DEXTERITY", color: "#e0e0e0" },
+  { key: "VITALITY", color: "#4caf50" },
+  { key: "ENERGY", color: "#edba21" },
+
+  { key: "FARMING_FORTUNE", color: "#7bc74d" },
+  { key: "WOODCUTTING_FORTUNE", color: "#8b6914" },
+  { key: "MINING_FORTUNE", color: "#a0826d" },
+  { key: "FISHING_FORTUNE", color: "#5b9bd5" },
+  { key: "GATHERING_FORTUNE", color: "#e05555" },
+  { key: "LOOTING_FORTUNE", color: "#10b981" },
+] as const;
+
+export function getStatLabel(stat: string, t: TFunction<"common">): string {
+  const statInfo = STATS.find((s) => s.key === stat);
+  return statInfo ? t(`common:stats.${statInfo.key}`) : stat;
+}
+
+export function getStatColor(stat: string): string {
+  const statInfo = STATS.find((s) => s.key === stat);
+  return statInfo ? statInfo.color : "#fff";
+}
+
+export function getStatIconURL(stat: string): string {
+  const statInfo = STATS.find((s) => s.key === stat);
+  return statInfo ? `/assets/media/elemental/${statInfo.key.toLowerCase()}.png` : "/assets/media/elemental/defense.png"; 
+}

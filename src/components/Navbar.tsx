@@ -137,7 +137,7 @@ const LanguageSelector = ({
                             />
                             <span className="font-medium">{lang.label}</span>
                             {lang.code === currentCode && (
-                                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+                                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] animate-pulse"></div>
                             )}
                         </button>
                     ))}

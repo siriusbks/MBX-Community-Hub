@@ -14,7 +14,20 @@ export type StatKey =
     | "STRENGTH"
     | "FORTUNE"
     | "DEFENSE"
-    | "INTELLIGENCE";
+    | "INTELLIGENCE"
+    // New Stats SEASON 1
+    | "ATTACK_SPEED"
+    | "ENDURANCE"
+    | "CHARISMA"
+    | "MOVEMENT_SPEED"
+    | "DEXTERITY"
+    | "VITALITY"
+    | "FARMING_FORTUNE"
+    | "WOODCUTTING_FORTUNE"
+    | "MINING_FORTUNE"
+    | "FISHING_FORTUNE"
+    | "GATHERING_FORTUNE"
+    | "LOOTING_FORTUNE";
 
 export type StatMap = Partial<Record<StatKey, number>>;
 

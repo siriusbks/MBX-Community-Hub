@@ -15,6 +15,7 @@ import {
     ClipboardCopy,
     Eye,
     EyeOff,
+    LoaderCircleIcon,
     Minus,
     Plus,
     SeparatorHorizontal,
@@ -22,6 +23,8 @@ import {
     X,
 } from "lucide-react";
 import { getRarityBadge, getRarityColor } from "@utils/equipmentSlots";
+import i18next from "i18next";
+import { getStatLabel, getStatColor, getStatIconURL } from "@components/stats";
 
 // Definition of interfaces
 interface Group {
@@ -55,133 +58,131 @@ interface RecipeNodeProps {
 }
 
 export const itemTypes = [
+    "BACK",
 
-  "BACK",
+    "BAG",
 
-  "BAG",
+    "BASKET_SEEDS",
 
-  "BASKET_SEEDS",
+    "BELT",
 
-  "BELT",
+    "BLOCK_STICK",
 
-  "BLOCK_STICK",
+    "BLOWER",
 
-  "BLOWER",
+    "BOOTS",
 
-  "BOOTS",
+    "BOW",
 
-  "BOW",
+    "BUCKET",
 
-  "BUCKET",
+    "CANDY",
 
-  "CANDY",
+    "CHESTPLATE",
 
-  "CHESTPLATE",
+    "CHRISTMAS_PRESENT",
 
-  "CHRISTMAS_PRESENT",
+    "CLASS",
 
-  "CLASS",
+    "COMPACTOR",
 
-  "COMPACTOR",
+    "CONSUMABLE",
 
-  "CONSUMABLE",
+    "DAGGER",
 
-  "DAGGER",
+    "DIVORCE_POTION",
 
-  "DIVORCE_POTION",
+    "EDIBLE",
 
-  "EDIBLE",
+    "EGG_INCUBATOR",
 
-  "EGG_INCUBATOR",
+    "EXPERIENCE_TOME",
 
-  "EXPERIENCE_TOME",
+    "FISHING_ROD",
 
-  "FISHING_ROD",
+    "GHOST_VACUUM",
 
-  "GHOST_VACUUM",
+    "GLOVES",
 
-  "GLOVES",
+    "GUN",
 
-  "GUN",
+    "HAMMER",
 
-  "HAMMER",
+    "HARVESTER",
 
-  "HARVESTER",
+    "HELMET",
 
-  "HELMET",
+    "INFINITE_BAG",
 
-  "INFINITE_BAG",
+    "INFINITE_BAG_MODULE",
 
-  "INFINITE_BAG_MODULE",
+    "INFINITE_CHEST",
 
-  "INFINITE_CHEST",
+    "INGREDIENT",
 
-  "INGREDIENT",
+    "JELLY",
 
-  "JELLY",
+    "JUKEBOX",
 
-  "JUKEBOX",
+    "JUMP_PAD",
 
-  "JUMP_PAD",
+    "KIBBLE",
 
-  "KIBBLE",
+    "LABORER",
 
-  "LABORER",
+    "LEGGINGS",
 
-  "LEGGINGS",
+    "LONG_SWORD",
 
-  "LONG_SWORD",
+    "LUNAR_ENVELOPE",
 
-  "LUNAR_ENVELOPE",
+    "MOUNT",
 
-  "MOUNT",
+    "MUSIC_DISC",
 
-  "MUSIC_DISC",
+    "NECKLACE",
 
-  "NECKLACE",
+    "OWNER_REMOVER",
 
-  "OWNER_REMOVER",
+    "PET",
 
-  "PET",
+    "PROFILE_ATTRIBUTE",
 
-  "PROFILE_ATTRIBUTE",
+    "RING",
 
-  "RING",
+    "RUNE",
 
-  "RUNE",
+    "SCROLL",
 
-  "SCROLL",
+    "SHIP",
 
-  "SHIP",
+    "SHIP_COMPONENT",
 
-  "SHIP_COMPONENT",
+    "SKILL_EXPERIENCE_TOME",
 
-  "SKILL_EXPERIENCE_TOME",
+    "SOUL",
 
-  "SOUL",
+    "SPAWNER",
 
-  "SPAWNER",
+    "SPELL",
 
-  "SPELL",
+    "SPONGE",
 
-  "SPONGE",
+    "STAFF",
 
-  "STAFF",
+    "SUBSCRIPTION",
 
-  "SUBSCRIPTION",
+    "SWORD",
 
-  "SWORD",
+    "TELEPORTER",
 
-  "TELEPORTER",
+    "VANILLA_TOOL",
 
-  "VANILLA_TOOL",
+    "VEIN",
 
-  "VEIN",
+    "VILLAGE",
 
-  "VILLAGE",
-
-  "WATERING_CAN",
-
+    "WATERING_CAN",
 ] as const;
 
 // ItemsNRecipesApp: Main component handling the display of items, modals and recipe details.
@@ -497,7 +498,7 @@ const ItemsNRecipesApp: FC = () => {
             setApiItemsLoading(true);
             setApiItemsError(null);
             try {
-                const baseUrl = `https://api.minebox.co/items?page=${apiItemsPage}&pageSize=${apiItemsPageSize}`;
+                const baseUrl = `https://api.minebox.co/items?page=${apiItemsPage}&pageSize=${apiItemsPageSize}&locale=${i18next.language}`;
                 const url = selectedCategory
                     ? `${baseUrl}&category=${encodeURIComponent(selectedCategory)}`
                     : baseUrl;
@@ -606,7 +607,7 @@ const ItemsNRecipesApp: FC = () => {
             setItemDetailsData(null);
 
             const res = await fetch(
-                `https://api.minebox.co/item/${encodeURIComponent(id)}`,
+                `https://api.minebox.co/item/${encodeURIComponent(id)}?locale=${i18next.language}`,
                 { signal: controller.signal },
             );
             if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
@@ -966,9 +967,9 @@ const ItemsNRecipesApp: FC = () => {
                 <div className="w-1/4 bg-gray-800 p-4 rounded-lg overflow-y-auto custom-scrollbar">
                     {/* Clear filter button when a category is selected */}
                     {selectedCategory && (
-                        <div className="mb-3">
+                        <div className="w-full flex">
                             <button
-                                className="text-sm text-gray-200 bg-red-600 hover:bg-red-700 px-2 py-1 rounded"
+                                className="mb-2 w-full text-sm text-gray-200 bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
                                 onClick={() => {
                                     setSelectedCategory(null);
                                     setApiItemsPage(1);
@@ -976,37 +977,43 @@ const ItemsNRecipesApp: FC = () => {
                                     setApiItemsTotal(null);
                                 }}
                             >
-                                {t("itemsNrecipes.clearFilter") || "Clear filter"}
+                                {t("itemsNrecipes.clearFilter") ||
+                                    "Clear filter"}
                             </button>
                         </div>
                     )}
 
-                    {itemTypes.map((type) => (
-                        <div
-                            key={type}
-                            className={`text-sm cursor-pointer mb-2 px-1 py-0.5 rounded ${selectedCategory === type ? "text-white bg-gray-700 font-semibold" : "text-gray-300 hover:text-white"}`}
-                            onClick={() => {
-                                // single-category filter: set selected category and reset pagination
-                                if (selectedCategory === type) {
-                                    // toggle off if clicking the same category
-                                    setSelectedCategory(null);
-                                    setApiItemsPage(1);
-                                    setApiItems([]);
-                                    setApiItemsTotal(null);
-                                } else {
-                                    setSelectedCategory(type);
-                                    setApiItemsPage(1);
-                                    setApiItems([]);
-                                    setApiItemsTotal(null);
-                                }
-                            }}
-                        >
-                            {type}
-                        </div>
-                    ))}
+                    <span className="grid grid-cols-2 gap-1">
+                        {itemTypes.map((type) => (
+                            <div
+                                key={type}
+                                className={`text-xs cursor-pointer px-2 py-1 rounded transition-colors ${selectedCategory === type ? "text-white bg-gray-700 font-semibold" : "text-gray-300 hover:text-white"}`}
+                                onClick={() => {
+                                    // single-category filter: set selected category and reset pagination
+                                    if (selectedCategory === type) {
+                                        // toggle off if clicking the same category
+                                        setSelectedCategory(null);
+                                        setApiItemsPage(1);
+                                        setApiItems([]);
+                                        setApiItemsTotal(null);
+                                    } else {
+                                        setSelectedCategory(type);
+                                        setApiItemsPage(1);
+                                        setApiItems([]);
+                                        setApiItemsTotal(null);
+                                    }
+                                }}
+                            >
+                                <img
+                                    src={`/assets/media/museum/not-found.png`}
+                                    alt={type}
+                                    className="inline w-5 h-5 mr-1"
+                                />
+                                {type}
+                            </div>
+                        ))}
+                    </span>
                 </div>
-
-
 
                 <div
                     ref={apiItemsContainerRef}
@@ -1049,10 +1056,16 @@ const ItemsNRecipesApp: FC = () => {
                                     <div
                                         className={`text-xs mt-1 rounded px-1 py-0.25 ${getRarityBadge(it.rarity ?? "UNKNOWN")}`}
                                     >
-                                        {it.rarity ??
-                                            detailsIndex?.[it.id ?? it.name]
-                                                ?.rarity ??
-                                            "UNKNOWN"}
+                                        {t(
+                                            "rarity." +
+                                                (
+                                                    it.rarity ??
+                                                    detailsIndex?.[
+                                                        it.id ?? it.name
+                                                    ]?.rarity ??
+                                                    "UNKNOWN"
+                                                ).toLowerCase(),
+                                        ).toUpperCase()}
                                     </div>
                                     <div className="text-xs opacity-70">
                                         Lvl. {it.level}
@@ -1091,11 +1104,20 @@ const ItemsNRecipesApp: FC = () => {
 
                 <div
                     id="itemDetails"
-                    className={`w-1/4 bg-gray-800 p-4 rounded-lg  overflow-y-auto custom-scrollbar border-4 border-${itemDetailsData?.rarity ?? "none"}`}
+                    className={`w-1/4  p-4 rounded-lg  overflow-y-auto custom-scrollbar border-4 bg-${itemDetailsData?.rarity ?? "none"}-50 border-${itemDetailsData?.rarity ?? "none"}`}
                 >
                     {itemDetailsLoading ? (
-                        <div className="text-center text-gray-300">
-                            Loading...
+                        <div className="w-full flex flex-col items-center justify-center py-8 gap-3 text-center text-gray-400">
+                            <LoaderCircleIcon
+                                className="mx-auto mb-2 animate-spin"
+                                size={24}
+                            />
+                            <p className="text-lg font-semibold text-gray-200">
+                                Loading item details...
+                            </p>
+                            <p className="text-sm max-w-xs">
+                                Data is fetched from the API when you click an item on the left. If it takes too long, it might be due to a slow network or API issues. You can try again by clicking another item or refreshing the page.
+                            </p>
                         </div>
                     ) : itemDetailsError ? (
                         <div className="text-red-400">{itemDetailsError}</div>
@@ -1110,7 +1132,13 @@ const ItemsNRecipesApp: FC = () => {
                                 <div
                                     className={`px-1 py-0.5 font-bold bg-${itemDetailsData.rarity} rounded`}
                                 >
-                                    {itemDetailsData.rarity ?? "UNKNOWN"}
+                                    {t(
+                                        "rarity." +
+                                            (
+                                                itemDetailsData.rarity ??
+                                                "UNKNOWN"
+                                            ).toLowerCase(),
+                                    ).toUpperCase()}
                                 </div>
                                 <div>Lvl. {itemDetailsData.level ?? "-"}</div>
                             </div>
@@ -1162,7 +1190,28 @@ const ItemsNRecipesApp: FC = () => {
                                                       className="flex flex-row gap-1 justify-between"
                                                       key={statKey}
                                                   >
-                                                      <p>{statKey}</p>
+                                                      <p
+                                                          className={`flex items-center justify-center leading-none font-semibold text-shadow-sm `}
+                                                          style={{
+                                                              color:
+                                                                  getStatColor(
+                                                                      statKey,
+                                                                  ) ?? "#fff",
+                                                          }}
+                                                      >
+                                                          <img
+                                                              src={getStatIconURL(
+                                                                  statKey,
+                                                              )}
+                                                              alt={statKey}
+                                                              className="inline w-4 h-4 mr-1 drop-shadow-sm"
+                                                          />
+                                                          {getStatLabel(
+                                                              statKey,
+                                                              t,
+                                                          )}
+                                                          :
+                                                      </p>
                                                       <p>
                                                           {Array.isArray(
                                                               statVal,
@@ -1257,12 +1306,18 @@ const ItemsNRecipesApp: FC = () => {
                                 <div className="text-sm text-gray-300 mt-2 w-full">
                                     <p className="font-bold">Used in Recipes</p>
                                     <div className="grid grid-cols-7 gap-2 mt-2">
-                                        {(
-                                            Array.isArray(itemDetailsData.used_in_recipes)
-                                                ? itemDetailsData.used_in_recipes
-                                                : Array.isArray(itemDetailsData.used_in_recipes?.ingredients)
-                                                ? itemDetailsData.used_in_recipes.ingredients
-                                                : []
+                                        {(Array.isArray(
+                                            itemDetailsData.used_in_recipes,
+                                        )
+                                            ? itemDetailsData.used_in_recipes
+                                            : Array.isArray(
+                                                    itemDetailsData
+                                                        .used_in_recipes
+                                                        ?.ingredients,
+                                                )
+                                              ? itemDetailsData.used_in_recipes
+                                                    .ingredients
+                                              : []
                                         ).map((ing: any) => (
                                             <div
                                                 key={ing.id}
@@ -1275,9 +1330,13 @@ const ItemsNRecipesApp: FC = () => {
                                                             ? `data:image/png;base64,${ing.item.image}`
                                                             : "/assets/media/item/placeholder.png"
                                                     }
-                                                    alt={ing?.item?.name ?? ing.id}
+                                                    alt={
+                                                        ing?.item?.name ??
+                                                        ing.id
+                                                    }
                                                     className={`flex rounded aspect-square ${getRarityColor(
-                                                        ing.item?.rarity ?? "UNKNOWN",
+                                                        ing.item?.rarity ??
+                                                            "UNKNOWN",
                                                     )} m-1`}
                                                 />
                                                 <div className="text-xs text-gray-400 -mt-1">
@@ -1289,14 +1348,59 @@ const ItemsNRecipesApp: FC = () => {
                                 </div>
                             )}
                             {itemDetailsData.dropped_by && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
-                                    <p className="font-bold">Dropped By</p>
-                                </div>
+                                <>
+                                    <div className="text-sm text-gray-300 mt-2 w-full">
+                                        <p className="font-bold">Dropped By</p>
+                                    </div>
+                                    <div className="grid grid-cols-4 gap-2 mt-2">
+                                        {(Array.isArray(
+                                            itemDetailsData.dropped_by,
+                                        )
+                                            ? itemDetailsData.dropped_by
+                                            : []
+                                        ).map((d: any) => (
+                                            <div
+                                                key={d.creature_id ?? d.name}
+                                                className="flex flex-col items-center bg-gray-600 bg-opacity-30 border border-gray-500 rounded p-1 aspect-square"
+                                                title={d.name ?? d.creature_id}
+                                            >
+                                                <img
+                                                    src={
+                                                        d.image ??
+                                                        "/assets/media/item/placeholder.png"
+                                                    }
+                                                    alt={
+                                                        d.name ?? d.creature_id
+                                                    }
+                                                    className="w-12 h-12 object-contain rounded m-1"
+                                                ></img>
+                                                <div className="text-xs text-gray-400 -mt-1 text-center">
+                                                    x
+                                                    {Array.isArray(d.amount)
+                                                        ? `${d.amount[0]}-${d.amount[1]}`
+                                                        : (d.amount ?? 1)}
+                                                </div>
+                                                <div className="text-xs text-gray-400 -mt-1 text-center">
+                                                    {typeof d.chance ===
+                                                    "number"
+                                                        ? `${Number(((d.chance || 0) * 100).toFixed(6))}%`
+                                                        : String(d.chance)}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>
                             )}
                         </div>
                     ) : (
-                        <div className="text-gray-400">
-                            Kliknij kafelek, aby zobaczyć szczegóły
+                        <div className="w-full flex flex-col items-center justify-center py-8 gap-3 text-center text-gray-400">
+                            <p className="text-lg font-semibold text-gray-200">
+                                No item selected
+                            </p>
+                            <p className="text-sm max-w-xs">
+                                Click an item on the left to see its details,
+                                recipe, drops and where it's used.
+                            </p>
                         </div>
                     )}
                 </div>
