@@ -775,7 +775,7 @@ const BestiaryPage: FC = () => {
                             &times;
                         </span>
 
-                        <div className="grid grid-cols-1 w-full h-full">
+                        <div className="grid grid-cols-1 w-full h-full min-h-0">
                             {apiDetailsLoading ? (
                                 <div className="text-center text-gray-300">
                                     Loading...
@@ -785,8 +785,8 @@ const BestiaryPage: FC = () => {
                                     {apiDetailsError}
                                 </div>
                             ) : apiSelectedDetails ? (
-                                <div className="flex flex-row gap-4 h-full">
-                                    <div className="w-1/4 bg-gray-800 rounded-lg p-4">
+                                <div className="flex flex-col lg:flex-row gap-4 h-full overflow-y-auto lg:overflow-hidden custom-scrollbar lg:pr-0">
+                                    <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 flex-shrink-0 lg:flex-shrink-1">
                                         <div className="flex items-center flex-col gap-4">
                                             <div className="w-full my-auto">
                                                 <div className="flex justify-center gap-2 items-center">
@@ -901,9 +901,9 @@ const BestiaryPage: FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="w-2/4">
+                                    <div className="w-full lg:w-2/4 flex flex-col lg:h-full lg:min-h-0">
                                         {/* Family (from API) */}
-                                        <div className="mt-4">
+                                        <div className="mt-4 lg:flex-shrink-0">
                                             <div className="text-sm text-gray-200 font-semibold mb-2">
                                                 Family
                                             </div>
@@ -917,7 +917,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             ) : apiFamilyCreatures &&
                                               apiFamilyCreatures.length > 0 ? (
-                                                <div className="grid grid-cols-6 gap-3">
+                                                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
                                                     {apiFamilyCreatures.map(
                                                         (fc) => (
                                                             <button
@@ -973,14 +973,15 @@ const BestiaryPage: FC = () => {
                                         </div>
 
                                         {/* Drops */}
-                                        <div>
-                                            <div className="text-sm text-gray-200 font-semibold mb-2">
+                                        <div className="flex flex-col lg:flex-1 lg:min-h-0 mt-4">
+                                            <div className="text-sm text-gray-200 font-semibold mb-2 lg:flex-shrink-0">
                                                 Drops
                                             </div>
                                             {apiSelectedDetails.drops &&
                                             apiSelectedDetails.drops.length >
                                                 0 ? (
-                                                <div className="grid grid-cols-6 gap-3">
+                                                <div className="lg:overflow-y-auto overflow-x-hidden custom-scrollbar lg:flex-1 lg:pr-2 lg:pb-2">
+                                                    <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
                                                     {apiSelectedDetails.drops
                                                         .slice()
                                                         .map((d, i) => {
@@ -1077,6 +1078,7 @@ const BestiaryPage: FC = () => {
                                                                 </div>
                                                             );
                                                         })}
+                                                    </div>
                                                 </div>
                                             ) : (
                                                 <div className="text-xs text-gray-400 italic">
@@ -1086,11 +1088,11 @@ const BestiaryPage: FC = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-1/4 bg-gray-800 rounded-lg p-4 gap-2 flex flex-col">
-                                        <div className="text-sm text-gray-200 font-semibold mb-2">
+                                    <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 gap-2 flex flex-col lg:h-full lg:min-h-0">
+                                        <div className="text-sm text-gray-200 font-semibold mb-2 lg:flex-shrink-0">
                                             Collection
                                         </div>
-                                        <div className="grid grid-cols-4 gap-2">
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:overflow-y-auto overflow-x-hidden custom-scrollbar lg:flex-1 lg:pr-2 lg:pb-2">
                                             {Array.from({ length: 28 }).map(
                                                 (_, i) => (
                                                     <div
@@ -1104,11 +1106,11 @@ const BestiaryPage: FC = () => {
                                                 ),
                                             )}
                                         </div>
-                                        <div className="text-sm text-gray-200 font-semibold mb-2 mt-auto">
+                                        <div className="text-sm text-gray-200 font-semibold mb-2 mt-auto lg:flex-shrink-0">
                                             Map
                                         </div>
                                         {/* Map Placeholder */}
-                                        <div className="aspect-video  bg-gray-700 rounded"></div>
+                                        <div className="aspect-video  bg-gray-700 rounded lg:flex-shrink-0"></div>
                                     </div>
                                 </div>
                             ) : null}
