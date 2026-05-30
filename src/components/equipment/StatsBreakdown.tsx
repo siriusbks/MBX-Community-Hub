@@ -10,7 +10,7 @@ import { EQUIPMENT_SLOTS } from "@utils/equipmentSlots";
 import { ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const statColors: Record<string, string> = {
+export const statColors: Record<string, string> = {
     HEALTH: "#e02044",
     AGILITY: "#85c062",
     STRENGTH: "#58350b",
@@ -19,6 +19,19 @@ const statColors: Record<string, string> = {
     LUCK: "#7ccbf9",
     FORTUNE: "#f1903e",
     DEFENSE: "#0045cd",
+    // New Stats
+    ATTACK_SPEED: "#f59e0b",
+    ENDURANCE: "#10b981",
+    CHARISMA: "#ec4899",
+    MOVEMENT_SPEED: "#3b82f6",
+    DEXTERITY: "#8b5cf6",
+    VITALITY: "#ef4444",
+    FARMING_FORTUNE: "#22c55e",
+    WOODCUTTING_FORTUNE: "#a855f7",
+    MINING_FORTUNE: "#3b82f6",
+    FISHING_FORTUNE: "#ec4899",
+    GATHERING_FORTUNE: "#f59e0b",
+    LOOTING_FORTUNE: "#10b981",
 };
 
 interface Props {
