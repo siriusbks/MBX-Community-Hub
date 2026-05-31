@@ -776,7 +776,7 @@ const BestiaryPage: FC = () => {
                             &times;
                         </span>
 
-                        <div className="grid grid-cols-1 w-full h-full">
+                        <div className="grid grid-cols-1 w-full h-full min-h-0">
                             {apiDetailsLoading ? (
                                 <div className="text-center text-gray-300">
                                     Loading...
@@ -786,8 +786,8 @@ const BestiaryPage: FC = () => {
                                     {apiDetailsError}
                                 </div>
                             ) : apiSelectedDetails ? (
-                                <div className="flex flex-row gap-4 max-h-full overflow-auto">
-                                    <div className="w-1/4 bg-gray-800 rounded-lg p-4">
+                                <div className="flex flex-col lg:flex-row gap-4 h-full overflow-y-auto lg:overflow-hidden custom-scrollbar lg:pr-0">
+                                    <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 flex-shrink-0 lg:flex-shrink-1">
                                         <div className="flex items-center flex-col gap-4">
                                             <div className="w-full my-auto">
                                                 <div className="flex justify-center gap-2 items-center">
@@ -881,7 +881,7 @@ const BestiaryPage: FC = () => {
                                                     )}
                                                 </div>
 
-                                                <div className="mt-4">
+                                                <div className="mt-4 lg:flex-shrink-0">
                                                     <div className="font-semibold text-white mb-1">
                                                         Zones
                                                     </div>
@@ -917,8 +917,8 @@ const BestiaryPage: FC = () => {
                                                     {apiFamilyError}
                                                 </div>
                                             ) : apiFamilyCreatures &&
-                                              apiFamilyCreatures.length > 0 ? (
-                                                <div className="grid grid-cols-6 gap-3">
+                                              apiFamilyCreatures.length > 0 ? (                                                
+                                              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
                                                     {apiFamilyCreatures.map(
                                                         (fc) => (
                                                             <button
