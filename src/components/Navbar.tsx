@@ -27,7 +27,18 @@ import { useState, useEffect, useRef } from "react";
 // Navigation data driven consts — edit these to change links/menu items
 const NAV_LINKS: Array<any> = [
     { id: "map", to: "/map", icon: Map, labelKey: "navbar.map", matchPrefix: "/mappage" },
-    { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary", matchPrefix: "/bestiary" },
+    {
+        id: "codex",
+        dropdown: true,
+        icon: Wrench,
+        labelKey: "navbar.codex",
+        items: [
+            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary" },
+            { id: "class_and_spells", to: "/classAndSpells", icon: Bone, labelKey: "navbar.class_and_spells", badge: "Coming Soon" },
+            { id: "expeditions", to: "/expeditions", icon: Bone, labelKey: "navbar.expeditions", badge: "Coming Soon" },
+            { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
+        ],
+    },    
     {
         id: "tools",
         dropdown: true,
@@ -37,12 +48,11 @@ const NAV_LINKS: Array<any> = [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
             { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
             { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
-            { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
     { 
-        id: "Archives",
+        id: "archives",
         dropdown: true,
         icon: FolderClosed,
         labelKey: "navbar.archives",
@@ -152,19 +162,14 @@ export const Navbar = () => {
     const { t } = useTranslation("navbar");
     const location = useLocation();
 
-    const [toolsOpen, setToolsOpen] = useState(false);
-    const toolsRef = useRef<HTMLDivElement>(null);
-    const [archivesOpen, setArchivesOpen] = useState(false);
-    const archivesRef = useRef<HTMLDivElement>(null);
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
-                setToolsOpen(false);
-            }
-            if (archivesRef.current && !archivesRef.current.contains(event.target as Node)) {
-                setArchivesOpen(false);
-            }
+            const refs = Object.values(dropdownRefs.current);
+            const clickedInsideAny = refs.some((r) => r && r.contains(event.target as Node));
+            if (!clickedInsideAny) setOpenDropdown(null);
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -193,14 +198,13 @@ export const Navbar = () => {
                             const dropdownActive = link.items?.some((item: any) =>
                                 location.pathname.startsWith(item.to)
                             );
-                            const isTools = link.id === "tools";
-                            const isOpen = isTools ? toolsOpen : archivesOpen;
-                            const toggleOpen = isTools
-                                ? () => setToolsOpen((v) => !v)
-                                : () => setArchivesOpen((v) => !v);
-                            const ref = isTools ? toolsRef : archivesRef;
+                            const isOpen = openDropdown === link.id;
+                            const toggleOpen = () => setOpenDropdown((v) => (v === link.id ? null : link.id));
+                            const setRef = (el: HTMLDivElement | null) => {
+                                dropdownRefs.current[link.id] = el;
+                            };
                             return (
-                                <div className="relative" key={link.id} ref={ref}>
+                                <div className="relative" key={link.id}>
                                     <button
                                         onClick={toggleOpen}
                                         className={`flex items-center gap-2 px-2 lg:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
@@ -219,38 +223,27 @@ export const Navbar = () => {
                                     </button>
 
                                     {isOpen && (
-                                        <div className="absolute left-0 mt-2 w-52 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden p-1 animate-in fade-in slide-in-from-top-2 duration-200 origin-top-left" >
+                                        <div ref={setRef} className="absolute left-0 mt-2 w-52 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden p-1 animate-in fade-in slide-in-from-top-2 duration-200 origin-top-left" >
                                             {link.items.map((item: any) => (
                                                 <NavLink
                                                     key={item.id}
                                                     to={item.to}
-                                                    onClick={() => {
-                                                        if (isTools) setToolsOpen(false);
-                                                        else setArchivesOpen(false);
-                                                    }}
-                                                    className={({ isActive }) =>
-                                                        `group w-full flex items-center gap-3 px-3 py-2 text-sm transition-all relative rounded-md ${
-                                                            isActive 
-                                                                ? "text-gray-300 bg-white/5" 
-                                                                : "text-gray-300 hover:text-white hover:bg-white/5"
-                                                        }`
-                                                    }
-                                                >
-                                                    {({ isActive }) => (
-                                                        <>
-                                                            <div className={`p-1.5 rounded-md transition-colors ${isActive ? "bg-white/5 text-gray-200" : "bg-white/5 text-gray-300 group-hover:text-white group-hover:bg-white/10"}`}>
-                                                                {React.createElement(item.icon, { className: "w-4 h-4" })}
-                                                            </div>
-                                                            <div className="flex flex-col">
-                                                                <span className="font-medium">{t(item.labelKey)}</span>
-                                                                {item.badge && (
-                                                                    <span className={`text-[10px] uppercase font-bold tracking-wider ${item.event ? "text-white" : "text-green-400"}`}>
-                                                                        {item.badge}
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                        </>
-                                                    )}
+                                                    onClick={() => setOpenDropdown(null)}
+                                                    className={`group w-full flex items-center gap-3 px-3 py-2 text-sm transition-all relative rounded-md ${location.pathname.startsWith(item.to) ? "text-gray-300 bg-white/5" : "text-gray-300 hover:text-white hover:bg-white/5"}`}
+                                                    >
+                                                    <>
+                                                        <div className={`p-1.5 rounded-md transition-colors ${location.pathname.startsWith(item.to) ? "bg-white/5 text-gray-200" : "bg-white/5 text-gray-300 group-hover:text-white group-hover:bg-white/10"}`}>
+                                                            {React.createElement(item.icon, { className: "w-4 h-4" })}
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="font-medium">{t(item.labelKey)}</span>
+                                                            {item.badge && (
+                                                                <span className={`text-[10px] uppercase font-bold tracking-wider ${item.event ? "text-white" : "text-green-400"}`}>
+                                                                    {item.badge}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </>
                                                 </NavLink>
                                             ))}
                                         </div>
