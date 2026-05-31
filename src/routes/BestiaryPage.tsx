@@ -8,7 +8,14 @@ import React, { FC, useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Bone, Eye, LoaderCircleIcon, Package, Star, AlertTriangleIcon } from "lucide-react";
+import {
+    Bone,
+    Eye,
+    LoaderCircleIcon,
+    Package,
+    Star,
+    AlertTriangleIcon,
+} from "lucide-react";
 import ItemImage from "@components/ItemImage";
 import { getRarityColor, getRarityBadge } from "@utils/equipmentSlots";
 
@@ -51,6 +58,11 @@ const BestiaryPage: FC = () => {
         string
     > | null>(null);
 
+    // UI filters (dropdowns + toggle)
+    const [filterRegion, setFilterRegion] = useState<string>("all");
+    const [filterType, setFilterType] = useState<string>("all");
+    const [onlyBosses, setOnlyBosses] = useState<boolean>(false);
+
     // API bestiary (v3) pagination
     type ApiCreature = {
         id: string;
@@ -61,6 +73,7 @@ const BestiaryPage: FC = () => {
         level_max?: number;
         health?: [number, number];
         image?: string;
+        zones?: string[];
     };
 
     const [apiCreatures, setApiCreatures] = useState<ApiCreature[]>([]);
@@ -101,6 +114,63 @@ const BestiaryPage: FC = () => {
     >(null);
     const [apiFamilyLoading, setApiFamilyLoading] = useState(false);
     const [apiFamilyError, setApiFamilyError] = useState<string | null>(null);
+
+    // Static families list (mirror of API 'families' payload)
+    const families = [
+        { id: "bamboo", name: "Bamboo" },
+        { id: "boos", name: "Boos" },
+        { id: "cactus", name: "Cactus" },
+        { id: "caw", name: "Caw" },
+        { id: "xmas", name: "Christmas" },
+        { id: "class_boss", name: "Classers" },
+        { id: "cloud_skel", name: "Cloud Skeleton" },
+        { id: "coconut", name: "Coconut" },
+        { id: "crabs", name: "Crabs" },
+        { id: "debris", name: "Debris" },
+        { id: "desert", name: "Desert" },
+        { id: "dragons", name: "Dragons" },
+        { id: "droid", name: "Droid" },
+        { id: "fastfood", name: "Fast Food" },
+        { id: "fey", name: "Fey" },
+        { id: "ghost_monkey", name: "Ghost Monkey" },
+        { id: "goblins", name: "Goblins" },
+        { id: "goofish", name: "Goofish" },
+        { id: "halloween", name: "Halloween" },
+        { id: "ice_fox", name: "Ice Fox" },
+        { id: "ice_golem", name: "Ice Golem" },
+        { id: "ice_wolf", name: "Ice Wolf" },
+        { id: "kobold", name: "Kobold" },
+        { id: "monkey", name: "Monkey" },
+        { id: "moskito", name: "Moskito" },
+        { id: "mushrooms", name: "Mushrooms" },
+        { id: "ogre", name: "Ogre" },
+        { id: "orcs", name: "Orcs" },
+        { id: "panda", name: "Panda" },
+        { id: "pirate_farmers", name: "Pirate Farmers" },
+        { id: "props", name: "Props" },
+        { id: "pyramid_skel", name: "Pyramid Skeleton" },
+        { id: "rat", name: "Rat" },
+        { id: "rats", name: "Rats" },
+        { id: "scarecrow", name: "Scarecrow" },
+        { id: "skeletons", name: "Skeletons" },
+        { id: "slimes", name: "Slimes" },
+        { id: "snake", name: "Snake" },
+        { id: "snow_skel", name: "Snow Skeleton" },
+        { id: "spiders", name: "Spiders" },
+        { id: "trees", name: "Trees" },
+        { id: "wolfang", name: "Wolfang" },
+    ];
+
+    // Static zones list to use for zone/region filtering
+    const creatureZones = [
+        { value: "spawn", label: "Spawn" },
+        { value: "island_tropical", label: "Tropical Island" },
+        { value: "island_plain", label: "Plain Island" },
+        { value: "island_bamboo", label: "Bamboo Island" },
+        { value: "island_desert", label: "Desert Island" },
+        { value: "island_snow", label: "Snow Island" },
+        { value: "expedition", label: "Expedition" },
+    ];
 
     useEffect(() => {
         if (!apiSelectedId) {
@@ -183,31 +253,50 @@ const BestiaryPage: FC = () => {
             setApiLoading(true);
             setApiError(null);
             try {
-                const res = await fetch(
-                        `https://api.minebox.co/bestiary/?page=${apiPage}&pageSize=${apiPageSize}`,
-                    );
+                const params = new URLSearchParams();
+                params.set("page", String(apiPage));
+                params.set("pageSize", String(apiPageSize));
+                if (filterType && filterType !== "all") params.set("family", String(filterType));
+                // don't send a zone param for 'expedition' — we'll treat it specially client-side
+                if (filterRegion && filterRegion !== "all" && filterRegion !== "expedition") params.set("zone", String(filterRegion));
+                if (onlyBosses) params.set("boss", "true");
+
+                const url = `https://api.minebox.co/bestiary/?${params.toString()}`;
+                const res = await fetch(url);
                 if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
                 const json = await res.json();
                 const creatures = Array.isArray(json.creatures)
                     ? (json.creatures as ApiCreature[])
                     : [];
                 if (!mounted) return;
-                setApiCreatures((prev) =>
-                    apiPage === 1 ? creatures : [...prev, ...creatures],
-                );
-                    const total = typeof json.total === "number" ? json.total : null;
-                    setApiTotal(total);
+                // If expedition selected, show only creatures that have no zones listed
+                if (filterRegion === "expedition") {
+                    const filtered = creatures.filter(
+                        (c) => !c.zones || (Array.isArray(c.zones) && c.zones.length === 0),
+                    );
+                    setApiCreatures((prev) =>
+                        apiPage === 1 ? filtered : [...prev, ...filtered],
+                    );
+                } else {
+                    setApiCreatures((prev) =>
+                        apiPage === 1 ? creatures : [...prev, ...creatures],
+                    );
+                }
+                const total =
+                    typeof json.total === "number" ? json.total : null;
+                setApiTotal(total);
 
-                    // Automatically fetch the next page sequentially if more creatures remain.
-                    // We compute how many items have been fetched including this page and
-                    // request the next page only when needed. This keeps requests sequential
-                    // instead of firing all pages in parallel.
-                    if (total !== null) {
-                        const fetchedSoFar = (apiPage - 1) * apiPageSize + creatures.length;
-                        if (fetchedSoFar < total) {
-                            setApiPage(apiPage + 1);
-                        }
+                // Automatically fetch the next page sequentially if more creatures remain.
+                // We compute how many items have been fetched including this page and
+                // request the next page only when needed. This keeps requests sequential
+                // instead of firing all pages in parallel.
+                if (total !== null) {
+                    const fetchedSoFar =
+                        (apiPage - 1) * apiPageSize + creatures.length;
+                    if (fetchedSoFar < total) {
+                        setApiPage(apiPage + 1);
                     }
+                }
             } catch (e: any) {
                 if (!mounted) return;
                 setApiError(e?.message ?? "Failed to load API bestiary");
@@ -219,8 +308,16 @@ const BestiaryPage: FC = () => {
         return () => {
             mounted = false;
         };
+        // Include filters so fetch uses current selection
+    }, [apiPage, filterRegion, filterType, onlyBosses]);
+
+    // Reset pagination when filters change
+    useEffect(() => {
+        setApiCreatures([]);
+        setApiTotal(null);
+        setApiPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apiPage]);
+    }, [filterRegion, filterType, onlyBosses]);
 
     useEffect(() => {
         let mounted = true;
@@ -562,6 +659,9 @@ const BestiaryPage: FC = () => {
         );
     };
 
+    
+    
+
     const renderResists = (mob: BestiaryInfo) => {
         return (
             <div className="text-[11px] text-gray-300 flex justify-between mt-1">
@@ -646,8 +746,8 @@ const BestiaryPage: FC = () => {
     };
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
-            <div className="text-center mb-8">
+        <div className="p-8 max-w-8xl mx-auto">
+            {/*<div className="text-center mb-8">
                 <Bone className="mx-auto mb-2 h-16 w-16 text-green-500 bg-opacity-20 bg-green-500 p-3 rounded-lg" />
                 <h1 className="text-4xl font-bold text-white mb-1">
                     {t("bestiary.title", { ns: "bestiary" })}
@@ -656,33 +756,61 @@ const BestiaryPage: FC = () => {
                     {t("bestiary.subtitle", { ns: "bestiary" })}
                 </p>
                 <div className="mt-4 h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
-            </div>
+            </div>*/}
 
-                        <section
-                            className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
-                            role="alert"
-                            aria-live="assertive"
-                        >
-                            <div className="flex items-start gap-3">
-                                <AlertTriangleIcon
-                                    className="text-yellow-500 flex-shrink-0 mt-0.5"
-                                    size={20}
-                                    aria-hidden="true"
-                                />
-                                <div className="text-sm text-yellow-200/90">
-                                    <p className="font-medium mb-1">
-                                        Bestiary Update: API Migration in Progress
-                                    </p>
-                                    <p className="text-yellow-200/70">
-                                        We're in the process of migrating our bestiary data to a new API.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
+            <section className="flex flex-row items-center gap-3 mb-4">
+                <div className="flex items-center gap-2">
+                    <label className="text-sm text-gray-300 mr-2">Region</label>
+                    <select
+                        value={filterRegion}
+                        onChange={(e) => setFilterRegion(e.target.value)}
+                        className="bg-gray-800 text-white border border-gray-700 rounded px-3 py-2 text-sm"
+                    >
+                        <option value="all">All</option>
+                        {creatureZones.map((z) => (
+                            <option key={z.value} value={z.value}>
+                                {z.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <label className="text-sm text-gray-300 mr-2">Type</label>
+                    <select
+                        value={filterType}
+                        onChange={(e) => setFilterType(e.target.value)}
+                        className="bg-gray-800 text-white border border-gray-700 rounded px-3 py-2 text-sm max-w-xs"
+                    >
+                        <option value="all">All</option>
+                        {families.map((f) => (
+                            <option key={f.id} value={f.id}>
+                                {f.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="flex items-center gap-2 ml-auto">
+                    <label className="text-sm text-gray-300 mr-2">Only Bosses</label>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={onlyBosses}
+                            onChange={(e) => setOnlyBosses(e.target.checked)}
+                        />
+                        <div className="w-11 h-6 bg-gray-700 peer-checked:bg-green-600 rounded-full transition-all"></div>
+                        <span className="ml-2 text-sm text-gray-300">
+                            {onlyBosses ? "ON" : "OFF"}
+                        </span>
+                    </label>
+                </div>
+            </section>
 
             {/* API Bestiary: fetched from https://api.minebox.co/bestiary/ */}
             <div className="">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                     {apiCreatures.map((c) => (
                         <div
                             key={c.id}
@@ -756,7 +884,6 @@ const BestiaryPage: FC = () => {
                         )}
                 </div>
             </div>
-
 
             {/* Modal popup for selected mob */}
             {/* API creature details modal */}
@@ -917,8 +1044,8 @@ const BestiaryPage: FC = () => {
                                                     {apiFamilyError}
                                                 </div>
                                             ) : apiFamilyCreatures &&
-                                              apiFamilyCreatures.length > 0 ? (                                                
-                                              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                                              apiFamilyCreatures.length > 0 ? (
+                                                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
                                                     {apiFamilyCreatures.map(
                                                         (fc) => (
                                                             <button
@@ -1034,7 +1161,8 @@ const BestiaryPage: FC = () => {
                                                                     className={`relative aspect-square bg-opacity-30 border rounded p-2 flex flex-col items-center justify-center text-center ${getRarityStyle(d.item.rarity ?? "UNKNOWN")}`}
                                                                     title={`${t(
                                                                         d.item_id,
-                                                                    )}`}>
+                                                                    )}`}
+                                                                >
                                                                     {/*<ItemImage
                                                                         detailsIndex={
                                                                             null
@@ -1052,9 +1180,7 @@ const BestiaryPage: FC = () => {
                                                                         }}
                                                                     />*/}
                                                                     <img
-                                                                        src={
-                                                                            `data:image/png;base64,${d.image}`
-                                                                        }
+                                                                        src={`data:image/png;base64,${d.image}`}
                                                                         alt={
                                                                             d.item_id
                                                                         }
@@ -1092,9 +1218,14 @@ const BestiaryPage: FC = () => {
                                                                             : `${chance}%`}
                                                                     </div>
                                                                     <div className="absolute bottom-1 right-2 text-xl font-extrabold mt-auto">
-                                                                        {(d.amount[0] === d.amount[1]
-                                                                            ? d.amount[0]
-                                                                            : `${d.amount[0]}-${d.amount[1]}`) ?? "0"}
+                                                                        {(d
+                                                                            .amount[0] ===
+                                                                        d
+                                                                            .amount[1]
+                                                                            ? d
+                                                                                  .amount[0]
+                                                                            : `${d.amount[0]}-${d.amount[1]}`) ??
+                                                                            "0"}
                                                                     </div>
                                                                 </div>
                                                             );
@@ -1121,7 +1252,12 @@ const BestiaryPage: FC = () => {
                                                     >
                                                         <p>Level X</p>
                                                         <p>0000</p>
-                                                        <p className="font-bold text-sm">5000 <span className="bg-white px-1  rounded-sm text-black text-xs">XP</span></p>
+                                                        <p className="font-bold text-sm">
+                                                            5000{" "}
+                                                            <span className="bg-white px-1  rounded-sm text-black text-xs">
+                                                                XP
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 ),
                                             )}
