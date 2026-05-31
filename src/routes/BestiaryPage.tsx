@@ -1029,7 +1029,8 @@ const BestiaryPage: FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="w-2/4 overflow-y-auto custom-scrollbar">
+                                    <div className="flex-1 flex gap-4 overflow-y-auto">
+                                        <div className="w-full overflow-y-auto custom-scrollbar">
                                         {/* Family (from API) */}
                                         <div className="mt-4 lg:flex-shrink-0">
                                             <div className="text-sm text-gray-200 font-semibold mb-2">
@@ -1045,7 +1046,7 @@ const BestiaryPage: FC = () => {
                                                 </div>
                                             ) : apiFamilyCreatures &&
                                               apiFamilyCreatures.length > 0 ? (
-                                                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                                                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-3">
                                                     {apiFamilyCreatures.map(
                                                         (fc) => (
                                                             <button
@@ -1108,7 +1109,7 @@ const BestiaryPage: FC = () => {
                                             {apiSelectedDetails.drops &&
                                             apiSelectedDetails.drops.length >
                                                 0 ? (
-                                                <div className="grid grid-cols-7 gap-3">
+                                                <div className="grid grid-cols-12 gap-3">
                                                     {apiSelectedDetails.drops
                                                         .slice()
                                                         .map((d, i) => {
@@ -1231,7 +1232,6 @@ const BestiaryPage: FC = () => {
                                                             );
                                                         })}
                                                     </div>
-                                                </div>
                                             ) : (
                                                 <div className="text-xs text-gray-400 italic">
                                                     No drops
@@ -1239,36 +1239,7 @@ const BestiaryPage: FC = () => {
                                             )}
                                         </div>
                                     </div>
-
-                                    <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 gap-2 flex flex-col lg:h-full lg:min-h-0">
-                                        <div className="text-sm text-gray-200 font-semibold mb-2 lg:flex-shrink-0">
-                                            Collection
-                                        </div>
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:overflow-y-auto overflow-x-hidden custom-scrollbar lg:flex-1 lg:pr-2 lg:pb-2">
-                                            {Array.from({ length: 28 }).map(
-                                                (_, i) => (
-                                                    <div
-                                                        key={i}
-                                                        className=" p-1.5 border border-gray-600 bg-gray-700/50 text-xs rounded items-center justify-between flex flex-col"
-                                                    >
-                                                        <p>Level X</p>
-                                                        <p>0000</p>
-                                                        <p className="font-bold text-sm">
-                                                            5000{" "}
-                                                            <span className="bg-white px-1  rounded-sm text-black text-xs">
-                                                                XP
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                ),
-                                            )}
-                                        </div>
-                                        <div className="text-sm text-gray-200 font-semibold mb-2 mt-auto lg:flex-shrink-0">
-                                            Map
-                                        </div>
-                                        {/* Map Placeholder */}
-                                        <div className="aspect-video  bg-gray-700 rounded lg:flex-shrink-0"></div>
-                                    </div>
+                                </div>
                                 </div>
                             ) : null}
                         </div>
