@@ -24,7 +24,12 @@ import {
 } from "lucide-react";
 import { getRarityBadge, getRarityColor } from "@utils/equipmentSlots";
 import i18next from "i18next";
-import { getStatLabel, getStatColor, getStatIconURL } from "@components/stats";
+import {
+    getStatLabel,
+    getStatColor,
+    getStatIconURL,
+    getRarityStyle,
+} from "@components/stats";
 
 // Definition of interfaces
 interface Group {
@@ -964,7 +969,7 @@ const ItemsNRecipesApp: FC = () => {
             {/* Navigation bar displaying item categories */}
 
             <div className="flex flex-row h-[calc(100vh-340px)] gap-4 ">
-                <div className="w-1/4 bg-gray-800 p-4 rounded-lg overflow-y-auto custom-scrollbar">
+                <div className="w-1/6 bg-gray-800 p-4 rounded-lg overflow-y-auto custom-scrollbar">
                     {/* Clear filter button when a category is selected */}
                     {selectedCategory && (
                         <div className="w-full flex">
@@ -983,7 +988,7 @@ const ItemsNRecipesApp: FC = () => {
                         </div>
                     )}
 
-                    <span className="grid grid-cols-2 gap-1">
+                    <span className="grid grid-cols-1 gap-1">
                         {itemTypes.map((type) => (
                             <div
                                 key={type}
@@ -1017,7 +1022,7 @@ const ItemsNRecipesApp: FC = () => {
 
                 <div
                     ref={apiItemsContainerRef}
-                    className="w-2/4 rounded-lg overflow-y-auto custom-scrollbar p-2 grid grid-cols-3 gap-x-4 gap-y-4 content-start auto-rows-max"
+                    className="w-3/6 rounded-lg overflow-y-auto custom-scrollbar p-2 grid grid-cols-3 gap-x-4 gap-y-4 content-start auto-rows-max"
                 >
                     {apiItemsError && (
                         <div className="col-span-4 text-red-400 text-sm">
@@ -1033,7 +1038,7 @@ const ItemsNRecipesApp: FC = () => {
                     {apiItems.map((it) => (
                         <div
                             key={it.id ?? `${it}`}
-                            className={`relative rounded h-fit w-full text-xs flex flex-row p-2 items-center cursor-pointer ${getRarityColor(
+                            className={`relative rounded h-fit w-full text-xs flex flex-row p-2 items-center cursor-pointer ${getRarityStyle(
                                 it.rarity ?? "UNKNOWN",
                             )}`}
                             onClick={(e) => {
@@ -1068,7 +1073,7 @@ const ItemsNRecipesApp: FC = () => {
                                         ).toUpperCase()}
                                     </div>
                                     <div className="text-xs opacity-70">
-                                        Lvl. {it.level}
+                                        Lvl {it.level}
                                     </div>
                                 </span>
 
@@ -1104,7 +1109,7 @@ const ItemsNRecipesApp: FC = () => {
 
                 <div
                     id="itemDetails"
-                    className={`w-1/4  p-4 rounded-lg  overflow-y-auto custom-scrollbar border-4 bg-${itemDetailsData?.rarity ?? "none"}-50 border-${itemDetailsData?.rarity ?? "none"}`}
+                    className={`w-2/6  rounded-lg  overflow-y-auto custom-scrollbar`}
                 >
                     {itemDetailsLoading ? (
                         <div className="w-full flex flex-col items-center justify-center py-8 gap-3 text-center text-gray-400">
@@ -1116,153 +1121,201 @@ const ItemsNRecipesApp: FC = () => {
                                 Loading item details...
                             </p>
                             <p className="text-sm max-w-xs">
-                                Data is fetched from the API when you click an item on the left. If it takes too long, it might be due to a slow network or API issues. You can try again by clicking another item or refreshing the page.
+                                Data is fetched from the API when you click an
+                                item on the left. If it takes too long, it might
+                                be due to a slow network or API issues. You can
+                                try again by clicking another item or refreshing
+                                the page.
                             </p>
                         </div>
                     ) : itemDetailsError ? (
                         <div className="text-red-400">{itemDetailsError}</div>
                     ) : itemDetailsData ? (
                         <div className="flex flex-col gap-2 items-center">
-                            <h2
-                                className={`text-xl font-bold text-${itemDetailsData.rarity ?? "UNKNOWN"}`}
+                            {/* BASE SEGMENT */}
+                            <div
+                                className={`flex w-full  items-center pb-4 ${getRarityStyle(itemDetailsData.rarity ?? "UNKNOWN")} rounded-lg p-2 flex-col`}
                             >
-                                {itemDetailsData.name ?? itemDetailsData.id}
-                            </h2>
-                            <div className="flex gap-2 items-center text-xs text-white ">
-                                <div
-                                    className={`px-1 py-0.5 font-bold bg-${itemDetailsData.rarity} rounded`}
-                                >
-                                    {t(
-                                        "rarity." +
-                                            (
-                                                itemDetailsData.rarity ??
-                                                "UNKNOWN"
-                                            ).toLowerCase(),
-                                    ).toUpperCase()}
-                                </div>
-                                <div>Lvl. {itemDetailsData.level ?? "-"}</div>
-                            </div>
-                            <div className="mt-2 w-full items-center justify-center flex flex-col">
-                                <img
-                                    src={
-                                        itemDetailsData.image
-                                            ? `data:image/png;base64,${itemDetailsData.image}`
-                                            : "/assets/media/item/placeholder.png"
-                                    }
-                                    className="aspect-square  border-gray-600 w-1/2"
-                                />
-                            </div>
+                                <span className="flex flex-row items-center justify-center w-full gap-4 pl-2 pt-2">
+                                    <div className="w-1/3 items-center justify-center flex flex-col">
+                                        <img
+                                            src={
+                                                itemDetailsData.image
+                                                    ? `data:image/png;base64,${itemDetailsData.image}`
+                                                    : "/assets/media/item/placeholder.png"
+                                            }
+                                            className="aspect-square  border-gray-600"
+                                        />
+                                    </div>
 
-                            {itemDetailsData.description && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
-                                    <p className="font-bold">Description</p>
-                                    {itemDetailsData.description ||
-                                        "No description available."}
-                                </div>
-                            )}
-                            {itemDetailsData.lore && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
-                                    <p className="font-bold">Lore</p>
-                                    {itemDetailsData.lore ||
-                                        "No lore available."}
-                                </div>
-                            )}
-                            {itemDetailsData.stats && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
-                                    <p className="font-bold">Stats</p>
-                                    <ul className="list-disc list-inside">
-                                        {Array.isArray(itemDetailsData.stats)
-                                            ? itemDetailsData.stats.map(
-                                                  (
-                                                      stat: any,
-                                                      index: number,
-                                                  ) => (
-                                                      <p>
-                                                          {stat.type}:{" "}
-                                                          {stat.value}
-                                                      </p>
-                                                  ),
-                                              )
-                                            : Object.entries(
-                                                  itemDetailsData.stats,
-                                              ).map(([statKey, statVal]) => (
-                                                  <span
-                                                      className="flex flex-row gap-1 justify-between"
-                                                      key={statKey}
-                                                  >
-                                                      <p
-                                                          className={`flex items-center justify-center leading-none font-semibold text-shadow-sm `}
-                                                          style={{
-                                                              color:
-                                                                  getStatColor(
+                                    <span className="flex flex-col items-start justify-start w-full">
+                                        <h2
+                                            className={`text-xl font-bold text-${itemDetailsData.rarity ?? "UNKNOWN"} mb-1 tracking-extra text-center`}
+                                        >
+                                            {itemDetailsData.name ??
+                                                itemDetailsData.id}
+                                        </h2>
+                                        <div className="flex gap-2 items-center text-xs text-white ">
+                                            <div
+                                                className={`px-1 py-0.5 font-bold bg-${itemDetailsData.rarity} rounded`}
+                                            >
+                                                {t(
+                                                    "rarity." +
+                                                        (
+                                                            itemDetailsData.rarity ??
+                                                            "UNKNOWN"
+                                                        ).toLowerCase(),
+                                                ).toUpperCase()}
+                                            </div>
+                                            <div>
+                                                Lvl{" "}
+                                                {itemDetailsData.level ?? "-"}
+                                            </div>
+                                            {itemDetailsData.mount?.flyable && (
+                                                <p className="font-bold text-LEGENDARY">
+                                                    FLYABLE
+                                                </p>
+                                            )}
+                                        </div>
+                                        {itemDetailsData.lore && (
+                                            <div className="text-sm text-gray-300 mt-2 w-full">
+                                                <p className="text-gray-300 text-xs">
+                                                    {itemDetailsData.lore ||
+                                                        "No lore available."}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </span>
+                                </span>
+
+                                {itemDetailsData.description && (
+                                    <div className="text-sm text-gray-300 mt-2 w-full px-2 text-center">
+                                        <p className="text-gray-300 text-xs">
+                                            {itemDetailsData.description ||
+                                                "No description available."}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {itemDetailsData.stats && (
+                                    <div className="text-sm text-gray-300 mt-2 w-full px-4">
+                                        <p className="font-bold">Stats</p>
+                                        <ul className="list-disc list-inside">
+                                            {Array.isArray(
+                                                itemDetailsData.stats,
+                                            )
+                                                ? itemDetailsData.stats.map(
+                                                      (
+                                                          stat: any,
+                                                          index: number,
+                                                      ) => (
+                                                          <p>
+                                                              {stat.type}:{" "}
+                                                              {stat.value}
+                                                          </p>
+                                                      ),
+                                                  )
+                                                : Object.entries(
+                                                      itemDetailsData.stats,
+                                                  ).map(
+                                                      ([statKey, statVal]) => (
+                                                          <span
+                                                              className="flex flex-row gap-1 justify-between"
+                                                              key={statKey}
+                                                          >
+                                                              <p
+                                                                  className={`flex items-center justify-center leading-none font-semibold text-shadow-sm `}
+                                                              >
+                                                                  <img
+                                                                      src={getStatIconURL(
+                                                                          statKey,
+                                                                      )}
+                                                                      alt={
+                                                                          statKey
+                                                                      }
+                                                                      className="inline w-4 h-4 mr-1 drop-shadow-sm"
+                                                                  />
+                                                                  {getStatLabel(
                                                                       statKey,
-                                                                  ) ?? "#fff",
-                                                          }}
-                                                      >
-                                                          <img
-                                                              src={getStatIconURL(
-                                                                  statKey,
-                                                              )}
-                                                              alt={statKey}
-                                                              className="inline w-4 h-4 mr-1 drop-shadow-sm"
-                                                          />
-                                                          {getStatLabel(
-                                                              statKey,
-                                                              t,
-                                                          )}
-                                                          :
-                                                      </p>
-                                                      <p>
-                                                          {Array.isArray(
-                                                              statVal,
-                                                          )
-                                                              ? `${statVal[0]} to ${statVal[1]}`
-                                                              : String(statVal)}
-                                                      </p>
-                                                  </span>
-                                              ))}
-                                    </ul>
-                                </div>
-                            )}
-                            {itemDetailsData.damage && (
+                                                                      t,
+                                                                  )}
+                                                              </p>
+                                                              <p>
+                                                                  {Array.isArray(
+                                                                      statVal,
+                                                                  )
+                                                                      ? `${statVal[0]} to ${statVal[1]}`
+                                                                      : String(
+                                                                            statVal,
+                                                                        )}
+                                                              </p>
+                                                          </span>
+                                                      ),
+                                                  )}
+                                        </ul>
+                                    </div>
+                                )}
+                                {itemDetailsData.damages && (
+                                    <div className="text-sm text-gray-300 mt-2 w-full px-4">
+                                        <p className="font-bold">Damage</p>
+                                        <ul className="list-disc list-inside">
+                                            {Array.isArray(
+                                                itemDetailsData.damages,
+                                            )
+                                                ? itemDetailsData.damages.map(
+                                                      (
+                                                          stat: any,
+                                                          index: number,
+                                                      ) => (
+                                                          <p>
+                                                              {stat.type}:{" "}
+                                                              {stat.value}
+                                                          </p>
+                                                      ),
+                                                  )
+                                                : Object.entries(
+                                                      itemDetailsData.damages,
+                                                  ).map(
+                                                      ([statKey, statVal]) => (
+                                                          <span
+                                                              className="flex flex-row gap-1 justify-between"
+                                                              key={statKey}
+                                                          >
+                                                              <p>{statKey}</p>
+                                                              <p>
+                                                                  {Array.isArray(
+                                                                      statVal,
+                                                                  )
+                                                                      ? `${statVal[0]} to ${statVal[1]}`
+                                                                      : String(
+                                                                            statVal,
+                                                                        )}
+                                                              </p>
+                                                          </span>
+                                                      ),
+                                                  )}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                
+
+                            {itemDetailsData.mount && (
                                 <div className="text-sm text-gray-300 mt-2 w-full">
-                                    <p className="font-bold">Damage</p>
-                                    <ul className="list-disc list-inside">
-                                        {Array.isArray(itemDetailsData.damage)
-                                            ? itemDetailsData.damage.map(
-                                                  (
-                                                      stat: any,
-                                                      index: number,
-                                                  ) => (
-                                                      <p>
-                                                          {stat.type}:{" "}
-                                                          {stat.value}
-                                                      </p>
-                                                  ),
-                                              )
-                                            : Object.entries(
-                                                  itemDetailsData.damage,
-                                              ).map(([statKey, statVal]) => (
-                                                  <span
-                                                      className="flex flex-row gap-1 justify-between"
-                                                      key={statKey}
-                                                  >
-                                                      <p>{statKey}</p>
-                                                      <p>
-                                                          {Array.isArray(
-                                                              statVal,
-                                                          )
-                                                              ? `${statVal[0]} to ${statVal[1]}`
-                                                              : String(statVal)}
-                                                      </p>
-                                                  </span>
-                                              ))}
-                                    </ul>
+                                    <p className="flex flex-row justify-between px-4">
+                                        <p className="font-bold">Movement Speed</p>
+                                        <p>{itemDetailsData.mount.speed*100}%</p>
+                                    </p>
+                                    <p className="flex flex-row justify-between px-4">
+                                        <p className="font-bold">Jump Height</p>
+                                        <p>{itemDetailsData.mount.jump_height} block's</p>
+                                    </p>
                                 </div>
                             )}
+                            </div>
 
                             {itemDetailsData.recipe && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
+                                <div className="text-sm text-gray-300 mt-2 w-full  ">
                                     <span className="flex justify-between">
                                         <p className="font-bold">Recipe</p>
                                         <p className="">
@@ -1290,9 +1343,9 @@ const ItemsNRecipesApp: FC = () => {
                                                                     ?.name ??
                                                                 ing.id
                                                             }
-                                                            className={`flex rounded aspect-square ${getRarityColor(ing.item?.rarity ?? "UNKNOWN")} m-1`}
+                                                            className={`p-1 flex rounded aspect-square ${getRarityStyle(ing.item?.rarity ?? "UNKNOWN")} m-1`}
                                                         />
-                                                        <div className="text-xs text-gray-400 -mt-1">
+                                                        <div className="text-xs font-semibold -mt-1">
                                                             x{ing.amount ?? 1}
                                                         </div>
                                                     </div>
@@ -1303,7 +1356,7 @@ const ItemsNRecipesApp: FC = () => {
                             )}
 
                             {itemDetailsData.used_in_recipes && (
-                                <div className="text-sm text-gray-300 mt-2 w-full">
+                                <div className="text-sm text-gray-300 mt-2 w-full  ">
                                     <p className="font-bold">Used in Recipes</p>
                                     <div className="grid grid-cols-7 gap-2 mt-2">
                                         {(Array.isArray(
@@ -1321,7 +1374,7 @@ const ItemsNRecipesApp: FC = () => {
                                         ).map((ing: any) => (
                                             <div
                                                 key={ing.id}
-                                                className="flex flex-col items-center"
+                                                className="relative flex flex-col items-center"
                                                 title={`${ing?.item?.name ?? ing.id}${ing?.item?.recipe?.job ? ` — ${ing.item.recipe.job}` : ""}`}
                                             >
                                                 <img
@@ -1334,12 +1387,12 @@ const ItemsNRecipesApp: FC = () => {
                                                         ing?.item?.name ??
                                                         ing.id
                                                     }
-                                                    className={`flex rounded aspect-square ${getRarityColor(
+                                                    className={`flex rounded aspect-square  ${getRarityStyle(
                                                         ing.item?.rarity ??
                                                             "UNKNOWN",
-                                                    )} m-1`}
+                                                    )} p-1`}
                                                 />
-                                                <div className="text-xs text-gray-400 -mt-1">
+                                                <div className="text-xs font-semibold">
                                                     x{ing.amount ?? 1}
                                                 </div>
                                             </div>
@@ -1349,47 +1402,65 @@ const ItemsNRecipesApp: FC = () => {
                             )}
                             {itemDetailsData.dropped_by && (
                                 <>
-                                    <div className="text-sm text-gray-300 mt-2 w-full">
+                                    <div className="text-sm text-gray-300 mt-2 w-full  ">
                                         <p className="font-bold">Dropped By</p>
-                                    </div>
-                                    <div className="grid grid-cols-4 gap-2 mt-2">
-                                        {(Array.isArray(
-                                            itemDetailsData.dropped_by,
-                                        )
-                                            ? itemDetailsData.dropped_by
-                                            : []
-                                        ).map((d: any) => (
-                                            <div
-                                                key={d.creature_id ?? d.name}
-                                                className="flex flex-col items-center bg-gray-600 bg-opacity-30 border border-gray-500 rounded p-1 aspect-square"
-                                                title={d.name ?? d.creature_id}
-                                            >
-                                                <img
-                                                    src={
-                                                        d.image ??
-                                                        "/assets/media/item/placeholder.png"
+                                        <div className="grid grid-cols-6 gap-2 mt-2">
+                                            {(Array.isArray(
+                                                itemDetailsData.dropped_by,
+                                            )
+                                                ? itemDetailsData.dropped_by
+                                                : []
+                                            ).map((d: any) => (
+                                                <div
+                                                    key={
+                                                        d.creature_id ?? d.name
                                                     }
-                                                    alt={
+                                                    className={`relative flex flex-col items-center rounded p-1 aspect-square ${getRarityStyle("UNKNOWN")}`}
+                                                    title={
                                                         d.name ?? d.creature_id
                                                     }
-                                                    className="w-12 h-12 object-contain rounded m-1"
-                                                ></img>
-                                                <div className="text-xs text-gray-400 -mt-1 text-center">
-                                                    x
-                                                    {Array.isArray(d.amount)
-                                                        ? `${d.amount[0]}-${d.amount[1]}`
-                                                        : (d.amount ?? 1)}
+                                                >
+                                                    <img
+                                                        src={
+                                                            d.image ??
+                                                            "/assets/media/item/placeholder.png"
+                                                        }
+                                                        alt={
+                                                            d.name ??
+                                                            d.creature_id
+                                                        }
+                                                        className="w-12 h-12 object-contain rounded m-1"
+                                                    ></img>
+
+                                                    <div className="absolute top-1 left-1 text-xs mt-auto">
+                                                        {typeof d.chance ===
+                                                        "number"
+                                                            ? `${Number(((d.chance || 0) * 100).toFixed(6))}%`
+                                                            : String(d.chance)}
+                                                    </div>
+                                                    <div className="absolute bottom-1 right-2 text-xl font-extrabold mt-auto">
+                                                        {d.amount[0] !==
+                                                        d.amount[1]
+                                                            ? `${d.amount[0]}-${d.amount[1]}`
+                                                            : d.amount[0]}
+                                                    </div>
                                                 </div>
-                                                <div className="text-xs text-gray-400 -mt-1 text-center">
-                                                    {typeof d.chance ===
-                                                    "number"
-                                                        ? `${Number(((d.chance || 0) * 100).toFixed(6))}%`
-                                                        : String(d.chance)}
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 </>
+                            )}
+
+                            {itemDetailsData.extra_image && (
+                            <img
+                                src={
+                                    itemDetailsData.extra_image
+                                        ? `${itemDetailsData.extra_image}`
+                                        : "/assets/media/item/placeholder.png"
+                                }
+                                alt={itemDetailsData.name}
+                                className="aspect-square w-1/2"
+                            />
                             )}
                         </div>
                     ) : (

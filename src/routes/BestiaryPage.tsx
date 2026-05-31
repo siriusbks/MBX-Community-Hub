@@ -25,6 +25,7 @@ import {
     LevelBG_Gradient,
     LevelTextColor,
 } from "@components/editor/LevelBadge";
+import { getRarityStyle } from "@components/stats";
 
 const BestiaryPage: FC = () => {
     const { t } = useTranslation([
@@ -685,7 +686,7 @@ const BestiaryPage: FC = () => {
                     {apiCreatures.map((c) => (
                         <div
                             key={c.id}
-                            className="relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer"
+                            className={`relative group bg-gray-800 hover:bg-gray-700 rounded-lg p-4 pt-2 shadow-md cursor-pointer border border-gray-700 transition-colors`}
                             onClick={() => setApiSelectedId(c.id)}
                         >
                             <div className="mt-2">
@@ -785,7 +786,7 @@ const BestiaryPage: FC = () => {
                                     {apiDetailsError}
                                 </div>
                             ) : apiSelectedDetails ? (
-                                <div className="flex flex-row gap-4 h-full">
+                                <div className="flex flex-row gap-4 max-h-full overflow-auto">
                                     <div className="w-1/4 bg-gray-800 rounded-lg p-4">
                                         <div className="flex items-center flex-col gap-4">
                                             <div className="w-full my-auto">
@@ -901,7 +902,7 @@ const BestiaryPage: FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="w-2/4">
+                                    <div className="w-2/4 overflow-y-auto custom-scrollbar">
                                         {/* Family (from API) */}
                                         <div className="mt-4">
                                             <div className="text-sm text-gray-200 font-semibold mb-2">
@@ -927,7 +928,7 @@ const BestiaryPage: FC = () => {
                                                                         fc.id,
                                                                     )
                                                                 }
-                                                                className="flex flex-col items-center text-center bg-gray-800 bg-opacity-30 border border-gray-700 rounded p-2 hover:bg-gray-700/60 focus:outline-none"
+                                                                className={`flex flex-col items-center text-center bg-opacity-30 border rounded p-2 ${getRarityStyle("UNKNOWN")}`}
                                                                 title={fc.name}
                                                             >
                                                                 <img
@@ -974,13 +975,13 @@ const BestiaryPage: FC = () => {
 
                                         {/* Drops */}
                                         <div>
-                                            <div className="text-sm text-gray-200 font-semibold mb-2">
+                                            <div className="pt-4 text-sm text-gray-200 font-semibold mb-2">
                                                 Drops
                                             </div>
                                             {apiSelectedDetails.drops &&
                                             apiSelectedDetails.drops.length >
                                                 0 ? (
-                                                <div className="grid grid-cols-6 gap-3">
+                                                <div className="grid grid-cols-7 gap-3">
                                                     {apiSelectedDetails.drops
                                                         .slice()
                                                         .map((d, i) => {
@@ -1030,9 +1031,11 @@ const BestiaryPage: FC = () => {
                                                             return (
                                                                 <div
                                                                     key={i}
-                                                                    className={`${getRarityColor(rarity ?? "UNKNOWN")} bg-opacity-30 border rounded p-2 flex flex-col items-center text-center`}
-                                                                >
-                                                                    <ItemImage
+                                                                    className={`relative aspect-square bg-opacity-30 border rounded p-2 flex flex-col items-center justify-center text-center ${getRarityStyle(d.item.rarity ?? "UNKNOWN")}`}
+                                                                    title={`${t(
+                                                                        d.item_id,
+                                                                    )}`}>
+                                                                    {/*<ItemImage
                                                                         detailsIndex={
                                                                             null
                                                                         }
@@ -1042,12 +1045,26 @@ const BestiaryPage: FC = () => {
                                                                         alt={
                                                                             d.item_id
                                                                         }
-                                                                        className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-contain my-1 mb-2"
+                                                                        className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-contain"
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
+                                                                    />*/}
+                                                                    <img
+                                                                        src={
+                                                                            `data:image/png;base64,${d.image}`
+                                                                        }
+                                                                        alt={
+                                                                            d.item_id
+                                                                        }
+                                                                        className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] h-16 w-16 object-fill"
                                                                         style={{
                                                                             imageRendering:
                                                                                 "pixelated",
                                                                         }}
                                                                     />
+                                                                    {/*
                                                                     {rarityLabel && (
                                                                         <div
                                                                             className={`text-[10px] px-2 py-0.5 rounded ${rarityBg} text-white mb-1`}
@@ -1066,13 +1083,18 @@ const BestiaryPage: FC = () => {
                                                                                     d.item_id,
                                                                             },
                                                                         )}
-                                                                    </div>
-                                                                    <div className="text-[11px] text-gray-300 mt-auto">
+                                                                    </div>*/}
+                                                                    <div className="absolute top-1 left-1 text-xs mt-auto">
                                                                         {(d.chance ??
                                                                             0) ===
                                                                         0
                                                                             ? "??.?? %"
                                                                             : `${chance}%`}
+                                                                    </div>
+                                                                    <div className="absolute bottom-1 right-2 text-xl font-extrabold mt-auto">
+                                                                        {(d.amount[0] === d.amount[1]
+                                                                            ? d.amount[0]
+                                                                            : `${d.amount[0]}-${d.amount[1]}`) ?? "0"}
                                                                     </div>
                                                                 </div>
                                                             );
