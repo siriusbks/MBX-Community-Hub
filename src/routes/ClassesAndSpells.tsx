@@ -93,8 +93,8 @@ const ClassesAndSpellsPage: FC = () => {
 
             {/* Classes Grid */}
             <div className="mt-6">
-                {loading && <div className="text-gray-400">Ładowanie klas...</div>}
-                {error && <div className="text-red-400">Błąd: {error}</div>}
+                {loading && <div className="text-gray-400">Class Loading...</div>}
+                {error && <div className="text-red-400">Error: {error}</div>}
 
                 {!loading && !error && (
                     <div className="grid grid-cols-1 gap-6 mt-6">
@@ -208,7 +208,7 @@ const ClassesAndSpellsPage: FC = () => {
                                                                     {s.description ? (
                                                                         <div className="text-xs text-gray-300">{s.description}</div>
                                                                     ) : (
-                                                                        <div className="text-xs text-gray-500">Brak opisu</div>
+                                                                        <div className="text-xs text-gray-500">No description available</div>
                                                                     )}
                                                                     <div className="mt-2 flex flex-wrap gap-1">
 {s.cooldown != null && <div className="text-xs text-gray-300">Cooldown: {s.cooldown/1000}s</div>}
@@ -220,8 +220,8 @@ const ClassesAndSpellsPage: FC = () => {
                                                 </div>
 
                                                 {/* loading / error */}
-                                                {spellsByClass[c.id]?.loading && <div className="text-gray-400 mt-2">Ładowanie czarów...</div>}
-                                                {spellsByClass[c.id]?.error && <div className="text-red-400 mt-2">Błąd: {spellsByClass[c.id]!.error}</div>}
+                                                {spellsByClass[c.id]?.loading && <div className="text-gray-400 mt-2">Loading spells...</div>}
+                                                {spellsByClass[c.id]?.error && <div className="text-red-400 mt-2">Error: {spellsByClass[c.id]!.error}</div>}
                                             </div>
                                         )}
                                     </div>
