@@ -40,7 +40,23 @@ export const Footer = () => {
                         Minebox
                     </span>
                 </div>
-                <div className="w-full md:w-1/3" />
+                {/* Right: Support / Ko-fi */}
+                <div className="w-full md:w-1/3 flex justify-center md:justify-end">
+                    <a
+                        href="https://ko-fi.com/6rius"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800/50 border border-gray-700 text-gray-300 hover:text-white hover:border-green-500/50 hover:bg-green-500/10 shadow-sm transition-all duration-300"
+                        title="Support me on Ko-fi"
+                    >
+                        <img 
+                            src="/assets/media/website/kofi_symbol.png" 
+                            alt="Ko-fi" 
+                            className="w-5 h-5 object-contain group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300" 
+                        />
+                        <span className="text-sm font-medium">Support the project</span>
+                    </a>
+                </div>
             </div>
         </footer>
     );

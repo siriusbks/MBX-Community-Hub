@@ -8,6 +8,7 @@ import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BookCopy, Eye, EyeClosed } from "lucide-react";
 import { getRarityStyle,getStatIconURL, getStatLabel } from "@components/stats";
+import i18next from "i18next";
 
 interface MBClass {
     id: string;
@@ -33,7 +34,7 @@ const ClassesAndSpellsPage: FC = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch("https://api.minebox.co/classes")
+        fetch(`https://api.minebox.co/classes?&locale=${i18next.language}`)
             .then((r) => {
                 if (!r.ok) throw new Error(`HTTP ${r.status}`);
                 return r.json();
@@ -55,7 +56,7 @@ const ClassesAndSpellsPage: FC = () => {
             return { ...s, [classId]: { loading: true } };
         });
 
-        fetch(`https://api.minebox.co/spells?class=${classId}`)
+        fetch(`https://api.minebox.co/spells?class=${classId}&locale=${i18next.language}`)
             .then((r) => {
                 if (!r.ok) throw new Error(`HTTP ${r.status}`);
                 return r.json();
@@ -108,7 +109,11 @@ const ClassesAndSpellsPage: FC = () => {
                                                 src={`data:image/png;base64,${c.image}`}
                                                 alt={c.name}
                                                 className={`w-full h-full object-cover ${getRarityStyle("LEGENDARY")}`}
-                                            />
+                                                                        style={{
+                                                                            imageRendering:
+                                                                                "pixelated",
+                                                                        }}
+                                                />
                                         ) : (
                                             <div className="text-sm text-gray-400">No image</div>
                                         )}
@@ -164,15 +169,83 @@ const ClassesAndSpellsPage: FC = () => {
                                         )}
                                         
                                         
-                                        {c.passive && <div className="mb-2"><strong className="text-gray-200">Passive:</strong> <span className="ml-2">{c.passive}</span></div>}
+                                        {/* Render passive as a spell-like card */}
+                                        {c.passive && (
+                                            <div className="mb-3">
+                                                <strong className="text-gray-200">Passive</strong>
+                                                <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                                                    {(() => {
+                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === c.passive);
+                                                        if (s) {
+                                                            return (
+                                                                <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                                        {s.icon ? (
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400">no icon</div>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="flex-1 w-full px-2 pb-2">
+                                                                        <div className="flex items-center justify-between">
+                                                                            <div className="text-md font-medium text-white">{s.name || s.id}</div>
+                                                                            <span className="text-[10px] bg-indigo-600/30 text-indigo-200 px-1 py-0.5 rounded">Passive</span>
+                                                                        </div>
+                                                                        {s.description ? (
+                                                                            <div className="text-xs text-gray-400 leading-none">{s.description}</div>
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400 leading-none">No description available</div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        }
 
+                                                        // fallback: show id
+                                                        return (
+                                                            <div key={c.passive} className="bg-slate-800 p-2 rounded text-xs text-gray-200">{c.passive}</div>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Render auto attack spells as spell-like cards per weapon */}
                                         {c.auto_attack && (
-                                            <div className="mb-2">
-                                                <strong className="text-gray-200">Auto Attack:</strong>
-                                                <div className="mt-1 flex flex-wrap gap-2 text-xs">
-                                                    {Object.entries(c.auto_attack).map(([w, a]) => (
-                                                        <span key={w} className="bg-slate-700/40 text-slate-200 px-2 py-1 rounded">{w} → {a}</span>
-                                                    ))}
+                                            <div className="mb-3">
+                                                <strong className="text-gray-200">Auto Attack</strong>
+                                                <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                    {Object.entries(c.auto_attack).map(([weapon, spellId]) => {
+                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === spellId);
+                                                        if (s) {
+                                                            return (
+                                                                <div key={weapon} className={`flex items-start gap-3 p-2 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-12 h-12 bg-slate-800 rounded overflow-hidden flex items-center justify-center">
+                                                                        {s.icon ? (
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400">no icon</div>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="flex-1">
+                                                                        <div className="flex items-center justify-between">
+                                                                            <div className="text-sm font-medium text-white">{s.name || s.id}</div>
+                                                                            <span className="text-[10px] bg-yellow-600/30 text-yellow-200 px-1 py-0.5 rounded">{weapon}</span>
+                                                                        </div>
+                                                                        {s.description ? (
+                                                                            <div className="text-xs text-gray-400">{s.description}</div>
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400">No description available</div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        }
+
+                                                        return (
+                                                            <div key={weapon} className="bg-slate-800 p-2 rounded text-xs text-gray-200">{weapon} → {spellId}</div>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         )}
@@ -187,15 +260,15 @@ const ClassesAndSpellsPage: FC = () => {
                                                             .filter(([, arr]) => Array.isArray(arr) && arr.includes(s.id))
                                                             .map(([lvl]) => lvl);
                                                         return (
-                                                            <div key={s.id} className={`items-center flex flex-col items-start gap-3 p-2 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                <div className="w-24 h-24 bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                            <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
                                                                     {s.icon ? (
                                                                         <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
                                                                     ) : (
                                                                         <div className="text-xs text-gray-400">no icon</div>
                                                                     )}
                                                                 </div>
-                                                                <div className="flex-1">
+                                                                <div className="flex-1 w-full px-2 pb-2">
                                                                     <div className="flex items-center justify-between">
                                                                         <div className="text-md font-medium text-white">{s.name || s.id}</div>
                                                                                                                                                 {unlocks.length > 0 ? unlocks.map((l) => (
@@ -206,9 +279,9 @@ const ClassesAndSpellsPage: FC = () => {
                                                                         
                                                                     </div>
                                                                     {s.description ? (
-                                                                        <div className="text-xs text-gray-300">{s.description}</div>
+                                                                        <div className="text-xs text-gray-400 leading-none">{s.description}</div>
                                                                     ) : (
-                                                                        <div className="text-xs text-gray-500">No description available</div>
+                                                                        <div className="text-xs text-gray-400  leading-none">No description available</div>
                                                                     )}
                                                                     <div className="mt-2 flex flex-wrap gap-1">
 {s.cooldown != null && <div className="text-xs text-gray-300">Cooldown: {s.cooldown/1000}s</div>}
