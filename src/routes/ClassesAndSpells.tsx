@@ -164,7 +164,7 @@ const ClassesAndSpellsPage: FC = () => {
                                             </div>
                                             
                                             <div>
-                                                <button onClick={() => toggleDetails(c.id)} className="text-xs bg-blue-600/20 hover:bg-blue-600/30 text-blue-200 px-2 py-1 rounded">
+                                                <button onClick={() => toggleDetails(c.id)} className="text-xs bg-green-600/20 hover:bg-green-600/30 text-green-200 px-2 py-1 rounded">
                                                     {detailsOpen[c.id] ? <span className="flex items-center gap-1"><EyeClosed className="w-4 h-4" /> Close Details</span> : <span className="flex items-center gap-1"><Eye className="w-4 h-4" /> Show Details</span>}
                                                 </button>
                                             </div>
@@ -209,24 +209,24 @@ const ClassesAndSpellsPage: FC = () => {
                                         {c.passive && (
                                             <div className="mb-3">
                                                 <strong className="text-gray-200">Passive</strong>
-                                                <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                                                <div className="mt-2 grid lg:grid-cols-2 gap-3">
                                                     {(() => {
                                                         const cached = spellCache[c.passive!];
                                                         const s = spellsByClass[c.id]?.spells?.find((x) => x.id === c.passive) ?? cached?.spell;
                                                         if (s) {
                                                             return (
-                                                                <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                                <div key={s.id} className={`items-center flex flex-row items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-16 h-16  bg-slate-800 shadow overflow-hidden flex items-center justify-center">
                                                                         {s.icon ? (
-                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className={`w-full h-full object-cover border-l-0 border-y-0 ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")} `} />
                                                                         ) : (
                                                                             <div className="text-xs text-gray-400">no icon</div>
                                                                         )}
                                                                     </div>
-                                                                    <div className="flex-1 w-full px-2 pb-2">
+                                                                    <div className="flex-1 w-full pr-2 items-center justify-center">
                                                                         <div className="flex items-center justify-between">
                                                                             <div className="text-md font-medium text-white">{s.name || s.id}</div>
-                                                                            <span className="text-[10px] bg-indigo-600/30 text-indigo-200 px-1 py-0.5 rounded">Passive</span>
+                                                                            <span className="text-[10px]  text-yellow-200">Passive</span>
                                                                         </div>
                                                                         {s.description ? (
                                                                             <div className="text-xs text-gray-400 leading-none">{s.description}</div>
@@ -259,18 +259,18 @@ const ClassesAndSpellsPage: FC = () => {
                                                         const s = spellsByClass[c.id]?.spells?.find((x) => x.id === spellId) ?? cached?.spell;
                                                         if (s) {
                                                             return (
-                                                                <div key={weapon} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                                <div key={weapon} className={`items-center flex flex-row items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-16 h-16 bg-slate-800 shadow overflow-hidden flex items-center justify-center">
                                                                         {s.icon ? (
-                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className={`w-full h-full object-cover border-l-0 border-y-0 ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")} `} />
                                                                         ) : (
                                                                             <div className="text-xs text-gray-400">no icon</div>
                                                                         )}
                                                                     </div>
-                                                                    <div className="flex-1 w-full px-2 pb-2">
+                                                                    <div className="flex-1 w-full pr-2">
                                                                         <div className="flex items-center justify-between">
                                                                             <div className="text-md font-medium text-white">{s.name || s.id}</div>
-                                                                            <span className="text-[10px] bg-yellow-600/30 text-yellow-200 px-1 py-0.5 rounded">{weapon}</span>
+                                                                            <span className="text-[10px]  text-yellow-200">{weapon} Exclusive</span>
                                                                         </div>
                                                                         {s.description ? (
                                                                             <div className="text-xs text-gray-400 leading-none">{s.description}</div>
@@ -302,7 +302,7 @@ const ClassesAndSpellsPage: FC = () => {
                                         {spellsByClass[c.id]?.spells && (
                                             <div className="mb-2">
                                                 <strong className="text-gray-200">Spells</strong>
-                                                <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+                                                <div className="mt-2 grid lg:grid-cols-2 gap-3">
                                                     {(() => {
                                                         const exclude = new Set<string>();
                                                         if (c.passive) exclude.add(c.passive);
@@ -312,15 +312,15 @@ const ClassesAndSpellsPage: FC = () => {
                                                                 .filter(([, arr]) => Array.isArray(arr) && arr.includes(s.id))
                                                                 .map(([lvl]) => lvl);
                                                             return (
-                                                                <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                                <div key={s.id} className={`items-center flex flex-row items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-16 h-16 bg-slate-800 shadow overflow-hidden flex items-center justify-center">
                                                                         {s.icon ? (
-                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className={`w-full h-full object-cover border-l-0 border-y-0 ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")} `} />
                                                                         ) : (
                                                                             <div className="text-xs text-gray-400">no icon</div>
                                                                         )}
                                                                     </div>
-                                                                    <div className="flex-1 w-full px-2 pb-2">
+                                                                    <div className="flex-1 w-full pr-2 items-center justify-center">
                                                                         <div className="flex items-center justify-between">
                                                                             <div className="text-md font-medium text-white">{s.name || s.id}</div>
                                                                             {unlocks.length > 0 ? unlocks.map((l) => (
@@ -334,7 +334,7 @@ const ClassesAndSpellsPage: FC = () => {
                                                                         ) : (
                                                                             <div className="text-xs text-gray-400  leading-none">No description available</div>
                                                                         )}
-                                                                        <div className="mt-2 flex flex-wrap gap-1">
+                                                                        <div className="flex flex-wrap gap-1">
                                                                             {s.cooldown != null && <div className="text-xs text-gray-300">Cooldown: {s.cooldown/1000}s</div>}
                                                                         </div>
                                                                     </div>
