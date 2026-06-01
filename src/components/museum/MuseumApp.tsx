@@ -993,6 +993,29 @@ export const MuseumApp: FC = () => {
 
     return (
         <div className="museum-page">
+<section
+                className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
+                role="alert"
+                aria-live="assertive"
+            >
+                <div className="flex items-start gap-3">
+                    <AlertTriangle
+                        className="text-red-500 flex-shrink-0 mt-0.5"
+                        size={20}
+                        aria-hidden="true"
+                    />
+                    <div className="text-sm text-red-200/90">
+                        <p className="font-medium mb-1">
+                            Migration to new API
+                        </p>
+                        <p className="text-red-200/70">
+                            Coming Soon: We're transitioning to a new API for better performance and reliability. During this period, some museum data may not load correctly
+                            .
+                        </p>
+                    </div>
+                </div>
+            </section>
+{/*}
             <section
                 className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
                 role="alert"
@@ -1030,7 +1053,7 @@ export const MuseumApp: FC = () => {
                         </p>
                     </div>
                 </div>
-            </section>
+            </section>*/}
 
             {/* Form for entering the username */}
             <span className="flex flex-col md:flex-row mb-2 gap-2">

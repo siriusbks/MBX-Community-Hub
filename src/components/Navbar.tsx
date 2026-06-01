@@ -17,7 +17,8 @@ import {
     Bone,
     Snowflake,
     FolderClosed,
-    BookA
+    BookA,
+    BookCopy
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -33,8 +34,8 @@ const NAV_LINKS: Array<any> = [
         icon: Wrench,
         labelKey: "navbar.codex",
         items: [
-            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary" },
-            { id: "class_and_spells", to: "/classAndSpells", icon: Bone, labelKey: "navbar.class_and_spells", badge: "Coming Soon" },
+            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary", badge: "Beta" },
+            { id: "class_and_spells", to: "/classAndSpells", icon: BookCopy, labelKey: "navbar.class_and_spells", badge: "Coming Soon" },
             { id: "expeditions", to: "/expeditions", icon: Bone, labelKey: "navbar.expeditions", badge: "Coming Soon" },
             { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
         ],
@@ -46,11 +47,12 @@ const NAV_LINKS: Array<any> = [
         labelKey: "navbar.tools",
         items: [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
-            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
-            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
+            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Coming Soon" },
+            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Coming Soon" },
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
+    /*
     { 
         id: "archives",
         dropdown: true,
@@ -60,7 +62,7 @@ const NAV_LINKS: Array<any> = [
             { id: "christmas", to: "archives/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true},
             { id: "halloween", to: "archives/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
         ],
-    },
+    },*/
 ];
 
 const LanguageSelector = ({
