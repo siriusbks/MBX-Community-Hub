@@ -12,6 +12,8 @@ import NotFound from "./NotFound";
 import HalloweenPage from "./Halloween2025";
 import BestiaryPage from "./BestiaryPage";
 import ChristmasPage from "./Christmas2025";
+import ComingSoon from "./ComingSoon";
+import ClassesAndSpellsPage from "./ClassesAndSpells";
 
 const EquipPage = lazy(() => import("@routes/EquipPage"));
 const ProfilePage = lazy(() => import("@routes/ProfilePage"));
@@ -31,24 +33,41 @@ export const AppRoutes: FC = () => {
             <main className="flex-1 container mx-auto px-6 py-8">
                 <Suspense fallback={fallback}>
                     <Routes>
+                        {/* Foundation */}
                         <Route path="*" element={<NotFound />} />
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
+
+                        {/* Maps */}
                         <Route path="/map" element={<InfoMapPage />} />
                         <Route path="/mappage" element={<MapPage />} />
-                        <Route path="/equipment" element={<EquipPage />} />
-                        <Route path="/community" element={<CommunityPage />} />
-                        <Route path="/museum" element={<MuseumPage />} />
+
+                        {/* Codex */}
                         <Route path="/bestiary" element={<BestiaryPage />} />
-                        <Route
-                            path="/itemsNrecipes"
-                            element={<ItemsNRecipesPage />}
+                        <Route path="/classAndSpells" element={<ClassesAndSpellsPage />} />
+                        <Route path="/expeditions" element={<ComingSoon />} />
+                        <Route path="/itemsNrecipes" element={<ItemsNRecipesPage />}
                         />
 
+                        {/* Tools */}
+                        <Route path="/profile" element={<ProfilePage />} />
+                        {/*<Route path="/equipment" element={<EquipPage />} />*/}
+                        <Route path="/equipment" element={<ComingSoon />} />
+                        {/*<Route path="/museum" element={<MuseumPage />} />*/}
+                        <Route path="/museum" element={<ComingSoon />} />
 
+                        {/* Community */}
+                        <Route path="/community" element={<CommunityPage />} />
 
+                        {/* Archives */}
                         <Route path="archives/christmas" element={<ChristmasPage />} />
                         <Route path="archives/halloween" element={<HalloweenPage />} />
+
+                        {/* Events */}
+
+
+
+
+
                     </Routes>
                 </Suspense>
             </main>

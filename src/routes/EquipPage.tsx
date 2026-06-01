@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Loader2, RotateCcw, Shield } from "lucide-react";
+import { AlertTriangle, Loader2, RotateCcw, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useEquipment } from "@hooks/useEquipment";
@@ -110,7 +110,29 @@ const EquipPage: React.FC = () => {
     }
     if (error) {
         return (
-            <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-red-300">
+            <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-red-300 flex-col">
+                            <section
+                className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
+                role="alert"
+                aria-live="assertive"
+            >
+                <div className="flex items-start gap-3">
+                    <AlertTriangle
+                        className="text-red-500 flex-shrink-0 mt-0.5"
+                        size={20}
+                        aria-hidden="true"
+                    />
+                    <div className="text-sm text-red-200/90">
+                        <p className="font-medium mb-1">
+                            Migration to new API
+                        </p>
+                        <p className="text-red-200/70">
+                            Coming Soon: We're transitioning to a new API for better performance and reliability. <br></br>During this period, some equipment data may not load correctly
+                            .
+                        </p>
+                    </div>
+                </div>
+            </section>
                 {String(error)}
             </div>
         );
@@ -119,6 +141,8 @@ const EquipPage: React.FC = () => {
     return (
         <div className="min-h-screen w-screen max-w-full bg-gray-900 text-white flex flex-col">
             {/* Topbar */}
+
+            
             <header className="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-800 bg-gray-900/80 sticky top-0 z-10 backdrop-blur">
                 <div className="flex items-center gap-2">
                     <Shield className="w-6 h-6 text-green-400" />
