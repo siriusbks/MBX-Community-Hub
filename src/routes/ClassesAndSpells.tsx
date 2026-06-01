@@ -30,6 +30,7 @@ const ClassesAndSpellsPage: FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [spellsByClass, setSpellsByClass] = useState<Record<string, { loading: boolean; error?: string; spells?: any[] }>>({});
+    const [spellCache, setSpellCache] = useState<Record<string, { loading?: boolean; error?: string; spell?: any }>>({});
     const [detailsOpen, setDetailsOpen] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
@@ -70,10 +71,45 @@ const ClassesAndSpellsPage: FC = () => {
             });
     };
 
+    const loadSpellById = (spellId: string) => {
+        if (!spellId) return;
+        setSpellCache((s) => {
+            if (s[spellId]) return s;
+            return { ...s, [spellId]: { loading: true } };
+        });
+
+        fetch(`https://api.minebox.co/spells/${spellId}?locale=${i18next.language}`)
+            .then((r) => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.json();
+            })
+            .then((d) => {
+                // API might return { spell: {...} } or the spell object directly
+                const spellObj = d && (d.spell ?? d);
+                setSpellCache((s) => ({ ...s, [spellId]: { loading: false, spell: spellObj } }));
+            })
+            .catch((e) => {
+                console.error("Failed to load spell", spellId, e);
+                setSpellCache((s) => ({ ...s, [spellId]: { loading: false, error: String(e) } }));
+            });
+    };
+
     const toggleDetails = (classId: string) => {
         const isOpen = !!detailsOpen[classId];
         setDetailsOpen((s) => ({ ...s, [classId]: !isOpen }));
-        if (!isOpen) loadSpellsForClass(classId);
+        if (!isOpen) {
+            loadSpellsForClass(classId);
+            // prefetch passive and auto_attack spells for this class
+            const cls = classes.find((x) => x.id === classId);
+            if (cls) {
+                if (cls.passive) loadSpellById(cls.passive);
+                if (cls.auto_attack) {
+                    Object.values(cls.auto_attack).forEach((sid) => {
+                        if (sid) loadSpellById(sid);
+                    });
+                }
+            }
+        }
     };
 
     return (
@@ -175,7 +211,8 @@ const ClassesAndSpellsPage: FC = () => {
                                                 <strong className="text-gray-200">Passive</strong>
                                                 <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                                                     {(() => {
-                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === c.passive);
+                                                        const cached = spellCache[c.passive!];
+                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === c.passive) ?? cached?.spell;
                                                         if (s) {
                                                             return (
                                                                 <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
@@ -201,44 +238,53 @@ const ClassesAndSpellsPage: FC = () => {
                                                             );
                                                         }
 
+                                                        if (cached?.loading) {
+                                                            return (
+                                                                <div key={c.passive} className="bg-slate-800 p-2 rounded text-xs text-gray-200">Loading...</div>
+                                                            );
+                                                        }
+
                                                         // fallback: show id
                                                         return (
                                                             <div key={c.passive} className="bg-slate-800 p-2 rounded text-xs text-gray-200">{c.passive}</div>
                                                         );
                                                     })()}
-                                                </div>
-                                            </div>
-                                        )}
+                                                    
 
-                                        {/* Render auto attack spells as spell-like cards per weapon */}
+                                        {/* Render auto attack spells as spell-like cards per weapon (match passive style) */}
                                         {c.auto_attack && (
-                                            <div className="mb-3">
-                                                <strong className="text-gray-200">Auto Attack</strong>
-                                                <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+<>
                                                     {Object.entries(c.auto_attack).map(([weapon, spellId]) => {
-                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === spellId);
+                                                        const cached = spellCache[spellId];
+                                                        const s = spellsByClass[c.id]?.spells?.find((x) => x.id === spellId) ?? cached?.spell;
                                                         if (s) {
                                                             return (
-                                                                <div key={weapon} className={`flex items-start gap-3 p-2 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                    <div className="w-12 h-12 bg-slate-800 rounded overflow-hidden flex items-center justify-center">
+                                                                <div key={weapon} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
                                                                         {s.icon ? (
                                                                             <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
                                                                         ) : (
                                                                             <div className="text-xs text-gray-400">no icon</div>
                                                                         )}
                                                                     </div>
-                                                                    <div className="flex-1">
+                                                                    <div className="flex-1 w-full px-2 pb-2">
                                                                         <div className="flex items-center justify-between">
-                                                                            <div className="text-sm font-medium text-white">{s.name || s.id}</div>
+                                                                            <div className="text-md font-medium text-white">{s.name || s.id}</div>
                                                                             <span className="text-[10px] bg-yellow-600/30 text-yellow-200 px-1 py-0.5 rounded">{weapon}</span>
                                                                         </div>
                                                                         {s.description ? (
-                                                                            <div className="text-xs text-gray-400">{s.description}</div>
+                                                                            <div className="text-xs text-gray-400 leading-none">{s.description}</div>
                                                                         ) : (
-                                                                            <div className="text-xs text-gray-400">No description available</div>
+                                                                            <div className="text-xs text-gray-400 leading-none">No description available</div>
                                                                         )}
                                                                     </div>
                                                                 </div>
+                                                            );
+                                                        }
+
+                                                        if (cached?.loading) {
+                                                            return (
+                                                                <div key={weapon} className="bg-slate-800 p-2 rounded text-xs text-gray-200">Loading...</div>
                                                             );
                                                         }
 
@@ -246,6 +292,8 @@ const ClassesAndSpellsPage: FC = () => {
                                                             <div key={weapon} className="bg-slate-800 p-2 rounded text-xs text-gray-200">{weapon} → {spellId}</div>
                                                         );
                                                     })}
+                                                </>
+                                        )}
                                                 </div>
                                             </div>
                                         )}
@@ -255,41 +303,45 @@ const ClassesAndSpellsPage: FC = () => {
                                             <div className="mb-2">
                                                 <strong className="text-gray-200">Spells</strong>
                                                 <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
-                                                    {spellsByClass[c.id]!.spells!.map((s) => {
-                                                        const unlocks = Object.entries(c.spell_unlocks || {})
-                                                            .filter(([, arr]) => Array.isArray(arr) && arr.includes(s.id))
-                                                            .map(([lvl]) => lvl);
-                                                        return (
-                                                            <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
-                                                                <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
-                                                                    {s.icon ? (
-                                                                        <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
-                                                                    ) : (
-                                                                        <div className="text-xs text-gray-400">no icon</div>
-                                                                    )}
-                                                                </div>
-                                                                <div className="flex-1 w-full px-2 pb-2">
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div className="text-md font-medium text-white">{s.name || s.id}</div>
-                                                                                                                                                {unlocks.length > 0 ? unlocks.map((l) => (
-                                                                            <span key={l} className="text-sm font-bold">Lv {l}</span>
-                                                                        )) : (
-                                                                            <span className="text-[10px] text-gray-400">Unlisted</span>
+                                                    {(() => {
+                                                        const exclude = new Set<string>();
+                                                        if (c.passive) exclude.add(c.passive);
+                                                        if (c.auto_attack) Object.values(c.auto_attack).forEach((id) => id && exclude.add(id));
+                                                        return spellsByClass[c.id]!.spells!.filter((s) => !exclude.has(s.id)).map((s) => {
+                                                            const unlocks = Object.entries(c.spell_unlocks || {})
+                                                                .filter(([, arr]) => Array.isArray(arr) && arr.includes(s.id))
+                                                                .map(([lvl]) => lvl);
+                                                            return (
+                                                                <div key={s.id} className={`items-center flex flex-col items-start gap-3 rounded ${getRarityStyle(s.categories?.includes("ULTIMATE") ? "LEGENDARY" : "RARE")}`}>
+                                                                    <div className="w-full aspect-square bg-slate-800 shadow overflow-hidden flex items-center justify-center">
+                                                                        {s.icon ? (
+                                                                            <img src={`data:image/png;base64,${s.icon}`} alt={s.name || s.id} className="w-full h-full object-cover" />
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400">no icon</div>
                                                                         )}
-                                                                        
                                                                     </div>
-                                                                    {s.description ? (
-                                                                        <div className="text-xs text-gray-400 leading-none">{s.description}</div>
-                                                                    ) : (
-                                                                        <div className="text-xs text-gray-400  leading-none">No description available</div>
-                                                                    )}
-                                                                    <div className="mt-2 flex flex-wrap gap-1">
-{s.cooldown != null && <div className="text-xs text-gray-300">Cooldown: {s.cooldown/1000}s</div>}
+                                                                    <div className="flex-1 w-full px-2 pb-2">
+                                                                        <div className="flex items-center justify-between">
+                                                                            <div className="text-md font-medium text-white">{s.name || s.id}</div>
+                                                                            {unlocks.length > 0 ? unlocks.map((l) => (
+                                                                                <span key={l} className="text-sm font-bold">Lv {l}</span>
+                                                                            )) : (
+                                                                                <span className="text-[10px] text-gray-400">Unlisted</span>
+                                                                            )}
+                                                                        </div>
+                                                                        {s.description ? (
+                                                                            <div className="text-xs text-gray-400 leading-none">{s.description}</div>
+                                                                        ) : (
+                                                                            <div className="text-xs text-gray-400  leading-none">No description available</div>
+                                                                        )}
+                                                                        <div className="mt-2 flex flex-wrap gap-1">
+                                                                            {s.cooldown != null && <div className="text-xs text-gray-300">Cooldown: {s.cooldown/1000}s</div>}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        );
-                                                    })}
+                                                            );
+                                                        });
+                                                    })()}
                                                 </div>
 
                                                 {/* loading / error */}
