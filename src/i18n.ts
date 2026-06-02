@@ -16,7 +16,7 @@ i18n.use(HttpBackend)
         fallbackLng: "en",
         debug: false,
         backend: {
-            loadPath: "/locales/{{lng}}/{{ns}}.json",
+            loadPath: `/locales/{{lng}}/{{ns}}.json?v=${__APP_VERSION__}`,
         },
         detection: {
             order: ["cookie", "localStorage", "navigator"],

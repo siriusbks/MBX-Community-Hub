@@ -24,6 +24,9 @@ export default defineConfig({
     optimizeDeps: {
         exclude: [],
     },
+    define: {
+        __APP_VERSION__: JSON.stringify(Date.now()),
+    },
     build: {
         target: "es2017",
         sourcemap: true,
