@@ -99,12 +99,6 @@ export const MuseumApp: FC = () => {
 
     // FIX: items-unobtainable.json loading 1.5K times :)
     const [unobtainable, setUnobtainable] = useState<string[]>([]);
-    useEffect(() => {
-        fetch("/assets/data/items-unobtainable.json")
-            .then((res) => res.json())
-            .then((data) => setUnobtainable(data.unobtainable || []))
-            .catch((err) => console.error("Error loading JSON :", err));
-    }, []);
 
     const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
         {}
@@ -217,9 +211,12 @@ export const MuseumApp: FC = () => {
             setMuseumItems(museumItemsFetched);
 
             const itemsGroupedResponse = await fetch(
-                "/assets/data/items_museum_grouped_by_category.json"
+                "https://api.minebox.co/museum"
             );
-            const itemsGrouped: Group[] = await itemsGroupedResponse.json();
+            const itemsGroupedRaw = await itemsGroupedResponse.json();
+            const itemsGrouped: Group[] = Object.keys(itemsGroupedRaw).map(
+                (category) => ({ category, items: itemsGroupedRaw[category] || [] })
+            );
 
             /* const itemsDetailsResponse = await fetch(
                 "https://cdn2.minebox.co/data/items.json"
@@ -304,9 +301,13 @@ export const MuseumApp: FC = () => {
 
     // Function to find the category of any items
     useEffect(() => {
-        fetch("/assets/data/items_museum_grouped_by_category.json")
+        fetch("https://api.minebox.co/museum")
             .then((res) => res.json())
-            .then((groups: Group[]) => {
+            .then((raw) => {
+                const groups: Group[] = Object.keys(raw).map((category) => ({
+                    category,
+                    items: raw[category] || [],
+                }));
                 setGroupedItemsForResearch(groups);
             })
             .catch(() => {
@@ -893,11 +894,13 @@ export const MuseumApp: FC = () => {
                                 <Plus className="p-0.5 opacity-70" />
                             )}
                             {/* {t(`museum.category.${group.category}`)} */}
+                            {/*
                             <ItemTranslation
                                 mbxId="null"
                                 category={group.category}
                                 type="name"
-                            />
+                            />*/}
+                            {group.category}
                         </span>
                         <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
@@ -1178,7 +1181,7 @@ export const MuseumApp: FC = () => {
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
                                                     {t(
-                                                        `museum.category.${group.category}`
+                                                        `museum.category.${(group.category).toUpperCase()}`
                                                     )}
                                                 </span>
                                                 <span className="text-xs opacity-50">
