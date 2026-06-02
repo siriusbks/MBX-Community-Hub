@@ -38,10 +38,22 @@ const STORE_TO_DATA_KEY: Record<StoreProfessionId, string> = {
     runeforging: "runeforger",
 };
 
-const DATA_URL = "/assets/data/skillsXP.json";
+const DATA_URL = "https://api.minebox.co/skills";
 
 // cache JSON once
 let xpData: XpJson | null = null;
+
+function parseXpData(rawData: any): XpJson {
+    if (rawData && Array.isArray(rawData.skills)) {
+        const transformed: XpJson = {};
+        for (const skill of rawData.skills) {
+            transformed[skill.id] = { id: skill.id, experience_per_level: skill.experience_per_level };
+        }
+        return transformed;
+    }
+    return rawData as XpJson;
+}
+
 async function loadXpData(): Promise<XpJson> {
     if (xpData) return xpData;
     const res = await fetch(DATA_URL, {
@@ -49,7 +61,7 @@ async function loadXpData(): Promise<XpJson> {
         cache: "no-cache",
     });
     if (!res.ok) throw new Error(`Failed to load ${DATA_URL}: ${res.status}`);
-    xpData = (await res.json()) as XpJson;
+    xpData = parseXpData(await res.json());
     return xpData;
 }
 
@@ -133,6 +145,6 @@ export async function initXpCurve(url = DATA_URL): Promise<void> {
     else {
         const res = await fetch(url, { cache: "no-cache" });
         if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
-        xpData = (await res.json()) as XpJson;
+        xpData = parseXpData(await res.json());
     }
 }
