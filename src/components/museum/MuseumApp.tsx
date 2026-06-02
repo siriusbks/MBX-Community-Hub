@@ -25,7 +25,6 @@ import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage";
 import ItemTranslation from "../ItemTranslation";
-import { redirect } from "react-router-dom";
 
 // Definition of interfaces
 interface Group {
@@ -37,6 +36,7 @@ interface Details {
         id: string;
         image?: string;
         rarity?: string;
+        name?: string;
         recipe?: any;
     };
 }
@@ -49,12 +49,7 @@ export const MuseumApp: FC = () => {
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
-    // used_in_recipes fetched from the item API for the currently opened craft modal
-    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(
-        null
-    );
-    const [itemUsedLoading, setItemUsedLoading] = useState(false);
-    const [itemUsedError, setItemUsedError] = useState<string | null>(null);
+    // used_in_recipes fetching is disabled to avoid extra API calls
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -98,7 +93,7 @@ export const MuseumApp: FC = () => {
     ];
 
     // FIX: items-unobtainable.json loading 1.5K times :)
-    const [unobtainable, setUnobtainable] = useState<string[]>([]);
+    const [unobtainable] = useState<string[]>([]);
 
     const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
         {}
@@ -238,6 +233,30 @@ export const MuseumApp: FC = () => {
                     details[item.id] = item;
                 }
             });
+
+            // Prefer local minebox_items.json for display fields (name, image, rarity)
+            try {
+                const mb = await import("./itemDataFromApi/minebox_items.json");
+                const mineboxItems: Record<string, any> = (mb?.default ?? mb) as any;
+                if (mineboxItems && typeof mineboxItems === "object") {
+                    Object.keys(mineboxItems).forEach((id) => {
+                        details[id] = details[id] || ({ id } as any);
+                        const src = mineboxItems[id];
+                        if (src) {
+                            // name: prefer english when available
+                            (details[id] as any).name =
+                                src.name?.en ?? src.name?.fr ?? src.name?.pl ?? (details[id] as any).name;
+                            // image: store raw base64 (rendering code will prefix)
+                            if (src.image) (details[id] as any).image = src.image;
+                            // rarity
+                            if (src.rarity) (details[id] as any).rarity = src.rarity;
+                        }
+                    });
+                }
+            } catch (e) {
+                // ignore if import fails
+                console.warn("Could not load minebox_items.json", e);
+            }
 
             setGroupedItems(itemsGrouped);
             setDetailsIndex(details);
@@ -933,6 +952,7 @@ export const MuseumApp: FC = () => {
                                         imageSrc={imageSrc} // we can use MuseumItemImage but I think, we will have to rewrite the code
                                         isOwned={isOwned}
                                         rarity={rarity}
+                                        label={detailsIndex[itemId]?.name}
                                         category={group.category}
                                         unobtainable={unobtainable}
                                         missingRarity={missingRarity}

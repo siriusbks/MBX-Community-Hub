@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ItemTranslation from "../ItemTranslation";
+import { getRarityStyle } from "@components/stats";
 
 interface MuseumCard {
     itemId: string;
@@ -8,9 +9,10 @@ interface MuseumCard {
     isOwned: boolean;
     category?: string;
     rarity: string;
+    label?: string;
     unobtainable: string[];
     missingRarity: Record<string, string>;
-    craftModalOpener?: (itemId: string) => void;
+    craftModalOpener?: () => void;
 }
 
 const MuseumItemCard: React.FC<MuseumCard> = ({
@@ -22,6 +24,7 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     unobtainable,
     missingRarity,
     craftModalOpener,
+    label,
 }) => {
     let adjustedRarity = rarity;
     if (
@@ -30,16 +33,6 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     ) {
         adjustedRarity = missingRarity[itemId];
     }
-
-    const TMPBorderColorClass =
-        {
-            COMMON: "border-COMMON-BORDER",
-            UNCOMMON: "border-UNCOMMON",
-            RARE: "border-RARE",
-            EPIC: "border-EPIC",
-            LEGENDARY: "border-LEGENDARY",
-            MYTHIC: "border-MYTHIC",
-        }[adjustedRarity] || "border-UNKNOWN";
 
     const TMPBackgroundColorClass =
         {
@@ -50,18 +43,6 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
             LEGENDARY: "bg-LEGENDARY",
             MYTHIC: "bg-MYTHIC",
         }[adjustedRarity] || "bg-UNKNOWN";
-
-    const TMPShadowClass =
-        {
-            COMMON: "shadow-[inset_0_0_4px_theme(colors.COMMON.BORDER)]",
-            UNCOMMON: "shadow-[inset_0_0_8px_theme(colors.UNCOMMON.DEFAULT)]",
-            RARE: "shadow-[inset_0_0_8px_theme(colors.RARE.DEFAULT)]",
-            EPIC: "shadow-[inset_0_0_8px_theme(colors.EPIC.DEFAULT)]",
-            LEGENDARY:
-                "shadow-[inset_0_0_12px_theme(colors.LEGENDARY.DEFAULT)]",
-            MYTHIC: "shadow-[inset_0_0_16px_theme(colors.MYTHIC.DEFAULT)]",
-        }[adjustedRarity] ||
-        "shadow-[inset_0_0_8px_theme(colors.UNKNOWN.DEFAULT)]";
 
     const { t } = useTranslation(["museum", "common"]);
 
@@ -96,15 +77,15 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
     return (
         <div
             key={itemId}
-            className={`text-regal-blue min-h-40 item relative flex flex-col items-center bg-gray-700 border-4 ${TMPBorderColorClass} p-2 rounded-lg text-center transition-transform hover:scale-105 m-2 ${
+            className={`text-regal-blue min-h-40 item relative flex flex-col items-center border-[6px] ${getRarityStyle(adjustedRarity)} p-2 rounded text-center transition-transform hover:scale-105 m-2 ${
                 isOwned
                     ? "bg-green-600 bg-opacity-20 border-4 cursor-default !border-green-600 shadow-[inset_0_0_4px_theme(colors.green.600)]"
                     : isUnobtainable
                     ? "bg-red-600 bg-opacity-20 border-4 cursor-default !border-red-600 shadow-[inset_0_0_4px_theme(colors.red.600)]"
-                    : `cursor-pointer ${TMPShadowClass}`
+                    : `cursor-pointer `
             }`}
             onClick={() => {
-                if (!isOwned && craftModalOpener) craftModalOpener(itemId);
+                if (!isOwned && craftModalOpener) craftModalOpener();
             }}
         >
             <img
@@ -121,11 +102,15 @@ const MuseumItemCard: React.FC<MuseumCard> = ({
                     isOwned ? "opacity-80 text-green-300" : ""
                 }`}
             >
-                <ItemTranslation
-                    mbxId={itemId}
-                    category={category!}
-                    type="name"
-                />
+                {label ? (
+                    <span>{label}</span>
+                ) : (
+                    <ItemTranslation
+                        mbxId={itemId}
+                        category={category!}
+                        type="name"
+                    />
+                )}
             </span>
 
             {isOwned && (
