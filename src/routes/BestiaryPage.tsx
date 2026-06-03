@@ -1159,7 +1159,7 @@ const BestiaryPage: FC = () => {
                                                             return (
                                                                 <div
                                                                     key={i}
-                                                                    className={`relative aspect-square bg-opacity-30 border rounded p-2 flex flex-col items-center justify-center text-center ${getRarityStyle(d.item.rarity ?? "UNKNOWN")}`}
+                                                                    className={`relative aspect-square bg-opacity-30 border rounded p-2 flex flex-col items-center justify-center text-center ${getRarityStyle(d.item?.rarity ?? "UNKNOWN")}`}
                                                                     title={`${t(
                                                                         d.item_id,
                                                                     )}`}
