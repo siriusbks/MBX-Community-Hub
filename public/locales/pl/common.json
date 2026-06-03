@@ -4,7 +4,9 @@
         "clickToView": "Kliknij, aby zobaczyć",
         "openInteractiveMap": "Otwórz Interaktywną mapę",
         "openInMinebox": "Otwórz w Minebox",
-        "openInItemsNRecipes": "Otwórz w Przedmioty i Receptury"
+        "openInItemsNRecipes": "Otwórz w Przedmioty i Receptury",
+        "showDetails": "Show Details",
+        "closeDetails": "Close Details"
     },
     "infos": {
         "recipeNotFound": "Brak receptury dla tego przedmiotu."
@@ -17,16 +19,31 @@
         "STRENGTH": "Siła",
         "FORTUNE": "Fortuna",
         "DEFENSE": "Ochrona",
-        "INTELLIGENCE": "Inteligencja"
+        "INTELLIGENCE": "Inteligencja",
+        "ATTACK_SPEED": "Prędkość Ataku",
+        "ENDURANCE": "Wytrzymałość",
+        "CHARISMA": "Charyzma",
+        "MOVEMENT_SPEED": "Prędkość Ruchu",
+        "DEXTERITY": "Zręczność",
+        "VITALITY": "Witalność",
+        "ENERGY": "Energia",
+        "FARMING_FORTUNE": "Fortuna Rolnicza",
+        "WOODCUTTING_FORTUNE": "Fortuna Rąbania",
+        "MINING_FORTUNE": "Fortuna Kopania",
+        "FISHING_FORTUNE": "Fortuna Łowiectwa",
+        "GATHERING_FORTUNE": "Fortuna Zbierania",
+        "LOOTING_FORTUNE": "Fortuna Grabieży"
     },
     "rarity": {
         "unknown": "Nieznane",
         "vanilla": "Wanilia",
+        "trash": "Śmieć",
         "common": "Zwykły",
         "uncommon": "Niezwykły",
         "rare": "Rzadki",
         "epic": "Epicki",
         "legendary": "Legendarny",
-        "mythic": "Mityczny"
+        "mythic": "Mityczny",
+        "contraband": "Kontrabanda"
     }
 }

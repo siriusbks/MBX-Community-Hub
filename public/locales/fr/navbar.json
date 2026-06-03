@@ -6,7 +6,11 @@
     "navbar.museum": "Musée",
     "navbar.community": "Communauté",
     "navbar.itemsNrecipes": "Objets & Recettes",
+    "navbar.codex": "Codex",
+    "navbar.class_and_spells": "Classes et sorts",
+    "navbar.expeditions": "Expéditions",
     "navbar.bestiary": "Bestiaire",
+    "navbar.archives": "Archives",
     "navbar.halloween": "Halloween",
     "navbar.christmas": "Noël"
 }

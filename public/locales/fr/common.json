@@ -4,7 +4,9 @@
         "clickToView": "Voir les détails",
         "openInteractiveMap": "Ouvrir la carte interactive",
         "openInMinebox": "Ouvrir dans Minebox",
-        "openInItemsNRecipes": "Ouvrir dans la page Items et Recettes"
+        "openInItemsNRecipes": "Ouvrir dans la page Items et Recettes",
+        "showDetails": "Afficher les détails",
+        "closeDetails": "Masquer les détails"
     },
     "infos": {
         "recipeNotFound": "Aucune recette disponible pour cet objet."
@@ -17,16 +19,31 @@
         "STRENGTH": "Force",
         "FORTUNE": "Fortune",
         "DEFENSE": "Défense",
-        "INTELLIGENCE": "Intelligence"
+        "INTELLIGENCE": "Intelligence",
+        "ATTACK_SPEED": "Vitesse d'attaque",
+        "ENDURANCE": "Endurance",
+        "CHARISMA": "Charisme",
+        "MOVEMENT_SPEED": "Vitesse de déplacement",
+        "DEXTERITY": "Dextérité",
+        "VITALITY": "Vitalité",
+        "ENERGY": "Énergie",
+        "FARMING_FORTUNE": "Fortune agricole",
+        "WOODCUTTING_FORTUNE": "Fortune de coupe de bois",
+        "MINING_FORTUNE": "Fortune de minage",
+        "FISHING_FORTUNE": "Fortune de Pêche",
+        "GATHERING_FORTUNE": "Fortune de Collecte",
+        "LOOTING_FORTUNE": "Fortune de loot"
     },
     "rarity": {
         "unknown": "Inconnu",
         "vanilla": "Vanilla",
+        "trash": "Ordures",
         "common": "Commun",
         "uncommon": "Peu Commun",
         "rare": "Rare",
         "epic": "Épique",
         "legendary": "Légendaire",
-        "mythic": "Mythique"
+        "mythic": "Mythique",
+        "contraband": "Contrebande"
     }
 }
