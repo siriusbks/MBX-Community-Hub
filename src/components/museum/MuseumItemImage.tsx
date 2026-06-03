@@ -3,6 +3,7 @@
  */
 
 import React, { useEffect, useState } from "react";
+import mineboxItems from "./itemDataFromApi/minebox_items.json";
 
 interface MuseumItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     groupCategory: string;
@@ -19,11 +20,32 @@ const MuseumItemImage: React.FC<MuseumItemImageProps> = ({
 
     const fallbackImage = `assets/media/item/textures/${itemId}.png`;
 
-    const primarySrc = groupCategory
+    const isInMinebox = Boolean(
+        mineboxItems && Object.prototype.hasOwnProperty.call(mineboxItems, itemId)
+    );
+
+    const mineboxImage = isInMinebox ? (mineboxItems as any)[itemId]?.image : null;
+
+    const primarySrc = mineboxImage
+        ? `data:image/png;base64,${mineboxImage}`
+        : isInMinebox && groupCategory
         ? `assets/media/museum/${groupCategory}/${itemId}.png`
         : fallbackImage;
 
-    console.log("MuseumItemImage - itemId:", itemId, "groupCategory:", groupCategory, "primarySrc:", primarySrc, "fallbackImage:", fallbackImage);
+    console.log(
+        "MuseumItemImage - itemId:",
+        itemId,
+        "groupCategory:",
+        groupCategory,
+        "isInMinebox:",
+        isInMinebox,
+        "hasMineboxImage:",
+        Boolean(mineboxImage),
+        "primarySrc:",
+        primarySrc,
+        "fallbackImage:",
+        fallbackImage
+    );
 
     const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const currentSrc = (e.target as HTMLImageElement).src;

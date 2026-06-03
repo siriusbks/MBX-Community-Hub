@@ -52,8 +52,7 @@ export const AppRoutes: FC = () => {
                         <Route path="/profile" element={<ProfilePage />} />
                         {/*<Route path="/equipment" element={<EquipPage />} />*/}
                         <Route path="/equipment" element={<ComingSoon />} />
-                        {/*<Route path="/museum" element={<MuseumPage />} />*/}
-                        <Route path="/museum" element={<ComingSoon />} />
+                        <Route path="/museum" element={<MuseumPage />} />
 
                         {/* Community */}
                         <Route path="/community" element={<CommunityPage />} />

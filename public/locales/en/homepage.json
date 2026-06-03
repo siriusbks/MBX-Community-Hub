@@ -16,5 +16,9 @@
     "homepage.features.halloween.title": "Halloween Event",
     "homepage.features.halloween.description": "Join the Halloween festivities with special quests, items, and more!",
     "homepage.features.itemsNrecipes.title": "Items & Recipes",
-    "homepage.features.itemsNrecipes.description": "Explore all the items and the recipes associated with them."
+    "homepage.features.itemsNrecipes.description": "Explore all the items and the recipes associated with them.",
+    "homepage.features.classAndSpells.title": "Class and Spells",
+    "homepage.features.classAndSpells.description": "Discover detailed information about the classes and spells available in the Minebox world.",
+    "homepage.features.expeditions.title": "Expeditions",
+    "homepage.features.expeditions.description": "Join exciting expeditions and explore new territories in the Minebox world."
 }

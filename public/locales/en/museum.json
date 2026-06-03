@@ -68,5 +68,14 @@
     "museum.category.MOUNT": "Mount",
     "museum.category.SHIP": "Ship",
     "museum.category.ART": "Art",
+    "museum.category.BOOT": "Boot",
+    "museum.category.CLASS": "Class",
+    "museum.category.CONSUMABLE": "Consumable",
+    "museum.category.CROP": "Crop",
+    "museum.category.FARMING": "Farming",
+    "museum.category.HAVERSACK": "Haversack",
+"museum.category.INGREDIENT": "Ingredient",
+    "museum.category.LEGGING": "Legging",
+    "museum.category.MUSKET": "Musket",
     "museum.category.JELLY": "Jelly"
 }

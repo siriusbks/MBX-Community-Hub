@@ -25,7 +25,7 @@ import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage";
 import ItemTranslation from "../ItemTranslation";
-import { redirect } from "react-router-dom";
+import i18next from "i18next";
 
 // Definition of interfaces
 interface Group {
@@ -37,6 +37,7 @@ interface Details {
         id: string;
         image?: string;
         rarity?: string;
+        name?: string;
         recipe?: any;
     };
 }
@@ -49,12 +50,7 @@ export const MuseumApp: FC = () => {
     const [groupedItems, setGroupedItems] = useState<Group[] | null>(null);
     const [detailsIndex, setDetailsIndex] = useState<Details | null>(null);
     const [museumItems, setMuseumItems] = useState<string[]>([]);
-    // used_in_recipes fetched from the item API for the currently opened craft modal
-    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(
-        null
-    );
-    const [itemUsedLoading, setItemUsedLoading] = useState(false);
-    const [itemUsedError, setItemUsedError] = useState<string | null>(null);
+    // used_in_recipes fetching is disabled to avoid extra API calls
     const [error] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -98,13 +94,7 @@ export const MuseumApp: FC = () => {
     ];
 
     // FIX: items-unobtainable.json loading 1.5K times :)
-    const [unobtainable, setUnobtainable] = useState<string[]>([]);
-    useEffect(() => {
-        fetch("/assets/data/items-unobtainable.json")
-            .then((res) => res.json())
-            .then((data) => setUnobtainable(data.unobtainable || []))
-            .catch((err) => console.error("Error loading JSON :", err));
-    }, []);
+    const [unobtainable] = useState<string[]>([]);
 
     const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
         {}
@@ -217,9 +207,12 @@ export const MuseumApp: FC = () => {
             setMuseumItems(museumItemsFetched);
 
             const itemsGroupedResponse = await fetch(
-                "/assets/data/items_museum_grouped_by_category.json"
+                "https://api.minebox.co/museum"
             );
-            const itemsGrouped: Group[] = await itemsGroupedResponse.json();
+            const itemsGroupedRaw = await itemsGroupedResponse.json();
+            const itemsGrouped: Group[] = Object.keys(itemsGroupedRaw).map(
+                (category) => ({ category, items: itemsGroupedRaw[category] || [] })
+            );
 
             /* const itemsDetailsResponse = await fetch(
                 "https://cdn2.minebox.co/data/items.json"
@@ -241,6 +234,32 @@ export const MuseumApp: FC = () => {
                     details[item.id] = item;
                 }
             });
+
+            // Prefer local minebox_items.json for display fields (name, image, rarity)
+            try {
+                const mb = await import("./itemDataFromApi/minebox_items.json");
+                const mineboxItems: Record<string, any> = (mb?.default ?? mb) as any;
+                if (mineboxItems && typeof mineboxItems === "object") {
+                    Object.keys(mineboxItems).forEach((id) => {
+                        details[id] = details[id] || ({ id } as any);
+                        const src = mineboxItems[id];
+                        if (src) {
+                            // name: prefer english when available
+(details[id] as any).name =
+    src.name?.[i18next.language] ??
+    src.name?.en ??
+    (details[id] as any).name;
+                            // image: store raw base64 (rendering code will prefix)
+                            if (src.image) (details[id] as any).image = src.image;
+                            // rarity
+                            if (src.rarity) (details[id] as any).rarity = src.rarity;
+                        }
+                    });
+                }
+            } catch (e) {
+                // ignore if import fails
+                console.warn("Could not load minebox_items.json", e);
+            }
 
             setGroupedItems(itemsGrouped);
             setDetailsIndex(details);
@@ -304,9 +323,13 @@ export const MuseumApp: FC = () => {
 
     // Function to find the category of any items
     useEffect(() => {
-        fetch("/assets/data/items_museum_grouped_by_category.json")
+        fetch("https://api.minebox.co/museum")
             .then((res) => res.json())
-            .then((groups: Group[]) => {
+            .then((raw) => {
+                const groups: Group[] = Object.keys(raw).map((category) => ({
+                    category,
+                    items: raw[category] || [],
+                }));
                 setGroupedItemsForResearch(groups);
             })
             .catch(() => {
@@ -322,6 +345,39 @@ export const MuseumApp: FC = () => {
             return category;
         }
         return "";
+    };
+
+    // Rarity order mapping (higher number = rarer)
+    const rarityOrder: Record<string, number> = {
+        prototype: 1,
+        contraband: 1,
+        trash: 0,
+        common: -1,
+        uncommon: -2,
+        rare: -3,
+        epic: -4,
+        legendary: -5,
+        mythic: -6,
+    };
+
+    const sortIdsByRarityThenName = (ids: string[] = []) => {
+        if (!detailsIndex) return [...ids];
+        return [...ids].sort((a, b) => {
+            const ra = (detailsIndex[a]?.rarity || missingRarity[a] || "").toString().toLowerCase();
+            const rb = (detailsIndex[b]?.rarity || missingRarity[b] || "").toString().toLowerCase();
+            const oa = rarityOrder[ra] ?? -999;
+            const ob = rarityOrder[rb] ?? -999;
+            // rarer items first
+            if (oa !== ob) return ob - oa;
+            // fallback to localized name then id
+            const na = (detailsIndex[a]?.name && typeof detailsIndex[a].name === "string")
+                ? detailsIndex[a].name
+                : (detailsIndex[a]?.name?.[i18next.language] || detailsIndex[a]?.name?.en || a);
+            const nb = (detailsIndex[b]?.name && typeof detailsIndex[b].name === "string")
+                ? detailsIndex[b].name
+                : (detailsIndex[b]?.name?.[i18next.language] || detailsIndex[b]?.name?.en || b);
+            return na.localeCompare(nb, i18next.language || "en", { sensitivity: "base" });
+        });
     };
 
     // Recursive function to aggregate the required resources from a given recipe
@@ -561,7 +617,9 @@ export const MuseumApp: FC = () => {
                             </div>
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-                                {missingItems.map((itemId) => {
+                                {(() => {
+                                    const sortedMissing = sortIdsByRarityThenName(missingItems);
+                                    return sortedMissing.map((itemId) => {
                                     return (
                                         <li
                                             key={itemId}
@@ -597,7 +655,8 @@ export const MuseumApp: FC = () => {
                                             </span>
                                         </li>
                                     );
-                                })}
+                                    });
+                                })()}
                             </ul>
                         </div>
                     );
@@ -865,6 +924,8 @@ export const MuseumApp: FC = () => {
 
         if (!groupedItems || !detailsIndex) return null;
 
+        
+
         return groupedItems.map((group, index) => {
             const ownedCount = group.items.filter((item) =>
                 museumItems.includes(item)
@@ -879,13 +940,14 @@ export const MuseumApp: FC = () => {
                         className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
                         onClick={() => toggleGroup(group.category)}
                     >
-                        <MuseumItemImage
-                            groupCategory={group.category}
-                            itemId={group.category}
-                            detailsIndex={detailsIndex}
-                            className="h-8 w-8"
-                            style={{ imageRendering: "pixelated" }}
-                        />
+                                            <img
+                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
+                                                alt={group.category}
+                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
+                                            />
                         <span className="flex items-center">
                             {isExpanded ? (
                                 <Minus className="p-0.5 opacity-70" />
@@ -893,11 +955,13 @@ export const MuseumApp: FC = () => {
                                 <Plus className="p-0.5 opacity-70" />
                             )}
                             {/* {t(`museum.category.${group.category}`)} */}
+                            {/*
                             <ItemTranslation
                                 mbxId="null"
                                 category={group.category}
                                 type="name"
-                            />
+                            />*/}
+                            {t(`museum.category.${group.category.toUpperCase()}`)}
                         </span>
                         <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
@@ -909,7 +973,9 @@ export const MuseumApp: FC = () => {
                             isExpanded ? "opacity-100" : "max-h-0 opacity-0"
                         }`}
                     >
-                        {group.items.map((itemId) => {
+                        {(() => {
+                            const sortedItems = sortIdsByRarityThenName(group.items);
+                            return sortedItems.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
                                 detailsIndex[itemId] &&
@@ -930,6 +996,7 @@ export const MuseumApp: FC = () => {
                                         imageSrc={imageSrc} // we can use MuseumItemImage but I think, we will have to rewrite the code
                                         isOwned={isOwned}
                                         rarity={rarity}
+                                        label={detailsIndex[itemId]?.name}
                                         category={group.category}
                                         unobtainable={unobtainable}
                                         missingRarity={missingRarity}
@@ -943,7 +1010,8 @@ export const MuseumApp: FC = () => {
                                 );
                             }
                             return null;
-                        })}
+                            });
+                        })()}
                     </div>
                 </div>
             );
@@ -993,29 +1061,8 @@ export const MuseumApp: FC = () => {
 
     return (
         <div className="museum-page">
-<section
-                className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
-                role="alert"
-                aria-live="assertive"
-            >
-                <div className="flex items-start gap-3">
-                    <AlertTriangle
-                        className="text-red-500 flex-shrink-0 mt-0.5"
-                        size={20}
-                        aria-hidden="true"
-                    />
-                    <div className="text-sm text-red-200/90">
-                        <p className="font-medium mb-1">
-                            Migration to new API
-                        </p>
-                        <p className="text-red-200/70">
-                            Coming Soon: We're transitioning to a new API for better performance and reliability. During this period, some museum data may not load correctly
-                            .
-                        </p>
-                    </div>
-                </div>
-            </section>
-{/*}
+
+
             <section
                 className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
                 role="alert"
@@ -1053,7 +1100,7 @@ export const MuseumApp: FC = () => {
                         </p>
                     </div>
                 </div>
-            </section>*/}
+            </section>
 
             {/* Form for entering the username */}
             <span className="flex flex-col md:flex-row mb-2 gap-2">
@@ -1147,9 +1194,11 @@ export const MuseumApp: FC = () => {
                 id="categoryNav"
                 className="bg-gray-800 bg-opacity-50 p-4 rounded-lg"
             >
-                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
+                <ul className="grid grid-cols-2 xl:grid-cols-7 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
-                        groupedItems.map((group, i) => {
+                        groupedItems
+        .filter((group) => group.category !== "spell")
+        .map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
                                 museumItems.includes(item)
                             ).length;
@@ -1159,6 +1208,7 @@ export const MuseumApp: FC = () => {
                                     .toLowerCase()
                                     .replace(/\s+/g, "-");
                             return (
+                                
                                 <li key={group.category} className="w-full">
                                     <a
                                         key={i}
@@ -1166,10 +1216,9 @@ export const MuseumApp: FC = () => {
                                         className="block w-full bg-gray-700 text-white p-2 rounded-t transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
                                     >
                                         <span className="flex flex-row items-center gap-2">
-                                            <MuseumItemImage
-                                                groupCategory={group.category}
-                                                itemId={group.category}
-                                                detailsIndex={detailsIndex}
+                                            <img
+                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
+                                                alt={group.category}
                                                 className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
                                                 style={{
                                                     imageRendering: "pixelated",
@@ -1178,7 +1227,7 @@ export const MuseumApp: FC = () => {
                                             <span className="flex flex-col items-start leading-tight">
                                                 <span className="font-bold text-sm">
                                                     {t(
-                                                        `museum.category.${group.category}`
+                                                        `museum.category.${(group.category).toUpperCase()}`
                                                     )}
                                                 </span>
                                                 <span className="text-xs opacity-50">
