@@ -347,6 +347,39 @@ export const MuseumApp: FC = () => {
         return "";
     };
 
+    // Rarity order mapping (higher number = rarer)
+    const rarityOrder: Record<string, number> = {
+        prototype: 1,
+        contraband: 1,
+        trash: 0,
+        common: -1,
+        uncommon: -2,
+        rare: -3,
+        epic: -4,
+        legendary: -5,
+        mythic: -6,
+    };
+
+    const sortIdsByRarityThenName = (ids: string[] = []) => {
+        if (!detailsIndex) return [...ids];
+        return [...ids].sort((a, b) => {
+            const ra = (detailsIndex[a]?.rarity || missingRarity[a] || "").toString().toLowerCase();
+            const rb = (detailsIndex[b]?.rarity || missingRarity[b] || "").toString().toLowerCase();
+            const oa = rarityOrder[ra] ?? -999;
+            const ob = rarityOrder[rb] ?? -999;
+            // rarer items first
+            if (oa !== ob) return ob - oa;
+            // fallback to localized name then id
+            const na = (detailsIndex[a]?.name && typeof detailsIndex[a].name === "string")
+                ? detailsIndex[a].name
+                : (detailsIndex[a]?.name?.[i18next.language] || detailsIndex[a]?.name?.en || a);
+            const nb = (detailsIndex[b]?.name && typeof detailsIndex[b].name === "string")
+                ? detailsIndex[b].name
+                : (detailsIndex[b]?.name?.[i18next.language] || detailsIndex[b]?.name?.en || b);
+            return na.localeCompare(nb, i18next.language || "en", { sensitivity: "base" });
+        });
+    };
+
     // Recursive function to aggregate the required resources from a given recipe
     const gatherResources = (
         recipe: any,
@@ -584,7 +617,9 @@ export const MuseumApp: FC = () => {
                             </div>
 
                             <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-                                {missingItems.map((itemId) => {
+                                {(() => {
+                                    const sortedMissing = sortIdsByRarityThenName(missingItems);
+                                    return sortedMissing.map((itemId) => {
                                     return (
                                         <li
                                             key={itemId}
@@ -620,7 +655,8 @@ export const MuseumApp: FC = () => {
                                             </span>
                                         </li>
                                     );
-                                })}
+                                    });
+                                })()}
                             </ul>
                         </div>
                     );
@@ -888,6 +924,8 @@ export const MuseumApp: FC = () => {
 
         if (!groupedItems || !detailsIndex) return null;
 
+        
+
         return groupedItems.map((group, index) => {
             const ownedCount = group.items.filter((item) =>
                 museumItems.includes(item)
@@ -935,7 +973,9 @@ export const MuseumApp: FC = () => {
                             isExpanded ? "opacity-100" : "max-h-0 opacity-0"
                         }`}
                     >
-                        {group.items.map((itemId) => {
+                        {(() => {
+                            const sortedItems = sortIdsByRarityThenName(group.items);
+                            return sortedItems.map((itemId) => {
                             const isOwned = museumItems.includes(itemId);
                             const imageSrc =
                                 detailsIndex[itemId] &&
@@ -970,7 +1010,8 @@ export const MuseumApp: FC = () => {
                                 );
                             }
                             return null;
-                        })}
+                            });
+                        })()}
                     </div>
                 </div>
             );
