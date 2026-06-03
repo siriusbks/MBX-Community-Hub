@@ -19,7 +19,8 @@ import {
     FolderClosed,
     BookA,
     BookCopy,
-    Swords
+    Swords,
+    BookOpen
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -32,7 +33,7 @@ const NAV_LINKS: Array<any> = [
     {
         id: "codex",
         dropdown: true,
-        icon: Wrench,
+        icon: BookOpen,
         labelKey: "navbar.codex",
         items: [
             { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary" },
