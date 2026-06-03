@@ -171,7 +171,7 @@ const ClassesAndSpellsPage: FC = () => {
                                             
                                             <div>
                                                 <button onClick={() => toggleDetails(c.id)} className="text-xs bg-green-600/20 hover:bg-green-600/30 text-green-200 px-2 py-1 rounded">
-                                                    {detailsOpen[c.id] ? <span className="flex items-center gap-1"><EyeClosed className="w-4 h-4" /> Close Details</span> : <span className="flex items-center gap-1"><Eye className="w-4 h-4" /> Show Details</span>}
+                                                    {detailsOpen[c.id] ? <span className="flex items-center gap-1"><EyeClosed className="w-4 h-4" /> {t("common:actions.closeDetails")}</span> : <span className="flex items-center gap-1"><Eye className="w-4 h-4" /> {t("common:actions.showDetails")}</span>}
                                                 </button>
                                             </div>
                                         </div>

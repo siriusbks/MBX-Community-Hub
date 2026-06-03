@@ -4,7 +4,9 @@
         "clickToView": "Click to view",
         "openInteractiveMap": "Open Interactive Map",
         "openInMinebox": "Open in Minebox",
-        "openInItemsNRecipes": "Open in Items & Recipes Page"
+        "openInItemsNRecipes": "Open in Items & Recipes Page",
+        "showDetails": "Show Details",
+        "closeDetails": "Close Details"
     },
 
     "infos": {
