@@ -9,10 +9,12 @@ import { useTranslation } from "react-i18next";
 import { BookCopy, Eye, EyeClosed } from "lucide-react";
 import { getRarityStyle,getStatIconURL, getStatLabel } from "@components/stats";
 import i18next from "i18next";
+import { getRarityBadge } from "@utils/equipmentSlots";
 
 interface MBClass {
     id: string;
     name: string;
+        rarity: string;
     description?: string;
     lore?: string;
     image?: string; // base64
@@ -49,6 +51,7 @@ const ClassesAndSpellsPage: FC = () => {
             })
             .finally(() => setLoading(false));
     }, []);
+
 
     const loadSpellsForClass = (classId: string) => {
         // avoid refetch
@@ -136,7 +139,7 @@ const ClassesAndSpellsPage: FC = () => {
                 {!loading && !error && (
                     <div className="grid grid-cols-1 gap-6 mt-6">
                         {classes.map((c) => (
-                            <div key={c.id} className="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <div key={c.id} className={`bg-slate-800 p-4 rounded-lg border border-slate-700  `}>
                                 <div className="flex flex-row gap-4 items-center justify-center">
                                     <div className="w-28 h-28 bg-slate-900 rounded overflow-hidden flex items-center justify-center">
                                         {c.image ? (
@@ -144,7 +147,7 @@ const ClassesAndSpellsPage: FC = () => {
                                             <img
                                                 src={`data:image/png;base64,${c.image}`}
                                                 alt={c.name}
-                                                className={`w-full h-full object-cover ${getRarityStyle("LEGENDARY")}`}
+                                                className={`w-full h-full object-fit !border-0 ${getRarityStyle(c.rarity)}`}
                                                                         style={{
                                                                             imageRendering:
                                                                                 "pixelated",
@@ -157,7 +160,10 @@ const ClassesAndSpellsPage: FC = () => {
                                     <div className="flex-1">
                                         <div className="flex items-start justify-between">
                                             <div>
+                                                <span className="flex flex-row gap-2 items-center">
+                                                <h3 className={`text text-white px-2 rounded font-bold ${getRarityBadge(c.rarity)}`}>{c.rarity}</h3>
                                                 <h3 className="text-2xl font-bold text-white">{c.name}</h3>
+                                                </span>
                                                 <div className="text-xs text-gray-400">{c.description}</div>
                                                 
                                 {c.lore && <p className="text-gray-400 text-xs">{c.lore}</p>}
@@ -171,7 +177,11 @@ const ClassesAndSpellsPage: FC = () => {
                                         </div>
                                         <div className="mt-2 flex flex-wrap gap-2">
                                             {(c.types || []).map((t) => (
-                                                <span key={t} className="text-xs bg-green-600/50 text-white px-2 py-0.5 font-semibold rounded">{t}</span>
+                                                <span key={t} className={`text-xs ${{
+            DAMAGE: "bg-red-800",
+            TANK: "bg-blue-700",
+            SUPPORT: "bg-green-800",
+        }[t] ?? "bg-gray-500"} text-white px-2 py-0.5 font-semibold rounded`}>{t}</span>
                                             ))}
                                         </div>
                                     </div>

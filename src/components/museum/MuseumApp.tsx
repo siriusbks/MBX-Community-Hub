@@ -25,6 +25,7 @@ import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage";
 import ItemTranslation from "../ItemTranslation";
+import i18next from "i18next";
 
 // Definition of interfaces
 interface Group {
@@ -244,8 +245,10 @@ export const MuseumApp: FC = () => {
                         const src = mineboxItems[id];
                         if (src) {
                             // name: prefer english when available
-                            (details[id] as any).name =
-                                src.name?.en ?? src.name?.fr ?? src.name?.pl ?? (details[id] as any).name;
+(details[id] as any).name =
+    src.name?.[i18next.language] ??
+    src.name?.en ??
+    (details[id] as any).name;
                             // image: store raw base64 (rendering code will prefix)
                             if (src.image) (details[id] as any).image = src.image;
                             // rarity
@@ -899,13 +902,14 @@ export const MuseumApp: FC = () => {
                         className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
                         onClick={() => toggleGroup(group.category)}
                     >
-                        <MuseumItemImage
-                            groupCategory={group.category}
-                            itemId={group.category}
-                            detailsIndex={detailsIndex}
-                            className="h-8 w-8"
-                            style={{ imageRendering: "pixelated" }}
-                        />
+                                            <img
+                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
+                                                alt={group.category}
+                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
+                                            />
                         <span className="flex items-center">
                             {isExpanded ? (
                                 <Minus className="p-0.5 opacity-70" />
@@ -919,7 +923,7 @@ export const MuseumApp: FC = () => {
                                 category={group.category}
                                 type="name"
                             />*/}
-                            {group.category}
+                            {t(`museum.category.${group.category.toUpperCase()}`)}
                         </span>
                         <p className=" opacity-40 text-sm">
                             [{ownedCount} / {group.items.length}]
@@ -1016,29 +1020,8 @@ export const MuseumApp: FC = () => {
 
     return (
         <div className="museum-page">
-<section
-                className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
-                role="alert"
-                aria-live="assertive"
-            >
-                <div className="flex items-start gap-3">
-                    <AlertTriangle
-                        className="text-red-500 flex-shrink-0 mt-0.5"
-                        size={20}
-                        aria-hidden="true"
-                    />
-                    <div className="text-sm text-red-200/90">
-                        <p className="font-medium mb-1">
-                            Migration to new API
-                        </p>
-                        <p className="text-red-200/70">
-                            Coming Soon: We're transitioning to a new API for better performance and reliability. During this period, some museum data may not load correctly
-                            .
-                        </p>
-                    </div>
-                </div>
-            </section>
-{/*}
+
+
             <section
                 className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-4"
                 role="alert"
@@ -1076,7 +1059,7 @@ export const MuseumApp: FC = () => {
                         </p>
                     </div>
                 </div>
-            </section>*/}
+            </section>
 
             {/* Form for entering the username */}
             <span className="flex flex-col md:flex-row mb-2 gap-2">
@@ -1170,9 +1153,11 @@ export const MuseumApp: FC = () => {
                 id="categoryNav"
                 className="bg-gray-800 bg-opacity-50 p-4 rounded-lg"
             >
-                <ul className="grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
+                <ul className="grid grid-cols-2 xl:grid-cols-7 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
-                        groupedItems.map((group, i) => {
+                        groupedItems
+        .filter((group) => group.category !== "spell")
+        .map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
                                 museumItems.includes(item)
                             ).length;
@@ -1182,6 +1167,7 @@ export const MuseumApp: FC = () => {
                                     .toLowerCase()
                                     .replace(/\s+/g, "-");
                             return (
+                                
                                 <li key={group.category} className="w-full">
                                     <a
                                         key={i}
@@ -1189,10 +1175,9 @@ export const MuseumApp: FC = () => {
                                         className="block w-full bg-gray-700 text-white p-2 rounded-t transition-colors hover:bg-gray-600 whitespace-nowrap text-center"
                                     >
                                         <span className="flex flex-row items-center gap-2">
-                                            <MuseumItemImage
-                                                groupCategory={group.category}
-                                                itemId={group.category}
-                                                detailsIndex={detailsIndex}
+                                            <img
+                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
+                                                alt={group.category}
                                                 className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
                                                 style={{
                                                     imageRendering: "pixelated",

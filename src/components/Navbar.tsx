@@ -18,7 +18,8 @@ import {
     Snowflake,
     FolderClosed,
     BookA,
-    BookCopy
+    BookCopy,
+    Swords
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -34,9 +35,9 @@ const NAV_LINKS: Array<any> = [
         icon: Wrench,
         labelKey: "navbar.codex",
         items: [
-            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary", badge: "Beta" },
-            { id: "class_and_spells", to: "/classAndSpells", icon: BookCopy, labelKey: "navbar.class_and_spells", badge: "Coming Soon" },
-            { id: "expeditions", to: "/expeditions", icon: Bone, labelKey: "navbar.expeditions", badge: "Coming Soon" },
+            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary" },
+            { id: "class_and_spells", to: "/classAndSpells", icon: BookCopy, labelKey: "navbar.class_and_spells" },
+            { id: "expeditions", to: "/expeditions", icon: Swords, labelKey: "navbar.expeditions", badge: "Coming Soon" },
             { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
         ],
     },    
@@ -48,7 +49,7 @@ const NAV_LINKS: Array<any> = [
         items: [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
             { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Coming Soon" },
-            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Coming Soon" },
+            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
         ],
     },
     { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },

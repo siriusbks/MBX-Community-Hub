@@ -14,6 +14,8 @@ import {
     BookMarked,
     Bone,
     BookA,
+    BookCopy,
+    Swords,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -49,145 +51,185 @@ export function HomePage() {
 
                 {/* Features Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
-                    {/* Player Profile */}
+                                        {/* Player Profile */}
                     <Link
                         to="/profile"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-green-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-green-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-400/20 transition-colors">
+                            <div className="p-3 rounded-lg border border-green-400/30 bg-green-500/10 text-green-400 group-hover:bg-green-400/20 transition-colors">
                                 <User size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
                                 {t("homepage.features.playerProfile.title")}
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
                             {t("homepage.features.playerProfile.description")}
                         </p>
                     </Link>
-
-                    {/* Interactive Map */}
+                    
+                    {/* Interactive Maps */}
                     <Link
                         to="/map"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-blue-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-blue-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition-colors">
+                            <div className="p-3 rounded-lg border border-blue-400/30 bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition-colors">
                                 <Map size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
                                 {t("homepage.features.interactiveMap.title")}
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
                             {t("homepage.features.interactiveMap.description")}
                         </p>
                     </Link>
 
-                    {/* Bestiary */}
-                    <Link
-                        to="/bestiary"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-pink-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-pink-500/10 text-pink-400 group-hover:bg-pink-400/20 transition-colors">
-                                <Bone size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.bestiary.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t("homepage.features.bestiary.description")}
-                        </p>
-                    </Link>
-                </div>
-
-                {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
                     {/* Community Projects */}
                     <Link
                         to="/community"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-red-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-red-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition-colors">
+                            <div className="p-3 rounded-lg border border-red-400/30 bg-red-500/10 text-red-400 group-hover:bg-red-400/20 transition-colors">
                                 <Users size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
                                 {t("homepage.features.communityProjects.title")}
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t(
-                                "homepage.features.communityProjects.description"
-                            )}
-                        </p>
-                    </Link>
-                    {/* Equipment Manager  */}
-                    <Link
-                        to="/equipment"
-                        className="relative group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <span className="absolute top-3 right-3 bg-yellow-500 text-black text-xs font-bold px-2 py-0.5 rounded">
-                            BETA
-                        </span>
-
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 group-hover:bg-yellow-400/20 transition-colors">
-                                <Shield size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.equipment.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t("homepage.features.equipment.description")}
-                        </p>
-                    </Link>
-                    {/* Museum */}
-                    <Link
-                        to="/museum"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-purple-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
-                    >
-                        <span className="absolute top-3 right-3 bg-purple-500 text-black text-xs font-bold px-2 py-0.5 rounded">
-                            BETA
-                        </span>
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-purple-600/10 text-purple-500 group-hover:bg-purple-500/20 transition-colors">
-                                <BookMarked size={28} />
-                            </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
-                                {t("homepage.features.museum.title")}
-                            </h2>
-                        </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {t("homepage.features.museum.description")}
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.communityProjects.description")}
                         </p>
                     </Link>
                 </div>
 
+
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
+
+                    {/* Bestiary */}
+                    <Link
+                        to="/bestiary"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-pink-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-pink-400/30 bg-pink-500/10 text-pink-400 group-hover:bg-pink-400/20 transition-colors">
+                                <Bone size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.bestiary.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.bestiary.description")}
+                        </p>
+                    </Link>
+
+
+                    {/* Expeditions */}
+                    <Link
+                        to="/expeditions"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-orange-400/30 bg-orange-500/10 text-orange-400 group-hover:bg-orange-400/20 transition-colors">
+                                <Swords size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.expeditions.title")}
+                                <span className="w-fit text-orange-400 text-xs font-semibold rounded">
+                                    COMING SOON
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.expeditions.description")}
+                        </p>
+                    </Link>
+
                     {/* Items & Recipes */}
                     <Link
                         to="/itemsNrecipes"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-500 rounded-2xl p-6 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
-                        <span className="absolute top-3 right-3 bg-teal-500 text-black text-xs font-bold px-2 py-0.5 rounded">
-                            BETA
-                        </span>
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-xl bg-teal-600/10 text-teal-500 group-hover:bg-teal-500/20 transition-colors">
+                            <div className="p-3 rounded-lg border border-teal-400/30 bg-teal-500/10 text-teal-400 group-hover:bg-teal-400/20 transition-colors">
                                 <BookA size={28} />
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors">
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
                                 {t("homepage.features.itemsNrecipes.title")}
+                                <span className="w-fit text-teal-400 text-xs font-semibold rounded">
+                                    BETA
+                                </span>
                             </h2>
                         </div>
-                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
                             {t("homepage.features.itemsNrecipes.description")}
+                        </p>
+                    </Link>
+                </div>
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
+                    {/* Equipment */}
+                    <Link
+                        to="/equipment"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-yellow-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-yellow-400/30 bg-yellow-500/10 text-yellow-400 group-hover:bg-yellow-400/20 transition-colors">
+                                <Shield size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.equipment.title")}
+                                <span className="w-fit text-yellow-400 text-xs font-semibold rounded">
+                                    COMING SOON
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.equipment.description")}
+                        </p>
+                    </Link>
+
+                    {/* Museum */}
+                    <Link
+                        to="/museum"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-purple-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-purple-400/30 bg-purple-500/10 text-purple-400 group-hover:bg-purple-400/20 transition-colors">
+                                <BookMarked size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.museum.title")}
+                                <span className="w-fit text-purple-400 text-xs font-semibold rounded">
+                                    BETA
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.museum.description")}
+                        </p>
+                    </Link>
+
+                    {/* Classes & Spells */}
+                    <Link
+                        to="/classAndSpells"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-lime-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-lime-400/30 bg-lime-500/10 text-lime-400 group-hover:bg-lime-400/20 transition-colors">
+                                <BookCopy size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.classAndSpells.title")}
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.classAndSpells.description")}
                         </p>
                     </Link>
                 </div>
