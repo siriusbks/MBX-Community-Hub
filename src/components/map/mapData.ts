@@ -148,6 +148,7 @@ export const mapData: Record<string, MapDataConfig> = {
             "kokoko_bloon",
             "kokoko_viewPoint",
             "kokoko_coin",
+            "kokoko_npc",
             "coconut_magician",
             "coconut_warrior",
             "crabician",

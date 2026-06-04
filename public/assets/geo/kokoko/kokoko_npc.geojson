@@ -1,0 +1,93 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": { "coordinates": [62, 68, -110], "type": "Point" },
+            "id": 1,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.flora_fancy",
+                "description": "npc.description.flora_fancy",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [152, 75, -300], "type": "Point" },
+            "id": 2,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.trekker_tom",
+                "description": "npc.description.trekker_tom",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [144, 77, -320], "type": "Point" },
+            "id": 3,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.jungle_researcher",
+                "description": "npc.description.jungle_researcher",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [356, 73, -358], "type": "Point" },
+            "id": 4,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.goldgrub_gary",
+                "description": "npc.description.goldgrub_gary",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [393, 72, -367], "type": "Point" },
+            "id": 5,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.mariey_cawthorn",
+                "description": "npc.description.mariey_cawthorn",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [192, 73, -111], "type": "Point" },
+            "id": 6,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.professor_flutterby",
+                "description": "npc.description.professor_flutterby",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [450, 96, -91], "type": "Point" },
+            "id": 7,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.burnard_the_burned",
+                "description": "npc.description.burnard_the_burned",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        },
+        {
+            "geometry": { "coordinates": [56, 73, -341], "type": "Point" },
+            "id": 8,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.itchy_ivan",
+                "description": "npc.description.itchy_ivan",
+                "iconUrl": "",
+                "map": "kokoko"
+            }
+        }
+    ]
+}

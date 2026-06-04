@@ -233,6 +233,16 @@ const kokokoMarkers: Record<string, MarkerConfig> = {
             showCount: true,
         },
     },
+    kokoko_npc: {
+        displayName: "markers.item.npc",
+        iconUrl: "assets/media/npc/default.png",
+        geoJsonFile: "assets/geo/kokoko/kokoko_npc.geojson",
+        defaultChecked: false,
+        category: "markers.category.villager",
+        properties: {
+            showCount: true,
+        },
+    },
 };
 
 export default kokokoMarkers;

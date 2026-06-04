@@ -101,5 +101,21 @@
     "npc.helka_assemblage": "Helka Assemblage",
     "npc.description.helka_assemblage": "Daily Furniture",
     "npc.bob_slowley": "Bob Slowley",
-    "npc.description.bob_slowley": "Sell at night under the full moon"
+    "npc.description.bob_slowley": "Sell at night under the full moon",
+    "npc.flora_fancy": "Flora Fancy",
+    "npc.description.flora_fancy": "",
+    "npc.trekker_tom": "Trekker Tom",
+    "npc.description.trekker_tom": "",
+    "npc.jungle_researcher": "Jungle Researcher",
+    "npc.description.jungle_researcher": "",
+    "npc.goldgrub_gary": "Goldgrub Gary",
+    "npc.description.goldgrub_gary": "",
+    "npc.mariey_cawthorn": "Mariey Cawthorn",
+    "npc.description.mariey_cawthorn": "",
+    "npc.professor_flutterby": "Professor Flutterby",
+    "npc.description.professor_flutterby": "",
+    "npc.burnard_the_burned": "Burnard the Burned",
+    "npc.description.burnard_the_burned": "",
+    "npc.itchy_ivan": "Itchy Ivan",
+    "npc.description.itchy_ivan": ""
 }
