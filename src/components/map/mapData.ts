@@ -26,8 +26,8 @@ export const mapData: Record<string, MapDataConfig> = {
     spawn: {
         imageUrl: "assets/media/maps/spawn.png",
         previewUrl: "assets/media/preview_map/spawn.png",
-        width: 640,
-        height: 592,
+        width: 791,
+        height: 839,
         name: "mappage.maps.spawn_island.name",
         mapProperties: {
             minZoom: 0.5,
@@ -35,7 +35,7 @@ export const mapData: Record<string, MapDataConfig> = {
         },
         requiredLevel: 0,
         description: "",
-        referencePoint: { x: 113, y: 290 },
+        referencePoint: { x: 220, y: 388 },
         markerRefs: [
             //"EVENT_TEST",
             "log_coconuts",
