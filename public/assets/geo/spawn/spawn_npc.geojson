@@ -365,7 +365,7 @@
             }
         },
         {
-            "geometry": { "type": "Point", "coordinates": [98, 81, -145] },
+            "geometry": { "type": "Point", "coordinates": [96, 82, -145] },
             "id": 34,
             "type": "Feature",
             "properties": {
@@ -602,6 +602,17 @@
             "properties": {
                 "name": "npc.elo_musk",
                 "description": "npc.description.elo_musk",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [99, 82, -145] },
+            "id": 56,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.shyla_the_cow",
+                "description": "npc.description.shyla_the_cow",
                 "iconUrl": "",
                 "map": "spawn"
             }

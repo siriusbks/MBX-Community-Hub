@@ -123,5 +123,7 @@
     "npc.tromphy": "Tromphy",
     "npc.description.tromphy": "Trophy Store",
     "npc.elo_musk": "Elo Musk",
-    "npc.description.elo_musk": "Coliseum PvP"
+    "npc.description.elo_musk": "Coliseum PvP",
+    "npc.shyla_the_cow": "Shyla the Cow",
+    "npc.description.shyla_the_cow": "Spawner shop"
 }
