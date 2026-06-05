@@ -120,5 +120,9 @@
     "itemsNrecipes.category.VANILLA_TOOL": "Vanilla Tool",
     "itemsNrecipes.category.VEIN": "Vein",
     "itemsNrecipes.category.VILLAGE": "Village",
-    "itemsNrecipes.category.WATERING_CAN": "Watering Can"
+    "itemsNrecipes.category.WATERING_CAN": "Watering Can",
+
+
+    "itemsNrecipes.calculateRecipe.button": "Calculate Recipe",
+    "itemsNrecipes.calculateRecipe.leafItems": "Needed Resources to craft all leaf items"
 }

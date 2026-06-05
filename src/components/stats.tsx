@@ -50,12 +50,12 @@ export function getStatIconURL(stat: string): string {
 
 export function getRarityStyle(rarity: string): string {
   if(rarity === "TRASH") return "bg-[#422b1b30] border-x-[#422b1b] border-y-[#7e7867] border-[3px]";
-  if(rarity === "COMMON") return "bg-[#11415f30] border-x-[#11415f] border-y-[#55a0ac] border-[3px]";
+  if(rarity === "COMMON") return "bg-[#20252c50] border-x-[#d2d2d3] border-y-[#9ea59f] border-[3px]";
   if(rarity === "UNCOMMON") return "bg-[#07ff7b20] border-x-[#07ff7b] border-y-[#00dca8] border-[3px]";
   if(rarity === "RARE") return "bg-[#2dd0d915] border-x-[#2dd0d9] border-y-[#2291b9] border-[3px]";
   if(rarity === "EPIC") return "bg-[#c507ff20] border-x-[#c507ff] border-y-[#dc00ce] border-[3px]";
   if(rarity === "LEGENDARY") return "bg-[#ffbf6620] border-x-[#ffbf66] border-y-[#f59b20] border-[4px]";
   if(rarity === "MYTHIC") return "bg-[#c9324b20] border-x-[#c9324b] border-y-[#961f32] border-[5px]";
-  if(rarity === "CONTRABAND") return "bg-[#432c4340] border-x-[#432c43] border-y-[#767065] border-[5px]";
-  return "bg-gray-600/10 border-x-gray-600 border-y-gray-700 border-[3px]";
+  if(rarity === "CONTRABAND") return "bg-[#2a212c40] border-x-[#521283] border-y-[#9816fc] border-[5px]";
+  return "bg-[#11415f30] border-x-[#457192] border-y-[#55a0ac] border-[3px]";
 }
