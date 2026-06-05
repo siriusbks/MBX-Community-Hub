@@ -30,6 +30,7 @@ import {
     getStatIconURL,
     getRarityStyle,
 } from "@components/stats";
+import MuseumItemImage from "@components/museum/MuseumItemImage";
 
 // Definition of interfaces
 interface Group {
@@ -235,6 +236,11 @@ const ItemsNRecipesApp: FC = () => {
     const [itemDetailsError, setItemDetailsError] = useState<string | null>(
         null,
     );
+    // Calculate recipe modal state
+    const [calcModalOpen, setCalcModalOpen] = useState<boolean>(false);
+    const [calcLoading, setCalcLoading] = useState<boolean>(false);
+    const [calcError, setCalcError] = useState<string | null>(null);
+    const [calcData, setCalcData] = useState<any | null>(null);
 
     // Asynchronous function to load data (API and JSON)
     const loadData = async () => {
@@ -424,6 +430,93 @@ const ItemsNRecipesApp: FC = () => {
         );
     };
 
+    // Helper to collect leaf (last) items from API-fetched recipe structures and sum totals
+    const collectLeafTotals = (recipe: any, acc: Map<string, any>, multiplier = 1) => {
+        if (!recipe || !recipe.ingredients) return;
+        for (const ing of recipe.ingredients) {
+            const amount = typeof ing.amount === "number" ? ing.amount : parseFloat(ing.amount) || 1;
+            const qty = multiplier * amount;
+            if (ing?.item?.recipe) {
+                collectLeafTotals(ing.item.recipe, acc, qty);
+            } else {
+                const key = ing?.item?.id ?? ing.id ?? ing?.item?.name ?? String(Math.random());
+                const existing = acc.get(key) || { id: key, name: ing?.item?.name ?? ing.id, image: ing?.item?.image, rarity: ing?.item?.rarity,job: ing?.item?.job, total: 0 };
+                existing.total += qty;
+                // If image/rarity missing, prefer available
+                if (!existing.image && ing?.item?.image) existing.image = ing.item.image;
+                if (!existing.rarity && ing?.item?.rarity) existing.rarity = ing.item.rarity;
+                if (!existing.job && ing?.item?.job) existing.job = ing.item.job;
+                acc.set(key, existing);
+            }
+        }
+    };
+
+    // Simple renderer for API-fetched recipe structures (show icons, names, amounts)
+    const CalcRecipeTree: FC<{ recipe: any }> = ({ recipe }) => {
+        if (!recipe || !recipe.ingredients) return <></>;
+        return (
+            <ul>
+                {recipe.ingredients.map((ing: any, i: number) => (
+                    <CalcRecipeNode key={i} ing={ing} />
+                ))}
+            </ul>
+        );
+    };
+
+    const CalcRecipeNode: FC<{ ing: any }> = ({ ing }) => {
+        const [expanded, setExpanded] = useState<boolean>(false); // default collapsed
+        const imgSrc =
+            ing?.item?.image
+                ? `data:image/png;base64,${ing.item.image}`
+                : "/assets/media/item/placeholder.png";
+        const hasSub = !!ing?.item?.recipe;
+        return (
+            <li className="mb-2">
+                <div className="flex items-center">
+                    {hasSub ? (
+                        <button
+                            onClick={() => setExpanded((v) => !v)}
+                            className="flex items-center justify-center h-6 w-6 rounded text-gray-300 hover:bg-gray-600 mr-2"
+                            title={expanded ? "Collapse" : "Expand"}
+                        >
+                            {expanded ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                        </button>
+                    ) : (
+                        <div className="w-4" />
+                    )}
+                    <span className={`flex flex-row w-full ${getRarityStyle(ing?.item?.rarity ?? missingRarity[ing.id])} `}>
+                    <span className={`rounded-l`}>
+                    <MuseumItemImage
+                        groupCategory={setCategory(ing.id)}
+                        itemId={ing.id}
+                        detailsIndex={detailsIndex}
+                        className=" w-12 h-12  p-1"
+                        style={{ imageRendering: "pixelated" }}
+                    /></span>
+                    <div className={`  flex-1  p-2 rounded-r-lg `}>
+                        <div className="font-bold text-sm">
+                            {ing.amount}x {ing?.item?.name ?? ing.id}
+                        </div>
+                        {ing?.item?.rarity ? (
+                            <div className="text-xs opacity-60">{ing.item.rarity}</div>
+                        ) :
+                            (<div className="text-xs opacity-60">VANILLA</div>)
+                            }
+                        {ing?.item?.job && (
+                            <div className="text-xs opacity-60">{ing.item.job}</div>
+                        )}
+                    </div>
+                    </span>
+                </div>
+                {hasSub && expanded && (
+                    <div className="ml-10 mt-2">
+                        <CalcRecipeTree recipe={ing.item.recipe} />
+                    </div>
+                )}
+            </li>
+        );
+    };
+
     // Effect to fetch missing rarity data from the JSON file on component mount
     useEffect(() => {
         fetch("/assets/data/items-missing-rarity.json")
@@ -564,6 +657,32 @@ const ItemsNRecipesApp: FC = () => {
         }
     };
 
+    // Open a modal that fetches the full item structure from the API and displays its recipe tree
+    const openCalcModal = async (id: string) => {
+        try {
+            setCalcLoading(true);
+            setCalcError(null);
+            setCalcData(null);
+            const res = await fetch(
+                `https://api.minebox.co/item/${encodeURIComponent(id)}?locale=${i18next.language}`,
+            );
+            if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+            const json = await res.json();
+            setCalcData(json);
+            setCalcModalOpen(true);
+        } catch (e: any) {
+            setCalcError(e?.message ?? "Failed to load recipe");
+        } finally {
+            setCalcLoading(false);
+        }
+    };
+
+    const closeCalcModal = () => {
+        setCalcModalOpen(false);
+        setCalcData(null);
+        setCalcError(null);
+    };
+
     // Update URL when selectedCategory changes
     useEffect(() => {
         if (selectedCategory) {
@@ -653,6 +772,8 @@ const ItemsNRecipesApp: FC = () => {
                                 <span className="font-bold text-sm">
                                     {resId}
                                 </span>
+
+                                
                                 <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
                                     {totalResources[resId].toLocaleString(
                                         "fr-FR",
@@ -685,32 +806,24 @@ const ItemsNRecipesApp: FC = () => {
                     {t("itemsNrecipes.usedInRecipes.yes")}
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    {usedInList.map(
-                        (item: {
-                            type: string;
-                            id: string;
-                            amount: number;
-                        }) => {
-                            const itemDetails = detailsIndex[item.id];
-                            const category = itemDetails?.category || "default";
-                            const url = `${
-                                window.location.origin
-                            }/itemsNrecipes?category=${encodeURIComponent(
-                                category,
-                            )}&item=${encodeURIComponent(item.id)}`;
-                            return (
-                                <a
-                                    key={item.id}
-                                    href={url}
-                                    target="_self"
-                                    rel="noopener noreferrer"
-                                    className="text-sm bg-gray-800 px-2 py-1 rounded border border-gray-600 hover:bg-gray-700"
-                                >
-                                    {item.id}
-                                </a>
-                            );
-                        },
-                    )}
+                    {usedInList.map((item: { type: string; id: string; amount: number }) => {
+                        const itemDetails = detailsIndex[item.id];
+                        const category = itemDetails?.category || "default";
+                        const url = `${window.location.origin}/itemsNrecipes?category=${encodeURIComponent(
+                            category,
+                        )}&item=${encodeURIComponent(item.id)}`;
+                        return (
+                            <a
+                                key={item.id}
+                                href={url}
+                                target="_self"
+                                rel="noopener noreferrer"
+                                className="text-sm bg-gray-800 px-2 py-1 rounded border border-gray-600 hover:bg-gray-700"
+                            >
+                                {item.id}
+                            </a>
+                        );
+                    })}
                 </div>
             </div>
         );
@@ -1253,7 +1366,22 @@ const ItemsNRecipesApp: FC = () => {
                             {itemDetailsData.recipe && (
                                 <div className="text-sm text-gray-300 mt-2 w-full  ">
                                     <span className="flex justify-between">
-                                        <p className="font-bold">Recipe</p>
+                                        <p className="font-bold flex flex-row gap-2 items-center justify-center">
+                                            Recipe
+                                   <button
+                                        className="flex items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded text-xs"
+                                        onClick={() =>
+                                            openCalcModal(
+                                                itemDetailsData.id ??
+                                                    detailItemId ?? "",
+                                            )
+                                        }
+                                    >
+                                        <Calculator className="w-4 h-4" />
+                                        {t("itemsNrecipes.calculateRecipe.button") ?? "Calculate Recipe"}
+                                    </button>
+
+                                            </p>
                                         <p className="">
                                             {itemDetailsData.recipe.job}
                                         </p>
@@ -1268,18 +1396,12 @@ const ItemsNRecipesApp: FC = () => {
                                                         key={ing.id}
                                                         className="flex flex-col items-center"
                                                     >
-                                                        <img
-                                                            src={
-                                                                ing?.item?.image
-                                                                    ? `data:image/png;base64,${ing.item.image}`
-                                                                    : "/assets/media/item/placeholder.png"
-                                                            }
-                                                            alt={
-                                                                ing?.item
-                                                                    ?.name ??
-                                                                ing.id
-                                                            }
-                                                            className={`p-1 flex rounded aspect-square ${getRarityStyle(ing.item?.rarity ?? "UNKNOWN")} m-1`}
+                                                        <MuseumItemImage
+                                                            groupCategory={setCategory(ing.id)}
+                                                            itemId={ing.id}
+                                                            detailsIndex={detailsIndex}
+                                                            className={`size-16 p-1 flex rounded aspect-square ${getRarityStyle(ing.item?.rarity ?? "UNKNOWN")} m-1`}
+                                                            style={{ imageRendering: "pixelated" }}
                                                         />
                                                         <div className="text-xs font-semibold -mt-1">
                                                             x{ing.amount ?? 1}
@@ -1290,6 +1412,8 @@ const ItemsNRecipesApp: FC = () => {
                                     </div>
                                 </div>
                             )}
+
+
 
                             {itemDetailsData.used_in_recipes && (
                                 <div className="text-sm text-gray-300 mt-2 w-full  ">
@@ -1720,6 +1844,102 @@ const ItemsNRecipesApp: FC = () => {
                         </>
                     )}
                 </>
+            )}
+
+            {/* Calculate Recipe modal (API fetched full recipe tree) */}
+            {calcModalOpen && (
+                <div
+                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+                    onClick={(e) => {
+                        if (e.currentTarget === e.target) closeCalcModal();
+                    }}
+                >
+                    <div className="modal-content bg-[rgb(31,41,55)] text-white w-full h-full shadow-2xl overflow-hidden flex flex-col">
+                        <div className="p-4 flex items-center gap-4 border-b border-gray-700">
+                                                                <div className="flex items-center gap-3">
+                                        <img
+                                            src={
+                                                calcData.image
+                                                    ? `data:image/png;base64,${calcData.image}`
+                                                    : "/assets/media/item/placeholder.png"
+                                            }
+                                            alt={calcData.name ?? calcData.id}
+                                            className="w-12 h-12 rounded"
+                                        />
+                                        <div>
+                                            <div className="font-bold">{calcData.name ?? calcData.id}</div>
+                                            <div className="text-xs opacity-60">{calcData.recipe?.job ?? ""}</div>
+                                        </div>
+                                    </div>
+                            <div className="ml-auto flex items-center gap-2">
+                                <button
+                                    className="px-2 py-1 bg-gray-600 hover:bg-gray-500 rounded text-xs"
+                                    onClick={closeCalcModal}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-row gap-2 w-full h-full items-start justify-start p-2">
+                        <div className="w-2/3 p-2 overflow-y-auto h-[calc(100%-5rem)] flex-1  custom-scrollbar">
+                            {calcLoading && (
+                                <div className="text-sm text-gray-300">Loading...</div>
+                            )}
+                            {calcError && (
+                                <div className="text-sm text-red-400">{calcError}</div>
+                            )}
+                            {!calcLoading && !calcError && calcData && (
+                                <div>
+                                    <CalcRecipeTree recipe={calcData.recipe} />
+                                </div>
+                            )}
+                        </div>
+                        
+
+                        {!calcLoading && !calcError && calcData && (
+                            (() => {
+                                const leafMap = new Map<string, any>();
+                                collectLeafTotals(calcData.recipe, leafMap);
+                                const leaves = Array.from(leafMap.values());
+                                return (
+                                    <div className="w-1/3 h-full max-h-[calc(100%-5rem)]  overflow-y-auto  mb-auto bg-gray-700 text-white p-4 rounded-lg flex flex-col gap-3 shadow-md custom-scrollbar">
+                                        <div className="font-semibold">{t("itemsNrecipes.calculateRecipe.leafItems") ?? "Leaf items"}</div>
+                                        <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
+                                            {leaves.length === 0 ? (
+                                                <div className="text-sm opacity-60">{t("itemsNrecipes.calculateRecipe.noLeafItems") ?? "No leaf items"}</div>
+                                            ) : (
+                                                leaves.map((item) => (
+                                                    <div key={item.id} className={`relative aspect-square flex flex-col items-center gap-3 p-2 rounded ${getRarityStyle(item.rarity ?? "UNKNOWN")}`} title={`${item.name} x${Math.round(item.total).toLocaleString("fr-FR")}`}>
+                                                        <MuseumItemImage
+                                                            groupCategory={item.group_category}
+                                                            itemId={item.id}
+                                                            detailsIndex={detailsIndex}
+                                                            className="w-12 h-12 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                            style={{ imageRendering: "pixelated" }}
+                                                        />
+                                                        <div className="absolute bottom-0 left-0 right-0 font-bold flex items-center justify-center">
+                                                            {Math.round(item.total).toLocaleString("fr-FR")}
+                                                        </div>
+                                                        {/*}
+                                                        <div className="flex-1">
+                                                            <div className="font-bold text-sm">{item.name}</div>
+                                                            <div className="text-xs opacity-60">{item.rarity ?? "VANILLA"}</div>
+                                                        </div>
+                                                        <div className="flex items-center justify-center">
+                                                            {Math.round(item.total).toLocaleString("fr-FR")}
+                                                        </div>*/}
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })()
+                        )}
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

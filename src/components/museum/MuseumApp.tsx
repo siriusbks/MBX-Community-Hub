@@ -78,6 +78,13 @@ export const MuseumApp: FC = () => {
 
     const [showDonated, setShowDonated] = useState(true);
 
+    // States for fetching `used_in_recipes` for the craft modal item
+    const [itemUsedInRecipes, setItemUsedInRecipes] = useState<string[] | null>(
+        null,
+    );
+    const [itemUsedLoading, setItemUsedLoading] = useState(false);
+    const [itemUsedError, setItemUsedError] = useState<string | null>(null);
+
     const NO_DECOMPOSE_PREFIXES = [
         "transformed_",
         "bag_",
@@ -276,8 +283,7 @@ export const MuseumApp: FC = () => {
 
     // When a craft modal opens, fetch the item's details from the API to get
     // its `used_in_recipes` array (we show the ids in the summary).
-    // LupusArctos4 : We do not display used_in_recipes in the museum, but only in INR. To avoid unnecessary API calls, I disable it.
-    /* useEffect(() => {
+    useEffect(() => {
         if (!craftModalItem) {
             setItemUsedInRecipes(null);
             setItemUsedError(null);
@@ -292,7 +298,12 @@ export const MuseumApp: FC = () => {
         setItemUsedError(null);
         setItemUsedInRecipes(null);
 
-        fetch(`https://api.minebox.co/item/${craftModalItem}`, { signal: controller.signal })
+        fetch(
+            `https://api.minebox.co/item/${encodeURIComponent(
+                craftModalItem,
+            )}?locale=${i18next.language}`,
+            { signal: controller.signal },
+        )
             .then((res) => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 return res.json();
@@ -305,6 +316,30 @@ export const MuseumApp: FC = () => {
                     ? used.map((u: any) => u?.id || u?.item?.id).filter(Boolean)
                     : [];
                 setItemUsedInRecipes(Array.from(new Set(ids)));
+                // Prefer recipe from API when available and merge into detailsIndex
+                const apiRecipe = data?.recipe ?? data?.item?.recipe ?? null;
+                const apiName = data?.name ?? data?.item?.name ?? null;
+                const apiImageRaw = data?.image ?? data?.item?.image ?? null;
+                const apiImage = apiImageRaw
+                    ? apiImageRaw.startsWith("data:")
+                        ? apiImageRaw
+                        : `data:image/png;base64,${apiImageRaw}`
+                    : null;
+                if (apiRecipe || apiName || apiImage) {
+                    setDetailsIndex((prev) => {
+                        if (!prev) return prev;
+                        const copy: any = { ...prev };
+                        copy[craftModalItem] = {
+                            ...(copy[craftModalItem] || { id: craftModalItem }),
+                            ...copy[craftModalItem],
+                            // API-provided fields override local when present
+                            ...(apiRecipe ? { recipe: apiRecipe } : {}),
+                            ...(apiName ? { apiName } : {}),
+                            ...(apiImage ? { apiImage } : {}),
+                        };
+                        return copy;
+                    });
+                }
             })
             .catch((err: any) => {
                 if (!active) return;
@@ -319,7 +354,7 @@ export const MuseumApp: FC = () => {
             active = false;
             controller.abort();
         };
-    }, [craftModalItem]); */
+    }, [craftModalItem]);
 
     // Function to find the category of any items
     useEffect(() => {
@@ -576,7 +611,7 @@ export const MuseumApp: FC = () => {
             window.location.origin
         }/itemsNrecipes?category=${encodeURIComponent(
             craftModalCategory
-        )}&item=${encodeURIComponent(craftModalItem)}`;
+        ).toUpperCase()}&item=${encodeURIComponent(craftModalItem)}`;
         return (
             <a
                 key={craftModalItem}
@@ -1330,25 +1365,40 @@ export const MuseumApp: FC = () => {
                             detailsIndex[craftModalItem].recipe ? (
                                 <>
                                     <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        <MuseumItemImage
-                                            groupCategory={craftModalCategory!}
-                                            itemId={craftModalItem}
-                                            detailsIndex={detailsIndex}
-                                            className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            style={{
-                                                imageRendering: "pixelated",
-                                            }}
-                                        />
+                                        {detailsIndex[craftModalItem]?.apiImage ? (
+                                            <img
+                                                src={detailsIndex[craftModalItem].apiImage}
+                                                alt={
+                                                    detailsIndex[craftModalItem].apiName || craftModalItem
+                                                }
+                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
+                                                style={{ imageRendering: "pixelated" }}
+                                            />
+                                        ) : (
+                                            <MuseumItemImage
+                                                groupCategory={craftModalCategory!}
+                                                itemId={craftModalItem}
+                                                detailsIndex={detailsIndex}
+                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
+                                            />
+                                        )}
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")}{" "}
-                                                <ItemTranslation
-                                                    mbxId={craftModalItem}
-                                                    category={
-                                                        craftModalCategory!
-                                                    }
-                                                    type="name"
-                                                />
+                                                {t("museum.craftFor")} {" "}
+                                                {detailsIndex[craftModalItem]?.apiName ? (
+                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
+                                                ) : (
+                                                    <ItemTranslation
+                                                        mbxId={craftModalItem}
+                                                        category={
+                                                            craftModalCategory!
+                                                        }
+                                                        type="name"
+                                                    />
+                                                )}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t("museum.jobRequired")}{" "}
@@ -1392,25 +1442,40 @@ export const MuseumApp: FC = () => {
                             ) : (
                                 <>
                                     <div className="bg-gray-700 text-white p-4 rounded-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        <MuseumItemImage
-                                            groupCategory={craftModalCategory!}
-                                            itemId={craftModalItem}
-                                            detailsIndex={detailsIndex}
-                                            className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                            style={{
-                                                imageRendering: "pixelated",
-                                            }}
-                                        />
+                                        {detailsIndex[craftModalItem]?.apiImage ? (
+                                            <img
+                                                src={detailsIndex[craftModalItem].apiImage}
+                                                alt={
+                                                    detailsIndex[craftModalItem].apiName || craftModalItem
+                                                }
+                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
+                                                style={{ imageRendering: "pixelated" }}
+                                            />
+                                        ) : (
+                                            <MuseumItemImage
+                                                groupCategory={craftModalCategory!}
+                                                itemId={craftModalItem}
+                                                detailsIndex={detailsIndex}
+                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
+                                                style={{
+                                                    imageRendering: "pixelated",
+                                                }}
+                                            />
+                                        )}
                                         <span className="flex flex-col">
                                             <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")}{" "}
-                                                <ItemTranslation
-                                                    mbxId={craftModalItem}
-                                                    category={
-                                                        craftModalCategory
-                                                    }
-                                                    type="name"
-                                                />
+                                                {t("museum.craftFor")} {" "}
+                                                {detailsIndex[craftModalItem]?.apiName ? (
+                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
+                                                ) : (
+                                                    <ItemTranslation
+                                                        mbxId={craftModalItem}
+                                                        category={
+                                                            craftModalCategory
+                                                        }
+                                                        type="name"
+                                                    />
+                                                )}
                                             </div>
                                             <p className="text-sm opacity-60">
                                                 {t(
