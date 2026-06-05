@@ -30,7 +30,7 @@ export const mapData: Record<string, MapDataConfig> = {
         height: 839,
         name: "mappage.maps.spawn_island.name",
         mapProperties: {
-            minZoom: 0.5,
+            minZoom: 0.2,
             maxZoom: 2,
         },
         requiredLevel: 0,
