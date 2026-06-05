@@ -117,5 +117,11 @@
     "npc.burnard_the_burned": "Burnard the Burned",
     "npc.description.burnard_the_burned": "",
     "npc.itchy_ivan": "Itchy Ivan",
-    "npc.description.itchy_ivan": ""
+    "npc.description.itchy_ivan": "",
+    "npc.ratty": "Ratty",
+    "npc.description.ratty": "",
+    "npc.tromphy": "Tromphy",
+    "npc.description.tromphy": "Trophy Store",
+    "npc.elo_musk": "Elo Musk",
+    "npc.description.elo_musk": "Coliseum PvP"
 }

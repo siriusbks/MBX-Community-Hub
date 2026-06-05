@@ -572,6 +572,39 @@
                 "iconUrl": "",
                 "map": "spawn"
             }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [-34, 81, -315] },
+            "id": 53,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.ratty",
+                "description": "npc.description.ratty",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [-33, 91, -328] },
+            "id": 54,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.tromphy",
+                "description": "npc.description.tromphy",
+                "iconUrl": "",
+                "map": "spawn"
+            }
+        },
+        {
+            "geometry": { "type": "Point", "coordinates": [11, 84, -360] },
+            "id": 55,
+            "type": "Feature",
+            "properties": {
+                "name": "npc.elo_musk",
+                "description": "npc.description.elo_musk",
+                "iconUrl": "",
+                "map": "spawn"
+            }
         }
     ]
 }
