@@ -49,7 +49,7 @@ const NAV_LINKS: Array<any> = [
         labelKey: "navbar.tools",
         items: [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
-            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Coming Soon" },
+            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
             { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
         ],
     },
