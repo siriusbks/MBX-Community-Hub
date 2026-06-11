@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Equipment, PlayerStats } from "@t/equip";
+import { Equipment, EquippedItems, PlayerStats } from "@t/equip";
+import { computePetBoostedStats } from "./petStat";
 
 export const calculateTotalStats = (equippedItems: {
     [key: string]: Equipment | null;
@@ -23,3 +24,37 @@ export const calculateTotalStats = (equippedItems: {
 
 export const formatStatRange = (range: number[]): string =>
     range[0] === range[1] ? `${range[0]}` : `${range[0]} - ${range[1]}`;
+
+
+export function mergeAllEquipmentStats(
+  equippedItems: EquippedItems,
+  petGeneration: number,
+  petTrait: string,
+  petEnchanted: boolean
+): PlayerStats {
+  const merged: PlayerStats = {};
+
+  for (const equip of Object.values(equippedItems)) {
+    if (!equip?.stats) continue;
+
+    let statsToAdd = equip.stats;
+
+    // if pet, use the boost, else do nothing
+    if (equip.category?.toUpperCase() === "PET") {
+      statsToAdd = computePetBoostedStats(equip, {
+        generation: petGeneration,
+        trait: petTrait,
+        enchanted: petEnchanted,
+      });
+    }
+
+    // Merge each stat [min, max]
+    for (const [stat, arr] of Object.entries(statsToAdd)) {
+      if (!merged[stat]) merged[stat] = [0, 0];
+      merged[stat][0] += arr[0];
+      merged[stat][1] += arr[1];
+    }
+  }
+
+  return merged;
+}

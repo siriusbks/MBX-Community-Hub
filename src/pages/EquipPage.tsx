@@ -9,6 +9,7 @@ import { AlertTriangle, Loader2, RotateCcw, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useEquipment } from "@hooks/useEquipment";
+import { useSets } from "@hooks/useSet";
 import { CharacterDisplay } from "@components/equipment/CharacterDisplay";
 import { StatsPanel } from "@components/equipment/StatsPanel";
 import { EquipmentSelector } from "@components/equipment/EquipmentSelector";
@@ -16,7 +17,7 @@ import { CraftingBreakdown } from "@components/equipment/CraftingBreakdown";
 import { SkullSelector } from "@components/equipment/SkullSelector";
 
 import { EQUIPMENT_SLOTS } from "@utils/equipmentSlots";
-import { calculateTotalStats } from "@utils/statsCalculator";
+import { mergeAllEquipmentStats } from "@utils/statsCalculator";
 import { Equipment, EquippedItems } from "@t/equip";
 
 import { SKULLS, sumSkullStats } from "../constants/skulls";
@@ -44,9 +45,28 @@ const EquipPage: React.FC = () => {
     const [focusedItemId, setFocusedItemId] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<RightTab>("stats");
 
+    // Set
+    const { sets, loadingSets, errorSets, getTotalSetBonus, getActiveSets, setsById } = useSets();
+    const currentActiveSets = getActiveSets(equippedItems);
+    // Check if a piece of equipment has a “set”
+    // function equipmentHasSet(item: Equipment | null | undefined): boolean {
+    //     return !!item?.set && item.set.length > 0;
+    // }
+
     // Skulls
     const [skullModalOpen, setSkullModalOpen] = useState(false);
     const [selectedSkulls, setSelectedSkulls] = useState<string[]>([]);
+
+    // Pet
+    const [petGeneration, setPetGeneration] = useState(1);
+    const [petTrait, setPetTrait] = useState("");
+    const [petEnchanted, setPetEnchanted] = useState(false);
+
+    const pet = useMemo(
+        () => Object.values(equippedItems).find(item => item?.category?.toUpperCase() === "PET") || null,
+        [equippedItems]
+    );
+
 
     const onSlotClick = (slotId: string) => {
         setSelectedSlot(slotId);
@@ -69,6 +89,10 @@ const EquipPage: React.FC = () => {
         setFocusedItemId((prev) =>
             prev && equippedItems[slotId]?.id === prev ? null : prev
         );
+        
+        setPetGeneration(1);
+        setPetTrait("");
+        setPetEnchanted(false);
     };
 
     const onResetAll = () => {
@@ -76,17 +100,38 @@ const EquipPage: React.FC = () => {
         setFocusedItemId(null);
         setActiveTab("stats");
         setSelectedSkulls([]);
+        setPetGeneration(1);
+        setPetTrait("");
+        setPetEnchanted(false);
     };
 
     useEffect(() => {
         /* noop */
     }, [focusedItemId]);
+    
 
+    const flatFromSkulls = useMemo(() => sumSkullStats(selectedSkulls), [selectedSkulls]);
+    
     const totalStats = useMemo(() => {
-        const base = calculateTotalStats(equippedItems);
-        const flatFromSkulls = sumSkullStats(selectedSkulls);
-        return addFlatToRanges(base, flatFromSkulls);
-    }, [equippedItems, selectedSkulls]);
+        const base = mergeAllEquipmentStats(
+            equippedItems,
+            petGeneration,
+            petTrait,
+            petEnchanted
+        );
+        // const flatFromSkulls = sumSkullStats(selectedSkulls);
+        const flatFromSets = getTotalSetBonus(equippedItems);
+
+        const withSkulls = addFlatToRanges(base, flatFromSkulls);
+        const withSets = addFlatToRanges(withSkulls, flatFromSets);
+
+        return withSets;
+    }, [
+        equippedItems,
+        selectedSkulls,
+        getTotalSetBonus,
+    ]);
+
 
     const selectedSlotData = selectedSlot
         ? EQUIPMENT_SLOTS.find((s) => s.id === selectedSlot)
@@ -100,22 +145,22 @@ const EquipPage: React.FC = () => {
         [selectedSkulls]
     );
 
-    if (loading) {
+    if (loading || loadingSets) {
         return (
             <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-white">
                 <Loader2 className="w-6 h-6 mr-2 animate-spin" />
-                <span>Loading equipment…</span>
+                <span>Loading data…</span>
             </div>
         );
     }
     if (error) {
         return (
             <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-red-300 flex-col">
-                            <section
-                className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
-                role="alert"
-                aria-live="assertive"
-            >
+                <section
+                    className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-4"
+                    role="alert"
+                    aria-live="assertive"
+                >
                 <div className="flex items-start gap-3">
                     <AlertTriangle
                         className="text-red-500 flex-shrink-0 mt-0.5"
@@ -134,6 +179,13 @@ const EquipPage: React.FC = () => {
                 </div>
             </section>
                 {String(error)}
+            </div>
+        );
+    }
+    if (errorSets) {
+        return (
+            <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-red-300 flex-col">
+                {String(errorSets)}
             </div>
         );
     }
@@ -212,9 +264,18 @@ const EquipPage: React.FC = () => {
                                             stats={totalStats}
                                             equippedItems={equippedItems}
                                             skullNames={skullNames}
+                                            flatFromSkulls={flatFromSkulls}
                                             onOpenSkulls={() =>
                                                 setSkullModalOpen(true)
                                             }
+                                            activeSets={currentActiveSets}
+                                            pet={pet}
+                                            petGeneration={petGeneration}
+                                            setPetGeneration={setPetGeneration}
+                                            petTrait={petTrait}
+                                            setPetTrait={setPetTrait}
+                                            petEnchanted={petEnchanted}
+                                            setPetEnchanted={setPetEnchanted}
                                         />
                                     </div>
                                 )}
@@ -223,7 +284,7 @@ const EquipPage: React.FC = () => {
                                     <div className="h-full animate-in fade-in duration-150">
                                         <CraftingBreakdown
                                             equippedItems={equippedItems}
-                                            locale="us"
+                                            locale="en"
                                         />
                                     </div>
                                 )}

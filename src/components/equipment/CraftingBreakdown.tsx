@@ -12,7 +12,7 @@ import { Hammer, ChevronDown, PackageOpen, Cog } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ItemTranslation from "@components/ItemTranslation";
 
-type Locale = "us" | "fr" | "pl";
+type Locale = "en" | "fr" | "pl";
 
 interface Props {
     equippedItems: { [key: string]: Equipment | null };
@@ -305,7 +305,7 @@ const CraftSection: React.FC<{
 
 export const CraftingBreakdown: React.FC<Props> = ({
     equippedItems,
-    locale = "us",
+    locale = "en",
 }) => {
     const { t } = useTranslation("equipment");
 

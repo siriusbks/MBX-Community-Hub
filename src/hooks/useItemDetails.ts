@@ -6,11 +6,15 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const API_BASE = "https://api.mineboxcommunity.com";
+// ─── New API base ────────────────────────────────────────────────────────────
+// The old endpoint was https://api.mineboxcommunity.com/items/{locale}/{id}
+// The new endpoint is  https://api.minebox.co/items/{id}?locale={locale}
+const API_BASE = "https://api.minebox.co/items";
 
 export interface ItemDetails {
     id: string;
     name: string;
+    /** The new API exposes this as "type"; normalised to "category" here. */
     category: string;
     rarity?: string;
     image?: string;
@@ -29,11 +33,21 @@ export type Ingredient =
     | { type: "vanilla"; id: string; amount?: number }
     | { [key: string]: any };
 
+// Simple in-memory cache keyed by "locale:id"
 const cache = new Map<string, ItemDetails>();
+
+/** Normalise a raw API response so downstream code always sees `category`. */
+function normalizeDetails(raw: any): ItemDetails {
+    return {
+        ...raw,
+        // The new API field is "type", old code expects "category"
+        category: raw.category ?? raw.type ?? "UNKNOWN",
+    };
+}
 
 export function useItemDetails(
     id?: string | null,
-    locale: "us" | "fr" | "pl" = "us"
+    locale: "en" | "fr" | "pl" = "en"
 ) {
     const [data, setData] = useState<ItemDetails | null>(null);
     const [loading, setLoading] = useState(false);
@@ -65,12 +79,17 @@ export function useItemDetails(
             try {
                 setLoading(true);
                 setError(null);
-                const res = await fetch(
-                    `${API_BASE}/items/${locale}/${encodeURIComponent(id)}`,
-                    { signal: controller.signal, cache: "no-store" }
-                );
+
+                // New API: GET /items/{id}?locale={locale}
+                const url = new URL(`${API_BASE}/${encodeURIComponent(id)}`);
+                url.searchParams.set("locale", locale);
+
+                const res = await fetch(url.toString(), {
+                    signal: controller.signal,
+                    cache: "no-store",
+                });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const json = (await res.json()) as ItemDetails;
+                const json = normalizeDetails(await res.json());
                 cache.set(key, json);
                 setData(json);
             } catch (e: any) {

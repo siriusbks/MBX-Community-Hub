@@ -12,6 +12,7 @@ export interface Equipment {
     image: string;
     stats?: { [key: string]: number[] };
     level?: number;
+    set?: string;
 }
 
 export interface EquipmentSlot {
