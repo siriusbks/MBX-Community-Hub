@@ -111,12 +111,12 @@ export const Navbar = () => {
     return (
       <li {...props}>
         <NavigationMenuLink asChild>
-          <a href={href}>
+          <Link to={href}>
             <div className="flex flex-col gap-1 text-sm">
               <div className="leading-none font-medium">{title}</div>
               <div className="line-clamp-2 text-muted-foreground">{children}</div>
             </div>
-          </a>
+          </Link>
         </NavigationMenuLink>
       </li>
     )
@@ -125,7 +125,7 @@ export const Navbar = () => {
   return (
     <nav className="z-10 minebox-shadow w-full border-b bg-linear-to-b from-secondary-lighter to-secondary backdrop-blur-sm">
       <div className=" mx-auto flex items-center  py-1 px-4">
-        <a href="/" className="text-lg font-bold text-primary"><img src="/media/logo.png" className="size-12" /></a>
+        <Link to="/" className="text-lg font-bold text-primary"><img src="/media/logo.png" className="size-12" /></Link>
 
 
         <span className="text-xs mr-auto flex flex-row gap-8 ml-4">
@@ -164,9 +164,9 @@ export const Navbar = () => {
                   return (
                     <NavigationMenuItem>
                       <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <a href={link.to}>
+                        <Link to={link.to}>
                           <link.icon /> {link.label}
-                        </a>
+                        </Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   )
