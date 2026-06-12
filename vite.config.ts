@@ -8,7 +8,26 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@ui": path.resolve(__dirname, "./src/components/ui"),
+      "@lib": path.resolve(__dirname, "./src/lib"),
+      "@const": path.resolve(__dirname, "./src/const"),
+        },
     },
-  },
-})
+    optimizeDeps: {
+        exclude: [],
+    },
+    define: {
+        __APP_VERSION__: JSON.stringify(Date.now()),
+    },
+    build: {
+        target: "es2017",
+        sourcemap: true,
+    },
+    server: {
+        fs: {
+            strict: false,
+        },
+    },
+});

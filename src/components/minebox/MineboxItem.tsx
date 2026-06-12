@@ -1,4 +1,4 @@
-import { RarityBadge, RarityBorder } from "@/const/rarities";
+import { RarityBadge, RarityBorder } from "@const/rarities";
 
 export function MineboxItem({ id, name, rarity, image, onClick }:
     {

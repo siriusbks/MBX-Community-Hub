@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "@ui/button";
 import { BookOpen, GlobeIcon, Map, type LucideIcon } from "lucide-react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { LevelBadge } from "@/const/levels";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@ui/select";
+import { LevelBadge } from "@const/levels";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,7 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@ui/navigation-menu"
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {

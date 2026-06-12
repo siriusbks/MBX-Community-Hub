@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Button } from "@ui/button";
 import { Globe } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { RarityBadge, RarityBorder, ItemSlot } from "@/const/rarities";
-import mineboxItems from "@/const/APIPreload/minebox_items.json";
-import { Input } from "@/components/ui/input"
-import { CodexGrid } from "@/components/minebox/codex-grid";
-import { MineboxItem } from "@/components/minebox/MineboxItem";
+import { Card } from "@ui/card";
+import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities";
+import mineboxItems from "@const/APIPreload/minebox_items.json";
+import { Input } from "@components/ui/input"
+import { CodexGrid } from "@components/minebox/codex-grid";
+import { MineboxItem } from "@components/minebox/MineboxItem";
 import {
     Sheet,
     SheetClose,
@@ -16,9 +16,9 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "@/components/ui/sheet"
-import { Separator } from "@/components/ui/separator";
-import { DamageItem, StatItem } from "@/const/statsAndDamage";
+} from "@ui/sheet"
+import { Separator } from "@ui/separator";
+import { DamageItem, StatItem } from "@const/statsAndDamage";
 
 export function ItemsCodex() {
     const [itemDetailsData, setItemDetailsData] = useState<any | null>(null);

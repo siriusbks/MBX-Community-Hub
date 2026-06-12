@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@ui/button"
 import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "@/components/ui/alert"
+} from "@ui/alert"
 import { Globe, InfoIcon } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@ui/badge"
 import { useLocation } from "react-router-dom";
 
 export function Error404() {

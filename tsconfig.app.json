@@ -21,8 +21,17 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
+      "@ui/*": ["components/ui/*"],
+      "@lib/*": ["lib/*"],
+      "@const/*": ["const/*"],
     }
   },
   "include": ["src"]

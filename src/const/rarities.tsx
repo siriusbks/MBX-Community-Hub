@@ -1,7 +1,7 @@
 import React from "react";
-import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { levels } from "./levels";
+import { Badge } from "@ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip";
+import { levels } from "@const/levels";
 
 export const rarities = [
     {

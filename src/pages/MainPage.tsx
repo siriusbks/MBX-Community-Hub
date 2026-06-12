@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@ui/button"
 import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "@/components/ui/alert"
+} from "@ui/alert"
 import { Globe, InfoIcon } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
+import { Badge } from "@ui/badge"
+import { Card } from "@ui/card"
 
 export function Home() {
     return (
