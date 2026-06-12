@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@ui/button";
-import { BookOpen, GlobeIcon, Map, type LucideIcon } from "lucide-react";
+import { BookOpen, GlobeIcon, Map, Box, type LucideIcon } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@ui/select";
 import { LevelBadge } from "@const/levels";
 import {
@@ -90,7 +90,7 @@ export const Navbar = () => {
     {
       id: "community",
       to: "/community",
-      icon: Map,
+      icon: Box,
       label: "Community",
     },
     {
