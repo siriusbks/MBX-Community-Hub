@@ -1,306 +1,196 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- */
-
-import {
-    Github,
-    Map,
-    Users,
-    User,
-    ChevronDown,
-    Shield,
-    BookMarked,
-    Leaf,
-    Wrench,
-    Bone,
-    Snowflake,
-    FolderClosed,
-    BookA,
-    BookCopy,
-    Swords,
-    BookOpen
-} from "lucide-react";
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useState, useEffect, useRef } from "react";
-
-// Navigation data driven consts — edit these to change links/menu items
-const NAV_LINKS: Array<any> = [
-    { id: "map", to: "/map", icon: Map, labelKey: "navbar.map", matchPrefix: "/mappage" },
-    {
-        id: "codex",
-        dropdown: true,
-        icon: BookOpen,
-        labelKey: "navbar.codex",
-        items: [
-            { id: "bestiary", to: "/bestiary", icon: Bone, labelKey: "navbar.bestiary" },
-            { id: "class_and_spells", to: "/classAndSpells", icon: BookCopy, labelKey: "navbar.class_and_spells" },
-            { id: "expeditions", to: "/expeditions", icon: Swords, labelKey: "navbar.expeditions", badge: "Coming Soon" },
-            { id: "itemsAndRecipes", to: "/itemsNrecipes", icon: BookA, labelKey: "navbar.itemsNrecipes", badge: "Beta" },
-        ],
-    },    
-    {
-        id: "tools",
-        dropdown: true,
-        icon: Wrench,
-        labelKey: "navbar.tools",
-        items: [
-            { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
-            { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Coming Soon" },
-            { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
-        ],
-    },
-    { id: "community", to: "/community", icon: Users, labelKey: "navbar.community" },
-    /*
-    { 
-        id: "archives",
-        dropdown: true,
-        icon: FolderClosed,
-        labelKey: "navbar.archives",
-        items: [
-            { id: "christmas", to: "archives/christmas", icon: Snowflake, labelKey: "navbar.christmas", badge: "Event" , event: true},
-            { id: "halloween", to: "archives/halloween", icon: Leaf, labelKey: "navbar.halloween", badge: "Event" , event: true },
-        ],
-    },*/
-];
-
-const LanguageSelector = ({
-    i18n,
-    handleLanguageChange,
-}: {
-    i18n: any;
-    handleLanguageChange: (event: { target: { value: string } }) => void;
-}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const languages = [
-        { code: "en", label: "English", flag: "/assets/media/flags/us.svg" },
-        { code: "fr", label: "Français", flag: "/assets/media/flags/fr.svg" },
-        { code: "pl", label: "Polski", flag: "/assets/media/flags/pl.svg" },
-        { code: "es", label: "Español", flag: "/assets/media/flags/es.svg" },
-    ];
-
-    const resolved = i18n.resolvedLanguage || i18n.language;
-    const currentCode =
-        (typeof resolved === "string" ? resolved.split("-")[0] : "en") || "en";
-
-    const selected =
-        languages.find((l) => l.code === currentCode) || languages[0];
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () =>
-            document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
-    return (
-        <div className="relative" ref={dropdownRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className={`group flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg border transition-all duration-300 ${
-                    isOpen 
-                        ? "bg-gray-800 border-gray-700 text-white shadow-sm" 
-                        : "bg-gray-800 border-gray-700 text-gray-100 hover:bg-gray-700"
-                }`}
-                aria-haspopup="listbox"
-                aria-expanded={isOpen}
-            >
-                <img
-                    src={selected.flag}
-                    alt={selected.label}
-                    className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
-                />
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-white" : "text-gray-400 group-hover:text-gray-300"}`} />
-            </button>
-
-            {isOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-44 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-200">
-                    {languages.map((lang) => (
-                        <button
-                            key={lang.code}
-                            onClick={() => {
-                                handleLanguageChange({
-                                    target: { value: lang.code },
-                                });
-                                setIsOpen(false);
-                            }}
-                            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                                lang.code === currentCode 
-                                    ? "bg-white/5 text-white" 
-                                    : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                            }`}
-                            role="option"
-                            aria-selected={lang.code === currentCode}
-                        >
-                            <img
-                                src={lang.flag}
-                                alt={lang.label}
-                                className="w-5 h-3.5 object-cover rounded-[2px]"
-                            />
-                            <span className="font-medium">{lang.label}</span>
-                            {lang.code === currentCode && (
-                                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] animate-pulse"></div>
-                            )}
-                        </button>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
+import { Button } from "./ui/button";
+import { BookOpen, GlobeIcon, Map, type LucideIcon } from "lucide-react";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { LevelBadge } from "@/const/levels";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-    const { i18n } = useTranslation();
-    const { t } = useTranslation("navbar");
-    const location = useLocation();
 
-    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-    const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [hoverOpen, setHoverOpen] = React.useState<string | null>(null);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const refs = Object.values(dropdownRefs.current);
-            const clickedInsideAny = refs.some((r) => r && r.contains(event.target as Node));
-            if (!clickedInsideAny) setOpenDropdown(null);
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+  // Typ dla pojedynczego elementu w dropdown
+  type NavDropdownItem = {
+    id: string;
+    to: string;
+    icon: LucideIcon;
+    label: string;
+    badge?: string;
+  };
 
-    const handleLanguageChange = (event: { target: { value: string } }) => {
-        i18n.changeLanguage(event.target.value);
-    };
 
+  type NavDropdown = {
+    id: string;
+    dropdown: true;
+    icon: LucideIcon;
+    label: string;
+    items: NavDropdownItem[];
+  };
+  type NavLink = {
+    id: string;
+    to: string;
+    icon: LucideIcon;
+    label: string;
+    matchPrefix?: string;
+  };
+
+  function isDropdown(item: NavItem): item is NavDropdown {
+    return 'dropdown' in item && item.dropdown === true;
+  }
+
+  type NavItem = NavLink | NavDropdown;
+
+  const NAV_LINKS: NavItem[] = [
+    {
+      id: "maps",
+      to: "/maps",
+      icon: Map,
+      label: "Maps",
+      matchPrefix: "/maps"
+    },
+    {
+      id: "codex",
+      dropdown: true,
+      icon: BookOpen,
+      label: "Codex",
+      items: [
+        { id: "items", to: "/codex/items", icon: Map, label: "Items" },
+        { id: "bestiary", to: "/codex/bestiary", icon: Map, label: "Bestiary" },
+        { id: "ships", to: "/codex/ships", icon: Map, label: "Ships" },
+        { id: "classes", to: "/codex/classes", icon: Map, label: "Classes" },
+        { id: "cosmetics", to: "/codex/cosmetics", icon: Map, label: "Cosmetics" },
+      ],
+    },
+    {
+      id: "tools",
+      dropdown: true,
+      icon: BookOpen,
+      label: "Tools",
+      items: [
+        { id: "equipment", to: "/tools/equipment-builder", icon: Map, label: "Equpment Builder" },
+        { id: "collections", to: "/tools/collections", icon: Map, label: "Collections" },
+      ],
+    },
+    {
+      id: "actions",
+      to: "/actions",
+      icon: Map,
+      label: "Actions",
+      matchPrefix: "/Actions"
+    },
+    {
+      id: "community",
+      to: "/community",
+      icon: Map,
+      label: "Community",
+    },
+    {
+      id: "profile",
+      to: "/profile",
+      icon: Map,
+      label: "Profile",
+      matchPrefix: "/profile"
+    },
+  ];
+
+  function ListItem({
+    title,
+    children,
+    href,
+    ...props
+  }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
     return (
-        <header className="relative z-50 w-full h-18 bg-gray-900/95 backdrop-blur-sm border-gray-700 shadow-md">
-            <div className="container mx-auto px-6 py-0 h-full flex items-center justify-between">
-                {/* Logo */}
-                <NavLink to="/" className="flex items-center h-full group">
-                    <img
-                        src="/assets/media/website/logo.png"
-                        alt="MBX Logo"
-                        className="h-[96px] max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
-                    />
-                </NavLink>
-
-                {/* Navigation Links (data-driven from NAV_LINKS) */}
-                <nav className="flex items-center gap-3 sm:gap-5">
-                    {NAV_LINKS.map((link) => {
-                        if (link.dropdown) {
-                            const dropdownActive = link.items?.some((item: any) =>
-                                location.pathname.startsWith(item.to)
-                            );
-                            const isOpen = openDropdown === link.id;
-                            const toggleOpen = () => setOpenDropdown((v) => (v === link.id ? null : link.id));
-                            const setRef = (el: HTMLDivElement | null) => {
-                                dropdownRefs.current[link.id] = el;
-                            };
-                            return (
-                                <div className="relative" key={link.id}>
-                                    <button
-                                        onClick={toggleOpen}
-                                        className={`flex items-center gap-2 px-2 lg:px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
-                                            dropdownActive
-                                                ? "bg-green-500/20 text-green-400"
-                                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                                        }`}
-                                        aria-haspopup="menu"
-                                        aria-expanded={isOpen}
-                                    >
-                                        {React.createElement(link.icon, { className: "h-5 w-5" })}
-                                        <span className="items-center gap-1 hidden md:flex">
-                                            <span className="hidden lg:flex">{t(link.labelKey) ?? link.labelKey}</span>
-                                            <ChevronDown className={`w-4 h-4 ml-1 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
-                                        </span>
-                                    </button>
-
-                                    {isOpen && (
-                                        <div ref={setRef} className="absolute left-0 mt-2 w-52 bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden p-1 animate-in fade-in slide-in-from-top-2 duration-200 origin-top-left" >
-                                            {link.items.map((item: any) => (
-                                                <NavLink
-                                                    key={item.id}
-                                                    to={item.to}
-                                                    onClick={() => setOpenDropdown(null)}
-                                                    className={`group w-full flex items-center gap-3 px-3 py-2 text-sm transition-all relative rounded-md ${location.pathname.startsWith(item.to) ? "text-gray-300 bg-white/5" : "text-gray-300 hover:text-white hover:bg-white/5"}`}
-                                                    >
-                                                    <>
-                                                        <div className={`p-1.5 rounded-md transition-colors ${location.pathname.startsWith(item.to) ? "bg-white/5 text-gray-200" : "bg-white/5 text-gray-300 group-hover:text-white group-hover:bg-white/10"}`}>
-                                                            {React.createElement(item.icon, { className: "w-4 h-4" })}
-                                                        </div>
-                                                        <div className="flex flex-col">
-                                                            <span className="font-medium">{t(item.labelKey)}</span>
-                                                            {item.badge && (
-                                                                <span className={`text-[10px] uppercase font-bold tracking-wider ${item.event ? "text-white" : "text-green-400"}`}>
-                                                                    {item.badge}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </>
-                                                </NavLink>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        }
-
-                        // regular link
-                        return (
-                            <NavLink
-                                key={link.id}
-                                to={link.to}
-                                className={({ isActive }) =>
-                                    `flex items-center gap-2 px-2 lg:px-4  py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-green-500/50 ${
-                                        isActive || (link.matchPrefix && location.pathname.startsWith(link.matchPrefix))
-                                            ? link.event
-                                                ? "bg-white/20 text-white"
-                                                : "bg-green-500/20 text-green-400"
-                                            : "text-gray-400 hover:text-white hover:bg-white/5"
-                                    }`
-                                }
-                            >
-                                {React.createElement(link.icon, { className: "h-5 w-5" })}
-                                <span className="items-center gap-1 hidden md:flex">
-                                    <span className="hidden lg:flex">{t(link.labelKey)}</span>
-                                </span>
-                                {link.badge && (
-                                    <span className={`ml-auto ml-1 px-1.5 py-0.5 text-[10px] font-bold uppercase bg-${link.event ? "white" : "green-500"} text-black rounded`}>{link.badge}</span>
-                                )}
-                            </NavLink>
-                        );
-                    })}
-                </nav>
-
-                {/* Right Side: Lang + GitHub */}
-                <div className="flex items-center gap-4">
-                    <LanguageSelector
-                        i18n={i18n}
-                        handleLanguageChange={handleLanguageChange}
-                    />
-
-                    <a
-                        href="https://github.com/siriusbks/MBX-Community-Hub"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-white transition-colors duration-200 rounded-lg p-1"
-                        aria-label="View source on GitHub"
-                    >
-                        <Github size={22} />
-                    </a>
-                </div>
+      <li {...props}>
+        <NavigationMenuLink asChild>
+          <a href={href}>
+            <div className="flex flex-col gap-1 text-sm">
+              <div className="leading-none font-medium">{title}</div>
+              <div className="line-clamp-2 text-muted-foreground">{children}</div>
             </div>
-        </header>
-    );
-};
+          </a>
+        </NavigationMenuLink>
+      </li>
+    )
+  }
+
+  return (
+    <nav className="z-10 minebox-shadow w-full border-b bg-linear-to-b from-secondary-lighter to-secondary backdrop-blur-sm">
+      <div className=" mx-auto flex items-center  py-1 px-4">
+        <a href="/" className="text-lg font-bold text-primary"><img src="/media/logo.png" className="size-12" /></a>
+
+
+        <span className="text-xs mr-auto flex flex-row gap-8 ml-4">
+          <NavigationMenu className="z-10" viewport={false}>
+            <NavigationMenuList>
+              {NAV_LINKS.map((link) => {
+                if (isDropdown(link)) {
+                  return (
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger><link.icon size={16} className="mr-2" /> {link.label}</NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="max-w-64 w-48 flex flex-col">
+                          {link.items.map((sub) => {
+                            return (
+                              <ListItem href={sub.to} className="w-full flex flex-row">
+                                <span className="flex flex-row gap-2">
+                                  <sub.icon className="size-6" />
+                                  <span className="flex flex-col gap-0 leading-none justify-center">
+                                    <p className="text-card-foreground flex flex-row items-center">
+                                      {sub.label}
+                                    </p>
+                                    {sub.badge && (
+                                      <p className="text-[0.5rem] text-primary">
+                                        {sub.label}
+                                      </p>)}
+                                  </span>
+                                </span>
+                              </ListItem>
+                            )
+                          })}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  )
+                } else {
+                  return (
+                    <NavigationMenuItem>
+                      <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <a href={link.to}>
+                          <link.icon /> {link.label}
+                        </a>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
+                }
+              })}
+
+            </NavigationMenuList>
+          </NavigationMenu>
+        </span>
+
+        <span className="flex items-center gap-2">
+
+          <span className="items-end justify-end flex flex-col leading-none gap-0.5">
+
+            <p className="font-medium">Player Name</p>
+            <p className="text-[0.7rem] text-muted-foreground">LEVEL 000 </p>
+          </span>
+
+          {/* Player Head Links */}
+          <img src="https://api.mineatar.io/face/1ffb3a0d-4c5d-4708-9bf6-26cbe70023eb" className="h-8 rounded-sm" />
+
+          <Button size="lg" className="tracking-wider"><GlobeIcon className="mt-0.5" />Login with Discord </Button>
+        </span>
+      </div>
+    </nav>
+  );
+}

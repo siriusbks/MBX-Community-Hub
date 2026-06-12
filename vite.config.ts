@@ -1,41 +1,14 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- */
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
-import { defineConfig } from "vite";
-
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-    plugins: [react()],
-    resolve: {
-        alias: {
-            "@store": resolve(__dirname, "src/store"),
-            "@components": resolve(__dirname, "src/components"),
-            "@t": resolve(__dirname, "src/types"),
-            "@router": resolve(__dirname, "src/router"),
-            "@pages": resolve(__dirname, "src/pages"),
-            "@layouts": resolve(__dirname, "src/layouts"),
-            "@hooks": resolve(__dirname, "src/hooks"),
-            "@utils": resolve(__dirname, "src/utils"),
-        },
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
-    optimizeDeps: {
-        exclude: [],
-    },
-    define: {
-        __APP_VERSION__: JSON.stringify(Date.now()),
-    },
-    build: {
-        target: "es2017",
-        sourcemap: true,
-    },
-    server: {
-        fs: {
-            strict: false,
-        },
-    },
-});
+  },
+})
