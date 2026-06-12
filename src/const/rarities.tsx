@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { levels } from "./levels";
 
 export const rarities = [
     {
@@ -172,24 +173,26 @@ export function RarityBadge({ rarity , className}: { rarity: string, className?:
     );
 }
 
-export const RaritySlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { rarity: string; className?: string }>(
-    ({ rarity, children, className, ...props }, ref) => {
+export const ItemSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { id?: string; rarity: string; image: string; name: string; desc: string; level: number; className?: string }>(
+    ({ name, id, rarity, desc, level, image, children, className, ...props }, ref) => {
         let rarityData = rarities.find(r => r.id === rarity);
-        if (!rarityData) rarityData = rarities[0]; // default to "vanilla" if not found
+        if (!rarityData) rarityData = rarities[0];
 
         return (
+            <RarityTooltip name={name} rarity={rarity} level={level} description={desc}>
             <div ref={ref} {...props} className={`${rarityData.border} ${rarityData.backgroundColor} ${className} rounded-sm`}>
                 <div className={`size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}>
-                    {children}
+                    <img src={`data:image/png;base64,${image}`} alt="" className="size-full p-1 object-cover" />
                 </div>
             </div>
+            </RarityTooltip>
         )
     }
 )
 
-RaritySlot.displayName = "RaritySlot";
+ItemSlot.displayName = "RaritySlot";
 
-export function RarityTooltip({ rarity, children }: { rarity: string; children?: React.ReactNode }) {
+export function RarityTooltip({ name, rarity, level, description, children }: { name:string, rarity: string; level: number, description:string, children?: React.ReactNode }) {
     let rarityData = rarities.find(r => r.id === rarity);
     if (!rarityData) rarityData = rarities[0]; // default to "vanilla" if not found
 
@@ -200,9 +203,9 @@ export function RarityTooltip({ rarity, children }: { rarity: string; children?:
             </TooltipTrigger>
             <TooltipContent className={`p-0 m-0  ${rarityData.border} ${rarityData.backgroundColor} rounded-sm`}>
                 <span className={`p-2 flex gap-1 flex-col ${rarityData.innerBorder}`}>
-                    <p className={rarityData.textColor}>Item Name</p>
+                    <p className={rarityData.textColor}>{name}</p>
                     <RarityBadge rarity={rarity} />
-                    <p className="text-xs text-muted-foreground">Description - Lorem Ipsum dolor sit amet</p>
+                    <p className="text-xs text-muted-foreground">{description}</p>
                 </span>
             </TooltipContent>
         </Tooltip>
