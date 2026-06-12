@@ -1,41 +1,21 @@
-import { StrictMode } from "react"
-import { createRoot } from "react-dom/client"
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+﻿import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
 
-import "./index.css"
-import { ThemeProvider } from "@components/theme-provider.tsx"
-import { TooltipProvider } from "@components/ui/tooltip"
-import { Navbar } from "@components/Navbar.tsx"
-import { Footer } from "@components/Footer.tsx"
-import Home from "@pages/MainPage.tsx";
-import Error404 from "@pages/Error404.tsx";
-import ItemsCodex from "@pages/Items.tsx";
+const rootElement = document.getElementById("root");
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col">
-          <TooltipProvider>
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
+if (!rootElement) {
+    throw new Error(
+        "Root element not found. Please ensure there is an element with id 'root' in your HTML."
+    );
+}
 
-                {/* Main Page */}
-                <Route path="/" element={<Home />} />
+const root = ReactDOM.createRoot(rootElement);
 
-                {/* Codex */}
-                <Route path="/codex/items" element={<ItemsCodex />} />
+root.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
 
-                {/* Errors */}
-                <Route path="*" element={<Error404 />} />
-
-              </Routes>
-            </main>
-            <Footer />
-          </TooltipProvider>
-        </div>
-      </BrowserRouter>
-    </ThemeProvider>
-  </StrictMode>
-)
