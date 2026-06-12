@@ -1,32 +1,41 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- */
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import "@babel/polyfill";
-import "./index.css";
+import "./index.css"
+import { ThemeProvider } from "@/components/theme-provider.tsx"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { Navbar } from "./components/navbar.tsx"
+import { Footer } from "./components/footer.tsx"
+import Home from "./pages/MainPage.tsx";
+import Error404 from "./pages/Error404.tsx";
+import ItemsCodex from "./pages/Items.tsx";
 
-import ErrorBoundary from "@components/preview/ErrorBoundary";
-import React from "react";
-import ReactDOM from "react-dom/client";
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className="min-h-screen flex flex-col">
+          <TooltipProvider>
+            <Navbar />
+            <main className="flex-1">
+              <Routes>
 
-import App from "./App";
+                {/* Main Page */}
+                <Route path="/" element={<Home />} />
 
-const rootElement = document.getElementById("root");
+                {/* Codex */}
+                <Route path="/codex/items" element={<ItemsCodex />} />
 
-if (!rootElement) {
-    throw new Error(
-        "Root element not found. Please ensure there is an element with id 'root' in your HTML."
-    );
-}
+                {/* Errors */}
+                <Route path="*" element={<Error404 />} />
 
-const root = ReactDOM.createRoot(rootElement);
-
-root.render(
-    <React.StrictMode>
-        <ErrorBoundary>
-            <App />
-        </ErrorBoundary>
-    </React.StrictMode>
-);
+              </Routes>
+            </main>
+            <Footer />
+          </TooltipProvider>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
+  </StrictMode>
+)

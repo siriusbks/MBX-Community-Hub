@@ -1,3 +1,0 @@
-MBX, Community Based Project
-Copyright (c) {year} {author}
-SPDX-License-Identifier: MIT
