@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { RarityBadge, RarityBorder, RaritySlot } from "@/const/rarities";
+import { RarityBadge, RarityBorder, ItemSlot } from "@/const/rarities";
 import mineboxItems from "@/const/APIPreload/minebox_items.json";
 import { Input } from "@/components/ui/input"
 import { CodexGrid } from "@/components/minebox/codex-grid";
@@ -17,6 +17,8 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { Separator } from "@/components/ui/separator";
+import { DamageItem, StatItem } from "@/const/statsAndDamage";
 
 export function ItemsCodex() {
     const [itemDetailsData, setItemDetailsData] = useState<any | null>(null);
@@ -80,94 +82,134 @@ export function ItemsCodex() {
                 </div>
 
                 {itemDetailsData && (
-                    
+
                     <div className="w-1/3 gap-2 flex flex-col">
-                <RarityBorder rarity={itemDetailsData.rarity.toLowerCase()} className="border-[8px] rounded-lg">
-                    <span className="flex flex-row gap-2 p-1 ">
-                        <img src={`data:image/png;base64,${itemDetailsData.image}`} className="size-24" style={{
-                            imageRendering:
-                                "pixelated",
-                        }} />
-                        <span className="h-full flex flex-col items-start justify-center">
-                            <p>{itemDetailsData.name}</p>
-                            <span className="flex flex-row gap-2">
-                                <RarityBadge rarity={itemDetailsData.rarity.toLowerCase()}/>
-                                <p className="text-xs text-muted-foreground">Lv. {itemDetailsData.level}</p>
+                        <RarityBorder rarity={itemDetailsData.rarity.toLowerCase()} className="border-[8px] rounded-lg">
+                            <span className="flex flex-row gap-2 p-1 ">
+                                <img src={`data:image/png;base64,${itemDetailsData.image}`} className="size-24" style={{
+                                    imageRendering:
+                                        "pixelated",
+                                }} />
+                                <span className="h-full flex flex-col items-start justify-center">
+                                    <p>{itemDetailsData.name}</p>
+                                    <span className="flex flex-row gap-2">
+                                        <RarityBadge rarity={itemDetailsData.rarity.toLowerCase()} />
+                                        <Separator orientation="vertical" className="bg-muted-foreground my-0.5"></Separator>
+                                        <p className="text-xs text-muted-foreground">Lv. {itemDetailsData.level}</p>
+                                        <Separator orientation="vertical" className="bg-muted-foreground my-0.5"></Separator>
+                                        {itemDetailsData?.mount?.flyable && (
+                                            <p className="text-xs text-primary">FLYABLE</p>
+                                        )}
+                                    </span>
+                                    <p className="text-xs text-muted-foreground">{itemDetailsData.lore}</p>
+                                </span>
                             </span>
-                            <p className="text-xs text-muted-foreground">{itemDetailsData.lore}</p>
-                        </span>
-                    </span>
-                    <span className="px-1 pb-1">
-                        <span className="flex flex-row gap-1 text-xs">
-                            <p className="mr-auto  ">ID:</p>
-                            <p>{itemDetailsData.id}</p>
-                        </span>
-                        {itemDetailsData.recipe?.unlock_collection && (
-                        <span className="flex flex-row gap-1 text-xs">
-                            <p className="">Unlocked By </p>
-                            <p className="text-primary mr-auto  ">{itemDetailsData.recipe?.unlock_collection}</p>
-                            <p>Level {itemDetailsData.recipe?.unlock_level}</p>
-                        </span>
+                            <span className="px-1 pb-1">
+                                <span className="flex flex-row gap-1 text-xs">
+                                    <p className="mr-auto  ">ID:</p>
+                                    <p>{itemDetailsData.id}</p>
+                                </span>
+                                {itemDetailsData.recipe?.unlock_collection && (
+                                    <span className="flex flex-row gap-1 text-xs">
+                                        <p className="">Unlocked By </p>
+                                        <p className="text-primary mr-auto  ">{itemDetailsData.recipe?.unlock_collection}</p>
+                                        <p>Level {itemDetailsData.recipe?.unlock_level}</p>
+                                    </span>
+                                )}
+                                <span className="flex flex-row gap-1 text-xs">
+                                    <p className="mr-auto  ">Museum</p>
+                                    <p>????</p>
+                                </span>
+                                {itemDetailsData?.stats && (
+                                    <div>
+                                        <p className="text-xs">Stats</p>
+                                        {Object.entries(itemDetailsData.stats).map(([stat, values]) => (
+                                            <StatItem
+                                                key={stat}
+                                                stat={stat}
+                                                from={values[0]}
+                                                to={values[1]}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                                {itemDetailsData?.damages && (
+                                    <div>
+                                        <p className="text-xs">Damage</p>
+                                        {Object.entries(itemDetailsData.damages).map(([stat, values]) => (
+                                            <DamageItem
+                                                key={stat}
+                                                type={stat}
+                                                from={values[0]}
+                                                to={values[1]}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                                {itemDetailsData?.mount && (
+                                    <>
+                                        <span className="flex flex-row gap-1 text-xs">
+                                            <p className="mr-auto  ">Speed</p>
+                                            <p>{itemDetailsData.mount.speed * 100}%</p>
+                                        </span>
+                                        <span className="flex flex-row gap-1 text-xs">
+                                            <p className="mr-auto  ">Jump Height</p>
+                                            <p>{itemDetailsData.mount.jump_height}</p>
+                                        </span>
+                                    </>
+                                )}
+                            </span>
+                        </RarityBorder>
+
+                        {itemDetailsData?.extra_image && (
+                            <img src={itemDetailsData.extra_image} />
                         )}
-                        <span className="flex flex-row gap-1 text-xs">
-                            <p className="mr-auto  ">Museum</p>
-                            <p>????</p>
-                        </span>
-                        <p className="text-xs">Stats</p>
-                        <p className="text-xs">Damage</p>
-                    </span>
-                </RarityBorder>
 
-                <Card className="p-2 flex flex-col gap-1 pb-3">
-                    <span className="flex flex-row gap-1">
-                        <Button size="icon-xs"><Globe /></Button>
-                        <p>Recipes</p>
-                        <p className="ml-auto text-xs">JOB</p>
+                        {itemDetailsData?.recipe && (
+                            <Card className="p-2 flex flex-col gap-1 pb-3">
+                                <span className="flex flex-row gap-1">
+                                    <Button size="icon-xs"><Globe /></Button>
+                                    <p>Recipes</p>
+                                    <p className="ml-auto text-xs">{itemDetailsData.recipe.job}</p>
 
-                    </span>
-                    <span className="grid-cols-7 grid gap-1">
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                    </span>
-                </Card>
-                <Card className="p-2 flex flex-col gap-1 pb-3">
-                    <span className="flex flex-row gap-1">
-                        <p>Used in Recipes</p>
+                                </span>
+                                <span className="grid-cols-7 grid gap-1">
+                                    {itemDetailsData?.recipe?.ingredients && (
+                                        itemDetailsData.recipe.ingredients.map((ingredient, index) => (
+                                            <ItemSlot
+                                                key={index}
+                                                image={ingredient.item.image}
+                                                id={ingredient.id}
+                                                name={ingredient.item.name}
+                                                desc={ingredient.item.lore}
+                                                rarity={ingredient.item.rarity.toLowerCase()}
+                                                level={0}
+                                                className="aspect-square"
+                                            />
+                                        ))
+                                    )}
+                                </span>
+                            </Card>
+                        )}
+                        <Card className="p-2 flex flex-col gap-1 pb-3">
+                            <span className="flex flex-row gap-1">
+                                <p>Used in Recipes</p>
 
-                    </span>
-                    <span className="grid-cols-7 grid gap-1">
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                    </span>
-                </Card>
-                <Card className="p-2 flex flex-col gap-1 pb-3">
-                    <span className="flex flex-row gap-1">
-                        <p>Dropped By</p>
+                            </span>
+                            <span className="grid-cols-7 grid gap-1">
+                            </span>
+                        </Card>
+                        <Card className="p-2 flex flex-col gap-1 pb-3">
+                            <span className="flex flex-row gap-1">
+                                <p>Dropped By</p>
 
-                    </span>
-                    <span className="grid-cols-7 grid gap-1">
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                        <RaritySlot rarity="common" className="aspect-square" />
-                    </span>
-                </Card>
+                            </span>
+                            <span className="grid-cols-7 grid gap-1">
+                            </span>
+                        </Card>
+                    </div>
+                )}
             </div>
-            )}
-        </div>
         </div >
     )
 }
