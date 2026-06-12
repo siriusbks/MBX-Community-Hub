@@ -31,6 +31,7 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
     let translationLore: string ="";
     let translationDescription: string ="";
     const lowerCategory = category ? category.toLowerCase() : "";
+    const upperCategory = category ? category.toUpperCase() : "";
     const cleanedItemId = mbxId.replace(
         new RegExp(`^${lowerCategory}_`),
         ""
@@ -452,11 +453,11 @@ const ItemTranslation: React.FC<ItemTranslationProps> = ({ mbxId, category, type
                     break;
                 case "furniture":
                 case "skull":
-                    translation = inr(`itemsNrecipes.category.${category}`, { defaultValue: "" });
+                    translation = inr(`itemsNrecipes.category.${upperCategory}`, { defaultValue: "" });
                     break;
                 default: 
                     // Default fallback key
-                    translation = museum(`museum.category.${category}`, { defaultValue: "" });
+                    translation = museum(`museum.category.${upperCategory}`, { defaultValue: "" });
                     break;
             }
         } else {
