@@ -66,8 +66,7 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     const isValidLink = (url?: string) => url && url.trim().length > 0;
 
     return (
-        <Card className="relative p-0 gap-0 overflow-hidden group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border-primary/10 hover:border-primary/30 bg-card/60 backdrop-blur-sm">
-            
+        <Card className="minebox-shadow relative p-0 gap-0 overflow-hidden group hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border-primary/10 hover:border-primary/30  backdrop-blur-sm">
             <div className="relative h-40 w-full bg-muted shrink-0">
                 {project.banner ? (
                     <img
@@ -78,19 +77,32 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-secondary to-background" />
                 )}
-                
+
                 <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
 
-                <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
-                    <Badge variant="secondary" className="flex items-center gap-1.5 bg-background/80 backdrop-blur-md shadow-sm">
-                        <Layers size={14} className="text-primary" /> {project.type}
+                <div className="absolute top-2 left-2 flex flex-col flex-wrap gap-1 z-10">
+                    <Badge variant="secondary" className="flex items-center gap-1.5  backdrop-blur-md shadow-sm">
+                        <Layers size={14} className="text-primary tracking-wider" /> {project.type}
                     </Badge>
                     {project.modrinthId && version && (
-                        <Badge variant="secondary" className="flex items-center gap-1.5 bg-background/80 backdrop-blur-md shadow-sm">
+                        <Badge variant="secondary" className="flex items-center gap-1.5 backdrop-blur-md shadow-sm">
                             <Layers2 size={14} className="text-primary" /> v{version}
                         </Badge>
                     )}
                 </div>
+                <div className="absolute bottom-2 right-2 flex flex-row flex-wrap gap-1 z-10">
+                    {project.language && project.language.length > 0 && (
+                        <div className="ml-auto flex space-x-2" title="Supported Languages">
+                            {project.language.map((lang, idx) => (
+                                <span key={idx} className="inline-flex items-center justify-center text-xs z-10 hover:z-20 hover:scale-110 transition-all cursor-default">
+                                    {lang}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+
 
                 {project.badge && project.badge.length > 0 && (
                     <div className="absolute top-0 right-0 z-20">
@@ -99,47 +111,40 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                         </Badge>
                     </div>
                 )}
-                
-                <div className="absolute -bottom-8 left-4 z-20">
-                    <div className="rounded-xl bg-background p-1.5 shadow-xl border border-border group-hover:scale-105 transition-transform duration-300">
+
+                <div className="absolute -bottom-12 left-4 z-20">
+                    <div className="w-full   rounded-xl flex flex-row items-end gap-2 ">
                         <img
                             src={project.logo}
                             alt={project.name}
-                            className="w-16 h-16 rounded-lg object-cover bg-muted"
+                            className="size-20 rounded-lg object-cover bg-muted group-hover:scale-105 transition-transform duration-300"
                         />
+
+                        <div className="flex justify-between items-start mb-1">
+                            <div>
+                                <h2 className="text-xl  tracking-wide drop-shadow-[0_3px_0_#5d3a00] text-primary transition-colors leading-tight">
+                                    {project.name}
+                                </h2>
+                                {project.subname && (
+                                    <h4 className="text-xs font-semibold text-primary/80 uppercase tracking-wider mt-0.5">
+                                        {project.subname}
+                                    </h4>
+                                )}
+                                <p className="text-xs text-muted-foreground  flex items-center">
+                                    by <span className="text-foreground font-medium ml-1">{project.creator}</span>
+
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
 
             <CardContent className="flex-1 flex flex-col p-5 pt-12">
-                
-                <div className="flex justify-between items-start mb-1">
-                    <div>
-                        <h2 className="text-2xl font-bold text-foreground drop-shadow-sm group-hover:text-primary transition-colors leading-tight">
-                            {project.name}
-                        </h2>
-                        {project.subname && (
-                            <h4 className="text-xs font-semibold text-primary/80 uppercase tracking-wider mt-0.5">
-                                {project.subname}
-                            </h4>
-                        )}
-                        <p className="text-sm text-muted-foreground mt-1 flex items-center">
-                            by <span className="text-foreground font-medium ml-1">{project.creator}</span>
-                        </p>
-                    </div>
-                    
-                    {project.language && project.language.length > 0 && (
-                        <div className="flex -space-x-1" title="Supported Languages">
-                            {project.language.map((lang, idx) => (
-                                <span key={idx} className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-secondary border border-background shadow-sm text-sm z-10 hover:z-20 hover:scale-110 transition-all cursor-default">
-                                    {lang}
-                                </span>
-                            ))}
-                        </div>
-                    )}
-                </div>
 
-                <p className="text-sm text-muted-foreground mt-3 line-clamp-3 leading-relaxed">
+
+                <p className="text-xs text-muted-foreground leading-tight mt-3 line-clamp-3 leading-relaxed">
                     {description}
                 </p>
                 <div className="mt-auto pt-6 flex flex-wrap items-center gap-2">
@@ -151,30 +156,30 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                         </Button>
                     )}
                     {isValidLink(links?.modrinth) && (
-                        <Button variant="secondary" size="sm" className="h-9 gap-1.5 bg-[#00AF5C]/10 text-[#00AF5C] hover:bg-[#00AF5C]/20 border border-[#00AF5C]/20 shadow-none" asChild>
+                        <Button size="lg" className="" asChild>
                             <a href={links?.modrinth} target="_blank" rel="noopener noreferrer">
-                                <SiModrinth size={16} /> Modrinth
+                                <SiModrinth className="size-3 mt-0.5" /> Modrinth
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.curseforge) && (
-                        <Button variant="secondary" size="sm" className="h-9 gap-1.5 bg-[#F16436]/10 text-[#F16436] hover:bg-[#F16436]/20 border border-[#F16436]/20 shadow-none" asChild>
+                        <Button size="lg" className="" asChild>
                             <a href={links?.curseforge} target="_blank" rel="noopener noreferrer">
-                                <SiCurseforge size={16} /> CurseForge
+                                <SiCurseforge className="size-3 mt-0.5" /> Curse Forge
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.github) && (
-                        <Button variant="outline" size="sm" className="h-9 gap-1.5 shadow-none" asChild>
+                        <Button variant="secondary" size="lg" className="" asChild>
                             <a href={links?.github} target="_blank" rel="noopener noreferrer">
-                                <SiGithub size={16} /> GitHub
+                                <SiGithub className="size-3 mt-0.5" /> GitHub
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.discord) && (
-                        <Button variant="outline" size="sm" className="h-9 gap-1.5 text-[#5865F2] hover:text-[#5865F2] hover:bg-[#5865F2]/10 border border-border shadow-none" asChild>
+                        <Button variant="secondary" size="lg" className="" asChild>
                             <a href={links?.discord} target="_blank" rel="noopener noreferrer">
-                                <SiDiscord size={16} /> Discord
+                                <SiDiscord className="size-3 mt-0.5" /> Discord
                             </a>
                         </Button>
                     )}
