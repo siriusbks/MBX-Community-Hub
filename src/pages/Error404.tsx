@@ -15,10 +15,10 @@ export function Error404() {
         <div className="py-auto relative flex flex-col page-container ">
 
             {/* Background */}
-            <div className="absolute  opacity-30 bg-center -z-1 top-0 w-full aspect-21/9  mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 bg-center -z-1 top-0 w-full aspect-21/9  mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
 
             {/* Welcome Hero */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 items-center justify-center flex flex-col my-auto">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center flex flex-col my-auto">
                 <Badge variant="secondary" className="font-light tracking-wide">API Status: <p className="">ONLINE</p></Badge>
                 <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">Error 404</h2>
                 <h1 className="inline-block text-6xl font-bold
