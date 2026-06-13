@@ -7,8 +7,10 @@ import {
 import { Globe, InfoIcon } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
+import { useTranslation } from "react-i18next"
 
 export function Home() {
+    const { t } = useTranslation()
     return (
         <div className="relative flex flex-col page-container pb-24">
 
@@ -30,11 +32,11 @@ export function Home() {
             {/* Welcome Hero */}
             <div className="items-center justify-center flex flex-col py-24">
                 <Badge variant="secondary" className="font-light tracking-wide">XXX Players Online</Badge>
-                <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">Welcome To</h2>
+                <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">{t('homepage.title')}</h2>
                 <h1 className="inline-block text-6xl font-bold
       bg-gradient-to-b from-primary to-primary-dark
       bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider ">MBX COMMUNITY</h1>
-                <p className="text-sm max-w-xl text-center mt-2 font-light">Join the Minebox community and enhance your journey with Player Profiles, Interactive Maps, the Equipment Manager, and Community Projects.</p>
+                <p className="text-sm max-w-xl text-center mt-2 font-light">{t('homepage.description')}</p>
                 <span className="mt-4 flex gap-2">
                     <Button size="lg" className="tracking-wider"><Globe className="mt-0.5" />Codex</Button>
                     <Button size="lg" className="tracking-wider" variant="secondary"><Globe className="mt-0.5" /> Contribute</Button>

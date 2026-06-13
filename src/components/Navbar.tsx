@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "@ui/button";
 import { BookOpen, GlobeIcon, Map, Box, type LucideIcon } from "lucide-react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@ui/select";
 import { LevelBadge } from "@const/levels";
 import {
   NavigationMenu,
@@ -13,6 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@ui/navigation-menu"
 import { Link } from "react-router-dom";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export const Navbar = () => {
 
@@ -134,13 +134,13 @@ export const Navbar = () => {
               {NAV_LINKS.map((link) => {
                 if (isDropdown(link)) {
                   return (
-                    <NavigationMenuItem>
+                    <NavigationMenuItem key={link.id}>
                       <NavigationMenuTrigger><link.icon size={16} className="mr-2" /> {link.label}</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="max-w-64 w-48 flex flex-col">
                           {link.items.map((sub) => {
                             return (
-                              <ListItem href={sub.to} className="w-full flex flex-row">
+                              <ListItem key={sub.id} href={sub.to} className="w-full flex flex-row">
                                 <span className="flex flex-row gap-2">
                                   <sub.icon className="size-6" />
                                   <span className="flex flex-col gap-0 leading-none justify-center">
@@ -162,7 +162,7 @@ export const Navbar = () => {
                   )
                 } else {
                   return (
-                    <NavigationMenuItem>
+                    <NavigationMenuItem key={link.id}>
                       <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                         <Link to={link.to}>
                           <link.icon /> {link.label}
@@ -188,7 +188,9 @@ export const Navbar = () => {
           {/* Player Head Links */}
           <img src="https://api.mineatar.io/face/1ffb3a0d-4c5d-4708-9bf6-26cbe70023eb" className="h-8 rounded-sm" />
 
-          <Button size="lg" className="tracking-wider"><GlobeIcon className="mt-0.5" />Login with Discord </Button>
+          <Button size="lg" className="tracking-wider ml-2"><GlobeIcon className="mt-0.5" />Login with Discord </Button>
+
+          <LanguageSwitcher />
         </span>
       </div>
     </nav>
