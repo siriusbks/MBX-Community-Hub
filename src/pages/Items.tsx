@@ -86,7 +86,7 @@ export function ItemsCodex() {
                     <div className="w-1/3 gap-2 flex flex-col">
                         <RarityBorder rarity={itemDetailsData.rarity.toLowerCase()} className="border-[8px] rounded-lg">
                             <span className="flex flex-row gap-2 p-1 ">
-                                <img src={`data:image/png;base64,${itemDetailsData.image}`} className="size-24" style={{
+                                <img src={`data:image/png;base64,${itemDetailsData.image}`} className="size-24 object-scale-down" style={{
                                     imageRendering:
                                         "pixelated",
                                 }} />
@@ -96,9 +96,11 @@ export function ItemsCodex() {
                                         <RarityBadge rarity={itemDetailsData.rarity.toLowerCase()} />
                                         <Separator orientation="vertical" className="bg-muted-foreground my-0.5"></Separator>
                                         <p className="text-xs text-muted-foreground">Lv. {itemDetailsData.level}</p>
-                                        <Separator orientation="vertical" className="bg-muted-foreground my-0.5"></Separator>
                                         {itemDetailsData?.mount?.flyable && (
-                                            <p className="text-xs text-primary">FLYABLE</p>
+                                            <>
+                                                <Separator orientation="vertical" className="bg-muted-foreground my-0.5"></Separator>
+                                                <p className="text-xs text-primary">FLYABLE</p>
+                                            </>
                                         )}
                                     </span>
                                     <p className="text-xs text-muted-foreground">{itemDetailsData.lore}</p>
@@ -171,11 +173,52 @@ export function ItemsCodex() {
                                     <Button size="icon-xs"><Globe /></Button>
                                     <p>Recipes</p>
                                     <p className="ml-auto text-xs">{itemDetailsData.recipe.job}</p>
-
                                 </span>
                                 <span className="grid-cols-7 grid gap-1">
                                     {itemDetailsData?.recipe?.ingredients && (
-                                        itemDetailsData.recipe.ingredients.map((ingredient, index) => (
+                                        itemDetailsData.recipe.ingredients.map((ingredient, index) => {
+                                            if (ingredient.type === "vanilla") {
+                                                return (
+                                                    <ItemSlot
+                                                        key={index}
+                                                        image=""
+                                                        id={ingredient.id}
+                                                        name={ingredient.id}
+                                                        desc=""
+                                                        rarity="vanilla"
+                                                        level={0}
+                                                        className="aspect-square"
+                                                    />
+                                                );
+                                            } else {
+                                                return (
+                                                    <ItemSlot
+                                                        key={index}
+                                                        image={ingredient.item.image}
+                                                        id={ingredient.id}
+                                                        name={ingredient.item.name}
+                                                        desc={ingredient.item.lore}
+                                                        rarity={ingredient.item.rarity.toLowerCase()}
+                                                        level={0}
+                                                        className="aspect-square"
+                                                    />
+                                                );
+                                            }
+                                        })
+                                    )}
+                                </span>
+                            </Card>
+                        )}
+
+                        {itemDetailsData?.used_in_recipes && (
+                            <Card className="p-2 flex flex-col gap-1 pb-3">
+                                <span className="flex flex-row gap-1">
+                                    <p>Used in Recipes</p>
+
+                                </span>
+                                <span className="grid-cols-7 grid gap-1">
+                                    {itemDetailsData?.used_in_recipes && (
+                                        itemDetailsData.used_in_recipes.map((ingredient, index) => (
                                             <ItemSlot
                                                 key={index}
                                                 image={ingredient.item.image}
@@ -191,14 +234,6 @@ export function ItemsCodex() {
                                 </span>
                             </Card>
                         )}
-                        <Card className="p-2 flex flex-col gap-1 pb-3">
-                            <span className="flex flex-row gap-1">
-                                <p>Used in Recipes</p>
-
-                            </span>
-                            <span className="grid-cols-7 grid gap-1">
-                            </span>
-                        </Card>
                         <Card className="p-2 flex flex-col gap-1 pb-3">
                             <span className="flex flex-row gap-1">
                                 <p>Dropped By</p>

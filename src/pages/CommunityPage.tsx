@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ProjectCard, type ProjectProps } from "@components/community/ProjectCard";
 import { Badge } from "@ui/badge";
 import { PageTitle } from "@components/layour/title";
+import { Ripple } from "@components/ripple";
 
 export function CommunityPage() {
     const [projects, setProjects] = useState<ProjectProps["project"][]>([]);
@@ -18,7 +19,7 @@ export function CommunityPage() {
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
 
             <PageTitle
-                title = "COMMUNITY PROJECTS"
+                title="COMMUNITY PROJECTS"
                 description="Discover amazing projects created by the Minebox community, including Mods, Resource Packs, and more."
             />
 
@@ -30,7 +31,7 @@ export function CommunityPage() {
                 </div>
                 {projects.length === 0 && (
                     <div className="w-full text-center py-20 text-muted-foreground flex flex-col items-center gap-4">
-                        <div className="size-8 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                        <Ripple className="size-16 text-primary" />
                         <p>Loading projects...</p>
                     </div>
                 )}

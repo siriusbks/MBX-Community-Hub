@@ -182,7 +182,7 @@ export const ItemSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
             <RarityTooltip name={name} rarity={rarity} level={level} description={desc}>
             <div ref={ref} {...props} className={`${rarityData.border} ${rarityData.backgroundColor} ${className} rounded-sm`}>
                 <div className={`size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}>
-                    <img src={`data:image/png;base64,${image}`} alt="" className="size-full p-1 object-cover" />
+                    <img src={`data:image/png;base64,${image}`} alt="" className="size-full p-1 object-scale-down" />
                 </div>
             </div>
             </RarityTooltip>
