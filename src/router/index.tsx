@@ -5,12 +5,16 @@ const MainPage = lazy(() => import("@pages/MainPage"));
 const ItemsCodex = lazy(() => import("@pages/Items"));
 const CommunityPage = lazy(() => import("@pages/CommunityPage"));
 const Error404 = lazy(() => import("@pages/Error404"));
+const MapsPage = lazy(() => import("@pages/Maps"));
 
 export const AppRoutes: FC = () => {
     return (
         <Routes>
                 {/* Main Page */}
                 <Route path="/" element={<MainPage />} />
+
+                {/* Maps */}
+                <Route path="/maps" element={<MapsPage />} />
 
                 {/* Codex */}
                 <Route path="/codex/items" element={<ItemsCodex />} />
