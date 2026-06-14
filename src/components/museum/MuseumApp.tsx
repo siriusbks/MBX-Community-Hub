@@ -3,7 +3,6 @@
  */
 
 import React, { FC, useEffect, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import {
     User,
@@ -24,8 +23,15 @@ import {
 import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
 import MuseumItemImage from "./MuseumItemImage";
+import ResourcesRecapModal from "./ResourcesRecapModal";
+import ItemsRecapModal from "./ItemsRecapModal";
+import CraftModal from "./CraftModal";
+import RecipeTree from "./RecipeTree";
+import CraftsOnlyContent from "./CraftsOnlyContent";
 import ItemTranslation from "../ItemTranslation";
+import { copyResourcesCsvToClipboard } from "@utils/resourcesCsv";
 import i18next from "i18next";
+
 
 // Definition of interfaces
 interface Group {
@@ -443,161 +449,6 @@ export const MuseumApp: FC = () => {
         return resources;
     };
 
-    // Small component that renders the full recipe tree. We split nodes into
-    // a separate component so each node can use hooks safely (one hook call per
-    // component instance) and to avoid calling hooks inside loops.
-    const RecipeTree: FC<{ recipe: any; detailsIndex: any }> = ({
-        recipe,
-        detailsIndex,
-    }) => {
-        if (!recipe || !recipe.ingredients) return <></>;
-        return (
-            <ul>
-                {recipe.ingredients.map((ing: any, i: number) => (
-                    <RecipeNode key={i} ing={ing} detailsIndex={detailsIndex} />
-                ))}
-            </ul>
-        );
-    };
-
-    const RecipeNode: FC<{ ing: any; detailsIndex: any }> = ({
-        ing,
-        detailsIndex,
-    }) => {
-        const [isExpanded, setIsExpanded] = useState(false);
-
-        const hasSubRecipe =
-            detailsIndex &&
-            detailsIndex[ing.id] &&
-            detailsIndex[ing.id].recipe &&
-            !NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p))
-
-        let summary: JSX.Element | null = null;
-
-        if (
-            detailsIndex &&
-            detailsIndex[ing.id] &&
-            detailsIndex[ing.id].recipe
-        ) {
-            const subResources = gatherResources(
-                detailsIndex[ing.id].recipe,
-                detailsIndex
-            );
-            summary = (
-                <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
-                    {Object.keys(subResources).map((key, index, arr) => {
-                        const globalAmount = subResources[key] * ing.amount;
-                        return (
-                            <span
-                                key={key}
-                                className="inline-flex items-center mr-1 text-xs align-baseline"
-                            >
-                                <span>
-                                    {globalAmount.toLocaleString("fr-FR")}
-                                </span>
-                                x
-                                <MuseumItemImage
-                                    groupCategory={setCategory(key)}
-                                    itemId={key}
-                                    detailsIndex={detailsIndex}
-                                    className="h-4 w-4 ml-0.5"
-                                    style={{ imageRendering: "pixelated" }}
-                                />
-                                <span className="ml-0.5">
-                                    {index < arr.length - 1 && " "}
-                                </span>
-                            </span>
-                        );
-                    })}
-                </span>
-            );
-        }
-
-        return (
-            <li className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border-2 border-gray-500 border-opacity-30">
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                    onClick={() => setIsExpanded(!isExpanded)}
-                >
-                    <div className="flex items-center">
-                        <MuseumItemImage
-                            groupCategory={setCategory(ing.id)}
-                            itemId={ing.id}
-                            detailsIndex={detailsIndex}
-                            style={{
-                                width: "35px",
-                                height: "35px",
-                                marginRight: "5px",
-                                verticalAlign: "middle",
-                                imageRendering: "pixelated",
-                            }}
-                            onClick={() => setIsExpanded(!isExpanded)}
-                        />
-
-                        <span className="font-bold text-sm flex flex-col">
-                            <span
-                                className="flex items-center mr-2 whitespace-nowrap"
-                                onClick={() => setIsExpanded(!isExpanded)}
-                            >
-                                {/* Przycisk zwijania/rozwijania */}
-                                {hasSubRecipe && (
-                                    <button className="mr-0.5 text-xs text-gray-300 hover:text-white focus:outline-none">
-                                        {isExpanded ? (
-                                            <Minus className="h-4 w-4" />
-                                        ) : (
-                                            <Plus className="h-4 w-4" />
-                                        )}
-                                    </button>
-                                )}
-                                {ing.amount}x{" "}
-                                <ItemTranslation
-                                    mbxId={ing.id}
-                                    category={setCategory(ing.id)!}
-                                    type="name"
-                                />
-                            </span>
-                            {
-                                detailsIndex &&
-                                detailsIndex[ing.id] &&
-                                detailsIndex[ing.id].recipe &&
-                                detailsIndex[ing.id].recipe.job && (
-                                    <span className="text-xs font-normal text-green-500">
-                                        <ItemTranslation
-                                            mbxId={detailsIndex[ing.id].recipe.job}
-                                            category={"SKILL"}
-                                            type="name"
-                                        />
-                                    </span>
-                                )
-                            }
-                        </span>
-                    </div>
-                    {summary}
-                </div>
-
-                {/* Renderuj poddrzewo seulement si développé */}
-                {hasSubRecipe && isExpanded && (
-                    <div
-                        style={{
-                            marginLeft: "25px",
-                            paddingLeft: "10px",
-                            marginTop: "5px",
-                        }}
-                    >
-                        <RecipeTree
-                            recipe={detailsIndex[ing.id].recipe}
-                            detailsIndex={detailsIndex}
-                        />
-                    </div>
-                )}
-            </li>
-        );
-    };
-
     // Function that is executed when clicking on an unowned item to open the craft modal
     const openCraftModal = (itemId: string, category: string) => {
         setCraftModalItem(itemId);
@@ -799,140 +650,45 @@ export const MuseumApp: FC = () => {
         return acc;
     };
     
-    const renderCraftsOnlyContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-        return <p>{t("museum.noDataLoaded")}</p>;
-        }
-    
-        const totalCrafts: Record<string, number> = {};
-    
-        groupedItems.forEach((group) => {
-        const missingItems = group.items.filter(
-            (itemId) => !museumItems.includes(itemId) && missingSelection[itemId]
-        );
-    
-        missingItems.forEach((itemId) => {
-            const recipe = detailsIndex[itemId]?.recipe;
-            if (!recipe) return;
-    
-            const crafts = gatherCraftsOnly(recipe, detailsIndex);
-            for (const craftId in crafts) {
-            totalCrafts[craftId] = (totalCrafts[craftId] || 0) + crafts[craftId];
-            }
-        });
-        });
-    
-        const sortedCraftIds = Object.keys(totalCrafts).sort((a, b) =>
-        a.localeCompare(b, "en", { sensitivity: "base" })
-        );
-    
-        if (sortedCraftIds.length === 0) {
-        return <p>{t("museum.noResourceRquired")}</p>;
-        }
-    
-        return (
-        <span>
-            <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-            {sortedCraftIds.map((craftId) => (
-                <li key={craftId} className="block bg-gray-700 p-2 rounded-lg">
-                <div className="flex items-center">
-                    <MuseumItemImage
-                    groupCategory={setCategory(craftId)}
-                    itemId={craftId}
-                    detailsIndex={detailsIndex}
-                    className="w-8 h-8 mr-2 rounded"
-                    style={{ imageRendering: "pixelated" }}
-                    />
-                    <span className="font-bold text-sm">
-                    <ItemTranslation
-                        mbxId={craftId}
-                        category={setCategory(craftId)}
-                        type="name"
-                    />
-                    </span>
-    
-                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                    {totalCrafts[craftId].toLocaleString("fr-FR")}
-                    </span>
-                </div>
-                </li>
-            ))}
-            </span>
-        </span>
-        );
-    };
+    renderCraftsOnlyContent={() => (
+  	<CraftsOnlyContent
+	    groupedItems={groupedItems}
+	    detailsIndex={detailsIndex as any}
+	    museumItems={museumItems}
+    	    missingSelection={missingSelection}
+	    gatherCraftsOnly={gatherCraftsOnly as any}
+	    setCategory={setCategory}
+	/>
+    )}
 
     // Function to copy resource recap as CSV to clipboard
     const handleCopyCSV = async () => {
-        if (!groupedItems || !detailsIndex || !museumItems) return;
+  	if (!groupedItems || !detailsIndex || !museumItems) return;
 
-        if (!showBasicSection && !showCraftSection) {
-            alert(t("museum.copyCSV.alert.noSectionSelected"));
-            return;
-        }
+	if (!showBasicSection && !showCraftSection) {
+    		alert(t("museum.copyCSV.alert.noSectionSelected"));
+    		return;
+  	}
 
-        const totalResources: { [key: string]: number } = {};
-        groupedItems.forEach((group) => {
-            // Only missing items selected via the filter are taken into account
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item) && missingSelection[item]
-            );
-            missingItems.forEach((itemId) => {
-                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                    const resourcesForThisItem: Record<string, number> = {};
-                    if (showCraftSection) {
-                        const craftResources = gatherCraftsOnly(
-                            detailsIndex[itemId].recipe,
-                            detailsIndex
-                        );
-                        Object.entries(craftResources).forEach(([resId, qty]) => {
-                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
-                        });
-                    }
-                    if (showBasicSection) {
-                        const basicResources = gatherResources(
-                            detailsIndex[itemId].recipe,
-                            detailsIndex
-                        );
-                        Object.entries(basicResources).forEach(([resId, qty]) => {
-                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
-                        });
-                    } 
-                    
-                    Object.entries(resourcesForThisItem).forEach(([resId, qty]) => {
-                        totalResources[resId] = (totalResources[resId] || 0) + qty;
-                    });
-                }
-            });
-        });
-        
-        const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
-            a.localeCompare(b, "en", { sensitivity: "base" })
-        );
-        const csvLines = sortedResourceIds.map((resId) => {
-            const quantity = totalResources[resId];
-            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
-                <ItemTranslation 
-                    mbxId={resId} 
-                    category={setCategory(resId)} 
-                    type="name" 
-                />
-            );
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = labelMarkup;
-            const labelText = tempDiv.textContent || tempDiv.innerText || "";
-            //return `${quantity},${labelText},${resId}`; // For debugging
-            return `${quantity},${labelText}`; 
-        });
-        const csvText = csvLines.join("\n");
+	try {
+    	    await copyResourcesCsvToClipboard({
+      		groupedItems,
+      		detailsIndex,
+      		museumItems,
+      		missingSelection,
+      		showBasicSection,
+      		showCraftSection,
+      		gatherCraftsOnly,
+      		gatherResources,
+      		setCategory,
+    	    });
 
-        try {
-            await navigator.clipboard.writeText(csvText);
-            alert(t("museum.copyCSV.alert.copied"));
-        } catch (err) {
-            console.error("Copy CSV failed:", err);
-        }
-    }
+  	    alert(t("museum.copyCSV.alert.copied"));
+	} catch (err) {
+    	    console.error("Copy CSV failed:", err);
+  	}
+    };
+
 
     // Function that returns the display of the items grid and the category navigation bar
     const renderItems = () => {
@@ -1347,337 +1103,39 @@ export const MuseumApp: FC = () => {
             </button>
 
             {/* Craft modal */}
-            {craftModalItem && detailsIndex && (
-                <div
-                    className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="craftModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setCraftModalItem(null);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        <div
-                            id="craftDetails"
-                            className="flex flex-col flex-1 max-h-[90vh]"
-                        >
-                            {detailsIndex[craftModalItem] &&
-                            detailsIndex[craftModalItem].recipe ? (
-                                <>
-                                    <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        {detailsIndex[craftModalItem]?.apiImage ? (
-                                            <img
-                                                src={detailsIndex[craftModalItem].apiImage}
-                                                alt={
-                                                    detailsIndex[craftModalItem].apiName || craftModalItem
-                                                }
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
-                                                style={{ imageRendering: "pixelated" }}
-                                            />
-                                        ) : (
-                                            <MuseumItemImage
-                                                groupCategory={craftModalCategory!}
-                                                itemId={craftModalItem}
-                                                detailsIndex={detailsIndex}
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                        )}
-                                        <span className="flex flex-col">
-                                            <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")} {" "}
-                                                {detailsIndex[craftModalItem]?.apiName ? (
-                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
-                                                ) : (
-                                                    <ItemTranslation
-                                                        mbxId={craftModalItem}
-                                                        category={
-                                                            craftModalCategory!
-                                                        }
-                                                        type="name"
-                                                    />
-                                                )}
-                                            </div>
-                                            <p className="text-sm opacity-60">
-                                                {t("museum.jobRequired")}{" "}
-                                                <ItemTranslation
-                                                    mbxId={
-                                                        detailsIndex[
-                                                            craftModalItem
-                                                        ].recipe.job
-                                                    }
-                                                    category={"SKILL"}
-                                                    type="name"
-                                                />
-                                            </p>
-                                        </span>
-                                        <span className="ml-auto">
-                                            {moreInformation()}
-                                        </span>
-                                        <span
-                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                            onClick={() =>
-                                                setCraftModalItem(null)
-                                            }
-                                        >
-                                            <X
-                                                strokeWidth={3}
-                                                className="h-5 w-5"
-                                            />
-                                        </span>
-                                    </div>
-
-                                    <div className="flex-1 overflow-y-auto p-4 pb-3 custom-scrollbar">
-                                        <RecipeTree
-                                            recipe={
-                                                detailsIndex[craftModalItem]
-                                                    .recipe
-                                            }
-                                            detailsIndex={detailsIndex}
-                                        />
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="bg-gray-700 text-white p-4 rounded-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        {detailsIndex[craftModalItem]?.apiImage ? (
-                                            <img
-                                                src={detailsIndex[craftModalItem].apiImage}
-                                                alt={
-                                                    detailsIndex[craftModalItem].apiName || craftModalItem
-                                                }
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
-                                                style={{ imageRendering: "pixelated" }}
-                                            />
-                                        ) : (
-                                            <MuseumItemImage
-                                                groupCategory={craftModalCategory!}
-                                                itemId={craftModalItem}
-                                                detailsIndex={detailsIndex}
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                        )}
-                                        <span className="flex flex-col">
-                                            <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")} {" "}
-                                                {detailsIndex[craftModalItem]?.apiName ? (
-                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
-                                                ) : (
-                                                    <ItemTranslation
-                                                        mbxId={craftModalItem}
-                                                        category={
-                                                            craftModalCategory
-                                                        }
-                                                        type="name"
-                                                    />
-                                                )}
-                                            </div>
-                                            <p className="text-sm opacity-60">
-                                                {t(
-                                                    "common:infos.recipeNotFound"
-                                                )}
-                                            </p>
-                                        </span>
-                                        {/* <a
-                                            className="ml-auto"
-                                            href={`https://minebox.co/universe/items?id=${craftModalItem}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <span className="close flex items-center justify-center text-xl font-semibold cursor-pointer h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600">
-                                                ?
-                                            </span>
-                                        </a> */}
-                                        <span className="ml-auto">
-                                            {moreInformation()}
-                                        </span>
-                                        <span
-                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                            onClick={() =>
-                                                setCraftModalItem(null)
-                                            }
-                                        >
-                                            <X
-                                                strokeWidth={3}
-                                                className="h-5 w-5"
-                                            />
-                                        </span>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+	    <CraftModal
+		craftModalItem={craftModalItem}
+		craftModalCategory={craftModalCategory}
+		detailsIndex={detailsIndex}
+		onClose={() => setCraftModalItem(null)}
+		moreInformation={moreInformation}
+		gatherResources={gatherResources}
+		setCategory={setCategory}
+		NO_DECOMPOSE_PREFIXES={NO_DECOMPOSE_PREFIXES}
+	    />
 
             {/* Missing items recap modal */}
-            {showRecapModal && (
-                <div
-                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="recapModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setShowRecapModal(false);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
-                            <ListTodo
-                                strokeWidth={2.4}
-                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
-                            />
-                            <span className="flex flex-col">
-                                <div className="text-2xl font-bold">
-                                    {t("museum.recapMuseum.title")}
-                                </div>
-                                <div className="text-sm font-normal opacity-60">
-                                    {t("museum.recapMuseum.description")}
-                                </div>
-                            </span>
-                            {/* Selection of Items */}
-                            <div className="ml-auto flex items-center">
-                                <button
-                                    id="selectedItems"
-                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => {
-                                        setSelectedItems(!selectedItems);
-                                        toggleSelectAllMissing();
-                                    }}
-                                >
-                                    {selectedItems ? (
-                                        <>
-                                            <SquareAsterisk className="w-5 h-5" />{" "}
-                                            {t(
-                                                "museum.filterRecapItems.selectAll"
-                                            )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Square className="w-5 h-5" />{" "}
-                                            {t(
-                                                "museum.filterRecapItems.unselectAll"
-                                            )}
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                            <span
-                                className="ml-1 close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                onClick={() => setShowRecapModal(false)}
-                            >
-                                <X strokeWidth={3} className="h-5 w-5" />
-                            </span>
-                        </div>
+            <ItemsRecapModal
+		show={showRecapModal}
+		onClose={() => setShowRecapModal(false)}
+		selectedItems={selectedItems}
+		setSelectedItems={setSelectedItems}
+		toggleSelectAllMissing={toggleSelectAllMissing}
+		renderRecapContent={renderRecapContent}
+	    />
 
-                        <div
-                            id="recapContent"
-                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
-                        >
-                            {renderRecapContent()}
-                        </div>
-                    </div>
-                </div>
-            )}
             {/* Resources recap modal */}
-            {showResourcesModal && (
-                <div
-                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="resourcesModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setShowResourcesModal(false);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        {/* HEADER */}
-                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
-                            <List
-                                strokeWidth={2.4}
-                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
-                            />
-                            <span className="flex flex-col">
-                                <div className="text-2xl font-bold">
-                                    {t("museum.resourcesMuseum.title")}
-                                </div>
-                                <div className="text-sm font-normal opacity-60">
-                                    {t("museum.resourcesMuseum.description")}
-                                </div>
-                            </span>
-                            {/* TOGGLES */}
-                            <div className="ml-auto flex items-center">
-                                <button
-                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => setShowCraftSection(!showCraftSection)}
-                                >
-                                    {showCraftSection
-                                    ? <SquareAsterisk className="w-5 h-5"/>
-                                    : <Square className="w-5 h-5"/>}
-                                    {t("museum.craftingResourcesMuseum.title")}
-                                </button>
-
-                                <button
-                                    className="ml-4 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => setShowBasicSection(!showBasicSection)}
-                                >
-                                    {showBasicSection
-                                    ? <SquareAsterisk className="w-5 h-5"/>
-                                    : <Square className="w-5 h-5"/>}
-                                    {t("museum.basicResourcesMuseum.title")}
-                                </button>
-                            </div>
-                            {/* CSV copy button */}
-                            <button
-                                className="ml-1 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                onClick={() => {
-                                    handleCopyCSV()
-                                }}
-                            >
-                                <ClipboardCopy className="w-5 h-5" />{" "}
-                                {t("museum.copyCSV.button")}
-                            </button>
-                            <span
-                                className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                onClick={() => setShowResourcesModal(false)}
-                            >
-                                <X strokeWidth={3} className="w-5 h-5" />
-                            </span>
-                        </div>
-
-                        {/* CONTENT */}
-                        <div 
-                            id="resourcesContent"
-                            className="flex-1 overflow-y-auto p-4 custom-scrollbar"
-                        >
-                            {showCraftSection && (
-                            <>
-                                <div className="text-lg font-semibold mb-2">
-                                    {t("museum.craftingResourcesMuseum.title")}
-                                </div>
-                                {renderCraftsOnlyContent()}
-                            </>
-                            )}
-                            {showBasicSection && (
-                            <>
-                                <div className="text-lg font-semibold mt-4 mb-2">
-                                    {t("museum.resourcesMuseum.title")}
-                                </div>
-                                {renderBasicResourcesContent()}
-                            </>
-                            )}
-                            {!showCraftSection && !showBasicSection && (
-                                <div className="text-center opacity-50">
-                                    {t("museum.resourcesMuseum.noSectionSelected")}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ResourceRecapModal
+  	    	show={showResourcesModal}
+  		onClose={() => setShowResourcesModal(false)}
+  		showCraftSection={showCraftSection}
+  		setShowCraftSection={setShowCraftSection}
+  		showBasicSection={showBasicSection}
+  		setShowBasicSection={setShowBasicSection}
+  		handleCopyCSV={handleCopyCSV}
+  		renderCraftsOnlyContent={renderCraftsOnlyContent}
+  	    	renderBasicResourcesContent={renderBasicResourcesContent}
+	    />
         </div>
     );
 };
