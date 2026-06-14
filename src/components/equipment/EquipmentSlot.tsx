@@ -42,6 +42,19 @@ const iconMap: Record<string, string> = {
     LUCK: "/assets/media/elemental/luck.png",
     FORTUNE: "/assets/media/elemental/fortune.png",
     DEFENSE: "/assets/media/elemental/defense.png",
+    // New Stats
+    ATTACK_SPEED: "/assets/media/elemental/attack_speed.png",
+    CHARISMA: "/assets/media/elemental/charisma.png",
+    DEXTERITY: "/assets/media/elemental/dexterity.png",
+    ENDURANCE: "/assets/media/elemental/endurance.png",
+    ENERGY: "/assets/media/elemental/energy.png",
+    MOVEMENT_SPEED: "/assets/media/elemental/movement_speed.png",
+    FARMING_FORTUNE: "/assets/media/elemental/farming_fortune.png",
+    FISHING_FORTUNE: "/assets/media/elemental/fishing_fortune.png",
+    GATHERING_FORTUNE: "/assets/media/elemental/gathering_fortune.png",
+    LOOTING_FORTUNE: "/assets/media/elemental/looting_fortune.png",
+    MINING_FORTUNE: "/assets/media/elemental/mining_fortune.png",
+    WOODCUTTING_FORTUNE: "/assets/media/elemental/woodcutting_fortune.png",
 };
 
 type TooltipPos = { left: number; top: number; place: "bottom" | "top" };

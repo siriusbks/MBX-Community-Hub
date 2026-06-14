@@ -14,7 +14,7 @@ import ChristmasPage from "@pages/Christmas2025";
 import ComingSoon from "@pages/ComingSoon";
 import ClassesAndSpellsPage from "@pages/ClassesAndSpells";
 
-// const EquipPage = lazy(() => import("@pages/EquipPage"));
+const EquipPage = lazy(() => import("@pages/EquipPage"));
 const ProfilePage = lazy(() => import("@pages/ProfilePage"));
 const InfoMapPage = lazy(() => import("@pages/InfoMapPage"));
 const MapPage = lazy(() => import("@pages/MapPage"));
@@ -42,8 +42,8 @@ export const AppRoutes: FC = () => {
 
                 {/* Tools */}
                 <Route path="/profile" element={<ProfilePage />} />
-                {/*<Route path="/equipment" element={<EquipPage />} />*/}
-                <Route path="/equipment" element={<ComingSoon />} />
+                <Route path="/equipment" element={<EquipPage />} />
+                {/* <Route path="/equipment" element={<ComingSoon />} /> */}
                 <Route path="/museum" element={<MuseumPage />} />
 
                 {/* Community */}
