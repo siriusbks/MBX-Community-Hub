@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { FC, useEffect, useState } from "react";
@@ -11,26 +13,17 @@ import {
     EyeOff,
     ArrowUpFromLine,
     AlertTriangle,
-    Plus,
-    Minus,
     List,
     ListTodo,
-    X,
-    ClipboardCopy,
-    Square,
-    SquareAsterisk,
 } from "lucide-react";
-import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
-import MuseumItemImage from "./MuseumItemImage";
 import ResourcesRecapModal from "./ResourcesRecapModal";
 import ItemsRecapModal from "./ItemsRecapModal";
 import CraftModal from "./CraftModal";
-import RecipeTree from "./RecipeTree";
-import CraftsOnlyContent from "./CraftsOnlyContent";
-import ItemTranslation from "../ItemTranslation";
-import { copyResourcesCsvToClipboard } from "@utils/resourcesCsv";
 import i18next from "i18next";
+import { MuseumItemList } from "./MuseumItemList";
+import MissingItemsRecapContent from "./MissingItemsRecapContent";
+import BasicResourcesContent from "./BasicResourcesContent";
 
 
 // Definition of interfaces
@@ -90,24 +83,6 @@ export const MuseumApp: FC = () => {
     );
     const [itemUsedLoading, setItemUsedLoading] = useState(false);
     const [itemUsedError, setItemUsedError] = useState<string | null>(null);
-
-    const NO_DECOMPOSE_PREFIXES = [
-        "transformed_",
-        "bag_",
-        "crate_",
-        "barrel_",
-        "enchanted_b",
-        "enchanted_c",
-        "enchanted_k",
-        "enchanted_m",
-        "enchanted_n",
-        "enchanted_p",
-        "enchanted_s",
-        "enchanted_w",
-    ];
-
-    // FIX: items-unobtainable.json loading 1.5K times :)
-    const [unobtainable] = useState<string[]>([]);
 
     const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
         {}
@@ -258,10 +233,10 @@ export const MuseumApp: FC = () => {
                         const src = mineboxItems[id];
                         if (src) {
                             // name: prefer english when available
-(details[id] as any).name =
-    src.name?.[i18next.language] ??
-    src.name?.en ??
-    (details[id] as any).name;
+                            (details[id] as any).name =
+                                src.name?.[i18next.language] ??
+                                src.name?.en ??
+                                (details[id] as any).name;
                             // image: store raw base64 (rendering code will prefix)
                             if (src.image) (details[id] as any).image = src.image;
                             // rarity
@@ -386,427 +361,6 @@ export const MuseumApp: FC = () => {
             return category;
         }
         return "";
-    };
-
-    // Rarity order mapping (higher number = rarer)
-    const rarityOrder: Record<string, number> = {
-        prototype: 1,
-        contraband: 1,
-        trash: 0,
-        common: -1,
-        uncommon: -2,
-        rare: -3,
-        epic: -4,
-        legendary: -5,
-        mythic: -6,
-    };
-
-    const sortIdsByRarityThenName = (ids: string[] = []) => {
-        if (!detailsIndex) return [...ids];
-        return [...ids].sort((a, b) => {
-            const ra = (detailsIndex[a]?.rarity || missingRarity[a] || "").toString().toLowerCase();
-            const rb = (detailsIndex[b]?.rarity || missingRarity[b] || "").toString().toLowerCase();
-            const oa = rarityOrder[ra] ?? -999;
-            const ob = rarityOrder[rb] ?? -999;
-            // rarer items first
-            if (oa !== ob) return ob - oa;
-            // fallback to localized name then id
-            const na = (detailsIndex[a]?.name && typeof detailsIndex[a].name === "string")
-                ? detailsIndex[a].name
-                : (detailsIndex[a]?.name?.[i18next.language] || detailsIndex[a]?.name?.en || a);
-            const nb = (detailsIndex[b]?.name && typeof detailsIndex[b].name === "string")
-                ? detailsIndex[b].name
-                : (detailsIndex[b]?.name?.[i18next.language] || detailsIndex[b]?.name?.en || b);
-            return na.localeCompare(nb, i18next.language || "en", { sensitivity: "base" });
-        });
-    };
-
-    // Recursive function to aggregate the required resources from a given recipe
-    const gatherResources = (
-        recipe: any,
-        detailsIndex: Details
-    ): { [key: string]: number } => {
-        const resources: { [key: string]: number } = {};
-        recipe.ingredients.forEach((ing: any) => {
-            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
-            if (
-                detailsIndex[ing.id]?.recipe &&
-                !isNoDecomp
-            ) {
-                const subResources = gatherResources(
-                    detailsIndex[ing.id].recipe,
-                    detailsIndex
-                );
-                for (const resId in subResources) {
-                    resources[resId] =
-                        (resources[resId] || 0) +
-                        subResources[resId] * ing.amount;
-                }
-            } else {
-                resources[ing.id] = (resources[ing.id] || 0) + ing.amount;
-            }
-        });
-        return resources;
-    };
-
-    // Function that is executed when clicking on an unowned item to open the craft modal
-    const openCraftModal = (itemId: string, category: string) => {
-        setCraftModalItem(itemId);
-        setCraftModalCategory(category);
-    };
-
-    // Function that returns the content of link of the wiki
-    const moreInformation = () => {
-        if (!craftModalItem || !craftModalCategory) return null;
-        const url = `${
-            window.location.origin
-        }/itemsNrecipes?category=${encodeURIComponent(
-            craftModalCategory
-        ).toUpperCase()}&item=${encodeURIComponent(craftModalItem)}`;
-        return (
-            <a
-                key={craftModalItem}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
-            >
-                ?
-            </a>
-        );
-    };
-
-    // Function that returns the content of the missing items recap
-    const renderRecapContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-            return <p>{t("museum.noDataLoaded")}</p>;
-        }
-
-        return (
-            <div>
-                <div className="mb-4 flex items-center"></div>
-                {groupedItems.map((group, index) => {
-                    const missingItems = group.items.filter(
-                        (item) => !museumItems.includes(item)
-                    );
-                    if (missingItems.length === 0) return null;
-
-                    return (
-                        <div key={index} className="mb-4">
-                            <div className="text-2xl font-bold">
-                                {/* {t(`museum.category.${group.category}`)} */}
-                                <ItemTranslation
-                                    mbxId="null"
-                                    category={group.category}
-                                    type="name"
-                                />
-                            </div>
-
-                            <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-                                {(() => {
-                                    const sortedMissing = sortIdsByRarityThenName(missingItems);
-                                    return sortedMissing.map((itemId) => {
-                                    return (
-                                        <li
-                                            key={itemId}
-                                            className="flex items-center bg-gray-700 p-2 rounded-lg"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                checked={
-                                                    !!missingSelection[itemId]
-                                                }
-                                                onChange={() =>
-                                                    toggleMissingSelection(
-                                                        itemId
-                                                    )
-                                                }
-                                                className="mr-2"
-                                            />
-                                            <MuseumItemImage
-                                                groupCategory={group.category}
-                                                itemId={itemId}
-                                                detailsIndex={detailsIndex}
-                                                className="w-8 h-8 mr-2"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                            <span className="text-sm font-semibold">
-                                                <ItemTranslation
-                                                    mbxId={itemId}
-                                                    category={group.category}
-                                                    type="name"
-                                                />
-                                            </span>
-                                        </li>
-                                    );
-                                    });
-                                })()}
-                            </ul>
-                        </div>
-                    );
-                })}
-            </div>
-        );
-    };
-
-    // Function that returns the content of the missing resources
-    const renderBasicResourcesContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-            return <p>{t("museum.noDataLoaded")}</p>;
-        }
-        const totalResources: { [key: string]: number } = {};
-        groupedItems.forEach((group) => {
-            // On ne considère que les items manquants sélectionnés
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item) && missingSelection[item]
-            );
-            missingItems.forEach((itemId) => {
-                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                    const itemResources = gatherResources(
-                        detailsIndex[itemId].recipe,
-                        detailsIndex
-                    );
-                    for (const resId in itemResources) {
-                        totalResources[resId] =
-                            (totalResources[resId] || 0) + itemResources[resId];
-                    }
-                }
-            });
-        });
-        const sortedResourceIds = Object.keys(totalResources).sort();
-        if (sortedResourceIds.length === 0) {
-            return <p>{t("museum.noResourceRquired")}</p>;
-        }
-        return (
-            <span>
-                <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                    {sortedResourceIds.map((resId) => {
-                        return (
-                            <li
-                                key={resId}
-                                className="block bg-gray-700 p-2 rounded-lg"
-                            >
-                                <div className="flex items-center">
-                                    <MuseumItemImage
-                                        groupCategory={setCategory(resId)}
-                                        itemId={resId}
-                                        detailsIndex={detailsIndex}
-                                        className="w-8 h-8 mr-2 rounded"
-                                        style={{ imageRendering: "pixelated" }}
-                                    />
-                                    <span className="font-bold text-sm">
-                                        <ItemTranslation
-                                            mbxId={resId}
-                                            category={setCategory(resId)}
-                                            type="name"
-                                        />
-                                    </span>
-                                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                                        {totalResources[resId].toLocaleString(
-                                            "fr-FR"
-                                        )}
-                                    </span>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </span>
-            </span>
-        );
-    };
-
-    const gatherCraftsOnly = (
-        recipe: any,
-        detailsIndex: Details,
-        multiplier = 1,
-        acc: Record<string, number> = {},
-        visiting: Set<string> = new Set() // anti-boucle (sécurité)
-    ): Record<string, number> => {
-        if (!recipe?.ingredients) return acc;
-    
-        for (const ing of recipe.ingredients) {
-            const ingRecipe = detailsIndex[ing.id]?.recipe;
-            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
-        
-            // Pas de recette => ressource de base => ignorée
-            if (!ingRecipe || isNoDecomp) continue;
-        
-            // Craft "valide"
-            const qty = (ing.amount ?? 0) * multiplier;
-            acc[ing.id] = (acc[ing.id] || 0) + qty;
-        
-            // Descendre récursivement dans ses sous-crafts (si boucle, on stoppe)
-            if (
-                !isNoDecomp &&
-                !visiting.has(ing.id)
-            ) {
-                visiting.add(ing.id);
-                gatherCraftsOnly(ingRecipe, detailsIndex, qty, acc, visiting);
-                visiting.delete(ing.id);
-            }
-        }
-        return acc;
-    };
-    
-    renderCraftsOnlyContent={() => (
-  	<CraftsOnlyContent
-	    groupedItems={groupedItems}
-	    detailsIndex={detailsIndex as any}
-	    museumItems={museumItems}
-    	    missingSelection={missingSelection}
-	    gatherCraftsOnly={gatherCraftsOnly as any}
-	    setCategory={setCategory}
-	/>
-    )}
-
-    // Function to copy resource recap as CSV to clipboard
-    const handleCopyCSV = async () => {
-  	if (!groupedItems || !detailsIndex || !museumItems) return;
-
-	if (!showBasicSection && !showCraftSection) {
-    		alert(t("museum.copyCSV.alert.noSectionSelected"));
-    		return;
-  	}
-
-	try {
-    	    await copyResourcesCsvToClipboard({
-      		groupedItems,
-      		detailsIndex,
-      		museumItems,
-      		missingSelection,
-      		showBasicSection,
-      		showCraftSection,
-      		gatherCraftsOnly,
-      		gatherResources,
-      		setCategory,
-    	    });
-
-  	    alert(t("museum.copyCSV.alert.copied"));
-	} catch (err) {
-    	    console.error("Copy CSV failed:", err);
-  	}
-    };
-
-
-    // Function that returns the display of the items grid and the category navigation bar
-    const renderItems = () => {
-        const [expandedGroups, setExpandedGroups] = useState<
-            Record<string, boolean>
-        >({});
-
-        const toggleGroup = (category: string) => {
-            setExpandedGroups((prev) => ({
-                ...prev,
-                [category]: !prev[category],
-            }));
-        };
-
-        useEffect(() => {
-            if (groupedItems) {
-                const allExpanded: Record<string, boolean> = {};
-                groupedItems.forEach((group) => {
-                    allExpanded[group.category] = true;
-                });
-                setExpandedGroups(allExpanded);
-            }
-        }, [groupedItems]);
-
-        if (!groupedItems || !detailsIndex) return null;
-
-        
-
-        return groupedItems.map((group, index) => {
-            const ownedCount = group.items.filter((item) =>
-                museumItems.includes(item)
-            ).length;
-            const categoryId =
-                "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
-            const isExpanded = expandedGroups[group.category];
-
-            return (
-                <div key={index} className="category w-full" id={categoryId}>
-                    <div
-                        className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
-                        onClick={() => toggleGroup(group.category)}
-                    >
-                                            <img
-                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
-                                                alt={group.category}
-                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                        <span className="flex items-center">
-                            {isExpanded ? (
-                                <Minus className="p-0.5 opacity-70" />
-                            ) : (
-                                <Plus className="p-0.5 opacity-70" />
-                            )}
-                            {/* {t(`museum.category.${group.category}`)} */}
-                            {/*
-                            <ItemTranslation
-                                mbxId="null"
-                                category={group.category}
-                                type="name"
-                            />*/}
-                            {t(`museum.category.${group.category.toUpperCase()}`)}
-                        </span>
-                        <p className=" opacity-40 text-sm">
-                            [{ownedCount} / {group.items.length}]
-                        </p>
-                    </div>
-
-                    <div
-                        className={`groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between overflow-hidden ${
-                            isExpanded ? "opacity-100" : "max-h-0 opacity-0"
-                        }`}
-                    >
-                        {(() => {
-                            const sortedItems = sortIdsByRarityThenName(group.items);
-                            return sortedItems.map((itemId) => {
-                            const isOwned = museumItems.includes(itemId);
-                            const imageSrc =
-                                detailsIndex[itemId] &&
-                                detailsIndex[itemId].image
-                                    ? "data:image/png;base64," +
-                                      detailsIndex[itemId].image
-                                    : `assets/media/museum/${group.category}/${itemId}.png`;
-                            const rarity =
-                                detailsIndex[itemId] &&
-                                detailsIndex[itemId].rarity
-                                    ? detailsIndex[itemId].rarity
-                                    : "UNKNOWN";
-                            if (showDonated || !isOwned) {
-                                return (
-                                    <MuseumItemCard
-                                        key={itemId}
-                                        itemId={itemId}
-                                        imageSrc={imageSrc} // we can use MuseumItemImage but I think, we will have to rewrite the code
-                                        isOwned={isOwned}
-                                        rarity={rarity}
-                                        label={detailsIndex[itemId]?.name}
-                                        category={group.category}
-                                        unobtainable={unobtainable}
-                                        missingRarity={missingRarity}
-                                        craftModalOpener={() =>
-                                            openCraftModal(
-                                                itemId,
-                                                group.category
-                                            )
-                                        }
-                                    />
-                                );
-                            }
-                            return null;
-                            });
-                        })()}
-                    </div>
-                </div>
-            );
-        });
     };
 
     // useEffect hook to handle the "Back to Top" button using a scroll listener
@@ -988,8 +542,8 @@ export const MuseumApp: FC = () => {
                 <ul className="grid grid-cols-2 xl:grid-cols-7 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
                         groupedItems
-        .filter((group) => group.category !== "spell")
-        .map((group, i) => {
+                        .filter((group) => group.category !== "spell")
+                        .map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
                                 museumItems.includes(item)
                             ).length;
@@ -1090,7 +644,14 @@ export const MuseumApp: FC = () => {
                 id="itemsContainer"
                 className="flex flex-wrap gap-4 justify-start p-4"
             >
-                {renderItems()}
+                <MuseumItemList
+                    groupedItems={groupedItems}
+                    detailsIndex={detailsIndex}
+                    museumItems={museumItems}
+                    showDonated={showDonated}
+                    setCraftModalItem={setCraftModalItem}
+                    setCraftModalCategory={setCraftModalCategory}
+                />
             </div>
 
             {/* "Back to Top" button */}
@@ -1102,40 +663,60 @@ export const MuseumApp: FC = () => {
                 <span>{t("museum.backToTop.button")}</span>
             </button>
 
-            {/* Craft modal */}
-	    <CraftModal
-		craftModalItem={craftModalItem}
-		craftModalCategory={craftModalCategory}
-		detailsIndex={detailsIndex}
-		onClose={() => setCraftModalItem(null)}
-		moreInformation={moreInformation}
-		gatherResources={gatherResources}
-		setCategory={setCategory}
-		NO_DECOMPOSE_PREFIXES={NO_DECOMPOSE_PREFIXES}
-	    />
+            {/* Craft modal with RecipeTree/RecipeNode */}
+            <CraftModal
+                craftModalItem={craftModalItem}
+                craftModalCategory={craftModalCategory}
+                detailsIndex={detailsIndex}
+                onClose={() => setCraftModalItem(null)}
+                setCategory={setCategory}
+            />
 
-            {/* Missing items recap modal */}
+            {/* Missing items recap modal with MissingItemsRecapContent */}
             <ItemsRecapModal
-		show={showRecapModal}
-		onClose={() => setShowRecapModal(false)}
-		selectedItems={selectedItems}
-		setSelectedItems={setSelectedItems}
-		toggleSelectAllMissing={toggleSelectAllMissing}
-		renderRecapContent={renderRecapContent}
-	    />
+                show={showRecapModal}
+                onClose={() => setShowRecapModal(false)}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+                toggleSelectAllMissing={toggleSelectAllMissing}
+                renderRecapContent={() =>(
+                    <MissingItemsRecapContent
+                        groupedItems={groupedItems}
+                        detailsIndex={detailsIndex}
+                        museumItems={museumItems}
+                        missingSelection={missingSelection}
+                        toggleMissingSelection={toggleMissingSelection}
+                        missingRarity={missingRarity}
+                    />
+                )}
+            />
 
-            {/* Resources recap modal */}
-            <ResourceRecapModal
-  	    	show={showResourcesModal}
-  		onClose={() => setShowResourcesModal(false)}
-  		showCraftSection={showCraftSection}
-  		setShowCraftSection={setShowCraftSection}
-  		showBasicSection={showBasicSection}
-  		setShowBasicSection={setShowBasicSection}
-  		handleCopyCSV={handleCopyCSV}
-  		renderCraftsOnlyContent={renderCraftsOnlyContent}
-  	    	renderBasicResourcesContent={renderBasicResourcesContent}
-	    />
+            {/* Resources recap modal with CraftsOnlyContent && BasicResourcesContent */}
+            <ResourcesRecapModal
+                show={showResourcesModal}
+                onClose={() => setShowResourcesModal(false)}
+
+                showCraftSection={showCraftSection}
+                setShowCraftSection={setShowCraftSection}
+                showBasicSection={showBasicSection}
+                setShowBasicSection={setShowBasicSection}
+                setCategory={setCategory}
+                renderBasicResourcesContent={() => (
+                    <BasicResourcesContent
+                        groupedItems={groupedItems}
+                        detailsIndex={detailsIndex}
+                        museumItems={museumItems}
+                        missingSelection={missingSelection}
+                        setCategory={setCategory}
+                    />
+                )}
+
+                // handleCopyCSV
+                groupedItems={groupedItems}
+                detailsIndex={detailsIndex}
+                museumItems={museumItems}
+                missingSelection={missingSelection}
+	        />
         </div>
     );
 };

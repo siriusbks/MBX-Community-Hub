@@ -1,51 +1,51 @@
-// src/components/museum/RecipeTree.tsx
-import React, { FC } from "react";
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
+import React from "react";
 import RecipeNode from "./RecipeNode";
 
 type RecipeTreeProps = {
-  recipe: any;
-  detailsIndex: any;
+    recipe: any;
+    detailsIndex: any;
 
-  gatherResources: (recipe: any, detailsIndex: any) => Record<string, number>;
-  setCategory: (id: string) => string;
-  NO_DECOMPOSE_PREFIXES: string[];
+    setCategory: (id: string) => string;
 };
 
-export const RecipeTree: FC<RecipeTreeProps> = ({
-  recipe,
-  detailsIndex,
-  gatherResources,
-  setCategory,
-  NO_DECOMPOSE_PREFIXES,
+/*
+ * RecipeTree recursive
+*/
+export const RecipeTree: React.FC<RecipeTreeProps> = ({
+    recipe,
+    detailsIndex,
+    setCategory,
 }) => {
-  if (!recipe || !recipe.ingredients) return <></>;
+    if (!recipe || !recipe.ingredients) return <></>;
 
-  // On se passe nous-mêmes à RecipeNode via une closure de composant
-  const RecipeTreeSelf: FC<{ recipe: any; detailsIndex: any }> = (props) => (
-    <RecipeTree
-      recipe={props.recipe}
-      detailsIndex={props.detailsIndex}
-      gatherResources={gatherResources}
-      setCategory={setCategory}
-      NO_DECOMPOSE_PREFIXES={NO_DECOMPOSE_PREFIXES}
-    />
-  );
-
-  return (
-    <ul>
-      {recipe.ingredients.map((ing: any, i: number) => (
-        <RecipeNode
-          key={i}
-          ing={ing}
-          detailsIndex={detailsIndex}
-          gatherResources={gatherResources}
-          setCategory={setCategory}
-          NO_DECOMPOSE_PREFIXES={NO_DECOMPOSE_PREFIXES}
-          RecipeTree={RecipeTreeSelf}
+    // We pass ourselves to RecipeNode using a component closure
+    const RecipeTreeSelf: React.FC<{ recipe: any; detailsIndex: any }> = (props) => (
+        <RecipeTree
+            recipe={props.recipe}
+            detailsIndex={props.detailsIndex}
+            setCategory={setCategory}
         />
-      ))}
-    </ul>
-  );
+    );
+
+    return (
+        <ul>
+            {recipe.ingredients.map((ing: any, i: number) => (
+                <RecipeNode
+                    key={i}
+                    ing={ing}
+                    detailsIndex={detailsIndex}
+                    setCategory={setCategory}
+                    RecipeTree={RecipeTreeSelf}
+                />
+            ))}
+        </ul>
+    );
 };
 
 export default RecipeTree;

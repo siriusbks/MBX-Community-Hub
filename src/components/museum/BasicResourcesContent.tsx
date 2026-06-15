@@ -8,12 +8,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import MuseumItemImage from "./MuseumItemImage";
 import ItemTranslation from "../ItemTranslation";
-import { gatherCraftsOnly } from "@utils/gatherCraftsOnly";
+import { gatherResources } from "@utils/gatherResources";
 
-type Group = { 
-    category: string; 
-    items: string[] 
-};
+interface Group {
+    category: string;
+    items: string[];
+}
 
 interface Details {
     [key: string]: {
@@ -25,17 +25,15 @@ interface Details {
     };
 }
 
-type CraftsOnlyContentProps = {
+type BasicResourcesContentProps = {
     groupedItems: Group[] | null;
     detailsIndex: Details | null;
     museumItems: string[];
-
     missingSelection: Record<string, boolean>;
-
-    setCategory: (id: string) => string;
+    setCategory: (itemId: string) => string;
 };
 
-export const CraftsOnlyContent: React.FC<CraftsOnlyContentProps> = ({
+export const BasicResourcesContent: React.FC<BasicResourcesContentProps> = ({
     groupedItems,
     detailsIndex,
     museumItems,
@@ -48,62 +46,70 @@ export const CraftsOnlyContent: React.FC<CraftsOnlyContentProps> = ({
         return <p>{t("museum.noDataLoaded")}</p>;
     }
 
-    const totalCrafts: Record<string, number> = {};
+    const totalResources: Record<string, number> = {};
 
     groupedItems.forEach((group) => {
         const missingItems = group.items.filter(
-            (itemId) => !museumItems.includes(itemId) && missingSelection[itemId],
+            (item) => !museumItems.includes(item) && missingSelection[item]
         );
 
         missingItems.forEach((itemId) => {
-            const recipe = detailsIndex[itemId]?.recipe;
-            if (!recipe) return;
+            if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
+                const itemResources = gatherResources(
+                    detailsIndex[itemId].recipe,
+                    detailsIndex
+                );
 
-            const crafts = gatherCraftsOnly(recipe, detailsIndex);
-            for (const craftId in crafts) {
-                totalCrafts[craftId] = (totalCrafts[craftId] || 0) + crafts[craftId];
+                for (const resId in itemResources) {
+                    totalResources[resId] =
+                        (totalResources[resId] || 0) + itemResources[resId];
+                }
             }
         });
     });
 
-    const sortedCraftIds = Object.keys(totalCrafts).sort((a, b) =>
-        a.localeCompare(b, "en", { sensitivity: "base" }),
-    );
+    const sortedResourceIds = Object.keys(totalResources).sort();
 
-    if (sortedCraftIds.length === 0) {
+    if (sortedResourceIds.length === 0) {
         return <p>{t("museum.noResourceRquired")}</p>;
     }
 
     return (
-        <span>
-            <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                {sortedCraftIds.map((craftId) => (
-                    <li key={craftId} className="block bg-gray-700 p-2 rounded-lg">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            {sortedResourceIds.map((resId) => {
+                const category = setCategory(resId);
+
+                return (
+                    <li
+                        key={resId}
+                        className="block bg-gray-700 p-2 rounded-lg"
+                    >
                         <div className="flex items-center">
                             <MuseumItemImage
-                                groupCategory={setCategory(craftId)}
-                                itemId={craftId}
-                                detailsIndex={detailsIndex as any}
+                                groupCategory={category}
+                                itemId={resId}
+                                detailsIndex={detailsIndex}
                                 className="w-8 h-8 mr-2 rounded"
                                 style={{ imageRendering: "pixelated" }}
                             />
+
                             <span className="font-bold text-sm">
                                 <ItemTranslation
-                                    mbxId={craftId}
-                                    category={setCategory(craftId)}
+                                    mbxId={resId}
+                                    category={category}
                                     type="name"
                                 />
                             </span>
 
                             <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                                {totalCrafts[craftId].toLocaleString("fr-FR")}
+                                {totalResources[resId].toLocaleString("fr-FR")}
                             </span>
                         </div>
                     </li>
-                ))}
-            </span>
-        </span>
+                );
+            })}
+        </ul>
     );
 };
 
-export default CraftsOnlyContent;
+export default BasicResourcesContent;
