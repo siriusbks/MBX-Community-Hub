@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { FC, useEffect, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import {
     User,
@@ -12,20 +13,18 @@ import {
     EyeOff,
     ArrowUpFromLine,
     AlertTriangle,
-    Plus,
-    Minus,
     List,
     ListTodo,
-    X,
-    ClipboardCopy,
-    Square,
-    SquareAsterisk,
 } from "lucide-react";
-import MuseumItemCard from "./MuseumItemCard";
 import { useProfileStore } from "@store/profileStore";
-import MuseumItemImage from "./MuseumItemImage";
-import ItemTranslation from "../ItemTranslation";
+import ResourcesRecapModal from "./ResourcesRecapModal";
+import ItemsRecapModal from "./ItemsRecapModal";
+import CraftModal from "./CraftModal";
 import i18next from "i18next";
+import { MuseumItemList } from "./MuseumItemList";
+import MissingItemsRecapContent from "./MissingItemsRecapContent";
+import BasicResourcesContent from "./BasicResourcesContent";
+
 
 // Definition of interfaces
 interface Group {
@@ -84,24 +83,6 @@ export const MuseumApp: FC = () => {
     );
     const [itemUsedLoading, setItemUsedLoading] = useState(false);
     const [itemUsedError, setItemUsedError] = useState<string | null>(null);
-
-    const NO_DECOMPOSE_PREFIXES = [
-        "transformed_",
-        "bag_",
-        "crate_",
-        "barrel_",
-        "enchanted_b",
-        "enchanted_c",
-        "enchanted_k",
-        "enchanted_m",
-        "enchanted_n",
-        "enchanted_p",
-        "enchanted_s",
-        "enchanted_w",
-    ];
-
-    // FIX: items-unobtainable.json loading 1.5K times :)
-    const [unobtainable] = useState<string[]>([]);
 
     const [missingRarity, setMissingRarity] = useState<Record<string, string>>(
         {}
@@ -252,10 +233,10 @@ export const MuseumApp: FC = () => {
                         const src = mineboxItems[id];
                         if (src) {
                             // name: prefer english when available
-(details[id] as any).name =
-    src.name?.[i18next.language] ??
-    src.name?.en ??
-    (details[id] as any).name;
+                            (details[id] as any).name =
+                                src.name?.[i18next.language] ??
+                                src.name?.en ??
+                                (details[id] as any).name;
                             // image: store raw base64 (rendering code will prefix)
                             if (src.image) (details[id] as any).image = src.image;
                             // rarity
@@ -380,677 +361,6 @@ export const MuseumApp: FC = () => {
             return category;
         }
         return "";
-    };
-
-    // Rarity order mapping (higher number = rarer)
-    const rarityOrder: Record<string, number> = {
-        prototype: 1,
-        contraband: 1,
-        trash: 0,
-        common: -1,
-        uncommon: -2,
-        rare: -3,
-        epic: -4,
-        legendary: -5,
-        mythic: -6,
-    };
-
-    const sortIdsByRarityThenName = (ids: string[] = []) => {
-        if (!detailsIndex) return [...ids];
-        return [...ids].sort((a, b) => {
-            const ra = (detailsIndex[a]?.rarity || missingRarity[a] || "").toString().toLowerCase();
-            const rb = (detailsIndex[b]?.rarity || missingRarity[b] || "").toString().toLowerCase();
-            const oa = rarityOrder[ra] ?? -999;
-            const ob = rarityOrder[rb] ?? -999;
-            // rarer items first
-            if (oa !== ob) return ob - oa;
-            // fallback to localized name then id
-            const na = (detailsIndex[a]?.name && typeof detailsIndex[a].name === "string")
-                ? detailsIndex[a].name
-                : (detailsIndex[a]?.name?.[i18next.language] || detailsIndex[a]?.name?.en || a);
-            const nb = (detailsIndex[b]?.name && typeof detailsIndex[b].name === "string")
-                ? detailsIndex[b].name
-                : (detailsIndex[b]?.name?.[i18next.language] || detailsIndex[b]?.name?.en || b);
-            return na.localeCompare(nb, i18next.language || "en", { sensitivity: "base" });
-        });
-    };
-
-    // Recursive function to aggregate the required resources from a given recipe
-    const gatherResources = (
-        recipe: any,
-        detailsIndex: Details
-    ): { [key: string]: number } => {
-        const resources: { [key: string]: number } = {};
-        recipe.ingredients.forEach((ing: any) => {
-            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
-            if (
-                detailsIndex[ing.id]?.recipe &&
-                !isNoDecomp
-            ) {
-                const subResources = gatherResources(
-                    detailsIndex[ing.id].recipe,
-                    detailsIndex
-                );
-                for (const resId in subResources) {
-                    resources[resId] =
-                        (resources[resId] || 0) +
-                        subResources[resId] * ing.amount;
-                }
-            } else {
-                resources[ing.id] = (resources[ing.id] || 0) + ing.amount;
-            }
-        });
-        return resources;
-    };
-
-    // Small component that renders the full recipe tree. We split nodes into
-    // a separate component so each node can use hooks safely (one hook call per
-    // component instance) and to avoid calling hooks inside loops.
-    const RecipeTree: FC<{ recipe: any; detailsIndex: any }> = ({
-        recipe,
-        detailsIndex,
-    }) => {
-        if (!recipe || !recipe.ingredients) return <></>;
-        return (
-            <ul>
-                {recipe.ingredients.map((ing: any, i: number) => (
-                    <RecipeNode key={i} ing={ing} detailsIndex={detailsIndex} />
-                ))}
-            </ul>
-        );
-    };
-
-    const RecipeNode: FC<{ ing: any; detailsIndex: any }> = ({
-        ing,
-        detailsIndex,
-    }) => {
-        const [isExpanded, setIsExpanded] = useState(false);
-
-        const hasSubRecipe =
-            detailsIndex &&
-            detailsIndex[ing.id] &&
-            detailsIndex[ing.id].recipe &&
-            !NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p))
-
-        let summary: JSX.Element | null = null;
-
-        if (
-            detailsIndex &&
-            detailsIndex[ing.id] &&
-            detailsIndex[ing.id].recipe
-        ) {
-            const subResources = gatherResources(
-                detailsIndex[ing.id].recipe,
-                detailsIndex
-            );
-            summary = (
-                <span className="max-w-[80%] ml-auto bg-gray-500 bg-opacity-20 border-2 border-gray-500 border-opacity-30 rounded p-0.5 px-2">
-                    {Object.keys(subResources).map((key, index, arr) => {
-                        const globalAmount = subResources[key] * ing.amount;
-                        return (
-                            <span
-                                key={key}
-                                className="inline-flex items-center mr-1 text-xs align-baseline"
-                            >
-                                <span>
-                                    {globalAmount.toLocaleString("fr-FR")}
-                                </span>
-                                x
-                                <MuseumItemImage
-                                    groupCategory={setCategory(key)}
-                                    itemId={key}
-                                    detailsIndex={detailsIndex}
-                                    className="h-4 w-4 ml-0.5"
-                                    style={{ imageRendering: "pixelated" }}
-                                />
-                                <span className="ml-0.5">
-                                    {index < arr.length - 1 && " "}
-                                </span>
-                            </span>
-                        );
-                    })}
-                </span>
-            );
-        }
-
-        return (
-            <li className="mb-2 bg-gray-500 p-2 rounded-lg bg-opacity-20 border-2 border-gray-500 border-opacity-30">
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                    onClick={() => setIsExpanded(!isExpanded)}
-                >
-                    <div className="flex items-center">
-                        <MuseumItemImage
-                            groupCategory={setCategory(ing.id)}
-                            itemId={ing.id}
-                            detailsIndex={detailsIndex}
-                            style={{
-                                width: "35px",
-                                height: "35px",
-                                marginRight: "5px",
-                                verticalAlign: "middle",
-                                imageRendering: "pixelated",
-                            }}
-                            onClick={() => setIsExpanded(!isExpanded)}
-                        />
-
-                        <span className="font-bold text-sm flex flex-col">
-                            <span
-                                className="flex items-center mr-2 whitespace-nowrap"
-                                onClick={() => setIsExpanded(!isExpanded)}
-                            >
-                                {/* Przycisk zwijania/rozwijania */}
-                                {hasSubRecipe && (
-                                    <button className="mr-0.5 text-xs text-gray-300 hover:text-white focus:outline-none">
-                                        {isExpanded ? (
-                                            <Minus className="h-4 w-4" />
-                                        ) : (
-                                            <Plus className="h-4 w-4" />
-                                        )}
-                                    </button>
-                                )}
-                                {ing.amount}x{" "}
-                                <ItemTranslation
-                                    mbxId={ing.id}
-                                    category={setCategory(ing.id)!}
-                                    type="name"
-                                />
-                            </span>
-                            {
-                                detailsIndex &&
-                                detailsIndex[ing.id] &&
-                                detailsIndex[ing.id].recipe &&
-                                detailsIndex[ing.id].recipe.job && (
-                                    <span className="text-xs font-normal text-green-500">
-                                        <ItemTranslation
-                                            mbxId={detailsIndex[ing.id].recipe.job}
-                                            category={"SKILL"}
-                                            type="name"
-                                        />
-                                    </span>
-                                )
-                            }
-                        </span>
-                    </div>
-                    {summary}
-                </div>
-
-                {/* Renderuj poddrzewo seulement si développé */}
-                {hasSubRecipe && isExpanded && (
-                    <div
-                        style={{
-                            marginLeft: "25px",
-                            paddingLeft: "10px",
-                            marginTop: "5px",
-                        }}
-                    >
-                        <RecipeTree
-                            recipe={detailsIndex[ing.id].recipe}
-                            detailsIndex={detailsIndex}
-                        />
-                    </div>
-                )}
-            </li>
-        );
-    };
-
-    // Function that is executed when clicking on an unowned item to open the craft modal
-    const openCraftModal = (itemId: string, category: string) => {
-        setCraftModalItem(itemId);
-        setCraftModalCategory(category);
-    };
-
-    // Function that returns the content of link of the wiki
-    const moreInformation = () => {
-        if (!craftModalItem || !craftModalCategory) return null;
-        const url = `${
-            window.location.origin
-        }/itemsNrecipes?category=${encodeURIComponent(
-            craftModalCategory
-        ).toUpperCase()}&item=${encodeURIComponent(craftModalItem)}`;
-        return (
-            <a
-                key={craftModalItem}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-400 h-8 w-8 flex items-center justify-center rounded bg-opacity-20"
-            >
-                ?
-            </a>
-        );
-    };
-
-    // Function that returns the content of the missing items recap
-    const renderRecapContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-            return <p>{t("museum.noDataLoaded")}</p>;
-        }
-
-        return (
-            <div>
-                <div className="mb-4 flex items-center"></div>
-                {groupedItems.map((group, index) => {
-                    const missingItems = group.items.filter(
-                        (item) => !museumItems.includes(item)
-                    );
-                    if (missingItems.length === 0) return null;
-
-                    return (
-                        <div key={index} className="mb-4">
-                            <div className="text-2xl font-bold">
-                                {/* {t(`museum.category.${group.category}`)} */}
-                                <ItemTranslation
-                                    mbxId="null"
-                                    category={group.category}
-                                    type="name"
-                                />
-                            </div>
-
-                            <ul className="list-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-                                {(() => {
-                                    const sortedMissing = sortIdsByRarityThenName(missingItems);
-                                    return sortedMissing.map((itemId) => {
-                                    return (
-                                        <li
-                                            key={itemId}
-                                            className="flex items-center bg-gray-700 p-2 rounded-lg"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                checked={
-                                                    !!missingSelection[itemId]
-                                                }
-                                                onChange={() =>
-                                                    toggleMissingSelection(
-                                                        itemId
-                                                    )
-                                                }
-                                                className="mr-2"
-                                            />
-                                            <MuseumItemImage
-                                                groupCategory={group.category}
-                                                itemId={itemId}
-                                                detailsIndex={detailsIndex}
-                                                className="w-8 h-8 mr-2"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                            <span className="text-sm font-semibold">
-                                                <ItemTranslation
-                                                    mbxId={itemId}
-                                                    category={group.category}
-                                                    type="name"
-                                                />
-                                            </span>
-                                        </li>
-                                    );
-                                    });
-                                })()}
-                            </ul>
-                        </div>
-                    );
-                })}
-            </div>
-        );
-    };
-
-    // Function that returns the content of the missing resources
-    const renderBasicResourcesContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-            return <p>{t("museum.noDataLoaded")}</p>;
-        }
-        const totalResources: { [key: string]: number } = {};
-        groupedItems.forEach((group) => {
-            // On ne considère que les items manquants sélectionnés
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item) && missingSelection[item]
-            );
-            missingItems.forEach((itemId) => {
-                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                    const itemResources = gatherResources(
-                        detailsIndex[itemId].recipe,
-                        detailsIndex
-                    );
-                    for (const resId in itemResources) {
-                        totalResources[resId] =
-                            (totalResources[resId] || 0) + itemResources[resId];
-                    }
-                }
-            });
-        });
-        const sortedResourceIds = Object.keys(totalResources).sort();
-        if (sortedResourceIds.length === 0) {
-            return <p>{t("museum.noResourceRquired")}</p>;
-        }
-        return (
-            <span>
-                <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                    {sortedResourceIds.map((resId) => {
-                        return (
-                            <li
-                                key={resId}
-                                className="block bg-gray-700 p-2 rounded-lg"
-                            >
-                                <div className="flex items-center">
-                                    <MuseumItemImage
-                                        groupCategory={setCategory(resId)}
-                                        itemId={resId}
-                                        detailsIndex={detailsIndex}
-                                        className="w-8 h-8 mr-2 rounded"
-                                        style={{ imageRendering: "pixelated" }}
-                                    />
-                                    <span className="font-bold text-sm">
-                                        <ItemTranslation
-                                            mbxId={resId}
-                                            category={setCategory(resId)}
-                                            type="name"
-                                        />
-                                    </span>
-                                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                                        {totalResources[resId].toLocaleString(
-                                            "fr-FR"
-                                        )}
-                                    </span>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </span>
-            </span>
-        );
-    };
-
-    const gatherCraftsOnly = (
-        recipe: any,
-        detailsIndex: Details,
-        multiplier = 1,
-        acc: Record<string, number> = {},
-        visiting: Set<string> = new Set() // anti-boucle (sécurité)
-    ): Record<string, number> => {
-        if (!recipe?.ingredients) return acc;
-    
-        for (const ing of recipe.ingredients) {
-            const ingRecipe = detailsIndex[ing.id]?.recipe;
-            const isNoDecomp = NO_DECOMPOSE_PREFIXES.some(p => ing.id.startsWith(p));
-        
-            // Pas de recette => ressource de base => ignorée
-            if (!ingRecipe || isNoDecomp) continue;
-        
-            // Craft "valide"
-            const qty = (ing.amount ?? 0) * multiplier;
-            acc[ing.id] = (acc[ing.id] || 0) + qty;
-        
-            // Descendre récursivement dans ses sous-crafts (si boucle, on stoppe)
-            if (
-                !isNoDecomp &&
-                !visiting.has(ing.id)
-            ) {
-                visiting.add(ing.id);
-                gatherCraftsOnly(ingRecipe, detailsIndex, qty, acc, visiting);
-                visiting.delete(ing.id);
-            }
-        }
-        return acc;
-    };
-    
-    const renderCraftsOnlyContent = () => {
-        if (!groupedItems || !detailsIndex || !museumItems) {
-        return <p>{t("museum.noDataLoaded")}</p>;
-        }
-    
-        const totalCrafts: Record<string, number> = {};
-    
-        groupedItems.forEach((group) => {
-        const missingItems = group.items.filter(
-            (itemId) => !museumItems.includes(itemId) && missingSelection[itemId]
-        );
-    
-        missingItems.forEach((itemId) => {
-            const recipe = detailsIndex[itemId]?.recipe;
-            if (!recipe) return;
-    
-            const crafts = gatherCraftsOnly(recipe, detailsIndex);
-            for (const craftId in crafts) {
-            totalCrafts[craftId] = (totalCrafts[craftId] || 0) + crafts[craftId];
-            }
-        });
-        });
-    
-        const sortedCraftIds = Object.keys(totalCrafts).sort((a, b) =>
-        a.localeCompare(b, "en", { sensitivity: "base" })
-        );
-    
-        if (sortedCraftIds.length === 0) {
-        return <p>{t("museum.noResourceRquired")}</p>;
-        }
-    
-        return (
-        <span>
-            <span className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-            {sortedCraftIds.map((craftId) => (
-                <li key={craftId} className="block bg-gray-700 p-2 rounded-lg">
-                <div className="flex items-center">
-                    <MuseumItemImage
-                    groupCategory={setCategory(craftId)}
-                    itemId={craftId}
-                    detailsIndex={detailsIndex}
-                    className="w-8 h-8 mr-2 rounded"
-                    style={{ imageRendering: "pixelated" }}
-                    />
-                    <span className="font-bold text-sm">
-                    <ItemTranslation
-                        mbxId={craftId}
-                        category={setCategory(craftId)}
-                        type="name"
-                    />
-                    </span>
-    
-                    <span className="ml-auto text-sm font-bold bg-green-600 bg-opacity-30 w-16 py-1 rounded flex items-center justify-center">
-                    {totalCrafts[craftId].toLocaleString("fr-FR")}
-                    </span>
-                </div>
-                </li>
-            ))}
-            </span>
-        </span>
-        );
-    };
-
-    // Function to copy resource recap as CSV to clipboard
-    const handleCopyCSV = async () => {
-        if (!groupedItems || !detailsIndex || !museumItems) return;
-
-        if (!showBasicSection && !showCraftSection) {
-            alert(t("museum.copyCSV.alert.noSectionSelected"));
-            return;
-        }
-
-        const totalResources: { [key: string]: number } = {};
-        groupedItems.forEach((group) => {
-            // Only missing items selected via the filter are taken into account
-            const missingItems = group.items.filter(
-                (item) => !museumItems.includes(item) && missingSelection[item]
-            );
-            missingItems.forEach((itemId) => {
-                if (detailsIndex[itemId] && detailsIndex[itemId].recipe) {
-                    const resourcesForThisItem: Record<string, number> = {};
-                    if (showCraftSection) {
-                        const craftResources = gatherCraftsOnly(
-                            detailsIndex[itemId].recipe,
-                            detailsIndex
-                        );
-                        Object.entries(craftResources).forEach(([resId, qty]) => {
-                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
-                        });
-                    }
-                    if (showBasicSection) {
-                        const basicResources = gatherResources(
-                            detailsIndex[itemId].recipe,
-                            detailsIndex
-                        );
-                        Object.entries(basicResources).forEach(([resId, qty]) => {
-                            resourcesForThisItem[resId] = (resourcesForThisItem[resId] || 0) + qty;
-                        });
-                    } 
-                    
-                    Object.entries(resourcesForThisItem).forEach(([resId, qty]) => {
-                        totalResources[resId] = (totalResources[resId] || 0) + qty;
-                    });
-                }
-            });
-        });
-        
-        const sortedResourceIds = Object.keys(totalResources).sort((a, b) =>
-            a.localeCompare(b, "en", { sensitivity: "base" })
-        );
-        const csvLines = sortedResourceIds.map((resId) => {
-            const quantity = totalResources[resId];
-            const labelMarkup = ReactDOMServer.renderToStaticMarkup(
-                <ItemTranslation 
-                    mbxId={resId} 
-                    category={setCategory(resId)} 
-                    type="name" 
-                />
-            );
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = labelMarkup;
-            const labelText = tempDiv.textContent || tempDiv.innerText || "";
-            //return `${quantity},${labelText},${resId}`; // For debugging
-            return `${quantity},${labelText}`; 
-        });
-        const csvText = csvLines.join("\n");
-
-        try {
-            await navigator.clipboard.writeText(csvText);
-            alert(t("museum.copyCSV.alert.copied"));
-        } catch (err) {
-            console.error("Copy CSV failed:", err);
-        }
-    }
-
-    // Function that returns the display of the items grid and the category navigation bar
-    const renderItems = () => {
-        const [expandedGroups, setExpandedGroups] = useState<
-            Record<string, boolean>
-        >({});
-
-        const toggleGroup = (category: string) => {
-            setExpandedGroups((prev) => ({
-                ...prev,
-                [category]: !prev[category],
-            }));
-        };
-
-        useEffect(() => {
-            if (groupedItems) {
-                const allExpanded: Record<string, boolean> = {};
-                groupedItems.forEach((group) => {
-                    allExpanded[group.category] = true;
-                });
-                setExpandedGroups(allExpanded);
-            }
-        }, [groupedItems]);
-
-        if (!groupedItems || !detailsIndex) return null;
-
-        
-
-        return groupedItems.map((group, index) => {
-            const ownedCount = group.items.filter((item) =>
-                museumItems.includes(item)
-            ).length;
-            const categoryId =
-                "cat-" + group.category.toLowerCase().replace(/\s+/g, "-");
-            const isExpanded = expandedGroups[group.category];
-
-            return (
-                <div key={index} className="category w-full" id={categoryId}>
-                    <div
-                        className="titreCategory text-2xl font-bold flex flex-row gap-2 items-center mb-2 cursor-pointer select-none"
-                        onClick={() => toggleGroup(group.category)}
-                    >
-                                            <img
-                                                src={`assets/media/museum/${group.category.toUpperCase()}/${group.category.toUpperCase()}.png`}
-                                                alt={group.category}
-                                                className="h-8 w-8 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                        <span className="flex items-center">
-                            {isExpanded ? (
-                                <Minus className="p-0.5 opacity-70" />
-                            ) : (
-                                <Plus className="p-0.5 opacity-70" />
-                            )}
-                            {/* {t(`museum.category.${group.category}`)} */}
-                            {/*
-                            <ItemTranslation
-                                mbxId="null"
-                                category={group.category}
-                                type="name"
-                            />*/}
-                            {t(`museum.category.${group.category.toUpperCase()}`)}
-                        </span>
-                        <p className=" opacity-40 text-sm">
-                            [{ownedCount} / {group.items.length}]
-                        </p>
-                    </div>
-
-                    <div
-                        className={`groupItem grid grid-cols-2 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 justify-between overflow-hidden ${
-                            isExpanded ? "opacity-100" : "max-h-0 opacity-0"
-                        }`}
-                    >
-                        {(() => {
-                            const sortedItems = sortIdsByRarityThenName(group.items);
-                            return sortedItems.map((itemId) => {
-                            const isOwned = museumItems.includes(itemId);
-                            const imageSrc =
-                                detailsIndex[itemId] &&
-                                detailsIndex[itemId].image
-                                    ? "data:image/png;base64," +
-                                      detailsIndex[itemId].image
-                                    : `assets/media/museum/${group.category}/${itemId}.png`;
-                            const rarity =
-                                detailsIndex[itemId] &&
-                                detailsIndex[itemId].rarity
-                                    ? detailsIndex[itemId].rarity
-                                    : "UNKNOWN";
-                            if (showDonated || !isOwned) {
-                                return (
-                                    <MuseumItemCard
-                                        key={itemId}
-                                        itemId={itemId}
-                                        imageSrc={imageSrc} // we can use MuseumItemImage but I think, we will have to rewrite the code
-                                        isOwned={isOwned}
-                                        rarity={rarity}
-                                        label={detailsIndex[itemId]?.name}
-                                        category={group.category}
-                                        unobtainable={unobtainable}
-                                        missingRarity={missingRarity}
-                                        craftModalOpener={() =>
-                                            openCraftModal(
-                                                itemId,
-                                                group.category
-                                            )
-                                        }
-                                    />
-                                );
-                            }
-                            return null;
-                            });
-                        })()}
-                    </div>
-                </div>
-            );
-        });
     };
 
     // useEffect hook to handle the "Back to Top" button using a scroll listener
@@ -1232,8 +542,8 @@ export const MuseumApp: FC = () => {
                 <ul className="grid grid-cols-2 xl:grid-cols-7 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-4 gap-2 p-0 m-0">
                     {groupedItems &&
                         groupedItems
-        .filter((group) => group.category !== "spell")
-        .map((group, i) => {
+                        .filter((group) => group.category !== "spell")
+                        .map((group, i) => {
                             const ownedCount = group.items.filter((item) =>
                                 museumItems.includes(item)
                             ).length;
@@ -1334,7 +644,14 @@ export const MuseumApp: FC = () => {
                 id="itemsContainer"
                 className="flex flex-wrap gap-4 justify-start p-4"
             >
-                {renderItems()}
+                <MuseumItemList
+                    groupedItems={groupedItems}
+                    detailsIndex={detailsIndex}
+                    museumItems={museumItems}
+                    showDonated={showDonated}
+                    setCraftModalItem={setCraftModalItem}
+                    setCraftModalCategory={setCraftModalCategory}
+                />
             </div>
 
             {/* "Back to Top" button */}
@@ -1346,338 +663,60 @@ export const MuseumApp: FC = () => {
                 <span>{t("museum.backToTop.button")}</span>
             </button>
 
-            {/* Craft modal */}
-            {craftModalItem && detailsIndex && (
-                <div
-                    className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="craftModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setCraftModalItem(null);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        <div
-                            id="craftDetails"
-                            className="flex flex-col flex-1 max-h-[90vh]"
-                        >
-                            {detailsIndex[craftModalItem] &&
-                            detailsIndex[craftModalItem].recipe ? (
-                                <>
-                                    <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        {detailsIndex[craftModalItem]?.apiImage ? (
-                                            <img
-                                                src={detailsIndex[craftModalItem].apiImage}
-                                                alt={
-                                                    detailsIndex[craftModalItem].apiName || craftModalItem
-                                                }
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
-                                                style={{ imageRendering: "pixelated" }}
-                                            />
-                                        ) : (
-                                            <MuseumItemImage
-                                                groupCategory={craftModalCategory!}
-                                                itemId={craftModalItem}
-                                                detailsIndex={detailsIndex}
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                        )}
-                                        <span className="flex flex-col">
-                                            <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")} {" "}
-                                                {detailsIndex[craftModalItem]?.apiName ? (
-                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
-                                                ) : (
-                                                    <ItemTranslation
-                                                        mbxId={craftModalItem}
-                                                        category={
-                                                            craftModalCategory!
-                                                        }
-                                                        type="name"
-                                                    />
-                                                )}
-                                            </div>
-                                            <p className="text-sm opacity-60">
-                                                {t("museum.jobRequired")}{" "}
-                                                <ItemTranslation
-                                                    mbxId={
-                                                        detailsIndex[
-                                                            craftModalItem
-                                                        ].recipe.job
-                                                    }
-                                                    category={"SKILL"}
-                                                    type="name"
-                                                />
-                                            </p>
-                                        </span>
-                                        <span className="ml-auto">
-                                            {moreInformation()}
-                                        </span>
-                                        <span
-                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                            onClick={() =>
-                                                setCraftModalItem(null)
-                                            }
-                                        >
-                                            <X
-                                                strokeWidth={3}
-                                                className="h-5 w-5"
-                                            />
-                                        </span>
-                                    </div>
+            {/* Craft modal with RecipeTree/RecipeNode */}
+            <CraftModal
+                craftModalItem={craftModalItem}
+                craftModalCategory={craftModalCategory}
+                detailsIndex={detailsIndex}
+                onClose={() => setCraftModalItem(null)}
+                setCategory={setCategory}
+            />
 
-                                    <div className="flex-1 overflow-y-auto p-4 pb-3 custom-scrollbar">
-                                        <RecipeTree
-                                            recipe={
-                                                detailsIndex[craftModalItem]
-                                                    .recipe
-                                            }
-                                            detailsIndex={detailsIndex}
-                                        />
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="bg-gray-700 text-white p-4 rounded-lg flex flex-row gap-3 items-center shadow-[0_4px_16px_rgba(0,0,0,0.25)] z-10">
-                                        {detailsIndex[craftModalItem]?.apiImage ? (
-                                            <img
-                                                src={detailsIndex[craftModalItem].apiImage}
-                                                alt={
-                                                    detailsIndex[craftModalItem].apiName || craftModalItem
-                                                }
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)] rounded"
-                                                style={{ imageRendering: "pixelated" }}
-                                            />
-                                        ) : (
-                                            <MuseumItemImage
-                                                groupCategory={craftModalCategory!}
-                                                itemId={craftModalItem}
-                                                detailsIndex={detailsIndex}
-                                                className="h-16 w-16 drop-shadow-[0_5px_5px_rgba(0,0,0,0.2)]"
-                                                style={{
-                                                    imageRendering: "pixelated",
-                                                }}
-                                            />
-                                        )}
-                                        <span className="flex flex-col">
-                                            <div className="text-2xl font-bold mb-0">
-                                                {t("museum.craftFor")} {" "}
-                                                {detailsIndex[craftModalItem]?.apiName ? (
-                                                    <span>{detailsIndex[craftModalItem].apiName}</span>
-                                                ) : (
-                                                    <ItemTranslation
-                                                        mbxId={craftModalItem}
-                                                        category={
-                                                            craftModalCategory
-                                                        }
-                                                        type="name"
-                                                    />
-                                                )}
-                                            </div>
-                                            <p className="text-sm opacity-60">
-                                                {t(
-                                                    "common:infos.recipeNotFound"
-                                                )}
-                                            </p>
-                                        </span>
-                                        {/* <a
-                                            className="ml-auto"
-                                            href={`https://minebox.co/universe/items?id=${craftModalItem}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <span className="close flex items-center justify-center text-xl font-semibold cursor-pointer h-8 w-8 rounded transition hover:text-white text-gray-200 hover:bg-gray-600">
-                                                ?
-                                            </span>
-                                        </a> */}
-                                        <span className="ml-auto">
-                                            {moreInformation()}
-                                        </span>
-                                        <span
-                                            className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                            onClick={() =>
-                                                setCraftModalItem(null)
-                                            }
-                                        >
-                                            <X
-                                                strokeWidth={3}
-                                                className="h-5 w-5"
-                                            />
-                                        </span>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Missing items recap modal with MissingItemsRecapContent */}
+            <ItemsRecapModal
+                show={showRecapModal}
+                onClose={() => setShowRecapModal(false)}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+                toggleSelectAllMissing={toggleSelectAllMissing}
+                renderRecapContent={() =>(
+                    <MissingItemsRecapContent
+                        groupedItems={groupedItems}
+                        detailsIndex={detailsIndex}
+                        museumItems={museumItems}
+                        missingSelection={missingSelection}
+                        toggleMissingSelection={toggleMissingSelection}
+                        missingRarity={missingRarity}
+                    />
+                )}
+            />
 
-            {/* Missing items recap modal */}
-            {showRecapModal && (
-                <div
-                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="recapModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setShowRecapModal(false);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
-                            <ListTodo
-                                strokeWidth={2.4}
-                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
-                            />
-                            <span className="flex flex-col">
-                                <div className="text-2xl font-bold">
-                                    {t("museum.recapMuseum.title")}
-                                </div>
-                                <div className="text-sm font-normal opacity-60">
-                                    {t("museum.recapMuseum.description")}
-                                </div>
-                            </span>
-                            {/* Selection of Items */}
-                            <div className="ml-auto flex items-center">
-                                <button
-                                    id="selectedItems"
-                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => {
-                                        setSelectedItems(!selectedItems);
-                                        toggleSelectAllMissing();
-                                    }}
-                                >
-                                    {selectedItems ? (
-                                        <>
-                                            <SquareAsterisk className="w-5 h-5" />{" "}
-                                            {t(
-                                                "museum.filterRecapItems.selectAll"
-                                            )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Square className="w-5 h-5" />{" "}
-                                            {t(
-                                                "museum.filterRecapItems.unselectAll"
-                                            )}
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                            <span
-                                className="ml-1 close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                onClick={() => setShowRecapModal(false)}
-                            >
-                                <X strokeWidth={3} className="h-5 w-5" />
-                            </span>
-                        </div>
+            {/* Resources recap modal with CraftsOnlyContent && BasicResourcesContent */}
+            <ResourcesRecapModal
+                show={showResourcesModal}
+                onClose={() => setShowResourcesModal(false)}
 
-                        <div
-                            id="recapContent"
-                            className="flex-1 overflow-y-auto custom-scrollbar p-4 relative z-0"
-                        >
-                            {renderRecapContent()}
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Resources recap modal */}
-            {showResourcesModal && (
-                <div
-                    className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
-                    id="resourcesModal"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget)
-                            setShowResourcesModal(false);
-                    }}
-                >
-                    <div className="modal-content flex flex-col bg-[rgb(31,41,55)] text-white rounded-lg max-w-[90%] max-h-[90vh] mx-auto shadow-2xl relative">
-                        {/* HEADER */}
-                        <div className="bg-gray-700 text-white p-4 rounded-t-lg flex flex-row gap-3 items-center align-middle shadow-[0_4px_16px_rgba(0,0,0,0.25)] relative z-10">
-                            <List
-                                strokeWidth={2.4}
-                                className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
-                            />
-                            <span className="flex flex-col">
-                                <div className="text-2xl font-bold">
-                                    {t("museum.resourcesMuseum.title")}
-                                </div>
-                                <div className="text-sm font-normal opacity-60">
-                                    {t("museum.resourcesMuseum.description")}
-                                </div>
-                            </span>
-                            {/* TOGGLES */}
-                            <div className="ml-auto flex items-center">
-                                <button
-                                    className="flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => setShowCraftSection(!showCraftSection)}
-                                >
-                                    {showCraftSection
-                                    ? <SquareAsterisk className="w-5 h-5"/>
-                                    : <Square className="w-5 h-5"/>}
-                                    {t("museum.craftingResourcesMuseum.title")}
-                                </button>
+                showCraftSection={showCraftSection}
+                setShowCraftSection={setShowCraftSection}
+                showBasicSection={showBasicSection}
+                setShowBasicSection={setShowBasicSection}
+                setCategory={setCategory}
+                renderBasicResourcesContent={() => (
+                    <BasicResourcesContent
+                        groupedItems={groupedItems}
+                        detailsIndex={detailsIndex}
+                        museumItems={museumItems}
+                        missingSelection={missingSelection}
+                        setCategory={setCategory}
+                    />
+                )}
 
-                                <button
-                                    className="ml-4 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                    onClick={() => setShowBasicSection(!showBasicSection)}
-                                >
-                                    {showBasicSection
-                                    ? <SquareAsterisk className="w-5 h-5"/>
-                                    : <Square className="w-5 h-5"/>}
-                                    {t("museum.basicResourcesMuseum.title")}
-                                </button>
-                            </div>
-                            {/* CSV copy button */}
-                            <button
-                                className="ml-1 flex font-medium flex-row gap-2 bg-gray-600 hover:bg-gray-500 transition text-white py-1.5 px-2 rounded text-sm"
-                                onClick={() => {
-                                    handleCopyCSV()
-                                }}
-                            >
-                                <ClipboardCopy className="w-5 h-5" />{" "}
-                                {t("museum.copyCSV.button")}
-                            </button>
-                            <span
-                                className="close flex items-center justify-center text-2xl font-bold cursor-pointer h-8 w-8 mr-1 rounded transition hover:text-white text-gray-200 hover:bg-gray-600"
-                                onClick={() => setShowResourcesModal(false)}
-                            >
-                                <X strokeWidth={3} className="w-5 h-5" />
-                            </span>
-                        </div>
-
-                        {/* CONTENT */}
-                        <div 
-                            id="resourcesContent"
-                            className="flex-1 overflow-y-auto p-4 custom-scrollbar"
-                        >
-                            {showCraftSection && (
-                            <>
-                                <div className="text-lg font-semibold mb-2">
-                                    {t("museum.craftingResourcesMuseum.title")}
-                                </div>
-                                {renderCraftsOnlyContent()}
-                            </>
-                            )}
-                            {showBasicSection && (
-                            <>
-                                <div className="text-lg font-semibold mt-4 mb-2">
-                                    {t("museum.resourcesMuseum.title")}
-                                </div>
-                                {renderBasicResourcesContent()}
-                            </>
-                            )}
-                            {!showCraftSection && !showBasicSection && (
-                                <div className="text-center opacity-50">
-                                    {t("museum.resourcesMuseum.noSectionSelected")}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+                // handleCopyCSV
+                groupedItems={groupedItems}
+                detailsIndex={detailsIndex}
+                museumItems={museumItems}
+                missingSelection={missingSelection}
+	        />
         </div>
     );
 };
