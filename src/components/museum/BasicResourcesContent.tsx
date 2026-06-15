@@ -10,6 +10,8 @@ import MuseumItemImage from "./MuseumItemImage";
 import ItemTranslation from "../ItemTranslation";
 import { gatherResources } from "@utils/gatherResources";
 
+type Translation = "museum" | "craftPlanner";
+
 interface Group {
     category: string;
     items: string[];
@@ -31,6 +33,20 @@ type BasicResourcesContentProps = {
     museumItems: string[];
     missingSelection: Record<string, boolean>;
     setCategory: (itemId: string) => string;
+
+    translation: Translation;
+};
+
+const getItemsRecapTranslationKeys = (translation: Translation) => {
+    if (translation === "craftPlanner") {
+        return {
+            noResourceRquired: "craftPlanner:craftPlanner.noResourceRquired",
+        };
+    }
+
+    return {
+        noResourceRquired: "museum.noResourceRquired",
+    };
 };
 
 export const BasicResourcesContent: React.FC<BasicResourcesContentProps> = ({
@@ -39,8 +55,11 @@ export const BasicResourcesContent: React.FC<BasicResourcesContentProps> = ({
     museumItems,
     missingSelection,
     setCategory,
+    translation,
 }) => {
-    const { t } = useTranslation(["museum", "common"]);
+    const { t } = useTranslation(["museum", "craftPlanner", "common"]);
+
+    const translationKey = getItemsRecapTranslationKeys(translation);
 
     if (!groupedItems || !detailsIndex || !museumItems) {
         return <p>{t("museum.noDataLoaded")}</p>;
@@ -71,7 +90,7 @@ export const BasicResourcesContent: React.FC<BasicResourcesContentProps> = ({
     const sortedResourceIds = Object.keys(totalResources).sort();
 
     if (sortedResourceIds.length === 0) {
-        return <p>{t("museum.noResourceRquired")}</p>;
+        return <p>{t(translationKey.noResourceRquired)}</p>;
     }
 
     return (

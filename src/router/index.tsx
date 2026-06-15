@@ -22,6 +22,7 @@ const HomePage = lazy(() => import("@pages/HomePage"));
 const CommunityPage = lazy(() => import("@pages/CommunityPage"));
 const MuseumPage = lazy(() => import("@pages/MuseumPage"));
 const ItemsNRecipesPage = lazy(() => import("@pages/ItemsNRecipesPage"));
+const CraftPlannerPage = lazy(() => import("@pages/CraftPlannerPage"));
 
 export const AppRoutes: FC = () => {
     return (
@@ -43,7 +44,7 @@ export const AppRoutes: FC = () => {
                 {/* Tools */}
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/equipment" element={<EquipPage />} />
-                {/* <Route path="/equipment" element={<ComingSoon />} /> */}
+                <Route path="/craftPlanner" element={<CraftPlannerPage />}/>
                 <Route path="/museum" element={<MuseumPage />} />
 
                 {/* Community */}

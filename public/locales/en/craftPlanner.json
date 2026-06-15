@@ -1,0 +1,14 @@
+{
+    "craftPlanner.title": "Craft Planner",
+    "craftPlanner.selectedItems.sentence": "selected item(s)",
+    "craftPlanner.selectedItems.title": "Selected Items Summary",
+    "craftPlanner.selectItems.title": "Show to select items",
+    "craftPlanner.selectItems.description": "These are the items you can craft.",
+    "craftPlanner.selectItems.show": "Show to select items",
+    "craftPlanner.requiredResources.title": "Required Resources",
+    "craftPlanner.requiredResources.description": "These are the resources you are missing for crafts.",
+    "craftPlanner.requiredResources.show": "Show required resources",
+    "craftPlanner.requiredResources.noSelected" : "Please select at least one item.",
+    "craftPlanner.noResourceRquired": "No resources required (or no craft available for selected items).",
+    "craftPlanner.noItems": "No Items Selected"
+}

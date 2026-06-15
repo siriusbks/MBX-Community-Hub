@@ -689,6 +689,7 @@ export const MuseumApp: FC = () => {
                         missingRarity={missingRarity}
                     />
                 )}
+                translation="museum"
             />
 
             {/* Resources recap modal with CraftsOnlyContent && BasicResourcesContent */}
@@ -708,6 +709,8 @@ export const MuseumApp: FC = () => {
                         museumItems={museumItems}
                         missingSelection={missingSelection}
                         setCategory={setCategory}
+
+                        translation="museum"
                     />
                 )}
 
@@ -716,6 +719,8 @@ export const MuseumApp: FC = () => {
                 detailsIndex={detailsIndex}
                 museumItems={museumItems}
                 missingSelection={missingSelection}
+
+                translation="museum"
 	        />
         </div>
     );

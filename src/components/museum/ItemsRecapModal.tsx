@@ -8,6 +8,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ListTodo, Square, SquareAsterisk, X } from "lucide-react";
 
+type Translation = "museum" | "craftPlanner";
+
 type ItemsRecapModalProps = {
     show: boolean;
     onClose: () => void;
@@ -17,13 +19,30 @@ type ItemsRecapModalProps = {
     toggleSelectAllMissing: () => void;
 
     renderRecapContent: () => React.ReactNode;
+
+    translation: Translation;
+};
+
+const getItemsRecapTranslationKeys = (translation: Translation) => {
+    if (translation === "craftPlanner") {
+        return {
+            title: "craftPlanner:craftPlanner.selectItems.title",
+            description: "craftPlanner:craftPlanner.selectItems.description",
+        };
+    }
+
+    return {
+        title: "museum.recapMuseum.title",
+        description: "museum.recapMuseum.description",
+    };
 };
 
 /*
  * Missing items recap modal with MissingItemsRecapContent
 */
 export const ItemsRecapModal: React.FC<ItemsRecapModalProps> = (props) => {
-    const { t } = useTranslation(["museum", "common"]);
+    const { t } = useTranslation(["museum", "craftPlanner", "common"]);
+
     const {
         show,
         onClose,
@@ -31,13 +50,16 @@ export const ItemsRecapModal: React.FC<ItemsRecapModalProps> = (props) => {
         setSelectedItems,
         toggleSelectAllMissing,
         renderRecapContent,
+        translation,
     } = props;
+
+    const translationKeys = getItemsRecapTranslationKeys(translation);
 
     if (!show) return null;
 
     return (
         <div
-            className="modal  backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
+            className="modal backdrop-blur-sm fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-60 overflow-y-auto p-[2.49%]"
             id="recapModal"
             onClick={(e) => {
                 if (e.target === e.currentTarget) onClose();
@@ -49,12 +71,13 @@ export const ItemsRecapModal: React.FC<ItemsRecapModalProps> = (props) => {
                         strokeWidth={2.4}
                         className="text-green-400 h-12 w-12 p-2 bg-green-500 rounded bg-opacity-10"
                     />
+
                     <span className="flex flex-col">
                         <div className="text-2xl font-bold">
-                            {t("museum.recapMuseum.title")}
+                            {t(translationKeys.title)}
                         </div>
                         <div className="text-sm font-normal opacity-60">
-                            {t("museum.recapMuseum.description")}
+                            {t(translationKeys.description)}
                         </div>
                     </span>
 

@@ -8,9 +8,10 @@ import React, { useState } from "react";
 import { EQUIPMENT_SLOTS } from "@utils/equipmentSlots";
 import { Equipment } from "@t/equip";
 import { useItemDetails } from "@hooks/useItemDetails";
-import { Hammer, ChevronDown, PackageOpen, Cog } from "lucide-react";
+import { Hammer, ChevronDown, PackageOpen, Cog, ListTodo } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ItemTranslation from "@components/ItemTranslation";
+import CraftPlannerModal from "@components/craftPlanner/CraftPlannerModal";
 
 type Locale = "en" | "fr" | "pl";
 
@@ -307,35 +308,68 @@ export const CraftingBreakdown: React.FC<Props> = ({
     equippedItems,
     locale = "en",
 }) => {
-    const { t } = useTranslation("equipment");
+    const { t:equip } = useTranslation("equipment");
+    const { t:craftPlanner } = useTranslation("craftPlanner");
+
+    const [craftPlannerOpen, setCraftPlannerOpen] = useState(false);
+
+    const equippedItemIds = Object.values(equippedItems)
+        .filter((item): item is Equipment => !!item?.id)
+        .map((item) => item.id);
+
+    const uniqueEquippedItemIds = Array.from(new Set(equippedItemIds));
+
+    const hasEquippedItems = uniqueEquippedItemIds.length > 0;
 
     return (
-        <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-3">
-                <Hammer className="w-5 h-5 text-green-400" />
-                <h3 className="text-sm font-semibold text-white">
-                    {t("equip.craftingBySlot")}
-                </h3>
+        <>
+            <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                        <Hammer className="w-5 h-5 text-green-400" />
+                        <h3 className="text-sm font-semibold text-white">
+                            {equip("equip.craftingBySlot")}
+                        </h3>
+                    </div>
+
+                    {hasEquippedItems && (
+                        <button
+                            type="button"
+                            onClick={() => setCraftPlannerOpen(true)}
+                            className="inline-flex items-center gap-2 rounded bg-green-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-green-700"
+                            title="Open selected equipment in Craft Planner"
+                        >
+                            <ListTodo className="w-4 h-4" />
+                            {craftPlanner("craftPlanner.title")}
+                        </button>
+                    )}
+                </div>
+
+                <div className="space-y-2 max-h-72 xl:max-h-80 overflow-y-auto custom-scrollbar pr-1">
+                    {EQUIPMENT_SLOTS.map((slot) => {
+                        const item = equippedItems[slot.id];
+                        if (!item?.id) return null;
+                        return (
+                            <CraftSection
+                                key={slot.id}
+                                slotId={slot.id}
+                                item={item}
+                                locale={locale}
+                            />
+                        );
+                    })}
+                </div>
+
+                {Object.values(equippedItems).every((it) => !it) && (
+                    <p className="text-sm text-gray-400">{equip("equip.seerecipe")}</p>
+                )}
             </div>
 
-            <div className="space-y-2 max-h-72 xl:max-h-80 overflow-y-auto custom-scrollbar pr-1">
-                {EQUIPMENT_SLOTS.map((slot) => {
-                    const item = equippedItems[slot.id];
-                    if (!item?.id) return null;
-                    return (
-                        <CraftSection
-                            key={slot.id}
-                            slotId={slot.id}
-                            item={item}
-                            locale={locale}
-                        />
-                    );
-                })}
-            </div>
-
-            {Object.values(equippedItems).every((it) => !it) && (
-                <p className="text-sm text-gray-400">{t("equip.seerecipe")}</p>
-            )}
-        </div>
+            <CraftPlannerModal
+                open={craftPlannerOpen}
+                onClose={() => setCraftPlannerOpen(false)}
+                preselectedItems={uniqueEquippedItemIds}
+            />
+        </>
     );
 };

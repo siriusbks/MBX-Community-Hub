@@ -16,6 +16,7 @@ import {
     BookA,
     BookCopy,
     Swords,
+    Package,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -171,6 +172,7 @@ export function HomePage() {
                         </p>
                     </Link>
                 </div>
+
                 {/* Features Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
                     {/* Equipment */}
@@ -185,7 +187,7 @@ export function HomePage() {
                             <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
                                 {t("homepage.features.equipment.title")}
                                 <span className="w-fit text-yellow-400 text-xs font-semibold rounded">
-                                    COMING SOON
+                                    BETA
                                 </span>
                             </h2>
                         </div>
@@ -232,6 +234,74 @@ export function HomePage() {
                             {t("homepage.features.classAndSpells.description")}
                         </p>
                     </Link>
+                </div>
+
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-4">
+
+                    {/* Craft Planner */}
+                    <Link
+                        to="/craftPlanner"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-amber-200 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-amber-200/30 bg-amber-500/10 text-amber-200 group-hover:bg-amber-200/20 transition-colors">
+                                <Package size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.craftPlanner.title")}
+                                <span className="w-fit text-amber-200 text-xs font-semibold rounded">
+                                    BETA
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.craftPlanner.description")}
+                        </p>
+                    </Link>
+
+
+                    {/* NA */}
+                    {/* <Link
+                        to="/NA"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-orange-400/30 bg-orange-500/10 text-orange-400 group-hover:bg-orange-400/20 transition-colors">
+                                <Swords size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.NA.title")}
+                                <span className="w-fit text-orange-400 text-xs font-semibold rounded">
+                                    COMING SOON
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.NA.description")}
+                        </p>
+                    </Link> */}
+
+                    {/* NA */}
+                    {/* <Link
+                        to="/NA"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-teal-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-lg border border-teal-400/30 bg-teal-500/10 text-teal-400 group-hover:bg-teal-400/20 transition-colors">
+                                <BookA size={28} />
+                            </div>
+                            <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
+                                {t("homepage.features.NA.title")}
+                                <span className="w-fit text-teal-400 text-xs font-semibold rounded">
+                                    COMING SOON
+                                </span>
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
+                            {t("homepage.features.NA.description")}
+                        </p>
+                    </Link> */}
                 </div>
             </div>
         </>
