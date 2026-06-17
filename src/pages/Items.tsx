@@ -3,7 +3,7 @@ import { Button } from "@ui/button";
 import { Globe } from "lucide-react";
 import { Card } from "@ui/card";
 import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities";
-import mineboxItems from "@const/APIPreload/minebox_items.json";
+import mineboxItems from "@const/APIPreload/items.json";
 import { Input } from "@components/ui/input"
 import { CodexGrid } from "@components/minebox/codex-grid";
 import { MineboxItem } from "@components/minebox/MineboxItem";
@@ -36,6 +36,7 @@ export function ItemsCodex() {
 
     return (
         <div className="relative flex flex-col page-container">
+      <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
             <div className="flex flex-row gap-2">
                 <span className="flex minebox-shadow bg-linear-to-t from-secondary to-secondary-lighter rounded-lg p-1 gap-1">
                     <a href="/codex/items"><Button variant="default" size="lg"><Globe /> Items</Button></a>
