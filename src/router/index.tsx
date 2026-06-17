@@ -1,3 +1,4 @@
+import ProfilePage from "@pages/Profile";
 import { lazy, type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -21,6 +22,9 @@ export const AppRoutes: FC = () => {
 
                 {/* Community */}
                 <Route path="/community" element={<CommunityPage />} />
+
+                {/* Profile */}
+                <Route path="/profile" element={<ProfilePage />} />
 
                 {/* Errors */}
                 <Route path="*" element={<Error404 />} />

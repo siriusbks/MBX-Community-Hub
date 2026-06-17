@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@ui/button";
-import { BookOpen, GlobeIcon, Map, Box, type LucideIcon } from "lucide-react";
+import { BookOpen, GlobeIcon, Map, Box, type LucideIcon, InfoIcon } from "lucide-react";
 import { LevelBadge } from "@const/levels";
 import {
   NavigationMenu,
@@ -13,10 +13,66 @@ import {
 } from "@ui/navigation-menu"
 import { Link } from "react-router-dom";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@components/ui/popover"
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Input } from "./ui/input";
 
 export const Navbar = () => {
 
   const [hoverOpen, setHoverOpen] = React.useState<string | null>(null);
+  const [nick, setNick] = React.useState<string>("");
+  const [storedNick, setStoredNick] = React.useState<string | null>(null);
+  const [playerId, setPlayerId] = React.useState<string | null>(null);
+  const [playerLevel, setPlayerLevel] = React.useState<number | null>(null);
+  const [loadingNick, setLoadingNick] = React.useState<boolean>(false);
+  const [nickError, setNickError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    try {
+      const s = localStorage.getItem("minebox_nick");
+      if (s) {
+        setStoredNick(s);
+      }
+      const id = localStorage.getItem("minebox_id");
+      if (id) setPlayerId(id);
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  // Fetch latest player level (and id if available) whenever storedNick changes
+  React.useEffect(() => {
+    if (!storedNick) return;
+    let mounted = true;
+    void (async () => {
+      try {
+        const res = await fetch(`https://api.minebox.co/data/${encodeURIComponent(storedNick)}`);
+        if (res.ok) {
+          const j = await res.json().catch(() => ({} as any));
+          const id = j.id || j.uuid || j.player?.id || j.data?.id;
+          const lvl = j.level || j.player?.level || j.data?.level;
+          if (!mounted) return;
+          if (id && typeof id === "string") {
+            setPlayerId(id);
+            try { localStorage.setItem("minebox_id", id); } catch (e) { /* ignore */ }
+          }
+          if (typeof lvl !== "undefined" && lvl !== null) {
+            setPlayerLevel(Number(lvl));
+          }
+        }
+      } catch (e) {
+        // ignore errors silently
+      }
+    })();
+    return () => { mounted = false; };
+  }, [storedNick]);
 
   // Typ dla pojedynczego elementu w dropdown
   type NavDropdownItem = {
@@ -179,17 +235,139 @@ export const Navbar = () => {
 
         <span className="flex items-center gap-2">
 
-          <span className="items-end justify-end flex flex-col leading-none gap-0.5">
 
-            <p className="font-medium">Player Name</p>
-            <p className="text-[0.7rem] text-muted-foreground">LEVEL 000 </p>
-          </span>
 
-          {/* Player Head Links */}
-          <img src="https://api.mineatar.io/face/1ffb3a0d-4c5d-4708-9bf6-26cbe70023eb" className="h-8 rounded-sm" />
+          <Popover>
+            <PopoverTrigger asChild>
+              <span className="flex flex-row items-center justify-center gap-2">
 
+                {/* if not selected */}
+
+
+                {/* IF Nickname Selected */}
+                <span className="items-end justify-end flex flex-col leading-none gap-0.5">
+                  <p className="font-medium">{storedNick ? storedNick : "Player Name"}</p>
+                  <p className="text-[0.7rem] text-muted-foreground">{playerLevel !== null ? `LEVEL ${String(playerLevel).padStart(3, "0")}` : "LEVEL 000"}</p>
+                </span>
+
+                {/* Player Head Links */}
+                <img src={playerId ? `https://api.mineatar.io/face/${playerId}` : "https://api.mineatar.io/face/1ffb3a0d-4c5d-4708-9bf6-26cbe70023eb"} className="h-8 rounded-sm" />
+              </span>
+            </PopoverTrigger>
+            <PopoverContent className="gap-2">
+              <PopoverHeader>
+                <PopoverTitle>Minebox Player</PopoverTitle>
+              </PopoverHeader>
+
+              {nickError ? (
+                <Alert variant="destructive" className="flex items-center justify-center">
+                  <span className="items-center justify-center">
+                    <InfoIcon className="size-4 mr-1" /></span>
+                  <span className="flex flex-row gap-4 w-full">
+                    <AlertDescription className="flex items-center justify-center mr-auto leading-tight">
+                      {nickError}
+                    </AlertDescription>
+                  </span>
+                </Alert>
+              ) : (
+                <Alert variant="default" className="flex items-center justify-center">
+                  <span className="items-center justify-center">
+                    <InfoIcon className="size-4 mr-1" /></span>
+                  <span className="flex flex-row gap-4 w-full">
+                    <AlertDescription className="flex items-center justify-center mr-auto leading-tight">
+                      Check if you have enabled API
+                    </AlertDescription>
+                  </span>
+                </Alert>
+              )}
+
+              <Input
+                value={nick}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNick(e.target.value)}
+                placeholder={storedNick ? storedNick : "Enter your Minebox nickname"}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (e.key === "Enter") {
+                    void (async () => {
+                      const value = nick.trim();
+                      if (!value) return;
+                      setLoadingNick(true);
+                      setNickError(null);
+                      try {
+                        const res = await fetch(`https://api.minebox.co/data/${encodeURIComponent(value)}`);
+                            if (res.ok) {
+                              const j = await res.json().catch(() => ({}));
+                              const id = j.id || j.uuid || j.player?.id || j.data?.id;
+                              const lvl = j.level || j.player?.level || j.data?.level;
+                              if (id && typeof id === "string") {
+                                try { localStorage.setItem("minebox_id", id); } catch (e) { /* ignore */ }
+                                setPlayerId(id);
+                              }
+                              if (typeof lvl !== "undefined" && lvl !== null) setPlayerLevel(Number(lvl));
+                              localStorage.setItem("minebox_nick", value);
+                              setStoredNick(value);
+                              setNickError(null);
+                            } else if (res.status === 401) {
+                          const j = await res.json().catch(() => ({}));
+                          setNickError(j.error || "Player has disabled API access");
+                        } else if (res.status === 404) {
+                          const j = await res.json().catch(() => ({}));
+                          setNickError(j.error || "User not found");
+                        } else {
+                          const j = await res.json().catch(() => ({}));
+                          setNickError(j.error || `Error: ${res.status}`);
+                        }
+                      } catch (err) {
+                        setNickError("Network error");
+                      } finally {
+                        setLoadingNick(false);
+                      }
+                    })();
+                  }
+                }}
+              />
+
+              <Button disabled={loadingNick} onClick={async () => {
+                const value = nick.trim();
+                if (!value) return;
+                setLoadingNick(true);
+                setNickError(null);
+                try {
+                  const res = await fetch(`https://api.minebox.co/data/${encodeURIComponent(value)}`);
+                  if (res.ok) {
+                    const j = await res.json().catch(() => ({}));
+                    const id = j.id || j.uuid || j.player?.id || j.data?.id;
+                    const lvl = j.level || j.player?.level || j.data?.level;
+                    if (id && typeof id === "string") {
+                      try { localStorage.setItem("minebox_id", id); } catch (e) { /* ignore */ }
+                      setPlayerId(id);
+                    }
+                    if (typeof lvl !== "undefined" && lvl !== null) setPlayerLevel(Number(lvl));
+                    localStorage.setItem("minebox_nick", value);
+                    setStoredNick(value);
+                    setNickError(null);
+                  } else if (res.status === 401) {
+                    const j = await res.json().catch(() => ({}));
+                    setNickError(j.error || "Player has disabled API access");
+                  } else if (res.status === 404) {
+                    const j = await res.json().catch(() => ({}));
+                    setNickError(j.error || "User not found");
+                  } else {
+                    const j = await res.json().catch(() => ({}));
+                    setNickError(j.error || `Error: ${res.status}`);
+                  }
+                } catch (err) {
+                  setNickError("Network error");
+                } finally {
+                  setLoadingNick(false);
+                }
+              }}>{loadingNick ? "Loading..." : "Load Data"}</Button>
+            </PopoverContent>
+          </Popover>
+
+
+          {/*
           <Button size="lg" className="tracking-wider ml-2"><GlobeIcon className="mt-0.5" />Login with Discord </Button>
-
+*/}
           <LanguageSwitcher />
         </span>
       </div>
