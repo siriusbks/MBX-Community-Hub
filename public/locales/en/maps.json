@@ -1,0 +1,19 @@
+{
+    "maps.title": "EXPLORE MAPS",
+    "maps.description.part1": "Hover over the",
+    "maps.description.part2": "to view resources.",
+
+    "maps.no_required": "No Required Level",
+    "maps.required": "Required Level: ",
+    "maps.view_map": "View Interactive Map",
+
+    "maps.island.spawn": "Spawn Island",
+    "maps.island.island_home": "Player Island",
+    "maps.island.island_nether": "Nether Island",
+    "maps.island.island_end": "End Island",
+    "maps.island.island_tropical": "Kokoko Island",
+    "maps.island.island_plain": "Quadra Plains",
+    "maps.island.island_bamboo": "Bamboo Peak",
+    "maps.island.island_snow": "Frostbite Fortress",
+    "maps.island.island_desert": "Sandwhisper Dunes"
+}

@@ -1,0 +1,29 @@
+{
+    "spawn": {
+        "trees": [
+            "tree_coconut",
+            "tree_banana"
+        ],
+        "ores": [
+            "coal",
+            "copper",
+            "iron",
+            "gold",
+            "diamond",
+            "emerald",
+            "lapis",
+            "redstone",
+            "ore_silver"
+        ],
+        "plants": [
+            "plant_clover",
+            "plant_lily",
+            "plant_heart_blue",
+            "plant_heart_yellow",
+            "plant_heart_red"
+        ],
+        "fish": [
+            "shoal_tropical"
+        ]
+    }
+}

@@ -1,0 +1,626 @@
+{
+  "shoal_swamp": {
+    "min_level": 60,
+    "name": {
+      "en": "Swamp Shoal",
+      "fr": "Banc Marécageux",
+      "es": "Banco Pantanoso"
+    }
+  },
+  "shoal_canyon": {
+    "min_level": 80,
+    "name": {
+      "en": "Canyon Shoal",
+      "fr": "Banc de canyon",
+      "es": "Banco del Cañón"
+    }
+  },
+  "shoal_cold": {
+    "min_level": 70,
+    "name": {
+      "en": "Cold Shoal",
+      "fr": "Banc Froid",
+      "es": "Banco Frío"
+    }
+  },
+  "shoal_deep": {
+    "min_level": 10,
+    "name": {
+      "en": "Deep Shoal",
+      "fr": "Banc Profond",
+      "es": "Banco Profundo"
+    }
+  },
+  "shoal_tropical": {
+    "min_level": 1,
+    "name": {
+      "en": "Tropical Shoal",
+      "fr": "Banc Tropical",
+      "es": "Banco Tropical"
+    }
+  },
+  "shoal_bamboo": {
+    "min_level": 30,
+    "name": {
+      "en": "Bamboo Shoal",
+      "fr": "Banc Bambou",
+      "es": "Banco de Bambú"
+    }
+  },
+  "shoal_bamboo_jungle": {
+    "min_level": 70,
+    "name": {
+      "en": "Bamboo Jungle Shoal",
+      "fr": "Banc de jungle bambou",
+      "es": "Banco de Jungla de Bambú"
+    }
+  },
+  "shoal_coral": {
+    "min_level": 50,
+    "name": {
+      "en": "Coral Shoal",
+      "fr": "Banc de Corail",
+      "es": "Banco de Coral"
+    }
+  },
+  "shoal_dark_jungle": {
+    "min_level": 80,
+    "name": {
+      "en": "Jungle Shoal",
+      "fr": "Banc Luxuriant",
+      "es": "Banco de Jungla"
+    }
+  },
+  "shoal_desert": {
+    "min_level": 40,
+    "name": {
+      "en": "Desert Shoal",
+      "fr": "Banc Désertique",
+      "es": "Banco Desértico"
+    }
+  },
+  "shoal_plain": {
+    "min_level": 20,
+    "name": {
+      "en": "Plain Shoal",
+      "fr": "Banc des Plaines",
+      "es": "Banco Llano"
+    }
+  },
+  "shoal_superdeep": {
+    "min_level": 90,
+    "name": {
+      "en": "Super Deep Shoal",
+      "fr": "Banc Super Profond",
+      "es": "Banco Superprofundo"
+    }
+  },
+  "diamond": {
+    "min_level": 8,
+    "name": {
+      "en": "Diamond",
+      "fr": "Diamant",
+      "es": "Diamante"
+    }
+  },
+  "emerald": {
+    "min_level": 5,
+    "name": {
+      "en": "Emerald",
+      "fr": "Émeraude",
+      "es": "Esmeralda"
+    }
+  },
+  "ore_bauxite": {
+    "min_level": 30,
+    "name": {
+      "en": "Bauxite",
+      "fr": "Bauxite",
+      "es": "Bauxita"
+    }
+  },
+  "ore_seafoam": {
+    "min_level": 60,
+    "name": {
+      "en": "Seafoam",
+      "fr": "Écume Marine",
+      "es": "Espuma marina"
+    }
+  },
+  "ore_tin": {
+    "min_level": 40,
+    "name": {
+      "en": "Tin",
+      "fr": "Étain",
+      "es": "Estaño"
+    }
+  },
+  "coal": {
+    "min_level": 1,
+    "name": {
+      "en": "Coal",
+      "fr": "Charbon",
+      "es": "Carbón"
+    }
+  },
+  "copper": {
+    "min_level": 1,
+    "name": {
+      "en": "Copper",
+      "fr": "Cuivre",
+      "es": "Cobre"
+    }
+  },
+  "gold": {
+    "min_level": 3,
+    "name": {
+      "en": "Gold",
+      "fr": "Or",
+      "es": "Oro"
+    }
+  },
+  "ore_dolomite": {
+    "min_level": 20,
+    "name": {
+      "en": "Dolomite",
+      "fr": "Dolomite",
+      "es": "Dolomita"
+    }
+  },
+  "ore_liquid_diamond": {
+    "min_level": 50,
+    "name": {
+      "en": "Liquid Diamond",
+      "fr": "Diamant Liquide",
+      "es": "Diamante Líquido"
+    }
+  },
+  "ore_opale": {
+    "min_level": 90,
+    "name": {
+      "en": "Opale",
+      "fr": "Opale",
+      "es": "Ópalo"
+    }
+  },
+  "ore_rainbow": {
+    "min_level": 100,
+    "name": {
+      "en": "Rainbow",
+      "fr": "Arc-en-ciel",
+      "es": "Arcoíris"
+    }
+  },
+  "lapis": {
+    "min_level": 5,
+    "name": {
+      "en": "Lapis Lazuli",
+      "fr": "Lapis-lazuli",
+      "es": "Lapislázuli"
+    }
+  },
+  "ore_ashtone": {
+    "min_level": 10,
+    "name": {
+      "en": "Ashstone",
+      "fr": "Cendrite",
+      "es": "Piedra de Ceniza"
+    }
+  },
+  "ore_silicate": {
+    "min_level": 70,
+    "name": {
+      "en": "Silicate",
+      "fr": "Silicate",
+      "es": "Silicato"
+    }
+  },
+  "ore_topaz": {
+    "min_level": 80,
+    "name": {
+      "en": "Topaz",
+      "fr": "Topaze",
+      "es": "Topacio"
+    }
+  },
+  "redstone": {
+    "min_level": 5,
+    "name": {
+      "en": "Redstone",
+      "fr": "Redstone",
+      "es": "Polvo de Redstone"
+    }
+  },
+  "iron": {
+    "min_level": 1,
+    "name": {
+      "en": "Iron",
+      "fr": "Fer",
+      "es": "Hierro"
+    }
+  },
+  "ore_cobalt": {
+    "min_level": 30,
+    "name": {
+      "en": "Cobalt",
+      "fr": "Cobalt",
+      "es": "Cobalto"
+    }
+  },
+  "ore_manganese": {
+    "min_level": 20,
+    "name": {
+      "en": "Manganese",
+      "fr": "Manganèse",
+      "es": "Manganeso"
+    }
+  },
+  "ore_raw_obsidian": {
+    "min_level": 40,
+    "name": {
+      "en": "Raw Obsidian",
+      "fr": "Obsidienne brute",
+      "es": "Obsidiana cruda"
+    }
+  },
+  "ore_silver": {
+    "min_level": 10,
+    "name": {
+      "en": "Silver",
+      "fr": "Argent",
+      "es": "Plata"
+    }
+  },
+  "tree_chestnut": {
+    "min_level": 20,
+    "name": {
+      "en": "Chestnut",
+      "fr": "Châtaigne",
+      "es": "Nuez"
+    }
+  },
+  "tree_laughing": {
+    "min_level": 80,
+    "name": {
+      "en": "Laughing",
+      "fr": "Rieur",
+      "es": "Riendo"
+    }
+  },
+  "tree_mahogany": {
+    "min_level": 40,
+    "name": {
+      "en": "Mahogany",
+      "fr": "Teck",
+      "es": "Caoba"
+    }
+  },
+  "tree_mystic_horbeam": {
+    "min_level": 90,
+    "name": {
+      "en": "Mystic horbeam",
+      "fr": "Charme Mystique",
+      "es": "Aliso místico"
+    }
+  },
+  "tree_olive": {
+    "min_level": 40,
+    "name": {
+      "en": "Olive",
+      "fr": "Olive",
+      "es": "Oliva"
+    }
+  },
+  "tree_sacred_coconut": {
+    "min_level": 90,
+    "name": {
+      "en": "Sacred coconut tree",
+      "fr": "Cocotier Sacré",
+      "es": "Árbol sagrado de coco"
+    }
+  },
+  "tree_banana": {
+    "min_level": 5,
+    "name": {
+      "en": "Banana",
+      "fr": "Banane",
+      "es": "Plátano"
+    }
+  },
+  "tree_coconut": {
+    "min_level": 1,
+    "name": {
+      "en": "Coconut",
+      "fr": "Noix de coco",
+      "es": "Coco"
+    }
+  },
+  "tree_dark_coconut": {
+    "min_level": 60,
+    "name": {
+      "en": "Dark coconut tree",
+      "fr": "Cocotier Sombre",
+      "es": "Árbol de coco oscuro"
+    }
+  },
+  "tree_maple": {
+    "min_level": 70,
+    "name": {
+      "en": "Maple",
+      "fr": "Érable",
+      "es": "Arce"
+    }
+  },
+  "tree_walnut": {
+    "min_level": 40,
+    "name": {
+      "en": "Walnut",
+      "fr": "Noyer",
+      "es": "Nuez"
+    }
+  },
+  "tree_elm": {
+    "min_level": 100,
+    "name": {
+      "en": "Elm",
+      "fr": "Orme",
+      "es": "Olmo"
+    }
+  },
+  "tree_ecalyptus": {
+    "min_level": 60,
+    "name": {
+      "en": "Ecalyptus",
+      "fr": "Eucalyptus",
+      "es": "Eucalipto"
+    }
+  },
+  "tree_hazelnut": {
+    "min_level": 40,
+    "name": {
+      "en": "Hazelnut",
+      "fr": "Noisette",
+      "es": "Avellana"
+    }
+  },
+  "tree_yew": {
+    "min_level": 70,
+    "name": {
+      "en": "Yew",
+      "fr": "If",
+      "es": "Tejo"
+    }
+  },
+  "plant_five_leaf_clover": {
+    "min_level": 90,
+    "name": {
+      "en": "Five-Leaf Clover",
+      "fr": "Trèfle à cinq feuilles",
+      "es": "Cinco hojas"
+    }
+  },
+  "plant_ginger_root": {
+    "min_level": 70,
+    "name": {
+      "en": "Ginger Root",
+      "fr": "Racine de Gingembre",
+      "es": "Raíz de jengibre"
+    }
+  },
+  "plant_hemlock": {
+    "min_level": 80,
+    "name": {
+      "en": "Hemlock",
+      "fr": "Cigüe",
+      "es": "Cicuta"
+    }
+  },
+  "plant_mandrake": {
+    "min_level": 80,
+    "name": {
+      "en": "Mandrake",
+      "fr": "Mandragore",
+      "es": "Mandrágora"
+    }
+  },
+  "plant_st_johns_wort": {
+    "min_level": 20,
+    "name": {
+      "en": "St. John's Wort",
+      "fr": "Millepertuis",
+      "es": "Hipérico"
+    }
+  },
+  "plant_yarrow": {
+    "min_level": 50,
+    "name": {
+      "en": "Yarrow",
+      "fr": "Achillée",
+      "es": "Radicheta"
+    }
+  },
+  "plant_clover": {
+    "min_level": 5,
+    "name": {
+      "en": "Clover",
+      "fr": "Trèfle",
+      "es": "Trébol"
+    }
+  },
+  "plant_foxglove": {
+    "min_level": 40,
+    "name": {
+      "en": "Foxglove",
+      "fr": "Queue-de-loup",
+      "es": "Dedalera"
+    }
+  },
+  "plant_heart_blue": {
+    "min_level": 5,
+    "name": {
+      "en": "Blue Heartvine",
+      "fr": "Vigne Cœur Bleu",
+      "es": "Corazón Azul"
+    }
+  },
+  "plant_lily": {
+    "min_level": 1,
+    "name": {
+      "en": "Lily",
+      "fr": "Lys",
+      "es": "Lirio"
+    }
+  },
+  "plant_mullein": {
+    "min_level": 40,
+    "name": {
+      "en": "Mullein",
+      "fr": "Molène",
+      "es": "Gualda"
+    }
+  },
+  "plant_origami": {
+    "min_level": 100,
+    "name": {
+      "en": "Origami",
+      "fr": "Origami",
+      "es": "Origami"
+    }
+  },
+  "plant_belladonna": {
+    "min_level": 10,
+    "name": {
+      "en": "Belladonna",
+      "fr": "Belladone",
+      "es": "Belladona"
+    }
+  },
+  "plant_chamomille": {
+    "min_level": 20,
+    "name": {
+      "en": "Chamomille",
+      "fr": "Camomille",
+      "es": "Manzanilla"
+    }
+  },
+  "plant_echinacea": {
+    "min_level": 90,
+    "name": {
+      "en": "Echinacea",
+      "fr": "Échinacée",
+      "es": "Echinacea"
+    }
+  },
+  "plant_heart_red": {
+    "min_level": 5,
+    "name": {
+      "en": "Red Heartvine",
+      "fr": "Vigne Cœur Rouge",
+      "es": "Corazón Rojo"
+    }
+  },
+  "plant_heart_yellow": {
+    "min_level": 5,
+    "name": {
+      "en": "Yellow Heartvine",
+      "fr": "Vigne Cœur Jaune",
+      "es": "Corazón Amarillo"
+    }
+  },
+  "plant_henbane": {
+    "min_level": 40,
+    "name": {
+      "en": "Henbane",
+      "fr": "Jusquiame",
+      "es": "Beleño"
+    }
+  },
+  "plant_snowdrop": {
+    "min_level": 60,
+    "name": {
+      "en": "Snowdrop",
+      "fr": "Galanthus",
+      "es": "Campanilla"
+    }
+  },
+  "plant_peppermint": {
+    "min_level": 60,
+    "name": {
+      "en": "Peppermint",
+      "fr": "Menthe poivrée",
+      "es": "Menta"
+    }
+  },
+  "crop_quinoa_yellow": {
+    "min_level": 40,
+    "name": {
+      "en": "Yellow Quinoa",
+      "fr": "Quinoa Jaune",
+      "es": "Quinua Amarilla"
+    }
+  },
+  "crop_rye": {
+    "min_level": 80,
+    "name": {
+      "en": "Rye",
+      "fr": "Seigle",
+      "es": "Centeno"
+    }
+  },
+  "crop_barley": {
+    "min_level": 10,
+    "name": {
+      "en": "Barley",
+      "fr": "Orge",
+      "es": "Cebada"
+    }
+  },
+  "crop_corn": {
+    "min_level": 30,
+    "name": {
+      "en": "Corn",
+      "fr": "Maïs",
+      "es": "Maíz"
+    }
+  },
+  "crop_quinoa_orange": {
+    "min_level": 60,
+    "name": {
+      "en": "Orange Quinoa",
+      "fr": "Quinoa Orange",
+      "es": "Quinua Naranja"
+    }
+  },
+  "crop_quinoa_red": {
+    "min_level": 90,
+    "name": {
+      "en": "Red Quinoa",
+      "fr": "Quinoa Rouge",
+      "es": "Quinua Roja"
+    }
+  },
+  "crop_rice": {
+    "min_level": 50,
+    "name": {
+      "en": "Rice",
+      "fr": "Riz",
+      "es": "Arroz"
+    }
+  },
+  "crop_quinoa_green": {
+    "min_level": 20,
+    "name": {
+      "en": "Green Quinoa",
+      "fr": "Quinoa Verte",
+      "es": "Quinua Verde"
+    }
+  },
+  "crop_quinoa_purple": {
+    "min_level": 70,
+    "name": {
+      "en": "Purple Quinoa",
+      "fr": "Quinoa Pourpre",
+      "es": "Quinua Púrpura"
+    }
+  }
+}

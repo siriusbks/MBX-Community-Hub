@@ -1,0 +1,42 @@
+{
+        "mega_brain": {
+      "category": "title",
+      "icon": "iVBORw0KGgoAAAANSUhEUgAAAHAAAABgCAYAAADFNvbQAAAD2UlEQVR4nOydz0sUYRjHpxQ8ZIpuaUwiFEkFgrFdg05F1N8QQt07CNGtQ6e8dOhW0A/p3q0oOkRUdGpJELawDFZdUlml8pBgGDvxhs7O86w+zMy+X/p+Luu+747z7nz2cb698862OyDQUCA4FAgOBYJDgeBQIDgUCA4FgkOB4FAgOBQIDgWC097qAWTNp0uPNqS+o/cv7sp3NOnDCgSHAsGhQHAoEBwKBEdNod9uvRIT3IGx06YE51MqzOL95Q0rEBwKBIcCwaFAcCgQHJi50LzTq7Y/DW0sWaReViA4FAgOBYJDgeBQIDjmFKolqizoHh7MdTuNN++nxL6XZ2+nfly0RMwKBIcCwaFAcCgQHAoER51/yyJplp9NmrY7fm4k7aGoY5lZmBf7DvcfNO3P+h6+T1XEPlYgOBQIDgWCQ4HgeHVBt/PI/sT21c9Lie3tfZ2J7euLq9t6ndtf/PfX2ws9cn7rLCRv1wpUgdpVYi2hWpPmfG0xsb22UA3CqZ6G9o7B3sTXr1WW//1cnVsRPxgalR8/m76mPq44p04O73hfzdDmXr2oQHeAZ95+SOwvHAsjWU6ME7dZ1GakfqlipEqsCvF9T2/jh6lV8BwIDgWCQ4HgeHEOzIudptxQuhhcbR5w8sIsUJuf03hebkxUYdvfA3Vlcjwx9RbbihvBdBCUSqWov1gsRgnYPbeu4Xz39Uv0WC1XEseTNtoxe/Ditdg3pIQmLyswLigtXKW5SpRSpkPq1w5o3vAcCI6XFSj9qUwLV4nuHNesEn2GFQiOFxXoKsBVnEOqxHh7fEpNmqGR9itVopRCC117o8fax8aptLzJRGBS0twO14dGtzyv/T4TCSoMhcGN6QnT7wwHeoKOvq7o565f61s7y/J2Dxcei313Dl2NHrv7d/aXXUuaGpeFdB74UoEO6RNdby9NNp4HXSWunVhW/xnRrCLjlVd/XpqVz7ur+5ZyXdSswXMgOBQIDgWCQ4HgeBVirPToast6pTYbJ4jiIbM3uV98v9VIzgUCA4FgkOB4FAgOJl8J6Z2hVxb42hFW4tpvUdeWxNrXQGgvXdtvlODFQgOBYJDgeBQIDgUCI55LvTdyDVT0tQSY3VuRezT7ln3Ce09XBg9L284Nm7aHysQHAoEhwLBoUBwKBCcTL6p6cnEU7HPmkI1rN+AZL2XP4uxaGjzsqxAcCgQHAoEhwLBoUBwzFfkrQlVu09cS6HhgLyGU7vq7tP3k2rpXEO7Ws8KBIcCwaFAcCgQHAoEJ/d1odb5Ti2FWsni/1XKImlqsALBoUBwKBAcCgSHAsH5EwAA//+cZ0BrTtLIGAAAAABJRU5ErkJggg==",
+      "id": "mega_brain",
+      "lore": "Misclicked into victory, overthinks level 5 mobs, outsmarts himself daily.",
+      "name": "Mega Brain",
+      "rarity": "LEGENDARY"
+    },
+    "the_collector": {
+      "category": "title",
+      "icon": "iVBORw0KGgoAAAANSUhEUgAAAHAAAABgCAYAAADFNvbQAAAEYElEQVR4nOydzU8bRxjGt5X5sLGxMZSCoIi2BgOtqkqtStXSA6dK7bWVqir3/IeJlENOKBIHFCECwXwE5IhPg/kw4Dg5JPKGRfay77vR4DX7wPO7TLzjGdv65dU+Hu8sESsAJoe/ft/oOWc3Nz5r9Jx3gc9v+w2Qm0GB4FAgOBQIDgWCY5xCtaT54OefjOYslkpat/h69zmhsgLBoUBwKBAcCgSHAsFRU6iWNCcHB8RxPmlSJJ1IiH1/ZUe1oU1NqD1j2Yav9VZKZ2JfaWtL/AysQHAoEBwKBIcCwaFAcCKmSbO7o0PsOzw/NxqnpVctoQaBljS/+/dvozl351fEvu2550ZzsgLBoUBwKBAcCgSHAsGJHF9cGA00TZpBJFSfKwDENLne3ioOGpz6TZtT5GTnSOzTkqa23qnBCgSHAsGhQHAoEBwKBCeQ3UlBJNT56V+M3kslpayhzjwTu8r7BaPXW3/8ROwzTZoarEBwKBAcCgSHAsGhQHDUVJTt/VJcR/xzdMToBV8WDsW+wh+/Gs2Z7O8yGqetW5qm0CDWOzVYgeBQIDgUCA4FghPIUpopY0NDnseX83n1+fGezrrjqztbdY9H+r0vjzxrSXjOX523Eu/0fb9Lr9Z9nxM0qsDc/p6Wmox26Ax1pcW+SvHY83g1EUZ7vxDHnR2c1j2uTZdaQnXEJ991eR6XaJ2ds9vU4uK1vlSL/Cv/rDqrGaGowMzEuN0+Ff5HT3zzrdWWTl1VilN5fpXp7ndXpoNToe5+af42D3G3Bc+B4FAgOBQITijOgc1CSqPSuVFKxRsNfVc3w1igT0LVuJZe46eXKbKjXRxUzK1Z+7ll+9+95bd2e/X4xx/EcdVE6nxdcDO9d2C3X62t1R3vy1TUD/C7ch1qs+82FcoKrKZOK4DvWe4Uu+sS50bqb/ZWNw2eA8EJZQU6lVdbiaXtnYbN71TidCZjt36VGGZYgeCEogKXFhbsduL//+qP11TieSJpvbgMLU77fXbMbtOutCitoLhxKq9PqETnuJtkLGa3hY3bz6NNF6il14F8vi6lHa6s2u1JpMWKRGPinNWEWouTTqs87O6x+to+jh1/vV33POc61Gi5fO1xMhoVX+/kckeXV+Js9t2mQnWjVO3GAq3xuNGcVYESphcga2gCta8Yj3LyDRA0gTwHgkOB4FAgOBQITqhCjIZpwPmnXU6TQezl18Zp18Rq5I+KYh8rEBwKBIcCwaFAcCgQnFAsZn8KB8s5MTFru6gsZReVadKc2ZQXy08rb8Q+bS1Uey9MoXcYCgSHAsGhQHAoEByYFNpstKQ5Nex9wa/l88Oshuk6KSsQHAoEhwLBoUBwKBCcO5FCTffya3eb0tY0tXVLbb1TS7baeqf2+ViB4FAgOBQIDgWCQ4HgwFwXGgTaL/mpmLwbyhTt71SZ3nOAFQgOBYJDgeBQIDgUCM69TqEa6rWmhtzg7lYirEBwKBAcCgSHAsGhQHA+BAAA///a2m30WABJvgAAAABJRU5ErkJggg==",
+      "id": "the_collector",
+      "lore": "You've conquered every challenge, gathered every piece, the ultimate master of collections.",
+      "name": "THE COLLECTOR",
+      "rarity": "MYTHIC"
+    },
+    "the_machine": {
+      "category": "title",
+      "icon": "iVBORw0KGgoAAAANSUhEUgAAAHAAAABgCAYAAADFNvbQAAACqElEQVR4nOybMW4TXRRG5/+xhGkT6Kgj7wFYgyXvxivwJoAlWHJqOsBLADs1nQkSVAYFg4SgMb5vPC9543fQOQ1k7nvOaE6u5tMdz/+NoFEgHAXCUSAcBcJRIBwFwlEgHAXCUSAcBcJRIJzBqU/glMzn8x85+yaTyX93fzZ52IFwFAhHgXAUCEeBcKpJU6VIJc0nT5+F+64/bsLaarUKa30nVDsQjgLhKBCOAuEoEA4mhebOLUejUVi7uHicdS7Xn76GtbdvXoe1EgnVDoSjQDgKhKNAOAqEU1UKzZ1bnp/dL3VKnbm6+hDWFotFWJtOp1ku7EA4CoSjQDgKhKNAOEVSaE1zy5q4vHwV1tbrdVhLJVQ7EI4C4SgQjgLhVPVyy3A4PHh8u90GO6K/v92R63LXR/v6JzuFppJmKk2eP3wU184eBJXoQrEEpuakqe+aphJqFR04GNz7/b82Ubvg57b1zR2vrwfvgXAUCEeBcKq4B/bHsaEnd33/JAWWSZqHnp63hZJ/g9R1Wa/zntZX2oGlhB6bYvfX14v3QDiVdmDXTqnt8/vDDoRTSQfud0R0fNeyfn9f19972xFc/2TPQmezWZhQx+NxuK/bLDT3Akfruo7qDvP5y7df/97cfP+rlnq3vsT3QivpwD9EF7jr8a7rus1AD4k7Fd4D4SgQjgLhKBBOdohpSU1ZCbVpus5Qy5F6D/7li+dZn5mbNFPYgXAUCEeBcBQIR4FwiozSakqoqTS5ev8urC2Xy7BWIk3mYgfCUSAcBcJRIBwFwqkmTTW3eMq/2cRPwVNpMkVNSTOFHQhHgXAUCEeBcBQIB5G0mpaEmoKSJnOxA+EoEI4C4SgQjgJFTokdCEeBcBQIR4FwFAhHgXAUCEeBcBQIR4FwFAjnZwAAAP//w2amlTxkOxwAAAAASUVORK5CYII=",
+      "id": "the_machine",
+      "lore": "Human or bot? We'll never know. But those votes keep rolling in. Suspiciously efficient.",
+      "name": "The machine",
+      "rarity": "LEGENDARY"
+    },
+    "cool_pirate": {
+      "category": "title",
+      "icon": "iVBORw0KGgoAAAANSUhEUgAAAHAAAABgCAYAAADFNvbQAAACqElEQVR4nOybMW4TXRRG5/+xhGkT6Kgj7wFYgyXvxivwJoAlWHJqOsBLADs1nQkSVAYFg4SgMb5vPC9543fQOQ1k7nvOaE6u5tMdz/+NoFEgHAXCUSAcBcJRIBwFwlEgHAXCUSAcBcJRIJzBqU/glMzn8x85+yaTyX93fzZ52IFwFAhHgXAUCEeBcKpJU6VIJc0nT5+F+64/bsLaarUKa30nVDsQjgLhKBCOAuEoEA4mhebOLUejUVi7uHicdS7Xn76GtbdvXoe1EgnVDoSjQDgKhKNAOAqEU1UKzZ1bnp/dL3VKnbm6+hDWFotFWJtOp1ku7EA4CoSjQDgKhKNAOEVSaE1zy5q4vHwV1tbrdVhLJVQ7EI4C4SgQjgLhVPVyy3A4PHh8u90GO6K/v92R63LXR/v6JzuFppJmKk2eP3wU184eBJXoQrEEpuakqe+aphJqFR04GNz7/b82Ubvg57b1zR2vrwfvgXAUCEeBcKq4B/bHsaEnd33/JAWWSZqHnp63hZJ/g9R1Wa/zntZX2oGlhB6bYvfX14v3QDiVdmDXTqnt8/vDDoRTSQfud0R0fNeyfn9f19972xFc/2TPQmezWZhQx+NxuK/bLDT3Akfruo7qDvP5y7df/97cfP+rlnq3vsT3QivpwD9EF7jr8a7rus1AD4k7Fd4D4SgQjgLhKBBOdohpSU1ZCbVpus5Qy5F6D/7li+dZn5mbNFPYgXAUCEeBcBQIR4FwiozSakqoqTS5ev8urC2Xy7BWIk3mYgfCUSAcBcJRIBwFwqkmTTW3eMq/2cRPwVNpMkVNSTOFHQhHgXAUCEeBcBQIB5G0mpaEmoKSJnOxA+EoEI4C4SgQjgJFTokdCEeBcBQIR4FwFAhHgXAUCEeBcBQIR4FwFAjnZwAAAP//w2amlTxkOxwAAAAASUVORK5CYII=",
+      "id": "cool_pirate",
+      "lore": "You're a cool pirate, a very cool pirate. Certified.",
+      "name": "Cool pirate",
+      "rarity": "EPIC"
+    },
+    "puddle_master": {
+      "category": "title",
+      "icon": "iVBORw0KGgoAAAANSUhEUgAAAHAAAABgCAYAAADFNvbQAAADTklEQVR4nOydT6sSURjGvZdgqKDUxCAJDAQpWrgRV678CrVqL7T2c9x1Sxcu6yv4BXTjqlCMBPG2Ef8EEbYp7pUTeZr3dTq3OZ4nnt/mMvPOoSO/Xs7jmVHPMwQaCgSHAsGhQHAoEBwKBOfWqSfwO/V6/cep55CE4XB4duo5GNiB4FAgOBQIDgWCQ4HgpJJCXdNkq9Vy+vfK5bLTuBvg9PrSSK/sQHAoEBwKBIcCwaFAcJxTkZY0tTT59sMLsXb3diTWig+LYm2z2Yo1je+7ndO4r9/kcS+fvhNr/X5frLkmVHYgOBQIDgWCQ4HgUCA4qeyFaknzSfmxWCs+uPPP56Il1OfP5D3UycfPYk1LxNprz2fkFOoKOxAcCgSHAsGhQHAoEJxUUmj+8rVY217K4z49eiPWctl7Yi2bve9U05LmevNFrJ29fyXW8mIlHdiB4FAgOBQIDgWCQ4HgpJJCe72eWBuNRmLt4kJOrxklvbrdj9cfR9DSZLPZFGuVSkWsdbvdhDNLDjsQHAoEhwLBoUBwgvqIdbVajT0/Ho9vdL10nev1pVLp+u9isVCv84F3gbVaTaw1Go3Y8zvh+c0o2j9HOplMDs6v1+uD41wuFzt+u93n1+VyeXC+UChk5vO5OM+QCKIDjYhjokzdPpaE2eft49Vqdf33SlgmRmQIHXYMroHgUCA4FAhOEGugL+wwc36+//9rr30GkzZtQlobgxKoxffZbOZ1Lq7k837vyQclMG1MCjWdKHWeIaROk+AaCA5MB0rvEV0wnSi9/0OCHQhOEB2YpLuiKPp1nb0jY6dLe8dFwnSe1IlSCjWEsEamIlC7667thZK/J4gOTEJcl0p7oTbH6nbnXR2H0F1J4BoIDgWCQ4HgUCA4qYSYwWAg1v73FGpuEvuCHQgOBYJDgeBQIDgUCI5zCj3y/Zbid4m2221xkPQAb2i4fgKJ31pP/oACwaFAcCgQHAoEx/sNXd93633vTfqGHQgOBYJDgeBQIDgUCI7330PXfnOp0+mI47SEqiVbLYVOp1OxFtJ+pwY7EBwKBIcCwaFAcCgQHO8pVMP19+d94ztparADwaFAcCgQHAoEhwIJOSXsQHAoEBwKBIcCwaFAcH4GAAD//yYq6eXMl62BAAAAAElFTkSuQmCC",
+      "id": "puddle_master",
+      "lore": "Knows every puddle by name. A true connoisseur of wet terrain.",
+      "name": "Puddle master",
+      "rarity": "RARE"
+    }
+}
