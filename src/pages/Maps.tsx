@@ -68,7 +68,7 @@ export function Maps() {
 
               <Popover>
                 <PopoverTrigger asChild>
-                  <div className="absolute top-3 right-3 bg-black/30 rounded-full p-1 cursor-help hover:bg-black/50 transition-colors">
+                  <div className="absolute top-3 right-3 bg-black/30 rounded-full p-1 hover:bg-black/50 transition-colors">
                     <Info className="size-4 text-primary" />
                   </div>
                 </PopoverTrigger>
@@ -106,7 +106,7 @@ export function Maps() {
             </div>
 
             <div className="p-4 flex flex-col items-center bg-card-dark">
-              <h3 className="text-primary font-bold text-xl mb-1">{t(("maps.island.") + map.id)}</h3>
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1">{t(("maps.island.") + map.id)}</h3>
               {map.level === 0 ? (
                 <p className="text-xs text-muted-foreground mb-4">
                   {t("maps.no_required")}
