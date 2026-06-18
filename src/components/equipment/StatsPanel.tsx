@@ -107,6 +107,8 @@ interface Props {
     setPetTrait: (t:string) => void;
     petEnchanted: boolean;
     setPetEnchanted: (v:boolean) => void;
+	hasPass: boolean;
+	setHasPass: (v: boolean) => void;
 }
 
 export const StatsPanel: React.FC<Props> = ({
@@ -123,6 +125,8 @@ export const StatsPanel: React.FC<Props> = ({
     setPetTrait,
     petEnchanted,
     setPetEnchanted,
+	hasPass,
+	setHasPass,
 }) => {
     const { t: tEquip } = useTranslation("equipment");
     /* const { t: tSkulls } = useTranslation("skulls", {
@@ -130,8 +134,6 @@ export const StatsPanel: React.FC<Props> = ({
     }); */
     const { setsById } = useSets();
 	
-	const [hasPass, setHasPass] = useState(false);
-
     /* const selectedSkullLabels = useMemo(() => {
         if (skullIds?.length) {
             return skullIds.map((id) =>
