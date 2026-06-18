@@ -1,4 +1,6 @@
+import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
+import VillagePreview from "@pages/VillagePreview";
 import { lazy, type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -16,6 +18,8 @@ export const AppRoutes: FC = () => {
 
                 {/* Maps */}
                 <Route path="/maps" element={<MapsPage />} />
+                <Route path="/map/island_village" element={<VillagePreview />} />
+                <Route path="/map/*" element={<MapPreview />} />
 
                 {/* Codex */}
                 <Route path="/codex/items" element={<ItemsCodex />} />

@@ -14,14 +14,17 @@ import {
   PopoverTrigger,
 } from "@components/ui/popover"
 import { RarityBadge, RarityBorder } from "@const/rarities";
+import { Link } from "react-router-dom";
 
-
+const player_islands = [
+  { id: "island_home", level: 0, command: "/is" },
+  { id: "island_nether", level: 20, command: "/isn" },
+  { id: "island_end", level: 40, command: "/ise" },
+  { id: "island_village", level: 0, command: "/v" },
+];
 
 const islands = [
   { id: "spawn", level: 0 },
-  { id: "island_home", level: 0 },
-  { id: "island_nether", level: 20 },
-  { id: "island_end", level: 40 },
   { id: "island_tropical", level: 0 },
   { id: "island_plain", level: 10 },
   { id: "island_bamboo", level: 20 },
@@ -61,7 +64,50 @@ export function Maps() {
         }
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl z-10">
+      <span className="flex flex-row items-center justify-between w-full">
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Player Islands</p>
+        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full  z-10">
+        {player_islands.map((map, index) => (
+          <Card key={index} className="group p-0 gap-0 overflow-hidden ring-1 ring-border/50">
+            <div className="relative h-48 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
+
+
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
+                        imageRendering: "pixelated",
+                    }}/>
+            </div>
+
+            <div className="p-4 flex flex-col items-center bg-card-dark">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1">{t(("maps.island.") + map.id)}</h3>
+              {map.level === 0 ? (
+                <p className="text-xs text-muted-foreground mb-4">
+                  {t("maps.no_required")}
+                </p>
+              ) : (
+                <p className="text-xs text-muted-foreground mb-4">
+                  {t("maps.required")}
+                  {map.level}
+                </p>
+              )}
+
+              <Link to={`/map/${map.id}`}>
+              <Button size="lg" className="">
+                {t("maps.view_map")}
+              </Button></Link>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <span className="flex flex-row items-center justify-between w-full mt-8">
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Exploration Islands</p>
+        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  z-10">
+
+
         {islands.map((map, index) => (
           <Card key={index} className="group p-0 gap-0 overflow-hidden ring-1 ring-border/50">
             <div className="relative h-48 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
@@ -102,7 +148,9 @@ export function Maps() {
               </Popover>
 
 
-              <img src={`/media/maps/${map.id}.png`} className="size-40 group-hover:size-44 object-contain transition-all" />
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
+                        imageRendering: "pixelated",
+                    }}/>
             </div>
 
             <div className="p-4 flex flex-col items-center bg-card-dark">
@@ -118,9 +166,11 @@ export function Maps() {
                 </p>
               )}
 
+              <Link to={`/map/${map.id}`}>
               <Button size="lg" className="">
                 {t("maps.view_map")}
               </Button>
+              </Link>
             </div>
           </Card>
         ))}

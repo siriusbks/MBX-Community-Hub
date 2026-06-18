@@ -25,5 +25,146 @@
         "fish": [
             "shoal_tropical"
         ]
+    },
+    "island_home": {
+        "trees": [],
+        "ores": [],
+        "plants": [],
+        "fish": [],
+        "treasure": [
+            "common_bundle",
+            "uncommon_bundle",
+            "rare_bundle",
+            "epic_bundle",
+            "legendary_bundle"
+        ]
+    },
+    "island_nether": {
+        "trees": [],
+        "ores": [],
+        "plants": [],
+        "fish": [],
+        "treasure": [
+            "rare_bundle",
+            "epic_bundle",
+            "legendary_bundle"
+        ]
+    },
+    "island_end": {
+        "trees": [],
+        "ores": [],
+        "plants": [],
+        "fish": [],
+        "treasure": [
+            "epic_bundle",
+            "legendary_bundle",
+            "mythic_bundle"
+        ]
+    },
+    "island_tropical": {
+        "trees": [
+            "tree_coconut",
+            "tree_banana",
+            "tree_mahogany",
+            "tree_dark_coconut",
+            "tree_sacred_coconut"
+        ],
+        "ores": [
+            "ore_silver",
+            "ore_ashstone",
+            "ore_bauxite"
+        ],
+        "plants": [
+            "plant_lily",
+            "plant_clover",
+            "plant_belladonna",
+            "plant_hemlock",
+            "plant_mandrake"
+        ],
+        "fish": [
+            "shoal_deep",
+            "shoal_coral",
+            "shoal_jungle"
+        ]
+    },
+    "island_plain": {
+        "trees": [
+            "tree_chestnut",
+            "tree_walnut",
+            "tree_mystic_horbeam"
+        ],
+        "ores": [
+            "ore_dolomite",
+            "ore_cobalt",
+            "ore_raw_obsidian",
+            "ore_rainbow"
+        ],
+        "plants": [
+            "plant_chamomille",
+            "plant_henbane",
+            "plant_peppermint",
+            "plant_echinacea"
+        ],
+        "fish": [
+            "shoal_plain",
+            "shoal_swamp"
+        ]
+    },
+    "island_bamboo": {
+        "trees": [
+            "tree_laughing",
+            "tree_ecalyptus",
+            "tree_elm"
+        ],
+        "ores": [
+            "ore_manganese",
+            "ore_liquid_diamond"
+        ],
+        "plants": [
+            "plant_st_johns_wort",
+            "plant_ginger_root",
+            "plant_origami"
+        ],
+        "fish": [
+            "shoal_bamboo",
+            "shoal_bamboo_jungle"
+        ]
+    },
+    "island_snow": {
+        "trees": [
+            "tree_hazelnut",
+            "tree_yew",
+            "tree_maple"
+        ],
+        "ores": [
+            "ore_tin",
+            "ore_opale"
+        ],
+        "plants": [
+            "plant_mullein",
+            "plant_foxglove",
+            "plant_snowdrop",
+            "plant_yarrow",
+            "plant_five_leaf_clover"
+        ],
+        "fish": [
+            "shoal_cold",
+            "shoal_superdeep"
+        ]
+    },
+    "island_desert": {
+        "trees": [
+            "tree_olive"
+        ],
+        "ores": [
+            "ore_seafoam",
+            "ore_silicate",
+            "ore_topaz"
+        ],
+        "plants": [],
+        "fish": [
+            "shoal_desert",
+            "shoal_canyon"
+        ]
     }
 }
