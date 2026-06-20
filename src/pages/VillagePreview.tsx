@@ -13,8 +13,10 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@components/ui/popover"
-import { RarityBadge, RarityBorder } from "@const/rarities"
+import { ItemSlot, RarityBadge, RarityBorder } from "@const/rarities"
 import { Link, useParams } from "react-router-dom"
+import { Separator } from "@components/ui/separator"
+import mineboxItems from "@const/APIPreload/items.json";
 
 export function VillagePreview() {
   const { t, i18n } = useTranslation("maps")
@@ -42,6 +44,8 @@ export function VillagePreview() {
   const cellEntries = Object.entries(cells)
   const buildings = villageData.buildings?.[0] ?? {}
   const buildingEntries = Object.entries(buildings)
+
+
 
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
@@ -96,14 +100,63 @@ export function VillagePreview() {
       <p>Buildings</p>
       <div className="grid w-full grid-cols-3 gap-4">
         {buildingEntries.map(([buildingKey, buildingData]) => (
-          <Card className="w-full p-0 gap-0">
-            {buildingKey}
-            
-            <Card className="w-full p-0">
-              Tier X
+          <Card className="w-full p-0 gap-0 ">
+            <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
+              <p className="text-primary text-md uppercase ">{buildingKey}</p>
             </Card>
-            
-            </Card>
+
+            {buildingData.map((level, index) => (
+              <div key={index} className="p-2 flex flex-col justify-between">
+
+                {/* Header */}
+                <span className="flex flex-row justify-between">
+                  <span>Tier {index + 1}</span>
+                  <span>Prod: {level.production}/h | Mag: {level.storage}</span>
+                </span>
+
+                {/* Cost */}
+                <p>Build Cost</p>
+                {level.cost && (
+                  <>
+                    <span className="w-full grid grid-cols-5 gap-2">
+                      {level.cost.map((costs, index) => {
+                        // Szukamy przedmiotu w mineboxItems
+                        const itemKey = Object.keys(mineboxItems).find(key => key === costs.id);
+                        const itemData = itemKey ? mineboxItems[itemKey] : null;
+
+                        return (
+                          <ItemSlot
+                            key={index}
+                            id={costs.id}
+                            name={itemData?.name?.en || 'Unknown Item'}
+                            rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
+                            image={itemData?.image || ''}
+                            className="aspect-square"
+                          />
+                        );
+                      })}
+                    </span>
+                    <span className="flex flex-row justify-between">
+                      <span className="flex gap-2 text-lg items-center">
+                        <img src="/media/currency/Lux.png" className="size-6" /> {level.player_level}
+                      </span>
+                      <span className="flex gap-2 text-lg items-center">
+                        <img src="/media/currency/Crystal.png" className="size-6" /> {level.crystals}
+                      </span>
+                      <span className="flex gap-2 text-lg items-center">
+                        <img src="/media/currency/Lux.png" className="size-6" /> {level.gold}
+                      </span>
+                    </span>
+                  </>
+                )}
+
+                {/* Production */}
+                <p>Production</p>
+                <Separator />
+              </div>
+            ))}
+
+          </Card>
         ))}
       </div>
     </div>

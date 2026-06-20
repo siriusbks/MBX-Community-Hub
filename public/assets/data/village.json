@@ -5,25 +5,40 @@
         "x": 66,
         "y": 51,
         "village_tier_required": 0,
-        "allowed_buildings": ["farming", "gathering"]
+        "allowed_buildings": [
+          "farming",
+          "gathering"
+        ]
       },
       "cell_2": {
         "x": 57,
         "y": 90,
         "village_tier_required": 1,
-        "allowed_buildings": ["mining", "woodcutting", "enclosure"]
+        "allowed_buildings": [
+          "mining",
+          "woodcutting",
+          "enclosure"
+        ]
       },
       "cell_3": {
         "x": 87,
         "y": 37,
         "village_tier_required": 2,
-        "allowed_buildings": ["enclosure", "fishing"]
+        "allowed_buildings": [
+          "enclosure",
+          "fishing"
+        ]
       },
       "cell_4": {
         "x": 46,
         "y": 28,
         "village_tier_required": 3,
-        "allowed_buildings": ["farming", "woodcutting", "mining", "gathering"]
+        "allowed_buildings": [
+          "farming",
+          "woodcutting",
+          "mining",
+          "gathering"
+        ]
       },
       "cell_5": {
         "x": 30,
@@ -53,138 +68,203 @@
   ],
   "buildings": [
     {
-      "farming": {
-        "tier_1": {
+      "mining": [
+        {
           "production": 4,
           "storage": 576
         },
-        "tier_2": {
+        {
           "production": 8,
           "storage": 1152
         },
-        "tier_3": {
+        {
           "production": 13,
           "storage": 1728
         },
-        "tier_4": {
+        {
           "production": 21,
           "storage": 2304
         },
-        "tier_5": {
+        {
           "production": 36,
           "storage": 2880
         }
-      },
-      "woodcutting": {
-        "tier_1": {
+      ],
+      "woodcutting": [
+        {
           "production": 4,
           "storage": 576
         },
-        "tier_2": {
+        {
           "production": 8,
           "storage": 1152
         },
-        "tier_3": {
+        {
           "production": 13,
           "storage": 1728
         },
-        "tier_4": {
+        {
           "production": 21,
           "storage": 2304
         },
-        "tier_5": {
+        {
           "production": 36,
           "storage": 2880
         }
-      },
-      "mining": {
-        "tier_1": {
+      ],
+      "enclosure": [
+        {
           "production": 4,
           "storage": 576
         },
-        "tier_2": {
+        {
           "production": 8,
           "storage": 1152
         },
-        "tier_3": {
+        {
           "production": 13,
           "storage": 1728
         },
-        "tier_4": {
+        {
           "production": 21,
           "storage": 2304
         },
-        "tier_5": {
+        {
           "production": 36,
           "storage": 2880
         }
-      },
-      "gathering": {
-        "tier_1": {
+      ],
+      "fishing": [
+        {
+          "production": 4,
+          "storage": 576,
+          "cost": [
+            {
+              "id": "coconut_log",
+              "quantity": 2
+            },
+            {
+              "id": "banan_log",
+              "quantity": 2
+            }
+          ],
+          "player_level": 0,
+          "crystals": 0,
+          "gold": 0
+        },
+        {
+          "production": 8,
+          "storage": 1152,
+          "cost": [
+            {
+              "id": "belt_bronze",
+              "quantity": 2
+            },
+            {
+              "id": "emmental_cheese",
+              "quantity": 2
+            }
+          ],
+          "player_level": 20,
+          "crystals": 40,
+          "gold": 324320
+        },
+        {
+          "production": 13,
+          "storage": 1728,
+          "cost": [
+            {
+              "id": "coconut_log",
+              "quantity": 2
+            },
+            {
+              "id": "banan_log",
+              "quantity": 2
+            }
+          ],
+          "player_level": 0,
+          "crystals": 0,
+          "gold": 0
+        },
+        {
+          "production": 21,
+          "storage": 2304,
+          "cost": [
+            {
+              "id": "coconut_log",
+              "quantity": 2
+            },
+            {
+              "id": "banan_log",
+              "quantity": 2
+            }
+          ],
+          "player_level": 0,
+          "crystals": 0,
+          "gold": 0
+        },
+        {
+          "production": 36,
+          "storage": 2880,
+          "cost": [
+            {
+              "id": "coconut_log",
+              "quantity": 2
+            },
+            {
+              "id": "banan_log",
+              "quantity": 2
+            }
+          ],
+          "player_level": 0,
+          "crystals": 0,
+          "gold": 0
+        }
+      ],
+      "farming": [
+        {
+          "production": 4,
+          "storage": 576
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728
+        },
+        {
+          "production": 21,
+          "storage": 2304
+        },
+        {
+          "production": 36,
+          "storage": 2880
+        }
+      ],
+      "gathering": [
+        {
           "production": 3,
           "storage": 576
         },
-        "tier_2": {
+        {
           "production": 6,
           "storage": 1152
         },
-        "tier_3": {
+        {
           "production": 10,
           "storage": 1728
         },
-        "tier_4": {
+        {
           "production": 17,
           "storage": 2304
         },
-        "tier_5": {
+        {
           "production": 28,
           "storage": 2880
         }
-      },
-      "enclosure": {
-        "tier_1": {
-          "production": 4,
-          "storage": 576
-        },
-        "tier_2": {
-          "production": 8,
-          "storage": 1152
-        },
-        "tier_3": {
-          "production": 13,
-          "storage": 1728
-        },
-        "tier_4": {
-          "production": 21,
-          "storage": 2304
-        },
-        "tier_5": {
-          "production": 36,
-          "storage": 2880
-        }
-      },
-      "fishing": {
-        "tier_1": {
-          "production": 4,
-          "storage": 576
-        },
-        "tier_2": {
-          "production": 8,
-          "storage": 1152
-        },
-        "tier_3": {
-          "production": 13,
-          "storage": 1728
-        },
-        "tier_4": {
-          "production": 21,
-          "storage": 2304
-        },
-        "tier_5": {
-          "production": 36,
-          "storage": 2880
-        }
-      }
+      ]
     }
   ]
 }
