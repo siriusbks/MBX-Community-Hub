@@ -201,6 +201,7 @@ export function ItemsCodex() {
                                                         desc={ingredient.item.lore}
                                                         rarity={ingredient.item.rarity.toLowerCase()}
                                                         level={0}
+                                                        fetchFromApi={false}
                                                         className="aspect-square"
                                                     />
                                                 );

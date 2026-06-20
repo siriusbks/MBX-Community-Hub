@@ -2,6 +2,7 @@ import React from "react";
 import { Badge } from "@ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip";
 import { levels } from "@const/levels";
+import { count } from "node:console";
 
 export const rarities = [
     {
@@ -173,16 +174,24 @@ export function RarityBadge({ rarity , className}: { rarity: string, className?:
     );
 }
 
-export const ItemSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { id?: string; rarity: string; image: string; name: string; desc: string; level: number; className?: string }>(
-    ({ name, id, rarity, desc, level, image, children, className, ...props }, ref) => {
+export const ItemSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { id?: string; rarity: string; image: string; name: string; desc: string; level: number; change?:number; count?:number; className?: string }>(
+    ({ name, id, rarity, desc, level, image, change, count, children, className, ...props }, ref) => {
         let rarityData = rarities.find(r => r.id === rarity);
         if (!rarityData) rarityData = rarities[0];
 
         return (
             <RarityTooltip name={name} rarity={rarity} level={level} description={desc}>
             <div ref={ref} {...props} className={`${rarityData.border} ${rarityData.backgroundColor} ${className} rounded-sm`}>
-                <div className={`size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}>
+                <div className={`relative size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}>
                     <img src={`data:image/png;base64,${image}`} alt="" className="size-full p-1 object-scale-down" />
+{count && (
+    <p>{count}</p>
+)}
+{change && (
+    <p className="absolute bottom-0 right-0 text-xs font-bold">
+        {change > 0 ? '+' : ''}{change}
+    </p>
+)}
                 </div>
             </div>
             </RarityTooltip>

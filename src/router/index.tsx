@@ -13,25 +13,25 @@ const MapsPage = lazy(() => import("@pages/Maps"));
 export const AppRoutes: FC = () => {
     return (
         <Routes>
-                {/* Main Page */}
-                <Route path="/" element={<MainPage />} />
+            {/* Main Page */}
+            <Route path="/" element={<MainPage />} />
 
-                {/* Maps */}
-                <Route path="/maps" element={<MapsPage />} />
-                <Route path="/map/island_village" element={<VillagePreview />} />
-                <Route path="/map/*" element={<MapPreview />} />
+            {/* Maps */}
+            <Route path="/maps" element={<MapsPage />} />
+            <Route path="/map/island_village" element={<VillagePreview />} />
+            <Route path="/map/*" element={<MapPreview />} />
 
-                {/* Codex */}
-                <Route path="/codex/items" element={<ItemsCodex />} />
+            {/* Codex */}
+            <Route path="/codex/items" element={<ItemsCodex />} />
 
-                {/* Community */}
-                <Route path="/community" element={<CommunityPage />} />
+            {/* Community */}
+            <Route path="/community" element={<CommunityPage />} />
 
-                {/* Profile */}
-                <Route path="/profile" element={<ProfilePage />} />
+            {/* Profile */}
+            <Route path="/profile" element={<ProfilePage />} />
 
-                {/* Errors */}
-                <Route path="*" element={<Error404 />} />
+            {/* Errors */}
+            <Route path="*" element={<Error404 />} />
 
         </Routes>
     );
