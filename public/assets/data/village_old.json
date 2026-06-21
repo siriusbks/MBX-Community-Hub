@@ -1,0 +1,354 @@
+{
+  "cells": [
+    {
+      "cell_1": {
+        "x": 66,
+        "y": 51,
+        "village_tier_required": 0,
+        "allowed_buildings": [
+          "farming",
+          "gathering"
+        ]
+      },
+      "cell_2": {
+        "x": 57,
+        "y": 90,
+        "village_tier_required": 1,
+        "allowed_buildings": [
+          "mining",
+          "woodcutting",
+          "enclosure"
+        ]
+      },
+      "cell_3": {
+        "x": 87,
+        "y": 37,
+        "village_tier_required": 2,
+        "allowed_buildings": [
+          "enclosure",
+          "fishing"
+        ]
+      },
+      "cell_4": {
+        "x": 46,
+        "y": 28,
+        "village_tier_required": 3,
+        "allowed_buildings": [
+          "farming",
+          "woodcutting",
+          "mining",
+          "gathering"
+        ]
+      },
+      "cell_5": {
+        "x": 30,
+        "y": 83,
+        "village_tier_required": 4,
+        "allowed_buildings": [
+          "farming",
+          "woodcutting",
+          "mining",
+          "gathering",
+          "enclosure"
+        ]
+      },
+      "cell_6": {
+        "x": 102,
+        "y": 103,
+        "village_tier_required": 5,
+        "allowed_buildings": [
+          "farming",
+          "woodcutting",
+          "mining",
+          "gathering",
+          "enclosure"
+        ]
+      }
+    }
+  ],
+  "buildings": [
+    {
+      "mining": [
+        {
+          "production": 4,
+          "storage": 576
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728
+        },
+        {
+          "production": 21,
+          "storage": 2304
+        },
+        {
+          "production": 36,
+          "storage": 2880
+        }
+      ],
+      "woodcutting": [
+        {
+          "production": 4,
+          "storage": 576
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728,
+          "cost": [
+            {
+              "id": "log_chestnut",
+              "quantity": 32
+            },
+            {
+              "id": "log_hazel",
+              "quantity": 16
+            },
+            {
+              "id": "log_mahogany",
+              "quantity": 16
+            },
+            {
+              "id": "nailed_wooden_board",
+              "quantity": 4
+            }
+          ],
+          "player_level": 35,
+          "job_level": 20,
+          "crystals": 500,
+          "gold": 1000000
+        },
+        {
+          "production": 21,
+          "storage": 2304,
+          "cost": [
+            {
+              "id": "log_eucalyptus",
+              "quantity": 16
+            },
+            {
+              "id": "log_maple",
+              "quantity": 16
+            },
+            {
+              "id": "log_olive_tree",
+              "quantity": 16
+            },
+            {
+              "id": "fortified_plank",
+              "quantity": 4
+            }
+          ],
+          "player_level": 50,
+          "job_level": 40,
+          "crystals": 1000,
+          "gold": 5000000
+        },
+        {
+          "production": 36,
+          "storage": 2880,
+          "cost": [
+            {
+              "id": "log_mahogany",
+              "quantity": 32
+            },
+            {
+              "id": "log_yew",
+              "quantity": 16
+            },
+            {
+              "id": "log_walnut",
+              "quantity": 16
+            },
+            {
+              "id": "ebony_carving",
+              "quantity": 4
+            }
+          ],
+          "player_level": 75,
+          "job_level": 75,
+          "crystals": 2500,
+          "gold": 15000000
+        }
+      ],
+      "enclosure": [
+        {
+          "production": 4,
+          "storage": 576
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728
+        },
+        {
+          "production": 21,
+          "storage": 2304
+        },
+        {
+          "production": 36,
+          "storage": 2880
+        }
+      ],
+      "fishing": [
+        {
+          "production": 4,
+          "storage": 576,
+          "cost": [
+            {
+              "id": "raw_cod",
+              "quantity": 16
+            },
+            {
+              "id": "fish_clam",
+              "quantity": 4
+            },
+            {
+              "id": "fish_breaded_fish",
+              "quantity": 4
+            }
+          ],
+          "player_level": 3,
+          "crystals": 100,
+          "gold": 25000
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728
+        },
+        {
+          "production": 21,
+          "storage": 2304
+        },
+        {
+          "production": 36,
+          "storage": 2880
+        }
+      ],
+      "farming": [
+        {
+          "production": 4,
+          "storage": 576
+        },
+        {
+          "production": 8,
+          "storage": 1152
+        },
+        {
+          "production": 13,
+          "storage": 1728
+        },
+        {
+          "production": 21,
+          "storage": 2304
+        },
+        {
+          "production": 36,
+          "storage": 2880
+        }
+      ],
+      "gathering": [
+        {
+          "production": 3,
+          "storage": 576
+        },
+        {
+          "production": 6,
+          "storage": 1152
+        },
+        {
+          "production": 10,
+          "storage": 1728,
+          "cost": [
+            {
+              "id": "log_chestnut",
+              "quantity": 32
+            },
+            {
+              "id": "log_hazel",
+              "quantity": 16
+            },
+            {
+              "id": "log_mahogany",
+              "quantity": 16
+            },
+            {
+              "id": "nailed_wooden_board",
+              "quantity": 4
+            }
+          ],
+          "player_level": 35,
+          "job_level": 20,
+          "crystals": 500,
+          "gold": 1000000
+        },
+        {
+          "production": 17,
+          "storage": 2304,
+          "cost": [
+            {
+              "id": "log_eucalyptus",
+              "quantity": 16
+            },
+            {
+              "id": "log_maple",
+              "quantity": 16
+            },
+            {
+              "id": "log_olive_tree",
+              "quantity": 16
+            },
+            {
+              "id": "fortified_plank",
+              "quantity": 4
+            }
+          ],
+          "player_level": 50,
+          "job_level": 40,
+          "crystals": 1000,
+          "gold": 5000000
+        },
+        {
+          "production": 28,
+          "storage": 2880,
+          "cost": [
+            {
+              "id": "log_mahogany",
+              "quantity": 32
+            },
+            {
+              "id": "log_yew",
+              "quantity": 16
+            },
+            {
+              "id": "log_walnut",
+              "quantity": 16
+            },
+            {
+              "id": "ebony_carving",
+              "quantity": 4
+            }
+          ],
+          "player_level": 75,
+          "job_level": 75,
+          "crystals": 2500,
+          "gold": 15000000
+        }
+      ]
+    }
+  ]
+}

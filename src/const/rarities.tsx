@@ -190,7 +190,7 @@ export const ItemSlot = React.forwardRef<
     name: string
     desc: string
     level: number
-    change?: number
+    change?: string
     count?: number
     className?: string
   }
@@ -236,9 +236,9 @@ export const ItemSlot = React.forwardRef<
             />
             {count && <p className="absolute right-1 bottom-0 text-lg">x{count}</p>}
             {change && (
-              <p className="absolute right-0 bottom-0 text-xs font-bold">
-                {change > 0 ? "+" : ""}
+              <p className="absolute left-1 top-0 text-xs font-bold">
                 {change}
+                {change > 0 ? "%" : ""}
               </p>
             )}
           </div>
