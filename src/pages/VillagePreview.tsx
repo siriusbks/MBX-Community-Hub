@@ -118,7 +118,7 @@ export function VillagePreview() {
                 <p>Build Cost</p>
                 {level.cost && (
                   <>
-                    <span className="w-full grid grid-cols-5 gap-2">
+                    <span className="w-full grid grid-cols-4 gap-2">
                       {level.cost.map((costs, index) => {
                         // Szukamy przedmiotu w mineboxItems
                         const itemKey = Object.keys(mineboxItems).find(key => key === costs.id);
@@ -131,20 +131,24 @@ export function VillagePreview() {
                             name={itemData?.name?.en || 'Unknown Item'}
                             rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
                             image={itemData?.image || ''}
+                            count={costs.quantity}
                             className="aspect-square"
                           />
                         );
                       })}
                     </span>
-                    <span className="flex flex-row justify-between">
-                      <span className="flex gap-2 text-lg items-center">
-                        <img src="/media/currency/Lux.png" className="size-6" /> {level.player_level}
+                    <span className="flex grid grid-cols-4 ">
+                      <span className="flex gap-1 text-sm items-center">
+                        <img src="/media/currency/Lux.png" className="size-4" /> {level.player_level}
                       </span>
-                      <span className="flex gap-2 text-lg items-center">
-                        <img src="/media/currency/Crystal.png" className="size-6" /> {level.crystals}
+                      <span className="flex gap-1 text-sm items-center">
+                        <img src="/media/currency/Crystal.png" className="size-4" /> {level.crystals}
                       </span>
-                      <span className="flex gap-2 text-lg items-center">
-                        <img src="/media/currency/Lux.png" className="size-6" /> {level.gold}
+                      <span className="flex gap-1 text-sm items-center">
+                        <img src="/media/currency/Lux.png" className="size-4" /> {level.gold}
+                      </span>
+                      <span className="flex gap-1 text-sm items-center">
+                        <img src="/media/currency/Lux.png" className="size-4" /> {level.gold}
                       </span>
                     </span>
                   </>
