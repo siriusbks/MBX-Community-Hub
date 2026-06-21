@@ -1,5 +1,5 @@
 import { Clock10Icon, Info } from "lucide-react"
-import { Card } from "@ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card"
 import { Button } from "@ui/button"
 import { PageTitle } from "@components/layout/title"
 import { useTranslation } from "react-i18next"
@@ -51,7 +51,7 @@ export function VillagePreview() {
   const cells = villageData.cells ?? {}
   const cellEntries = Object.entries(cells)
   const village_tiers = villageData.village_tiers ?? {}
-  const villageTiersEntries = Object.entries(village_tiers)
+const villageTiersEntries = Object.entries(village_tiers)
 
   const formatTime = (ms) => {
     if (ms < 1000) return `${ms}ms`;
@@ -118,7 +118,81 @@ export function VillagePreview() {
             </Popover>
           ))}*/}
         </span>
-        <Card className="w-1/3"></Card>
+
+
+
+<Card className="w-1/3">
+
+
+    {Object.entries(village_tiers).map(([tierKey, tierData]) => (
+      <div key={tierKey} className="px-2">
+        <div className="flex flex-row justify-between items-center mb-2">
+          <h3 className="text-primary uppercase font-bold">Tier {tierKey}</h3>
+          <span className="flex-row flex gap-1 items-center text-sm">
+            <Clock10Icon className="size-4"/> 
+            {formatTime(tierData.construction_time)}
+          </span>
+        </div>
+
+          <div className="flex flex-row w-full justify-between">
+            <span className="text-gray-400">Chance Reduction</span>
+            <div className="font-bold">{(tierData.chance_reduction * 100)}%</div>
+          </div>
+
+        {/* Requirements */}
+        {tierData.requirements && tierData.requirements.length > 0 && (
+          <div className="border-t border-gray-700 pt-3">
+            <span className="text-sm font-semibold mb-2 block">Requirements</span>
+            
+            {/* Items */}
+            <div className="grid grid-cols-5 gap-2 mb-2">
+              {tierData.requirements
+                .filter(req => req.type === 'ITEM')
+                .map((req, index) => {
+                  const itemKey = Object.keys(mineboxItems).find(key => key === req.id);
+                  const itemData = itemKey ? mineboxItems[itemKey] : null;
+
+                  return (
+                    <ItemSlot
+                      key={`${tierKey}-item-${index}`}
+                      id={req.id}
+                      name={itemData?.name?.en || req.id || 'Unknown Item'}
+                      rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
+                      image={itemData?.image || ''}
+                      count={req.amount}
+                      className="aspect-square"
+                    />
+                  );
+                })}
+            </div>
+
+            {/* Other requirements */}
+            <div className="flex flex-wrap gap-2">
+              {tierData.requirements
+                .filter(req => req.type !== 'ITEM')
+                .map((req, idx) => (
+                  <span key={`${tierKey}-other-${idx}`} className="text-xs bg-gray-800 px-2 py-1 rounded">
+                    {req.type === 'CURRENCY' ? (
+                      `${req.amount} ${req.id}`
+                    ) : req.type === 'LEVEL' ? (
+                      `Level ${req.amount}`
+                    ) : req.type === 'SKILL' ? (
+                      `${req.id} Level ${req.amount}`
+                    ) : (
+                      `${req.amount} ${req.id}`
+                    )}
+                  </span>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+</Card>
+
+
+
+
       </div>
 
 
@@ -126,7 +200,7 @@ export function VillagePreview() {
       <p>Buildings</p>
       <div className="grid w-full grid-cols-3 gap-4">
         {buildingEntries.map(([buildingKey, buildingData]) => (
-          <Card className="w-full p-0 gap-0 ">
+          <Card key={buildingKey} className="w-full p-0 gap-0 ">
 
             {/* Title */}
             <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
