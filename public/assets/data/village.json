@@ -1,354 +1,4154 @@
 {
-  "cells": [
-    {
-      "cell_1": {
-        "x": 66,
-        "y": 51,
-        "village_tier_required": 0,
-        "allowed_buildings": [
-          "farming",
-          "gathering"
-        ]
-      },
-      "cell_2": {
-        "x": 57,
-        "y": 90,
-        "village_tier_required": 1,
-        "allowed_buildings": [
-          "mining",
-          "woodcutting",
-          "enclosure"
-        ]
-      },
-      "cell_3": {
-        "x": 87,
-        "y": 37,
-        "village_tier_required": 2,
-        "allowed_buildings": [
-          "enclosure",
-          "fishing"
-        ]
-      },
-      "cell_4": {
-        "x": 46,
-        "y": 28,
-        "village_tier_required": 3,
-        "allowed_buildings": [
-          "farming",
-          "woodcutting",
-          "mining",
-          "gathering"
-        ]
-      },
-      "cell_5": {
-        "x": 30,
-        "y": 83,
-        "village_tier_required": 4,
-        "allowed_buildings": [
-          "farming",
-          "woodcutting",
-          "mining",
-          "gathering",
-          "enclosure"
-        ]
-      },
-      "cell_6": {
-        "x": 102,
-        "y": 103,
-        "village_tier_required": 5,
-        "allowed_buildings": [
-          "farming",
-          "woodcutting",
-          "mining",
-          "gathering",
-          "enclosure"
-        ]
+  "buildings": {
+    "enclosure": {
+      "id": "enclosure",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "enclosure": {
+            "pet_slots": 1,
+            "xp_per_hour": 100
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-kibble_carrot_and_melon_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-kibble_fish_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_rabbit_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "xp_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "enclosure": {
+            "pet_slots": 2,
+            "xp_per_hour": 250
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-kibble_chicken_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-kibble_beef_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_potato_and_chicken_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_squash_and_beef_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "xp_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "enclosure": {
+            "pet_slots": 3,
+            "xp_per_hour": 500
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-kibble_honey",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-kibble_lemon",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_vegetable_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "xp_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "enclosure": {
+            "pet_slots": 4,
+            "xp_per_hour": 800
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-kibble_pepper",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-kibble_olive_beetroot_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_turkey_and_rice_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "xp_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.4
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.6
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "enclosure": {
+            "pet_slots": 6,
+            "xp_per_hour": 1600
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-kibble_rice_and_chicken_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-kibble_turkey_and_rice_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-kibble_vegetable_mash",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "xp_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.5
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 250,
+                      "id": "CRYSTAL",
+                      "type": "CURRENCY"
+                    }
+                  ],
+                  "effect": {
+                    "xp_multiplier": 1.75
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "farming": {
+      "id": "farming",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "production": {
+            "base_rate": 4,
+            "resources": [
+              {
+                "item_id": "material-wheat",
+                "min_tier": 1,
+                "weight": 30
+              },
+              {
+                "item_id": "material-carrot",
+                "min_tier": 1,
+                "weight": 25
+              },
+              {
+                "item_id": "material-potato",
+                "min_tier": 1,
+                "weight": 25
+              },
+              {
+                "item_id": "material-beetroot",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-sugar_cane",
+                "min_tier": 1,
+                "weight": 5
+              }
+            ],
+            "storage_capacity": 9
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "material-wheat",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "material-carrot",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "material-potato",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-iron_hoe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.15
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "production": {
+            "base_rate": 8,
+            "resources": [
+              {
+                "item_id": "material-wheat",
+                "min_tier": 1,
+                "weight": 20
+              },
+              {
+                "item_id": "material-carrot",
+                "min_tier": 1,
+                "weight": 20
+              },
+              {
+                "item_id": "material-potato",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-beetroot",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-sugar_cane",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "material-melon_slice",
+                "min_tier": 2,
+                "weight": 10
+              },
+              {
+                "item_id": "material-pumpkin",
+                "min_tier": 2,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 18
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "material-carrot",
+              "type": "ITEM"
+            },
+            {
+              "amount": 32,
+              "id": "material-potato",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "material-beetroot",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-golden_hoe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.2
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "production": {
+            "base_rate": 13.5,
+            "resources": [
+              {
+                "item_id": "material-wheat",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-carrot",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-potato",
+                "min_tier": 1,
+                "weight": 15
+              },
+              {
+                "item_id": "material-beetroot",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "material-sugar_cane",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "material-melon_slice",
+                "min_tier": 2,
+                "weight": 10
+              },
+              {
+                "item_id": "material-pumpkin",
+                "min_tier": 2,
+                "weight": 10
+              },
+              {
+                "item_id": "material-cocoa_beans",
+                "min_tier": 3,
+                "weight": 8
+              },
+              {
+                "item_id": "material-nether_wart",
+                "min_tier": 3,
+                "weight": 7
+              }
+            ],
+            "storage_capacity": 27
+          },
+          "requirements": [
+            {
+              "amount": 8,
+              "id": "mbi-bag_material-beetroot",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-bag_material-sugar_cane",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-bag_material-melon_slice",
+              "type": "ITEM"
+            },
+            {
+              "amount": 2,
+              "id": "mbi-bag_material-pumpkin",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 20,
+              "id": "farmer",
+              "type": "SKILL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-diamond_hoe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "production": {
+            "base_rate": 21.25,
+            "resources": [
+              {
+                "item_id": "mbi-transformed_material-wheat",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-carrot",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-potato",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-beetroot",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-sugar_cane",
+                "min_tier": 1,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-melon_slice",
+                "min_tier": 2,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-pumpkin",
+                "min_tier": 2,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-cocoa_beans",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-nether_wart",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-transformed_material-sweet_berries",
+                "min_tier": 4,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 36
+          },
+          "requirements": [
+            {
+              "amount": 4,
+              "id": "mbi-crate_material-melon_slice",
+              "type": "ITEM"
+            },
+            {
+              "amount": 2,
+              "id": "mbi-crate_material-pumpkin",
+              "type": "ITEM"
+            },
+            {
+              "amount": 2,
+              "id": "mbi-crate_material-cocoa_beans",
+              "type": "ITEM"
+            },
+            {
+              "amount": 1,
+              "id": "mbi-crate_material-nether_wart",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 40,
+              "id": "farmer",
+              "type": "SKILL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "production": {
+            "base_rate": 36,
+            "resources": [
+              {
+                "item_id": "mbi-bag_material-wheat",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-carrot",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-potato",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-beetroot",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-sugar_cane",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-melon_slice",
+                "min_tier": 2,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-pumpkin",
+                "min_tier": 2,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-cocoa_beans",
+                "min_tier": 3,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-nether_wart",
+                "min_tier": 3,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-bag_material-sweet_berries",
+                "min_tier": 4,
+                "weight": 8
+              },
+              {
+                "item_id": "material-glow_berries",
+                "min_tier": 5,
+                "weight": 8
+              },
+              {
+                "item_id": "material-chorus_fruit",
+                "min_tier": 5,
+                "weight": 4
+              }
+            ],
+            "storage_capacity": 45
+          },
+          "requirements": [
+            {
+              "amount": 2,
+              "id": "mbi-barrel_material-cocoa_beans",
+              "type": "ITEM"
+            },
+            {
+              "amount": 1,
+              "id": "mbi-barrel_material-nether_wart",
+              "type": "ITEM"
+            },
+            {
+              "amount": 1,
+              "id": "mbi-barrel_material-sweet_berries",
+              "type": "ITEM"
+            },
+            {
+              "amount": 1,
+              "id": "mbi-barrel_material-pumpkin",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 75,
+              "id": "farmer",
+              "type": "SKILL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 2,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "fishing": {
+      "id": "fishing",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "production": {
+            "base_rate": 3,
+            "resources": [
+              {
+                "item_id": "mbi-fish_breaded_fish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_clam",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_mandarinfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_pirate_crab",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_angelfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_green_ray",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_kraken",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_rainbow_trout",
+                "min_tier": 1,
+                "weight": 8
+              }
+            ],
+            "storage_capacity": 9
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "material-cod",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-fish_clam",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-fish_breaded_fish",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 8,
+                      "id": "material-tripwire_hook",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.15
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "production": {
+            "base_rate": 6,
+            "resources": [
+              {
+                "item_id": "mbi-fish_breaded_fish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_clam",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_mandarinfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_pirate_crab",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_angelfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_green_ray",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_kraken",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_rainbow_trout",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_cowrie_shell",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_moon_jellyfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_swordfish",
+                "min_tier": 2,
+                "weight": 9
+              }
+            ],
+            "storage_capacity": 18
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-fish_rainbow_trout",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-fish_angelfish",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_swordfish",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 8,
+                      "id": "material-lead",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.2
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "production": {
+            "base_rate": 10.8,
+            "resources": [
+              {
+                "item_id": "mbi-fish_breaded_fish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_clam",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_mandarinfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_pirate_crab",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_angelfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_green_ray",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_kraken",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_rainbow_trout",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_cowrie_shell",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_moon_jellyfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_swordfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_clownfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_goldfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_monkfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_surgeonfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_tuna",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_anchovy",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_butterflyfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_snow_crab",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_triggerfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_carp",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_octopus",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_parrotfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_wrasse",
+                "min_tier": 3,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 27
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-fish_tuna",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_clownfish",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_rainbow_trout",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-bag_material-kelp",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 20,
+              "id": "fisherman",
+              "type": "SKILL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-diamond",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "production": {
+            "base_rate": 17,
+            "resources": [
+              {
+                "item_id": "mbi-fish_breaded_fish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_clam",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_mandarinfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_pirate_crab",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_angelfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_green_ray",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_kraken",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_rainbow_trout",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_cowrie_shell",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_moon_jellyfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_swordfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_clownfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_goldfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_monkfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_surgeonfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_tuna",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_anchovy",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_butterflyfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_snow_crab",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_triggerfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_carp",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_octopus",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_parrotfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_wrasse",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_goby",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_lionfish",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_moorish_idol",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_moray_eel",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_pearl",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_reef_shark",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_shrimp",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_zander",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_blue_tang",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_electric_eel",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_frogfish",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_haddock",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_humpback_chub",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_piranha",
+                "min_tier": 4,
+                "weight": 11
+              }
+            ],
+            "storage_capacity": 36
+          },
+          "requirements": [
+            {
+              "amount": 8,
+              "id": "mbi-fish_swordfish",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_octopus",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_pearl",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 40,
+              "id": "fisherman",
+              "type": "SKILL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "production": {
+            "base_rate": 28,
+            "resources": [
+              {
+                "item_id": "mbi-fish_breaded_fish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_clam",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_mandarinfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_pirate_crab",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_angelfish",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_green_ray",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_kraken",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_rainbow_trout",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-fish_cowrie_shell",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_moon_jellyfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_swordfish",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-fish_clownfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_goldfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_monkfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_surgeonfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_tuna",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_anchovy",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_butterflyfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_snow_crab",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_triggerfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_carp",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_octopus",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_parrotfish",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_wrasse",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-fish_goby",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_lionfish",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_moorish_idol",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_moray_eel",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_pearl",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_reef_shark",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_shrimp",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_zander",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_blue_tang",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_electric_eel",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_frogfish",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_haddock",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_humpback_chub",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_piranha",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-fish_barracuda",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_flying_fish",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_golden_shrimp",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_john_dory",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_razorback_sucker",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_sawfish",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_sushi_crab",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_lobster",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_nautilus",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_rainbow_sparkle_jelly",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-fish_blobfish",
+                "min_tier": 5,
+                "weight": 12
+              }
+            ],
+            "storage_capacity": 45
+          },
+          "requirements": [
+            {
+              "amount": 8,
+              "id": "mbi-fish_reef_shark",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_barracuda",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-fish_electric_eel",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-golden_shrimp_cocktail",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 75,
+              "id": "fisherman",
+              "type": "SKILL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 2,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "gathering": {
+      "id": "gathering",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "production": {
+            "base_rate": 3,
+            "resources": [
+              {
+                "item_id": "mbi-plant_lily",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_clover",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_blue",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_red",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_yellow",
+                "min_tier": 1,
+                "weight": 8
+              }
+            ],
+            "storage_capacity": 9
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "material-bone_meal",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-plant_clover",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-plant_lily",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-shears",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.15
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "production": {
+            "base_rate": 6,
+            "resources": [
+              {
+                "item_id": "mbi-plant_lily",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_clover",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_blue",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_red",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_yellow",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_belladonna",
+                "min_tier": 2,
+                "weight": 9
+              }
+            ],
+            "storage_capacity": 18
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-plant_clover",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-plant_lily",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-plant_chamomile",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-golden_hoe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.2
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "production": {
+            "base_rate": 10.8,
+            "resources": [
+              {
+                "item_id": "mbi-plant_lily",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_clover",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_blue",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_red",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_yellow",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_belladonna",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-plant_chamomile",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_st_johns_wort",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_foxglove",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_henbane",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_mullein",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_yarrow",
+                "min_tier": 3,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 27
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-plant_yarrow",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-plant_foxglove",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-plant_st_johns_wort",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-clover_bottle",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 20,
+              "id": "alchemist",
+              "type": "SKILL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-diamond_hoe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "production": {
+            "base_rate": 17,
+            "resources": [
+              {
+                "item_id": "mbi-plant_lily",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_clover",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_blue",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_red",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_yellow",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_belladonna",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-plant_chamomile",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_st_johns_wort",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_foxglove",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_henbane",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_mullein",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_yarrow",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_peppermint",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-plant_snowdrop",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-plant_ginger_root",
+                "min_tier": 4,
+                "weight": 11
+              }
+            ],
+            "storage_capacity": 36
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-plant_ginger_root",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-plant_foxglove",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-plant_mullein",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-chamomile_herbal_tea",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 40,
+              "id": "alchemist",
+              "type": "SKILL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "production": {
+            "base_rate": 28,
+            "resources": [
+              {
+                "item_id": "mbi-plant_lily",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_clover",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_blue",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_red",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_heart_yellow",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-plant_belladonna",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-plant_chamomile",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_st_johns_wort",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_foxglove",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_henbane",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_mullein",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_yarrow",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-plant_peppermint",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-plant_snowdrop",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-plant_ginger_root",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-plant_hemlock",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-plant_mandrake",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-plant_echinacea",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-plant_five_leaf_clover",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-plant_origami_flower",
+                "min_tier": 5,
+                "weight": 12
+              }
+            ],
+            "storage_capacity": 45
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-plant_belladonna",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-plant_mandrake",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-plant_five_leaf_clover",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-mullein_mixture",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 75,
+              "id": "alchemist",
+              "type": "SKILL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 2,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "mining": {
+      "id": "mining",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "production": {
+            "base_rate": 3,
+            "resources": [
+              {
+                "item_id": "mbi-ore_silver",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_ashstone",
+                "min_tier": 1,
+                "weight": 8
+              }
+            ],
+            "storage_capacity": 9
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "material-cobblestone",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-ore_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 2,
+              "id": "mbi-ingot_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-iron_pickaxe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.15
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "production": {
+            "base_rate": 6,
+            "resources": [
+              {
+                "item_id": "mbi-ore_silver",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_ashstone",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_bauxite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_dolomite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_manganese",
+                "min_tier": 2,
+                "weight": 9
+              }
+            ],
+            "storage_capacity": 18
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-ore_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-ore_bauxite",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ingot_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-golden_pickaxe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.2
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "production": {
+            "base_rate": 10.8,
+            "resources": [
+              {
+                "item_id": "mbi-ore_silver",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_ashstone",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_bauxite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_dolomite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_manganese",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_cobalt",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_raw_obsidian",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_tin",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_liquid_diamonds",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_seafoam",
+                "min_tier": 3,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 27
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-ore_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-ore_bauxite",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ingot_silver",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ore_manganese",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 20,
+              "id": "miner",
+              "type": "SKILL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-diamond_pickaxe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "production": {
+            "base_rate": 17,
+            "resources": [
+              {
+                "item_id": "mbi-ore_silver",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_ashstone",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_bauxite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_dolomite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_manganese",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_cobalt",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_raw_obsidian",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_tin",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_liquid_diamonds",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_seafoam",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_silicate",
+                "min_tier": 4,
+                "weight": 11
+              }
+            ],
+            "storage_capacity": 36
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-ore_cobalt",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-ore_ashstone",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ore_dolomite",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-cobalt_alloy",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 40,
+              "id": "miner",
+              "type": "SKILL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "production": {
+            "base_rate": 28,
+            "resources": [
+              {
+                "item_id": "mbi-ore_silver",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_ashstone",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-ore_bauxite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_dolomite",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_manganese",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-ore_cobalt",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_raw_obsidian",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_tin",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_liquid_diamonds",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_seafoam",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-ore_silicate",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-ore_topaz",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-ore_opale",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-ore_rainbow",
+                "min_tier": 5,
+                "weight": 12
+              }
+            ],
+            "storage_capacity": 45
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-ore_opale",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-ore_topaz",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ore_raw_obsidian",
+              "type": "ITEM"
+            },
+            {
+              "amount": 8,
+              "id": "mbi-ore_powder",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 75,
+              "id": "miner",
+              "type": "SKILL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 2,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "woodcutting": {
+      "id": "woodcutting",
+      "max_tier": 5,
+      "tiers": {
+        "1": {
+          "construction_time": 300000,
+          "production": {
+            "base_rate": 4,
+            "resources": [
+              {
+                "item_id": "mbi-log_coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-banana",
+                "min_tier": 1,
+                "weight": 8
+              }
+            ],
+            "storage_capacity": 9
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "material-oak_log",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-log_banana",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-log_coconut",
+              "type": "ITEM"
+            },
+            {
+              "amount": 3,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 25000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 100,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-iron_axe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.15
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "construction_time": 3600000,
+          "production": {
+            "base_rate": 8,
+            "resources": [
+              {
+                "item_id": "mbi-log_coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-avocado",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-lemon",
+                "min_tier": 2,
+                "weight": 9
+              }
+            ],
+            "storage_capacity": 18
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-log_banana",
+              "type": "ITEM"
+            },
+            {
+              "amount": 32,
+              "id": "mbi-log_coconut",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-coconut",
+              "type": "ITEM"
+            },
+            {
+              "amount": 20,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 100000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 250,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-golden_axe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.2
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "construction_time": 86400000,
+          "production": {
+            "base_rate": 13.5,
+            "resources": [
+              {
+                "item_id": "mbi-log_coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-avocado",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-lemon",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-pineapple",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_hazel",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-hazelnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_mahogany",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_olive_tree",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-olive",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-mango",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_walnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-walnut",
+                "min_tier": 3,
+                "weight": 10
+              }
+            ],
+            "storage_capacity": 27
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-log_chestnut",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_hazel",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_mahogany",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-nailed_wooden_board",
+              "type": "ITEM"
+            },
+            {
+              "amount": 35,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 20,
+              "id": "lumberjack",
+              "type": "SKILL"
+            },
+            {
+              "amount": 1000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-diamond_axe",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.25
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "construction_time": 172800000,
+          "production": {
+            "base_rate": 21.25,
+            "resources": [
+              {
+                "item_id": "mbi-log_coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-avocado",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-lemon",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-pineapple",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_hazel",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-hazelnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_mahogany",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_olive_tree",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-olive",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-mango",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_walnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-walnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_dark_coconut",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_eucalyptus",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-dark_coconut",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_maple",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_yew",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-mystic_hornbeam_leaf",
+                "min_tier": 4,
+                "weight": 11
+              }
+            ],
+            "storage_capacity": 36
+          },
+          "requirements": [
+            {
+              "amount": 16,
+              "id": "mbi-log_eucalyptus",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_maple",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_olive_tree",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-fortified_plank",
+              "type": "ITEM"
+            },
+            {
+              "amount": 50,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 40,
+              "id": "lumberjack",
+              "type": "SKILL"
+            },
+            {
+              "amount": 5000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 1000,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 1,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.3
+                  },
+                  "level": 1
+                }
+              ]
+            }
+          ]
+        },
+        "5": {
+          "construction_time": 604800000,
+          "production": {
+            "base_rate": 36,
+            "resources": [
+              {
+                "item_id": "mbi-log_coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-coconut",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-banana",
+                "min_tier": 1,
+                "weight": 8
+              },
+              {
+                "item_id": "mbi-log_chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-chestnut",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-avocado",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-lemon",
+                "min_tier": 2,
+                "weight": 9
+              },
+              {
+                "item_id": "mbi-pineapple",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_hazel",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-hazelnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_mahogany",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_olive_tree",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-olive",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-mango",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_walnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-walnut",
+                "min_tier": 3,
+                "weight": 10
+              },
+              {
+                "item_id": "mbi-log_dark_coconut",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_eucalyptus",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-dark_coconut",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_maple",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_yew",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-mystic_hornbeam_leaf",
+                "min_tier": 4,
+                "weight": 11
+              },
+              {
+                "item_id": "mbi-log_laughing_tree",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-log_mystic_hornbeam",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-log_sacred_coconut",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-sacred_coconut",
+                "min_tier": 5,
+                "weight": 12
+              },
+              {
+                "item_id": "mbi-log_elm",
+                "min_tier": 5,
+                "weight": 12
+              }
+            ],
+            "storage_capacity": 45
+          },
+          "requirements": [
+            {
+              "amount": 32,
+              "id": "mbi-log_mahogany",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_yew",
+              "type": "ITEM"
+            },
+            {
+              "amount": 16,
+              "id": "mbi-log_walnut",
+              "type": "ITEM"
+            },
+            {
+              "amount": 4,
+              "id": "mbi-ebony_carving",
+              "type": "ITEM"
+            },
+            {
+              "amount": 75,
+              "id": "player",
+              "type": "LEVEL"
+            },
+            {
+              "amount": 75,
+              "id": "lumberjack",
+              "type": "SKILL"
+            },
+            {
+              "amount": 15000000,
+              "id": "GOLD",
+              "type": "CURRENCY"
+            },
+            {
+              "amount": 2500,
+              "id": "CRYSTAL",
+              "type": "CURRENCY"
+            }
+          ],
+          "upgrades": [
+            {
+              "id": "productivity_boost",
+              "levels": [
+                {
+                  "cost": [
+                    {
+                      "amount": 2,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.35
+                  },
+                  "level": 1
+                },
+                {
+                  "cost": [
+                    {
+                      "amount": 4,
+                      "id": "material-netherite_ingot",
+                      "type": "ITEM"
+                    }
+                  ],
+                  "effect": {
+                    "rate_multiplier": 1.5
+                  },
+                  "level": 2
+                }
+              ]
+            }
+          ]
+        }
       }
     }
-  ],
-  "buildings": [
-    {
-      "mining": [
-        {
-          "production": 4,
-          "storage": 576
-        },
-        {
-          "production": 8,
-          "storage": 1152
-        },
-        {
-          "production": 13,
-          "storage": 1728
-        },
-        {
-          "production": 21,
-          "storage": 2304
-        },
-        {
-          "production": 36,
-          "storage": 2880
-        }
+  },
+  "cells": {
+    "cell_1": {
+      "allowed_buildings": [
+        "farming",
+        "gathering"
       ],
-      "woodcutting": [
-        {
-          "production": 4,
-          "storage": 576
-        },
-        {
-          "production": 8,
-          "storage": 1152
-        },
-        {
-          "production": 13,
-          "storage": 1728,
-          "cost": [
-            {
-              "id": "log_chestnut",
-              "quantity": 32
-            },
-            {
-              "id": "log_hazel",
-              "quantity": 16
-            },
-            {
-              "id": "log_mahogany",
-              "quantity": 16
-            },
-            {
-              "id": "nailed_wooden_board",
-              "quantity": 4
-            }
-          ],
-          "player_level": 35,
-          "job_level": 20,
-          "crystals": 500,
-          "gold": 1000000
-        },
-        {
-          "production": 21,
-          "storage": 2304,
-          "cost": [
-            {
-              "id": "log_eucalyptus",
-              "quantity": 16
-            },
-            {
-              "id": "log_maple",
-              "quantity": 16
-            },
-            {
-              "id": "log_olive_tree",
-              "quantity": 16
-            },
-            {
-              "id": "fortified_plank",
-              "quantity": 4
-            }
-          ],
-          "player_level": 50,
-          "job_level": 40,
-          "crystals": 1000,
-          "gold": 5000000
-        },
-        {
-          "production": 36,
-          "storage": 2880,
-          "cost": [
-            {
-              "id": "log_mahogany",
-              "quantity": 32
-            },
-            {
-              "id": "log_yew",
-              "quantity": 16
-            },
-            {
-              "id": "log_walnut",
-              "quantity": 16
-            },
-            {
-              "id": "ebony_carving",
-              "quantity": 4
-            }
-          ],
-          "player_level": 75,
-          "job_level": 75,
-          "crystals": 2500,
-          "gold": 15000000
-        }
+      "position": "-0.50;62.00;-10.50;0;0"
+    },
+    "cell_2": {
+      "allowed_buildings": [
+        "mining",
+        "woodcutting",
+        "enclosure"
       ],
-      "enclosure": [
-        {
-          "production": 4,
-          "storage": 576
-        },
-        {
-          "production": 8,
-          "storage": 1152
-        },
-        {
-          "production": 13,
-          "storage": 1728
-        },
-        {
-          "production": 21,
-          "storage": 2304
-        },
-        {
-          "production": 36,
-          "storage": 2880
-        }
+      "position": "-10.50;62.00;29.50;0;180",
+      "village_tier_required": 1
+    },
+    "cell_3": {
+      "allowed_buildings": [
+        "enclosure",
+        "fishing"
       ],
-      "fishing": [
-        {
-          "production": 4,
-          "storage": 576,
-          "cost": [
-            {
-              "id": "raw_cod",
-              "quantity": 16
-            },
-            {
-              "id": "fish_clam",
-              "quantity": 4
-            },
-            {
-              "id": "fish_breaded_fish",
-              "quantity": 4
-            }
-          ],
-          "player_level": 3,
-          "crystals": 100,
-          "gold": 25000
-        },
-        {
-          "production": 8,
-          "storage": 1152
-        },
-        {
-          "production": 13,
-          "storage": 1728
-        },
-        {
-          "production": 21,
-          "storage": 2304
-        },
-        {
-          "production": 36,
-          "storage": 2880
-        }
+      "position": "20.50;62.00;-24.50;0;0",
+      "village_tier_required": 2
+    },
+    "cell_4": {
+      "allowed_buildings": [
+        "farming",
+        "woodcutting",
+        "mining",
+        "gathering"
       ],
-      "farming": [
-        {
-          "production": 4,
-          "storage": 576
-        },
-        {
-          "production": 8,
-          "storage": 1152
-        },
-        {
-          "production": 13,
-          "storage": 1728
-        },
-        {
-          "production": 21,
-          "storage": 2304
-        },
-        {
-          "production": 36,
-          "storage": 2880
-        }
+      "position": "-21.50;70.00;-33.50;0;0",
+      "village_tier_required": 3
+    },
+    "cell_5": {
+      "allowed_buildings": [
+        "farming",
+        "woodcutting",
+        "mining",
+        "gathering",
+        "enclosure"
       ],
-      "gathering": [
-        {
-          "production": 3,
-          "storage": 576
-        },
-        {
-          "production": 6,
-          "storage": 1152
-        },
-        {
-          "production": 10,
-          "storage": 1728,
-          "cost": [
-            {
-              "id": "log_chestnut",
-              "quantity": 32
-            },
-            {
-              "id": "log_hazel",
-              "quantity": 16
-            },
-            {
-              "id": "log_mahogany",
-              "quantity": 16
-            },
-            {
-              "id": "nailed_wooden_board",
-              "quantity": 4
-            }
-          ],
-          "player_level": 35,
-          "job_level": 20,
-          "crystals": 500,
-          "gold": 1000000
-        },
-        {
-          "production": 17,
-          "storage": 2304,
-          "cost": [
-            {
-              "id": "log_eucalyptus",
-              "quantity": 16
-            },
-            {
-              "id": "log_maple",
-              "quantity": 16
-            },
-            {
-              "id": "log_olive_tree",
-              "quantity": 16
-            },
-            {
-              "id": "fortified_plank",
-              "quantity": 4
-            }
-          ],
-          "player_level": 50,
-          "job_level": 40,
-          "crystals": 1000,
-          "gold": 5000000
-        },
-        {
-          "production": 28,
-          "storage": 2880,
-          "cost": [
-            {
-              "id": "log_mahogany",
-              "quantity": 32
-            },
-            {
-              "id": "log_yew",
-              "quantity": 16
-            },
-            {
-              "id": "log_walnut",
-              "quantity": 16
-            },
-            {
-              "id": "ebony_carving",
-              "quantity": 4
-            }
-          ],
-          "player_level": 75,
-          "job_level": 75,
-          "crystals": 2500,
-          "gold": 15000000
-        }
-      ]
+      "position": "-37.50;68.00;22.50;0;-90",
+      "village_tier_required": 4
+    },
+    "cell_6": {
+      "allowed_buildings": [
+        "farming",
+        "woodcutting",
+        "mining",
+        "gathering",
+        "enclosure"
+      ],
+      "position": "34.50;72.00;42.50;0;180",
+      "village_tier_required": 5
     }
-  ]
+  },
+  "village_tiers": {
+    "1": {
+      "chance_reduction": 0.1,
+      "construction_time": 600000,
+      "requirements": [
+        {
+          "amount": 256,
+          "id": "material-oak_planks",
+          "type": "ITEM"
+        },
+        {
+          "amount": 256,
+          "id": "material-cobblestone",
+          "type": "ITEM"
+        },
+        {
+          "amount": 32,
+          "id": "material-iron_ingot",
+          "type": "ITEM"
+        },
+        {
+          "amount": 5,
+          "id": "player",
+          "type": "LEVEL"
+        },
+        {
+          "amount": 10000,
+          "id": "GOLD",
+          "type": "CURRENCY"
+        }
+      ],
+      "unlocked_plots": 1
+    },
+    "2": {
+      "chance_reduction": 0.2,
+      "construction_time": 21600000,
+      "requirements": [
+        {
+          "amount": 32,
+          "id": "mbi-ingot_silver",
+          "type": "ITEM"
+        },
+        {
+          "amount": 16,
+          "id": "mbi-breadboard",
+          "type": "ITEM"
+        },
+        {
+          "amount": 16,
+          "id": "mbi-clover_bottle",
+          "type": "ITEM"
+        },
+        {
+          "amount": 32,
+          "id": "mbi-ingot_ashstone",
+          "type": "ITEM"
+        },
+        {
+          "amount": 12,
+          "id": "player",
+          "type": "LEVEL"
+        },
+        {
+          "amount": 100000,
+          "id": "GOLD",
+          "type": "CURRENCY"
+        },
+        {
+          "amount": 250,
+          "id": "CRYSTAL",
+          "type": "CURRENCY"
+        }
+      ],
+      "unlocked_plots": 1
+    },
+    "3": {
+      "chance_reduction": 0.5,
+      "construction_time": 172800000,
+      "requirements": [
+        {
+          "amount": 16,
+          "id": "mbi-silver_plate",
+          "type": "ITEM"
+        },
+        {
+          "amount": 16,
+          "id": "mbi-nailed_wooden_board",
+          "type": "ITEM"
+        },
+        {
+          "amount": 4,
+          "id": "mbi-obsidian_fragment",
+          "type": "ITEM"
+        },
+        {
+          "amount": 8,
+          "id": "mbi-bag_material-wheat",
+          "type": "ITEM"
+        },
+        {
+          "amount": 8,
+          "id": "mbi-bag_material-carrot",
+          "type": "ITEM"
+        },
+        {
+          "amount": 20,
+          "id": "player",
+          "type": "LEVEL"
+        },
+        {
+          "amount": 500000,
+          "id": "GOLD",
+          "type": "CURRENCY"
+        },
+        {
+          "amount": 1000,
+          "id": "CRYSTAL",
+          "type": "CURRENCY"
+        }
+      ],
+      "unlocked_plots": 1
+    },
+    "4": {
+      "chance_reduction": 0.8,
+      "construction_time": 345600000,
+      "requirements": [
+        {
+          "amount": 8,
+          "id": "mbi-ingot_rainbow_stone",
+          "type": "ITEM"
+        },
+        {
+          "amount": 8,
+          "id": "mbi-mandrake_elixir",
+          "type": "ITEM"
+        },
+        {
+          "amount": 8,
+          "id": "mbi-ebony_carving",
+          "type": "ITEM"
+        },
+        {
+          "amount": 4,
+          "id": "mbi-crate_material-potato",
+          "type": "ITEM"
+        },
+        {
+          "amount": 4,
+          "id": "mbi-crate_material-wheat",
+          "type": "ITEM"
+        },
+        {
+          "amount": 40,
+          "id": "player",
+          "type": "LEVEL"
+        },
+        {
+          "amount": 5000000,
+          "id": "GOLD",
+          "type": "CURRENCY"
+        },
+        {
+          "amount": 3000,
+          "id": "CRYSTAL",
+          "type": "CURRENCY"
+        }
+      ],
+      "unlocked_plots": 1
+    },
+    "5": {
+      "chance_reduction": 0.9,
+      "construction_time": 1209600000,
+      "requirements": [
+        {
+          "amount": 2,
+          "id": "mbi-enchanted_ore_powder",
+          "type": "ITEM"
+        },
+        {
+          "amount": 4,
+          "id": "mbi-five_leaf_clover_elixir",
+          "type": "ITEM"
+        },
+        {
+          "amount": 4,
+          "id": "mbi-rainbow_stone_plate",
+          "type": "ITEM"
+        },
+        {
+          "amount": 2,
+          "id": "mbi-barrel_material-wheat",
+          "type": "ITEM"
+        },
+        {
+          "amount": 2,
+          "id": "mbi-enchanted_material-potato",
+          "type": "ITEM"
+        },
+        {
+          "amount": 50,
+          "id": "player",
+          "type": "LEVEL"
+        },
+        {
+          "amount": 10000000,
+          "id": "GOLD",
+          "type": "CURRENCY"
+        },
+        {
+          "amount": 10000,
+          "id": "CRYSTAL",
+          "type": "CURRENCY"
+        }
+      ],
+      "unlocked_plots": 1
+    }
+  }
 }
