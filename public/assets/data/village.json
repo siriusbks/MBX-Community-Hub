@@ -101,15 +101,81 @@
         },
         {
           "production": 13,
-          "storage": 1728
+          "storage": 1728,
+          "cost": [
+            {
+              "id": "log_chestnut",
+              "quantity": 32
+            },
+            {
+              "id": "log_hazel",
+              "quantity": 16
+            },
+            {
+              "id": "log_mahogany",
+              "quantity": 16
+            },
+            {
+              "id": "nailed_wooden_board",
+              "quantity": 4
+            }
+          ],
+          "player_level": 35,
+          "job_level": 20,
+          "crystals": 500,
+          "gold": 1000000
         },
         {
           "production": 21,
-          "storage": 2304
+          "storage": 2304,
+          "cost": [
+            {
+              "id": "log_eucalyptus",
+              "quantity": 16
+            },
+            {
+              "id": "log_maple",
+              "quantity": 16
+            },
+            {
+              "id": "log_olive_tree",
+              "quantity": 16
+            },
+            {
+              "id": "fortified_plank",
+              "quantity": 4
+            }
+          ],
+          "player_level": 50,
+          "job_level": 40,
+          "crystals": 1000,
+          "gold": 5000000
         },
         {
           "production": 36,
-          "storage": 2880
+          "storage": 2880,
+          "cost": [
+            {
+              "id": "log_mahogany",
+              "quantity": 32
+            },
+            {
+              "id": "log_yew",
+              "quantity": 16
+            },
+            {
+              "id": "log_walnut",
+              "quantity": 16
+            },
+            {
+              "id": "ebony_carving",
+              "quantity": 4
+            }
+          ],
+          "player_level": 75,
+          "job_level": 75,
+          "crystals": 2500,
+          "gold": 15000000
         }
       ],
       "enclosure": [
@@ -140,85 +206,37 @@
           "storage": 576,
           "cost": [
             {
-              "id": "coconut_log",
-              "quantity": 2
+              "id": "raw_cod",
+              "quantity": 16
             },
             {
-              "id": "banan_log",
-              "quantity": 2
+              "id": "fish_clam",
+              "quantity": 4
+            },
+            {
+              "id": "fish_breaded_fish",
+              "quantity": 4
             }
           ],
-          "player_level": 0,
-          "crystals": 0,
-          "gold": 0
+          "player_level": 3,
+          "crystals": 100,
+          "gold": 25000
         },
         {
           "production": 8,
-          "storage": 1152,
-          "cost": [
-            {
-              "id": "belt_bronze",
-              "quantity": 2
-            },
-            {
-              "id": "emmental_cheese",
-              "quantity": 2
-            }
-          ],
-          "player_level": 20,
-          "crystals": 40,
-          "gold": 324320
+          "storage": 1152
         },
         {
           "production": 13,
-          "storage": 1728,
-          "cost": [
-            {
-              "id": "coconut_log",
-              "quantity": 2
-            },
-            {
-              "id": "banan_log",
-              "quantity": 2
-            }
-          ],
-          "player_level": 0,
-          "crystals": 0,
-          "gold": 0
+          "storage": 1728
         },
         {
           "production": 21,
-          "storage": 2304,
-          "cost": [
-            {
-              "id": "coconut_log",
-              "quantity": 2
-            },
-            {
-              "id": "banan_log",
-              "quantity": 2
-            }
-          ],
-          "player_level": 0,
-          "crystals": 0,
-          "gold": 0
+          "storage": 2304
         },
         {
           "production": 36,
-          "storage": 2880,
-          "cost": [
-            {
-              "id": "coconut_log",
-              "quantity": 2
-            },
-            {
-              "id": "banan_log",
-              "quantity": 2
-            }
-          ],
-          "player_level": 0,
-          "crystals": 0,
-          "gold": 0
+          "storage": 2880
         }
       ],
       "farming": [
@@ -254,15 +272,81 @@
         },
         {
           "production": 10,
-          "storage": 1728
+          "storage": 1728,
+          "cost": [
+            {
+              "id": "log_chestnut",
+              "quantity": 32
+            },
+            {
+              "id": "log_hazel",
+              "quantity": 16
+            },
+            {
+              "id": "log_mahogany",
+              "quantity": 16
+            },
+            {
+              "id": "nailed_wooden_board",
+              "quantity": 4
+            }
+          ],
+          "player_level": 35,
+          "job_level": 20,
+          "crystals": 500,
+          "gold": 1000000
         },
         {
           "production": 17,
-          "storage": 2304
+          "storage": 2304,
+          "cost": [
+            {
+              "id": "log_eucalyptus",
+              "quantity": 16
+            },
+            {
+              "id": "log_maple",
+              "quantity": 16
+            },
+            {
+              "id": "log_olive_tree",
+              "quantity": 16
+            },
+            {
+              "id": "fortified_plank",
+              "quantity": 4
+            }
+          ],
+          "player_level": 50,
+          "job_level": 40,
+          "crystals": 1000,
+          "gold": 5000000
         },
         {
           "production": 28,
-          "storage": 2880
+          "storage": 2880,
+          "cost": [
+            {
+              "id": "log_mahogany",
+              "quantity": 32
+            },
+            {
+              "id": "log_yew",
+              "quantity": 16
+            },
+            {
+              "id": "log_walnut",
+              "quantity": 16
+            },
+            {
+              "id": "ebony_carving",
+              "quantity": 4
+            }
+          ],
+          "player_level": 75,
+          "job_level": 75,
+          "crystals": 2500,
+          "gold": 15000000
         }
       ]
     }
