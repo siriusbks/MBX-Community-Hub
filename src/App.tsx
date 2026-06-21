@@ -1,39 +1,13 @@
 import { AppRoutes } from "./router/index";
-import { useEffect, useRef, Suspense } from "react";
-import ReactGA from "react-ga4";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { useEffect, Suspense } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { GA4Tracking } from "@components/utils/GA4Tracking";
 import { ThemeProvider } from "@components/theme-provider";
 import { Navbar } from "@components/Navbar";
 import { Footer } from "@components/Footer";
 import "./i18n";
-import { isDev } from "@utils/helper";
 import { Ripple } from "@components/ripple";
 import { TooltipProvider } from "@components/ui/tooltip";
-
-const GA_MEASUREMENT_ID = "G-1E5DGV7ZFK";
-
-function GA4Tracking() {
-    const location = useLocation();
-    const initialized = useRef(false);
-
-    useEffect(() => {
-        if (isDev()) {
-            console.log("Dev mode: Google Analytics disabled");
-            return;
-        }
-        if (!initialized.current) {
-            ReactGA.initialize(GA_MEASUREMENT_ID);
-            initialized.current = true;
-        }
-
-        ReactGA.send({
-            hitType: "pageview",
-            page: location.pathname + location.search,
-        });
-    }, [location.pathname, location.search]);
-
-    return null;
-}
 
 export default function App() {
     useEffect(() => {
