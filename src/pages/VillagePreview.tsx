@@ -1,4 +1,4 @@
-import { Clock10Icon, Info } from "lucide-react"
+import { BoxIcon, Clock10Icon, Clock4Icon, Info } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card"
 import { Button } from "@ui/button"
 import { PageTitle } from "@components/layout/title"
@@ -23,6 +23,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@components/ui/accordion"
+import { Badge } from "@components/ui/badge"
 
 export function VillagePreview() {
   const { t, i18n } = useTranslation("maps")
@@ -123,9 +124,9 @@ export function VillagePreview() {
 
         <Card className="w-1/3 p-0 gap-0">
 
-            <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
-              <p className="text-primary text-md uppercase ">Village Tiers</p>
-            </Card>
+          <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
+            <p className="text-primary text-md uppercase ">Village Tiers</p>
+          </Card>
 
           <Accordion type="single" collapsible defaultValue="item-1">
             {Object.entries(village_tiers).map(([tierKey, tierData]) => (
@@ -133,8 +134,8 @@ export function VillagePreview() {
                 <AccordionTrigger className="gap-2">
                   <div className="w-full flex flex-row justify-between items-center mb-2">
                     <h3 className="text-primary uppercase font-bold">Tier {tierKey}</h3>
-                    <span className="flex-row flex gap-1 items-center text-sm">
-                      <Clock10Icon className="size-4" />
+                    <span className="flex-row flex gap-1 items-center text-xs">
+                      <Clock10Icon className="size-3" />
                       {formatTime(tierData.construction_time)}
                     </span>
                   </div>
@@ -158,14 +159,14 @@ export function VillagePreview() {
                           {tierData.requirements
                             .filter(req => req.type === 'ITEM')
                             .map((req, index) => {
-                              const itemKey = Object.keys(mineboxItems).find(key => key === req.id);
+                              const itemKey = Object.keys(mineboxItems).find(key => key === (req.id.replace(/^mbi-/, "")));
                               const itemData = itemKey ? mineboxItems[itemKey] : null;
 
                               return (
                                 <ItemSlot
                                   key={`${tierKey}-item-${index}`}
-                                  id={req.id}
-                                  name={itemData?.name?.en || req.id || 'Unknown Item'}
+                                  id={req.id.replace(/^mbi-/, "")}
+                                  name={itemData?.name?.en || req.id.replace(/^mbi-/, "") || 'Unknown Item'}
                                   rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
                                   image={itemData?.image || ''}
                                   count={req.amount}
@@ -176,17 +177,29 @@ export function VillagePreview() {
                         </div>
 
                         {/* Other requirements */}
-                        <div className="flex flex-wrap gap-2">
+                        <div className="w-full grid grid-cols-3 gap-2">
                           {tierData.requirements
                             .filter(req => req.type !== 'ITEM')
                             .map((req, idx) => (
-                              <span key={`${tierKey}-other-${idx}`} className="text-xs bg-gray-800 px-2 py-1 rounded">
+                              <span key={idx} className="flex text-sm items-center">
                                 {req.type === 'CURRENCY' ? (
-                                  `${req.amount} ${req.id}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    <span className="flex flex-row gap-0.5">
+                                      <img src={`/media/currency/${req.id}.png`} className="size-4" />
+                                      {req.id}
+                                    </span>
+                                    {req.amount}
+                                  </span>
                                 ) : req.type === 'LEVEL' ? (
-                                  `Level ${req.amount}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    Player
+                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                  </span>
                                 ) : req.type === 'SKILL' ? (
-                                  `${req.id} Level ${req.amount}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    {req.id}
+                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                  </span>
                                 ) : (
                                   `${req.amount} ${req.id}`
                                 )}
@@ -245,7 +258,7 @@ export function VillagePreview() {
                           {tierData.requirements
                             .filter(req => req.type === 'ITEM')
                             .map((req, index) => {
-                              const itemKey = Object.keys(mineboxItems).find(key => key === req.id);
+                              const itemKey = Object.keys(mineboxItems).find(key => key === req.id.replace(/^mbi-/, ""));
                               const itemData = itemKey ? mineboxItems[itemKey] : null;
 
                               return (
@@ -267,13 +280,26 @@ export function VillagePreview() {
                           {tierData.requirements
                             .filter(req => req.type !== 'ITEM')
                             .map((req, idx) => (
-                              <span key={idx} className="text-sm">
+
+                              <span key={idx} className="flex text-sm items-center">
                                 {req.type === 'CURRENCY' ? (
-                                  `${req.amount} ${req.id}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    <span className="flex flex-row gap-0.5">
+                                      <img src={`/media/currency/${req.id}.png`} className="size-4" />
+                                      {req.id}
+                                    </span>
+                                    {req.amount}
+                                  </span>
                                 ) : req.type === 'LEVEL' ? (
-                                  `Level ${req.amount}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    Player
+                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                  </span>
                                 ) : req.type === 'SKILL' ? (
-                                  `${req.id} Level ${req.amount}`
+                                  <span className="flex flex-col text-xs items-center w-full">
+                                    {req.id}
+                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                  </span>
                                 ) : (
                                   `${req.amount} ${req.id}`
                                 )}
@@ -284,18 +310,21 @@ export function VillagePreview() {
                     )}
                     {tierData.production && (
                       <>
-                        <span className="flex flex-row justify-between">
-                          <span>Production</span>
-                          <span>{tierData.production.base_rate}/s | {tierData.production.storage_capacity} Size</span>
+                        <span className="flex flex-row justify-between mt-4">
+                          <span className="text-lg">Production</span>
+                          <span className="flex flex-row gap-2 leading-none items-center text-xs ">
+                            <p className="!m-0 flex flex-row items-center gap-0.5"><Clock4Icon className="size-4"/> {tierData.production.base_rate}/h</p>
+                            <p className="!m-0 flex flex-row items-center gap-0.5"><BoxIcon className="size-4"/> {tierData.production.storage_capacity * 64}</p>
+                          </span>
                         </span>
 
                         {/* Zawartość - resources */}
-                        <span className="w-full grid grid-cols-4 gap-2">
+                        <span className="w-full grid grid-cols-6 gap-2">
                           {(() => {
                             const totalWeight = tierData.production.resources?.reduce((sum, r) => sum + r.weight, 0) || 0;
 
                             return tierData.production.resources?.map((req, index) => {
-                              const itemKey = Object.keys(mineboxItems).find(key => key === req.item_id);
+                              const itemKey = Object.keys(mineboxItems).find(key => key === req.item_id.replace(/^mbi-/, ""));
                               const itemData = itemKey ? mineboxItems[itemKey] : null;
                               const percentage = totalWeight > 0 ? ((req.weight / totalWeight) * 100).toFixed(1) : 0;
 

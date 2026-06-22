@@ -59,12 +59,12 @@ export const levels = [
     }
 ];
 
-export function LevelBadge({ level, children}: { level: number; children?: React.ReactNode }) {
+export function LevelBadge({ level, children, className}: { level: number; className?: string; children?: React.ReactNode }) {
     let levelData = levels.find(l => level >= l.from && level <= l.to);
     if (!levelData) levelData = levels[levels.length - 1];
     
     return (
-        <Badge className={`text-white text-shadow-[1px_1px_2px_#0000006f] tracking-wider ${levelData.style}`}>
+        <Badge className={`text-white text-shadow-[1px_1px_2px_#0000006f] tracking-wider ${levelData.style} ${className}`}>
             {children}
         </Badge>
     );
