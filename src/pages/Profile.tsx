@@ -14,7 +14,7 @@ import { SkillsTab } from "../components/profile/SkillsTab";
 import { CompanionsTab } from "../components/profile/CompanionsTab";
 import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
-import { Download, Clock, Shield, Star, Share2 } from 'lucide-react';
+import { Download, Activity, Swords, Users, Target, Ship, Eye } from 'lucide-react';
 
 export function ProfilePage() {
     const [nick, setNick] = useState<string | null>(null);
@@ -129,11 +129,12 @@ export function ProfilePage() {
 
     return (
         <div className="relative flex flex-col page-container gap-4 pb-12">
+            <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
             <PageTitle title="Profile" description="View your Minebox statistics and progress" />
             
             {/* Hidden Share Card used for html-to-image */}
             {data && (
-                <div className="absolute -left-[9999px] top-0">
+                <div className="absolute -left-[9999px] top-0 ">
                     <div 
                         ref={shareCardRef}
                         className="w-[850px] h-[480px] rounded-2xl overflow-hidden relative flex shadow-2xl"
@@ -169,108 +170,147 @@ export function ProfilePage() {
             ) : data ? (
                 <div className="space-y-4 mt-2">
                     {/* Header Profile Card */}
-                    <Card className="overflow-hidden border-primary/20 shadow-sm relative">
-                        <div className="h-20 bg-linear-to-r from-primary/40 via-primary/20 to-secondary relative">
-                            <div className="absolute -bottom-8 left-4 border-2 border-background rounded-md bg-background shadow-md">
+                    <Card className="overflow-hidden border-white/10 bg-card/40 backdrop-blur-xl shadow-xl relative mt-2">
+                        <div className="h-20 relative">
+                            <div className="absolute -bottom-6 left-4 w-16 h-16 rounded-full blur-xl"></div>
+                            
+                            <div className="absolute -bottom-8 left-4 border-2 border-card/60 backdrop-blur-xl rounded-lg bg-secondary/50 shadow-lg z-10 p-0.5">
                                 <img 
                                     src={`https://api.mineatar.io/face/${data.id || nick}?scale=4`} 
                                     alt={data.username}
-                                    className="w-16 h-16 rounded-sm bg-secondary"
+                                    className="w-16 h-16 rounded-md bg-background/50"
                                     style={{ imageRendering: 'pixelated' }}
                                 />
                             </div>
                         </div>
-                        <CardContent className="pt-10 pb-4 px-4">
-                            {/* Share Profile Button & Modal */}
-                            <div className="absolute top-4 right-4 z-20">
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button variant="secondary" size="sm" className="gap-2 bg-background/50 backdrop-blur-md hover:bg-primary/20 border border-primary/20">
-                                            <Share2 className="w-4 h-4" /> <span className="hidden sm:inline">Share Profile</span>
-                                        </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl z-[100]">
-                                        <DialogHeader>
-                                            <DialogTitle>Share your Player Card</DialogTitle>
-                                            <DialogDescription>
-                                                Download this beautiful card to share your stats on Discord or Twitter!
-                                            </DialogDescription>
-                                        </DialogHeader>
-                                        
-                                        <div className="flex justify-center items-center py-8 bg-secondary/20 rounded-xl border border-border/50 overflow-hidden my-2">
-                                            <div className="relative group transition-transform duration-500 hover:scale-105">
-                                                <div className="w-[850px] h-[480px] scale-[0.35] sm:scale-[0.55] origin-center pointer-events-none rounded-2xl overflow-hidden relative shadow-2xl ring-4 ring-primary/20">
-                                                    <ShareCardContent data={data} nick={nick} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <Button onClick={handleDownloadImage} disabled={isGenerating} className="w-full gap-2">
-                                            {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Download Image</>}
-                                        </Button>
-                                    </DialogContent>
-                                </Dialog>
+                        <CardContent className="pt-10 pb-4 px-4 relative z-20">
+                            {/* Dates at Top Right (Hidden on very small screens to avoid overlap) */}
+                            <div className="absolute top-4 right-4 z-20 hidden sm:block">
+                                <div className="text-xs text-muted-foreground space-y-2 bg-background/30 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm min-w-[150px]">
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">First Joined</span> 
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">{new Date(data.first_connection).toLocaleDateString()}</span>
+                                    </div>
+                                    <div className="h-px w-full bg-border/20"></div>
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">Last Seen</span> 
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">{new Date(data.last_connection).toLocaleDateString()}</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
+                            <div className="flex flex-col gap-4">
                                 <div>
-                                    <h1 className="text-xl font-bold flex items-center gap-2 mt-2 md:mt-0">
+                                    <h1 className="text-xl font-bold flex items-center gap-2 mt-2 md:mt-0 text-foreground">
                                         {data.username}
                                         {data.online ? (
-                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/50">Online</Badge>
+                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
                                         ) : (
-                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70">Offline</Badge>
+                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">Offline</Badge>
                                         )}
                                     </h1>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
-                                        <span className="flex items-center gap-1 font-medium text-primary bg-primary/10 px-2 py-0.5 rounded">
-                                            <Star className="w-3 h-3" /> Lv {data.level}
+                                        <span className="flex items-center gap-1 font-semibold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded shadow-sm">
+                                            Lv {data.level}
                                         </span>
                                         {data.guild && (
-                                            <span className="flex items-center gap-1 font-medium bg-secondary px-2 py-0.5 rounded text-foreground/80 border border-border/50">
-                                                <Shield className="w-3 h-3 text-primary/70" /> {data.guild.name}
+                                            <span className="flex items-center gap-1 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm">
+                                                {data.guild.name}
                                             </span>
                                         )}
-                                        <span className="flex items-center gap-1 font-medium bg-secondary px-2 py-0.5 rounded text-foreground/80 border border-border/50">
-                                            <Clock className="w-3 h-3 text-primary/70" /> {formatPlaytime(data.playtime)}
+                                        <span className="flex items-center gap-1 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm">
+                                            {formatPlaytime(data.playtime)}
                                         </span>
                                     </div>
                                 </div>
-                                
-                                <div className="text-xs text-muted-foreground space-y-1 bg-secondary/30 p-2 rounded border border-border/50 min-w-[150px] mt-2 md:mt-0">
-                                    <p className="flex justify-between gap-4">
-                                        <span>First Joined</span> 
-                                        <span className="text-foreground font-medium">{new Date(data.first_connection).toLocaleDateString()}</span>
-                                    </p>
-                                    <p className="flex justify-between gap-4">
-                                        <span>Last Seen</span> 
-                                        <span className="text-foreground font-medium">{new Date(data.last_connection).toLocaleDateString()}</span>
-                                    </p>
+
+                                {/* Mobile Dates Box (shows on small screens only) */}
+                                <div className="sm:hidden text-xs text-muted-foreground space-y-2 bg-background/30 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm w-full mt-2">
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">First Joined</span> 
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">{new Date(data.first_connection).toLocaleDateString()}</span>
+                                    </div>
+                                    <div className="h-px w-full bg-border/20"></div>
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">Last Seen</span> 
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">{new Date(data.last_connection).toLocaleDateString()}</span>
+                                    </div>
+                                </div>
+
+                                {/* Profile Card Button at Bottom Left */}
+                                <div>
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button variant="secondary" size="sm" className="gap-2 bg-background/40 backdrop-blur-md hover:bg-secondary/80 border border-white/5 shadow-sm transition-all">
+                                                <Eye className="w-4 h-4" /> <span>Profile Card</span>
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl z-[100]">
+                                            <DialogHeader>
+                                                <DialogTitle>Share your Player Card</DialogTitle>
+                                                <DialogDescription>
+                                                    Download this beautiful card to share your stats on Discord!
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            
+                                            <div className="flex justify-center items-center py-8 bg-secondary/20 rounded-xl border border-border/50 overflow-hidden my-2">
+                                                <div className="relative group transition-transform duration-500 hover:scale-105">
+                                                    <div className="w-[850px] h-[480px] scale-[0.35] sm:scale-[0.55] origin-center pointer-events-none rounded-2xl overflow-hidden relative shadow-2xl ring-4 ring-primary/20">
+                                                        <ShareCardContent data={data} nick={nick} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <Button onClick={handleDownloadImage} disabled={isGenerating} className="w-full gap-2">
+                                                {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Download Image</>}
+                                            </Button>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
                     <Tabs defaultValue="stats" className="w-full">
-                        <TabsList className="w-full justify-start border-b border-border/50 rounded-none h-auto p-0 bg-transparent mb-4 gap-4 overflow-x-auto flex-nowrap hide-scrollbar">
-                            <TabsTrigger value="stats" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-2 py-2 text-sm">
+                        <TabsList className="w-full justify-start h-auto p-1.5 bg-secondary/20 backdrop-blur-md rounded-2xl border border-border/50 mb-6 gap-1.5 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm">
+                            <TabsTrigger 
+                                value="stats" 
+                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                            >
+                                <Activity className="w-4 h-4" />
                                 Stats
                             </TabsTrigger>
-                            <TabsTrigger value="skills" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-2 py-2 text-sm">
+                            <TabsTrigger 
+                                value="skills" 
+                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                            >
+                                <Swords className="w-4 h-4" />
                                 Skills
                             </TabsTrigger>
                             {data.data?.COMPANIONS && (
-                                <TabsTrigger value="companions" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-2 py-2 text-sm">
+                                <TabsTrigger 
+                                    value="companions" 
+                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Users className="w-4 h-4" />
                                     Companions
                                 </TabsTrigger>
                             )}
                             {data.data?.OBJECTIVES && (
-                                <TabsTrigger value="objectives" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-2 py-2 text-sm">
+                                <TabsTrigger 
+                                    value="objectives" 
+                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Target className="w-4 h-4" />
                                     Objectives
                                 </TabsTrigger>
                             )}
                             {data.data?.SHIPS && (
-                                <TabsTrigger value="ships" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-2 py-2 text-sm">
+                                <TabsTrigger 
+                                    value="ships" 
+                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Ship className="w-4 h-4" />
                                     Ships
                                 </TabsTrigger>
                             )}
