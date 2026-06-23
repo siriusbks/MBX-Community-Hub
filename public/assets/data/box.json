@@ -1,0 +1,147 @@
+{
+    "box": "mythic",
+	"price": 12,
+	"image": "/assets/media/museum/TREASURE/treasure_mythic.png",
+    "items": [
+        {
+            "id": "jelly_mythic",
+            "dropRate": 0.1510
+        },
+        {
+            "id": "harvester_royal_axe",
+            "dropRate": 0.0686
+        },
+        {
+            "id": "harvester_royal_hoe",
+            "dropRate": 0.0686
+        },
+        {
+            "id": "hammer_ruby",
+            "dropRate": 0.0686
+        },
+        {
+            "id": "hammer_shovel_ruby",
+            "dropRate": 0.0686
+        },
+        {
+            "id": "vein_axe_ruby",
+            "dropRate": 0.0686
+        },
+        {
+            "id": "tome_mythic_alchemist",
+            "dropRate": 0.0549
+        },
+        {
+            "id": "vein_pickaxe_ruby",
+            "dropRate": 0.0412
+        },
+        {
+            "id": "mount_shark",
+            "dropRate": 0.0412
+        },
+        {
+            "id": "productivity_boost_3",
+            "dropRate": 0.0412
+        },
+        {
+            "id": "tome_mythic_xp",
+            "dropRate": 0.0274
+        },
+        {
+            "id": "cannon_4",
+            "dropRate": 0.0274
+        },
+        {
+            "id": "mount_motorcycle",
+            "dropRate": 0.0206
+        },
+        {
+            "id": "mount_cloud",
+            "dropRate": 0.0206
+        },
+        {
+            "id": "emote_rich",
+            "dropRate": 0.0206
+        },
+        {
+            "id": "class_monk",
+            "dropRate": 0.0206
+        },
+        {
+            "id": "pet_fire_dog",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "pet_wyrmling",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "pet_slimy",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "nameplate_demonic_azure",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "nameplate_golden_flag",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "class_reaper",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "safety_candy",
+            "dropRate": 0.0137
+        },
+        {
+            "id": "ship_rich",
+            "dropRate": 0.0123
+        },
+        {
+            "id": "ship_huge_yacht",
+            "dropRate": 0.0103
+        },
+        {
+            "id": "mount_shopping_cart",
+            "dropRate": 0.0103
+        },
+        {
+            "id": "mount_flying_carpet",
+            "dropRate": 0.0089
+        },
+        {
+            "id": "pet_robot",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "pet_rabbit",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "mount_truck",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "mount_ufo",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "pet_orc",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "pet_swordseye",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "pet_mimic",
+            "dropRate": 0.0068
+        },
+        {
+            "id": "ship_spaceship",
+            "dropRate": 0.0034
+        }
+    ]
+}

@@ -23,6 +23,7 @@ const CommunityPage = lazy(() => import("@pages/CommunityPage"));
 const MuseumPage = lazy(() => import("@pages/MuseumPage"));
 const ItemsNRecipesPage = lazy(() => import("@pages/ItemsNRecipesPage"));
 const CraftPlannerPage = lazy(() => import("@pages/CraftPlannerPage"));
+const BoxClickerPage = lazy(() => import("@pages/BoxClickerPage"));
 
 export const AppRoutes: FC = () => {
     return (
@@ -53,6 +54,9 @@ export const AppRoutes: FC = () => {
                 {/* Archives */}
                 <Route path="archives/christmas" element={<ChristmasPage />} />
                 <Route path="archives/halloween" element={<HalloweenPage />} />
+				
+	        {/* Fun */}
+	        <Route path="/boxClicker" element={<BoxClickerPage />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

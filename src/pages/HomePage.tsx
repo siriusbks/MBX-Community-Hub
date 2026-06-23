@@ -17,6 +17,7 @@ import {
     BookCopy,
     Swords,
     Package,
+    Gift
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -261,26 +262,26 @@ export function HomePage() {
                     </Link>
 
 
-                    {/* NA */}
-                    {/* <Link
-                        to="/NA"
-                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-orange-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
+                    {/* Box Clicker (like a cookie clicker) */}
+                    <Link
+                        to="/boxClicker"
+                        className="group bg-gradient-to-br from-gray-800/50 to-gray-900/60 backdrop-blur-md border border-gray-700 hover:border-blue-400 rounded-lg p-4 shadow-lg transition-all duration-200 hover:scale-[1.03]"
                     >
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 rounded-lg border border-orange-400/30 bg-orange-500/10 text-orange-400 group-hover:bg-orange-400/20 transition-colors">
-                                <Swords size={28} />
+                            <div className="p-3 rounded-lg border border-blue-400/30 bg-blue-500/10 text-blue-400 group-hover:bg-blue-400/20 transition-colors">
+                                <Gift size={28} />
                             </div>
                             <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors flex flex-col ">
-                                {t("homepage.features.NA.title")}
-                                <span className="w-fit text-orange-400 text-xs font-semibold rounded">
-                                    COMING SOON
+                                {t("homepage.features.boxClicker.title")}
+                                <span className="w-fit text-blue-400 text-xs font-semibold rounded">
+                                    BETA
                                 </span>
                             </h2>
                         </div>
                         <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm leading-tight">
-                            {t("homepage.features.NA.description")}
+                            {t("homepage.features.boxClicker.description")}
                         </p>
-                    </Link> */}
+                    </Link>
 
                     {/* NA */}
                     {/* <Link
