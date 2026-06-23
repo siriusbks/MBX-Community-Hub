@@ -45,6 +45,7 @@ export function Maps() {
       .then(([mapsJson, harvestablesJson]) => {
         setMapsData(mapsJson);
         setHarvestablesData(harvestablesJson);
+        console.log('loaded harvestables locations.servers keys:', Object.keys(harvestablesJson?.locations?.servers ?? {}));
       })
       .catch((e) => console.error('Failed to load map or harvestable data', e));
   }, []);
@@ -123,6 +124,29 @@ export function Maps() {
                     <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">Available Resources</PopoverTitle>
                   </PopoverHeader>
                   <div className="max-w-xs">
+                    {harvestablesData?.locations?.servers?.[map.id] ? (
+                      Object.keys(harvestablesData.locations.servers[map.id]).map((id) => {
+                        let minLevel = '0';
+                        const categories = harvestablesData.harvestables ?? {};
+                        for (const catKey of Object.keys(categories)) {
+                          const cat = categories[catKey];
+                          if (cat && cat[id]) {
+                            minLevel = cat[id]?.min_level ?? minLevel;
+                            break;
+                          }
+                        }
+                        const levelNum = Number(minLevel) || 0;
+                        return (
+                          <span key={id} className="flex flex-row gap-2 items-center justify-start mt-1">
+                            <LevelBadge level={levelNum} className="w-16">Lvl. {levelNum}</LevelBadge>
+                            <p className="items-center leading-none text-xs">{id}</p>
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <div className="text-xs text-muted-foreground">No data</div>
+                    )}
+                    {/*
                     {mapsData && harvestablesData && mapsData[map.id] ? (
                       // collect item IDs from arrays or objects in the map entry
                       Object.values(mapsData[map.id])
@@ -142,7 +166,7 @@ export function Maps() {
                         })
                     ) : (
                       <div className="text-xs text-muted-foreground">No data</div>
-                    )}
+                    )}*/}
                   </div>
                 </PopoverContent>
               </Popover>

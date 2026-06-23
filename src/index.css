@@ -202,5 +202,5 @@ body {
 }
 
 @utility page-container{
-  @apply w-full max-w-6xl py-6 gap-4 m-auto ;
+  @apply w-full max-w-6xl py-6 gap-4 m-auto px-4   ;
 }
