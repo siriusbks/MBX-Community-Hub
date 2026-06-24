@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@ui/card";
-import { Activity, Swords, Shield, Heart, Zap, Star } from "lucide-react";
+import { Activity } from "lucide-react";
 import { type PlayerData } from "../../types/profile";
 
 export function StatsTab({ data }: { data: PlayerData }) {
@@ -18,28 +18,52 @@ export function StatsTab({ data }: { data: PlayerData }) {
                 const scrollsValue = data.data?.ATTRIBUTED_STATS?.scrolls?.[statName] || 0;
                 const totalValue = baseValue + scrollsValue;
                 
-                let Icon = Activity;
-                if (statName === 'health') Icon = Heart;
-                else if (statName === 'strength') Icon = Swords;
-                else if (statName === 'defense') Icon = Shield;
-                else if (statName === 'agility') Icon = Zap;
-                else if (statName === 'luck' || statName === 'fortune') Icon = Star;
+                const imageSrc = `/media/attributes/${statName}.png`;
                 
                 return (
-                    <Card key={statName} className="bg-card/40 hover:bg-card/80 transition-colors border-primary/10 overflow-hidden relative group">
-                        <div className="absolute top-0 right-0 p-2 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <Icon className="w-12 h-12" />
-                        </div>
-                        <CardContent className="p-3 flex items-center gap-3 relative z-10">
-                            <div className="p-2 bg-primary/10 rounded-lg text-primary border border-primary/20 shadow-sm">
-                                <Icon className="w-4 h-4" />
+                    <Card 
+                        key={statName} 
+                        className={`group relative overflow-hidden bg-card/40 hover:bg-card/60 border-primary/10 hover:border-primary/30 transition-all duration-300 minebox-shadow backdrop-blur-sm`}
+                    >
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
+                        
+                        <CardContent className="p-4 sm:p-5 relative z-10 flex items-center gap-4">
+                            <div className="relative shrink-0 rounded-2xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden shadow-inner group-hover:scale-110 transition-transform duration-500 size-14">
+                                <img 
+                                    src={imageSrc} 
+                                    alt={statName} 
+                                    className="object-contain drop-shadow-md z-10 relative w-8 h-8" 
+                                    style={{ imageRendering: 'pixelated' }}
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).outerHTML = '<div class="w-full h-full flex items-center justify-center text-xs font-bold text-muted-foreground z-10 relative">?</div>';
+                                    }} 
+                                />
+                                <img 
+                                    src={imageSrc} 
+                                    alt="" 
+                                    className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[2px] grayscale" 
+                                    onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                                />
                             </div>
-                            <div className="flex-1">
-                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">{statName}</p>
-                                <div className="flex items-baseline gap-1.5 flex-wrap">
-                                    <p className="text-lg font-bold tracking-tight leading-none">{totalValue}</p>
+
+                            <div className="flex-1 min-w-0 flex flex-col justify-center gap-0.5">
+                                <h3 className="font-bold tracking-tight capitalize text-foreground drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] truncate group-hover:text-primary transition-colors text-sm sm:text-base" title={statName.replace(/_/g, ' ')}>
+                                    {statName.replace(/_/g, ' ')}
+                                </h3>
+                                
+                                <div className="flex items-center justify-between mt-0.5">
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-lg font-black text-foreground drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] leading-none">{baseValue}</span>
+                                        {scrollsValue > 0 && (
+                                            <span className="text-xs text-green-400 font-bold tracking-tight leading-none">+{scrollsValue}</span>
+                                        )}
+                                    </div>
+                                    
                                     {scrollsValue > 0 && (
-                                        <p className="text-[10px] text-green-500 font-medium leading-none">+{scrollsValue}</p>
+                                        <div className="flex flex-col items-end leading-none">
+                                            <span className="text-[8px] text-muted-foreground font-medium uppercase tracking-wider mb-0.5">Total</span>
+                                            <span className="text-xs text-primary font-bold">{totalValue}</span>
+                                        </div>
                                     )}
                                 </div>
                             </div>

@@ -30,7 +30,7 @@ export function ObjectivesTab({ data }: { data: PlayerData }) {
 
             <Card className="border-primary/10 bg-card/40">
                 <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2"><Target className="w-4 h-4" /> Top Successes</CardTitle>
+                    <CardTitle className="text-sm flex items-center gap-2"><Target className="w-4 h-4" /> Top Collection</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                     <div className="space-y-2">
