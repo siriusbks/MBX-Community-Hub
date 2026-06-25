@@ -44,7 +44,7 @@ const mapsConfig: Record<string, {
   height: number;
   referencePoint: { x: number; y: number }
 }> = {
-  spawn_map: {
+  spawn: {
     image: "/media/maps/spawn_map.png",
     width: 791,
     height: 839,
