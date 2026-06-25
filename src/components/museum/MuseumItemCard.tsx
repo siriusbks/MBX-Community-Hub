@@ -1,3 +1,9 @@
+/*
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
+ */
+
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ItemTranslation from "../ItemTranslation";

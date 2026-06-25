@@ -1,8 +1,10 @@
 /*
- * Copyright (c) 2025 LupusArctos4 SPDX-License-Identifier: MIT
+ * MBX, Community Based Project
+ * Copyright (c) 2024 SiriusB_
+ * SPDX-License-Identifier: MIT
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import mineboxItems from "./itemDataFromApi/minebox_items.json";
 
 interface MuseumItemImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
