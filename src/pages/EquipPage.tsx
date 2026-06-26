@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Loader2, RotateCcw, Shield } from "lucide-react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
+import { AlertTriangle, Loader2, RotateCcw, Shield, Check, Share2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useEquipment } from "@hooks/useEquipment";
@@ -24,6 +24,19 @@ import { SKULLS, sumSkullStats } from "../constants/skulls";
 
 type RightTab = "stats" | "craft";
 
+type SharedBuild = {
+    v: 1;
+    items: Record<string, string | null>;
+    skulls: string[];
+    pass: boolean;
+    pet: {
+        generation: number;
+        trait: string;
+        enchanted: boolean;
+    };
+    tab?: RightTab;
+};
+
 function addFlatToRanges(
     base: Record<string, number[]>,
     flat: Record<string, number>
@@ -36,6 +49,43 @@ function addFlatToRanges(
     return out;
 }
 
+function encodeBuildToUrlValue(build: SharedBuild): string {
+    const json = JSON.stringify(build);
+    const bytes = new TextEncoder().encode(json);
+
+    let binary = "";
+    bytes.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+    });
+
+    return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/g, "");
+}
+
+function decodeBuildFromUrlValue(value: string): SharedBuild | null {
+    try {
+        const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+        const padded = base64.padEnd(
+            base64.length + ((4 - (base64.length % 4)) % 4),
+            "="
+        );
+
+        const binary = atob(padded);
+        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+        const json = new TextDecoder().decode(bytes);
+
+        const parsed = JSON.parse(json);
+
+        if (!parsed || parsed.v !== 1) return null;
+
+        return parsed as SharedBuild;
+    } catch {
+        return null;
+    }
+}
+
 const EquipPage: React.FC = () => {
     const { t } = useTranslation("equipment");
     const { equipment, loading, error } = useEquipment();
@@ -45,6 +95,10 @@ const EquipPage: React.FC = () => {
     const [focusedItemId, setFocusedItemId] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<RightTab>("stats");
 
+	// SharedBuild
+	const [shareCopied, setShareCopied] = useState(false);
+	const hasLoadedSharedBuild = useRef(false);
+	
     // Set
     const { sets, loadingSets, errorSets, getTotalSetBonus, getActiveSets, setsById } = useSets();
     const currentActiveSets = getActiveSets(equippedItems);
@@ -56,6 +110,9 @@ const EquipPage: React.FC = () => {
     // Skulls
     const [skullModalOpen, setSkullModalOpen] = useState(false);
     const [selectedSkulls, setSelectedSkulls] = useState<string[]>([]);
+	
+	// Pass
+	const [hasPass, setHasPass] = useState(false);
 
     // Pet
     const [petGeneration, setPetGeneration] = useState(1);
@@ -66,6 +123,114 @@ const EquipPage: React.FC = () => {
         () => Object.values(equippedItems).find(item => item?.category?.toUpperCase() === "PET") || null,
         [equippedItems]
     );
+	
+	const shareBuild = useMemo<SharedBuild>(() => {
+		const items: Record<string, string | null> = {};
+
+		Object.entries(equippedItems).forEach(([slotId, item]) => {
+			items[slotId] = item?.id ?? null;
+		});
+
+		return {
+			v: 1,
+			items,
+			skulls: selectedSkulls,
+			pass: hasPass,
+			pet: {
+				generation: petGeneration,
+				trait: petTrait,
+				enchanted: petEnchanted,
+			},
+			tab: activeTab,
+		};
+	}, [
+		equippedItems,
+		selectedSkulls,
+		hasPass,
+		petGeneration,
+		petTrait,
+		petEnchanted,
+		activeTab,
+	]);
+
+	const onShareBuild = async () => {
+		const encoded = encodeBuildToUrlValue(shareBuild);
+
+		const url = new URL(window.location.href);
+		url.searchParams.set("build", encoded);
+
+		const shareUrl = url.toString();
+
+		try {
+			await navigator.clipboard.writeText(shareUrl);
+			setShareCopied(true);
+
+			alert(t("equip.share.alert", {url: shareUrl}));
+
+			window.setTimeout(() => {
+				setShareCopied(false);
+			}, 2000);
+		} catch {
+			alert(`Could not copy the build link:\n\n${shareUrl}`);
+		}
+	};
+	
+	// Load a build from URL
+	useEffect(() => {
+		if (hasLoadedSharedBuild.current) return;
+		if (!equipment.length) return;
+
+		const params = new URLSearchParams(window.location.search);
+		const buildParam = params.get("build");
+
+		if (!buildParam) return;
+
+		const decoded = decodeBuildFromUrlValue(buildParam);
+		if (!decoded) return;
+
+		hasLoadedSharedBuild.current = true;
+
+		const equipmentById = new Map<string, Equipment>();
+
+		equipment.forEach((item) => {
+			if (item.id) {
+				equipmentById.set(item.id, item);
+			}
+		});
+
+		const restoredItems: EquippedItems = {};
+
+		Object.entries(decoded.items ?? {}).forEach(([slotId, itemId]) => {
+			if (!itemId) {
+				restoredItems[slotId] = null;
+				return;
+			}
+
+			restoredItems[slotId] = equipmentById.get(itemId) ?? null;
+		});
+
+		setEquippedItems(restoredItems);
+		setSelectedSkulls(Array.isArray(decoded.skulls) ? decoded.skulls : []);
+		setHasPass(Boolean(decoded.pass));
+
+		setPetGeneration(
+			typeof decoded.pet?.generation === "number"
+				? decoded.pet.generation
+				: 1
+		);
+
+		setPetTrait(
+			typeof decoded.pet?.trait === "string"
+				? decoded.pet.trait
+				: ""
+		);
+
+		setPetEnchanted(Boolean(decoded.pet?.enchanted));
+
+		if (decoded.tab === "stats" || decoded.tab === "craft") {
+			setActiveTab(decoded.tab);
+		}
+	}, [equipment]);
 
 
     const onSlotClick = (slotId: string) => {
@@ -103,6 +268,7 @@ const EquipPage: React.FC = () => {
         setPetGeneration(1);
         setPetTrait("");
         setPetEnchanted(false);
+		setHasPass(false);
     };
 
     useEffect(() => {
@@ -130,6 +296,10 @@ const EquipPage: React.FC = () => {
         equippedItems,
         selectedSkulls,
         getTotalSetBonus,
+		petGeneration,
+		petTrait,
+		petEnchanted,
+		flatFromSkulls,
     ]);
 
 
@@ -203,18 +373,32 @@ const EquipPage: React.FC = () => {
                     </h1>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className="text-xs text-gray-400">
-                        {t("equip.itemsLoaded", { count: equipment.length })}
-                    </span>
-                    <button
-                        onClick={onResetAll}
-                        className="inline-flex items-center gap-2 bg-red-900/40 hover:bg-red-900/60 text-red-200 text-sm px-3 py-2 rounded border border-red-700/50 transition"
-                        title="Reset All Equipment"
-                    >
-                        <RotateCcw className="w-4 h-4" />
-                        {t("equip.resetAll")}
-                    </button>
-                </div>
+					<button
+						onClick={onShareBuild}
+						className="inline-flex items-center gap-2 bg-blue-900/40 hover:bg-blue-900/60 text-blue-200 text-sm px-3 py-2 rounded border border-blue-700/50 transition"
+						title="Share this build"
+					>
+						{shareCopied ? (
+							<Check className="w-4 h-4" />
+						) : (
+							<Share2 className="w-4 h-4" />
+						)}
+						{shareCopied ? "Copied" : "Share"}
+					</button>
+
+					<span className="text-xs text-gray-400">
+						{t("equip.itemsLoaded", { count: equipment.length })}
+					</span>
+
+					<button
+						onClick={onResetAll}
+						className="inline-flex items-center gap-2 bg-red-900/40 hover:bg-red-900/60 text-red-200 text-sm px-3 py-2 rounded border border-red-700/50 transition"
+						title="Reset All Equipment"
+					>
+						<RotateCcw className="w-4 h-4" />
+						{t("equip.resetAll")}
+					</button>
+				</div>
             </header>
 
             <main className="flex-1 p-4">
@@ -276,6 +460,8 @@ const EquipPage: React.FC = () => {
                                             setPetTrait={setPetTrait}
                                             petEnchanted={petEnchanted}
                                             setPetEnchanted={setPetEnchanted}
+											hasPass={hasPass}
+											setHasPass={setHasPass}
                                         />
                                     </div>
                                 )}

@@ -10,6 +10,8 @@ import { ClipboardCopy, List, Square, SquareAsterisk, X } from "lucide-react";
 import { handleCopyCSV } from "@utils/handleCopyCSV";
 import CraftsOnlyContent from "./CraftsOnlyContent";
 
+type Translation = "museum" | "craftPlanner";
+
 interface Group {
     category: string;
     items: string[];
@@ -23,6 +25,22 @@ interface Details {
         recipe?: any;
     };
 }
+
+const getItemsRecapTranslationKeys = (translation: Translation) => {
+    if (translation === "craftPlanner") {
+        return {
+            title: "craftPlanner:craftPlanner.requiredResources.title",
+            description: "craftPlanner:craftPlanner.requiredResources.description",
+            noSelected: "craftPlanner:craftPlanner.requiredResources.noSelected"
+        };
+    }
+
+    return {
+        title: "museum.resourcesMuseum.title",
+        description: "museum.resourcesMuseum.description",
+        noSelected: "museum.resourcesMuseum.noSectionSelected",
+    };
+};
 
 /*
  * Resources recap modal with CraftsOnlyContent && BasicResourcesContent
@@ -45,6 +63,8 @@ type ResourcesRecapModalProps = {
     detailsIndex: Details | null;
     museumItems: string[];
     missingSelection: Record<string, boolean>;
+
+    translation: Translation;
 };
 
 
@@ -63,8 +83,13 @@ export const ResourcesRecapModal: React.FC<ResourcesRecapModalProps> = ({
     detailsIndex,
     museumItems,
     missingSelection,
+
+    
+    translation,
 }) => {
-    const { t } = useTranslation(["museum", "common"]);
+    const { t } = useTranslation(["museum", "craftPlanner", "common"]);
+
+    const translationKeys = getItemsRecapTranslationKeys(translation);
 
     if (!show) return null;
 
@@ -85,10 +110,10 @@ export const ResourcesRecapModal: React.FC<ResourcesRecapModalProps> = ({
                     />
                     <span className="flex flex-col">
                         <div className="text-2xl font-bold">
-                            {t("museum.resourcesMuseum.title")}
+                            {t(translationKeys.title)}
                         </div>
                         <div className="text-sm font-normal opacity-60">
-                            {t("museum.resourcesMuseum.description")}
+                            {t(translationKeys.description)}
                         </div>
                     </span>
 
@@ -149,24 +174,25 @@ export const ResourcesRecapModal: React.FC<ResourcesRecapModalProps> = ({
                     className="flex-1 overflow-y-auto p-4 custom-scrollbar"
                 >
                     {showCraftSection && (
-                      <>
-                          <div className="text-lg font-semibold mb-2">
-                              {t("museum.craftingResourcesMuseum.title")}
-                          </div>
-                          <CraftsOnlyContent
-                              groupedItems={groupedItems}
-                              detailsIndex={detailsIndex as any}
-                              museumItems={museumItems}
-                              missingSelection={missingSelection}
-                              setCategory={setCategory}
-                          />
-                      </>
+                        <>
+                            <div className="text-lg font-semibold mb-2">
+                                {t("museum.craftingResourcesMuseum.title")}
+                            </div>
+                            <CraftsOnlyContent
+                                groupedItems={groupedItems}
+                                detailsIndex={detailsIndex as any}
+                                museumItems={museumItems}
+                                missingSelection={missingSelection}
+                                setCategory={setCategory}
+                                translation={translation}
+                            />
+                        </>
                     )}
 
                     {showBasicSection && (
                         <>
                             <div className="text-lg font-semibold mt-4 mb-2">
-                                {t("museum.resourcesMuseum.title")}
+                                {t("museum.basicResourcesMuseum.title")}
                             </div>
                             {renderBasicResourcesContent()}
                         </>
@@ -174,7 +200,7 @@ export const ResourcesRecapModal: React.FC<ResourcesRecapModalProps> = ({
 
                     {!showCraftSection && !showBasicSection && (
                         <div className="text-center opacity-50">
-                            {t("museum.resourcesMuseum.noSectionSelected")}
+                            {t(translationKeys.noSelected)}
                         </div>
                     )}
                 </div>

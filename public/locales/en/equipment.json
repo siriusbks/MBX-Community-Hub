@@ -12,6 +12,8 @@
     "equip.tooltip.action": "Click to manage equipment.",
     "equip.buttons.resetAllEquipment": "Reset All Equipment",
     "equip.buttons.removeEquipped": "Remove equipped item",
+	"equip.buttons.share": "Share",
+	"equip.share.alert": "Build link copied to clipboard: \n\n {{url}}",
     "equip.character.title": "Your Character",
     "equip.character.hint": "Click on a slot to equip an item",
     "equip.selector.title": "Select {{category}}",
@@ -27,6 +29,7 @@
     "equip.seerecipe": "Equip an item to see its recipe.",
     "equip.selector.clearFilters": "Clear Filters",
     "equip.selector.filterRarity": "Filter",
+		
     "equip.slots.necklace": "Necklace",
     "equip.slots.helmet": "Helmet",
     "equip.slots.ring1": "Ring 1",

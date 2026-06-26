@@ -20,5 +20,7 @@
     "homepage.features.classAndSpells.title": "Class and Spells",
     "homepage.features.classAndSpells.description": "Discover detailed information about the classes and spells available in the Minebox world.",
     "homepage.features.expeditions.title": "Expeditions",
-    "homepage.features.expeditions.description": "Join exciting expeditions and explore new territories in the Minebox world."
+    "homepage.features.expeditions.description": "Join exciting expeditions and explore new territories in the Minebox world.",
+    "homepage.features.craftPlanner.title": "Craft Planner",
+    "homepage.features.craftPlanner.description": "Plan your crafting by selecting items and instantly see a summary of the resources you'll need."
 }

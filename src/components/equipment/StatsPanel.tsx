@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Equipment, PlayerStats } from "@t/equip";
 import { useSets } from "@hooks/useSet";
 import { formatStatRange } from "@utils/statsCalculator";
@@ -62,6 +62,27 @@ const iconMap: Record<string, string> = {
     WOODCUTTING_FORTUNE: "/assets/media/elemental/woodcutting_fortune.png",
 };
 
+const isFortuneStat = (stat: string) => {
+    return stat === "FORTUNE" || stat.endsWith("_FORTUNE");
+};
+
+const getPassMultiplier = (stat: string) => {
+    if (stat === "WISDOM") return 1.5;
+    if (isFortuneStat(stat)) return 1.25;
+    return 1;
+};
+
+const boostRange = (
+    range: [number, number],
+    multiplier: number
+): [number, number] => {
+    return [
+        Math.round(range[0] * multiplier),
+        Math.round(range[1] * multiplier),
+    ];
+};
+
+
 
 interface SetWithBonus {
     id: string;
@@ -86,6 +107,8 @@ interface Props {
     setPetTrait: (t:string) => void;
     petEnchanted: boolean;
     setPetEnchanted: (v:boolean) => void;
+	hasPass: boolean;
+	setHasPass: (v: boolean) => void;
 }
 
 export const StatsPanel: React.FC<Props> = ({
@@ -102,13 +125,15 @@ export const StatsPanel: React.FC<Props> = ({
     setPetTrait,
     petEnchanted,
     setPetEnchanted,
+	hasPass,
+	setHasPass,
 }) => {
     const { t: tEquip } = useTranslation("equipment");
     /* const { t: tSkulls } = useTranslation("skulls", {
         keyPrefix: "skulls.names",
     }); */
     const { setsById } = useSets();
-
+	
     /* const selectedSkullLabels = useMemo(() => {
         if (skullIds?.length) {
             return skullIds.map((id) =>
@@ -202,8 +227,26 @@ export const StatsPanel: React.FC<Props> = ({
         });
     }, [pet, petGeneration, petTrait, petEnchanted]);
 
+	// Displayed Stats with the pass's buffs
+	const displayedStats = useMemo<PlayerStats>(() => {
+		if (!hasPass) return stats;
 
-    const allZero = Object.values(stats).every(([a, b]) => a + b === 0);
+		const boostedStats = { ...stats } as Record<string, [number, number]>;
+
+		Object.entries(stats as Record<string, [number, number]>).forEach(
+			([stat, range]) => {
+				const multiplier = getPassMultiplier(stat);
+
+				if (multiplier !== 1) {
+					boostedStats[stat] = boostRange(range, multiplier);
+				}
+			}
+		);
+
+		return boostedStats as PlayerStats;
+	}, [stats, hasPass]);
+
+    const allZero = Object.values(displayedStats).every(([a, b]) => a + b === 0);
 
     return (
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col h-full">
@@ -216,18 +259,37 @@ export const StatsPanel: React.FC<Props> = ({
                     </h2>
                 </div>
 
-                {onOpenSkulls && (
-                    <button
-                        onClick={onOpenSkulls}
-                        className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-yellow-600/40 bg-yellow-900/30 text-yellow-300 hover:bg-yellow-900/50 transition"
-                        title={tEquip("equip.stats.addSkulls", {
-                            defaultValue: "Add skull bonuses",
-                        })}
-                    >
-                        <Plus className="w-4 h-4" />
-                        {tEquip("equip.buttons.skulls")}
-                    </button>
-                )}
+                <div className="flex items-center gap-2">
+					<label
+						className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-emerald-600/40 bg-emerald-900/30 text-emerald-300 hover:bg-emerald-900/50 transition cursor-pointer"
+						title="+25% Fortune / +50% Wisdom"
+					>
+						<input
+							type="checkbox"
+							checked={hasPass}
+							onChange={(e) => setHasPass(e.target.checked)}
+							className="accent-emerald-500"
+						/>
+						<span>
+							{tEquip("equip.stats.pass", {
+								defaultValue: "Pass",
+							})}
+						</span>
+					</label>
+
+					{onOpenSkulls && (
+						<button
+							onClick={onOpenSkulls}
+							className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-yellow-600/40 bg-yellow-900/30 text-yellow-300 hover:bg-yellow-900/50 transition"
+							title={tEquip("equip.stats.addSkulls", {
+								defaultValue: "Add skull bonuses",
+							})}
+						>
+							<Plus className="w-4 h-4" />
+							{tEquip("equip.buttons.skulls")}
+						</button>
+					)}
+				</div>
             </div>
 
             {selectedSkullLabels.length > 0 && (
@@ -247,7 +309,7 @@ export const StatsPanel: React.FC<Props> = ({
             {!allZero && (
                 <div className="space-y-3">
                     {/* Section Stats */}
-                    {Object.entries(stats).map(([name, range]) => {
+                    {Object.entries(displayedStats).map(([name, range]) => {
                         if (range[0] + range[1] === 0) return null;
 
                         // Does the skull contribute to this statistic ?
@@ -273,6 +335,7 @@ export const StatsPanel: React.FC<Props> = ({
                         // Does the pet contribut to this statistic because of its generation ?
                         let showIconGen = false;
                         if (petGeneration !== 1) showIconGen = true;
+						const isBoostedByPass = hasPass && getPassMultiplier(name) !== 1;
 
                         return (
                             <div
@@ -311,6 +374,12 @@ export const StatsPanel: React.FC<Props> = ({
                                     {showIconGen && (
                                         <Dna className="inline-block w-4 h-4 text-yellow-600 ml-1"/>
                                     )}
+									{/* Display Pass icon if pass boost */}
+									{isBoostedByPass && (
+										<span className="ml-1 rounded bg-emerald-500/10 border border-emerald-400/30 px-1.5 py-0.5 text-[10px] text-emerald-300">
+											PASS
+										</span>
+									)}
                                 </span>
                                 <span className="font-bold text-white">
                                     {formatStatRange(range)}

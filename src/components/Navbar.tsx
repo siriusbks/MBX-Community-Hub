@@ -20,7 +20,8 @@ import {
     BookA,
     BookCopy,
     Swords,
-    BookOpen
+    BookOpen,
+    Package
 } from "lucide-react";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -50,6 +51,7 @@ const NAV_LINKS: Array<any> = [
         items: [
             { id: "profile", to: "/profile", icon: User, labelKey: "navbar.profile" },
             { id: "equipment", to: "/equipment", icon: Shield, labelKey: "navbar.equipement", badge: "Beta" },
+            { id: "craftPlanner", to: "/craftPlanner", icon: Package, labelKey: "navbar.craftplanner", badge: "Beta" },
             { id: "museum", to: "/museum", icon: BookMarked, labelKey: "navbar.museum", badge: "Beta" },
         ],
     },
