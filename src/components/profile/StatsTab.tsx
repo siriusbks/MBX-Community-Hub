@@ -23,7 +23,7 @@ export function StatsTab({ data }: { data: PlayerData }) {
                 return (
                     <Card 
                         key={statName} 
-                        className={`group relative overflow-hidden bg-card/40 hover:bg-card/60 border-primary/10 hover:border-primary/30 transition-all duration-300 minebox-shadow backdrop-blur-sm`}
+                        className={`group relative py-0 overflow-hidden bg-card/40 hover:bg-card/60 border-primary/10 hover:border-primary/30 transition-all duration-300 minebox-shadow backdrop-blur-sm`}
                     >
                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
                         
