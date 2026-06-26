@@ -1,3 +1,4 @@
+import ActionsPage from "@pages/Actions";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
 import VillagePreview from "@pages/VillagePreview";
@@ -23,6 +24,9 @@ export const AppRoutes: FC = () => {
 
             {/* Codex */}
             <Route path="/codex/items" element={<ItemsCodex />} />
+
+            {/* Action */}
+            <Route path="/actions" element={<ActionsPage />} />
 
             {/* Community */}
             <Route path="/community" element={<CommunityPage />} />

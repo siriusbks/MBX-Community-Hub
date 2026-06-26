@@ -3,6 +3,8 @@ import { Card, CardContent } from "@ui/card";
 import { type PlayerData } from "../../types/profile";
 import { progressForJob, type StoreProfessionId } from "./../utils/xpCurve";
 import { Activity, Star } from "lucide-react";
+import { LevelBadge } from "@const/levels";
+import { Badge } from "@components/ui/badge";
 
 const DATA_TO_STORE_KEY: Record<string, StoreProfessionId> = {
     alchemist: "alchemy",
@@ -57,7 +59,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
         let mounted = true;
         const fetchLevels = async () => {
             const rawData = data.data?.SKILLS?.data || {};
-            
+
             const newInfo: Record<string, SkillInfo> = {};
             for (const jobKey of ALL_PROFESSIONS) {
                 let totalXp = 0;
@@ -87,7 +89,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
             }
         };
         fetchLevels();
-        
+
         return () => { mounted = false; };
     }, [data.data?.SKILLS?.data]);
 
@@ -110,32 +112,32 @@ export function SkillsTab({ data }: { data: PlayerData }) {
                     const { level, currentXp, nextLevelXp, progressPercent, totalXp } = info;
                     const formattedName = JOB_DISPLAY_NAMES[jobKey];
                     const iconPath = `/media/jobs/${jobKey}.png`;
-                    
+
                     const isFeatured = index === 0 && totalXp > 0;
 
                     return (
-                        <Card 
-                            key={jobKey} 
-                            className={`group relative overflow-hidden bg-card/40 hover:bg-card/60 border-primary/10 hover:border-primary/30 transition-all duration-300 minebox-shadow backdrop-blur-sm ${isFeatured ? 'md:col-span-2 xl:col-span-3 border-primary/30' : ''}`}
+                        <Card
+                            key={jobKey}
+                            className={`py-0 group relative overflow-hidden bg-card/40 hover:bg-card/60 border-primary/10 hover:border-primary/30 transition-all duration-300 minebox-shadow backdrop-blur-sm ${isFeatured ? 'md:col-span-2 xl:col-span-3 border-primary/30' : ''}`}
                         >
                             <div className={`absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none ${isFeatured ? 'via-primary/10 opacity-50' : ''}`} />
-                            
+
                             <CardContent className={`p-4 sm:p-5 relative z-10 ${isFeatured ? 'flex flex-col sm:flex-row items-center sm:items-stretch gap-5 sm:gap-6' : ''}`}>
                                 <div className={`flex items-center gap-4 ${isFeatured ? 'w-full sm:w-auto' : ''}`}>
                                     <div className={`relative shrink-0 rounded-2xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden shadow-inner group-hover:scale-110 transition-transform duration-500 ${isFeatured ? 'size-16 sm:size-20' : 'size-14'}`}>
-                                        <img 
-                                            src={iconPath} 
-                                            alt={formattedName} 
-                                            className={`object-contain drop-shadow-md z-10 relative ${isFeatured ? 'w-10 h-10 sm:w-12 sm:h-12' : 'w-8 h-8'}`} 
+                                        <img
+                                            src={iconPath}
+                                            alt={formattedName}
+                                            className={`object-contain drop-shadow-md z-10 relative ${isFeatured ? 'w-10 h-10 sm:w-12 sm:h-12' : 'w-8 h-8'}`}
                                             onError={(e) => {
                                                 (e.target as HTMLImageElement).outerHTML = '<div class="w-full h-full flex items-center justify-center text-xs font-bold text-muted-foreground z-10 relative">?</div>';
-                                            }} 
+                                            }}
                                         />
-                                        <img 
-                                            src={iconPath} 
-                                            alt="" 
-                                            className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[2px] grayscale" 
-                                            onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                                        <img
+                                            src={iconPath}
+                                            alt=""
+                                            className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[2px] grayscale"
+                                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                         />
                                     </div>
 
@@ -159,28 +161,32 @@ export function SkillsTab({ data }: { data: PlayerData }) {
                                             </h3>
                                             {isFeatured && <span className="hidden sm:inline-block px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider"><Star className="w-4 h-4" /></span>}
                                         </div>
+                                        <LevelBadge level={level} className={`${isFeatured ? 'text-lg p-3 pb-4':'text-md p-2 pb-3'}`}>
+                                            Lvl {level}
+                                        </LevelBadge>
+                                        {/*}
                                         <div className={`px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold whitespace-nowrap shadow-sm ${isFeatured ? 'text-sm sm:text-base px-4 py-1' : 'text-xs'}`}>
                                             Lvl {level}
-                                        </div>
+                                        </div>*/}
                                     </div>
-                                    
+
                                     <div className="flex flex-col gap-1.5 mt-0.5">
                                         <div className="flex items-end justify-between text-xs sm:text-sm">
-                                            <span className="text-muted-foreground font-medium tabular-nums tracking-tight">
+                                            <span className="text-muted-foreground font-medium tabular-nums tracking-tight items-center justify-center flex gap-2">
                                                 {nextLevelXp ? (
-                                                    <><span className="text-foreground/90">{currentXp.toLocaleString()}</span> / {nextLevelXp.toLocaleString()} XP</>
+                                                    <><span className="text-foreground/90">{currentXp.toLocaleString()}</span> / {nextLevelXp.toLocaleString()} <Badge className="text-gray-900 bg-white px-1 tracking-wider">XP</Badge></>
                                                 ) : (
-                                                    <span className="text-primary font-bold">MAX LEVEL</span>
+                                                    <Badge className="tracking-wider">MAX LEVEL</Badge>
                                                 )}
                                             </span>
                                             <span className="text-primary/90 font-bold tabular-nums">
                                                 {progressPercent.toFixed(1)}%
                                             </span>
                                         </div>
-                                        
-                                        <div className={`w-full bg-background/50 rounded-full overflow-hidden border border-border/40 shadow-inner ${isFeatured ? 'h-3' : 'h-2'}`}>
-                                            <div 
-                                                className="h-full bg-gradient-to-r from-primary/60 to-primary rounded-full relative transition-all duration-1000 ease-out shadow-[0_0_10px_var(--color-primary)]" 
+
+                                        <div className={`w-full bg-background/50 rounded-sm overflow-hidden border border-border/40 shadow-inner ${isFeatured ? 'h-6' : 'h-4'}`}>
+                                            <div
+                                                className="h-full bg-gradient-to-r from-primary-dark to-primary rounded-sm relative transition-all duration-1000 ease-out shadow-[0_0_10px_var(--color-primary)]"
                                                 style={{ width: `${progressPercent}%` }}
                                             >
                                                 {isFeatured && <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.3)_50%,transparent_100%)] w-full h-full animate-[pulse_2s_infinite]" />}
