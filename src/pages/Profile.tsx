@@ -13,6 +13,7 @@ import { SkillsTab } from "../components/profile/SkillsTab";
 import { CompanionsTab } from "../components/profile/CompanionsTab";
 import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
+import { GuildDialog } from "../components/profile/GuildDialog";
 import { Download, Activity, Swords, Target, Ship, Eye, PawPrint } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
 
@@ -212,9 +213,7 @@ export function ProfilePage() {
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
 
                                         {data.guild && (
-                                            <span className="flex items-center gap-1 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm">
-                                                {data.guild.name}
-                                            </span>
+                                            <GuildDialog guildId={data.guild.id} guildName={data.guild.name}/>
                                         )}
                                         <span className="flex items-center gap-1 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm">
                                             {formatPlaytime(data.playtime)}
