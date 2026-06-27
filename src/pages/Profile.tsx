@@ -13,8 +13,7 @@ import { SkillsTab } from "../components/profile/SkillsTab";
 import { CompanionsTab } from "../components/profile/CompanionsTab";
 import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
-import { GuildDialog } from "../components/profile/GuildDialog";
-import { Download, Activity, Swords, Target, Ship, Eye, PawPrint } from 'lucide-react';
+import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
 
 export function ProfilePage() {
@@ -170,23 +169,38 @@ export function ProfilePage() {
             ) : data ? (
                 <div className="space-y-4 mt-2">
                     {/* Header Profile Card */}
-                    <Card className="overflow-hidden border-white/10 bg-card/40 backdrop-blur-xl shadow-xl relative mt-2">
-                        <div className="h-20 relative">
-                            <div className="absolute -bottom-6 left-4 w-16 h-16 rounded-full blur-xl"></div>
+                    <Card className="overflow-hidden border-white/10 bg-card/40 pb-0 backdrop-blur-xl shadow-xl relative mt-2">
 
-                            <div className="absolute -bottom-8 left-4 border-2 border-card/60 backdrop-blur-xl rounded-lg bg-secondary/50 shadow-lg z-10 p-0.5">
-                                <img
-                                    src={`https://api.mineatar.io/face/${data.id || nick}?scale=4`}
-                                    alt={data.username}
-                                    className="w-16 h-16 rounded-md bg-background/50"
-                                    style={{ imageRendering: 'pixelated' }}
-                                />
-                            </div>
-                        </div>
-                        <CardContent className="pt-10 pb-4 px-4 relative z-20">
+                        <div className="absolute opacity-40 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-90% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
+                        <CardContent className="pt-10 pb-4 min-h-80 h-80 px-4 relative z-20">
                             {/* Dates at Top Right (Hidden on very small screens to avoid overlap) */}
-                            <div className="absolute top-4 right-4 z-20 hidden sm:block">
-                                <div className="text-xs text-muted-foreground space-y-2 bg-background/30 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm min-w-[150px]">
+
+                            <img
+                                src={`https://vzge.me/bust/256/${data.id || nick}`}
+                                alt={data.username}
+                                className="absolute left-0 bottom-0 size-72 drop-shadow-[0px_35px_64px_rgba(255,208,0,0.25)] "
+                                style={{ imageRendering: 'pixelated' }}
+                            />
+
+                            <div className="absolute top-0 right-4 z-20 hidden sm:block">
+                                <div className="text-xs text-muted-foreground space-y-0 bg-background/30 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm min-w-[150px]">
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">PVP Rank</span>
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">...</span>
+                                    </div>
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">PVP Winrate</span>
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">...</span>
+                                    </div>
+                                    <div className="flex justify-between items-center gap-4">
+                                        <span className="font-medium text-muted-foreground">PVP Streak</span>
+                                        <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="absolute bottom-4 right-4 z-20 hidden sm:block">
+                                <div className="text-xs text-muted-foreground space-y-0 bg-background/30 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm min-w-[150px]">
                                     <div className="flex justify-between items-center gap-4">
                                         <span className="font-medium text-muted-foreground">First Joined</span>
                                         <span className="text-foreground font-semibold bg-secondary/40 px-1.5 py-0.5 rounded">{new Date(data.first_connection).toLocaleDateString()}</span>
@@ -199,7 +213,7 @@ export function ProfilePage() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-4 ml-67 h-full justify-end">
                                 <div>
                                     <h1 className="text-xl font-bold flex items-center gap-2 mt-2 md:mt-0 text-foreground">
                                         <LevelBadge level={data.level} className="text-lg py-3 pb-4">Lvl {data.level}</LevelBadge>
@@ -207,17 +221,28 @@ export function ProfilePage() {
                                         {data.online ? (
                                             <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
                                         ) : (
-                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">Offline</Badge>
+                                            <div className="size-2 bg-red-500 rounded-full animate-ping" />
                                         )}
                                     </h1>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
-
+                                        <img src="/media/skulls/abyss.png" className="size-8" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                    </div>
+                                    <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
                                         {data.guild && (
-                                            <GuildDialog guildId={data.guild.id} guildName={data.guild.name}/>
+                                            <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
+                                                {data.guild.name}
+                                            </Badge>
                                         )}
-                                        <span className="flex items-center gap-1 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm">
-                                            {formatPlaytime(data.playtime)}
-                                        </span>
+                                        <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
+                                            <TimerIcon strokeWidth={4} className="size-3" /> {formatPlaytime(data.playtime)}
+                                        </Badge>
                                     </div>
                                 </div>
 
@@ -269,17 +294,17 @@ export function ProfilePage() {
                     </Card>
 
                     <Tabs defaultValue="stats" className="w-full">
-                        <TabsList className="w-full justify-start !min-h-12 p-1.5 bg-secondary/20 backdrop-blur-md rounded-2xl border border-border/50 mb-6 gap-1.5 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm">
+                        <TabsList className="w-full justify-start !min-h-12 p-1.5 bg-secondary/20 backdrop-blur-md   border border-border/50 mb-2 gap-1.5 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm">
                             <TabsTrigger
                                 value="stats"
-                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                             >
                                 <Activity className="w-4 h-4" />
                                 Attributes
                             </TabsTrigger>
                             <TabsTrigger
                                 value="skills"
-                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                             >
                                 <Swords className="w-4 h-4" />
                                 Skills
@@ -287,28 +312,46 @@ export function ProfilePage() {
                             {data.data?.COMPANIONS && (
                                 <TabsTrigger
                                     value="companions"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                                 >
                                     <PawPrint className="w-4 h-4" />
                                     Pets & Mounts
                                 </TabsTrigger>
                             )}
-                            {data.data?.OBJECTIVES && (
-                                <TabsTrigger
-                                    value="objectives"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
-                                >
-                                    <Target className="w-4 h-4" />
-                                    Objectives
-                                </TabsTrigger>
-                            )}
                             {data.data?.SHIPS && (
                                 <TabsTrigger
                                     value="ships"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                                 >
                                     <Ship className="w-4 h-4" />
                                     Ships
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="objectives"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <SwordsIcon className="w-4 h-4" />
+                                    PVP
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="skulls"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Skull className="w-4 h-4" />
+                                    Skulls
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="objectives"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Target className="w-4 h-4" />
+                                    Objectives
                                 </TabsTrigger>
                             )}
                         </TabsList>
