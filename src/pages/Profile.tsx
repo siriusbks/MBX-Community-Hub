@@ -13,7 +13,7 @@ import { SkillsTab } from "../components/profile/SkillsTab";
 import { CompanionsTab } from "../components/profile/CompanionsTab";
 import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
-import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon } from 'lucide-react';
+import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
 
 export function ProfilePage() {
@@ -225,14 +225,14 @@ export function ProfilePage() {
                                         )}
                                     </h1>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
-                                        <img src="/media/skulls/abyss.png" className="size-8" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }}/>
+                                        <img src="/media/skulls/abyss.png" className="size-8" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
                                     </div>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
                                         {data.guild && (
@@ -294,17 +294,17 @@ export function ProfilePage() {
                     </Card>
 
                     <Tabs defaultValue="stats" className="w-full">
-                        <TabsList className="w-full justify-start !min-h-12 p-1.5 bg-secondary/20 backdrop-blur-md rounded-2xl border border-border/50 mb-6 gap-1.5 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm">
+                        <TabsList className="w-full justify-start !min-h-12 p-1.5 bg-secondary/20 backdrop-blur-md   border border-border/50 mb-2 gap-1.5 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm">
                             <TabsTrigger
                                 value="stats"
-                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                             >
                                 <Activity className="w-4 h-4" />
                                 Attributes
                             </TabsTrigger>
                             <TabsTrigger
                                 value="skills"
-                                className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                             >
                                 <Swords className="w-4 h-4" />
                                 Skills
@@ -312,28 +312,46 @@ export function ProfilePage() {
                             {data.data?.COMPANIONS && (
                                 <TabsTrigger
                                     value="companions"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                                 >
                                     <PawPrint className="w-4 h-4" />
                                     Pets & Mounts
                                 </TabsTrigger>
                             )}
-                            {data.data?.OBJECTIVES && (
-                                <TabsTrigger
-                                    value="objectives"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
-                                >
-                                    <Target className="w-4 h-4" />
-                                    Objectives
-                                </TabsTrigger>
-                            )}
                             {data.data?.SHIPS && (
                                 <TabsTrigger
                                     value="ships"
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                                 >
                                     <Ship className="w-4 h-4" />
                                     Ships
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="objectives"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <SwordsIcon className="w-4 h-4" />
+                                    PVP
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="skulls"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Skull className="w-4 h-4" />
+                                    Skulls
+                                </TabsTrigger>
+                            )}
+                            {data.data?.OBJECTIVES && (
+                                <TabsTrigger
+                                    value="objectives"
+                                    className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
+                                >
+                                    <Target className="w-4 h-4" />
+                                    Objectives
                                 </TabsTrigger>
                             )}
                         </TabsList>
