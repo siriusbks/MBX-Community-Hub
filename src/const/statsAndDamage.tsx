@@ -154,9 +154,10 @@ export function StatItem({ stat, from, to }: { stat: string, from: number, to: n
     return (
 
         <span className="flex flex-row gap-1 text-xs">
+            <img src={`/media/attributes/${statData.id.toLowerCase()}.png`} className="size-4 shadow-sm"/>
             <p className="mr-auto  ">{statData.name}</p>
             {from === to ? (<p>{to}</p>) : (<p>{from} to {to}</p>)}
-            
+
         </span>
     )
 }
@@ -170,7 +171,7 @@ export function DamageItem({ type, from, to }: { type: string, from: number, to:
         <span className="flex flex-row gap-1 text-xs">
             <p className="mr-auto  ">{damageData.name}</p>
             {from === to ? (<p>{to}</p>) : (<p>{from} to {to}</p>)}
-            
+
         </span>
     )
 }

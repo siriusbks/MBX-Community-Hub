@@ -1,4 +1,5 @@
 import ActionsPage from "@pages/Actions";
+import ContributePage from "@pages/COntribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
 import VillagePreview from "@pages/VillagePreview";
@@ -33,6 +34,11 @@ export const AppRoutes: FC = () => {
 
             {/* Profile */}
             <Route path="/profile" element={<ProfilePage />} />
+
+            {/* Others */}
+            <Route path="/contribute" element={<ContributePage />} />
+
+
 
             {/* Errors */}
             <Route path="*" element={<Error404 />} />

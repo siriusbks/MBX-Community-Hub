@@ -144,7 +144,7 @@ export function MapPreview() {
     <div className="relative flex flex-col page-container pb-24 items-center">
       <div className="flex flex-row gap-4 h-screen w-full">
         {/* Map */}
-        <span className="bg-card/10 h-screen w-3/4">
+        <span className="minebox-shadow rounded-xl h-screen w-3/4">
 		  {!harvestablesData ? (
 			<div className="flex items-center justify-center h-full">Loading map…</div>
 		  ) : (

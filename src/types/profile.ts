@@ -27,6 +27,7 @@ export interface PlayerData {
     OBJECTIVES?: {
       completed_quests: { DAILY?: number; WEEKLY?: number };
       museum: string[];
+      relics?: Record<string, Record<string, never>>;
       successes: Record<string, { levels: number[]; value: number }>;
     };
     SHIPS?: {

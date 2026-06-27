@@ -6,6 +6,10 @@ import {
     TabsList,
     TabsTrigger,
 } from "@components/ui/tabs"
+import { Button } from "@components/ui/button"
+import { Card } from "@components/ui/card"
+import { ItemSlot, RarityBadge } from "@const/rarities"
+import { MineboxItem } from "@components/minebox/MineboxItem"
 
 export function ActionsPage() {
     return (
@@ -20,8 +24,151 @@ export function ActionsPage() {
                     <TabsTrigger className="w-36" value="password">Bazzar</TabsTrigger>
                     <TabsTrigger className="w-36" value="gems">Gem Exchange</TabsTrigger>
                 </TabsList>
-                <TabsContent value="account">Make changes to your account here.</TabsContent>
-                <TabsContent value="password">Change your password here.</TabsContent>
+                <TabsContent value="account">
+
+                    <span>
+                        <Button size="lg" variant="default">Test</Button>
+                        <Button size="lg" variant="secondary">Test</Button>
+                        <Button size="lg" variant="outline">Test</Button>
+                        <Button size="lg" variant="destructive">Test</Button>
+                        <Button size="lg" variant="ghost">Test</Button>
+                        <Button size="lg" variant="link">Test</Button>
+                    </span>
+
+                </TabsContent>
+                <TabsContent value="password">
+
+
+                    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                        <Card className="flex flex-col items-center  gap-0">
+                            <img src="https://mineboxcommunity.com/assets/media/jobs/cooking.png" className="size-24" />
+
+                            <span className="flex flex-col gap-0 items-center">
+                                <RarityBadge rarity="prototype"></RarityBadge>
+                                <h3>ITEM NAME</h3>
+                            </span>
+
+                            <span className="flex flex-row gap-2 w-full justify-evenly my-2">
+                                <span>
+                                    <p>Sell Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                                <span>
+                                    <p>Buy Price</p>
+                                    <p className="gap-1 flex flex-row items-center justify-center text-md text-[#ffea00]">????<img src={`/media/currency/GOLD.png`} className="!size-6" /></p>
+                                </span>
+                            </span>
+
+                            <p className="">STOCK: ?????</p>
+                        </Card>
+                    </div>
+
+                </TabsContent>
                 <TabsContent value="gems">
                     <GemExchange />
                 </TabsContent>
