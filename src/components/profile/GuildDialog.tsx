@@ -48,25 +48,26 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
             if (isOpen) fetchGuildData();
         }}>
             <DialogTrigger asChild>
-                <button className="group flex items-center gap-1.5 font-medium bg-background/40 backdrop-blur-md px-2 py-0.5 rounded text-foreground/90 border border-white/5 shadow-sm transition-all hover:bg-white/10 hover:border-white/20 cursor-pointer">
-                    <span className="decoration-white/50 underline-offset-2">{guildName}</span>
-                </button>
+
+                <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
+                    {guildName}
+                </Badge>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] border-white/10 bg-card/95 backdrop-blur-xl shadow-2xl">
+            <DialogContent className="minebox-shadow sm:max-w-[425px] border-white/10 bg-card/95 backdrop-blur-xl shadow-2xl">
                 <DialogHeader>
-                    <DialogTitle className="text-xl flex items-center gap-2">
-                        {data?.level && <LevelBadge level={data.level} className="text-sm py-1 pb-1.5 px-2">Lvl {data.level}</LevelBadge>}
+                    <DialogTitle className="text-xl flex flex-col items-start -gap-2">
                         {guildName}
+                        {data?.level && <LevelBadge level={data.level * 10} className="text-sm py-1 pb-1.5 px-2">Lvl {data.level}</LevelBadge>}
                     </DialogTitle>
                 </DialogHeader>
-                
+
                 <div className="py-2">
                     {loading && (
                         <div className="flex justify-center py-8">
                             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                         </div>
                     )}
-                    
+
                     {error && (
                         <div className="text-center text-red-500 py-4">{error}</div>
                     )}
@@ -106,24 +107,27 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
                                                 return a.username.localeCompare(b.username);
                                             })
                                             .map((member, idx) => (
-                                            <div key={idx} className="flex justify-between items-center p-2 hover:bg-white/5 rounded-md transition-colors">
-                                                <div className="flex items-center gap-2">
-                                                    <span className={`font-medium ${member.is_owner ? 'text-yellow-500' : ''}`}>
-                                                        {member.username}
-                                                    </span>
-                                                    {member.is_owner && (
-                                                        <Badge variant="outline" className="text-[10px] px-1 py-0 h-4 border-yellow-500/50 text-yellow-500">Owner</Badge>
-                                                    )}
+                                                <div key={idx} className="flex justify-between items-center p-2 hover:bg-white/5 rounded-md transition-colors">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`flex flex-row items-center gap-2 text-[0.9rem] font-medium ${member.is_owner ? 'text-yellow-500' : ''}`}>
+                                                            <img src={`https://minotar.net/avatar/${member.username}`} className="size-8" />
+                                                            
+                                                            {member.is_owner && (
+                                                                <Badge variant="default" className="uppercase">Owner</Badge>
+                                                            )}
+
+                                                            {member.username}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5">
+                                                        {member.online ? (
+                                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
+                                                        ) : (
+                                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">Offline</Badge>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center gap-1.5">
-                                                    {member.online ? (
-                                                        <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
-                                                    ) : (
-                                                        <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">Offline</Badge>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
                                 </ScrollArea>
                             </div>

@@ -15,6 +15,7 @@ import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
 import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
+import { GuildDialog } from "@components/profile/GuildDialog";
 
 export function ProfilePage() {
     const [nick, setNick] = useState<string | null>(null);
@@ -236,9 +237,7 @@ export function ProfilePage() {
                                     </div>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
                                         {data.guild && (
-                                            <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
-                                                {data.guild.name}
-                                            </Badge>
+                                            <GuildDialog guildId={data.guild.id} guildName={data.guild.name} />
                                         )}
                                         <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
                                             <TimerIcon strokeWidth={4} className="size-3" /> {formatPlaytime(data.playtime)}
