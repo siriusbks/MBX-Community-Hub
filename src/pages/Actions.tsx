@@ -6,6 +6,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@components/ui/tabs"
+import { Button } from "@components/ui/button"
 
 export function ActionsPage() {
     return (
@@ -20,7 +21,18 @@ export function ActionsPage() {
                     <TabsTrigger className="w-36" value="password">Bazzar</TabsTrigger>
                     <TabsTrigger className="w-36" value="gems">Gem Exchange</TabsTrigger>
                 </TabsList>
-                <TabsContent value="account">Make changes to your account here.</TabsContent>
+                <TabsContent value="account">
+                    
+                    <span>
+                        <Button size="lg" variant="default">Test</Button>
+                        <Button size="lg"   variant="secondary">Test</Button>
+                        <Button size="lg" variant="outline">Test</Button>
+                        <Button size="lg" variant="destructive">Test</Button>
+                        <Button size="lg" variant="ghost">Test</Button>
+                        <Button size="lg" variant="link">Test</Button>
+                    </span>
+
+                </TabsContent>
                 <TabsContent value="password">Change your password here.</TabsContent>
                 <TabsContent value="gems">
                     <GemExchange />

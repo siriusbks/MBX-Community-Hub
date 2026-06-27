@@ -16,6 +16,7 @@ import { ShipsTab } from "../components/profile/ShipsTab";
 import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
 import { GuildDialog } from "@components/profile/GuildDialog";
+import { SkullsTab } from "@components/profile/SkullsTab";
 
 export function ProfilePage() {
     const [nick, setNick] = useState<string | null>(null);
@@ -226,14 +227,16 @@ export function ProfilePage() {
                                         )}
                                     </h1>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
-                                        <img src="/media/skulls/abyss.png" className="size-8" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
-                                        <img src="/media/skulls/abyss.png" className="size-8 opacity-50 grayscale" style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/basic.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('basic') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/pineapple.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('pineapple') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/chad.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('chad') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/thunder.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('thunder') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/opal.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('opal') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/grumpy.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('grumpy') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/crimson.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('crimson') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/jackpot.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('jackpot') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/sage.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('sage') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
+                                        <img src="/media/skulls/abyss.png" className={`size-8 ${data.data?.OBJECTIVES?.relics?.hasOwnProperty('abyss') ? "" : "grayscale-70 opacity-50"}`} style={{ imageRendering: 'pixelated' }} />
                                     </div>
                                     <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted-foreground">
                                         {data.guild && (
@@ -328,7 +331,7 @@ export function ProfilePage() {
                             )}
                             {data.data?.OBJECTIVES && (
                                 <TabsTrigger
-                                    value="objectives"
+                                    value="pvp"
                                     className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                                 >
                                     <SwordsIcon className="w-4 h-4" />
@@ -369,6 +372,13 @@ export function ProfilePage() {
                         {data.data?.COMPANIONS && (
                             <TabsContent value="companions" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
                                 <CompanionsTab data={data} />
+                            </TabsContent>
+                        )}
+
+                        {/* SKULLS TAB */}
+                        {data.data?.OBJECTIVES && (
+                            <TabsContent value="skulls" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+                                <SkullsTab data={data} />
                             </TabsContent>
                         )}
 
