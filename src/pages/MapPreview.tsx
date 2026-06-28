@@ -28,7 +28,7 @@ import {
     ImageOverlay,
     MapContainer,
     Marker,
-  CircleMarker,
+    CircleMarker,
     Popup,
     useMap,
     useMapEvents,
@@ -83,22 +83,112 @@ const mapsConfig: Record<string, {
 };
 
 
+const REGION_COLORS = [
+  '#4ade80', '#60a5fa', '#f97316', '#a78bfa',
+  '#f43f5e', '#facc15', '#22d3ee', '#fb923c',
+];
+
+function RegionPolygon({ positions, color, label }: {
+  positions: [number, number][];
+  color: string;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.5 : 0.15,
+        weight: hovered ? 3 : 1.5,
+        opacity: hovered ? 1 : 0.7,
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Tooltip sticky direction="center">
+        <span style={{ color, fontWeight: "bold" }}>{label}</span>
+      </Tooltip>
+    </Polygon>
+  );
+}
+
+function BestiaryPolygon({ positions, color, zoneName, mobs }: {
+  positions: [number, number][];
+  color: string;
+  zoneName: string;
+  mobs: string[];
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.55 : 0.25,
+        weight: hovered ? 3 : 2,
+        opacity: hovered ? 1 : 0.85,
+        dashArray: "6 4",
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Popup>
+        <div className="text-sm min-w-[140px]">
+          <p className="font-bold mb-1" style={{ color }}>{zoneName}</p>
+          <ul className="text-xs space-y-0.5 list-disc list-inside">
+            {mobs.map((mob, i) => (
+              <li key={i}>{mob}</li>
+            ))}
+          </ul>
+        </div>
+      </Popup>
+    </Polygon>
+  );
+}
+
 export function MapPreview() {
   const { t, i18n } = useTranslation("maps");
   const params = useParams();
   const mapId = params["*"] ?? '';
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null);
+  const [regionsData, setRegionsData] = useState<Record<string, [number, number][]> | null>(null);
+  const [showRegions, setShowRegions] = useState(false);
+  const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
+  const [showBestiary, setShowBestiary] = useState(false);
 
   // --- MAP CONFIG ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig];
   
   if (!config) {
-    return <div className="flex items-center justify-center h-full">Map inconnue</div>;
+    return <div className="flex items-center justify-center h-full">Unknown Map</div>;
   }
   const { image, width, height, referencePoint } = config;
 
   // We calculate the bounds once and for all
   const imageBounds: [number, number][] = [[0, 0], [height, width]];
+
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_region.json')
+      .then((r) => r.json())
+      .then((json) => setRegionsData(json[mapId] ?? null))
+      .catch((e) => console.error('Failed to load region data', e));
+  }, [mapId]);
+  
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_bestiary_region.json')
+      .then((r) => r.json())
+      .then((json) => setBestiaryZonesData(json))
+      .catch((e) => console.error('Failed to load bestairy zones', e));
+  }, []);
 
   useEffect(() => {
     fetch('/assets/data/harvestables.json')
@@ -176,6 +266,55 @@ export function MapPreview() {
 				  </Popup>
 				</CircleMarker>
 			  ))}
+			  {showRegions && regionsData && (() => {
+				const baseNames = Object.keys(regionsData).map((name) => name.replace(/_\d+$/, ''));
+				const uniqueBaseNames = [...new Set(baseNames)];
+				const colorMap: Record<string, string> = {};
+				uniqueBaseNames.forEach((base, i) => {
+				  colorMap[base] = REGION_COLORS[i % REGION_COLORS.length];
+				});
+				return Object.entries(regionsData).map(([regionName, coords]) => {
+				  const baseName = regionName.replace(/_\d+$/, '');
+				  const color = colorMap[baseName];
+				  const positions: [number, number][] = coords.map(([x, y]) => [y, x]);
+				  return (
+					<RegionPolygon
+					  key={regionName}
+					  positions={positions}
+					  color={color}
+					  label={t(`maps.${baseName}`, { defaultValue: baseName })}
+					/>
+				  );
+				});
+			  })()}
+			  {showBestiary && bestiaryZonesData && (() => {
+				// mapId in bestiary_zones uses original names: spawn, kokoko, quadra_plains, bamboo_peak, frostbite_fortress, sandwhisper_dunes
+				/*const mapKeyMap: Record<string, string> = {
+				  spawn: "spawn",
+				  island_tropical: "kokoko",
+				  island_plain: "quadra_plains",
+				  island_bamboo: "bamboo_peak",
+				  island_snow: "frostbite_fortress",
+				  island_desert: "sandwhisper_dunes",
+				};
+				const bestiaryKey = mapKeyMap[mapId];*/
+				const mapZones = mapId ? bestiaryZonesData[mapId] : null;
+				if (!mapZones) return null;
+				return Object.entries(mapZones).flatMap(([zoneName, zoneData]: any) =>
+				  (zoneData.zones as any[]).map((zone, idx) => {
+					const positions: [number, number][] = zone.coords.map(([x, y]: [number, number]) => [y, x]);
+					return (
+					  <BestiaryPolygon
+						key={`${zoneName}-${idx}`}
+						positions={positions}
+						color={zone.color}
+						zoneName={zoneName}
+						mobs={zone.mobs}
+					  />
+					);
+				  })
+				);
+			  })()}
 			</MapContainer>
 		  )}
 		</span>
@@ -240,11 +379,11 @@ export function MapPreview() {
           <Card className="w-full p-2 py-3 from-secondary-dark to-secondary pb-8 gap-2">
             <p>Preview Settings</p>
             <div className="flex items-center space-x-2">
-              <Switch id="regions" />
+              <Switch id="regions" checked={showRegions} onCheckedChange={setShowRegions} />
               <Label htmlFor="regions">Show Regions</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Switch id="bestairy" />
+              <Switch id="bestairy" checked={showBestiary} onCheckedChange={setShowBestiary} />
               <Label htmlFor="bestairy">Shop Bestiary Spawn</Label>
             </div>
           </Card>
