@@ -6,7 +6,14 @@ import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
 import { useTranslation } from "react-i18next";
 
-import { ImageOverlay, MapContainer, Marker, Tooltip } from "react-leaflet"
+import {
+  ImageOverlay,
+  MapContainer,
+  Marker,
+  Tooltip,
+  Polygon,
+  Popup,
+} from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
@@ -97,6 +104,76 @@ const mapsConfig: Record<
   },
 }
 
+const REGION_COLORS = [
+  '#4ade80', '#60a5fa', '#f97316', '#a78bfa',
+  '#f43f5e', '#facc15', '#22d3ee', '#fb923c',
+];
+
+function RegionPolygon({ positions, color, label }: {
+  positions: [number, number][];
+  color: string;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.5 : 0.15,
+        weight: hovered ? 3 : 1.5,
+        opacity: hovered ? 1 : 0.7,
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Tooltip sticky direction="center">
+        <span style={{ color, fontWeight: "bold" }}>{label}</span>
+      </Tooltip>
+    </Polygon>
+  );
+}
+
+function BestiaryPolygon({ positions, color, zoneName, mobs }: {
+  positions: [number, number][];
+  color: string;
+  zoneName: string;
+  mobs: string[];
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.55 : 0.25,
+        weight: hovered ? 3 : 2,
+        opacity: hovered ? 1 : 0.85,
+        dashArray: "6 4",
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Popup>
+        <div className="text-sm min-w-[140px]">
+          <p className="font-bold mb-1" style={{ color }}>{zoneName}</p>
+          <ul className="text-xs space-y-0.5 list-disc list-inside">
+            {mobs.map((mob, i) => (
+              <li key={i}>{mob}</li>
+            ))}
+          </ul>
+        </div>
+      </Popup>
+    </Polygon>
+  );
+}
+
 export function MapPreview() {
   type BestiaryCreature = {
     id: string
@@ -160,6 +237,13 @@ export function MapPreview() {
   const [isInsectsLoading, setIsInsectsLoading] = useState(false)
   const [insectsError, setInsectsError] = useState<string | null>(null)
 
+  // --- Regions & Bestiary regions ---
+  const [regionsData, setRegionsData] = useState<Record<string, [number, number][]> | null>(null);
+  const [showRegions, setShowRegions] = useState(false);
+  const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
+  const [showBestiary, setShowBestiary] = useState(false);
+  const [mobNamesData, setMobNamesData] = useState<Record<string, string>>({})
+
   const navigate = useNavigate()
   const handleValueChange = (value: string) => {
     navigate(`/maps/${value}`)
@@ -195,6 +279,47 @@ export function MapPreview() {
       .then((r) => r.json())
       .then((mapsJson) => setMapsData(mapsJson))
       .catch((e) => console.error("Failed to load maps.json data", e))
+  }, [])
+
+  useEffect(() => {
+    // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_region.json')
+      .then((r) => r.json())
+      .then((json) => setRegionsData(json[mapId] ?? null))
+      .catch((e) => console.error('Failed to load region data', e));
+  }, [mapId]);
+
+  useEffect(() => {
+    // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_bestiary_region.json')
+      .then((r) => r.json())
+      .then((json) => setBestiaryZonesData(json))
+      .catch((e) => console.error('Failed to load bestairy zones', e));
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch("https://mineboxadditions.bartier.me/bestiary", {
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error(`Bestiary names API error: ${r.status}`)
+        return r.json()
+      })
+      .then((data: any[]) => {
+        const map: Record<string, string> = {}
+        data.forEach((mob) => {
+          if (mob?.id) map[mob.id] = mob.name ?? mob.id
+        })
+        setMobNamesData(map)
+      })
+      .catch((e) => {
+        if (e?.name === "AbortError") return
+        console.error("Failed to load mob names", e)
+      })
+
+    return () => controller.abort()
   }, [])
 
   useEffect(() => {
@@ -480,6 +605,45 @@ export function MapPreview() {
                     </Tooltip>
                   </Marker>
                 ))}
+              {showRegions && regionsData && (() => {
+                const baseNames = Object.keys(regionsData).map((name) => name.replace(/_\d+$/, ''));
+                const uniqueBaseNames = [...new Set(baseNames)];
+                const colorMap: Record<string, string> = {};
+                uniqueBaseNames.forEach((base, i) => {
+                  colorMap[base] = REGION_COLORS[i % REGION_COLORS.length];
+                });
+                return Object.entries(regionsData).map(([regionName, coords]) => {
+                  const baseName = regionName.replace(/_\d+$/, '');
+                  const color = colorMap[baseName];
+                  const positions: [number, number][] = coords.map(([x, y]) => [y, x]);
+                  return (
+                    <RegionPolygon
+                      key={regionName}
+                      positions={positions}
+                      color={color}
+                      label={t(`maps.${baseName}`, { defaultValue: baseName })}
+                    />
+                  );
+                });
+              })()}
+              {showBestiary && bestiaryZonesData && (() => {
+                const mapZones = mapId ? bestiaryZonesData[mapId] : null;
+                if (!mapZones) return null;
+                return Object.entries(mapZones).flatMap(([zoneName, zoneData]: any) =>
+                  (zoneData.zones as any[]).map((zone, idx) => {
+                    const positions: [number, number][] = zone.coords.map(([x, y]: [number, number]) => [y, x]);
+                    return (
+                      <BestiaryPolygon
+                        key={`${zoneName}-${idx}`}
+                        positions={positions}
+                        color={zone.color}
+                        zoneName={zoneName}
+                        mobs={(zone.mobs as string[]).map((id) => mobNamesData[id] ?? id)}
+                      />
+                    );
+                  })
+                );
+              })()}
             </MapContainer>
           )}
         </span>
@@ -621,11 +785,11 @@ export function MapPreview() {
           <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
             <p>Preview Settings</p>
             <div className="flex items-center space-x-2">
-              <Switch id="regions" />
+              <Switch id="regions" checked={showRegions} onCheckedChange={setShowRegions} />
               <Label htmlFor="regions">Show Regions</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Switch id="bestairy" />
+              <Switch id="bestairy" checked={showBestiary} onCheckedChange={setShowBestiary} />
               <Label htmlFor="bestairy">Shop Bestiary Spawn</Label>
             </div>
           </Card>
