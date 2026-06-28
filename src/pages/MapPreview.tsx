@@ -1,9 +1,28 @@
-import { Card } from "@ui/card"
-import { LevelBadge } from "@const/levels"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { Switch } from "@components/ui/switch"
-import { Label } from "@components/ui/label"
+import { Info } from "lucide-react";
+import { Card } from "@ui/card";
+import { Button } from "@ui/button";
+import { PageTitle } from "@components/layout/title";
+import { useTranslation } from "react-i18next";
+import { LevelBadge } from "@const/levels";
+import { useEffect, useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@components/ui/popover"
+import { RarityBadge, RarityBorder } from "@const/rarities";
+import { Link, useParams } from "react-router-dom";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@components/ui/accordion"
+import { Switch } from "@components/ui/switch";
+import { Label } from "@components/ui/label";
 
 import {
     ImageOverlay,
@@ -18,64 +37,51 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { FindItemName, ItemImage, ItemImageUrl } from "@const/elements"
-import { BestiaryItem } from "@components/minebox/bestiary"
-import { useTranslation } from "react-i18next"
 
-const mapsConfig: Record<
-  string,
-  {
-    image: string
-    width: number
-    height: number
-    referencePoint: { x: number; y: number }
-    // zone key used by the insects API (mineboxadditions.strings.zones.<zoneKey>)
-    zoneKey: string
-  }
-> = {
+const mapsConfig: Record<string, {
+  image: string;
+  width: number;
+  height: number;
+  referencePoint: { x: number; y: number }
+}> = {
   spawn: {
     image: "/media/maps/spawn_map.png",
     width: 791,
     height: 839,
     referencePoint: { x: 220, y: 388 },
-    zoneKey: "overworld",
   },
   island_tropical: {
     image: "/media/maps/island_tropical_map.png",
     width: 528,
     height: 528,
     referencePoint: { x: 0, y: 0 },
-    zoneKey: "island_tropical",
   },
   island_plain: {
     image: "/media/maps/island_plain_map.png",
     width: 608,
     height: 560,
     referencePoint: { x: 81, y: 16 },
-    zoneKey: "island_plain",
   },
   island_bamboo: {
     image: "/media/maps/island_bamboo_map.png",
     width: 1256,
     height: 608,
     referencePoint: { x: 633, y: 611 },
-    zoneKey: "island_bamboo",
   },
   island_snow: {
     image: "/media/maps/island_snow_map.png",
     width: 720,
     height: 720,
     referencePoint: { x: 129, y: 64 },
-    zoneKey: "island_snow",
   },
   island_desert: {
     image: "/media/maps/island_desert_map.png",
     width: 752,
     height: 752,
     referencePoint: { x: 128, y: 720 },
-    zoneKey: "island_desert",
   },
-}
+};
+
 
 const REGION_COLORS = [
   '#4ade80', '#60a5fa', '#f97316', '#a78bfa',
@@ -148,86 +154,25 @@ function BestiaryPolygon({ positions, color, zoneName, mobs }: {
 }
 
 export function MapPreview() {
-  type BestiaryCreature = {
-    id: string
-    name: string
-    family: string
-    family_name: string
-    type: string
-    level: number
-    level_max: number
-    health: number[]
-    image: string
-    zones: string[]
-  }
-
-  type BestiaryFamily = {
-    id: string
-    name: string
-  }
-
-  type BestiaryResponse = {
-    creatures: BestiaryCreature[]
-    families: BestiaryFamily[]
-    page: number
-    pageSize: number
-    total: number
-  }
-
-  type InsectTimeRange = {
-    from: number
-    to: number
-  }
-
-  type InsectLocation = {
-    zone: string
-    subarea: string
-  }
-
-  type Insect = {
-    id: string
-    time_ranges: InsectTimeRange[]
-    weather: string
-    requires_moon: boolean
-    locations: InsectLocation[]
-  }
-
-  const params = useParams()
-  const mapId = params["*"] ?? ""
-  const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
-  const [hiddenResources, setHiddenResources] = useState<
-    Record<string, boolean>
-  >({})
-  const [bestiaryData, setBestiaryData] = useState<BestiaryResponse | null>(
-    null
-  )
-  const [isBestiaryLoading, setIsBestiaryLoading] = useState(false)
-  const [bestiaryError, setBestiaryError] = useState<string | null>(null)
-
-  const [insectsData, setInsectsData] = useState<Insect[] | null>(null)
-  const [isInsectsLoading, setIsInsectsLoading] = useState(false)
-  const [insectsError, setInsectsError] = useState<string | null>(null)
-
-
-  const { t } = useTranslation("maps");
+  const { t, i18n } = useTranslation("maps");
+  const params = useParams();
+  const mapId = params["*"] ?? '';
+  const [harvestablesData, setHarvestablesData] = useState<any | null>(null);
   const [regionsData, setRegionsData] = useState<Record<string, [number, number][]> | null>(null);
   const [showRegions, setShowRegions] = useState(false);
   const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
   const [showBestiary, setShowBestiary] = useState(false);
 
   // --- MAP CONFIG ---
-  const config = mapsConfig[mapId as keyof typeof mapsConfig]
-
+  const config = mapsConfig[mapId as keyof typeof mapsConfig];
+  
   if (!config) {
     return <div className="flex items-center justify-center h-full">Unknown Map</div>;
   }
-  const { image, width, height, referencePoint, zoneKey } = config
+  const { image, width, height, referencePoint } = config;
 
   // We calculate the bounds once and for all
-  const imageBounds: [number, number][] = [
-    [0, 0],
-    [height, width],
-  ]
+  const imageBounds: [number, number][] = [[0, 0], [height, width]];
 
   useEffect(() => {
 	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
@@ -249,353 +194,189 @@ export function MapPreview() {
     fetch('/assets/data/harvestables.json')
       .then((r) => r.json())
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
-      .catch((e) => console.error("Failed to load map or harvestable data", e))
-  }, [])
+      .catch((e) => console.error('Failed to load map or harvestable data', e));
+  }, []);
+
+  const [resourceMarkers, setResourceMarkers] = useState<any[]>([]);
 
   useEffect(() => {
-    const controller = new AbortController()
-    setIsBestiaryLoading(true)
-    setBestiaryError(null)
-
-    fetch(
-      `https://api.minebox.co/bestiary?locale=en&zone=${encodeURIComponent(mapId)}`,
-      { signal: controller.signal }
-    )
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error(`Bestiary API error: ${r.status}`)
-        }
-        return r.json()
-      })
-      .then((data: BestiaryResponse) => {
-        setBestiaryData(data)
-      })
-      .catch((error) => {
-        if (error?.name === "AbortError") return
-        setBestiaryData(null)
-        setBestiaryError("Failed to load bestiary")
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setIsBestiaryLoading(false)
-        }
-      })
-
-    return () => {
-      controller.abort()
-    }
-  }, [mapId])
-
-  useEffect(() => {
-    const controller = new AbortController()
-    setIsInsectsLoading(true)
-    setInsectsError(null)
-
-    fetch("https://mineboxadditions.bartier.me/insects", {
-      signal: controller.signal,
-    })
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error(`Insects API error: ${r.status}`)
-        }
-        return r.json()
-      })
-      .then((data: Insect[]) => {
-        setInsectsData(data)
-      })
-      .catch((error) => {
-        if (error?.name === "AbortError") return
-        setInsectsData(null)
-        setInsectsError("Failed to load insects")
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setIsInsectsLoading(false)
-        }
-      })
-
-    return () => {
-      controller.abort()
-    }
-  }, [])
-
-  const zoneFullKey = `mineboxadditions.strings.zones.${zoneKey}`
-
-  const insectsForZone = (insectsData ?? []).filter((insect) =>
-    insect.locations.some((loc) => loc.zone === zoneFullKey)
-  )
-
-  const formatSubarea = (subarea: string) => {
-    const last = subarea.split(".").pop() ?? subarea
-    return last
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase())
-  }
-
-  const formatTimeRange = (range: InsectTimeRange) => {
-    const pad = (n: number) => n.toString().padStart(2, "0")
-    return `${pad(range.from)}:00 - ${pad(range.to)}:00`
-  }
-
-  const [resourceMarkers, setResourceMarkers] = useState<any[]>([])
-  const [markerIconUrls, setMarkerIconUrls] = useState<Record<string, string>>(
-    {}
-  )
-
-  useEffect(() => {
-    if (!harvestablesData) return
-    const serverData = harvestablesData?.locations?.servers?.[mapId]
+    if (!harvestablesData) return;
+    const serverData = harvestablesData?.locations?.servers?.[mapId];
     if (!serverData) {
-      setResourceMarkers([])
-      return
+      setResourceMarkers([]);
+      return;
     }
-    const points: Array<{ cat: string; item: string; x: number; z: number }> =
-      []
+    const points: Array<{ cat: string; item: string; x: number; z: number }> = [];
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ;(arr as string[]).forEach((s) => {
-        const parts = s.split(";")
+      (arr as string[]).forEach((s) => {
+        const parts = s.split(";");
         if (parts.length >= 4) {
-          const x = Number(parts[1])
-          const z = Number(parts[3])
+          const x = Number(parts[1]);
+          const z = Number(parts[3]);
           if (!Number.isNaN(x) && !Number.isNaN(z)) {
-            points.push({ cat, item: parts[0], x, z })
+            points.push({ cat, item: parts[0], x, z });
           }
         }
-      })
-    })
+      });
+    });
 
     // Conversion with centering around referencePoint
     const mapped = points.map((p) => ({
       ...p,
       px: referencePoint.x + p.x,
-      py: referencePoint.y - p.z, // inversion vertical
-    }))
+      py: referencePoint.y - p.z // inversion vertical
+    }));
 
-    setResourceMarkers(mapped)
-  }, [harvestablesData, mapId, referencePoint])
-
-  useEffect(() => {
-    let canceled = false
-    const uniqueCategories = Array.from(
-      new Set(resourceMarkers.map((m) => m.cat as string))
-    )
-
-    if (uniqueCategories.length === 0) {
-      setMarkerIconUrls({})
-      return
-    }
-
-    ;(async () => {
-      try {
-        const resolvedEntries = await Promise.all(
-          uniqueCategories.map(async (cat) => {
-            const resolvedUrl = await ItemImageUrl({ itemId: cat })
-            return [cat, resolvedUrl] as const
-          })
-        )
-
-        if (!canceled) {
-          setMarkerIconUrls(Object.fromEntries(resolvedEntries))
-        }
-      } catch (e) {
-        if (!canceled) {
-          setMarkerIconUrls({})
-        }
-      }
-    })()
-
-    return () => {
-      canceled = true
-    }
-  }, [resourceMarkers])
-
-  const toggleResourceVisibility = (resourceId: string) => {
-    setHiddenResources((prev) => {
-      const next = { ...prev }
-      if (next[resourceId]) {
-        delete next[resourceId]
-      } else {
-        next[resourceId] = true
-      }
-      return next
-    })
-  }
+    setResourceMarkers(mapped);
+  }, [harvestablesData, mapId, referencePoint]);
 
   return (
-    <div className="relative page-container flex flex-col items-center pb-24">
-      <div className="flex h-80vh w-full flex-row gap-4">
+    <div className="relative flex flex-col page-container pb-24 items-center">
+      <div className="flex flex-row gap-4 h-screen w-full">
         {/* Map */}
         <span className="minebox-shadow rounded-xl h-screen w-3/4">
-          {!harvestablesData ? (
-          <div className="flex items-center justify-center h-full">Loading map…</div>
-          ) : (
-          <MapContainer
-            crs={L.CRS.Simple}
-            bounds={imageBounds}
-            maxBounds={imageBounds}
-            style={{
-            height: "100%",
-            width: "100%",
-            imageRendering: "pixelated",
-            backgroundColor: "#0b1220",
-            }}
-            attributionControl={false}
-          >
-            <ImageOverlay url={image} bounds={imageBounds} />
-            {resourceMarkers.map((m, i) => (
-            <CircleMarker
-              key={`${m.cat}-${i}`}
-              center={[m.py, m.px]}
-              radius={6}
-              pathOptions={{ color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.9 }}
-            >
-              <Popup>
-              <div className="text-sm">
-                <div><strong>{m.cat}</strong></div>
-                <div className="text-xs">x: {m.x}, z: {m.z}</div>
-              </div>
-              </Popup>
-            </CircleMarker>
-            ))}
-            {showRegions && regionsData && (() => {
-            const baseNames = Object.keys(regionsData).map((name) => name.replace(/_\d+$/, ''));
-            const uniqueBaseNames = [...new Set(baseNames)];
-            const colorMap: Record<string, string> = {};
-            uniqueBaseNames.forEach((base, i) => {
-              colorMap[base] = REGION_COLORS[i % REGION_COLORS.length];
-            });
-            return Object.entries(regionsData).map(([regionName, coords]) => {
-              const baseName = regionName.replace(/_\d+$/, '');
-              const color = colorMap[baseName];
-              const positions: [number, number][] = coords.map(([x, y]) => [y, x]);
-              return (
-              <RegionPolygon
-                key={regionName}
-                positions={positions}
-                color={color}
-                label={t(`maps.${baseName}`, { defaultValue: baseName })}
-              />
-              );
-            });
-            })()}
-            {showBestiary && bestiaryZonesData && (() => {
-            // mapId in bestiary_zones uses original names: spawn, kokoko, quadra_plains, bamboo_peak, frostbite_fortress, sandwhisper_dunes
-            /*const mapKeyMap: Record<string, string> = {
-              spawn: "spawn",
-              island_tropical: "kokoko",
-              island_plain: "quadra_plains",
-              island_bamboo: "bamboo_peak",
-              island_snow: "frostbite_fortress",
-              island_desert: "sandwhisper_dunes",
-            };
-            const bestiaryKey = mapKeyMap[mapId];*/
-            const mapZones = mapId ? bestiaryZonesData[mapId] : null;
-            if (!mapZones) return null;
-            return Object.entries(mapZones).flatMap(([zoneName, zoneData]: any) =>
-              (zoneData.zones as any[]).map((zone, idx) => {
-              const positions: [number, number][] = zone.coords.map(([x, y]: [number, number]) => [y, x]);
-              return (
-                <BestiaryPolygon
-                key={`${zoneName}-${idx}`}
-                positions={positions}
-                color={zone.color}
-                zoneName={zoneName}
-                mobs={zone.mobs}
-                />
-              );
-              })
-            );
-            })()}
-          </MapContainer>
-          )}
-        </span>
+		  {!harvestablesData ? (
+			<div className="flex items-center justify-center h-full">Loading map…</div>
+		  ) : (
+			<MapContainer
+			  crs={L.CRS.Simple}
+			  bounds={imageBounds}
+			  maxBounds={imageBounds}
+			  style={{
+				height: "100%",
+				width: "100%",
+				imageRendering: "pixelated",
+				backgroundColor: "#0b1220",
+			  }}
+			  attributionControl={false}
+			>
+			  <ImageOverlay url={image} bounds={imageBounds} />
+			  {resourceMarkers.map((m, i) => (
+				<CircleMarker
+				  key={`${m.cat}-${i}`}
+				  center={[m.py, m.px]}
+				  radius={6}
+				  pathOptions={{ color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.9 }}
+				>
+				  <Popup>
+					<div className="text-sm">
+					  <div><strong>{m.cat}</strong></div>
+					  <div className="text-xs">x: {m.x}, z: {m.z}</div>
+					</div>
+				  </Popup>
+				</CircleMarker>
+			  ))}
+			  {showRegions && regionsData && (() => {
+				const baseNames = Object.keys(regionsData).map((name) => name.replace(/_\d+$/, ''));
+				const uniqueBaseNames = [...new Set(baseNames)];
+				const colorMap: Record<string, string> = {};
+				uniqueBaseNames.forEach((base, i) => {
+				  colorMap[base] = REGION_COLORS[i % REGION_COLORS.length];
+				});
+				return Object.entries(regionsData).map(([regionName, coords]) => {
+				  const baseName = regionName.replace(/_\d+$/, '');
+				  const color = colorMap[baseName];
+				  const positions: [number, number][] = coords.map(([x, y]) => [y, x]);
+				  return (
+					<RegionPolygon
+					  key={regionName}
+					  positions={positions}
+					  color={color}
+					  label={t(`maps.${baseName}`, { defaultValue: baseName })}
+					/>
+				  );
+				});
+			  })()}
+			  {showBestiary && bestiaryZonesData && (() => {
+				// mapId in bestiary_zones uses original names: spawn, kokoko, quadra_plains, bamboo_peak, frostbite_fortress, sandwhisper_dunes
+				/*const mapKeyMap: Record<string, string> = {
+				  spawn: "spawn",
+				  island_tropical: "kokoko",
+				  island_plain: "quadra_plains",
+				  island_bamboo: "bamboo_peak",
+				  island_snow: "frostbite_fortress",
+				  island_desert: "sandwhisper_dunes",
+				};
+				const bestiaryKey = mapKeyMap[mapId];*/
+				const mapZones = mapId ? bestiaryZonesData[mapId] : null;
+				if (!mapZones) return null;
+				return Object.entries(mapZones).flatMap(([zoneName, zoneData]: any) =>
+				  (zoneData.zones as any[]).map((zone, idx) => {
+					const positions: [number, number][] = zone.coords.map(([x, y]: [number, number]) => [y, x]);
+					return (
+					  <BestiaryPolygon
+						key={`${zoneName}-${idx}`}
+						positions={positions}
+						color={zone.color}
+						zoneName={zoneName}
+						mobs={zone.mobs}
+					  />
+					);
+				  })
+				);
+			  })()}
+			</MapContainer>
+		  )}
+		</span>
 
 
         {/* Lists */}
-        <Card className="h-[80vh] w-1/4 gap-0 py-0">
+        <Card className="h-screen w-1/4 py-0">
+
           {/* Map Change */}
-          <Card className="from-secondary-dark w-full to-secondary p-2 py-3">
-            <p className="text-md text-primary uppercase">{params["*"]}</p>
+          <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
+            <p className="text-primary text-md uppercase ">{params["*"]}</p>
           </Card>
 
           {/* Resources */}
-          <div className="custom-scrollbar my-2 h-full w-full scroll-fade overflow-x-hidden overflow-y-auto px-2">
-            {harvestablesData?.locations?.servers?.[mapId] ? (
-              (() => {
-                const serverKeys = Object.keys(
-                  harvestablesData.locations.servers[mapId]
-                )
-                const categories = Object.keys(
-                  harvestablesData.harvestables ?? {}
-                )
-                // build accordion items per category, only if category has items on this server
-                return categories.map((catKey) => {
-                  const cat = harvestablesData.harvestables?.[catKey] ?? {}
-                  const itemsInCat = Object.keys(cat).filter((id) =>
-                    serverKeys.includes(id)
-                  )
-                  if (itemsInCat.length === 0) return null
-                  return (
-                    <span key={catKey} className="w-full px-2">
-                      <p className="font-bold text-primary uppercase">
-                        {catKey}
-                      </p>
-                      <div className="grid grid-cols-4 gap-2">
-                        {itemsInCat.map((id) => {
-                          const minLevel = cat[id]?.min_level ?? "0"
-                          const levelNum = Number(minLevel) || 0
-                          const isHidden = Boolean(hiddenResources[id])
-                          return (
-                            <div
-                              key={id}
-                              onClick={() => toggleResourceVisibility(id)}
-                              role="button"
-                              tabIndex={0}
-                              onKeyDown={(event) => {
-                                if (
-                                  event.key === "Enter" ||
-                                  event.key === " "
-                                ) {
-                                  event.preventDefault()
-                                  toggleResourceVisibility(id)
-                                }
-                              }}
-                              className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
-                                isHidden
-                                  ? "bg-red-500/40"
-                                  : "bg-transparent hover:bg-accent/40"
-                              }`}
-                            >
-                              <ItemImage
-                                itemId={id}
-                                className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
-                              />
+          <div className="w-full h-full overflow-y-auto ">
 
-                              <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
-                                {FindItemName({ itemId: id })}
-                              </p>
+            <Accordion
+              type="multiple"
+              className="max-w-lg"
+              defaultValue={["notifications"]}
+            >
+              {harvestablesData?.locations?.servers?.[mapId] ? (
+                (() => {
+                  const serverKeys = Object.keys(harvestablesData.locations.servers[mapId]);
+                  const categories = Object.keys(harvestablesData.harvestables ?? {});
+                  // build accordion items per category, only if category has items on this server
+                  return categories.map((catKey) => {
+                    const cat = harvestablesData.harvestables?.[catKey] ?? {};
+                    const itemsInCat = Object.keys(cat).filter((id) => serverKeys.includes(id));
+                    if (itemsInCat.length === 0) return null;
+                    return (
+                      <AccordionItem key={catKey} value={catKey}>
+                        <AccordionTrigger>{catKey}</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="flex flex-col gap-2">
+                            {itemsInCat.map((id) => {
+                              const minLevel = cat[id]?.min_level ?? '0';
+                              const levelNum = Number(minLevel) || 0;
+                              return (
+                                <div key={id} className="flex flex-row gap-2 items-center justify-start mt-1">
+                                  <LevelBadge level={levelNum} className="w-16">Lvl. {levelNum}</LevelBadge>
+                                  <p className="items-center leading-none text-xs">{id}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    );
+                  });
+                })()
+              ) : (
+                <div className="text-xs text-muted-foreground">No data</div>
+              )}
+            </Accordion>
 
-                              <LevelBadge
-                                level={levelNum}
-                                className="-mt-1 scale-90 uppercase"
-                              >
-                                Lvl. {levelNum}
-                              </LevelBadge>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </span>
-                  )
-                })
-              })()
-            ) : (
-              <div className="text-xs text-muted-foreground">No data</div>
-            )}
+
+
           </div>
 
           {/* Settings */}
-          <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
+          <Card className="w-full p-2 py-3 from-secondary-dark to-secondary pb-8 gap-2">
             <p>Preview Settings</p>
             <div className="flex items-center space-x-2">
               <Switch id="regions" checked={showRegions} onCheckedChange={setShowRegions} />
@@ -606,90 +387,12 @@ export function MapPreview() {
               <Label htmlFor="bestairy">Shop Bestiary Spawn</Label>
             </div>
           </Card>
+
         </Card>
       </div>
 
-      {/* Insects */}
-      <div className="w-full gap-2">
-        <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
-          Insects
-        </p>
-
-        {isInsectsLoading ? (
-          <p className="text-xs text-muted-foreground">Loading insects...</p>
-        ) : insectsError ? (
-          <p className="text-xs text-red-400">{insectsError}</p>
-        ) : insectsForZone.length === 0 ? (
-          <p className="text-xs text-muted-foreground">
-            No insects found for this island.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
-            {insectsForZone.map((insect) => {
-              const subareas = insect.locations
-                .filter((loc) => loc.zone === zoneFullKey)
-                .map((loc) => formatSubarea(loc.subarea))
-
-              return (
-                <Card
-                  key={insect.id}
-                  className="flex flex-col items-center gap-2 p-2"
-                >
-                  <ItemImage
-                    itemId={insect.id}
-                    className="aspect-square size-4/5"
-                  />
-                  <p className="text-center text-xs font-bold text-primary">
-                    {FindItemName({ itemId: insect.id })}
-                  </p>
-                  <div className="flex flex-col items-center gap-0.5 text-[0.65rem] text-muted-foreground">
-                    <p>
-                      {insect.time_ranges
-                        .map((range) => formatTimeRange(range))
-                        .join(", ")}
-                    </p>
-                    <p className="uppercase">{insect.weather}</p>
-                    {insect.requires_moon && <p>Full moon required</p>}
-                    <p className="text-center">{subareas.join(", ")}</p>
-                  </div>
-                </Card>
-              )
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Bestiary */}
-      <div className="w-full gap-2 mt-8">
-        <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
-          Bestiary
-        </p>
-
-        {isBestiaryLoading ? (
-          <p className="text-xs text-muted-foreground">Loading creatures...</p>
-        ) : bestiaryError ? (
-          <p className="text-xs text-red-400">{bestiaryError}</p>
-        ) : (bestiaryData?.creatures?.length ?? 0) === 0 ? (
-          <p className="text-xs text-muted-foreground">
-            No creatures found for this island.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
-            {bestiaryData?.creatures.map((creature) => (
-              <BestiaryItem
-                id={creature.id}
-                name={creature.name}
-                image={creature.image}
-                minLevel={creature.level}
-                maxLevel={creature.level_max}
-                minHealth={creature.health[0]}
-                maxHealth={creature.health[1]}
-                type={creature.type}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      <p>Inspects</p>
+      <p>Bestiary</p>
     </div>
   )
 }
