@@ -5,10 +5,20 @@ import { useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
 
-import { ImageOverlay, MapContainer, Marker, Tooltip } from "react-leaflet"
-import "leaflet/dist/leaflet.css"
-import L from "leaflet"
-import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
+import {
+    ImageOverlay,
+    MapContainer,
+    Marker,
+    CircleMarker,
+    Popup,
+    useMap,
+    useMapEvents,
+    Polygon,
+    Tooltip,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import { FindItemName, ItemImage, ItemImageUrl } from "@const/elements"
 import { BestiaryItem } from "@components/minebox/bestiary"
 
 const mapsConfig: Record<
@@ -64,6 +74,76 @@ const mapsConfig: Record<
     referencePoint: { x: 128, y: 720 },
     zoneKey: "island_desert",
   },
+}
+
+const REGION_COLORS = [
+  '#4ade80', '#60a5fa', '#f97316', '#a78bfa',
+  '#f43f5e', '#facc15', '#22d3ee', '#fb923c',
+];
+
+function RegionPolygon({ positions, color, label }: {
+  positions: [number, number][];
+  color: string;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.5 : 0.15,
+        weight: hovered ? 3 : 1.5,
+        opacity: hovered ? 1 : 0.7,
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Tooltip sticky direction="center">
+        <span style={{ color, fontWeight: "bold" }}>{label}</span>
+      </Tooltip>
+    </Polygon>
+  );
+}
+
+function BestiaryPolygon({ positions, color, zoneName, mobs }: {
+  positions: [number, number][];
+  color: string;
+  zoneName: string;
+  mobs: string[];
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.55 : 0.25,
+        weight: hovered ? 3 : 2,
+        opacity: hovered ? 1 : 0.85,
+        dashArray: "6 4",
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Popup>
+        <div className="text-sm min-w-[140px]">
+          <p className="font-bold mb-1" style={{ color }}>{zoneName}</p>
+          <ul className="text-xs space-y-0.5 list-disc list-inside">
+            {mobs.map((mob, i) => (
+              <li key={i}>{mob}</li>
+            ))}
+          </ul>
+        </div>
+      </Popup>
+    </Polygon>
+  );
 }
 
 export function MapPreview() {
@@ -127,15 +207,18 @@ export function MapPreview() {
   const [isInsectsLoading, setIsInsectsLoading] = useState(false)
   const [insectsError, setInsectsError] = useState<string | null>(null)
 
+
+  //const { t, i18n } = useTranslation("maps");
+  const [regionsData, setRegionsData] = useState<Record<string, [number, number][]> | null>(null);
+  const [showRegions, setShowRegions] = useState(false);
+  const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
+  const [showBestiary, setShowBestiary] = useState(false);
+
   // --- MAP CONFIG ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
 
   if (!config) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        Map inconnue
-      </div>
-    )
+    return <div className="flex items-center justify-center h-full">Unknown Map</div>;
   }
   const { image, width, height, referencePoint, zoneKey } = config
 
@@ -146,7 +229,23 @@ export function MapPreview() {
   ]
 
   useEffect(() => {
-    fetch("/assets/data/harvestables.json")
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_region.json')
+      .then((r) => r.json())
+      .then((json) => setRegionsData(json[mapId] ?? null))
+      .catch((e) => console.error('Failed to load region data', e));
+  }, [mapId]);
+  
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_bestiary_region.json')
+      .then((r) => r.json())
+      .then((json) => setBestiaryZonesData(json))
+      .catch((e) => console.error('Failed to load bestairy zones', e));
+  }, []);
+
+  useEffect(() => {
+    fetch('/assets/data/harvestables.json')
       .then((r) => r.json())
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
       .catch((e) => console.error("Failed to load map or harvestable data", e))
@@ -325,69 +424,91 @@ export function MapPreview() {
     <div className="relative page-container flex flex-col items-center pb-24">
       <div className="flex h-[80vh] w-full flex-row gap-4">
         {/* Map */}
-        <span className="h-full w-3/4 rounded-xl">
+        <span className="minebox-shadow rounded-xl h-screen w-3/4">
           {!harvestablesData ? (
-            <div className="flex h-full items-center justify-center">
-              Loading map…
-            </div>
+          <div className="flex items-center justify-center h-full">Loading map…</div>
           ) : (
-            <MapContainer
-              crs={L.CRS.Simple}
-              bounds={imageBounds}
-              maxBounds={imageBounds}
-              style={{
-                height: "100%",
-                width: "100%",
-                imageRendering: "pixelated",
-                borderRadius: "0.5rem",
-                backgroundColor: "#00000000",
-              }}
-              attributionControl={false}
+          <MapContainer
+            crs={L.CRS.Simple}
+            bounds={imageBounds}
+            maxBounds={imageBounds}
+            style={{
+            height: "100%",
+            width: "100%",
+            imageRendering: "pixelated",
+            backgroundColor: "#0b1220",
+            }}
+            attributionControl={false}
+          >
+            <ImageOverlay url={image} bounds={imageBounds} />
+            {resourceMarkers.map((m, i) => (
+            <CircleMarker
+              key={`${m.cat}-${i}`}
+              center={[m.py, m.px]}
+              radius={6}
+              pathOptions={{ color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.9 }}
             >
-              <ImageOverlay url={image} bounds={imageBounds} />
-              {resourceMarkers
-                .filter((m) => !hiddenResources[m.cat])
-                .map((m, i) => (
-                  <Marker
-                    key={`${m.cat}-${i}`}
-                    position={[m.py, m.px]}
-                    icon={L.icon({
-                      iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
-                      iconSize: [24, 24],
-                      iconAnchor: [12, 12],
-                      popupAnchor: [0, -16],
-                      className: `filter drop-shadow-[0_0_4px_#00000099]`,
-                    })}
-                  >
-                    <Tooltip direction="top" offset={[0, -8]} opacity={1}>
-                      <div className="flex min-w-32 flex-row items-center gap-1 text-xs">
-                        <ItemImage
-                          itemId={m.cat}
-                          className="aspect-square size-10"
-                        />
-                        <span className="flex flex-col items-start justify-center gap-0">
-                          <p className="font-bold text-primary">
-                            {FindItemName({ itemId: m.cat })}
-                          </p>
-                          <p className="flex flex-row gap-1 text-xs font-bold">
-                            <p className="dwadawdad font-normal text-muted-foreground">
-                              x:
-                            </p>{" "}
-                            {m.x}
-                            <span />{" "}
-                            <p className="font-normal text-muted-foreground">
-                              z:
-                            </p>{" "}
-                            {m.z}
-                          </p>
-                        </span>
-                      </div>
-                    </Tooltip>
-                  </Marker>
-                ))}
-            </MapContainer>
+              <Popup>
+              <div className="text-sm">
+                <div><strong>{m.cat}</strong></div>
+                <div className="text-xs">x: {m.x}, z: {m.z}</div>
+              </div>
+              </Popup>
+            </CircleMarker>
+            ))}
+            {showRegions && regionsData && (() => {
+            const baseNames = Object.keys(regionsData).map((name) => name.replace(/_\d+$/, ''));
+            const uniqueBaseNames = [...new Set(baseNames)];
+            const colorMap: Record<string, string> = {};
+            uniqueBaseNames.forEach((base, i) => {
+              colorMap[base] = REGION_COLORS[i % REGION_COLORS.length];
+            });
+            return Object.entries(regionsData).map(([regionName, coords]) => {
+              const baseName = regionName.replace(/_\d+$/, '');
+              const color = colorMap[baseName];
+              const positions: [number, number][] = coords.map(([x, y]) => [y, x]);
+              return (
+              <RegionPolygon
+                key={regionName}
+                positions={positions}
+                color={color}
+                label={t(`maps.${baseName}`, { defaultValue: baseName })}
+              />
+              );
+            });
+            })()}
+            {showBestiary && bestiaryZonesData && (() => {
+            // mapId in bestiary_zones uses original names: spawn, kokoko, quadra_plains, bamboo_peak, frostbite_fortress, sandwhisper_dunes
+            /*const mapKeyMap: Record<string, string> = {
+              spawn: "spawn",
+              island_tropical: "kokoko",
+              island_plain: "quadra_plains",
+              island_bamboo: "bamboo_peak",
+              island_snow: "frostbite_fortress",
+              island_desert: "sandwhisper_dunes",
+            };
+            const bestiaryKey = mapKeyMap[mapId];*/
+            const mapZones = mapId ? bestiaryZonesData[mapId] : null;
+            if (!mapZones) return null;
+            return Object.entries(mapZones).flatMap(([zoneName, zoneData]: any) =>
+              (zoneData.zones as any[]).map((zone, idx) => {
+              const positions: [number, number][] = zone.coords.map(([x, y]: [number, number]) => [y, x]);
+              return (
+                <BestiaryPolygon
+                key={`${zoneName}-${idx}`}
+                positions={positions}
+                color={zone.color}
+                zoneName={zoneName}
+                mobs={zone.mobs}
+                />
+              );
+              })
+            );
+            })()}
+          </MapContainer>
           )}
         </span>
+
 
         {/* Lists */}
         <Card className="h-[80vh] w-1/4 gap-0 py-0">
@@ -476,11 +597,11 @@ export function MapPreview() {
           <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
             <p>Preview Settings</p>
             <div className="flex items-center space-x-2">
-              <Switch id="regions" />
+              <Switch id="regions" checked={showRegions} onCheckedChange={setShowRegions} />
               <Label htmlFor="regions">Show Regions</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Switch id="bestairy" />
+              <Switch id="bestairy" checked={showBestiary} onCheckedChange={setShowBestiary} />
               <Label htmlFor="bestairy">Shop Bestiary Spawn</Label>
             </div>
           </Card>
@@ -572,4 +693,4 @@ export function MapPreview() {
   )
 }
 
-export default MapPreview
+export default MapPreview;
