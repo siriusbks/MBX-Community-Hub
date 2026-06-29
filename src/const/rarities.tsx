@@ -2,6 +2,7 @@ import React from "react"
 import { Badge } from "@ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip"
 import { levels } from "@const/levels"
+import { ItemImage } from "./elements"
 
 export const rarities = [
   {
@@ -67,7 +68,7 @@ export const rarities = [
     badgeColor: "#ed15f1",
     textColor: "text-[#ed15f1]",
     backgroundColor: "bg-[#291a40]",
-    border: "bg-[#c507ff20] border-x-[#c507ff] border-y-[#dc00ce] border-[3px]",
+    border: "bg-[#291a40] border-x-[#c507ff] border-y-[#dc00ce] border-[3px]",
     innerBorder: "border-[#758ea4] border-[2px]",
   },
   {
@@ -229,11 +230,7 @@ export const ItemSlot = React.forwardRef<
           <div
             className={`relative size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}
           >
-            <img
-              src={`data:image/png;base64,${image}`}
-              alt=""
-              className="size-full object-scale-down p-1"
-            />
+            <ItemImage itemId={id || ""} className="size-full object-contain p-1" />
             {count && <p className="absolute right-1 bottom-0 text-lg">x{count}</p>}
             {change && (
               <p className="absolute left-1 top-0 text-xs font-bold">
@@ -299,7 +296,7 @@ export function RarityBorder({
       className={`m-0 p-0 ${rarityData.border} ${rarityData.backgroundColor} rounded-sm border-[5px] ${className}`}
     >
       <span
-        className={`block flex flex-col gap-1 p-2 ${rarityData.innerBorder} h-full`}
+        className={`w-full block flex flex-col gap-1 p-2 ${rarityData.innerBorder} h-full`}
       >
         {children}
       </span>
