@@ -137,11 +137,15 @@ export const Navbar = () => {
       ],
     },
     {
-      id: "actions",
-      to: "/actions",
-      icon: Map,
-      label: "Actions",
-      matchPrefix: "/Actions"
+      id: "market",
+      dropdown: true,
+      icon: BookOpen,
+      label: "Market",
+      items: [
+        { id: "action-house", to: "/market/action-house", icon: Map, label: "Action House" },
+        { id: "bazaar", to: "/market/bazaar", icon: Map, label: "Bazaar" },
+        { id: "gem-exchange", to: "/market/gem-exchange", icon: Map, label: "Gem Exchange" },
+      ],
     },
     {
       id: "community",

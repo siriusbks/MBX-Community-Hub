@@ -1,4 +1,6 @@
-import ActionsPage from "@pages/Actions";
+import ActionsPage from "@pages/Actions/Actions";
+import { BazaarPage } from "@pages/Actions/Bazaar";
+import { GemExchangePage } from "@pages/Actions/GemExchange";
 import ContributePage from "@pages/COntribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
@@ -26,8 +28,11 @@ export const AppRoutes: FC = () => {
             {/* Codex */}
             <Route path="/codex/items" element={<ItemsCodex />} />
 
-            {/* Action */}
-            <Route path="/actions" element={<ActionsPage />} />
+            {/* Market Tqab */}
+            <Route path="/market" element={<ActionsPage />} />
+            <Route path="/market/action-house" element={<ActionsPage />} />
+            <Route path="/market/bazaar" element={<BazaarPage />} />
+            <Route path="/market/gem-exchange" element={<GemExchangePage />} />
 
             {/* Community */}
             <Route path="/community" element={<CommunityPage />} />
