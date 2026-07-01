@@ -13,7 +13,7 @@ import { SkillsTab } from "../components/profile/SkillsTab";
 import { CompanionsTab } from "../components/profile/CompanionsTab";
 import { ObjectivesTab } from "../components/profile/ObjectivesTab";
 import { ShipsTab } from "../components/profile/ShipsTab";
-import { Download, Activity, Swords, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull } from 'lucide-react';
+import { Download, Activity, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull, Network } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
 import { GuildDialog } from "@components/profile/GuildDialog";
 import { SkullsTab } from "@components/profile/SkullsTab";
@@ -313,7 +313,7 @@ export function ProfilePage() {
                                 value="skills"
                                 className="flex items-center gap-2 whitespace-nowrap  px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-secondary/50"
                             >
-                                <Swords className="w-4 h-4" />
+                                <Network className="w-4 h-4" />
                                 Skills
                             </TabsTrigger>
                             {data.data?.COMPANIONS && (
