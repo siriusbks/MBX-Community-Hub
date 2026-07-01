@@ -180,15 +180,17 @@ export function StatItem({
 export function SmallStatItem({
   stat,
   value,
+  className,
 }: {
   stat: string
-  value: number
+  value: string | number
+  className?: string
 }) {
   let statData = stats.find((r) => r.id === stat)
   if (!statData) statData = stats[0]
 
   return (
-    <span className="flex flex-col -space-y-0.5 text-xs items-center justify-center">
+    <span className={`flex flex-col -space-y-0.5 text-xs items-center justify-center ${className || ''}`}>
       <img
         src={`/media/attributes/${statData.id.toLowerCase()}.png`}
         className="size-4 shadow-sm"
