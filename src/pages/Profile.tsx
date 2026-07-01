@@ -221,7 +221,12 @@ export function ProfilePage() {
                                         <LevelBadge level={data.level} className="text-lg py-3 pb-4">Lvl {data.level}</LevelBadge>
                                         <p className="tracking-wider">{data.username}</p>
                                         {data.online ? (
-                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
+                                            <>
+                                                <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
+                                                {data.server_instance && (
+                                                    <Badge variant="default" className="text-[10px] px-1.5 py-0 uppercase tracking-wider">{data.server_instance}</Badge>
+                                                )}
+                                            </>
                                         ) : (
                                             <div className="size-2 bg-red-500 rounded-full animate-ping" />
                                         )}

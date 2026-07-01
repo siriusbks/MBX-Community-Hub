@@ -6,6 +6,7 @@ export interface PlayerData {
   first_connection: string;
   last_connection: string;
   online: boolean;
+  server_instance?: string | null;
   guild?: {
     id: string;
     name: string;
