@@ -1,6 +1,7 @@
 import ActionsPage from "@pages/Actions/Actions";
 import { BazaarPage } from "@pages/Actions/Bazaar";
 import { GemExchangePage } from "@pages/Actions/GemExchange";
+import { ShipCodexPage } from "@pages/Codex/ShipCodex";
 import ContributePage from "@pages/COntribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
@@ -27,6 +28,7 @@ export const AppRoutes: FC = () => {
 
             {/* Codex */}
             <Route path="/codex/items" element={<ItemsCodex />} />
+            <Route path="/codex/ships" element={<ShipCodexPage />} />
 
             {/* Market Tqab */}
             <Route path="/market" element={<ActionsPage />} />

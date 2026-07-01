@@ -283,10 +283,12 @@ export function RarityBorder({
   rarity,
   className,
   children,
+  onClick,
 }: {
   rarity: string
   className?: string
   children?: React.ReactNode
+  onClick?: () => void
 }) {
   let rarityData = rarities.find((r) => r.id === rarity)
   if (!rarityData) rarityData = rarities[0] // default to "vanilla" if not found
@@ -294,6 +296,7 @@ export function RarityBorder({
   return (
     <div
       className={`m-0 p-0 ${rarityData.border} ${rarityData.backgroundColor} rounded-sm border-[5px] ${className}`}
+      onClick={onClick}
     >
       <span
         className={`w-full block flex flex-col gap-1 p-2 ${rarityData.innerBorder} h-full`}
