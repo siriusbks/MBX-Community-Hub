@@ -190,8 +190,8 @@ const slotIcons = [
       </div>
 
       <div className="flex min-h-0 flex-1 flex-row gap-4">
-        <div className="custom-scrollbar h-full w-2/3 scroll-fade overflow-y-auto pr-2">
-          <div className="grid w-full grid-cols-3 gap-4">
+        <div className={`custom-scrollbar h-full ${selectedShip ? 'w-2/3' : 'w-full'} scroll-fade overflow-y-auto pr-2`}>
+          <div className={`grid w-full ${selectedShip ? 'grid-cols-3' : 'grid-cols-5'} gap-4`}>
             {ships.map((ship) => {
               const levelData = ship.levels[0] // Default to level 1 for overview
               return (
