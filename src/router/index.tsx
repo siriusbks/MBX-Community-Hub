@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const ItemsCodex = lazy(() => import("@pages/Items"));
+const CollectionsPage = lazy(() => import("@pages/Collections"));
 const CommunityPage = lazy(() => import("@pages/CommunityPage"));
 const Error404 = lazy(() => import("@pages/Error404"));
 const MapsPage = lazy(() => import("@pages/Maps"));
@@ -25,6 +26,9 @@ export const AppRoutes: FC = () => {
             <Route path="/maps" element={<MapsPage />} />
             <Route path="/map/island_village" element={<VillagePreview />} />
             <Route path="/map/*" element={<MapPreview />} />
+
+            {/* Tools Tab */}
+            <Route path="/tools/collections" element={<CollectionsPage />} />
 
             {/* Codex */}
             <Route path="/codex/items" element={<ItemsCodex />} />
