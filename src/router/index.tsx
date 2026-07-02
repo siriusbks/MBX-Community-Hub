@@ -12,7 +12,7 @@ import { Route, Routes } from "react-router-dom";
 const MainPage = lazy(() => import("@pages/MainPage"));
 const ItemsCodex = lazy(() => import("@pages/Items"));
 const CollectionsPage = lazy(() => import("@pages/Collections"));
-const CommunityPage = lazy(() => import("@pages/CommunityPage"));
+const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
 const MapsPage = lazy(() => import("@pages/Maps"));
 
@@ -48,7 +48,6 @@ export const AppRoutes: FC = () => {
 
             {/* Others */}
             <Route path="/contribute" element={<ContributePage />} />
-
 
 
             {/* Errors */}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@ui/card";
 import { type PlayerData } from "../../types/profile";
-import { progressForJob, type StoreProfessionId } from "./../utils/xpCurve";
+import { progressForJob, type StoreProfessionId } from "@utils/xpCurve";
 import { Activity, Star } from "lucide-react";
 import { LevelBadge } from "@const/levels";
 import { Badge } from "@components/ui/badge";

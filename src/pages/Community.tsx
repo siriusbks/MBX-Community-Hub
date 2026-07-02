@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProjectCard, type ProjectProps } from "@components/community/ProjectCard";
+import { ProjectCard, type ProjectProps } from "@pages/Community/ProjectCard";
 import { Badge } from "@ui/badge";
 import { PageTitle } from "@components/layout/title";
 import { Ripple } from "@components/ripple";

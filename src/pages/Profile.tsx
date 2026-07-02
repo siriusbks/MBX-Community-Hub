@@ -8,15 +8,15 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@ui/button";
 import { toPng } from 'html-to-image';
 import { type PlayerData } from "../types/profile";
-import { StatsTab } from "../components/profile/StatsTab";
-import { SkillsTab } from "../components/profile/SkillsTab";
-import { CompanionsTab } from "../components/profile/CompanionsTab";
-import { ObjectivesTab } from "../components/profile/ObjectivesTab";
-import { ShipsTab } from "../components/profile/ShipsTab";
+import { StatsTab } from "@pages/Profile/StatsTab";
+import { SkillsTab } from "@pages/Profile/SkillsTab";
+import { CompanionsTab } from "@pages/Profile/CompanionsTab";
+import { ObjectivesTab } from "@pages/Profile/ObjectivesTab";
+import { ShipsTab } from "@pages/Profile/ShipsTab";
 import { Download, Activity, Target, Ship, Eye, PawPrint, TimerIcon, SwordsIcon, Skull, Network } from 'lucide-react';
 import { LevelBadge } from "@const/levels";
-import { GuildDialog } from "@components/profile/GuildDialog";
-import { SkullsTab } from "@components/profile/SkullsTab";
+import { GuildDialog } from "@pages/Profile/GuildDialog";
+import { SkullsTab } from "@pages/Profile/SkullsTab";
 
 export function ProfilePage() {
     const [nick, setNick] = useState<string | null>(null);
