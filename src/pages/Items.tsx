@@ -213,8 +213,9 @@ export function ItemsCodex() {
       </span>
 
       <div className="flex min-h-0 flex-1 flex-row gap-4">
-        <div className="pr-2 h-full w-2/3 custom-scrollbar overflow-y-auto scroll-fade">
-          <CodexGrid>
+        <div className={`pr-2 h-full ${itemDetailsData ? 'w-2/3' : 'w-full'} custom-scrollbar overflow-y-auto scroll-fade`}>
+          
+        <div className={`w-full grid ${itemDetailsData ? 'grid-cols-5' : 'grid-cols-7'} gap-2 `}>
             {Object.entries(mineboxItems).map(([id, item]) => {
               const nameEn =
                 (item as any)?.name?.en ?? (item as any)?.name ?? id
@@ -242,7 +243,7 @@ export function ItemsCodex() {
                 </div>
               )
             })}
-          </CodexGrid>
+          </div>
 
           {/* Przycisk Load More */}
           <div className="my-4 flex flex-col items-center gap-2">
