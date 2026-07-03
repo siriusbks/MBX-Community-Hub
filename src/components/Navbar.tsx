@@ -183,13 +183,13 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="z-10 minebox-shadow w-full border-b bg-linear-to-b from-secondary-lighter to-secondary backdrop-blur-sm">
+    <nav className="z-9999 minebox-shadow w-full border-b bg-linear-to-b from-secondary-lighter to-secondary backdrop-blur-sm">
       <div className=" mx-auto flex items-center  py-1 px-4">
         <Link to="/" className="text-lg font-bold text-primary"><img src="/media/logo.png" className="size-12" /></Link>
 
 
         <span className="text-xs mr-auto flex flex-row gap-8 ml-4">
-          <NavigationMenu className="z-10" viewport={false}>
+          <NavigationMenu className="z-[9999]" viewport={false}>
             <NavigationMenuList>
               {NAV_LINKS.map((link) => {
                 if (isDropdown(link)) {
