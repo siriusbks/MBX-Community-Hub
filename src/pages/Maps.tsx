@@ -15,6 +15,7 @@ import {
 } from "@components/ui/popover"
 import { RarityBadge, RarityBorder } from "@const/rarities";
 import { Link } from "react-router-dom";
+import { FindItemName, ItemImage } from "@const/elements";
 
 const player_islands = [
   { id: "island_home", level: 0, command: "/is" },
@@ -137,9 +138,11 @@ export function Maps() {
                         }
                         const levelNum = Number(minLevel) || 0;
                         return (
-                          <span key={id} className="flex flex-row gap-2 items-center justify-start mt-1">
-                            <LevelBadge level={levelNum} className="w-16">Lvl. {levelNum}</LevelBadge>
-                            <p className="items-center leading-none text-xs">{id}</p>
+                          <span key={id} className="flex flex-row gap-0 items-center justify-start mt-1">
+                            <ItemImage itemId={id} className="aspect-square size-6" />
+                            <LevelBadge level={levelNum} className="w-16 scale-80">Lvl. {levelNum}</LevelBadge>
+                            <p className="items-center leading-none text-xs">{FindItemName({ itemId: id })}</p>
+                            
                           </span>
                         );
                       })
