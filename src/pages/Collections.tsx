@@ -5,7 +5,7 @@ import { Skeleton } from "@ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/tabs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@ui/accordion";
 import { type PlayerData } from "../types/profile";
-import { Leaf, Pickaxe, Fish, Axe, Book, ChevronDown, Check, Star, Lock } from 'lucide-react';
+import { Leaf, Pickaxe, Fish, Axe, Book, ChevronDown, Check, Star, Lock, Sprout, Apple, Sword } from 'lucide-react';
 import { ItemImage, FindItemName } from "@const/elements";
 
 const CATEGORIES = [
@@ -13,6 +13,9 @@ const CATEGORIES = [
     { id: 'mining', label: 'Mining', icon: Pickaxe },
     { id: 'fishing', label: 'Fishing', icon: Fish },
     { id: 'woodcutting', label: 'Woodcutting', icon: Axe },
+    { id: 'picking', label: 'Picking', icon: Sprout },
+    { id: 'fruits', label: 'Fruits', icon: Apple },
+    { id: 'looting', label: 'Looting', icon: Sword },
 ];
 
 const PROGRESS_FILTERS = [
