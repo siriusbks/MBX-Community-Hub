@@ -1,19 +1,11 @@
 import { Card } from "@ui/card"
-import { useTranslation } from "react-i18next"
 import { LevelBadge } from "@const/levels"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
 
-import {
-  ImageOverlay,
-  MapContainer,
-  CircleMarker,
-  Popup,
-  Marker,
-  Tooltip,
-} from "react-leaflet"
+import { ImageOverlay, MapContainer, Marker, Tooltip } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
@@ -66,10 +58,43 @@ const mapsConfig: Record<
 }
 
 export function MapPreview() {
-  const { t, i18n } = useTranslation("maps")
+  type BestiaryCreature = {
+    id: string
+    name: string
+    family: string
+    family_name: string
+    type: string
+    level: number
+    level_max: number
+    health: number[]
+    image: string
+    zones: string[]
+  }
+
+  type BestiaryFamily = {
+    id: string
+    name: string
+  }
+
+  type BestiaryResponse = {
+    creatures: BestiaryCreature[]
+    families: BestiaryFamily[]
+    page: number
+    pageSize: number
+    total: number
+  }
+
   const params = useParams()
   const mapId = params["*"] ?? ""
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
+  const [hiddenResources, setHiddenResources] = useState<
+    Record<string, boolean>
+  >({})
+  const [bestiaryData, setBestiaryData] = useState<BestiaryResponse | null>(
+    null
+  )
+  const [isBestiaryLoading, setIsBestiaryLoading] = useState(false)
+  const [bestiaryError, setBestiaryError] = useState<string | null>(null)
 
   // --- MAP CONFIG ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
@@ -95,6 +120,40 @@ export function MapPreview() {
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
       .catch((e) => console.error("Failed to load map or harvestable data", e))
   }, [])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    setIsBestiaryLoading(true)
+    setBestiaryError(null)
+
+    fetch(
+      `https://api.minebox.co/bestiary?locale=en&zone=${encodeURIComponent(mapId)}`,
+      { signal: controller.signal }
+    )
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`Bestiary API error: ${r.status}`)
+        }
+        return r.json()
+      })
+      .then((data: BestiaryResponse) => {
+        setBestiaryData(data)
+      })
+      .catch((error) => {
+        if (error?.name === "AbortError") return
+        setBestiaryData(null)
+        setBestiaryError("Failed to load bestiary")
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setIsBestiaryLoading(false)
+        }
+      })
+
+    return () => {
+      controller.abort()
+    }
+  }, [mapId])
 
   const [resourceMarkers, setResourceMarkers] = useState<any[]>([])
   const [markerIconUrls, setMarkerIconUrls] = useState<Record<string, string>>(
@@ -168,6 +227,18 @@ export function MapPreview() {
     }
   }, [resourceMarkers])
 
+  const toggleResourceVisibility = (resourceId: string) => {
+    setHiddenResources((prev) => {
+      const next = { ...prev }
+      if (next[resourceId]) {
+        delete next[resourceId]
+      } else {
+        next[resourceId] = true
+      }
+      return next
+    })
+  }
+
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
       <div className="flex h-[80vh] w-full flex-row gap-4">
@@ -215,38 +286,46 @@ export function MapPreview() {
                   </Popup>
                 </CircleMarker>
               ))}*/}
-              {resourceMarkers.map((m, i) => (
-                <Marker
-                  key={`${m.cat}-${i}`}
-                  position={[m.py, m.px]}
-                  icon={L.icon({
-                    iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                    popupAnchor: [0, -16],
-                    className: `filter drop-shadow-[0_0_1px_#00000099]`,
-                  })}
-                >
-                  <Tooltip
-                    direction="top"
-                    offset={[0, -8]}
-                    opacity={1}
+              {resourceMarkers
+                .filter((m) => !hiddenResources[m.cat])
+                .map((m, i) => (
+                  <Marker
+                    key={`${m.cat}-${i}`}
+                    position={[m.py, m.px]}
+                    icon={L.icon({
+                      iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
+                      iconSize: [24, 24],
+                      iconAnchor: [12, 12],
+                      popupAnchor: [0, -16],
+                      className: `filter drop-shadow-[0_0_4px_#00000099]`,
+                    })}
                   >
-                    <div className="flex min-w-32 flex-row items-center gap-1 text-xs">
-                      <ItemImage
-                        itemId={m.cat}
-                        className="aspect-square size-10"
-                      />
-                      <span className="flex flex-col items-start justify-center gap-0">
-                        <p className="font-bold text-primary">{FindItemName({ itemId: m.cat })}</p>
-                        <p className="text-xs flex flex-row gap-1 font-bold">
-                          <p className="font-normal text-muted-foreground dwadawdad">x:</p> {m.x}<span/> <p className="font-normal text-muted-foreground">z:</p> {m.z}
-                        </p>
-                      </span>
-                    </div>
-                  </Tooltip>
-                </Marker>
-              ))}
+                    <Tooltip direction="top" offset={[0, -8]} opacity={1}>
+                      <div className="flex min-w-32 flex-row items-center gap-1 text-xs">
+                        <ItemImage
+                          itemId={m.cat}
+                          className="aspect-square size-10"
+                        />
+                        <span className="flex flex-col items-start justify-center gap-0">
+                          <p className="font-bold text-primary">
+                            {FindItemName({ itemId: m.cat })}
+                          </p>
+                          <p className="flex flex-row gap-1 text-xs font-bold">
+                            <p className="dwadawdad font-normal text-muted-foreground">
+                              x:
+                            </p>{" "}
+                            {m.x}
+                            <span />{" "}
+                            <p className="font-normal text-muted-foreground">
+                              z:
+                            </p>{" "}
+                            {m.z}
+                          </p>
+                        </span>
+                      </div>
+                    </Tooltip>
+                  </Marker>
+                ))}
             </MapContainer>
           )}
         </span>
@@ -259,7 +338,7 @@ export function MapPreview() {
           </Card>
 
           {/* Resources */}
-          <div className="h-full w-full overflow-x-hidden overflow-y-auto custom-scrollbar px-2 scroll-fade my-2">
+          <div className="custom-scrollbar my-2 h-full w-full scroll-fade overflow-x-hidden overflow-y-auto px-2">
             {harvestablesData?.locations?.servers?.[mapId] ? (
               (() => {
                 const serverKeys = Object.keys(
@@ -276,20 +355,39 @@ export function MapPreview() {
                   )
                   if (itemsInCat.length === 0) return null
                   return (
-                    <span className="h-full w-full px-2">
-                      <p>{catKey}</p>
+                    <span key={catKey} className="w-full px-2">
+                      <p className="font-bold text-primary uppercase">
+                        {catKey}
+                      </p>
                       <div className="grid grid-cols-4 gap-2">
                         {itemsInCat.map((id) => {
                           const minLevel = cat[id]?.min_level ?? "0"
                           const levelNum = Number(minLevel) || 0
+                          const isHidden = Boolean(hiddenResources[id])
                           return (
                             <div
                               key={id}
-                              className="flex flex-col items-center justify-start gap-2 rounded bg-red-500/50 py-1"
+                              onClick={() => toggleResourceVisibility(id)}
+                              role="button"
+                              tabIndex={0}
+                              onKeyDown={(event) => {
+                                if (
+                                  event.key === "Enter" ||
+                                  event.key === " "
+                                ) {
+                                  event.preventDefault()
+                                  toggleResourceVisibility(id)
+                                }
+                              }}
+                              className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
+                                isHidden
+                                  ? "bg-red-500/40"
+                                  : "bg-transparent hover:bg-accent/40"
+                              }`}
                             >
                               <ItemImage
                                 itemId={id}
-                                className="aspect-square size-4/5"
+                                className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                               />
 
                               <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
@@ -330,8 +428,42 @@ export function MapPreview() {
         </Card>
       </div>
 
-      <p>Inspects</p>
-      <p>Bestiary</p>
+      <div className="w-full gap-2">
+        <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
+          Bestiary
+        </p>
+
+        {isBestiaryLoading ? (
+          <p className="text-xs text-muted-foreground">Loading creatures...</p>
+        ) : bestiaryError ? (
+          <p className="text-xs text-red-400">{bestiaryError}</p>
+        ) : (bestiaryData?.creatures?.length ?? 0) === 0 ? (
+          <p className="text-xs text-muted-foreground">
+            No creatures found for this island.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-8">
+            {bestiaryData?.creatures.map((creature) => (
+              <Card className="flex flex-col items-center justify-center gap-1 p-2" key={creature.id}>
+                <img
+                  src={creature.image}
+                  className="ml-2 inline-block w-full "
+                  style={{ imageRendering: "pixelated" }}
+                />
+                <p key={creature.id} className="text-sm leading-none text-center h-6 items-center justify-middle flex">
+                  {creature.name}
+                </p>
+                <LevelBadge level={creature.level} className="">
+                  Lvl. {creature.level} - {creature.level_max}
+                </LevelBadge>
+                <p>
+                  {creature.health[0]} - {creature.health[1]}
+                </p>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
