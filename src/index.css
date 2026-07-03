@@ -202,9 +202,8 @@ body {
 }
 
 @utility page-container{
-  @apply w-full max-w-6xl py-6 gap-4 m-auto px-4   ;
+  @apply w-full max-w-7xl py-6 gap-4 m-auto px-4   ;
 }
-
 
 body::-webkit-scrollbar {
   width: 10px;
@@ -243,4 +242,24 @@ body::-webkit-scrollbar-thumb:hover {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
+}
+
+.leaflet-popup{
+  margin-bottom: 8px !important;
+}
+.leaflet-popup-tip{
+  display: none !important;
+}
+
+.leaflet-tooltip-top{
+  background: linear-gradient(var(--card), var(--card-dark)) !important;
+    box-shadow: inset 0 2px #ffffff1f, 
+              inset 0 -3px #0000004d, 
+              0 2px #0a192f, 
+              0 8px 20px #0006;
+              color: var(--foreground) !important;
+  border:none !important;
+}
+.leaflet-tooltip-top:before{
+  display: none !important;
 }
