@@ -9,6 +9,7 @@ import { ImageOverlay, MapContainer, Marker, Tooltip } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
+import { BestiaryItem } from "@components/minebox/bestiary"
 
 const mapsConfig: Record<
   string,
@@ -442,24 +443,18 @@ export function MapPreview() {
             No creatures found for this island.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-8">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {bestiaryData?.creatures.map((creature) => (
-              <Card className="flex flex-col items-center justify-center gap-1 p-2" key={creature.id}>
-                <img
-                  src={creature.image}
-                  className="ml-2 inline-block w-full "
-                  style={{ imageRendering: "pixelated" }}
-                />
-                <p key={creature.id} className="text-sm leading-none text-center h-6 items-center justify-middle flex">
-                  {creature.name}
-                </p>
-                <LevelBadge level={creature.level} className="">
-                  Lvl. {creature.level} - {creature.level_max}
-                </LevelBadge>
-                <p>
-                  {creature.health[0]} - {creature.health[1]}
-                </p>
-              </Card>
+              <BestiaryItem
+                id = {creature.id}
+                name={creature.name}
+                image={creature.image}
+                minLevel={creature.level}
+                maxLevel={creature.level_max}
+                minHealth={creature.health[0]}
+                maxHealth={creature.health[1]}
+                type={creature.type}
+              />
             ))}
           </div>
         )}
