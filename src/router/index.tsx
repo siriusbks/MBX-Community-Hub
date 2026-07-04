@@ -1,9 +1,6 @@
 import ActionsPage from "@pages/Actions/Actions";
 import { BazaarPage } from "@pages/Actions/Bazaar";
 import { GemExchangePage } from "@pages/Actions/GemExchange";
-import { BestiaryCodexPage } from "@pages/Codex/BestiaryCodex";
-import { ClassCodexPage } from "@pages/Codex/ClassCodex";
-import { ShipCodexPage } from "@pages/Codex/ShipCodex";
 import ContributePage from "@pages/COntribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
@@ -12,7 +9,10 @@ import { lazy, type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
-const ItemsCodex = lazy(() => import("@pages/Items"));
+const ItemsCodex = lazy(() => import("@pages/Codex/ItemsCodex"));
+const BestiaryCodexPage = lazy(() => import( "@pages/Codex/BestiaryCodex"));
+const ClassCodexPage = lazy(() => import( "@pages/Codex/ClassCodex"));
+const ShipCodexPage  = lazy(() => import( "@pages/Codex/ShipCodex"));
 const CollectionsPage = lazy(() => import("@pages/Collections"));
 const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
@@ -33,10 +33,10 @@ export const AppRoutes: FC = () => {
             <Route path="/tools/collections" element={<CollectionsPage />} />
 
             {/* Codex */}
-            <Route path="/codex/items" element={<ItemsCodex />} />
-            <Route path="/codex/ships" element={<ShipCodexPage />} />
-            <Route path="/codex/classes" element={<ClassCodexPage />} />
-            <Route path="/codex/bestiary" element={<BestiaryCodexPage />} />
+            <Route path="/items" element={<ItemsCodex />} />
+            <Route path="/ships" element={<ShipCodexPage />} />
+            <Route path="/classes" element={<ClassCodexPage />} />
+            <Route path="/bestiary" element={<BestiaryCodexPage />} />
 
             {/* Market Tab */}
             <Route path="/market" element={<ActionsPage />} />

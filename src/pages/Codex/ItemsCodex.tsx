@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select"
+import { CodexNav } from "@components/minebox/codex-nav"
 
 export function ItemsCodex() {
   const [search, setSearch] = useState("")
@@ -141,30 +142,7 @@ export function ItemsCodex() {
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle title="Item Codex" />
 
-      <div className="flex flex-row items-center justify-center gap-2">
-        <span className="flex gap-1 rounded-lg bg-linear-to-t from-secondary to-secondary-lighter p-1 pt-2 minebox-shadow">
-          <a href="/codex/items">
-            <Button variant="default" size="lg" className="w-32">
-              <Globe /> Items
-            </Button>
-          </a>
-          <a href="/codex/bestiary">
-            <Button variant="ghost" size="lg" className="w-32">
-              <Globe /> Bestiary
-            </Button>
-          </a>
-          <a href="/codex/ships">
-            <Button variant="ghost" size="lg" className="w-32">
-              <Globe /> Ships
-            </Button>
-          </a>
-          <a href="/codex/classes">
-            <Button variant="ghost" size="lg" className="w-32">
-              <Globe /> Classes
-            </Button>
-          </a>
-        </span>
-      </div>
+      <CodexNav />
 
       <span className="flex gap-2">
         <Input
