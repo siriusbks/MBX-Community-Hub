@@ -24,6 +24,7 @@ import {
   AccordionTrigger,
 } from "@components/ui/accordion"
 import { Badge } from "@components/ui/badge"
+import { getCleanItemId, FindItemName, ItemImage } from "@const/elements"
 
 export function VillagePreview() {
   const { t, i18n } = useTranslation("maps")
@@ -258,7 +259,7 @@ export function VillagePreview() {
                           {tierData.requirements
                             .filter(req => req.type === 'ITEM')
                             .map((req, index) => {
-                              const itemKey = Object.keys(mineboxItems).find(key => key === req.id.replace(/^mbi-/, ""));
+                              const itemKey = Object.keys(mineboxItems).find(key => key === getCleanItemId(req.id));
                               const itemData = itemKey ? mineboxItems[itemKey] : null;
 
                               return (
@@ -324,7 +325,7 @@ export function VillagePreview() {
                             const totalWeight = tierData.production.resources?.reduce((sum, r) => sum + r.weight, 0) || 0;
 
                             return tierData.production.resources?.map((req, index) => {
-                              const itemKey = Object.keys(mineboxItems).find(key => key === req.item_id.replace(/^mbi-/, ""));
+                              const itemKey = Object.keys(mineboxItems).find(key => key === getCleanItemId(req.item_id));
                               const itemData = itemKey ? mineboxItems[itemKey] : null;
                               const percentage = totalWeight > 0 ? ((req.weight / totalWeight) * 100).toFixed(1) : 0;
 
