@@ -3,9 +3,14 @@ import itemsData from "@const/APIPreload/items.json"
 const resolvedImageUrlCache = new Map<string, Promise<string>>()
 const itemsDataMap = itemsData as Record<string, any>
 
-function getCleanItemId(itemId: string) {
+export function getCleanItemId(itemId: string) {
   let cleanId = itemId?.replace(/^mbi-/, "")
   cleanId = cleanId?.replace(/^material-/, "")
+  cleanId = cleanId?.replace(/^transformed_material-/, "transformed_")
+  cleanId = cleanId?.replace(/^bag_material-/, "bag_")
+  cleanId = cleanId?.replace(/^crate_material-/, "crate_")
+  cleanId = cleanId?.replace(/^barrel_material-/, "barrel_")
+  cleanId = cleanId?.replace(/^enchanted_material-/, "enchanted_")
   return cleanId
 }
 
@@ -119,17 +124,40 @@ export async function ItemImageUrl({ itemId }: { itemId: string }): Promise<stri
 
 export function FindItemRarity({ itemId }: { itemId: string }) {
   const cleanId = itemId?.replace(/^mbi-/, "")
+
+  {/* VANILLA ITEMS */}
   if (itemId.startsWith("material-")) {
     return "vanilla"
   }
+
+
+  {/* CROPS ITEMS */}
+  if (itemId.startsWith("mbi-transformed_")) {
+    return "common"
+  }
+  if (itemId.startsWith("mbi-bag_")) {
+    return "uncommon"
+  }
+  if (itemId.startsWith("mbi-crate_")) {
+    return "rare"
+  }
+  if (itemId.startsWith("mbi-barrel_")) {
+    return "epic"
+  }
+  if (itemId.startsWith("mbi-enchanted_")) {
+    return "legendary"
+  }
+
+
+
+
   const itemData = itemsDataMap[cleanId]
   const rarity = itemData?.rarity?.toLowerCase() || "prototype"
   return rarity
 }
 
 export function FindItemName({ itemId }: { itemId: string }) {
-  let cleanId = itemId?.replace(/^mbi-/, "")
-  cleanId = cleanId?.replace(/^material-/, "")
+  let cleanId = getCleanItemId(itemId)
   const itemData = itemsDataMap[cleanId]
   const name = itemData?.name?.en || cleanId
   return name
