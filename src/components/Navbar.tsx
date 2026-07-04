@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@ui/button";
-import { BookOpen, GlobeIcon, Map, Box, type LucideIcon, InfoIcon } from "lucide-react";
+import { BookOpen, GlobeIcon, Map, Box, type LucideIcon, InfoIcon, Sailboat, PawPrintIcon, SwordsIcon, ShapesIcon } from "lucide-react";
 import { LevelBadge } from "@const/levels";
 import {
   NavigationMenu,
@@ -119,11 +119,10 @@ export const Navbar = () => {
       icon: BookOpen,
       label: "Codex",
       items: [
-        { id: "items", to: "/codex/items", icon: Map, label: "Items" },
-        { id: "bestiary", to: "/codex/bestiary", icon: Map, label: "Bestiary" },
-        { id: "ships", to: "/codex/ships", icon: Map, label: "Ships" },
-        { id: "classes", to: "/codex/classes", icon: Map, label: "Classes" },
-        { id: "cosmetics", to: "/codex/cosmetics", icon: Map, label: "Cosmetics" },
+        { id: "items", to: "/items", icon: ShapesIcon, label: "Items" },
+        { id: "bestiary", to: "/bestiary", icon: PawPrintIcon, label: "Bestiary" },
+        { id: "ships", to: "/ships", icon: Sailboat, label: "Ships" },
+        { id: "classes", to: "/classes", icon: SwordsIcon, label: "Classes" },
       ],
     },
     {
