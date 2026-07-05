@@ -1,6 +1,6 @@
 import { Button } from "@components/ui/button"
 import { Globe, PawPrintIcon, Sailboat, ShapesIcon, SwordsIcon } from "lucide-react"
-import { useLocation } from "react-router-dom"
+import { useLocation, Link } from "react-router-dom"
 
 export function CodexNav() {
   const location = useLocation()
@@ -33,7 +33,7 @@ export function CodexNav() {
     <div className="flex flex-row items-center justify-center gap-2">
       <span className="flex gap-1 rounded-lg bg-linear-to-t from-secondary to-secondary-lighter p-1 pt-2 minebox-shadow">
         {navItems.map((item) => (
-          <a key={item.label} href={item.path}>
+          <Link key={item.label} to={item.path}>
             <Button 
               variant={currentPath === item.path ? "default" : "ghost"}
               size="lg"
@@ -41,7 +41,7 @@ export function CodexNav() {
             >
               {item.icon} {item.label}
             </Button>
-          </a>
+          </Link>
         ))}
       </span>
     </div>
