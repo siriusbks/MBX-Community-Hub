@@ -1,117 +1,306 @@
-"use client";
+"use client"
 
-import { Badge } from "@components/ui/badge";
-import { FindItemRarity, ItemImage, FindItemName } from "@const/elements";
-import { RarityBorder } from "@const/rarities";
-import { useEffect, useState } from "react";
+import { Badge } from "@components/ui/badge"
+import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
+import { RarityBorder } from "@const/rarities"
+import { useEffect, useState } from "react"
 
 type BazaarItem = {
-  item_id: string;
-  sell_price: number;
-  buy_price: number;
-  stock: number;
-};
+  item_id: string
+  sell_price: number
+  buy_price: number
+  stock: number
+  unavailable?: boolean // ✅ true jeśli itemu nie ma w odpowiedzi API
+}
 
 type BazaarResponse = {
-  items: BazaarItem[];
-  total: number;
-};
+  items: BazaarItem[]
+  total: number
+}
+
+// 📦 MAPA KATEGORII (kolejność ma znaczenie - taka też będzie kolejność wyświetlania)
+const categoryMap = {
+  categories: [
+    {
+      category: "Farming",
+      items: [
+        "material-bamboo",
+        "mbi-transformed_material-bamboo",
+        "mbi-bag_material-bamboo",
+        "mbi-crate_material-bamboo",
+        "mbi-barrel_material-bamboo",
+        "mbi-enchanted_material-bamboo",
+        
+        "material-carrot",
+        "mbi-transformed_material-carrot",
+        "mbi-bag_material-carrot",
+        "mbi-crate_material-carrot",
+        "mbi-barrel_material-carrot",
+        "mbi-enchanted_material-carrot",
+        
+        "material-beetroot",
+        "mbi-transformed_material-beetroot",
+        "mbi-bag_material-beetroot",
+        "mbi-crate_material-beetroot",
+        "mbi-barrel_material-beetroot",
+        "mbi-enchanted_material-beetroot",
+        
+        "material-cactus",
+        "mbi-transformed_material-cactus",
+        "mbi-bag_material-cactus",
+        "mbi-crate_material-cactus",
+        "mbi-barrel_material-cactus",
+        "mbi-enchanted_material-cactus",
+        
+        "material-cocoa_beans",
+        "mbi-transformed_material-cocoa_beans",
+        "mbi-bag_material-cocoa_beans",
+        "mbi-crate_material-cocoa_beans",
+        "mbi-barrel_material-cocoa_beans",
+        "mbi-enchanted_material-cocoa_beans",
+        
+        "material-kelp",
+        "mbi-transformed_material-kelp",
+        "mbi-bag_material-kelp",
+        "mbi-crate_material-kelp",
+        "mbi-barrel_material-kelp",
+        "mbi-enchanted_material-kelp",
+        
+        "material-melon_slice",
+        "mbi-transformed_material-melon_slice",
+        "mbi-bag_material-melon_slice",
+        "mbi-crate_material-melon_slice",
+        "mbi-barrel_material-melon_slice",
+        "mbi-enchanted_material-melon_slice",
+        
+        "material-nether_wart",
+        "mbi-transformed_material-nether_wart",
+        "mbi-bag_material-nether_wart",
+        "mbi-crate_material-nether_wart",
+        "mbi-barrel_material-nether_wart",
+        "mbi-enchanted_material-nether_wart",
+        
+        "material-potato",
+        "mbi-transformed_material-potato",
+        "mbi-bag_material-potato",
+        "mbi-crate_material-potato",
+        "mbi-barrel_material-potato",
+        "mbi-enchanted_material-potato",
+        
+        "material-pumpkin",
+        "mbi-transformed_material-pumpkin",
+        "mbi-bag_material-pumpkin",
+        "mbi-crate_material-pumpkin",
+        "mbi-barrel_material-pumpkin",
+        "mbi-enchanted_material-pumpkin",
+        
+        "material-sugar_cane",
+        "mbi-transformed_material-sugar_cane",
+        "mbi-bag_material-sugar_cane",
+        "mbi-crate_material-sugar_cane",
+        "mbi-barrel_material-sugar_cane",
+        "mbi-enchanted_material-sugar_cane",
+        
+        "material-sweet_berries",
+        "mbi-transformed_material-sweet_berries",
+        "mbi-bag_material-sweet_berries",
+        "mbi-crate_material-sweet_berries",
+        "mbi-barrel_material-sweet_berries",
+        "mbi-enchanted_material-sweet_berries",
+        
+        "material-wheat",
+        "mbi-transformed_material-wheat",
+        "mbi-bag_material-wheat",
+        "mbi-crate_material-wheat",
+        "mbi-barrel_material-wheat",
+        "mbi-enchanted_material-wheat",
+        
+        "material-honeycomb",
+      ],
+    },
+    {
+      category: "Harvestables",
+      items: [
+        "mbi-crop_barley",
+        "mbi-seed_barley",
+        "mbi-seed_corn",
+        "mbi-seed_quinoa",
+        "mbi-seed_rice",
+        "mbi-seed_rye",
+        "mbi-crop_quinoa_green",
+        "mbi-crop_corn",
+        "mbi-crop_quinoa_yellow",
+        "mbi-crop_rice",
+        "mbi-crop_quinoa_orange",
+        "mbi-crop_quinoa_purple",
+        "mbi-crop_rye",
+        "mbi-crop_quinoa_red",
+      ],
+    },
+  ],
+}
 
 export default function BazaarGrid() {
-  const [items, setItems] = useState<BazaarItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState<BazaarItem[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadAllPages = async () => {
-      const limit = 100;
+      const limit = 100
 
-      const firstPage = await fetch(
-        "https://api.minebox.co/market/bazaar?limit=100&offset=0&page=1"
-      ).then((r) => r.json()) as BazaarResponse;
+      const firstPage = (await fetch(
+        `https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`
+      ).then((r) => r.json())) as BazaarResponse
 
-      const allItems = [...firstPage.items];
+      const allItems = [...firstPage.items]
+      const totalPages = Math.ceil(firstPage.total / limit)
 
-      const totalPages = Math.ceil(firstPage.total / limit);
-
-      const requests = [];
-
+      const requests = []
+      // ✅ Pobieramy od page = 2 (bo strona 1 już jest)
       for (let page = 2; page <= totalPages; page++) {
         requests.push(
           fetch(
-            `https://api.minebox.co/market/bazaar?limit=100&offset=${(page - 1) * limit}&page=${page}`
+            `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
           ).then((r) => r.json())
-        );
+        )
       }
 
-      const results = await Promise.all(requests);
-
+      const results = await Promise.all(requests)
       results.forEach((result: BazaarResponse) => {
-        allItems.push(...result.items);
-      });
+        allItems.push(...result.items)
+      })
 
-      setItems(allItems);
-      setLoading(false);
-    };
+      setItems(allItems)
+      setLoading(false)
+    }
 
-    loadAllPages();
-  }, []);
+    loadAllPages()
+  }, [])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="py-10 text-center">Loading...</div>
   }
 
+  // 🔎 Mapa item_id -> dane z API, dla szybkiego lookupu
+  const itemsById = new Map(items.map((item) => [item.item_id, item]))
+  const usedIds = new Set<string>()
+
+  // 📊 Budujemy grupy w KOLEJNOŚCI z categoryMap, uzupełniając brakujące itemy
+  const groupedItems: Record<string, BazaarItem[]> = {}
+
+  categoryMap.categories.forEach((category) => {
+    groupedItems[category.category] = category.items.map((itemId) => {
+      usedIds.add(itemId)
+      const found = itemsById.get(itemId)
+      if (found) return found
+
+      // ✅ Item zdefiniowany w categoryMap, ale brak go w odpowiedzi API -> pokazujemy jako niedostępny
+      return {
+        item_id: itemId,
+        sell_price: 0,
+        buy_price: 0,
+        stock: 0,
+        unavailable: true,
+      } satisfies BazaarItem
+    })
+  })
+
+  // 📦 Itemy z API, które nie pasują do żadnej kategorii -> "Other" na końcu
+  const otherItems = items.filter((item) => !usedIds.has(item.item_id))
+  if (otherItems.length > 0) {
+    groupedItems["Other"] = otherItems
+  }
+
+  // ✅ Kolejność: dokładnie jak w categoryMap, "Other" zawsze na końcu
+  const orderedCategories = [
+    ...categoryMap.categories.map((c) => c.category),
+    ...(groupedItems["Other"] ? ["Other"] : []),
+  ]
+
   return (
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
-      {items.map((item) => (
-        <RarityBorder
-          key={item.item_id}
-          rarity={FindItemRarity({ itemId: item.item_id })}
-          className="flex flex-col items-center gap-0"
-        >
-          <ItemImage
-            itemId={item.item_id}
-            className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
-          />
+    <div className="space-y-8">
+      {orderedCategories.map((category) => (
+        <div key={category}>
+          {/* 🏷️ Nagłówek kategorii */}
+          <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold">
+            {category}
+            <Badge variant="secondary" className="text-sm">
+              {groupedItems[category].length} items
+            </Badge>
+          </h2>
 
-          <span className="flex flex-col items-center gap-0 text-sm h-8 items-center justify-center text-center flex leading-none">
-            <p>{FindItemName({ itemId: item.item_id })}</p>
-          </span>
+          {/* 📦 Siatka itemów w kategorii */}
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+            {groupedItems[category].map((item) => (
+              <RarityBorder
+                key={item.item_id}
+                rarity={FindItemRarity({ itemId: item.item_id })}
+                className={`flex flex-row items-center gap-0 ${
+                  item.unavailable ? "opacity-50 grayscale" : ""
+                }`}
+              >
+                <span className="flex w-full flex-row items-center justify-center gap-0">
+                  <ItemImage
+                    itemId={item.item_id}
+                    className="w-12 aspect-square object-fill drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
+                  />
 
-          <span className="text-xs my-2 flex w-full flex-col justify-evenly gap-2">
-            <span className="flex w-full flex-row justify-between gap-2 px-2">
-              <p>SELL</p>
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {item.sell_price.toLocaleString()}
-                <img
-                  src="/media/currency/GOLD.png"
-                  className="!size-5"
-                />
-              </p>
-            </span>
+                  {/* Name and Stock */}
+                  <span className="flex h-8 flex-col  justify-center gap-2 pl-2  text-sm leading-none">
+                    <p className="text-xs leading-none">
+                      {FindItemName({ itemId: item.item_id })}
+                    </p>
+                    <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
+                      <p className="text-[0.65rem] text-muted-foreground">
+                        STOCK
+                      </p>
+                      {item.stock > 0 ? (
+                        <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
+                      ) : (
+                        <Badge variant="secondary">No Stock</Badge>
+                      )}
+                    </span>
+                  </span>
+                </span>
 
-            <span className="text-xs flex w-full flex-row justify-between gap-2 px-2">
-              <p>BUY</p>
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {item.buy_price.toLocaleString()}
-                <img
-                  src="/media/currency/GOLD.png"
-                  className="!size-5"
-                />
-              </p>
-            </span>
+                <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
+                  {item.unavailable ? (
+                    <span className="flex w-full flex-row justify-center px-2">
+                      <Badge variant="secondary">Unavailable</Badge>
+                    </span>
+                  ) : (
+                    <>
+                      <span className="flex flex-row justify-between gap-2 px-2">
+                        <p className="text-[0.65rem] text-muted-foreground">SELL</p>
+                        <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                          {item.sell_price.toLocaleString()}
+                          <img
+                            src="/media/currency/GOLD.png"
+                            className="!size-4"
+                            alt="Gold"
+                          />
+                        </p>
+                      </span>
 
-            <span className="text-xs flex w-full flex-row justify-between gap-2 px-2">
-              <p>STOCK</p>
-
-              {item.stock > 0 ? (
-                <Badge>{item.stock.toLocaleString()}</Badge>
-              ) : (
-                <Badge variant="secondary">No Stock</Badge>
-              )}
-            </span>
-          </span>
-        </RarityBorder>
+                      <span className="flex flex-row justify-between gap-2 px-2 text-xs items-center">
+                        <p className="text-[0.65rem] text-muted-foreground">BUY</p>
+                        <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                          {item.buy_price.toLocaleString()}
+                          <img
+                            src="/media/currency/GOLD.png"
+                            className="!size-4"
+                            alt="Gold"
+                          />
+                        </p>
+                      </span>
+                    </>
+                  )}
+                </span>
+              </RarityBorder>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
-  );
+  )
 }
