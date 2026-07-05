@@ -17,12 +17,14 @@ const CollectionsPage = lazy(() => import("@pages/Collections"));
 const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
 const MapsPage = lazy(() => import("@pages/Maps"));
+const ChangelogPage = lazy(() => import("@pages/Changelog"));
 
 export const AppRoutes: FC = () => {
     return (
         <Routes>
             {/* Main Page */}
             <Route path="/" element={<MainPage />} />
+            <Route path="/changelog" element={<ChangelogPage />} />
 
             {/* Maps */}
             <Route path="/maps" element={<MapsPage />} />

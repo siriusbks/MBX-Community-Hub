@@ -1,0 +1,82 @@
+import { useEffect, useState } from "react"
+//import { useTranslation } from "react-i18next"
+import { Badge } from "@ui/badge"
+import { Card } from "@ui/card"
+import { Button } from "@ui/button"
+
+export default function Changelog() {
+    //const { t } = useTranslation()
+    const [changelogs, setChangelogs] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(3);
+
+    useEffect(() => {
+        fetch("https://api.mineboxcommunity.com/api/changelogs")
+            .then(res => res.json())
+            .then(data => {
+                if (data && !data.error) setChangelogs(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, []);
+
+    return (
+        <div className="relative flex flex-col page-container pb-24 min-h-[80vh]">
+            <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-21/9 mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
+            <div className="items-center justify-center flex flex-col py-16">
+                <Badge variant="secondary" className="font-light tracking-wide mb-4">Updates & Features</Badge>
+                <h1 className="inline-block text-5xl font-bold
+      bg-gradient-to-b from-primary to-primary-dark
+      bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider mb-2">CHANGELOG</h1>
+                <p className="text-sm max-w-xl text-center mt-2 font-light text-muted-foreground">
+                    Discover the latest improvements, bug fixes, and new features added to the MBX Community Hub.
+                </p>
+            </div>
+
+            <div className="w-full max-w-3xl mx-auto flex flex-col gap-6 relative">
+                {loading ? (
+                    <div className="text-center text-muted-foreground py-10">Loading changelogs...</div>
+                ) : changelogs.length === 0 ? (
+                    <div className="text-center text-muted-foreground py-10">No changelogs have been published yet.</div>
+                ) : (
+                    <>
+                        {changelogs.slice(0, visibleCount).map((log, index) => (
+                            <Card key={log.id} className="p-6 relative bg-card/80 backdrop-blur-sm border-primary/20 shadow-lg">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex flex-col items-start gap-1">
+                                        <div className="flex gap-2 mb-1">
+                                            {index === 0 && <Badge variant="secondary" className="font-light tracking-wide">LATEST</Badge>}
+                                            <Badge variant="secondary" className="font-light tracking-wide">{log.version}</Badge>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-primary drop-shadow-sm">{log.title}</h3>
+                                        <div className="text-xs text-muted-foreground mt-1">
+                                            Published on {new Date(log.createdAt).toLocaleDateString()}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="whitespace-pre-wrap text-sm text-foreground/90 font-light leading-relaxed">
+                                    {log.body}
+                                </div>
+                            </Card>
+                        ))}
+                        
+                        {visibleCount < changelogs.length && (
+                            <div className="flex justify-center mt-4">
+                                <Button 
+                                    variant="outline" 
+                                    onClick={() => setVisibleCount(prev => prev + 3)}
+                                    className="px-8 tracking-wider"
+                                >
+                                    Load older updates
+                                </Button>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </div>
+    )
+}
