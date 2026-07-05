@@ -18,6 +18,8 @@ const mapsConfig: Record<
     width: number
     height: number
     referencePoint: { x: number; y: number }
+    // zone key used by the insects API (mineboxadditions.strings.zones.<zoneKey>)
+    zoneKey: string
   }
 > = {
   spawn: {
@@ -25,36 +27,42 @@ const mapsConfig: Record<
     width: 791,
     height: 839,
     referencePoint: { x: 220, y: 388 },
+    zoneKey: "overworld",
   },
   island_tropical: {
     image: "/media/maps/island_tropical_map.png",
     width: 528,
     height: 528,
     referencePoint: { x: 0, y: 0 },
+    zoneKey: "island_tropical",
   },
   island_plain: {
     image: "/media/maps/island_plain_map.png",
     width: 608,
     height: 560,
     referencePoint: { x: 81, y: 16 },
+    zoneKey: "island_plain",
   },
   island_bamboo: {
     image: "/media/maps/island_bamboo_map.png",
     width: 1256,
     height: 608,
     referencePoint: { x: 633, y: 611 },
+    zoneKey: "island_bamboo",
   },
   island_snow: {
     image: "/media/maps/island_snow_map.png",
     width: 720,
     height: 720,
     referencePoint: { x: 129, y: 64 },
+    zoneKey: "island_snow",
   },
   island_desert: {
     image: "/media/maps/island_desert_map.png",
     width: 752,
     height: 752,
     referencePoint: { x: 128, y: 720 },
+    zoneKey: "island_desert",
   },
 }
 
@@ -85,6 +93,24 @@ export function MapPreview() {
     total: number
   }
 
+  type InsectTimeRange = {
+    from: number
+    to: number
+  }
+
+  type InsectLocation = {
+    zone: string
+    subarea: string
+  }
+
+  type Insect = {
+    id: string
+    time_ranges: InsectTimeRange[]
+    weather: string
+    requires_moon: boolean
+    locations: InsectLocation[]
+  }
+
   const params = useParams()
   const mapId = params["*"] ?? ""
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
@@ -97,6 +123,10 @@ export function MapPreview() {
   const [isBestiaryLoading, setIsBestiaryLoading] = useState(false)
   const [bestiaryError, setBestiaryError] = useState<string | null>(null)
 
+  const [insectsData, setInsectsData] = useState<Insect[] | null>(null)
+  const [isInsectsLoading, setIsInsectsLoading] = useState(false)
+  const [insectsError, setInsectsError] = useState<string | null>(null)
+
   // --- MAP CONFIG ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
 
@@ -107,7 +137,7 @@ export function MapPreview() {
       </div>
     )
   }
-  const { image, width, height, referencePoint } = config
+  const { image, width, height, referencePoint, zoneKey } = config
 
   // We calculate the bounds once and for all
   const imageBounds: [number, number][] = [
@@ -155,6 +185,57 @@ export function MapPreview() {
       controller.abort()
     }
   }, [mapId])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    setIsInsectsLoading(true)
+    setInsectsError(null)
+
+    fetch("https://mineboxadditions.bartier.me/insects", {
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`Insects API error: ${r.status}`)
+        }
+        return r.json()
+      })
+      .then((data: Insect[]) => {
+        setInsectsData(data)
+      })
+      .catch((error) => {
+        if (error?.name === "AbortError") return
+        setInsectsData(null)
+        setInsectsError("Failed to load insects")
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setIsInsectsLoading(false)
+        }
+      })
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
+
+  const zoneFullKey = `mineboxadditions.strings.zones.${zoneKey}`
+
+  const insectsForZone = (insectsData ?? []).filter((insect) =>
+    insect.locations.some((loc) => loc.zone === zoneFullKey)
+  )
+
+  const formatSubarea = (subarea: string) => {
+    const last = subarea.split(".").pop() ?? subarea
+    return last
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+  }
+
+  const formatTimeRange = (range: InsectTimeRange) => {
+    const pad = (n: number) => n.toString().padStart(2, "0")
+    return `${pad(range.from)}:00 - ${pad(range.to)}:00`
+  }
 
   const [resourceMarkers, setResourceMarkers] = useState<any[]>([])
   const [markerIconUrls, setMarkerIconUrls] = useState<Record<string, string>>(
@@ -264,29 +345,6 @@ export function MapPreview() {
               attributionControl={false}
             >
               <ImageOverlay url={image} bounds={imageBounds} />
-              {/*{resourceMarkers.map((m, i) => (
-                <CircleMarker
-                  key={`${m.cat}-${i}`}
-                  center={[m.py, m.px]}
-                  radius={5}
-                  pathOptions={{
-                    color: "#ffcc00",
-                    fillColor: "#ffcc00",
-                    fillOpacity: 0.9,
-                  }}
-                >
-                  <Popup>
-                    <div className="text-sm">
-                      <div>
-                        <strong>{m.cat}</strong>
-                      </div>
-                      <div className="text-xs">
-                        x: {m.x}, z: {m.z}
-                      </div>
-                    </div>
-                  </Popup>
-                </CircleMarker>
-              ))}*/}
               {resourceMarkers
                 .filter((m) => !hiddenResources[m.cat])
                 .map((m, i) => (
@@ -429,7 +487,58 @@ export function MapPreview() {
         </Card>
       </div>
 
+      {/* Insects */}
       <div className="w-full gap-2">
+        <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
+          Insects
+        </p>
+
+        {isInsectsLoading ? (
+          <p className="text-xs text-muted-foreground">Loading insects...</p>
+        ) : insectsError ? (
+          <p className="text-xs text-red-400">{insectsError}</p>
+        ) : insectsForZone.length === 0 ? (
+          <p className="text-xs text-muted-foreground">
+            No insects found for this island.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
+            {insectsForZone.map((insect) => {
+              const subareas = insect.locations
+                .filter((loc) => loc.zone === zoneFullKey)
+                .map((loc) => formatSubarea(loc.subarea))
+
+              return (
+                <Card
+                  key={insect.id}
+                  className="flex flex-col items-center gap-2 p-2"
+                >
+                  <ItemImage
+                    itemId={insect.id}
+                    className="aspect-square size-4/5"
+                  />
+                  <p className="text-center text-xs font-bold text-primary">
+                    {FindItemName({ itemId: insect.id })}
+                  </p>
+                  <div className="flex flex-col items-center gap-0.5 text-[0.65rem] text-muted-foreground">
+                    <p>
+                      {insect.time_ranges
+                        .map((range) => formatTimeRange(range))
+                        .join(", ")}
+                    </p>
+                    <p className="uppercase">{insect.weather}</p>
+                    {insect.requires_moon && <p>Full moon required</p>}
+                    <p className="text-center">{subareas.join(", ")}</p>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Bestiary */}
+      <div className="w-full gap-2 mt-8">
         <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
           Bestiary
         </p>
@@ -446,7 +555,7 @@ export function MapPreview() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {bestiaryData?.creatures.map((creature) => (
               <BestiaryItem
-                id = {creature.id}
+                id={creature.id}
                 name={creature.name}
                 image={creature.image}
                 minLevel={creature.level}
