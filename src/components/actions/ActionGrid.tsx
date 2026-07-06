@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@components/ui/select"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
-import { RarityBorder } from "@const/rarities"
+import { RarityBadge, RarityBorder } from "@const/rarities"
 import { StatItem } from "@const/statsAndDamage"
 import { useCallback, useEffect, useRef, useState } from "react"
 import {
@@ -20,6 +20,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@components/ui/hover-card"
+import { Button } from "@components/ui/button"
 
 type AuctionListing = {
   id: number
@@ -171,7 +172,10 @@ export default function ActionGrid() {
                   />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  <p>{FindItemName({ itemId: listing.item_id })}</p>
+                  <span className="flex flex-row  gap-2 items-center leading-none">
+                    <RarityBadge rarity={FindItemRarity({ itemId: listing.item_id })} />
+                    <p className="text-lg mb-1">{FindItemName({ itemId: listing.item_id })}</p>
+                  </span>
 
                   {listing.stats && (
                     <span className="flex w-full flex-col gap-1 text-xs">
@@ -208,13 +212,14 @@ export default function ActionGrid() {
       </div>
 
       {hasMore && (
-        <button
+        <Button
           onClick={handleLoadMore}
           disabled={loading}
-          className="rounded-md border border-muted-foreground/30 px-4 py-2 text-sm hover:bg-muted-foreground/10 disabled:opacity-50"
+          size="lg"
+          className=""
         >
           {loading ? "Ładowanie..." : "Load More"}
-        </button>
+        </Button>
       )}
     </div>
   )
