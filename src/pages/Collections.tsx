@@ -172,7 +172,7 @@ export function CollectionsPage() {
                         
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                             
-                            <TabsList className="justify-start p-1 bg-secondary/20 backdrop-blur-md border border-border/50 gap-1 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm rounded-lg w-fit h-auto">
+                            <TabsList className="justify-start p-1 bg-secondary/20 backdrop-blur-md border border-border/50 gap-1 overflow-x-auto flex-nowrap hide-scrollbar shadow-sm rounded-lg w-fit !h-10">
                                 {CATEGORIES.map(category => (
                                     <TabsTrigger
                                         key={category.id}
@@ -190,7 +190,7 @@ export function CollectionsPage() {
                                     <button 
                                         key={f.id} 
                                         onClick={() => setProgressFilter(f.id)} 
-                                        className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-medium rounded-md border transition-colors ${progressFilter === f.id ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' : 'bg-secondary/20 text-muted-foreground border-border/50 hover:bg-secondary/40 hover:text-white/80'}`}
+                                        className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-medium rounded-md border transition-colors ${progressFilter === f.id ? 'bg-primary text-primary-foreground border-none minebox-shadow' : 'bg-secondary/20 text-muted-foreground border-border/50 hover:bg-secondary/40 hover:text-white/80'}`}
                                     >
                                         {f.label}
                                     </button>
@@ -295,11 +295,11 @@ export function CollectionsPage() {
                                         const toNextLevel = Math.max(0, nextLevelAmount - currentValue);
 
                                         return (
-                                            <AccordionItem value={collection.id} key={collection.id} className="border-none bg-[#192131]/80 hover:bg-[#1f293d]/90 transition-colors backdrop-blur-md border border-[#2e3c54]/50 overflow-hidden shadow-lg rounded-sm data-open:bg-[#1f293d]">
+                                            <AccordionItem value={collection.id} key={collection.id} className="border-none bg-[#192131]/80 hover:bg-[#1f293d]/90 transition-colors backdrop-blur-md border border-[#2e3c54]/50 overflow-hidden shadow-lg rounded-sm data-open:bg-card-dark">
                                                 <AccordionTrigger className="hover:no-underline p-0 border-none w-full **:data-[slot=accordion-trigger-icon]:hidden">
-                                                    <div className="flex flex-row items-center w-full p-2.5 h-[5.5rem] relative z-10 group text-left cursor-pointer">
+                                                    <div className="flex flex-row items-center w-full p-2.5 h-[5.5rem] relative z-10 group text-left cursor-pointer bg-linear-to-b from-card to-card-dark minebox-shadow">
                                                         
-                                                        <div className="size-14 min-w-14 rounded-md bg-[#131926] border border-[#2e3c54]/50 flex items-center justify-center p-2 mr-4 shadow-inner">
+                                                        <div className="size-14 min-w-14 rounded-md bg-card-dark inset-shadow-[0_0_5px_rgba(0,0,0,0.3)] border border-[#2e3c54]/50 flex items-center justify-center p-2 mr-4 ">
                                                             <ItemImage itemId={collection.item || `material-${collection.id}`} className="size-full object-contain drop-shadow-md" />
                                                         </div>
 
@@ -329,7 +329,7 @@ export function CollectionsPage() {
                                                                                     isCompleted 
                                                                                         ? 'h-1.5 bg-[#00c06f] shadow-[0_0_4px_rgba(0,192,111,0.5)]' 
                                                                                         : isCurrent 
-                                                                                            ? 'h-2.5 bg-orange-400 shadow-[0_0_8px_rgba(249,115,22,0.8)] z-10' 
+                                                                                            ? 'h-2.5 bg-primary shadow-[0_0_8px_rgba(249,115,22,0.8)] z-10' 
                                                                                             : 'h-1.5 bg-white/10'
                                                                                 }`} 
                                                                             />
@@ -348,10 +348,10 @@ export function CollectionsPage() {
                                                             </div>
                                                         </div>
 
-                                                        <div className="flex items-center gap-3 pl-4 pr-2 border-l border-[#2e3c54]/50 h-full">
-                                                            <div className="flex flex-col items-center justify-center bg-[#131926] border border-[#2e3c54]/50 rounded-md px-3 py-1.5 min-w-[4.5rem] shadow-inner">
+                                                        <div className="flex items-center gap-3 pl-4 pr-2 border-l border-[#2e3c54]/50 h-full ">
+                                                            <div className="flex flex-col items-center justify-center bg-[#131926] border border-[#2e3c54]/50 rounded-md px-3 py-1.5 min-w-[4.5rem] bg-card-dark shadow-[0_0_5px_rgba(0,0,0,0.10)]">
                                                                 <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider mb-0.5">Tier</span>
-                                                                <span className="text-sm font-black text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] leading-none">{currentLevel}</span>
+                                                                <span className="text-sm font-black text-primary drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] leading-none">{currentLevel}</span>
                                                                 <span className="text-[9px] text-muted-foreground/60 leading-none mt-0.5">/ {maxLevel}</span>
                                                             </div>
                                                             <ChevronDown className="w-5 h-5 text-muted-foreground/50 group-aria-expanded/accordion-trigger:rotate-180 transition-transform duration-200" />
@@ -360,7 +360,7 @@ export function CollectionsPage() {
                                                     </div>
                                                 </AccordionTrigger>
                                                 
-                                                <AccordionContent className="bg-[#0a0d14]/80 border-t border-[#2e3c54]/50 p-0">
+                                                <AccordionContent className="bg-[#0a0d14]/80 0 p-0 mb-2 minebox-shadow">
                                                     <div className="flex flex-col w-full">
                                                         {collection.levels?.map((level: any, idx: number) => {
                                                             const isCompleted = currentValue >= level.amount;
@@ -368,17 +368,17 @@ export function CollectionsPage() {
                                                             
                                                             return (
                                                                 <div key={idx} className={`flex flex-col py-2.5 px-4 sm:px-6 border-b border-white/5 last:border-0 transition-colors ${
-                                                                    isCompleted ? 'bg-emerald-500/5' : isCurrent ? 'bg-orange-500/10 relative before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-orange-500' : 'hover:bg-white/[0.02]'
+                                                                    isCompleted ? 'bg-emerald-500/5' : isCurrent ? 'bg-primary/10 relative before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-primary' : 'hover:bg-white/[0.02]'
                                                                 }`}>
                                                                     <div className="flex items-center justify-between">
                                                                         <div className="flex items-center gap-3">
                                                                             <div className={`flex items-center justify-center w-6 h-6 rounded-full border shadow-inner shrink-0 ${
-                                                                                isCompleted ? 'bg-[#0a0d14] border-emerald-500/50' : isCurrent ? 'bg-orange-500/20 border-orange-500/50' : 'bg-[#131926] border-white/10'
+                                                                                isCompleted ? 'bg-[#0a0d14] border-emerald-500/50' : isCurrent ? 'bg-primary/20 border-primary/50' : 'bg-[#131926] border-white/10'
                                                                             }`}>
-                                                                                {isCompleted ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : isCurrent ? <Star className="w-3 h-3 text-orange-400" /> : <Lock className="w-3 h-3 text-muted-foreground/50" />}
+                                                                                {isCompleted ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : isCurrent ? <Star className="w-3 h-3 text-primary" /> : <Lock className="w-3 h-3 text-muted-foreground/50" />}
                                                                             </div>
                                                                             <div className="flex items-baseline gap-2">
-                                                                                <span className={`text-[11px] uppercase tracking-wider font-bold ${isCompleted ? 'text-emerald-500' : isCurrent ? 'text-orange-400' : 'text-muted-foreground'}`}>
+                                                                                <span className={`text-[11px] uppercase tracking-wider font-bold ${isCompleted ? 'text-emerald-500' : isCurrent ? 'text-primary' : 'text-muted-foreground'}`}>
                                                                                     Lvl {idx + 1}
                                                                                 </span>
                                                                                 <span className={`text-sm font-black tracking-tight ${isCompleted ? 'text-white' : 'text-white/80'}`}>
