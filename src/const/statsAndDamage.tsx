@@ -119,6 +119,30 @@ export const stats = [
     color: "#10b981",
     icon: "",
   },
+  {
+    id: "EARTH_RESISTANCE",
+    name: "EARTH_RESISTANCE",
+    color: "#58350b",
+    icon: "",
+  },
+  {
+    id: "AIR)RESISTANCE",
+    name: "AIR_RESISTANCE",
+    color: "#85c062",
+    icon: "",
+  },
+  {
+    id: "FIRE_RESISTANCE",
+    name: "FIRE_RESISTANCE",
+    color: "#df3f29",
+    icon: "",
+  },
+  {
+    id: "WATER_RESISTANCE",
+    name: "WATER_RESISTANCE",
+    color: "#7ccbf9",
+    icon: "",
+  },
 ]
 export const damages = [
   {
