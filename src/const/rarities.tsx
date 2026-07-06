@@ -12,7 +12,7 @@ export const rarities = [
 
     badgeColor: "#457192",
     textColor: "text-[#ddd]",
-    backgroundColor: "bg-[#213349]",
+    backgroundColor: "bg-[#21334980]",
     border: "border-x-[#457192] border-y-[#55a0ac] border-[3px]",
     innerBorder: "",
   },
@@ -23,7 +23,7 @@ export const rarities = [
 
     badgeColor: "#4d3323",
     textColor: "text-[#ddd]",
-    backgroundColor: "bg-[#302c2a]",
+    backgroundColor: "bg-[#302c2a80]",
     border: "border-x-[#422b1b] border-y-[#7e7867] border-[3px]",
     innerBorder: "",
   },
@@ -34,8 +34,8 @@ export const rarities = [
 
     badgeColor: "#665466",
     textColor: "text-[#eee]",
-    backgroundColor: "bg-[#4a484a]",
-    border: "bg-[#20252c50] border-x-[#d2d2d3] border-y-[#9ea59f] border-[3px]",
+    backgroundColor: "bg-[#45494c80]",
+    border: "border-x-[#d2d2d3] border-y-[#9ea59f] border-[3px]",
     innerBorder: "",
   },
   {
@@ -45,8 +45,8 @@ export const rarities = [
 
     badgeColor: "#00c06f",
     textColor: "text-[#00c06f]",
-    backgroundColor: "bg-[#0f2229]",
-    border: "bg-[#07ff7b20] border-x-[#07ff7b] border-y-[#00dca8] border-[3px]",
+    backgroundColor: "bg-[#07ff7b20]",
+    border: "border-x-[#07ff7b] border-y-[#00dca8] border-[3px]",
     innerBorder: "",
   },
   {
@@ -56,7 +56,7 @@ export const rarities = [
 
     badgeColor: "#00a5fc",
     textColor: "text-[#00a5fc]",
-    backgroundColor: "bg-[#0e202d]",
+    backgroundColor: "bg-[#10374180]",
     border: "border-x-[#2dd0d9] border-y-[#2291b9] border-[3px]",
     innerBorder: "",
   },
@@ -100,8 +100,8 @@ export const rarities = [
 
     badgeColor: "#9816fc",
     textColor: "text-[#9816fc]",
-    backgroundColor: "bg-[#241738]",
-    border: "bg-[#2a212c40] border-x-[#521283] border-y-[#9816fc] border-[5px]",
+    backgroundColor: "bg-[#241738da]",
+    border: " border-x-[#521283] border-y-[#9816fc] border-[5px]",
     innerBorder: "border-[#ffad2c] border-[2px]",
   },
   {
@@ -111,8 +111,8 @@ export const rarities = [
 
     badgeColor: "#56d3c4",
     textColor: "text-[#56d3c4]",
-    backgroundColor: "bg-[#0e202d]",
-    border: "bg-[#2a212c40] border-x-[#337d99] border-y-[#56d3c4] border-[5px]",
+    backgroundColor: "bg-[#103741d0]",
+    border: "border-x-[#337d99] border-y-[#56d3c4] border-[5px]",
     innerBorder: "border-[#758ea4] border-[2px]",
   },
 

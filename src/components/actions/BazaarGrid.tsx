@@ -10,7 +10,7 @@ type BazaarItem = {
   sell_price: number
   buy_price: number
   stock: number
-  unavailable?: boolean // ✅ true jeśli itemu nie ma w odpowiedzi API
+  unavailable?: boolean
 }
 
 type BazaarResponse = {
@@ -18,7 +18,6 @@ type BazaarResponse = {
   total: number
 }
 
-// 📦 MAPA KATEGORII (kolejność ma znaczenie - taka też będzie kolejność wyświetlania)
 const categoryMap = {
   categories: [
     {
@@ -135,6 +134,45 @@ const categoryMap = {
         "mbi-crop_quinoa_purple",
         "mbi-crop_rye",
         "mbi-crop_quinoa_red",
+
+        "mbi-coconut",
+        "mbi-banana",
+        "mbi-avocado",
+        "mbi-lemon",
+        "mbi-chestnut",
+        "mbi-hazelnut",
+        "mbi-olive",
+        "mbi-walnut",
+        "mbi-pineapple",
+        "mbi-dark_coconut",
+        "mbi-mystic_hornbeam_leaf",
+        "mbi-mango",
+        "mbi-sacred_coconut",
+
+        "material-jungle_log",
+        "material-oak_log",
+        "material-spruce_log",
+        "material-birch_log",
+        "material-acacia_log",
+        "material-dark_oak_log",
+        "material-mangrove_log",
+        "material-cherry_log",
+        "material-pale_oak_log",
+        "mbi-log_coconut",
+        "mbi-log_banana",
+        "mbi-log_chestnut",
+        "mbi-log_mahogany",
+        "mbi-log_hazel",
+        "mbi-log_olive_tree",
+        "mbi-log_walnut",
+        "mbi-log_dark_coconut",
+        "mbi-log_maple",
+        "mbi-log_eucalyptus",
+        "mbi-log_yew",
+        "mbi-log_elm",
+        "mbi-log_laughing_tree",
+        "mbi-log_mystic_hornbeam",
+        "mbi-log_sacred_coconut",
       ],
     },
   ],
@@ -156,7 +194,6 @@ export default function BazaarGrid() {
       const totalPages = Math.ceil(firstPage.total / limit)
 
       const requests = []
-      // ✅ Pobieramy od page = 2 (bo strona 1 już jest)
       for (let page = 2; page <= totalPages; page++) {
         requests.push(
           fetch(
@@ -181,11 +218,9 @@ export default function BazaarGrid() {
     return <div className="py-10 text-center">Loading...</div>
   }
 
-  // 🔎 Mapa item_id -> dane z API, dla szybkiego lookupu
   const itemsById = new Map(items.map((item) => [item.item_id, item]))
   const usedIds = new Set<string>()
 
-  // 📊 Budujemy grupy w KOLEJNOŚCI z categoryMap, uzupełniając brakujące itemy
   const groupedItems: Record<string, BazaarItem[]> = {}
 
   categoryMap.categories.forEach((category) => {
@@ -194,7 +229,6 @@ export default function BazaarGrid() {
       const found = itemsById.get(itemId)
       if (found) return found
 
-      // ✅ Item zdefiniowany w categoryMap, ale brak go w odpowiedzi API -> pokazujemy jako niedostępny
       return {
         item_id: itemId,
         sell_price: 0,
@@ -205,13 +239,11 @@ export default function BazaarGrid() {
     })
   })
 
-  // 📦 Itemy z API, które nie pasują do żadnej kategorii -> "Other" na końcu
   const otherItems = items.filter((item) => !usedIds.has(item.item_id))
   if (otherItems.length > 0) {
     groupedItems["Other"] = otherItems
   }
 
-  // ✅ Kolejność: dokładnie jak w categoryMap, "Other" zawsze na końcu
   const orderedCategories = [
     ...categoryMap.categories.map((c) => c.category),
     ...(groupedItems["Other"] ? ["Other"] : []),
@@ -221,7 +253,6 @@ export default function BazaarGrid() {
     <div className="space-y-8">
       {orderedCategories.map((category) => (
         <div key={category}>
-          {/* 🏷️ Nagłówek kategorii */}
           <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold">
             {category}
             <Badge variant="secondary" className="text-sm">
@@ -229,7 +260,6 @@ export default function BazaarGrid() {
             </Badge>
           </h2>
 
-          {/* 📦 Siatka itemów w kategorii */}
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
             {groupedItems[category].map((item) => (
               <RarityBorder
