@@ -179,6 +179,12 @@ body {
               0 2px #0a192f, 
               0 8px 20px #0006;
 }
+@utility minebox-shadow-light {
+  box-shadow: inset 0 2px #ffffff1f, 
+              inset 0 -3px #0000004d, 
+              0 2px #0a192f, 
+              0 4px 20px #0003;
+}
 @utility alert-shadow {
   box-shadow: inset 0 2px #ffffff1f, 
               inset 0 -3px #0000004d, 

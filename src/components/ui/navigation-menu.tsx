@@ -59,22 +59,37 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger hover:minebox-shadow inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-xs/relaxed font-medium transition-all outline-none hover:bg-card focus:bg-muted focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-card data-open:bg-muted/50 data-open:hover:bg-card data-open:focus:bg-muted"
+  "group/navigation-menu-trigger hover:minebox-shadow inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-xs/relaxed font-medium transition-all outline-none hover:bg-card focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-card data-open:bg-muted/50 data-open:hover:bg-card data-open:focus:bg-muted"
 )
+
+const navigationMenuActiveStyle =
+  "bg-linear-to-b! from-primary! to-primary-dark! minebox-shadow! text-primary-foreground! hover:bg-linear-to-b! hover:from-primary! hover:to-primary-dark!"
+
 
 function NavigationMenuTrigger({
   className,
   children,
+  active,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {
+}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger> & {
+  active?: boolean
+}) {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
-      className={cn(navigationMenuTriggerStyle(), "group", className)}
+      className={cn(
+        navigationMenuTriggerStyle(),
+        "group",
+        active && navigationMenuActiveStyle,
+        className
+      )}
       {...props}
     >
       {children}{" "}
-      <ChevronDownIcon className="relative top-px ml-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180" aria-hidden="true" />
+      <ChevronDownIcon
+        className="relative top-px ml-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180"
+        aria-hidden="true"
+      />
     </NavigationMenuPrimitive.Trigger>
   )
 }
@@ -116,7 +131,6 @@ function NavigationMenuViewport({
     </div>
   )
 }
-
 function NavigationMenuLink({
   className,
   ...props
@@ -125,7 +139,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "hover:minebox-shadow w-full flex items-center gap-1.5 rounded-lg p-2 pt-1 text-xs/relaxed transition-all outline-none hover:bg-card focus:bg-card focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-[active=true]:bg-muted/50 data-[active=true]:hover:bg-muted data-[active=true]:focus:bg-muted [&_svg:not([class*='size-'])]:size-4",
+        "hover:minebox-shadow w-full flex items-center gap-1.5 rounded-lg p-2 pt-1 text-xs/relaxed transition-all outline-none hover:bg-card focus:bg-card focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-[active]:bg-linear-to-b! data-[active]:from-primary! data-[active]:to-primary-dark! data-[active]:minebox-shadow! data-[active]:text-primary-foreground! data-[active]:hover:bg-linear-to-b! data-[active]:hover:from-primary! data-[active]:hover:to-primary-dark! data-[active]:focus:bg-linear-to-b! data-[active]:focus:from-primary! data-[active]:focus:to-primary-dark! [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
