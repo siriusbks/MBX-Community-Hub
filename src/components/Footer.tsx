@@ -1,4 +1,5 @@
 import { Button } from "@ui/button";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
     return (
@@ -12,12 +13,16 @@ export const Footer = () => {
                 </span>
                 <span className="text-sm justify-self-end gap-1 flex">
                     
+                    <Link to="/contribute">
                     <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
                         Contribute
                     </Button>
+                    </Link>
+                    <a href="https://ko-fi.com/6rius" target="_blank" rel="noopener noreferrer">
                     <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
                         Support Us
                     </Button>
+                    </a>
                 </span>
 
             </div>

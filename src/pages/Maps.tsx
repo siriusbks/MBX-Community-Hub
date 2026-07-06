@@ -193,7 +193,7 @@ export function Maps() {
                 </p>
               )}
 
-              <Link to={`/map/${map.id}`}>
+              <Link to={`/maps/${map.id}`}>
               <Button size="lg" className="">
                 {t("maps.view_map")}
               </Button>

@@ -5,6 +5,7 @@ import ContributePage from "@pages/COntribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
 import VillagePreview from "@pages/VillagePreview";
+import { VotePage } from "@pages/Votes";
 import { lazy, type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -24,12 +25,11 @@ export const AppRoutes: FC = () => {
         <Routes>
             {/* Main Page */}
             <Route path="/" element={<MainPage />} />
-            <Route path="/changelog" element={<ChangelogPage />} />
 
             {/* Maps */}
             <Route path="/maps" element={<MapsPage />} />
-            <Route path="/map/island_village" element={<VillagePreview />} />
-            <Route path="/map/*" element={<MapPreview />} />
+            <Route path="/maps/island_village" element={<VillagePreview />} />
+            <Route path="/maps/*" element={<MapPreview />} />
 
             {/* Tools Tab */}
             <Route path="/tools/collections" element={<CollectionsPage />} />
@@ -54,6 +54,8 @@ export const AppRoutes: FC = () => {
 
             {/* Others */}
             <Route path="/contribute" element={<ContributePage />} />
+            <Route path="/changelog" element={<ChangelogPage />} />
+            <Route path="/votes" element={<VotePage />} />
 
 
             {/* Errors */}
