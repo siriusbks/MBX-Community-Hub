@@ -7,7 +7,7 @@ export const Footer = () => {
             <div className="grid grid-cols-3 gap-4 items-center justify-center py-2 px-4">
                 <p className="text-xs">MIT License © 2026</p>
                 <span className="text-xs flex flex-col justify-center items-center">
-                    <span>Made with  for the Minebox community</span>
+                    <span>Made with ❤️ for the Minebox community</span>
                     <span className="text-[0.5rem] text-muted-foreground ">Some illustrations are property of Qore Games and Minebox</span>
 
                 </span>
