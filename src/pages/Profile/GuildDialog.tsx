@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@ui/dialog";
 import { ScrollArea } from "@ui/scroll-area";
 import { Badge } from "@ui/badge";
-import { Loader2, Users, Trophy } from "lucide-react";
+import { Loader2, Users, Trophy, Info } from "lucide-react";
 import { LevelBadge } from "@const/levels";
 
 interface GuildMember {
@@ -48,9 +48,9 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
             if (isOpen) fetchGuildData();
         }}>
             <DialogTrigger asChild>
-
-                <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3">
+                <Badge variant="default" className="text-[0.75rem] py-2.5 pb-3 cursor-pointer hover:bg-primary/80 transition-colors flex items-center gap-1.5">
                     {guildName}
+                    <Info className="size-3 opacity-70" />
                 </Badge>
             </DialogTrigger>
             <DialogContent className="minebox-shadow sm:max-w-[425px] border-white/10 bg-card/95 backdrop-blur-xl shadow-2xl">
