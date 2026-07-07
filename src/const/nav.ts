@@ -28,6 +28,7 @@ export type NavDropdown = {
 }
 export type NavLink = {
   id: string
+  dropdown?: false
   to: string
   icon: LucideIcon
   label: string
