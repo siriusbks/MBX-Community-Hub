@@ -25,31 +25,31 @@ export function ContributePage() {
                 <Card className="gap-0 px-2 py-2">
                     <h1 className="inline-block text-lg font-bold
       bg-gradient-to-b from-primary to-primary-dark
-      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">Code / Feature / Imrpovements</h1>
-                    <p className="text-muted-foreground leading-tight mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel velit lacus. Ut blandit ultrices odio vitae pharetra. Phasellus bibendum purus eu porta euismod. Nunc fringilla ut lectus id finibus.</p>
-                    <a href="#">
+      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">Code & Features</h1>
+                    <p className="text-sm text-muted-foreground leading-tight mb-3">Whether you're a developer eager to submit a PR, or a user who spotted a bug or has a brilliant idea, our GitHub is the place to be. Join the open-source effort to make the hub better for everyone!</p>
+                    <a href="https://github.com/siriusbks/MBX-Community-Hub" target="_blank">
                         <Button size="lg" className="w-full">Github</Button>
                     </a>
                 </Card>
                 <Card className="gap-0 px-2 py-2">
                     <h1 className="inline-block text-lg font-bold
       bg-gradient-to-b from-primary to-primary-dark
-      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">Translation</h1>
-                    <p className="text-muted-foreground leading-tight mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel velit lacus. Ut blandit ultrices odio vitae pharetra. Phasellus bibendum purus eu porta euismod. Nunc fringilla ut lectus id finibus.</p>
-                    <a href="#">
-                        <Button size="lg" className="w-full">Modrinth</Button>
+      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">Localization</h1>
+                    <p className="text-sm text-muted-foreground leading-tight mb-3">The hub aims to be accessible globally. If you're fluent in another language, you can make a huge impact by helping us translate the platform on Crowdin. Join our localization team!</p>
+                    <a href="https://crowdin.com/project/minebox-community" target="_blank">
+                        <Button size="lg" className="w-full">Crowdin</Button>
                     </a>
                 </Card>
                 <Card className="gap-0 px-2 py-2">
                     <h1 className="inline-block text-lg font-bold
       bg-gradient-to-b from-primary to-primary-dark
-      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">HELP / IDEA</h1>
-                    <p className="text-muted-foreground leading-tight mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel velit lacus. Ut blandit ultrices odio vitae pharetra. Phasellus bibendum purus eu porta euismod. Nunc fringilla ut lectus id finibus.</p>
+      bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider uppercase">Help & Ideas</h1>
+                    <p className="text-sm text-muted-foreground leading-tight mb-3">Have a quick question, need some help, or want to discuss a new idea before making it official? Hop into our dedicated Discord forums! Chat directly with the community and developers.</p>
                     <span className="flex flex-row gap-2 w-full">
-                    <a href="#" className="w-full">
+                    <a href="https://discord.com/channels/318496737067270146/1324109110693597315" target="_blank" className="w-full">
                         <Button size="lg" className="w-full">EN Forum</Button>
                     </a>
-                    <a href="#" className="w-full">
+                    <a href="https://discord.com/channels/318496737067270146/1324392188607467551" target="_blank" className="w-full">
                         <Button size="lg" className="w-full">FR Forum</Button>
                     </a>
                     </span>
