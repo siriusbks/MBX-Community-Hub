@@ -6,10 +6,11 @@ import {
 } from "@ui/alert"
 import { Globe, InfoIcon } from "lucide-react"
 import { Badge } from "@ui/badge"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Error404() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <div className="py-auto relative flex flex-col page-container ">
@@ -26,7 +27,7 @@ export function Error404() {
       bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider ">PAGE NOT FOUND</h1>
                 <p className="text-sm max-w-xl text-center mt-2 font-light"><span className="text-primary">{location.pathname}</span> doesn't exist in this world.</p>
                 <span className="mt-4 flex gap-2">
-                    <Button size="lg" className="tracking-wider"><Globe className="mt-0.5" />Go Back</Button>
+                    <Button size="lg" className="tracking-wider" onClick={() => navigate(-1)}><Globe className="mt-0.5" />Go Back</Button>
                 </span>
             </div>
         </div>
