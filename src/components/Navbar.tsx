@@ -12,6 +12,7 @@ import {
   SwordsIcon,
   ShapesIcon,
   VoteIcon,
+  SquarePen,
 } from "lucide-react"
 import { LevelBadge } from "@const/levels"
 import {
@@ -351,7 +352,7 @@ export const Navbar = () => {
         <span className="flex items-center gap-2">
           <Popover>
             <PopoverTrigger asChild>
-              <span className="flex flex-row items-center justify-center gap-2">
+              <button className="flex flex-row items-center justify-center gap-2 rounded-md p-1.5 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer outline-none">
                 {/* if not selected */}
 
                 {/* IF Nickname Selected */}
@@ -375,7 +376,8 @@ export const Navbar = () => {
                   }
                   className="h-8 rounded-sm"
                 />
-              </span>
+                <SquarePen className="size-4 text-muted-foreground opacity-70" />
+              </button>
             </PopoverTrigger>
             <PopoverContent className="gap-2">
               <PopoverHeader>
