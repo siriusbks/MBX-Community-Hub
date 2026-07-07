@@ -107,7 +107,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
             {ALL_PROFESSIONS
                 .map(jobKey => ({ jobKey, info: skillsInfo[jobKey] }))
                 .filter((item): item is { jobKey: StoreProfessionId; info: SkillInfo } => !!item.info)
-                .sort((a, b) => b.info.totalXp - a.info.totalXp)
+                .sort((a, b) => b.info.level === a.info.level ? b.info.totalXp - a.info.totalXp : b.info.level - a.info.level)
                 .map(({ jobKey, info }, index) => {
                     const { level, currentXp, nextLevelXp, progressPercent, totalXp } = info;
                     const formattedName = JOB_DISPLAY_NAMES[jobKey];
