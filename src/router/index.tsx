@@ -1,7 +1,7 @@
 import ActionsPage from "@pages/Actions/Actions";
 import { BazaarPage } from "@pages/Actions/Bazaar";
 import { GemExchangePage } from "@pages/Actions/GemExchange";
-import ContributePage from "@pages/COntribute";
+import ContributePage from "@pages/Contribute";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
 import VillagePreview from "@pages/VillagePreview";

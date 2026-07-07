@@ -29,6 +29,13 @@ const mapsConfig: Record<
     referencePoint: { x: 220, y: 388 },
     zoneKey: "overworld",
   },
+  island_home: {
+    image: "/media/maps/home_island_map.png",
+    width: 528,
+    height: 528,
+    referencePoint: { x: 56, y: 469 },
+    zoneKey: "",
+  },
   island_tropical: {
     image: "/media/maps/island_tropical_map.png",
     width: 528,
@@ -133,7 +140,7 @@ export function MapPreview() {
   if (!config) {
     return (
       <div className="flex h-full items-center justify-center">
-        Map inconnue
+        Map not found
       </div>
     )
   }
