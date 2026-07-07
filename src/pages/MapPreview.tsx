@@ -20,6 +20,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { FindItemName, ItemImage, ItemImageUrl } from "@const/elements"
 import { BestiaryItem } from "@components/minebox/bestiary"
+import { useTranslation } from "react-i18next"
 
 const mapsConfig: Record<
   string,
@@ -208,7 +209,7 @@ export function MapPreview() {
   const [insectsError, setInsectsError] = useState<string | null>(null)
 
 
-  //const { t, i18n } = useTranslation("maps");
+  const { t } = useTranslation("maps");
   const [regionsData, setRegionsData] = useState<Record<string, [number, number][]> | null>(null);
   const [showRegions, setShowRegions] = useState(false);
   const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
@@ -422,7 +423,7 @@ export function MapPreview() {
 
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
-      <div className="flex h-[80vh] w-full flex-row gap-4">
+      <div className="flex h-80vh w-full flex-row gap-4">
         {/* Map */}
         <span className="minebox-shadow rounded-xl h-screen w-3/4">
           {!harvestablesData ? (

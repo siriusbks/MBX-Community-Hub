@@ -5,365 +5,224 @@
         {
           "color": "#006effff",
           "coords": [
-            [
-              345,
-              571
-            ],
-            [
-              340,
-              604
-            ],
-            [
-              353,
-              629
-            ],
-            [
-              342,
-              653
-            ],
-            [
-              284,
-              669
-            ],
-            [
-              233,
-              678
-            ],
-            [
-              187,
-              668
-            ],
-            [
-              153,
-              634
-            ],
-            [
-              127,
-              589
-            ],
-            [
-              134,
-              544
-            ],
-            [
-              166,
-              482
-            ],
-            [
-              193,
-              423
-            ],
-            [
-              219,
-              415
-            ],
-            [
-              232,
-              433
-            ],
-            [
-              250,
-              437
-            ],
-            [
-              265,
-              428
-            ],
-            [
-              295,
-              433
-            ],
-            [
-              321,
-              447
-            ],
-            [
-              340,
-              500
-            ],
-            [
-              349,
-              500
-            ],
-            [
-              341,
-              453
-            ],
-            [
-              385,
-              455
-            ],
-            [
-              385,
-              447
-            ],
-            [
-              269,
-              412
-            ],
-            [
-              237,
-              381
-            ],
-            [
-              171,
-              381
-            ],
-            [
-              109,
-              511
-            ],
-            [
-              109,
-              646
-            ],
-            [
-              179,
-              693
-            ],
-            [
-              305,
-              693
-            ],
-            [
-              369,
-              649
-            ],
-            [
-              369,
-              552
-            ],
-            [
-              350,
-              529
-            ],
-            [
-              341,
-              508
-            ]
+            [345, 571],
+            [340, 604],
+            [353, 629],
+            [342, 653],
+            [284, 669],
+            [233, 678],
+            [187, 668],
+            [153, 634],
+            [127, 589],
+            [134, 544],
+            [166, 482],
+            [193, 423],
+            [219, 415],
+            [232, 433],
+            [250, 437],
+            [265, 428],
+            [295, 433],
+            [321, 447],
+            [340, 500],
+            [349, 500],
+            [341, 453],
+            [385, 455],
+            [385, 447],
+            [269, 412],
+            [237, 381],
+            [171, 381],
+            [109, 511],
+            [109, 646],
+            [179, 693],
+            [305, 693],
+            [369, 649],
+            [369, 552],
+            [350, 529],
+            [341, 508]
           ],
           "mobs": [
-            "bestiaryData.spawn.global[0]",
-            "bestiaryData.spawn.global[1]",
-            "bestiaryData.spawn.global[2]",
-            "bestiaryData.spawn.global[3]"
+            "xmas_penguin_blue",
+            "xmas_penguin_green",
+            "xmas_penguin_red",
+            "xmas_penguin_yellow"
           ]
         },
         {
           "color": "#006effff",
           "coords": [
-            [
-              452,
-              452
-            ],
-            [
-              452,
-              500
-            ],
-            [
-              465,
-              538
-            ],
-            [
-              454,
-              572
-            ],
-            [
-              447,
-              602
-            ],
-            [
-              452,
-              617
-            ],
-            [
-              476,
-              625
-            ],
-            [
-              515,
-              615
-            ],
-            [
-              570,
-              591
-            ],
-            [
-              639,
-              569
-            ],
-            [
-              679,
-              528
-            ],
-            [
-              709,
-              471
-            ],
-            [
-              732,
-              417
-            ],
-            [
-              725,
-              395
-            ],
-            [
-              691,
-              367
-            ],
-            [
-              664,
-              362
-            ],
-            [
-              617,
-              390
-            ],
-            [
-              589,
-              404
-            ],
-            [
-              550,
-              396
-            ],
-            [
-              518,
-              399
-            ],
-            [
-              482,
-              412
-            ],
-            [
-              487,
-              377
-            ],
-            [
-              473,
-              382
-            ],
-            [
-              462,
-              416
-            ],
-            [
-              432,
-              444
-            ],
-            [
-              402,
-              448
-            ],
-            [
-              402,
-              454
-            ],
-            [
-              437,
-              458
-            ],
-            [
-              445,
-              473
-            ],
-            [
-              444,
-              508
-            ],
-            [
-              452,
-              544
-            ],
-            [
-              431,
-              568
-            ],
-            [
-              431,
-              639
-            ],
-            [
-              493,
-              639
-            ],
-            [
-              578,
-              616
-            ],
-            [
-              682,
-              569
-            ],
-            [
-              714,
-              513
-            ],
-            [
-              748,
-              441
-            ],
-            [
-              748,
-              376
-            ],
-            [
-              677,
-              338
-            ],
-            [
-              612,
-              355
-            ],
-            [
-              547,
-              383
-            ],
-            [
-              499,
-              378
-            ],
-            [
-              487,
-              377
-            ],
-            [
-              482,
-              412
-            ]
+            [452, 452],
+            [452, 500],
+            [465, 538],
+            [454, 572],
+            [447, 602],
+            [452, 617],
+            [476, 625],
+            [515, 615],
+            [570, 591],
+            [639, 569],
+            [679, 528],
+            [709, 471],
+            [732, 417],
+            [725, 395],
+            [691, 367],
+            [664, 362],
+            [617, 390],
+            [589, 404],
+            [550, 396],
+            [518, 399],
+            [482, 412],
+            [487, 377],
+            [473, 382],
+            [462, 416],
+            [432, 444],
+            [402, 448],
+            [402, 454],
+            [437, 458],
+            [445, 473],
+            [444, 508],
+            [452, 544],
+            [431, 568],
+            [431, 639],
+            [493, 639],
+            [578, 616],
+            [682, 569],
+            [714, 513],
+            [748, 441],
+            [748, 376],
+            [677, 338],
+            [612, 355],
+            [547, 383],
+            [499, 378],
+            [487, 377],
+            [482, 412]
           ],
           "mobs": [
-            "bestiaryData.spawn.global[0]",
-            "bestiaryData.spawn.global[1]",
-            "bestiaryData.spawn.global[2]",
-            "bestiaryData.spawn.global[3]"
+            "xmas_penguin_blue",
+            "xmas_penguin_green",
+            "xmas_penguin_red",
+            "xmas_penguin_yellow"
           ]
         }
       ]
     },
     "church": {
-	  "zones": [{ "color": "#ff8800ff", "coords": [[275,215],[345,215],[373,242],[355,293],[275,293]], "mobs": ["bestiaryData.spawn.church[0]"] }]
-	},
-	"small_island": {
-	  "zones": [
-		{ "color": "#ff8800ff", "coords": [[509,340],[559,360],[559,320],[529,320]], "mobs": ["bestiaryData.spawn.small_island[0]"] },
-		{ "color": "#00ffc8ff", "coords": [[549,360],[534,360],[534,377]], "mobs": ["bestiaryData.spawn.small_island[1]"] }
-	  ]
-	},
-	"sewers": {
-	  "zones": [{ "color": "#ff00c8ff", "coords": [[376,479],[415,478],[416,527],[377,527]], "mobs": ["bestiaryData.spawn.sewers[0]"] }]
-	},
-	"central_island": {
-	  "zones": [{ "color": "#71df0bff", "coords": [[412,474],[426,474],[426,460],[412,460]], "mobs": ["bestiaryData.spawn.central_island[0]"] }]
-	},
-	"workshop_island": {
-	  "zones": [
-		{ "color": "#73ff00ff", "coords": [[689,417],[729,418],[727,432],[689,436]], "mobs": ["bestiaryData.spawn.workshop_island[1]"] },
-		{ "color": "#0099ffff", "coords": [[683,438],[680,453],[666,454],[664,437]], "mobs": ["bestiaryData.spawn.workshop_island[0]"] },
-		{ "color": "#ff5e00ff", "coords": [[501,480],[506,525],[529,552],[621,544],[621,460],[533,464]], "mobs": ["bestiaryData.spawn.workshop_island[2]"] }
-	  ]
-	}
+      "zones": [
+        {
+          "color": "#ff8800ff",
+          "coords": [
+            [275, 215],
+            [345, 215],
+            [373, 242],
+            [355, 293],
+            [275, 293]
+          ],
+          "mobs": [
+            "ghost"
+          ]
+        }
+      ]
+    },
+    "small_island": {
+      "zones": [
+        {
+          "color": "#ff8800ff",
+          "coords": [
+            [509, 340],
+            [559, 360],
+            [559, 320],
+            [529, 320]
+          ],
+          "mobs": [
+            "bestiaryData.spawn.small_island[0]"
+          ]
+        },
+        {
+          "color": "#00ffc8ff",
+          "coords": [
+            [549, 360],
+            [534, 360],
+            [534, 377]
+          ],
+          "mobs": [
+            "bestiaryData.spawn.small_island[1]"
+          ]
+        }
+      ]
+    },
+    "sewers": {
+      "zones": [
+        {
+          "color": "#ff00c8ff",
+          "coords": [
+            [376, 479],
+            [415, 478],
+            [416, 527],
+            [377, 527]
+          ],
+          "mobs": [
+            "rat_brown"
+          ]
+        }
+      ]
+    },
+    "central_island": {
+      "zones": [
+        {
+          "color": "#71df0bff",
+          "coords": [
+            [412, 474],
+            [426, 474],
+            [426, 460],
+            [412, 460]
+          ],
+          "mobs": [
+            "crow"
+          ]
+        }
+      ]
+    },
+    "workshop_island": {
+      "zones": [
+        {
+          "color": "#73ff00ff",
+          "coords": [
+            [689, 417],
+            [729, 418],
+            [727, 432],
+            [689, 436]
+          ],
+          "mobs": [
+            "rat_gray"
+          ]
+        },
+        {
+          "color": "#0099ffff",
+          "coords": [
+            [683, 438],
+            [680, 453],
+            [666, 454],
+            [664, 437]
+          ],
+          "mobs": [
+            "rat_albino"
+          ]
+        },
+        {
+          "color": "#ff5e00ff",
+          "coords": [
+            [501, 480],
+            [506, 525],
+            [529, 552],
+            [621, 544],
+            [621, 460],
+            [533, 464]
+          ],
+          "mobs": [
+            "xmas_gingerbread"
+          ]
+        }
+      ]
+    }
   },
   "island_tropical": {
     "beach": {
@@ -371,339 +230,141 @@
         {
           "color": "#15ff00ff",
           "coords": [
-            [
-              15,
-              88
-            ],
-            [
-              7,
-              53
-            ],
-            [
-              25,
-              7
-            ],
-            [
-              48,
-              13
-            ],
-            [
-              41,
-              27
-            ],
-            [
-              23,
-              57
-            ]
+            [15, 88],
+            [7, 53],
+            [25, 7],
+            [48, 13],
+            [41, 27],
+            [23, 57]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[0]",
-            "bestiaryData.kokoko.beach[1]",
-            "bestiaryData.kokoko.beach[2]",
-            "bestiaryData.kokoko.beach[3]",
-            "bestiaryData.kokoko.beach[4]"
+            "blue_starfish",
+            "cat_goofish",
+            "orange_starfish",
+            "clown_goofish",
+            "hammershark_goofish"
           ]
         },
         {
           "color": "#15ff00ff",
           "coords": [
-            [
-              82,
-              72
-            ],
-            [
-              116,
-              57
-            ],
-            [
-              150,
-              45
-            ],
-            [
-              161,
-              83
-            ],
-            [
-              184,
-              91
-            ],
-            [
-              220,
-              102
-            ],
-            [
-              231,
-              66
-            ],
-            [
-              218,
-              40
-            ],
-            [
-              232,
-              40
-            ],
-            [
-              255,
-              33
-            ],
-            [
-              258,
-              12
-            ],
-            [
-              244,
-              0
-            ],
-            [
-              223,
-              0
-            ],
-            [
-              205,
-              30
-            ],
-            [
-              153,
-              10
-            ],
-            [
-              88,
-              44
-            ]
+            [82, 72],
+            [116, 57],
+            [150, 45],
+            [161, 83],
+            [184, 91],
+            [220, 102],
+            [231, 66],
+            [218, 40],
+            [232, 40],
+            [255, 33],
+            [258, 12],
+            [244, 0],
+            [223, 0],
+            [205, 30],
+            [153, 10],
+            [88, 44]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[0]",
-            "bestiaryData.kokoko.beach[1]",
-            "bestiaryData.kokoko.beach[2]",
-            "bestiaryData.kokoko.beach[3]",
-            "bestiaryData.kokoko.beach[4]"
+            "blue_starfish",
+            "cat_goofish",
+            "orange_starfish",
+            "clown_goofish",
+            "hammershark_goofish"
           ]
         },
         {
           "color": "#0059ffff",
           "coords": [
-            [
-              202,
-              146
-            ],
-            [
-              227,
-              171
-            ],
-            [
-              232,
-              210
-            ],
-            [
-              222,
-              250
-            ],
-            [
-              225,
-              263
-            ],
-            [
-              240,
-              255
-            ],
-            [
-              250,
-              198
-            ],
-            [
-              238,
-              158
-            ],
-            [
-              214,
-              142
-            ]
+            [202, 146],
+            [227, 171],
+            [232, 210],
+            [222, 250],
+            [225, 263],
+            [240, 255],
+            [250, 198],
+            [238, 158],
+            [214, 142]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[0]",
-            "bestiaryData.kokoko.beach[1]",
-            "bestiaryData.kokoko.beach[2]",
-            "bestiaryData.kokoko.beach[3]",
-            "bestiaryData.kokoko.beach[4]",
-            "bestiaryData.kokoko.beach[5]",
-            "bestiaryData.kokoko.beach[6]"
+            "blue_starfish",
+            "cat_goofish",
+            "orange_starfish",
+            "clown_goofish",
+            "hammershark_goofish",
+            "crabician",
+            "craboxer"
           ]
         },
         {
           "color": "#9900ffff",
           "coords": [
-            [
-              38,
-              105
-            ],
-            [
-              49,
-              121
-            ],
-            [
-              49,
-              140
-            ],
-            [
-              35,
-              170
-            ],
-            [
-              17,
-              200
-            ],
-            [
-              7,
-              145
-            ],
-            [
-              13,
-              113
-            ]
+            [38, 105],
+            [49, 121],
+            [49, 140],
+            [35, 170],
+            [17, 200],
+            [7, 145],
+            [13, 113]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[5]",
-            "bestiaryData.kokoko.beach[6]"
+            "crabician",
+            "craboxer"
           ]
         },
         {
           "color": "#ff8800ff",
           "coords": [
-            [
-              55,
-              145
-            ],
-            [
-              34,
-              184
-            ],
-            [
-              30,
-              215
-            ],
-            [
-              49,
-              231
-            ],
-            [
-              113,
-              212
-            ],
-            [
-              95,
-              172
-            ]
+            [55, 145],
+            [34, 184],
+            [30, 215],
+            [49, 231],
+            [113, 212],
+            [95, 172]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[7]",
-            "bestiaryData.kokoko.beach[8]"
+            "coconut_mage",
+            "coconut_warrior"
           ]
         },
         {
           "color": "#ff8800ff",
           "coords": [
-            [
-              118,
-              60
-            ],
-            [
-              151,
-              67
-            ],
-            [
-              163,
-              99
-            ],
-            [
-              135,
-              132
-            ],
-            [
-              138,
-              160
-            ],
-            [
-              130,
-              171
-            ],
-            [
-              98,
-              163
-            ],
-            [
-              73,
-              140
-            ],
-            [
-              114,
-              127
-            ],
-            [
-              138,
-              97
-            ],
-            [
-              124,
-              77
-            ]
+            [118, 60],
+            [151, 67],
+            [163, 99],
+            [135, 132],
+            [138, 160],
+            [130, 171],
+            [98, 163],
+            [73, 140],
+            [114, 127],
+            [138, 97],
+            [124, 77]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[7]",
-            "bestiaryData.kokoko.beach[8]"
+            "coconut_mage",
+            "coconut_warrior"
           ]
         },
         {
           "color": "#ff8800ff",
           "coords": [
-            [
-              175,
-              182
-            ],
-            [
-              170,
-              155
-            ],
-            [
-              173,
-              121
-            ],
-            [
-              191,
-              102
-            ],
-            [
-              189,
-              148
-            ],
-            [
-              211,
-              187
-            ],
-            [
-              191,
-              227
-            ],
-            [
-              155,
-              231
-            ],
-            [
-              118,
-              205
-            ],
-            [
-              118,
-              174
-            ],
-            [
-              152,
-              170
-            ]
+            [175, 182],
+            [170, 155],
+            [173, 121],
+            [191, 102],
+            [189, 148],
+            [211, 187],
+            [191, 227],
+            [155, 231],
+            [118, 205],
+            [118, 174],
+            [152, 170]
           ],
           "mobs": [
-            "bestiaryData.kokoko.beach[7]",
-            "bestiaryData.kokoko.beach[8]"
+            "coconut_mage",
+            "coconut_warrior"
           ]
         }
       ]
@@ -713,247 +374,109 @@
         {
           "color": "#00ffedff",
           "coords": [
-            [
-              148,
-              265
-            ],
-            [
-              92,
-              292
-            ],
-            [
-              73,
-              330
-            ],
-            [
-              115,
-              360
-            ],
-            [
-              85,
-              360
-            ],
-            [
-              52,
-              384
-            ],
-            [
-              34,
-              363
-            ],
-            [
-              45,
-              334
-            ],
-            [
-              31,
-              302
-            ],
-            [
-              98,
-              264
-            ]
+            [148, 265],
+            [92, 292],
+            [73, 330],
+            [115, 360],
+            [85, 360],
+            [52, 384],
+            [34, 363],
+            [45, 334],
+            [31, 302],
+            [98, 264]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[4]"
+            "moskito"
           ]
         },
         {
           "color": "#ff00d4ff",
           "coords": [
-            [
-              118,
-              447
-            ],
-            [
-              148,
-              472
-            ],
-            [
-              93,
-              469
-            ]
+            [118, 447],
+            [148, 472],
+            [93, 469]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[5]"
+            "ogre_jungle"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              124,
-              378
-            ],
-            [
-              141,
-              418
-            ],
-            [
-              170,
-              415
-            ],
-            [
-              180,
-              445
-            ],
-            [
-              178,
-              468
-            ],
-            [
-              118,
-              448
-            ],
-            [
-              91,
-              469
-            ],
-            [
-              75,
-              458
-            ],
-            [
-              80,
-              438
-            ],
-            [
-              114,
-              412
-            ]
+            [124, 378],
+            [141, 418],
+            [170, 415],
+            [180, 445],
+            [178, 468],
+            [118, 448],
+            [91, 469],
+            [75, 458],
+            [80, 438],
+            [114, 412]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[0]",
-            "bestiaryData.kokoko.jungle[1]",
-            "bestiaryData.kokoko.jungle[2]",
-            "bestiaryData.kokoko.jungle[3]"
+            "monkey_banana",
+            "monkey_barrel",
+            "monkey_base",
+            "monkey_mage"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              111,
-              348
-            ],
-            [
-              139,
-              349
-            ],
-            [
-              169,
-              363
-            ],
-            [
-              181,
-              351
-            ],
-            [
-              147,
-              322
-            ]
+            [111, 348],
+            [139, 349],
+            [169, 363],
+            [181, 351],
+            [147, 322]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[0]",
-            "bestiaryData.kokoko.jungle[1]",
-            "bestiaryData.kokoko.jungle[2]",
-            "bestiaryData.kokoko.jungle[3]"
+            "monkey_banana",
+            "monkey_barrel",
+            "monkey_base",
+            "monkey_mage"
           ]
         },
         {
           "color": "#fbff00ff",
           "coords": [
-            [
-              117,
-              377
-            ],
-            [
-              112,
-              411
-            ],
-            [
-              80,
-              436
-            ],
-            [
-              49,
-              428
-            ],
-            [
-              51,
-              408
-            ],
-            [
-              76,
-              390
-            ],
-            [
-              104,
-              371
-            ]
+            [117, 377],
+            [112, 411],
+            [80, 436],
+            [49, 428],
+            [51, 408],
+            [76, 390],
+            [104, 371]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[0]",
-            "bestiaryData.kokoko.jungle[1]",
-            "bestiaryData.kokoko.jungle[2]",
-            "bestiaryData.kokoko.jungle[3]",
-            "bestiaryData.kokoko.jungle[4]"
+            "monkey_banana",
+            "monkey_barrel",
+            "monkey_base",
+            "monkey_mage",
+            "moskito"
           ]
         },
         {
           "color": "#fbff00ff",
           "coords": [
-            [
-              262,
-              481
-            ],
-            [
-              252,
-              450
-            ],
-            [
-              251,
-              378
-            ],
-            [
-              227,
-              344
-            ],
-            [
-              207,
-              380
-            ],
-            [
-              233,
-              410
-            ],
-            [
-              230,
-              437
-            ],
-            [
-              205,
-              454
-            ],
-            [
-              194,
-              466
-            ],
-            [
-              214,
-              489
-            ],
-            [
-              252,
-              492
-            ]
+            [262, 481],
+            [252, 450],
+            [251, 378],
+            [227, 344],
+            [207, 380],
+            [233, 410],
+            [230, 437],
+            [205, 454],
+            [194, 466],
+            [214, 489],
+            [252, 492]
           ],
           "mobs": [
-            "bestiaryData.kokoko.jungle[0]",
-            "bestiaryData.kokoko.jungle[1]",
-            "bestiaryData.kokoko.jungle[2]",
-            "bestiaryData.kokoko.jungle[3]",
-            "bestiaryData.kokoko.jungle[4]"
+            "monkey_banana",
+            "monkey_barrel",
+            "monkey_base",
+            "monkey_mage",
+            "moskito"
           ]
         }
       ]
@@ -963,134 +486,73 @@
         {
           "color": "#ff6600ff",
           "coords": [
-            [
-              450,
-              37
-            ],
-            [
-              465,
-              45
-            ],
-            [
-              487,
-              71
-            ],
-            [
-              495,
-              111
-            ],
-            [
-              480,
-              147
-            ],
-            [
-              447,
-              187
-            ],
-            [
-              420,
-              205
-            ],
-            [
-              400,
-              195
-            ],
-            [
-              383,
-              165
-            ],
-            [
-              383,
-              146
-            ],
-            [
-              415,
-              105
-            ],
-            [
-              415,
-              74
-            ]
+            [450, 37],
+            [465, 45],
+            [487, 71],
+            [495, 111],
+            [480, 147],
+            [447, 187],
+            [420, 205],
+            [400, 195],
+            [383, 165],
+            [383, 146],
+            [415, 105],
+            [415, 74]
           ],
           "mobs": [
-            "bestiaryData.kokoko.burned_jungle[3]"
+            "debris_golem"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              371,
-              178
-            ],
-            [
-              367,
-              147
-            ],
-            [
-              374,
-              117
-            ],
-            [
-              340,
-              86
-            ],
-            [
-              320,
-              123
-            ],
-            [
-              343,
-              156
-            ]
+            [371, 178],
+            [367, 147],
+            [374, 117],
+            [340, 86],
+            [320, 123],
+            [343, 156]
           ],
           "mobs": [
-            "bestiaryData.kokoko.burned_jungle[2]"
+            "lava_bucket"
           ]
         },
         {
           "color": "#0da0c5ff",
           "coords": [
-            [
-              310,
-              176
-            ],
-            [
-              338,
-              150
-            ],
-            [
-              311,
-              123
-            ],
-            [
-              301,
-              95
-            ],
-            [
-              295,
-              60
-            ],
-            [
-              270,
-              101
-            ],
-            [
-              277,
-              116
-            ],
-            [
-              268,
-              137
-            ],
-            [
-              278,
-              163
-            ]
+            [310, 176],
+            [338, 150],
+            [311, 123],
+            [301, 95],
+            [295, 60],
+            [270, 101],
+            [277, 116],
+            [268, 137],
+            [278, 163]
           ],
           "mobs": [
-            "bestiaryData.kokoko.burned_jungle[1]",
-            "bestiaryData.kokoko.burned_jungle[0]"
+            "monkey_ghost",
+            "scavenger_vulture"
+          ]
+        }
+      ]
+    },
+    "dark_jungle": {
+      "zones": [
+        {
+          "color": "#4467cfff",
+          "coords": [
+            [304, 325],
+            [320, 237],
+            [369, 251],
+            [472, 409],
+            [379, 470],
+            [306, 435]
+          ],
+          "mobs": [
+            "caw_brute",
+            "caw_grackless",
+            "caw_grackle"
           ]
         }
       ]
@@ -1102,99 +564,48 @@
         {
           "color": "#00ff4cff",
           "coords": [
-            [
-              400,
-              190
-            ],
-            [
-              410,
-              170
-            ],
-            [
-              395,
-              115
-            ],
-            [
-              360,
-              110
-            ],
-            [
-              355,
-              150
-            ],
-            [
-              360,
-              190
-            ]
+            [400, 190],
+            [410, 170],
+            [395, 115],
+            [360, 110],
+            [355, 150],
+            [360, 190]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.plains[0]",
-            "bestiaryData.quadra_plains.plains[1]",
-            "bestiaryData.quadra_plains.plains[2]"
+            "spidey",
+            "spidey_veno",
+            "scarecrow"
           ]
         },
         {
           "color": "#00ff4cff",
           "coords": [
-            [
-              450,
-              135
-            ],
-            [
-              460,
-              50
-            ],
-            [
-              420,
-              60
-            ],
-            [
-              415,
-              130
-            ]
+            [450, 135],
+            [460, 50],
+            [420, 60],
+            [415, 130]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.plains[0]",
-            "bestiaryData.quadra_plains.plains[1]",
-            "bestiaryData.quadra_plains.plains[2]"
+            "spidey",
+            "spidey_veno",
+            "scarecrow"
           ]
         },
         {
           "color": "#cacacaff",
           "coords": [
-            [
-              460,
-              130
-            ],
-            [
-              460,
-              50
-            ],
-            [
-              550,
-              50
-            ],
-            [
-              550,
-              250
-            ],
-            [
-              490,
-              250
-            ],
-            [
-              450,
-              195
-            ],
-            [
-              480,
-              150
-            ]
+            [460, 130],
+            [460, 50],
+            [550, 50],
+            [550, 250],
+            [490, 250],
+            [450, 195],
+            [480, 150]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.plains[3]",
-            "bestiaryData.quadra_plains.plains[4]",
-            "bestiaryData.quadra_plains.plains[2]"
+            "old_pirate_farmer",
+            "pirate_farmer",
+            "scarecrow"
           ]
         }
       ]
@@ -1204,205 +615,176 @@
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              505,
-              365
-            ],
-            [
-              540,
-              365
-            ],
-            [
-              540,
-              305
-            ],
-            [
-              505,
-              305
-            ]
+            [505, 365],
+            [540, 365],
+            [540, 305],
+            [505, 305]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[1]",
-            "bestiaryData.quadra_plains.swamp[2]"
+            "human_mushroom",
+            "purple_mushroom"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              505,
-              485
-            ],
-            [
-              540,
-              485
-            ],
-            [
-              565,
-              445
-            ],
-            [
-              565,
-              415
-            ],
-            [
-              525,
-              415
-            ],
-            [
-              505,
-              445
-            ]
+            [505, 485],
+            [540, 485],
+            [565, 445],
+            [565, 415],
+            [525, 415],
+            [505, 445]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[1]",
-            "bestiaryData.quadra_plains.swamp[2]"
+            "human_mushroom",
+            "purple_mushroom"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              360,
-              345
-            ],
-            [
-              420,
-              345
-            ],
-            [
-              450,
-              310
-            ],
-            [
-              450,
-              295
-            ],
-            [
-              415,
-              305
-            ],
-            [
-              360,
-              320
-            ]
+            [360, 345],
+            [420, 345],
+            [450, 310],
+            [450, 295],
+            [415, 305],
+            [360, 320]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[1]",
-            "bestiaryData.quadra_plains.swamp[2]"
+            "human_mushroom",
+            "purple_mushroom"
           ]
         },
         {
           "color": "#ff0000ff",
           "coords": [
-            [
-              390,
-              435
-            ],
-            [
-              455,
-              445
-            ],
-            [
-              480,
-              450
-            ],
-            [
-              480,
-              490
-            ],
-            [
-              400,
-              470
-            ]
+            [390, 435],
+            [455, 445],
+            [480, 450],
+            [480, 490],
+            [400, 470]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[1]",
-            "bestiaryData.quadra_plains.swamp[2]"
+            "human_mushroom",
+            "purple_mushroom"
           ]
         },
         {
           "color": "#0066ffff",
           "coords": [
-            [
-              430,
-              375
-            ],
-            [
-              360,
-              355
-            ],
-            [
-              360,
-              345
-            ],
-            [
-              420,
-              345
-            ],
-            [
-              450,
-              320
-            ],
-            [
-              490,
-              320
-            ],
-            [
-              505,
-              365
-            ],
-            [
-              505,
-              445
-            ],
-            [
-              455,
-              400
-            ],
-            [
-              490,
-              400
-            ],
-            [
-              490,
-              365
-            ],
-            [
-              455,
-              365
-            ],
-            [
-              455,
-              400
-            ]
+            [430, 375],
+            [360, 355],
+            [360, 345],
+            [420, 345],
+            [450, 320],
+            [490, 320],
+            [505, 365],
+            [505, 445],
+            [455, 400],
+            [490, 400],
+            [490, 365],
+            [455, 365],
+            [455, 400]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[0]"
+            "mud_boo"
           ]
         },
         {
           "color": "#ff00d4ff",
           "coords": [
-            [
-              490,
-              400
-            ],
-            [
-              455,
-              400
-            ],
-            [
-              455,
-              365
-            ],
-            [
-              490,
-              365
-            ]
+            [490, 400],
+            [455, 400],
+            [455, 365],
+            [490, 365]
           ],
           "mobs": [
-            "bestiaryData.quadra_plains.swamp[3]"
+            "dead_tree"
+          ]
+        }
+      ]
+    },
+    "savanna": {
+      "zones": [
+        {
+          "color": "#66e3bbff",
+          "coords": [
+            [281, 92],
+            [220, 54],
+            [141, 76],
+            [122, 165],
+            [135, 221],
+            [240, 237],
+            [318, 232],
+            [316, 159]
+          ],
+          "mobs": [
+            "kobold_archer",
+            "kobold_civil",
+            "kobold_halberdier",
+            "kobold_miner",
+            "kobold_soldier",
+            "kobold_warrior",
+            "kobold_wizard"
+          ]
+        }
+      ]
+    },
+    "mystical_forest": {
+      "zones": [
+        {
+          "color": "#ff9800ff",
+          "coords": [
+            [239, 286],
+            [158, 286],
+            [110, 314],
+            [72, 349],
+            [65, 382],
+            [116, 489],
+            [198, 506],
+            [267, 497],
+            [313, 481],
+            [332, 445],
+            [348, 396],
+            [351, 363],
+            [343, 313],
+            [283, 290],
+            [276, 311],
+            [317, 345],
+            [297, 429],
+            [262, 470],
+            [200, 475],
+            [137, 463],
+            [108, 391],
+            [116, 355],
+            [141, 327],
+            [178, 315],
+            [237, 310]
+          ],
+          "mobs": [
+            "fey_dyerftling",
+            "fey_brute",
+            "fey_sapper",
+            "fey_dyerftum"
+          ]
+        }
+      ]
+    },
+    "mystical_tree": {
+      "zones": [
+        {
+          "color": "#c2c05fff",
+          "coords": [
+            [205, 450],
+            [165, 409],
+            [193, 362],
+            [237, 366],
+            [251, 418]
+          ],
+          "mobs": [
+            "fey_shaman",
+            "fey_sapper",
+            "fey_dyerftum"
           ]
         }
       ]
@@ -1414,148 +796,58 @@
         {
           "color": "#ff15e0ff",
           "coords": [
-            [
-              222,
-              586
-            ],
-            [
-              190,
-              584
-            ],
-            [
-              160,
-              548
-            ],
-            [
-              162,
-              508
-            ],
-            [
-              175,
-              477
-            ],
-            [
-              220,
-              482
-            ],
-            [
-              231,
-              500
-            ],
-            [
-              220,
-              525
-            ],
-            [
-              231,
-              545
-            ]
+            [222, 586],
+            [190, 584],
+            [160, 548],
+            [162, 508],
+            [175, 477],
+            [220, 482],
+            [231, 500],
+            [220, 525],
+            [231, 545]
           ],
           "mobs": [
-            "bestiaryData.bamboo_peak.bamboo_plains[3]",
-            "bestiaryData.bamboo_peak.bamboo_plains[2]"
+            "panda_mage",
+            "panda_warrior"
           ]
         },
         {
           "color": "#ff15e0ff",
           "coords": [
-            [
-              520,
-              578
-            ],
-            [
-              522,
-              550
-            ],
-            [
-              590,
-              522
-            ],
-            [
-              598,
-              550
-            ],
-            [
-              620,
-              578
-            ],
-            [
-              605,
-              595
-            ],
-            [
-              552,
-              595
-            ]
+            [520, 578],
+            [522, 550],
+            [590, 522],
+            [598, 550],
+            [620, 578],
+            [605, 595],
+            [552, 595]
           ],
           "mobs": [
-            "bestiaryData.bamboo_peak.bamboo_plains[3]",
-            "bestiaryData.bamboo_peak.bamboo_plains[2]"
+            "panda_mage",
+            "panda_warrior"
           ]
         },
         {
           "color": "#d4ff15ff",
           "coords": [
-            [
-              220,
-              485
-            ],
-            [
-              267,
-              446
-            ],
-            [
-              319,
-              474
-            ],
-            [
-              358,
-              488
-            ],
-            [
-              414,
-              491
-            ],
-            [
-              427,
-              547
-            ],
-            [
-              466,
-              562
-            ],
-            [
-              461,
-              591
-            ],
-            [
-              418,
-              580
-            ],
-            [
-              387,
-              560
-            ],
-            [
-              351,
-              520
-            ],
-            [
-              307,
-              540
-            ],
-            [
-              260,
-              568
-            ],
-            [
-              248,
-              523
-            ]
+            [220, 485],
+            [267, 446],
+            [319, 474],
+            [358, 488],
+            [414, 491],
+            [427, 547],
+            [466, 562],
+            [461, 591],
+            [418, 580],
+            [387, 560],
+            [351, 520],
+            [307, 540],
+            [260, 568],
+            [248, 523]
           ],
           "mobs": [
-            "bestiaryData.bamboo_peak.bamboo_plains[0]",
-            "bestiaryData.bamboo_peak.bamboo_plains[1]"
+            "living_lotus",
+            "living_bamboo"
           ]
         }
       ]
@@ -1567,233 +859,101 @@
         {
           "color": "#15ffb2ff",
           "coords": [
-            [
-              566,
-              222
-            ],
-            [
-              591,
-              261
-            ],
-            [
-              635,
-              262
-            ],
-            [
-              666,
-              233
-            ],
-            [
-              670,
-              176
-            ],
-            [
-              628,
-              145
-            ],
-            [
-              600,
-              158
-            ]
+            [566, 222],
+            [591, 261],
+            [635, 262],
+            [666, 233],
+            [670, 176],
+            [628, 145],
+            [600, 158]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[2]",
-            "bestiaryData.frostbite_fortress.snow_plains[1]",
-            "bestiaryData.frostbite_fortress.snow_plains[0]"
+            "ice_fox",
+            "ice_fox_mage",
+            "ice_wolf"
           ]
         },
         {
           "color": "#15ffb2ff",
           "coords": [
-            [
-              534,
-              184
-            ],
-            [
-              544,
-              155
-            ],
-            [
-              534,
-              134
-            ],
-            [
-              523,
-              157
-            ]
+            [534, 184],
+            [544, 155],
+            [534, 134],
+            [523, 157]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[2]",
-            "bestiaryData.frostbite_fortress.snow_plains[1]",
-            "bestiaryData.frostbite_fortress.snow_plains[0]"
+            "ice_fox",
+            "ice_fox_mage",
+            "ice_wolf"
           ]
         },
         {
           "color": "#15ffb2ff",
           "coords": [
-            [
-              500,
-              238
-            ],
-            [
-              512,
-              289
-            ],
-            [
-              508,
-              318
-            ],
-            [
-              487,
-              340
-            ],
-            [
-              471,
-              329
-            ],
-            [
-              453,
-              313
-            ],
-            [
-              417,
-              311
-            ],
-            [
-              406,
-              283
-            ],
-            [
-              426,
-              276
-            ],
-            [
-              454,
-              290
-            ],
-            [
-              478,
-              305
-            ],
-            [
-              493,
-              287
-            ],
-            [
-              487,
-              260
-            ]
+            [500, 238],
+            [512, 289],
+            [508, 318],
+            [487, 340],
+            [471, 329],
+            [453, 313],
+            [417, 311],
+            [406, 283],
+            [426, 276],
+            [454, 290],
+            [478, 305],
+            [493, 287],
+            [487, 260]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[2]",
-            "bestiaryData.frostbite_fortress.snow_plains[1]",
-            "bestiaryData.frostbite_fortress.snow_plains[0]"
+            "ice_fox",
+            "ice_fox_mage",
+            "ice_wolf"
           ]
         },
         {
           "color": "#15ffb2ff",
           "coords": [
-            [
-              373,
-              186
-            ],
-            [
-              410,
-              174
-            ],
-            [
-              430,
-              140
-            ],
-            [
-              456,
-              166
-            ],
-            [
-              451,
-              196
-            ],
-            [
-              424,
-              198
-            ],
-            [
-              404,
-              210
-            ]
+            [373, 186],
+            [410, 174],
+            [430, 140],
+            [456, 166],
+            [451, 196],
+            [424, 198],
+            [404, 210]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[2]",
-            "bestiaryData.frostbite_fortress.snow_plains[1]",
-            "bestiaryData.frostbite_fortress.snow_plains[0]"
+            "ice_fox",
+            "ice_fox_mage",
+            "ice_wolf"
           ]
         },
         {
           "color": "#6bff15ff",
           "coords": [
-            [
-              486,
-              257
-            ],
-            [
-              459,
-              253
-            ],
-            [
-              453,
-              217
-            ],
-            [
-              469,
-              171
-            ],
-            [
-              495,
-              152
-            ],
-            [
-              522,
-              156
-            ],
-            [
-              518,
-              178
-            ],
-            [
-              499,
-              214
-            ],
-            [
-              504,
-              232
-            ]
+            [486, 257],
+            [459, 253],
+            [453, 217],
+            [469, 171],
+            [495, 152],
+            [522, 156],
+            [518, 178],
+            [499, 214],
+            [504, 232]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[3]"
+            "ice_golem"
           ]
         },
         {
           "color": "#ff1532ff",
           "coords": [
-            [
-              568,
-              231
-            ],
-            [
-              543,
-              246
-            ],
-            [
-              559,
-              275
-            ],
-            [
-              590,
-              266
-            ]
+            [568, 231],
+            [543, 246],
+            [559, 275],
+            [590, 266]
           ],
           "mobs": [
-            "bestiaryData.frostbite_fortress.snow_plains[4]"
+            "ogre_snow"
           ]
         }
       ]
@@ -1805,194 +965,63 @@
         {
           "color": "#ffae15ff",
           "coords": [
-            [
-              116,
-              480
-            ],
-            [
-              118,
-              421
-            ],
-            [
-              160,
-              390
-            ],
-            [
-              190,
-              355
-            ],
-            [
-              141,
-              364
-            ],
-            [
-              87,
-              375
-            ],
-            [
-              84,
-              432
-            ]
+            [116, 480],
+            [118, 421],
+            [160, 390],
+            [190, 355],
+            [141, 364],
+            [87, 375],
+            [84, 432]
           ],
           "mobs": [
-            "bestiaryData.sandwhisper_dunes.desert[3]"
+            "desert_pirate"
           ]
         },
         {
           "color": "#15ffaeff",
           "coords": [
-            [
-              240,
-              562
-            ],
-            [
-              220,
-              520
-            ],
-            [
-              218,
-              480
-            ],
-            [
-              190,
-              488
-            ],
-            [
-              190,
-              625
-            ],
-            [
-              180,
-              656
-            ],
-            [
-              220,
-              680
-            ],
-            [
-              267,
-              632
-            ],
-            [
-              307,
-              640
-            ],
-            [
-              326,
-              680
-            ],
-            [
-              350,
-              678
-            ],
-            [
-              365,
-              625
-            ]
+            [240, 562],
+            [220, 520],
+            [218, 480],
+            [190, 488],
+            [190, 625],
+            [180, 656],
+            [220, 680],
+            [267, 632],
+            [307, 640],
+            [326, 680],
+            [350, 678],
+            [365, 625]
           ],
           "mobs": [
-            "bestiaryData.sandwhisper_dunes.desert[0]",
-            "bestiaryData.sandwhisper_dunes.desert[1]"
+            "flametooth",
+            "sand_bird"
           ]
         },
         {
           "color": "#ff15d4ff",
           "coords": [
-            [
-              330,
-              560
-            ],
-            [
-              282,
-              480
-            ],
-            [
-              285,
-              411
-            ],
-            [
-              209,
-              470
-            ],
-            [
-              253,
-              511
-            ],
-            [
-              287,
-              563
-            ]
+            [330, 560],
+            [282, 480],
+            [285, 411],
+            [209, 470],
+            [253, 511],
+            [287, 563]
           ],
           "mobs": [
-            "bestiaryData.sandwhisper_dunes.desert[2]"
-          ]
-        },
-        {
-          "color": "#ff15d4ff",
-          "coords": [
-            [
-              330,
-              560
-            ],
-            [
-              282,
-              480
-            ],
-            [
-              246,
-              475
-            ],
-            [
-              250,
-              448
-            ],
-            [
-              283,
-              455
-            ],
-            [
-              285,
-              411
-            ],
-            [
-              209,
-              470
-            ],
-            [
-              253,
-              511
-            ],
-            [
-              287,
-              563
-            ]
-          ],
-          "mobs": [
-            "bestiaryData.sandwhisper_dunes.desert[2]"
+            "cactus"
           ]
         },
         {
           "color": "#4c00ffff",
           "coords": [
-            [
-              282,
-              480
-            ],
-            [
-              246,
-              475
-            ],
-            [
-              250,
-              448
-            ],
-            [
-              283,
-              455
-            ]
+            [282, 480],
+            [246, 475],
+            [250, 448],
+            [283, 455]
           ],
           "mobs": [
-            "bestiaryData.sandwhisper_dunes.desert[4]"
+            "ogre_desert"
           ]
         }
       ]
