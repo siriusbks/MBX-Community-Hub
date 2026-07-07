@@ -11,7 +11,7 @@ import { NAV_LINKS } from "@const/nav"
 interface ServerStatus {
   online: boolean
   players?: {
-    online: number
+    now: number
     max: number
   }
 }
@@ -48,7 +48,7 @@ export function Home() {
 
     async function loadStatus() {
       try {
-        const res = await fetch("https://api.mcsrvstat.us/3/play.minebox.co")
+        const res = await fetch("https://mcapi.us/server/status?ip=play.minebox.co")
         if (!res.ok) throw new Error("Failed to fetch server status")
         const data: ServerStatus = await res.json()
         if (!cancelled) setStatus(data)
@@ -67,7 +67,7 @@ export function Home() {
 
   const playersLabel =
     status?.online && status.players
-      ? `${status.players.online} Players Online`
+      ? `${status.players.now} Players Online`
       : status && !status.online
         ? "Server Offline"
         : "??? Players Online"
