@@ -1,17 +1,8 @@
 import React from "react"
 import { Button } from "@ui/button"
 import {
-  BookOpen,
   GlobeIcon,
-  Map,
-  Box,
-  type LucideIcon,
   InfoIcon,
-  Sailboat,
-  PawPrintIcon,
-  SwordsIcon,
-  ShapesIcon,
-  VoteIcon,
   SquarePen,
 } from "lucide-react"
 import { LevelBadge } from "@const/levels"
@@ -37,157 +28,9 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
 import { Input } from "./ui/input"
 
-type NavDropdownItem = {
-  id: string
-  to: string
-  icon: LucideIcon
-  label: string
-  desc: string
-  badge?: string
-}
-
-type NavDropdown = {
-  id: string
-  dropdown: true
-  icon: LucideIcon
-  label: string
-  items: NavDropdownItem[]
-}
-type NavLink = {
-  id: string
-  to: string
-  icon: LucideIcon
-  label: string
-  desc: string
-  matchPrefix?: string
-}
-
-type NavItem = NavLink | NavDropdown
-
-export const NAV_LINKS: NavItem[] = [
-  {
-    id: "maps",
-    to: "/maps",
-    icon: Map,
-    label: "Maps",
-    desc: "Explore the world of Minebox",
-    matchPrefix: "/maps",
-  },
-  {
-    id: "codex",
-    dropdown: true,
-    icon: BookOpen,
-    label: "Codex",
-    items: [
-      {
-        id: "items",
-        to: "/items",
-        icon: ShapesIcon,
-        label: "Items",
-        desc: "Browse all items in the game",
-      },
-      {
-        id: "bestiary",
-        to: "/bestiary",
-        icon: PawPrintIcon,
-        label: "Bestiary",
-        desc: "Discover all creatures and monsters",
-      },
-      {
-        id: "ships",
-        to: "/ships",
-        icon: Sailboat,
-        label: "Ships",
-        desc: "Explore the seas and discover new ships",
-      },
-      {
-        id: "classes",
-        to: "/classes",
-        icon: SwordsIcon,
-        label: "Classes",
-        desc: "Learn about different character classes",
-      },
-    ],
-  },
-  {
-    id: "tools",
-    dropdown: true,
-    icon: BookOpen,
-    label: "Tools",
-    items: [
-      {
-        id: "equipment",
-        to: "/tools/equipment-builder",
-        icon: Map,
-        label: "Equpment Builder",
-        desc: "Build and customize your equipment",
-        badge: "Soon",
-      },
-      {
-        id: "collections",
-        to: "/tools/collections",
-        icon: Map,
-        label: "Collections",
-        desc: "Manage your item collections",
-      },
-    ],
-  },
-  {
-    id: "market",
-    dropdown: true,
-    icon: BookOpen,
-    label: "Market",
-    items: [
-      {
-        id: "action-house",
-        to: "/market/action-house",
-        icon: Map,
-        label: "Action House",
-        desc: "Buy and sell items in the action house",
-      },
-      {
-        id: "bazaar",
-        to: "/market/bazaar",
-        icon: Map,
-        label: "Bazaar",
-        desc: "Trade items with other players",
-      },
-      {
-        id: "gem-exchange",
-        to: "/market/gem-exchange",
-        icon: Map,
-        label: "Gem Exchange",
-        desc: "Exchange gems for various items",
-      },
-    ],
-  },
-  {
-    id: "community",
-    to: "/community",
-    icon: Box,
-    label: "Community",
-    desc: "Connect with the Minebox community",
-  },
-  {
-    id: "profile",
-    to: "/profile",
-    icon: Map,
-    label: "Profile",
-    desc: "View and edit your profile",
-    matchPrefix: "/profile",
-  },
-  {
-    id: "votes",
-    to: "/votes",
-    icon: VoteIcon,
-    label: "Votes",
-    desc: "Vote for your favorite features and content",
-    
-  },
-]
+import { NAV_LINKS, type NavItem, type NavDropdown } from "@const/nav"
 
 export const Navbar = () => {
-  const [hoverOpen, setHoverOpen] = React.useState<string | null>(null)
   const [nick, setNick] = React.useState<string>("")
   const [storedNick, setStoredNick] = React.useState<string | null>(null)
   const [playerId, setPlayerId] = React.useState<string | null>(null)

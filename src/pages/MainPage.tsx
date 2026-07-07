@@ -6,7 +6,7 @@ import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { NAV_LINKS } from "@components/Navbar"
+import { NAV_LINKS } from "@const/nav"
 
 interface ServerStatus {
   online: boolean
