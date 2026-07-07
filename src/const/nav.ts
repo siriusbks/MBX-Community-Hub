@@ -8,6 +8,14 @@ import {
   SwordsIcon,
   ShapesIcon,
   VoteIcon,
+  Wrench,
+  Anvil,
+  Archive,
+  Store,
+  Gavel,
+  Tent,
+  Gem,
+  User,
 } from "lucide-react"
 
 export type NavDropdownItem = {
@@ -86,21 +94,21 @@ export const NAV_LINKS: NavItem[] = [
   {
     id: "tools",
     dropdown: true,
-    icon: BookOpen,
+    icon: Wrench,
     label: "Tools",
     items: [
       {
         id: "equipment",
         to: "/tools/equipment-builder",
-        icon: Map,
-        label: "Equpment Builder",
+        icon: Anvil,
+        label: "Equipment Builder",
         desc: "Build and customize your equipment",
         badge: "Soon",
       },
       {
         id: "collections",
         to: "/tools/collections",
-        icon: Map,
+        icon: Archive,
         label: "Collections",
         desc: "Manage your item collections",
       },
@@ -109,27 +117,27 @@ export const NAV_LINKS: NavItem[] = [
   {
     id: "market",
     dropdown: true,
-    icon: BookOpen,
+    icon: Store,
     label: "Market",
     items: [
       {
         id: "action-house",
         to: "/market/action-house",
-        icon: Map,
+        icon: Gavel,
         label: "Action House",
         desc: "Buy and sell items in the action house",
       },
       {
         id: "bazaar",
         to: "/market/bazaar",
-        icon: Map,
+        icon: Tent,
         label: "Bazaar",
         desc: "Trade items with other players",
       },
       {
         id: "gem-exchange",
         to: "/market/gem-exchange",
-        icon: Map,
+        icon: Gem,
         label: "Gem Exchange",
         desc: "Exchange gems for various items",
       },
@@ -145,7 +153,7 @@ export const NAV_LINKS: NavItem[] = [
   {
     id: "profile",
     to: "/profile",
-    icon: Map,
+    icon: User,
     label: "Profile",
     desc: "View and edit your profile",
     matchPrefix: "/profile",
