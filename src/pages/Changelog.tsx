@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { Button } from "@ui/button"
+import ReactMarkdown from "react-markdown"
 
 export default function Changelog() {
     //const { t } = useTranslation()
@@ -57,8 +58,8 @@ export default function Changelog() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="whitespace-pre-wrap text-sm text-foreground/90 font-light leading-relaxed">
-                                    {log.body}
+                                <div className="text-sm text-foreground/90 font-light leading-relaxed [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:mb-4 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-3 [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:mt-5 [&>h3]:mb-2 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4 [&>ol]:list-decimal [&>ol]:ml-6 [&>ol]:mb-4 [&>li]:mb-1 [&>strong]:font-semibold [&>a]:text-primary [&>a]:underline [&>blockquote]:border-l-4 [&>blockquote]:border-primary/50 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-muted-foreground [&>code]:bg-muted [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded-md [&>pre]:bg-muted/50 [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:overflow-x-auto [&>pre>code]:bg-transparent [&>pre>code]:p-0">
+                                    <ReactMarkdown>{log.body}</ReactMarkdown>
                                 </div>
                             </Card>
                         ))}
