@@ -147,6 +147,76 @@ function BestiaryPolygon({ positions, color, zoneName, mobs }: {
   );
 }
 
+const REGION_COLORS = [
+  '#4ade80', '#60a5fa', '#f97316', '#a78bfa',
+  '#f43f5e', '#facc15', '#22d3ee', '#fb923c',
+];
+
+function RegionPolygon({ positions, color, label }: {
+  positions: [number, number][];
+  color: string;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.5 : 0.15,
+        weight: hovered ? 3 : 1.5,
+        opacity: hovered ? 1 : 0.7,
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Tooltip sticky direction="center">
+        <span style={{ color, fontWeight: "bold" }}>{label}</span>
+      </Tooltip>
+    </Polygon>
+  );
+}
+
+function BestiaryPolygon({ positions, color, zoneName, mobs }: {
+  positions: [number, number][];
+  color: string;
+  zoneName: string;
+  mobs: string[];
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Polygon
+      positions={positions}
+      pathOptions={{
+        color,
+        fillColor: color,
+        fillOpacity: hovered ? 0.55 : 0.25,
+        weight: hovered ? 3 : 2,
+        opacity: hovered ? 1 : 0.85,
+        dashArray: "6 4",
+      }}
+      eventHandlers={{
+        mouseover: () => setHovered(true),
+        mouseout: () => setHovered(false),
+      }}
+    >
+      <Popup>
+        <div className="text-sm min-w-[140px]">
+          <p className="font-bold mb-1" style={{ color }}>{zoneName}</p>
+          <ul className="text-xs space-y-0.5 list-disc list-inside">
+            {mobs.map((mob, i) => (
+              <li key={i}>{mob}</li>
+            ))}
+          </ul>
+        </div>
+      </Popup>
+    </Polygon>
+  );
+}
+
 export function MapPreview() {
   type BestiaryCreature = {
     id: string
@@ -228,6 +298,22 @@ export function MapPreview() {
     [0, 0],
     [height, width],
   ]
+
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_region.json')
+      .then((r) => r.json())
+      .then((json) => setRegionsData(json[mapId] ?? null))
+      .catch((e) => console.error('Failed to load region data', e));
+  }, [mapId]);
+  
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_bestiary_region.json')
+      .then((r) => r.json())
+      .then((json) => setBestiaryZonesData(json))
+      .catch((e) => console.error('Failed to load bestairy zones', e));
+  }, []);
 
   useEffect(() => {
 	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
