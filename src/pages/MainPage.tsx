@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { NAV_LINKS } from "@const/nav"
 
+
+
 interface ServerStatus {
   online: boolean
   players?: {

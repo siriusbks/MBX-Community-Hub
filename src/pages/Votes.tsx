@@ -157,7 +157,7 @@ export function VotePage() {
                 </Alert>
             )}
 
-            <span className="flex flex-row gap-2">
+            <span className="flex grid grid-cols-3 gap-2">
                 {Object.entries(votes).map(([key, site]) => {
                     const nextAvailableRaw = cooldowns[key];
                     const nextAvailable = nextAvailableRaw ? new Date(nextAvailableRaw).getTime() : null;
@@ -165,7 +165,7 @@ export function VotePage() {
                     const remainingMs = nextAvailable ? nextAvailable - now : 0;
 
                     return (
-                        <Card key={key} className={`flex flex-col justify-center gap-2 p-4 w-full ${isReady ? "" : "opacity-70"}`}>
+                        <Card key={key} className={`flex flex-col justify-center gap-2 p-4 w-full ${isReady ? "" : "saturate-50 opacity-50"}`}>
                             <p className="flex items-center gap-1 uppercase text-[1rem] bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00]">
                                 {site.Name}
                             </p>
@@ -185,7 +185,7 @@ export function VotePage() {
                             {site.DailyResetTZ && (
                                 <span className="text-xs flex flex-row text-center text-muted-foreground w-full justify-between">
                                     <p>Reset at:</p>
-                                    <p>{getDailyResetInLocalTime(site.DailyResetTZ)}</p>
+                                    <p>{getDailyResetInLocalTime(site.DailyResetTZ)} (Local Time)</p>
                                 </span>
                             )}
 
