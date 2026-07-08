@@ -1,9 +1,10 @@
 import { Card } from "@ui/card"
 import { LevelBadge } from "@const/levels"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
+import { useTranslation } from "react-i18next";
 
 import { ImageOverlay, MapContainer, Marker, Tooltip } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
@@ -40,9 +41,23 @@ const mapsConfig: Record<
   },
   island_home: {
     image: "/media/maps/home_island_map.png",
-    width: 528,
-    height: 528,
-    referencePoint: { x: 56, y: 469 },
+    width: 320,
+    height: 320,
+    referencePoint: { x: 34, y: 284 },
+    zoneKey: "",
+  },
+  island_nether: {
+    image: "/media/maps/island_nether_map.png",
+    width: 160,
+    height: 176,
+    referencePoint: { x: 17, y: 143 },
+    zoneKey: "",
+  },
+  island_end: {
+    image: "/media/maps/island_end_map.png",
+    width: 160,
+    height: 176,
+    referencePoint: { x: 17, y: 143 },
     zoneKey: "",
   },
   island_tropical: {
@@ -129,7 +144,9 @@ export function MapPreview() {
 
   const params = useParams()
   const mapId = params["*"] ?? ""
+    const { t, i18n } = useTranslation("maps");
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
+  const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
     Record<string, boolean>
   >({})
@@ -171,6 +188,13 @@ export function MapPreview() {
       .then((r) => r.json())
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
       .catch((e) => console.error("Failed to load map or harvestable data", e))
+  }, [])
+
+  useEffect(() => {
+    fetch("/assets/data/maps.json")
+      .then((r) => r.json())
+      .then((mapsJson) => setMapsData(mapsJson))
+      .catch((e) => console.error("Failed to load maps.json data", e))
   }, [])
 
   useEffect(() => {
@@ -259,6 +283,7 @@ export function MapPreview() {
   }
 
   const [resourceMarkers, setResourceMarkers] = useState<any[]>([])
+  const [mapsJsonMarkers, setMapsJsonMarkers] = useState<any[]>([])
   const [markerIconUrls, setMarkerIconUrls] = useState<Record<string, string>>(
     {}
   )
@@ -295,10 +320,54 @@ export function MapPreview() {
     setResourceMarkers(mapped)
   }, [harvestablesData, mapId, referencePoint])
 
+  // --- Additional categories loaded from maps.json (treasure, and any future groups) ---
+  useEffect(() => {
+    if (!mapsData) return
+    const serverData = mapsData?.[mapId]
+    if (!serverData) {
+      setMapsJsonMarkers([])
+      return
+    }
+
+    const points: Array<{ group: string; cat: string; x: number; z: number }> =
+      []
+    Object.entries(serverData).forEach(([group, itemsObj]: any) => {
+      Object.entries(itemsObj as Record<string, string[]>).forEach(
+        ([itemId, arr]) => {
+          arr.forEach((s) => {
+            const parts = s.split(";")
+            if (parts.length >= 3) {
+              const x = Number(parts[0])
+              const y = Number(parts[1])
+              const z = Number(parts[2])
+              if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
+                points.push({ group, cat: itemId, x, z })
+              }
+            }
+          })
+        }
+      )
+    })
+
+    const mapped = points.map((p) => ({
+      ...p,
+      px: referencePoint.x + p.x,
+      py: referencePoint.y - p.z,
+    }))
+
+    setMapsJsonMarkers(mapped)
+  }, [mapsData, mapId, referencePoint])
+
+  // Combined markers from harvestables.json + maps.json
+  const allMarkers = useMemo(
+    () => [...resourceMarkers, ...mapsJsonMarkers],
+    [resourceMarkers, mapsJsonMarkers]
+  )
+
   useEffect(() => {
     let canceled = false
     const uniqueCategories = Array.from(
-      new Set(resourceMarkers.map((m) => m.cat as string))
+      new Set(allMarkers.map((m) => m.cat as string))
     )
 
     if (uniqueCategories.length === 0) {
@@ -328,7 +397,7 @@ export function MapPreview() {
     return () => {
       canceled = true
     }
-  }, [resourceMarkers])
+  }, [allMarkers])
 
   const toggleResourceVisibility = (resourceId: string) => {
     setHiddenResources((prev) => {
@@ -366,7 +435,7 @@ export function MapPreview() {
               attributionControl={false}
             >
               <ImageOverlay url={image} bounds={imageBounds} />
-              {resourceMarkers
+              {allMarkers
                 .filter((m) => !hiddenResources[m.cat])
                 .map((m, i) => (
                   <Marker
@@ -396,6 +465,11 @@ export function MapPreview() {
                             </p>{" "}
                             {m.x}
                             <span />{" "}
+                            <p className="dwadawdad font-normal text-muted-foreground">
+                              y:
+                            </p>{" "}
+                            {m.y}
+                            <span />{" "}
                             <p className="font-normal text-muted-foreground">
                               z:
                             </p>{" "}
@@ -422,7 +496,7 @@ export function MapPreview() {
               <SelectGroup>
                 {Object.entries(mapsConfig).map(([key, item]) => (
                   <SelectItem key={key} value={key}>
-                    {key}
+                    {t(`maps.island.${key}`)}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -500,8 +574,47 @@ export function MapPreview() {
                 })
               })()
             ) : (
-              <div className="text-xs text-muted-foreground">No data</div>
+              <></>
             )}
+
+            {/* Additional categories loaded from maps.json (treasure, and any future groups) */}
+            {mapsData?.[mapId] &&
+              Object.entries(mapsData[mapId]).map(([group, itemsObj]: any) => (
+                <span key={group} className="w-full px-2">
+                  <p className="font-bold text-primary uppercase">{group}</p>
+                  <div className="grid grid-cols-4 gap-2">
+                    {Object.keys(itemsObj).map((id) => {
+                      const isHidden = Boolean(hiddenResources[id])
+                      return (
+                        <div
+                          key={id}
+                          onClick={() => toggleResourceVisibility(id)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault()
+                              toggleResourceVisibility(id)
+                            }
+                          }}
+                          className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
+                              ? "bg-red-500/40"
+                              : "bg-transparent hover:bg-accent/40"
+                            }`}
+                        >
+                          <ItemImage
+                            itemId={id}
+                            className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                          />
+                          <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
+                            {FindItemName({ itemId: id })}
+                          </p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </span>
+              ))}
           </div>
 
           {/* Settings */}
