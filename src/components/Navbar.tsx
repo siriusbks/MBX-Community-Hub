@@ -130,7 +130,7 @@ export const Navbar = () => {
     <nav className="z-9999 w-full border-b bg-linear-to-b from-secondary-lighter to-secondary minebox-shadow backdrop-blur-sm">
       <div className="mx-auto flex items-center px-4 py-1">
         <Link to="/" className="text-lg font-bold text-primary">
-          <img src="/media/logo.png" className="size-12" />
+          <img src="/media/logo.png" className="w-24 h-12" />
         </Link>
 
         <span className="mr-auto ml-4 flex flex-row gap-8 text-xs">
