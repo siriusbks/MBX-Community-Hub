@@ -1,7 +1,7 @@
 import { Card } from "@ui/card"
 import { LevelBadge } from "@const/levels"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
 
@@ -10,6 +10,15 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
 import { BestiaryItem } from "@components/minebox/bestiary"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select"
+
 
 const mapsConfig: Record<
   string,
@@ -133,6 +142,11 @@ export function MapPreview() {
   const [insectsData, setInsectsData] = useState<Insect[] | null>(null)
   const [isInsectsLoading, setIsInsectsLoading] = useState(false)
   const [insectsError, setInsectsError] = useState<string | null>(null)
+
+  const navigate = useNavigate()
+  const handleValueChange = (value: string) => {
+    navigate(`/maps/${value}`)
+  }
 
   // --- MAP CONFIG ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
@@ -259,7 +273,7 @@ export function MapPreview() {
     const points: Array<{ cat: string; item: string; x: number; z: number }> =
       []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ;(arr as string[]).forEach((s) => {
+      ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
         if (parts.length >= 4) {
           const x = Number(parts[1])
@@ -292,7 +306,7 @@ export function MapPreview() {
       return
     }
 
-    ;(async () => {
+    ; (async () => {
       try {
         const resolvedEntries = await Promise.all(
           uniqueCategories.map(async (cat) => {
@@ -398,10 +412,22 @@ export function MapPreview() {
 
         {/* Lists */}
         <Card className="h-[80vh] w-1/4 gap-0 py-0">
-          {/* Map Change */}
-          <Card className="from-secondary-dark w-full to-secondary p-2 py-3">
-            <p className="text-md text-primary uppercase">{params["*"]}</p>
-          </Card>
+
+
+          <Select value={params["*"]} onValueChange={handleValueChange}>
+            <SelectTrigger className="w-full  text-primary uppercase minebox-shadow bg-linear-to-b from-secondary-dark w-full to-secondary !p-2 !py-5">
+              <SelectValue className="text-md text-primary uppercase" placeholder="Wybierz mapę" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {Object.entries(mapsConfig).map(([key, item]) => (
+                  <SelectItem key={key} value={key}>
+                    {key}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
 
           {/* Resources */}
           <div className="custom-scrollbar my-2 h-full w-full scroll-fade overflow-x-hidden overflow-y-auto px-2">
@@ -445,11 +471,10 @@ export function MapPreview() {
                                   toggleResourceVisibility(id)
                                 }
                               }}
-                              className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
-                                isHidden
+                              className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
                                   ? "bg-red-500/40"
                                   : "bg-transparent hover:bg-accent/40"
-                              }`}
+                                }`}
                             >
                               <ItemImage
                                 itemId={id}
