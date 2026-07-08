@@ -10,6 +10,8 @@ import { Badge } from "@ui/badge"
 import { useLocation } from "react-router-dom";
 import { PageTitle } from "@components/layout/title";
 import { Card } from "@components/ui/card";
+import { Skeleton } from "@components/ui/skeleton"
+import { useTranslation } from "react-i18next"
 
 interface VoteSite {
     Name: string;
@@ -71,6 +73,7 @@ function getDailyResetInLocalTime(tz: string): string {
 
 export function VotePage() {
     const location = useLocation();
+  const { t } = useTranslation("votes")
 
     const [votes, setVotes] = useState<VotesList | null>(null);
     const [cooldowns, setCooldowns] = useState<CooldownMap>({});
@@ -105,7 +108,6 @@ export function VotePage() {
                         const cdData: CooldownMap = await cdRes.json();
                         if (!cancelled) setCooldowns(cdData);
                     }
-                    // Jeśli 404 (brak historii głosów) - po prostu zostają puste cooldowny
                 }
             } catch (e) {
                 if (!cancelled) setError(e instanceof Error ? e.message : "Wystąpił nieznany błąd");
@@ -122,7 +124,20 @@ export function VotePage() {
         return (
             <div className="py-auto relative flex flex-col page-container">
                 <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
-                <p className="text-center text-muted-foreground">Ładowanie...</p>
+                
+            <span className="flex grid grid-cols-3 gap-2">
+                {}
+                <Skeleton className="">
+                    <Skeleton className="w-1/2 h-6 m-4"/>
+                    <Skeleton className="w-1/4 h-4 m-2 mx-4"/>
+                    <span className="flex flex-row justify-between">
+
+                    <Skeleton className="w-1/4 h-4 mx-4"/>
+                    <Skeleton className="w-1/6 h-4 mx-4"/>
+                    </span>
+                    <Skeleton className=" h-8 m-4"/>
+                </Skeleton>
+                </span>
             </div>
         );
     }
@@ -133,8 +148,8 @@ export function VotePage() {
                 <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
                 <Alert variant="destructive">
                     <InfoIcon className="h-4 w-4" />
-                    <AlertTitle>Błąd</AlertTitle>
-                    <AlertDescription>{error ?? "Nie udało się pobrać danych"}</AlertDescription>
+                    <AlertTitle>{t("votes.error")}</AlertTitle>
+                    <AlertDescription>{error ?? t("votes.error.loadError")}</AlertDescription>
                 </Alert>
             </div>
         );
@@ -150,14 +165,14 @@ export function VotePage() {
             {!nick && (
                 <Alert className="mb-4">
                     <InfoIcon className="h-4 w-4" />
-                    <AlertTitle>Brak nicku</AlertTitle>
+                    <AlertTitle>{t("votes.error")}</AlertTitle>
                     <AlertDescription>
-                        Ustaw swój nick, aby śledzić cooldowny na głosowania.
+                        {t("votes.error.noNickname")}
                     </AlertDescription>
                 </Alert>
             )}
 
-            <span className="flex grid grid-cols-3 gap-2">
+            <span className="flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {Object.entries(votes).map(([key, site]) => {
                     const nextAvailableRaw = cooldowns[key];
                     const nextAvailable = nextAvailableRaw ? new Date(nextAvailableRaw).getTime() : null;
@@ -173,26 +188,26 @@ export function VotePage() {
                             <Badge className={isReady ? "bg-emerald-600 text-white flex items-center gap-1" : "flex items-center gap-1"}>
                                 {isReady ? (
                                     <>
-                                        Ready to Vote
+                                        {t("votes.readyToVote")}
                                     </>
                                 ) : (
                                     <>
-                                        Next vote in {formatRemaining(remainingMs)}
+                                        {t("votes.nextVoteTime")} {formatRemaining(remainingMs)}
                                     </>
                                 )}
                             </Badge>
 
                             {site.DailyResetTZ && (
                                 <span className="text-xs flex flex-row text-center text-muted-foreground w-full justify-between">
-                                    <p>Reset at:</p>
-                                    <p>{getDailyResetInLocalTime(site.DailyResetTZ)} (Local Time)</p>
+                                    <p>{t("votes.resetAt")}:</p>
+                                    <p>{getDailyResetInLocalTime(site.DailyResetTZ)} ({t("votes.localTime")})</p>
                                 </span>
                             )}
 
                             {site.MinutesBetweenVotes > 0 && (
                                 <span className="text-xs flex flex-row text-center text-muted-foreground w-full justify-between">
-                                    <p>Reset after:</p>
-                                    <p>{site.MinutesBetweenVotes} Minutes</p>
+                                    <p>{t("votes.resetAfter")}:</p>
+                                    <p>{site.MinutesBetweenVotes} {t("votes.minutes")}</p>
                                 </span>
                             )}
 
@@ -200,7 +215,7 @@ export function VotePage() {
                                 disabled={!isReady}
                                 onClick={() => window.open(site.Url, "_blank", "noopener,noreferrer")}
                             >
-                                Vote Now
+                                {t("votes.VoteNow")}
                             </Button>
                         </Card>
                     );

@@ -1,0 +1,16 @@
+{
+    "votes.title": "Vote Page",
+    "votes.desc": "Vote on different international websites to support Minebox and get rewards!",
+    "votes.readyToVote": "Ready to Vote",
+    "votes.nextVoteTime": "Next Vote in",
+    "votes.resetAt": "Reset at",
+    "votes.resetAfter": "Reset after",
+    "votes.VoteNow": "Vote Now!",
+    "votes.localTime": "Local Time",
+    "votes.minutes": "minutes",
+
+
+    "votes.error": "Error",
+    "votes.error.loadError": "Failed to load votes. Please try again later.",
+    "votes.error.noNickname": "Nickname not set. Please set your nickname in the profile settings to vote."
+}
