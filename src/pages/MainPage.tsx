@@ -79,14 +79,16 @@ export function Home() {
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
 
       {/* Contribution Alert */}
-      <Alert variant="default" className="flex items-center justify-center">
+      <Alert variant="default" className="flex items-center justify-center gap-0 sm:gap-4 flex-col sm:flex-row">
+        <span className="flex flex-row w-full sm:w-fit">
         <span className="items-center justify-center">
           <InfoIcon className="mr-1 size-4" />
         </span>
-        <span className="flex w-full flex-row gap-4">
-          <AlertTitle className="flex items-center justify-center">
+          <p className="w-fit px-2flex items-center justify-center break-none">
             We need your help!
-          </AlertTitle>
+          </p>
+          </span>
+        <span className="flex w-full sm:flex-1 flex-row gap-4 justify-between">
           <AlertDescription className="mr-auto flex items-center justify-center">
             Help translate MBX Community on Crowdin!
           </AlertDescription>
@@ -104,7 +106,7 @@ export function Home() {
         <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">
           {t("homepage.title")}
         </h2>
-        <h1 className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-6xl font-bold tracking-wider text-transparent drop-shadow-[0_4px_0_#5d3a00]">
+        <h1 className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-transparent drop-shadow-[0_4px_0_#5d3a00]">
           MBX COMMUNITY
         </h1>
         <p className="mt-2 max-w-xl text-center text-sm font-light">
@@ -131,7 +133,7 @@ export function Home() {
         <span className="mb-4 text-xs leading-none">
           Website Features Description
         </span>
-        <div className="grid w-full grid-cols-3 gap-2">
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
           {FEATURE_ITEMS.map(({ id, to, icon: Icon, label, desc, badge }) => (
             <Link key={id} to={to}>
               <Card className="group h-full gap-2 px-4">

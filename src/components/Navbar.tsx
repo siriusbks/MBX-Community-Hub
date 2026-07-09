@@ -3,6 +3,7 @@ import { Button } from "@ui/button"
 import {
   GlobeIcon,
   InfoIcon,
+  MenuIcon,
   SquarePen,
 } from "lucide-react"
 import { LevelBadge } from "@const/levels"
@@ -27,6 +28,17 @@ import {
 } from "@components/ui/popover"
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
 import { Input } from "./ui/input"
+
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@components/ui/sheet"
 
 import { NAV_LINKS, type NavItem, type NavDropdown } from "@const/nav"
 
@@ -127,72 +139,74 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="z-9999 w-full border-b bg-linear-to-b from-secondary-lighter to-secondary minebox-shadow backdrop-blur-sm">
+    <nav className="z-9997 w-full border-b bg-linear-to-b from-secondary-lighter to-secondary minebox-shadow backdrop-blur-sm">
       <div className="mx-auto flex items-center px-4 py-1">
         <Link to="/" className="text-lg font-bold text-primary">
           <img src="/media/logo.png" className="w-24 h-12" />
         </Link>
 
-        <span className="mr-auto ml-4 flex flex-row gap-8 text-xs">
-          <NavigationMenu className="z-[9999]" viewport={false}>
-            <NavigationMenuList>
-  {NAV_LINKS.map((link) => {
-    if (isDropdown(link)) {
-      return (
-        <NavigationMenuItem key={link.id}>
-          <NavigationMenuTrigger active={isActive(link)}>
-            <link.icon size={16} className="mr-2" /> {link.label}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-                        <ul className="flex w-48 max-w-64 flex-col">
-                          {link.items.map((sub) => {
-                            return (
-                              <ListItem
-                                key={sub.id}
-                                href={sub.to}
-                                className="flex w-full flex-row"
-                              >
-                                <span className="flex flex-row gap-2">
-                                  <sub.icon className="size-6" />
-                                  <span className="flex flex-col justify-center gap-0 leading-none">
-                                    <p className="flex flex-row items-center text-card-foreground">
-                                      {sub.label}
-                                    </p>
-                                    {sub.badge && (
-                                      <p className="text-[0.5rem] text-primary">
-                                        {sub.badge}
+        <span className="mr-4 lg:mr-auto ml-auto lg:ml-4 flex flex-row gap-8 text-xs">
+          <span className="hidden lg:flex">
+            <NavigationMenu className="z-[9999]" viewport={false}>
+              <NavigationMenuList>
+                {NAV_LINKS.map((link) => {
+                  if (isDropdown(link)) {
+                    return (
+                      <NavigationMenuItem key={link.id}>
+                        <NavigationMenuTrigger active={isActive(link)}>
+                          <link.icon size={16} className="mr-2" /> {link.label}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="flex w-48 max-w-64 flex-col">
+                            {link.items.map((sub) => {
+                              return (
+                                <ListItem
+                                  key={sub.id}
+                                  href={sub.to}
+                                  className="flex w-full flex-row"
+                                >
+                                  <span className="flex flex-row gap-2">
+                                    <sub.icon className="size-6" />
+                                    <span className="flex flex-col justify-center gap-0 leading-none">
+                                      <p className="flex flex-row items-center text-card-foreground">
+                                        {sub.label}
                                       </p>
-                                    )}
+                                      {sub.badge && (
+                                        <p className="text-[0.5rem] text-primary">
+                                          {sub.badge}
+                                        </p>
+                                      )}
+                                    </span>
                                   </span>
-                                </span>
-                              </ListItem>
-                            )
-                          })}
-                        </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      )
-    } else {
-      return (
-        <NavigationMenuItem key={link.id}>
-          <NavigationMenuLink
-            asChild
-            active={isActive(link)}
-            className={navigationMenuTriggerStyle()}
-          >
-            <Link to={link.to}>
-              <link.icon /> {link.label}
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      )
-    }
-  })}
-            </NavigationMenuList>
-          </NavigationMenu>
+                                </ListItem>
+                              )
+                            })}
+                          </ul>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    )
+                  } else {
+                    return (
+                      <NavigationMenuItem key={link.id}>
+                        <NavigationMenuLink
+                          asChild
+                          active={isActive(link)}
+                          className={navigationMenuTriggerStyle()}
+                        >
+                          <Link to={link.to}>
+                            <link.icon /> {link.label}
+                          </Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )
+                  }
+                })}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </span>
         </span>
 
-        <span className="flex items-center gap-2">
+        <span className=" items-center gap-2 flex">
           <Popover>
             <PopoverTrigger asChild>
               <button className="flex flex-row items-center justify-center gap-2 rounded-md p-1.5 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer outline-none">
@@ -371,6 +385,47 @@ export const Navbar = () => {
           <Button size="lg" className="tracking-wider ml-2"><GlobeIcon className="mt-0.5" />Login with Discord </Button>
 */}
           <LanguageSwitcher />
+
+          
+          <span className="flex lg:hidden ">
+            <Sheet>
+              <SheetTrigger><MenuIcon className="size-6" strokeWidth={3} /></SheetTrigger>
+              <SheetContent className="z-9999 from-secondary-lighter to-secondary pb-4" side="right">
+                <SheetHeader className="pt-2">
+                  <Link to="/" className="text-lg font-bold text-primary">
+                    <img src="/media/logo.png" className="w-1/2 mx-auto" />
+                  </Link>
+                </SheetHeader>
+                <span className="scroll-fade overflow-y-auto custom-scrollbar gap-2 flex flex-col px-4 pr-2 mr-2">
+
+                    {NAV_LINKS.map((link) => {
+                      if (isDropdown(link)) {
+                        return (
+                          <>
+                            {link.items.map((sub) => {
+                              return (
+                                <Link to={sub.to} className="group gap-2 flex w-full flex-row items-center justify-start bg-card rounded p-2 py-2">
+                                  <sub.icon strokeWidth={2.5} className="size-8" />
+                                  <p className="text-primary text-[0.9rem] uppercase leading-none text-center">{sub.label}</p>
+                                </Link>
+                              )
+                            })}
+
+                          </>
+                        )
+                      } else {
+                        return (
+                          <Link to={link.to} className="group gap-2 flex w-full flex-row items-center justify-start bg-card rounded p-2 py-2">
+                            <link.icon strokeWidth={2.5} className="size-8" />
+                            <p className="text-primary text-[0.9rem] uppercase leading-none text-center">{link.label}</p>
+                          </Link>
+                        )
+                      }
+                    })}
+                </span>
+              </SheetContent>
+            </Sheet>
+          </span>
         </span>
       </div>
     </nav>
