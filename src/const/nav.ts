@@ -103,7 +103,7 @@ export const NAV_LINKS: NavItem[] = [
         icon: Anvil,
         label: "Equipment Builder",
         desc: "Build and customize your equipment",
-        badge: "Soon",
+        badge: "BETA",
       },
       {
         id: "collections",

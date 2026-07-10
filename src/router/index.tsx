@@ -14,6 +14,7 @@ const ItemsCodex = lazy(() => import("@pages/Codex/ItemsCodex"));
 const BestiaryCodexPage = lazy(() => import( "@pages/Codex/BestiaryCodex"));
 const ClassCodexPage = lazy(() => import( "@pages/Codex/ClassCodex"));
 const ShipCodexPage  = lazy(() => import( "@pages/Codex/ShipCodex"));
+const EquipmentPage = lazy(() => import( "@pages/Tools/Equipment"))
 const CollectionsPage = lazy(() => import("@pages/Collections"));
 const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
@@ -32,6 +33,7 @@ export const AppRoutes: FC = () => {
             <Route path="/maps/*" element={<MapPreview />} />
 
             {/* Tools Tab */}
+            <Route path="/tools/equipment-builder" element={<EquipmentPage />} />
             <Route path="/tools/collections" element={<CollectionsPage />} />
 
             {/* Codex */}
