@@ -268,7 +268,23 @@ export function MapPreview() {
   ]
 
   useEffect(() => {
-    fetch("/assets/data/harvestables.json")
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_region.json')
+      .then((r) => r.json())
+      .then((json) => setRegionsData(json[mapId] ?? null))
+      .catch((e) => console.error('Failed to load region data', e));
+  }, [mapId]);
+  
+  useEffect(() => {
+	  // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
+    fetch('/assets/data/maps_bestiary_region.json')
+      .then((r) => r.json())
+      .then((json) => setBestiaryZonesData(json))
+      .catch((e) => console.error('Failed to load bestairy zones', e));
+  }, []);
+
+  useEffect(() => {
+    fetch('/assets/data/harvestables.json')
       .then((r) => r.json())
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
       .catch((e) => console.error("Failed to load map or harvestable data", e))
@@ -355,6 +371,31 @@ export function MapPreview() {
       controller.abort()
     }
   }, [mapId])
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch("https://mineboxadditions.bartier.me/bestiary", {
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error(`Bestiary names API error: ${r.status}`)
+        return r.json()
+      })
+      .then((data: any[]) => {
+        const map: Record<string, string> = {}
+        data.forEach((mob) => {
+          if (mob?.id) map[mob.id] = mob.name ?? mob.id
+        })
+        setMobNamesData(map)
+      })
+      .catch((e) => {
+        if (e?.name === "AbortError") return
+        console.error("Failed to load mob names", e)
+      })
+
+    return () => controller.abort()
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -538,26 +579,31 @@ export function MapPreview() {
 
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
-      <div className="flex h-[80vh] w-full flex-row gap-4">
+      <div className="flex h-80vh w-full flex-row gap-4">
         {/* Map */}
-        <span className="h-full w-3/4 rounded-xl">
+        <span className="minebox-shadow rounded-xl h-screen w-3/4">
           {!harvestablesData ? (
-            <div className="flex h-full items-center justify-center">
-              Loading map…
-            </div>
+          <div className="flex items-center justify-center h-full">Loading map…</div>
           ) : (
-            <MapContainer
-              crs={L.CRS.Simple}
-              bounds={imageBounds}
-              maxBounds={imageBounds}
-              style={{
-                height: "100%",
-                width: "100%",
-                imageRendering: "pixelated",
-                borderRadius: "0.5rem",
-                backgroundColor: "#00000000",
-              }}
-              attributionControl={false}
+          <MapContainer
+            crs={L.CRS.Simple}
+            bounds={imageBounds}
+            maxBounds={imageBounds}
+            style={{
+            height: "100%",
+            width: "100%",
+            imageRendering: "pixelated",
+            backgroundColor: "#0b1220",
+            }}
+            attributionControl={false}
+          >
+            <ImageOverlay url={image} bounds={imageBounds} />
+            {resourceMarkers.map((m, i) => (
+            <CircleMarker
+              key={`${m.cat}-${i}`}
+              center={[m.py, m.px]}
+              radius={6}
+              pathOptions={{ color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.9 }}
             >
               <ImageOverlay url={image} bounds={imageBounds} />
               {allMarkers
@@ -647,6 +693,7 @@ export function MapPreview() {
             </MapContainer>
           )}
         </span>
+
 
         {/* Lists */}
         <Card className="h-[80vh] w-1/4 gap-0 py-0">
