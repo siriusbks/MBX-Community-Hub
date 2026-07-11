@@ -109,6 +109,29 @@ const REGION_COLORS = [
   '#f43f5e', '#facc15', '#22d3ee', '#fb923c',
 ];
 
+// Shared CSS to strip Leaflet's default tooltip chrome (background, border,
+// forced nowrap sizing) so our own styled tooltip content controls layout.
+function LeafletTooltipStyleOverrides() {
+  return (
+    <style>{`
+      .leaflet-tooltip {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        white-space: normal !important;
+        max-width: none !important;
+      }
+      .leaflet-tooltip:before {
+        display: none !important;
+      }
+      .leaflet-tooltip-pane {
+        z-index: 650;
+      }
+    `}</style>
+  )
+}
+
 function RegionPolygon({ positions, color, label }: {
   positions: [number, number][];
   color: string;
@@ -131,7 +154,17 @@ function RegionPolygon({ positions, color, label }: {
       }}
     >
       <Tooltip sticky direction="center">
-        <span style={{ color, fontWeight: "bold" }}>{label}</span>
+        <div
+          className="rounded-md border-l-4  px-3 py-1.5  bg-linear-to-b from-card to-card-dark minebox-shadow"
+          style={{ borderLeftColor: color }}
+        >
+          <span className="text-sm font-bold tracking-wide text-primary">
+            <p className="text-xs text-muted-foreground">
+              Region
+            </p>
+            {label}
+          </span>
+        </div>
       </Tooltip>
     </Polygon>
   );
@@ -141,7 +174,7 @@ function BestiaryPolygon({ positions, color, zoneName, mobs }: {
   positions: [number, number][];
   color: string;
   zoneName: string;
-  mobs: string[];
+  mobs: { id: string; name: string; image: string }[];
 }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -161,11 +194,34 @@ function BestiaryPolygon({ positions, color, zoneName, mobs }: {
       }}
     >
       <Tooltip sticky direction="center">
-        <div className="text-sm min-w-[140px]">
-          <p className="font-bold mb-1" style={{ color }}>{zoneName}</p>
-          <ul className="text-xs space-y-0.5 list-disc list-inside">
-            {mobs.map((mob, i) => (
-              <li key={i}>{mob}</li>
+        <div
+          className="min-w-[160px] max-w-[240px] rounded-md border-l-6  px-3 py-2   bg-linear-to-b from-card to-card-dark minebox-shadow"
+          style={{ borderLeftColor: color }}
+        >
+          <p className="text-xs text-muted-foreground font-bold ">
+            Region
+          </p>
+          <p
+            className="text-sm font-bold tracking-wide font-bold text-primary"
+          >
+            {zoneName}
+          </p>
+          <ul className="space-y-1.5  mt-2">
+            {mobs.map((mob) => (
+              <li
+                key={mob.id}
+                className="flex items-center gap-1.5 text-xs text-neutral-200"
+              >
+                <img
+                  src={mob.image || "/media/missing.png"}
+                  alt={mob.name}
+                  loading="lazy"
+                  className="size-9 shrink-0 rounded object-cover"
+                />
+                <span className="flex flex-col gap-0 -space-y-0.5 leading-none">
+                  <p>{mob.name}</p>
+                </span>
+              </li>
             ))}
           </ul>
         </div>
@@ -219,9 +275,14 @@ export function MapPreview() {
     locations: InsectLocation[]
   }
 
+  type MobInfo = {
+    name: string
+    image: string
+  }
+
   const params = useParams()
   const mapId = params["*"] ?? ""
-    const { t, i18n } = useTranslation("maps");
+  const { t, i18n } = useTranslation("maps");
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
@@ -242,7 +303,7 @@ export function MapPreview() {
   const [showRegions, setShowRegions] = useState(false);
   const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
   const [showBestiary, setShowBestiary] = useState(false);
-  const [mobNamesData, setMobNamesData] = useState<Record<string, string>>({})
+  const [mobNamesData, setMobNamesData] = useState<Record<string, MobInfo>>({})
 
   const navigate = useNavigate()
   const handleValueChange = (value: string) => {
@@ -308,9 +369,15 @@ export function MapPreview() {
         return r.json()
       })
       .then((data: any[]) => {
-        const map: Record<string, string> = {}
+        const map: Record<string, MobInfo> = {}
         data.forEach((mob) => {
-          if (mob?.id) map[mob.id] = mob.name ?? mob.id
+          if (mob?.id) {
+            map[mob.id] = {
+              name: mob.name ?? mob.id,
+              // API returns raw base64 GIF data with no data-URI prefix
+              image: mob.image ? `data:image/gif;base64,${mob.image}` : "",
+            }
+          }
         })
         setMobNamesData(map)
       })
@@ -420,16 +487,17 @@ export function MapPreview() {
       setResourceMarkers([])
       return
     }
-    const points: Array<{ cat: string; item: string; x: number; z: number }> =
+    const points: Array<{ cat: string; item: string; x: number; y: number; z: number }> =
       []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
       ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
         if (parts.length >= 4) {
           const x = Number(parts[1])
+          const y = Number(parts[2])
           const z = Number(parts[3])
-          if (!Number.isNaN(x) && !Number.isNaN(z)) {
-            points.push({ cat, item: parts[0], x, z })
+          if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
+            points.push({ cat, item: parts[0], x, y, z })
           }
         }
       })
@@ -454,7 +522,7 @@ export function MapPreview() {
       return
     }
 
-    const points: Array<{ group: string; cat: string; x: number; z: number }> =
+    const points: Array<{ group: string; cat: string; x: number; y: number; z: number }> =
       []
     Object.entries(serverData).forEach(([group, itemsObj]: any) => {
       Object.entries(itemsObj as Record<string, string[]>).forEach(
@@ -466,7 +534,7 @@ export function MapPreview() {
               const y = Number(parts[1])
               const z = Number(parts[2])
               if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
-                points.push({ group, cat: itemId, x, z })
+                points.push({ group, cat: itemId, x, y, z })
               }
             }
           })
@@ -538,6 +606,7 @@ export function MapPreview() {
 
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
+      <LeafletTooltipStyleOverrides />
       <div className="flex h-[80vh] w-full flex-row gap-4">
         {/* Map */}
         <span className="h-full w-3/4 rounded-xl">
@@ -575,7 +644,7 @@ export function MapPreview() {
                     })}
                   >
                     <Tooltip direction="top" offset={[0, -8]} opacity={1}>
-                      <div className="flex min-w-32 flex-row items-center gap-1 text-xs">
+                      <div className="flex min-w-32 !w-max flex-row items-center gap-1 rounded-md px-2 py-1.5 text-xs bg-linear-to-b from-card to-card-dark minebox-shadow">
                         <ItemImage
                           itemId={m.cat}
                           className="aspect-square size-10"
@@ -585,19 +654,17 @@ export function MapPreview() {
                             {FindItemName({ itemId: m.cat })}
                           </p>
                           <p className="flex flex-row gap-1 text-xs font-bold">
-                            <p className="dwadawdad font-normal text-muted-foreground">
+                            <span className="font-normal text-muted-foreground">
                               x:
-                            </p>{" "}
+                            </span>{" "}
                             {m.x}
-                            <span />{" "}
-                            <p className="dwadawdad font-normal text-muted-foreground">
+                            <span className="font-normal text-muted-foreground">
                               y:
-                            </p>{" "}
+                            </span>{" "}
                             {m.y}
-                            <span />{" "}
-                            <p className="font-normal text-muted-foreground">
+                            <span className="font-normal text-muted-foreground">
                               z:
-                            </p>{" "}
+                            </span>{" "}
                             {m.z}
                           </p>
                         </span>
@@ -638,7 +705,11 @@ export function MapPreview() {
                         positions={positions}
                         color={zone.color}
                         zoneName={zoneName}
-                        mobs={(zone.mobs as string[]).map((id) => mobNamesData[id] ?? id)}
+                        mobs={(zone.mobs as string[]).map((id) => ({
+                          id,
+                          name: mobNamesData[id]?.name ?? id,
+                          image: mobNamesData[id]?.image ?? "",
+                        }))}
                       />
                     );
                   })
@@ -710,8 +781,8 @@ export function MapPreview() {
                                 }
                               }}
                               className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
-                                  ? "bg-red-500/40"
-                                  : "bg-transparent hover:bg-accent/40"
+                                ? "bg-red-500/40"
+                                : "bg-transparent hover:bg-accent/40"
                                 }`}
                             >
                               <ItemImage
@@ -762,8 +833,8 @@ export function MapPreview() {
                             }
                           }}
                           className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
-                              ? "bg-red-500/40"
-                              : "bg-transparent hover:bg-accent/40"
+                            ? "bg-red-500/40"
+                            : "bg-transparent hover:bg-accent/40"
                             }`}
                         >
                           <ItemImage
