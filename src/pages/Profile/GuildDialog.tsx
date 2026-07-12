@@ -4,6 +4,7 @@ import { ScrollArea } from "@ui/scroll-area";
 import { Badge } from "@ui/badge";
 import { Loader2, Users, Trophy, Info } from "lucide-react";
 import { LevelBadge } from "@const/levels";
+import { useTranslation } from 'react-i18next';
 
 interface GuildMember {
     username: string;
@@ -25,6 +26,8 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
     const [data, setData] = useState<GuildData | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const { t } = useTranslation('profile');
 
     const fetchGuildData = async () => {
         if (data) return; // Already fetched
@@ -78,14 +81,14 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
                                 <div className="bg-background/40 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm flex flex-col gap-1 items-center justify-center">
                                     <div className="flex items-center gap-2 text-muted-foreground">
                                         <Trophy className="h-4 w-4 text-yellow-500" />
-                                        <span className="text-xs font-medium uppercase tracking-wider">Total XP</span>
+                                        <span className="text-xs font-medium uppercase tracking-wider">{t('profile.guild.total_xp')}</span>
                                     </div>
                                     <span className="font-semibold">{data.xp.toLocaleString()}</span>
                                 </div>
                                 <div className="bg-background/40 backdrop-blur-md p-3 rounded-lg border border-white/5 shadow-sm flex flex-col gap-1 items-center justify-center">
                                     <div className="flex items-center gap-2 text-muted-foreground">
                                         <Users className="h-4 w-4 text-blue-500" />
-                                        <span className="text-xs font-medium uppercase tracking-wider">Members</span>
+                                        <span className="text-xs font-medium uppercase tracking-wider">{t('profile.guild.member_count')}</span>
                                     </div>
                                     <span className="font-semibold">{data.members.length}</span>
                                 </div>
@@ -93,8 +96,8 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
 
                             <div className="space-y-2">
                                 <h4 className="text-sm font-medium flex justify-between items-center text-muted-foreground">
-                                    Member List
-                                    <span className="text-xs">{data.members.filter(m => m.online).length} online</span>
+                                    {t('profile.guild.member_list')}
+                                    <span className="text-xs">{data.members.filter(m => m.online).length} {t('profile.guild.online')}</span>
                                 </h4>
                                 <ScrollArea className="h-[250px] rounded-md border border-white/5 bg-background/20 backdrop-blur-md p-2">
                                     <div className="flex flex-col gap-1">

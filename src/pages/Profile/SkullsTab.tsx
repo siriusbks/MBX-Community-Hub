@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { type PlayerData } from "../../types/profile";
 import { StatItem } from "@const/statsAndDamage";
 import { CorsIfDev } from "@components/utils/helper";
+import { useTranslation } from 'react-i18next';
 
 type Relic = {
     id: string;
@@ -15,6 +16,8 @@ type Relic = {
 export function SkullsTab({ data }: { data: PlayerData }) {
     const [relics, setRelics] = useState<Relic[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const { t } = useTranslation('profile');
 
     void data;
 

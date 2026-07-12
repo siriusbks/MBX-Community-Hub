@@ -5,8 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "@ui/select";
 const LANGUAGES = [
   { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'pl', label: 'Polski', flag: '🇵🇱' }
+  //{ code: 'es', label: 'Español', flag: '🇪🇸' },
+  //{ code: 'pl', label: 'Polski', flag: '🇵🇱' }
 ];
 
 export const LanguageSwitcher = () => {

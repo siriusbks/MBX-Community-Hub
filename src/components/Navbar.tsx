@@ -40,9 +40,10 @@ import {
   SheetTrigger,
 } from "@components/ui/sheet"
 
-import { NAV_LINKS, type NavItem, type NavDropdown } from "@const/nav"
+import { useNavLinks, type NavItem, type NavDropdown } from "@const/nav"
 
 export const Navbar = () => {
+  const NAV_LINKS = useNavLinks()
   const [nick, setNick] = React.useState<string>("")
   const [storedNick, setStoredNick] = React.useState<string | null>(null)
   const [playerId, setPlayerId] = React.useState<string | null>(null)

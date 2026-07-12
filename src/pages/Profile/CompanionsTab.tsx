@@ -4,6 +4,7 @@ import { Cat, Anchor } from "lucide-react";
 import { type PlayerData } from "../../types/profile";
 import { CorsIfDev } from '@components/utils/helper';
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 function CompanionImage({ itemId, type, className }: { itemId: string, type: 'pet' | 'mount', className?: string }) {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -30,13 +31,15 @@ function CompanionImage({ itemId, type, className }: { itemId: string, type: 'pe
 }
 
 export function CompanionsTab({ data }: { data: PlayerData }) {
+    const { t } = useTranslation('profile');
+
     if (!data.data?.COMPANIONS) return null;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card className="border-primary/10 bg-card/40">
                 <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2"><Cat className="w-4 h-4" /> Pets</CardTitle>
+                    <CardTitle className="text-sm flex items-center gap-2"><Cat className="w-4 h-4" /> {t('profile.companions.pets')}</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
@@ -73,7 +76,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
 
             <Card className="border-primary/10 bg-card/40">
                 <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2"><Anchor className="w-4 h-4" /> Mounts</CardTitle>
+                    <CardTitle className="text-sm flex items-center gap-2"><Anchor className="w-4 h-4" /> {t('profile.companions.mounts')}</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">

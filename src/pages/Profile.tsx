@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@ui/card"
 import { Skeleton } from "@ui/skeleton"
+import { useTranslation } from "react-i18next"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/tabs"
 import {
   Dialog,
@@ -50,6 +51,8 @@ export function ProfilePage() {
 
   const shareCardRef = useRef<HTMLDivElement>(null)
   const [isGenerating, setIsGenerating] = useState(false)
+
+  const { t } = useTranslation('profile');
 
   // Initial load: get nick from URL (?player=name) or localStorage
   useEffect(() => {
@@ -175,8 +178,8 @@ export function ProfilePage() {
     <div className="relative page-container flex flex-col gap-4 pb-12">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle
-        title="Profile"
-        description="View your Minebox statistics and progress"
+        title={t('profile.title')}
+        description={t('profile.description')}
       />
 
       {/* Hidden Share Card used for html-to-image */}
@@ -233,7 +236,7 @@ export function ProfilePage() {
                 <div className="min-w-[150px] space-y-0 rounded-lg border border-white/5 bg-background/30 p-3 text-xs text-muted-foreground shadow-sm backdrop-blur-md">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      PVP Rank
+                      {t('profile.pvp_rank')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       ...
@@ -241,7 +244,7 @@ export function ProfilePage() {
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      PVP Winrate
+                      {t('profile.pvp_winrate')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       ...
@@ -249,7 +252,7 @@ export function ProfilePage() {
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      PVP Streak
+                      {t('profile.pvp_streak')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       ...
@@ -262,7 +265,7 @@ export function ProfilePage() {
                 <div className="min-w-[150px] space-y-0 rounded-lg border border-white/5 bg-background/30 p-3 text-xs text-muted-foreground shadow-sm backdrop-blur-md">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      First Joined
+                      {t('profile.first_joined')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       {new Date(data.first_connection).toLocaleDateString()}
@@ -271,7 +274,7 @@ export function ProfilePage() {
                   <div className="h-px w-full bg-border/20"></div>
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      Last Seen
+                      {t('profile.last_seen')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       {new Date(data.last_connection).toLocaleDateString()}
@@ -296,7 +299,7 @@ export function ProfilePage() {
                           variant="default"
                           className="border-green-500/30 bg-green-500/20 px-1.5 py-0 text-[10px] tracking-wider text-green-500 uppercase shadow-sm hover:bg-green-500/30"
                         >
-                          Online
+                          {t('profile.online')}
                         </Badge>
                         {data.server_instance && (
                           <Badge
@@ -384,7 +387,7 @@ export function ProfilePage() {
                 <div className="mt-2 w-full space-y-2 rounded-lg border border-white/5 bg-background/30 p-3 text-xs text-muted-foreground shadow-sm backdrop-blur-md sm:hidden">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      First Joined
+                      {t('profile.first_joined')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       {new Date(data.first_connection).toLocaleDateString()}
@@ -393,7 +396,7 @@ export function ProfilePage() {
                   <div className="h-px w-full bg-border/20"></div>
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-medium text-muted-foreground">
-                      Last Seen
+                      {t('profile.last_seen')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
                       {new Date(data.last_connection).toLocaleDateString()}
@@ -442,14 +445,14 @@ export function ProfilePage() {
                 className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
               >
                 <Activity className="h-4 w-4" />
-                Attributes
+                {t('profile.tabs.attributes')}
               </TabsTrigger>
               <TabsTrigger
                 value="skills"
                 className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
               >
                 <Network className="h-4 w-4" />
-                Skills
+                {t('profile.tabs.skills')}
               </TabsTrigger>
               {data.data?.COMPANIONS && (
                 <TabsTrigger
@@ -457,7 +460,7 @@ export function ProfilePage() {
                   className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
                 >
                   <PawPrint className="h-4 w-4" />
-                  Pets & Mounts
+                  {t('profile.tabs.pets_mounts')}
                 </TabsTrigger>
               )}
               {data.data?.SHIPS && (
@@ -466,7 +469,7 @@ export function ProfilePage() {
                   className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
                 >
                   <Ship className="h-4 w-4" />
-                  Ships
+                  {t('profile.tabs.ships')}
                 </TabsTrigger>
               )}
               {data.data?.OBJECTIVES && (
@@ -475,7 +478,7 @@ export function ProfilePage() {
                   className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
                 >
                   <SwordsIcon className="h-4 w-4" />
-                  PVP
+                  {t('profile.tabs.pvp')}
                 </TabsTrigger>
               )}
               {data.data?.OBJECTIVES && (
@@ -484,7 +487,7 @@ export function ProfilePage() {
                   className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
                 >
                   <Skull className="h-4 w-4" />
-                  Skulls
+                  {t('profile.tabs.skulls')}
                 </TabsTrigger>
               )}
               {data.data?.OBJECTIVES && (
@@ -493,7 +496,7 @@ export function ProfilePage() {
                   className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all hover:bg-secondary/50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
                 >
                   <Target className="h-4 w-4" />
-                  Objectives
+                  {t('profile.tabs.objectives')}
                 </TabsTrigger>
               )}
             </TabsList>

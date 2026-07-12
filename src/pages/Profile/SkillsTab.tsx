@@ -5,6 +5,7 @@ import { progressForJob, type StoreProfessionId } from "@utils/xpCurve";
 import { Activity, Star } from "lucide-react";
 import { LevelBadge } from "@const/levels";
 import { Badge } from "@components/ui/badge";
+import { useTranslation } from 'react-i18next';
 
 const DATA_TO_STORE_KEY: Record<string, StoreProfessionId> = {
     alchemist: "alchemy",
@@ -54,6 +55,8 @@ interface SkillInfo {
 export function SkillsTab({ data }: { data: PlayerData }) {
     const [skillsInfo, setSkillsInfo] = useState<Record<string, SkillInfo>>({});
     const [loading, setLoading] = useState(true);
+
+    const { t } = useTranslation('profile');
 
     useEffect(() => {
         let mounted = true;
