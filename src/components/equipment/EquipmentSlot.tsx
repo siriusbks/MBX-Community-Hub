@@ -25,7 +25,7 @@ interface Props {
     equippedItem: Equipment | null;
     onSlotClick: (slotId: string) => void;
 }
-
+ 
 export const EquipmentSlot: React.FC<Props> = ({
     slot,
     equippedItem,
@@ -35,13 +35,13 @@ export const EquipmentSlot: React.FC<Props> = ({
     const slotLabel = t(`equip.slots.${slot.id}`, {
         defaultValue: slot.name || slot.id,
     });
-
+ 
     // Normalise the item's rarity id to match @const/rarities ids (lowercase).
     const rarityId = equippedItem?.rarity?.toLowerCase() ?? "common";
-
+ 
     return (
         <div
-            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer text-center"
+            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer flex flex-col items-center"
             style={{ top: slot.position.top, left: slot.position.left }}
             onClick={() => onSlotClick(slot.id)}
         >
@@ -56,7 +56,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                         {equippedItem ? (
                             <RarityBorder
                                 rarity={rarityId}
-                                className="w-16 h-16 flex items-center justify-center transition-transform duration-200 group-hover:scale-110"
+                                className="w-24 h-24 flex items-center justify-center transition-transform duration-200 group-hover:scale-110"
                             >
                                 <ItemImage
                                     itemId={equippedItem.id}
@@ -64,11 +64,11 @@ export const EquipmentSlot: React.FC<Props> = ({
                                 />
                             </RarityBorder>
                         ) : (
-                            <div className="w-16 h-16 rounded-lg flex items-center justify-center border border-gray-600 bg-gray-700 transition-all duration-200 group-hover:scale-110 hover:border-gray-500">
-                                <Plus className="w-6 h-6 text-gray-400 pointer-events-none" />
+                            <div className="w-24 h-24 rounded-lg flex items-center justify-center border border-gray-600 bg-gray-700 transition-all duration-200 group-hover:scale-110 hover:border-gray-500">
+                                <Plus className="w-9 h-9 text-gray-400 pointer-events-none" />
                             </div>
                         )}
-
+ 
                         {/* Level badge */}
                         {equippedItem?.level != null && (
                             <div className="absolute bottom-0 inset-x-0 flex justify-center">
@@ -80,7 +80,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                         )}
                     </div>
                 </TooltipTrigger>
-
+ 
                 <TooltipContent className="w-64 p-2">
                     {equippedItem ? (
                         <div className="flex flex-col gap-1">
@@ -90,7 +90,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                                 </span>
                                 <RarityBadge rarity={rarityId} className="text-[10px]" />
                             </div>
-
+ 
                             {equippedItem.stats && (
                                 <ul className="mt-1 space-y-0.5">
                                     {Object.entries(equippedItem.stats).map(([stat, range]) => (
@@ -118,7 +118,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                     )}
                 </TooltipContent>
             </Tooltip>
-
+ 
             {/* Slot label */}
             <div className="mt-1">
                 <span className="text-[11px] font-medium text-gray-300 bg-gray-700 px-2 py-0.5 rounded">

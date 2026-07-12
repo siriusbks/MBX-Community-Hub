@@ -27,7 +27,6 @@
     "equip.seerecipe": "Equip an item to see its recipe.",
     "equip.selector.clearFilters": "Clear Filters",
     "equip.selector.filterRarity": "Filter",
-
     "equip.slots.necklace": "Necklace",
     "equip.slots.helmet": "Helmet",
     "equip.slots.ring1": "Ring 1",
@@ -38,12 +37,10 @@
     "equip.slots.leggings": "Leggings",
     "equip.slots.boots": "Boots",
     "equip.slots.pet": "Pet",
-
     "equip.set.title": "Active Set",
     "equip.set.tier": "Tier",
     "equip.set.equipped": "equipped",
     "equip.set.inactiveBonus": "Inactive Bonus",
-
     "equip.pet.title": "Pet data",
     "equip.pet.generation.title": "Generation",
     "equip.pet.trait.title": "Trait",
@@ -66,7 +63,6 @@
     "equip.pet.job.genius": "Crafting",
     "equip.pet.job.glutton": "Eating",
     "equip.pet.enchanted.title": "Enchanted",
-    
     "equip.stats.pass": "Pass",
     "equip.stats.addSkulls": "Add skull bonuses",
     "equip.share.button": "Share",
@@ -74,5 +70,8 @@
     "equip.share.copyFailed": "Could not copy the build link:",
     "equip.loading": "Loading data…",
     "equip.apiError.title": "Could not load equipment data",
-    "equip.apiError.body": "The Minebox item API could not be reached. Please try again later."
+    "equip.apiError.body": "The Minebox item API could not be reached. Please try again later.",
+    "equip.description": "Build and theory-craft your gear, pets and skull loadouts.",
+    "equip.classSection.title": "Class",
+    "equip.classSection.tier": "Tier"
 }

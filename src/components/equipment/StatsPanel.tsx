@@ -13,9 +13,12 @@ import type { SetBonus } from "./useSet";
 import { computePetBoostedStats, TRAIT_STAT_MAP } from "./petStat";
 import { formatStatRange } from "./statsCalculator";
 import { stats as statList, SmallStatItem } from "@const/statsAndDamage";
-import { TrendingUp, Plus, Package, Squirrel, Dna, Skull } from "lucide-react";
+import { TrendingUp, Plus, Package, Squirrel, Dna, Skull, Swords } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SKULLS } from "@const/skulls";
+import type { MineboxClass } from "types/class";
+import { getClassNumericStats, getClassStatEntries } from "@components/utils/classStats";
+
 
 const statColor = (stat: string) => statList.find((s) => s.id === stat)?.color ?? "#ccc";
  
@@ -36,6 +39,7 @@ interface Props {
     stats: PlayerStats;
     equippedItems: { [key: string]: Equipment | null };
     setsById: Record<string, SetBonus>;
+    flatFromSets?: Record<string, number>;
     skullIds?: string[];
     skullNames?: string[];
     flatFromSkulls?: Record<string, number>;
@@ -49,12 +53,16 @@ interface Props {
     setPetEnchanted: (v: boolean) => void;
     hasPass: boolean;
     setHasPass: (v: boolean) => void;
+    classes: MineboxClass[];
+    classTier: number;
+    setClassTier: (n: number) => void;
 }
  
 export const StatsPanel: React.FC<Props> = ({
     stats,
     equippedItems,
     setsById,
+    flatFromSets,
     skullIds,
     skullNames = [],
     flatFromSkulls,
@@ -68,6 +76,9 @@ export const StatsPanel: React.FC<Props> = ({
     setPetEnchanted,
     hasPass,
     setHasPass,
+    classes,
+    classTier,
+    setClassTier,
 }) => {
     const { t: tEquip } = useTranslation("equipment");
  
@@ -120,6 +131,40 @@ export const StatsPanel: React.FC<Props> = ({
             enchanted: petEnchanted,
         });
     }, [pet, petGeneration, petTrait, petEnchanted]);
+ 
+    const selectedClass = useMemo(() => {
+        const equippedClassId = equippedItems.class?.id;
+        if (!equippedClassId) return null;
+        return classes.find((c) => c.id === equippedClassId) ?? null;
+    }, [equippedItems, classes]);
+ 
+    // Tier-specific stats, plus the "all" tier's stats but only when tier 1
+    // is selected (tiers 2-5 already define their own value for stats that
+    // "all" would otherwise duplicate/conflict with).
+    const classStatEntries = useMemo(
+        () => getClassStatEntries(selectedClass, classTier),
+        [selectedClass, classTier]
+    );
+ 
+    // Only the numeric ones actually get added into the main stats total
+    // (percentage stats like "-70%" can't be summed linearly), so this is
+    // what drives the "Swords" icon in the stats list below.
+    const classNumericStatNames = useMemo(
+        () => new Set(Object.keys(getClassNumericStats(selectedClass, classTier))),
+        [selectedClass, classTier]
+    );
+
+    const classPercentEntries = useMemo(
+        () =>
+            classStatEntries
+                .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+                .map(([stat, value]) => [`${stat}_PCT`, stat, value] as [string, string, string]),
+        [classStatEntries]
+    );
+
+    // Core attributes (e.g. TRIPLE_JUMP) aren't stats, so they stay visible
+    // regardless of the selected tier.
+    const classCoreAttributes = selectedClass?.tiers.all?.core_attributes ?? [];
  
     // Displayed stats with the Pass buff applied
     const displayedStats = useMemo<PlayerStats>(() => {
@@ -199,6 +244,13 @@ export const StatsPanel: React.FC<Props> = ({
                             Object.prototype.hasOwnProperty.call(flatFromSkulls, name) &&
                             (flatFromSkulls as Record<string, number>)[name] !== 0;
  
+                        const isBoostedBySet =
+                            flatFromSets &&
+                            Object.prototype.hasOwnProperty.call(flatFromSets, name) &&
+                            (flatFromSets as Record<string, number>)[name] !== 0;
+ 
+                        const isBoostedByClass = classNumericStatNames.has(name);
+ 
                         const fromPet = !!petBoosted[name];
                         let showIconTrait = false;
                         if (petEnchanted && fromPet) {
@@ -215,7 +267,7 @@ export const StatsPanel: React.FC<Props> = ({
                         return (
                             <div
                                 key={name}
-                                className="flex items-center justify-between py-1 border-b border-gray-700/60"
+                                className="flex flex-wrap items-center py-1 border-b border-gray-700/60"
                             >
                                 <span
                                     className="flex items-center gap-2 font-medium"
@@ -227,26 +279,53 @@ export const StatsPanel: React.FC<Props> = ({
                                         className="w-4 h-4"
                                     />
                                     {name}
- 
-                                    {isBoostedBySkull && (
-                                        <Skull className="inline-block w-4 h-4 text-yellow-600 ml-1" />
-                                    )}
-                                    {showIconTrait && (
-                                        <Squirrel className="inline-block w-4 h-4 text-yellow-600 ml-1" />
-                                    )}
-                                    {showIconGen && (
-                                        <Dna className="inline-block w-4 h-4 text-yellow-600 ml-1" />
-                                    )}
+
+                                    {isBoostedBySkull && <Skull className="w-4 h-4 text-yellow-400" />}
+                                    {isBoostedBySet && <Package className="w-4 h-4 text-fuchsia-500" />}
+                                    {isBoostedByClass && <Swords className="w-4 h-4 text-blue-400" />}
+                                    {showIconTrait && <Squirrel className="w-4 h-4 text-yellow-600" />}
+                                    {showIconGen && <Dna className="w-4 h-4 text-yellow-600" />}
                                     {isBoostedByPass && (
-                                        <span className="ml-1 rounded bg-emerald-500/10 border border-emerald-400/30 px-1.5 py-0.5 text-[10px] text-emerald-300">
+                                        <span className="rounded bg-emerald-500/10 border border-emerald-400/30 px-1.5 py-0.5 text-[10px] text-emerald-300">
                                             PASS
                                         </span>
                                     )}
                                 </span>
-                                <span className="font-bold text-white">{formatStatRange(range)}</span>
+
+                                <span className="ml-auto font-bold text-white max-[430px]:basis-full max-[430px]:text-right">
+                                    {formatStatRange(range)}
+                                </span>
                             </div>
                         );
                     })}
+
+                    {/* Percentage-type class stats (e.g. "-70%" Defense) — can't be
+                        summed into the numeric total above, but still shown as
+                        extra rows in the recap, independent of allZero. */}
+                    {classPercentEntries.length > 0 && (
+                        <div className="space-y-0">
+                            {classPercentEntries.map(([key, statName, value]) => (
+                                <div
+                                    key={key}
+                                    className="flex items-center justify-between py-1 border-b border-gray-700/60"
+                                >
+                                    <span
+                                        className="flex items-center gap-2 font-medium"
+                                        style={{ color: statColor(statName) }}
+                                    >
+                                        <img
+                                            src={`/media/attributes/${statName.toLowerCase()}.png`}
+                                            alt={statName}
+                                            className="w-4 h-4"
+                                        />
+                                        {statName}
+                                        <Swords className="inline-block w-4 h-4 text-blue-400 ml-1" />
+                                    </span>
+                                    <span className="font-bold text-white">{value}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
  
                     {/* Sets section */}
                     {setsDisplay.length > 0 && (
@@ -381,6 +460,67 @@ export const StatsPanel: React.FC<Props> = ({
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* Class section — shown whenever a class is equipped, even if
+                every other stat happens to be at zero (e.g. only a class,
+                no items, is equipped). */}
+            {selectedClass && (
+                <div className="mt-8">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                            <Swords className="w-7 h-7 text-blue-400" />
+                            <h2 className="font-bold text-white">
+                                {tEquip("equip.classSection.title", { defaultValue: "Class" })}
+                            </h2>
+                        </div>
+ 
+                        <label className="flex items-center gap-1 text-sm">
+                            {tEquip("equip.classSection.tier", { defaultValue: "Tier" })}
+                            <select
+                                value={classTier}
+                                onChange={(e) => setClassTier(Number(e.target.value))}
+                                className="inline-block bg-gray-900 ml-1 text-white px-1 rounded"
+                            >
+                                {[1, 2, 3, 4, 5].map((tier) => (
+                                    <option key={tier} value={tier}>
+                                        {tier}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+ 
+                    <div className="rounded p-2 bg-gray-900/80">
+                        <div className="font-semibold text-sx text-blue-200 mb-2">{selectedClass.name}</div>
+ 
+                        {classStatEntries.map(([stat, value]) => (
+                            <div
+                                key={stat}
+                                className="flex items-center justify-between py-1 border-b border-gray-700/60 last:border-b-0 text-sm"
+                            >
+                                <span
+                                    className="flex items-center gap-2 font-medium"
+                                    style={{ color: statColor(stat) }}
+                                >
+                                    <img
+                                        src={`/media/attributes/${stat.toLowerCase()}.png`}
+                                        alt={stat}
+                                        className="w-3 h-3"
+                                    />
+                                    {stat}
+                                </span>
+                                <span className="font-bold text-white">{value}</span>
+                            </div>
+                        ))}
+ 
+                        {classCoreAttributes.map((attr) => (
+                            <div key={attr} className="flex items-center gap-2 py-1 text-sm text-blue-200 italic">
+                                {attr}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
  

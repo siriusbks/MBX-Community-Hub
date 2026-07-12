@@ -15,6 +15,8 @@ import { ItemImage } from "@const/elements";
 import { StatItem } from "@const/statsAndDamage";
 import { Search, X, Trash2, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import type { MineboxClass } from "types/class";
+import { formatClassStatRange, getClassTier1To5Range, hasClassTiers } from "@components/utils/classStats";
 
 const ALL_RARITIES = [
     "COMMON",
@@ -33,8 +35,9 @@ interface Props {
     onClose: () => void;
     equippedItems: { [key: string]: Equipment | null };
     selectedSlotId: string;
+    classesById?: Record<string, MineboxClass>;
 }
-
+ 
 export const EquipmentSelector: React.FC<Props> = ({
     equipment,
     category,
@@ -43,12 +46,13 @@ export const EquipmentSelector: React.FC<Props> = ({
     onClose,
     equippedItems,
     selectedSlotId,
+    classesById = {},
 }) => {
     const [q, setQ] = useState("");
     const [filterOpen, setFilterOpen] = useState(false);
     const [selectedRarities, setSelectedRarities] = useState<string[]>([]);
     const { t } = useTranslation("equipment");
-
+ 
     const toggleRarity = (rarity: string) => {
         setSelectedRarities((prev) =>
             prev.includes(rarity)
@@ -56,7 +60,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                 : [...prev, rarity]
         );
     };
-
+ 
     const filtered = equipment.filter(
         (it) =>
             it.category === category &&
@@ -64,11 +68,11 @@ export const EquipmentSelector: React.FC<Props> = ({
             (selectedRarities.length === 0 ||
                 selectedRarities.includes(it.rarity))
     );
-
+ 
     const isRingSlot = selectedSlotId === "ring1" || selectedSlotId === "ring2";
     const otherRingId = selectedSlotId === "ring1" ? "ring2" : "ring1";
     const otherRingItemId = equippedItems[otherRingId]?.id;
-
+ 
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
             <div className="bg-gray-900 border border-gray-700 rounded-lg max-w-5xl w-full mx-4 max-h-[90vh] overflow-hidden text-white">
@@ -80,7 +84,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                         <X className="w-5 h-5" />
                     </button>
                 </div>
-
+ 
                 {/* Search + Filter row */}
                 <div className="custom-scrollbar p-4 border-b border-gray-700">
                     <div className="flex items-center gap-3">
@@ -94,7 +98,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                 className="w-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 pl-10 pr-4 py-2 rounded focus:ring-2 focus:ring-green-400 focus:border-transparent"
                             />
                         </div>
-
+ 
                         <div className="relative">
                             <button
                                 onClick={() => setFilterOpen((o) => !o)}
@@ -107,7 +111,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                     }`}
                                 />
                             </button>
-
+ 
                             {filterOpen && (
                                 <div className="absolute right-0 mt-1 bg-gray-800 border border-gray-700 rounded shadow-lg w-44 max-h-48 overflow-y-auto z-20">
                                     {ALL_RARITIES.map((rarity) => (
@@ -124,7 +128,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                             {t(`equip.rarity.${rarity}`, { defaultValue: rarity })}
                                         </label>
                                     ))}
-
+ 
                                     {selectedRarities.length > 0 && (
                                         <button
                                             onClick={() => setSelectedRarities([])}
@@ -138,7 +142,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                         </div>
                     </div>
                 </div>
-
+ 
                 {/* Items list */}
                 <div className="p-4 overflow-y-auto max-h-[60vh] custom-scrollbar">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -149,17 +153,22 @@ export const EquipmentSelector: React.FC<Props> = ({
                                 !!otherRingItemId &&
                                 item.id === otherRingItemId;
                             const rarityId = item.rarity?.toLowerCase() ?? "common";
-
+ 
+                            const cls = category === "CLASS" ? classesById[item.id] : undefined;
+                            const isUnimplementedClass = !!cls && !hasClassTiers(cls);
+                            const isDisabled = isEquippedSameRing || isUnimplementedClass;
+                            const classStatRange = cls ? getClassTier1To5Range(cls) : [];
+ 
                             return (
                                 <RarityBorder
                                     key={item.id}
                                     rarity={rarityId}
                                     onClick={() => {
-                                        if (isEquippedSameRing) return;
+                                        if (isDisabled) return;
                                         onSelect(item);
                                     }}
                                     className={`text-left cursor-pointer transition-all ${
-                                        isEquippedSameRing
+                                        isDisabled
                                             ? "opacity-50 cursor-not-allowed"
                                             : "hover:scale-[1.01]"
                                     }`}
@@ -167,7 +176,9 @@ export const EquipmentSelector: React.FC<Props> = ({
                                     <div
                                         className="flex flex-col gap-3 w-full"
                                         title={
-                                            isEquippedSameRing
+                                            isUnimplementedClass
+                                                ? "Not Implemented"
+                                                : isEquippedSameRing
                                                 ? t("equip.alreadyEquippedOnOtherRing")
                                                 : ""
                                         }
@@ -177,7 +188,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                 itemId={item.id}
                                                 className="w-12 h-12 shrink-0"
                                             />
-
+ 
                                             <div className="min-w-0">
                                                 <h3 className="font-semibold text-white truncate">
                                                     {item.name}
@@ -197,7 +208,7 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                 )}
                                             </div>
                                         </div>
-
+ 
                                         {item.stats && (
                                             <div className="text-xs text-gray-300 space-y-0.5">
                                                 {Object.entries(item.stats).map(([stat, range]) => (
@@ -210,13 +221,31 @@ export const EquipmentSelector: React.FC<Props> = ({
                                                 ))}
                                             </div>
                                         )}
+ 
+                                        {classStatRange.length > 0 && (
+                                            <div className="text-xs text-gray-300 space-y-0.5">
+                                                {classStatRange.map(([stat, from, to]) => (
+                                                    <div key={stat} className="flex items-center justify-between">
+                                                        <span className="flex items-center gap-1">
+                                                            <img
+                                                                src={`/media/attributes/${stat.toLowerCase()}.png`}
+                                                                alt={stat}
+                                                                className="w-3 h-3"
+                                                            />
+                                                            {stat}
+                                                        </span>
+                                                        <span>{formatClassStatRange(from, to)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 </RarityBorder>
                             );
                         })}
                     </div>
                 </div>
-
+ 
                 {/* Footer */}
                 <div className="p-4 border-t border-gray-700 flex justify-end gap-3">
                     <button

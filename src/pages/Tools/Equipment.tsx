@@ -33,6 +33,9 @@ import {
     type RightTab, 
     type SharedBuild 
 } from "@components/equipment/buildShare";
+import { useClasses } from "@components/equipment/useClass";
+import type { MineboxClass } from "types/class";
+import { getClassNumericStats } from "@components/utils/classStats";
 
 function addFlatToRanges(
     base: Record<string, number[]>,
@@ -69,6 +72,26 @@ const Equipment: React.FC = () => {
     const [petTrait, setPetTrait] = useState("");
     const [petEnchanted, setPetEnchanted] = useState(false);
 
+    const { classes, loadingClasses, errorClasses } = useClasses();
+    const [classTier, setClassTier] = useState(1);
+
+    const classEquipment = useMemo<Equipment[]>(
+        () =>
+            classes.map((cls) => ({
+                id: cls.id,
+                name: cls.name,
+                category: "CLASS",
+                rarity: cls.rarity,
+                image: cls.image ? `data:image/png;base64,${cls.image}` : "",
+            })),
+        [classes]
+    );
+ 
+    const equipmentWithClasses = useMemo(
+        () => [...equipment, ...classEquipment],
+        [equipment, classEquipment]
+    );
+
     const pet = useMemo(
         () => Object.values(equippedItems).find((item) => item?.category?.toUpperCase() === "PET") || null,
         [equippedItems]
@@ -86,12 +109,13 @@ const Equipment: React.FC = () => {
             skulls: selectedSkulls,
             pass: hasPass,
             pet: { generation: petGeneration, trait: petTrait, enchanted: petEnchanted },
+            classTier,
             tab: activeTab,
         };
-    }, [equippedItems, selectedSkulls, hasPass, petGeneration, petTrait, petEnchanted, activeTab]);
+    }, [equippedItems, selectedSkulls, hasPass, petGeneration, petTrait, petEnchanted, classTier, activeTab]);
 
     const onShareBuild = async () => {
-        const encoded = encodeBuildToUrlValue(shareBuild, equipment);
+        const encoded = encodeBuildToUrlValue(shareBuild);
         const url = new URL(window.location.href);
         url.searchParams.set("build", encoded);
         const shareUrl = url.toString();
@@ -108,19 +132,19 @@ const Equipment: React.FC = () => {
     // Load a build from URL
     useEffect(() => {
         if (hasLoadedSharedBuild.current) return;
-        if (!equipment.length) return;
+        if (!equipment.length || !classes.length) return;
 
         const params = new URLSearchParams(window.location.search);
         const buildParam = params.get("build");
         if (!buildParam) return;
 
-        const decoded = decodeBuildFromUrlValue(buildParam, equipment);
+        const decoded = decodeBuildFromUrlValue(buildParam);
         if (!decoded) return;
 
         hasLoadedSharedBuild.current = true;
 
         const equipmentById = new Map<string, Equipment>();
-        equipment.forEach((item) => {
+        equipmentWithClasses.forEach((item) => {
             if (item.id) equipmentById.set(item.id, item);
         });
 
@@ -135,11 +159,12 @@ const Equipment: React.FC = () => {
         setPetGeneration(typeof decoded.pet?.generation === "number" ? decoded.pet.generation : 1);
         setPetTrait(typeof decoded.pet?.trait === "string" ? decoded.pet.trait : "");
         setPetEnchanted(Boolean(decoded.pet?.enchanted));
+        setClassTier(typeof decoded.classTier === "number" ? decoded.classTier : 1);
 
         if (decoded.tab === "stats" || decoded.tab === "craft") {
             setActiveTab(decoded.tab);
         }
-    }, [equipment]);
+    }, [equipment, classes, equipmentWithClasses]);
 
     const onSlotClick = (slotId: string) => {
         setSelectedSlot(slotId);
@@ -174,17 +199,36 @@ const Equipment: React.FC = () => {
         setPetTrait("");
         setPetEnchanted(false);
         setHasPass(false);
+        setClassTier(1);
     };
 
     const flatFromSkulls = useMemo(() => sumSkullStats(selectedSkulls), [selectedSkulls]);
 
+    const classesById = useMemo<Record<string, MineboxClass>>(
+        () => Object.fromEntries(classes.map((c) => [c.id, c])),
+        [classes]
+    );
+ 
+    const selectedClass = useMemo(() => {
+        const equippedClassId = equippedItems.class?.id;
+        return equippedClassId ? classesById[equippedClassId] ?? null : null;
+    }, [equippedItems, classesById]);
+ 
+    const flatFromClass = useMemo(
+        () => getClassNumericStats(selectedClass, classTier),
+        [selectedClass, classTier]
+    );
+ 
+    const flatFromSets = useMemo(() => getTotalSetBonus(equippedItems), [equippedItems, getTotalSetBonus]);
+
+
     const totalStats = useMemo(() => {
         const base = mergeAllEquipmentStats(equippedItems, petGeneration, petTrait, petEnchanted);
-        const flatFromSets = getTotalSetBonus(equippedItems);
         const withSkulls = addFlatToRanges(base, flatFromSkulls);
         const withSets = addFlatToRanges(withSkulls, flatFromSets);
-        return withSets;
-    }, [equippedItems, getTotalSetBonus, petGeneration, petTrait, petEnchanted, flatFromSkulls]);
+        const withClass = addFlatToRanges(withSets, flatFromClass);
+        return withClass;
+    }, [equippedItems, petGeneration, petTrait, petEnchanted, flatFromSkulls, flatFromSets, flatFromClass]);
 
     const selectedSlotData = selectedSlot ? EQUIPMENT_SLOTS.find((s) => s.id === selectedSlot) : null;
 
@@ -193,7 +237,7 @@ const Equipment: React.FC = () => {
         [selectedSkulls]
     );
 
-    if (loading || loadingSets) {
+    if (loading || loadingSets || loadingClasses) {
         return (
             <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-white">
                 <Loader2 className="w-6 h-6 mr-2 animate-spin" />
@@ -234,6 +278,14 @@ const Equipment: React.FC = () => {
         );
     }
 
+    if (errorClasses) {
+        return (
+            <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-red-300 flex-col">
+                {String(errorClasses)}
+            </div>
+        );
+    }
+
     return (
         <div className="relative flex flex-col page-container pb-24">
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
@@ -262,14 +314,14 @@ const Equipment: React.FC = () => {
             </div>
 
             <main className="flex-1 p-4">
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    <section className="xl:col-span-2">
+                <div className="grid grid-cols-1 xl:grid-cols-7 gap-3 w-full">
+                    <section className="xl:col-span-4">
                         <div className="bg-gray-800/60 border border-gray-700 rounded-lg p-4 shadow">
                             <CharacterDisplay equippedItems={equippedItems} onSlotClick={onSlotClick} />
                         </div>
                     </section>
 
-                    <aside className="xl:col-span-1">
+                    <aside className="xl:col-span-3">
                         <div className="bg-gray-800/60 border border-gray-700 rounded-lg shadow min-h-[560px] flex flex-col">
                             <div className="flex items-center">
                                 <button
@@ -303,6 +355,7 @@ const Equipment: React.FC = () => {
                                             stats={totalStats}
                                             equippedItems={equippedItems}
                                             setsById={setsById}
+                                            flatFromSets={flatFromSets}
                                             skullNames={skullNames}
                                             flatFromSkulls={flatFromSkulls}
                                             onOpenSkulls={() => setSkullModalOpen(true)}
@@ -315,6 +368,9 @@ const Equipment: React.FC = () => {
                                             setPetEnchanted={setPetEnchanted}
                                             hasPass={hasPass}
                                             setHasPass={setHasPass}
+                                            classes={classes}
+                                            classTier={classTier}
+                                            setClassTier={setClassTier}
                                         />
                                     </div>
                                 )}
@@ -332,13 +388,14 @@ const Equipment: React.FC = () => {
 
             {selectedSlot && selectedSlotData && (
                 <EquipmentSelector
-                    equipment={equipment}
+                    equipment={equipmentWithClasses}
                     category={selectedSlotData.category}
                     onSelect={onSelect}
                     onRemove={() => onRemove(selectedSlot)}
                     onClose={onCloseSelector}
                     equippedItems={equippedItems}
                     selectedSlotId={selectedSlot}
+                    classesById={classesById}
                 />
             )}
 
