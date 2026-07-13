@@ -34,7 +34,7 @@ const islands = [
 ];
 
 export function Maps() {
-  const { t, i18n } = useTranslation("maps");
+  const { t } = useTranslation("maps");
   const [mapsData, setMapsData] = useState<any | null>(null);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null);
 
@@ -67,8 +67,8 @@ export function Maps() {
       />
 
       <span className="flex flex-row items-center justify-between w-full">
-        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Player Islands</p>
-        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.players_island")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full  z-10">
         {player_islands.map((map, index) => (
@@ -104,8 +104,8 @@ export function Maps() {
       </div>
 
       <span className="flex flex-row items-center justify-between w-full mt-8">
-        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Exploration Islands</p>
-        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.exploration_island")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  z-10">
 

@@ -39,11 +39,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@components/ui/sheet"
+import { useTranslation } from "react-i18next";
 
 import { useNavLinks, type NavItem, type NavDropdown } from "@const/nav"
 
 export const Navbar = () => {
   const NAV_LINKS = useNavLinks()
+  const { t } = useTranslation("mbplayer");
   const [nick, setNick] = React.useState<string>("")
   const [storedNick, setStoredNick] = React.useState<string | null>(null)
   const [playerId, setPlayerId] = React.useState<string | null>(null)
@@ -239,7 +241,7 @@ export const Navbar = () => {
             </PopoverTrigger>
             <PopoverContent className="gap-2">
               <PopoverHeader>
-                <PopoverTitle>Minebox Player</PopoverTitle>
+                <PopoverTitle>{t("mbplayer.title")}</PopoverTitle>
               </PopoverHeader>
 
               {nickError ? (
@@ -266,7 +268,7 @@ export const Navbar = () => {
                   </span>
                   <span className="flex w-full flex-row gap-4">
                     <AlertDescription className="mr-auto flex items-center justify-center leading-tight">
-                      Check if you have enabled API
+                      {t("mbplayer.alertdescription")}
                     </AlertDescription>
                   </span>
                 </Alert>
@@ -278,7 +280,7 @@ export const Navbar = () => {
                   setNick(e.target.value)
                 }
                 placeholder={
-                  storedNick ? storedNick : "Enter your Minebox nickname"
+                  storedNick ? storedNick : t("mbplayer.nickname")
                 }
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === "Enter") {
@@ -377,7 +379,7 @@ export const Navbar = () => {
                   }
                 }}
               >
-                {loadingNick ? "Loading..." : "Load Data"}
+                {loadingNick ? "Loading..." : t("mbplayer.loaddata")}
               </Button>
             </PopoverContent>
           </Popover>

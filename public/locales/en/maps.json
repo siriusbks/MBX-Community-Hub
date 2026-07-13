@@ -3,6 +3,10 @@
     "maps.description.part1": "Hover over the",
     "maps.description.part2": "to view resources.",
 
+    "maps.players_island": "Player Islands",
+    "maps.exploration_island": "Exploration Islands",
+    "maps.some_info": "SOME INFO",
+
     "maps.no_required": "No Required Level",
     "maps.required": "Required Level: ",
     "maps.view_map": "View Interactive Map",

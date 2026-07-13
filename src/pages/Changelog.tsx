@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-//import { useTranslation } from "react-i18next"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { Button } from "@ui/button"
 import ReactMarkdown from "react-markdown"
+import { useTranslation } from "react-i18next"
 
 export default function Changelog() {
-    //const { t } = useTranslation()
+    const { t } = useTranslation("changelog")
     const [changelogs, setChangelogs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(3);
@@ -28,12 +28,12 @@ export default function Changelog() {
         <div className="relative flex flex-col page-container pb-24 min-h-[80vh]">
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-21/9 mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
             <div className="items-center justify-center flex flex-col py-16">
-                <Badge variant="secondary" className="font-light tracking-wide mb-4">Updates & Features</Badge>
+                <Badge variant="secondary" className="font-light tracking-wide mb-4">{t("changelog.tag")}</Badge>
                 <h1 className="inline-block text-5xl font-bold
       bg-gradient-to-b from-primary to-primary-dark
-      bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider mb-2">CHANGELOG</h1>
+      bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider mb-2">{t("changelog.title")}</h1>
                 <p className="text-sm max-w-xl text-center mt-2 font-light text-muted-foreground">
-                    Discover the latest improvements, bug fixes, and new features added to the MBX Community Hub.
+                    {t("changelog.description")}
                 </p>
             </div>
 
@@ -54,7 +54,7 @@ export default function Changelog() {
                                         </div>
                                         <h3 className="text-2xl font-bold text-primary drop-shadow-sm">{log.title}</h3>
                                         <div className="text-xs text-muted-foreground mt-1">
-                                            Published on {new Date(log.createdAt).toLocaleDateString()}
+                                            {t("changelog.published_on")} {new Date(log.createdAt).toLocaleDateString()}
                                         </div>
                                     </div>
                                 </div>
@@ -63,15 +63,14 @@ export default function Changelog() {
                                 </div>
                             </Card>
                         ))}
-                        
                         {visibleCount < changelogs.length && (
                             <div className="flex justify-center mt-4">
-                                <Button 
-                                    variant="outline" 
+                                <Button
+                                    variant="outline"
                                     onClick={() => setVisibleCount(prev => prev + 3)}
                                     className="px-8 tracking-wider"
                                 >
-                                    Load older updates
+                                    {t("changelog.load_older_updates")}
                                 </Button>
                             </div>
                         )}

@@ -9,7 +9,6 @@ import { Link } from "react-router-dom"
 import { useNavLinks } from "@const/nav"
 
 
-
 interface ServerStatus {
   online: boolean
   players?: {
@@ -71,10 +70,10 @@ export function Home() {
 
   const playersLabel =
     status?.online && status.players
-      ? `${status.players.now} Players Online`
+      ? `${status.players.now} ${t("mainpage.players_online")}`
       : status && !status.online
-        ? "Server Offline"
-        : "??? Players Online"
+        ? t("mainpage.server_offline")
+        : `??? ${t("mainpage.players_online")}`
 
   return (
     <div className="relative page-container flex flex-col pb-24">

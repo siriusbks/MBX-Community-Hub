@@ -1,7 +1,10 @@
 import { Button } from "@ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
+
+    const { t } = useTranslation("footer");
     return (
         <footer className="minebox-shadow  w-full border-t bg-linear-to-b from-secondary-lighter to-secondary">
             <div className="grid grid-cols-3 gap-4 items-center justify-center py-2 px-4 hidden md:grid">
@@ -15,12 +18,12 @@ export const Footer = () => {
 
                     <Link to="/contribute">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
-                            Contribute
+                            {t("footer.contribute")}
                         </Button>
                     </Link>
                     <a href="https://ko-fi.com/6rius" target="_blank" rel="noopener noreferrer">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
-                            Support Us
+                            {t("footer.supportUs")}
                         </Button>
                     </a>
                 </span>

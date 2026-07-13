@@ -7,6 +7,7 @@ const LANGUAGES = [
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
   //{ code: 'es', label: 'Español', flag: '🇪🇸' },
   //{ code: 'pl', label: 'Polski', flag: '🇵🇱' }
+  // temporarily disabled
 ];
 
 export const LanguageSwitcher = () => {
