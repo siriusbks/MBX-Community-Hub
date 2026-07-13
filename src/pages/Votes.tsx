@@ -73,7 +73,7 @@ function getDailyResetInLocalTime(tz: string): string {
 
 export function VotePage() {
     const location = useLocation();
-  const { t } = useTranslation("votes")
+    const { t } = useTranslation("votes")
 
     const [votes, setVotes] = useState<VotesList | null>(null);
     const [cooldowns, setCooldowns] = useState<CooldownMap>({});
@@ -124,19 +124,20 @@ export function VotePage() {
         return (
             <div className="py-auto relative flex flex-col page-container">
                 <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
-                
-            <span className="flex grid grid-cols-3 gap-2">
-                {}
-                <Skeleton className="">
-                    <Skeleton className="w-1/2 h-6 m-4"/>
-                    <Skeleton className="w-1/4 h-4 m-2 mx-4"/>
-                    <span className="flex flex-row justify-between">
 
-                    <Skeleton className="w-1/4 h-4 mx-4"/>
-                    <Skeleton className="w-1/6 h-4 mx-4"/>
-                    </span>
-                    <Skeleton className=" h-8 m-4"/>
-                </Skeleton>
+                <span className="flex grid grid-cols-3 gap-2">
+                    {Array(6).fill().map((_, i) => (
+                        <Skeleton className="">
+                            <Skeleton className="w-1/2 h-6 m-4" />
+                            <Skeleton className="w-1/4 h-4 m-2 mx-4" />
+                            <span className="flex flex-row justify-between">
+
+                                <Skeleton className="w-1/4 h-4 mx-4" />
+                                <Skeleton className="w-1/6 h-4 mx-4" />
+                            </span>
+                            <Skeleton className=" h-8 m-4" />
+                        </Skeleton>
+                    ))}
                 </span>
             </div>
         );

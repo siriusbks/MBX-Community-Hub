@@ -26,7 +26,7 @@ function getItemImageFallbackChain(itemId: string, cleanId: string, itemData: an
   const fallbackById = `/media/missing/${cleanId}.png`
   const fallbackGeneric = "/media/missing.png"
   const primary = getPrimaryItemImageUrl(itemId, cleanId, itemData)
-  return [primary, fallbackById, fallbackGeneric]
+  return [fallbackById, primary, fallbackGeneric]
 }
 
 function canLoadImage(url: string): Promise<boolean> {
@@ -68,13 +68,15 @@ export function ItemImage({
   const imageUrl = getPrimaryItemImageUrl(itemId, cleanId, itemData)
 
   if (itemId.startsWith("material-") || !itemData?.image) {
+    const vanillaUrl = `/media/vanilla/${cleanId}.png`
+
     return (
       <img
-        src={`/media/vanilla/${cleanId}.png`}
+        src={fallbackById}
         onError={(e) => {
           const target = e.currentTarget
-          if (target.src.endsWith(`/media/vanilla/${cleanId}.png`)) {
-            target.src = fallbackById
+          if (target.src.endsWith(fallbackById)) {
+            target.src = vanillaUrl
             return
           }
 
@@ -88,11 +90,11 @@ export function ItemImage({
 
   return (
     <img
-      src={imageUrl}
+      src={fallbackById}
       onError={(e) => {
         const target = e.currentTarget
-        if (target.src !== fallbackById) {
-          target.src = fallbackById
+        if (target.src.endsWith(fallbackById)) {
+          target.src = imageUrl
           return
         }
 

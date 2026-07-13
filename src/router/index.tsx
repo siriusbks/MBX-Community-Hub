@@ -2,8 +2,10 @@ import ActionsPage from "@pages/Actions/Actions";
 import { BazaarPage } from "@pages/Actions/Bazaar";
 import { GemExchangePage } from "@pages/Actions/GemExchange";
 import ContributePage from "@pages/Contribute";
+import { EventTemplate } from "@pages/Events/template";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
+import { ShopsPage } from "@pages/UnnamedPage";
 import VillagePreview from "@pages/VillagePreview";
 import { VotePage } from "@pages/Votes";
 import { lazy, type FC } from "react";
@@ -52,11 +54,18 @@ export const AppRoutes: FC = () => {
             {/* Profile */}
             <Route path="/profile" element={<ProfilePage />} />
 
+            {/* Votes */}
+            <Route path="/votes" element={<VotePage />} />
+
+            {/* Shops */}
+            <Route path="/shops" element={<ShopsPage />} /> 
+
             {/* Others */}
             <Route path="/contribute" element={<ContributePage />} />
             <Route path="/changelog" element={<ChangelogPage />} />
-            <Route path="/votes" element={<VotePage />} />
 
+            {/* Events */}
+            <Route path="/events" element={<EventTemplate />} />
 
             {/* Errors */}
             <Route path="*" element={<Error404 />} />
