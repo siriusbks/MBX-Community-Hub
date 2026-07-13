@@ -2,6 +2,7 @@ import ActionsPage from "@pages/Actions/Actions";
 import { BazaarPage } from "@pages/Actions/Bazaar";
 import { GemExchangePage } from "@pages/Actions/GemExchange";
 import ContributePage from "@pages/Contribute";
+import { EventTemplate } from "@pages/Events/template";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
 import { ShopsPage } from "@pages/UnnamedPage";
@@ -63,6 +64,8 @@ export const AppRoutes: FC = () => {
             <Route path="/contribute" element={<ContributePage />} />
             <Route path="/changelog" element={<ChangelogPage />} />
 
+            {/* Events */}
+            <Route path="/events" element={<EventTemplate />} />
 
             {/* Errors */}
             <Route path="*" element={<Error404 />} />

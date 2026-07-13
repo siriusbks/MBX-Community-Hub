@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useMemo } from "react"
 import { Button } from "@ui/button"
 import { Globe } from "lucide-react"
 import { Card } from "@ui/card"
 import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities"
 import { Input } from "@components/ui/input"
-import { CodexGrid } from "@components/minebox/codex-grid"
 import { MineboxItem } from "@components/minebox/MineboxItem"
 import {
   Sheet,
@@ -29,82 +28,43 @@ import {
 } from "@components/ui/select"
 import { CodexNav } from "@components/minebox/codex-nav"
 
+// Cały katalog przedmiotów wczytywany jednorazowo z lokalnego pliku
+import itemsData from "@const/APIPreload/items.json"
+
+type LocalizedText = Record<string, string>
+
+type LocalItem = {
+  name: LocalizedText
+  lore: LocalizedText
+  description: LocalizedText
+  image: string
+  rarity: string
+}
+
+const ITEMS: Record<string, LocalItem> = itemsData as Record<string, LocalItem>
+
+// Na razie ustawione na sztywno — docelowo będzie pochodzić z globalnego ustawienia języka
+const locale = "en"
+
 export function ItemsCodex() {
   const [search, setSearch] = useState("")
   const [itemDetailsData, setItemDetailsData] = useState<any | null>(null)
-  const [mineboxItems, setMineboxItems] = useState<Record<string, any>>({})
-  const [currentPage, setCurrentPage] = useState(1)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const [totalPages, setTotalPages] = useState<number | null>(null)
-  const [totalItems, setTotalItems] = useState<number | null>(null)
 
-  // Pobieranie danych z API
-  const fetchItems = async (page: number, searchQuery = search) => {
-    try {
-      const params = new URLSearchParams({
-        locale: "en",
-        page: page.toString(),
-      })
+  // Filtrowanie lokalne: po ID przedmiotu oraz po nazwie w aktywnym języku
+  const filteredItems = useMemo(() => {
+    const query = search.trim().toLowerCase()
 
-      if (searchQuery.trim() !== "") {
-        params.append("search", searchQuery.trim())
-      }
+    const entries = Object.entries(ITEMS)
 
-      const res = await fetch(
-        `https://api.minebox.co/Items?${params.toString()}`
-      )
+    if (query === "") return entries
 
-      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+    return entries.filter(([id, item]) => {
+      const nameInLocale = (item.name?.[locale] ?? "").toLowerCase()
+      return id.toLowerCase().includes(query) || nameInLocale.includes(query)
+    })
+  }, [search, locale])
 
-      const json = await res.json()
-
-      const itemsObject: Record<string, any> = {}
-
-      json.items.forEach((item: any) => {
-        itemsObject[item.id] = item
-      })
-
-      if (page === 1) {
-        setMineboxItems(itemsObject)
-      } else {
-        setMineboxItems((prev) => ({ ...prev, ...itemsObject }))
-      }
-
-      setTotalPages(json.pages ?? null)
-      setTotalItems(json.total ?? null)
-
-      return json
-    } catch (e) {
-      console.error(e)
-      return null
-    }
-  }
-
-  // Ładowanie przy pierwszym renderowaniu
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCurrentPage(1)
-      fetchItems(1, search)
-    }, 300)
-
-    return () => clearTimeout(timeout)
-  }, [search])
-
-  // Obsługa Load More
-  const handleLoadMore = async () => {
-    if (isLoadingMore) return
-
-    setIsLoadingMore(true)
-    const nextPage = currentPage + 1
-
-    const result = await fetchItems(nextPage)
-
-    if (result) {
-      setCurrentPage(nextPage)
-    }
-
-    setIsLoadingMore(false)
-  }
+  const totalItems = Object.keys(ITEMS).length
 
   const fetchItemDetails = async (id: string) => {
     try {
@@ -119,24 +79,6 @@ export function ItemsCodex() {
     }
   }
 
-  // Określenie czy pokazać przycisk Load More
-  const shouldShowLoadMore = () => {
-    const itemsCount = Object.keys(mineboxItems).length
-
-    // Jeśli API zwraca totalPages, używamy tego
-    if (totalPages !== null) {
-      return currentPage < totalPages
-    }
-
-    // Jeśli API zwraca total items, sprawdzamy czy załadowaliśmy wszystkie
-    if (totalItems !== null) {
-      return itemsCount < totalItems
-    }
-
-    // Fallback: zawsze pokazuj jeśli mamy jakieś itemy (może być więcej)
-    return itemsCount > 0
-  }
-
   return (
     <div className="relative page-container flex h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
@@ -149,14 +91,9 @@ export function ItemsCodex() {
           placeholder="Search items..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={async (e) => {
-            if (e.key === "Enter") {
-              setCurrentPage(1)
-              await fetchItems(1, e.currentTarget.value)
-            }
-          }}
           className="h-8 w-full minebox-shadow"
         />
+
         <Select>
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
             <SelectValue placeholder="Category" />
@@ -182,27 +119,22 @@ export function ItemsCodex() {
             </SelectGroup>
           </SelectContent>
         </Select>
-
-<span className="flex px-2 !h-8 w-fit items-center justify-center rounded bg-linear-to-t from-secondary to-secondary-lighter text-xs text-muted-foreground minebox-shadow whitespace-nowrap">
-  {totalItems && (
-    <p className="w-fit">{Object.keys(mineboxItems).length}/{totalItems} items</p>
-  )}
-</span>
       </span>
 
       <div className="flex min-h-0 flex-1 flex-row gap-4">
-        <div className={`pr-2 h-full ${itemDetailsData ? 'w-2/3' : 'w-full'} custom-scrollbar overflow-y-auto scroll-fade`}>
-          
-        <div className={`w-full grid ${itemDetailsData ? 'grid-cols-5' : 'grid-cols-7'} gap-2 `}>
-            {Object.entries(mineboxItems).map(([id, item]) => {
-              const nameEn =
-                (item as any)?.name?.en ?? (item as any)?.name ?? id
-              const rarity = ((item as any)?.rarity ?? "")
-                .toString()
-                .toLowerCase()
-              const image = (item as any)?.image
-                ? `data:image/png;base64,${(item as any).image}`
+        <div
+          className={`pr-2 h-full ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar overflow-y-auto scroll-fade`}
+        >
+          <div
+            className={`w-full grid ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2  `}
+          >
+            {filteredItems.map(([id, item]) => {
+              const name = item.name?.[locale] ?? item.name?.en ?? id
+              const rarity = (item.rarity ?? "").toString().toLowerCase()
+              const image = item.image
+                ? `data:image/png;base64,${item.image}`
                 : ""
+
               return (
                 <div
                   key={id}
@@ -212,35 +144,15 @@ export function ItemsCodex() {
                   }}
                   className="cursor-pointer"
                 >
-                  <MineboxItem
-                    id={id}
-                    name={nameEn}
-                    rarity={rarity}
-                    image={image}
-                  />
+                  <MineboxItem id={id} name={name} rarity={rarity} image={image} level={item.level ?? 0} />
                 </div>
               )
             })}
           </div>
 
-          {/* Przycisk Load More */}
-          <div className="my-4 flex flex-col items-center gap-2">
-            {shouldShowLoadMore() && (
-              <Button
-                onClick={handleLoadMore}
-                disabled={isLoadingMore}
-                variant="secondary"
-                size="lg"
-              >
-                {isLoadingMore ? "Loading..." : "Load More"}
-              </Button>
-            )}
-          </div>
-
-          {/* Informacja o ładowaniu przy pierwszym załadowaniu */}
-          {Object.keys(mineboxItems).length === 0 && (
+          {filteredItems.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">
-              Loading items...
+              No items found.
             </div>
           )}
         </div>
