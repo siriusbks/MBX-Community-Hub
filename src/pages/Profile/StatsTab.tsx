@@ -2,6 +2,7 @@ import { Card, CardContent } from "@ui/card";
 import { Activity, ScrollIcon, SkullIcon } from "lucide-react";
 import { type PlayerData } from "../../types/profile";
 import { Separator } from "@components/ui/separator";
+import { useTranslation } from 'react-i18next';
 
 export function StatsTab({ data }: { data: PlayerData }) {
     if (!data.data?.ATTRIBUTED_STATS?.base || Object.keys(data.data.ATTRIBUTED_STATS.base).length === 0) {
@@ -20,6 +21,8 @@ export function StatsTab({ data }: { data: PlayerData }) {
                 const totalValue = baseValue + scrollsValue;
 
                 const imageSrc = `/media/attributes/${statName}.png`;
+
+                const { t } = useTranslation('profile');
 
                 return (
                     <Card

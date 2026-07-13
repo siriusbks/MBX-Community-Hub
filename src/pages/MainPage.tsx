@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Button } from "@ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@ui/alert"
 import { Globe, InfoIcon } from "lucide-react"
@@ -6,7 +6,7 @@ import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { NAV_LINKS } from "@const/nav"
+import { useNavLinks } from "@const/nav"
 
 
 
@@ -18,32 +18,34 @@ interface ServerStatus {
   }
 }
 
-// Spłaszcza NAV_LINKS: zwykłe linki + wszystkie items z dropdownów
-const FEATURE_ITEMS = NAV_LINKS.flatMap((item) =>
-  "dropdown" in item && item.dropdown
-    ? item.items.map((sub) => ({
-        id: sub.id,
-        to: sub.to,
-        icon: sub.icon,
-        label: sub.label,
-        desc: sub.desc,
-        badge: sub.badge,
-      }))
-    : [
-        {
-          id: item.id,
-          to: item.to,
-          icon: item.icon,
-          label: item.label,
-          desc: item.desc,
-          badge: undefined,
-        },
-      ],
-)
 
 export function Home() {
+  const NAV_LINKS = useNavLinks()
   const { t } = useTranslation()
   const [status, setStatus] = useState<ServerStatus | null>(null)
+
+  // Spłaszcza NAV_LINKS: zwykłe linki + wszystkie items z dropdownów
+  const FEATURE_ITEMS = useMemo(() => NAV_LINKS.flatMap((item) =>
+    "dropdown" in item && item.dropdown
+      ? item.items.map((sub) => ({
+          id: sub.id,
+          to: sub.to,
+          icon: sub.icon,
+          label: sub.label,
+          desc: sub.desc,
+          badge: sub.badge,
+        }))
+      : [
+          {
+            id: item.id,
+            to: item.to,
+            icon: item.icon,
+            label: item.label,
+            desc: item.desc,
+            badge: undefined,
+          },
+        ],
+  ), [NAV_LINKS])
 
   useEffect(() => {
     let cancelled = false
@@ -104,13 +106,13 @@ export function Home() {
           {playersLabel}
         </Badge>
         <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">
-          {t("homepage.title")}
+          {t("mainpage.title")}
         </h2>
         <h1 className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-transparent drop-shadow-[0_4px_0_#5d3a00]">
           MBX COMMUNITY
         </h1>
         <p className="mt-2 max-w-xl text-center text-sm font-light">
-          {t("homepage.description")}
+          {t("mainpage.description")}
         </p>
         <span className="mt-4 flex gap-2">
           <Link to="/items">
@@ -129,9 +131,11 @@ export function Home() {
 
       {/* Website Features */}
       <div className="gap mx-auto flex w-full max-w-4xl flex-col">
-        <span className="text-lg text-primary">Website Features</span>
+        <span className="text-lg text-primary">
+          {t("mainpage.features.web.title")}
+        </span>
         <span className="mb-4 text-xs leading-none">
-          Website Features Description
+          {t("mainpage.features.web.description")}
         </span>
         <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
           {FEATURE_ITEMS.map(({ id, to, icon: Icon, label, desc, badge }) => (
