@@ -48,23 +48,14 @@ export const AppRoutes: FC = () => {
             <Route path="/market/bazaar" element={<BazaarPage />} />
             <Route path="/market/gem-exchange" element={<GemExchangePage />} />
 
-            {/* Community */}
             <Route path="/community" element={<CommunityPage />} />
-
-            {/* Profile */}
             <Route path="/profile" element={<ProfilePage />} />
-
-            {/* Votes */}
             <Route path="/votes" element={<VotePage />} />
-
-            {/* Shops */}
             <Route path="/shops" element={<ShopsPage />} /> 
 
             {/* Others */}
             <Route path="/contribute" element={<ContributePage />} />
             <Route path="/changelog" element={<ChangelogPage />} />
-
-            {/* Events */}
             <Route path="/events" element={<EventTemplate />} />
 
             {/* Errors */}

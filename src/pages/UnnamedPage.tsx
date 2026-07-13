@@ -113,7 +113,7 @@ export function ShopsPage() {
             <PageTitle title="Shops" description="Description" />
 
             <span className="flex flex-col sm:flex-row gap-2">
-                <Card className="px-4 py-0 items-center justify-center text-lg">{displayTime}  </Card>
+                <Card className="w-24 px-4 py-0 items-center justify-center text-lg">{displayTime}  </Card>
 
                 <Alert variant="default" className="flex items-center justify-center gap-0 sm:gap-4 flex-col sm:flex-row py-2">
                     <span className="flex flex-row w-full sm:w-fit">
@@ -179,7 +179,12 @@ export function ShopsPage() {
                             )}
                             {!shop.offer && shop.isOpen && (
                                 <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0">
-                                   <p>INFO ABOUT RELOAD</p>
+                                    <p className="text-xs text-muted-foreground">
+                                        Offert:
+                                    </p>
+                                    <p className="text-sm max-w-24 leading-none ">
+                                        Not Found
+                                    </p>
                                 </div>
                             )}
                         </Card>

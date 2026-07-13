@@ -28,5 +28,7 @@
     "mainpage.features.profile.title": "Profile",
     "mainpage.features.profile.description": "View and edit your profile",
     "mainpage.features.votes.title": "Votes",
-    "mainpage.features.votes.description": "Vote for your favorite features and content"
+    "mainpage.features.votes.description": "Vote for your favorite features and content",
+    "mainpage.features.shops.title": "Shops",
+    "mainpage.features.shops.description": "Browse available shops and their inventory"
 }
