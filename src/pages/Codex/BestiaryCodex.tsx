@@ -182,6 +182,13 @@ function getRecipeIngredientSlotsWithoutIntermediates(
   }, [])
 }
 
+const PROXY_BASE_URL = "https://mineboxadditions.bartier.me/proxy"
+
+function buildProxyUrl(targetUrl: string): string {
+  const params = new URLSearchParams({ url: targetUrl })
+  return `${PROXY_BASE_URL}?${params.toString()}`
+}
+
 export function BestiaryCodexPage() {
   const [creatures, setCreatures] = useState<BestiaryCreature[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -220,9 +227,8 @@ export function BestiaryCodexPage() {
         let page = 1
         const accumulated: BestiaryCreature[] = []
         while (true) {
-          const r = await fetch(
-            `https://api.minebox.co/bestiary?page=${page}&locale=en`
-          )
+          const minebox_api = `https://api.minebox.co/bestiary?page=${page}&locale=en`
+          const r = await fetch(buildProxyUrl(minebox_api))
           if (!r.ok) throw new Error(`Bestiary API error: ${r.status}`)
           const data: BestiaryResponse = await r.json()
           accumulated.push(...(data.creatures || []))
@@ -256,14 +262,12 @@ export function BestiaryCodexPage() {
       setIsDetailsLoading(true)
       setDetailsError(null)
       try {
-        let response = await fetch(
-          `https://api.minebox.co/bestiary/${selectedCreatureId}?locale=en`
-        )
+        const primaryUrl = `https://api.minebox.co/bestiary/${selectedCreatureId}?locale=en`
+        let response = await fetch(buildProxyUrl(primaryUrl))
 
         if (!response.ok) {
-          response = await fetch(
-            `https://api.minebox.co/bestiary/${selectedCreatureId}`
-          )
+          const fallbackUrl = `https://api.minebox.co/bestiary/${selectedCreatureId}`
+          response = await fetch(buildProxyUrl(fallbackUrl))
         }
 
         if (!response.ok) {
