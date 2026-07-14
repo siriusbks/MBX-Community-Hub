@@ -1,4 +1,10 @@
 {
+    "items.treasure_common": "Common Treasure",
+    "items.treasure_epic": "Epic Treasure",
+    "items.treasure_legendary": "Legendary Treasure",
+    "items.treasure_mythic": "Mythic Treasure",
+    "items.treasure_rare": "Rare Treasure",
+    "items.treasure_uncommon": "Uncommon Treasure",
     "items.shoal_tropical": "Tropical Shoal",
     "items.shoal_coral": "Coral Shoal",
     "items.shoal_dark_jungle": "Jungle Shoal",
