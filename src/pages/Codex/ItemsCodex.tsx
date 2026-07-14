@@ -27,6 +27,8 @@ import {
   SelectValue,
 } from "@components/ui/select"
 import { CodexNav } from "@components/minebox/codex-nav"
+import { BestiaryItem } from "@components/minebox/bestiary"
+import { Link } from "react-router-dom"
 
 // Katalog przedmiotów (~4MB, z osadzonymi obrazkami base64) — NIE importowany statycznie,
 // żeby nie trafiał do głównego bundla. Wczytywany asynchronicznie po zamontowaniu strony (patrz useEffect niżej).
@@ -160,7 +162,7 @@ export function ItemsCodex() {
 
         const ids = new Set<string>()
         Object.values(json as Record<string, string[]>).forEach((list) => {
-          ;(list ?? []).forEach((itemId) => ids.add(itemId))
+          ; (list ?? []).forEach((itemId) => ids.add(itemId))
         })
 
         setMuseumItemIds(ids)
@@ -360,7 +362,7 @@ export function ItemsCodex() {
         </div>
 
         {itemDetailsData && (
-          <div className="flex h-full w-1/3 flex-col gap-2 custom-scrollbar overflow-y-auto pr-2">
+          <div className="flex  min-h-0  w-1/3 flex-col gap-2 custom-scrollbar overflow-y-auto pr-2">
             <RarityBorder
               rarity={itemDetailsData.rarity.toLowerCase()}
               className="rounded-lg border-[8px]"
@@ -446,17 +448,17 @@ export function ItemsCodex() {
                   </p>
                 </span>*/}
                 {auctionData && auctionData.price_per_unit !== 0 && !auctionLoading && (
-                <span className="flex flex-row gap-1 text-xs">
-                  <p className="mr-auto">Price (Action House)</p>
-                  <p>
-                    {auctionLoading
-                      ? "..."
-                      : auctionData
-                        ? auctionData.price_per_unit.toLocaleString()
-                        : "????"}
-                  </p>
-                  <img src="/media/currency/GOLD.png" className="size-4" />
-                </span>
+                  <span className="flex flex-row gap-1 text-xs">
+                    <p className="mr-auto">Price (Action House)</p>
+                    <p>
+                      {auctionLoading
+                        ? "..."
+                        : auctionData
+                          ? auctionData.price_per_unit.toLocaleString()
+                          : "????"}
+                    </p>
+                    <img src="/media/currency/GOLD.png" className="size-4" />
+                  </span>
                 )}
                 {itemDetailsData?.stats && (
                   <div>
@@ -508,7 +510,7 @@ export function ItemsCodex() {
             )}
 
             {itemDetailsData?.recipe && (
-              <Card className="flex flex-col gap-1 p-2 pb-3">
+              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
                 <span className="flex flex-row gap-1">
                   <Button size="icon-xs">
                     <Globe />
@@ -557,7 +559,7 @@ export function ItemsCodex() {
             )}
 
             {itemDetailsData?.used_in_recipes && (
-              <Card className="flex flex-col gap-1 p-2 pb-3">
+              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
                 <span className="flex flex-row gap-1">
                   <p>Used in Recipes</p>
                 </span>
@@ -578,12 +580,29 @@ export function ItemsCodex() {
                 </span>
               </Card>
             )}
-            <Card className="flex flex-col gap-1 p-2 pb-3">
-              <span className="flex flex-row gap-1">
-                <p>Dropped By</p>
-              </span>
-              <span className="grid grid-cols-7 gap-1"></span>
-            </Card>
+            {itemDetailsData?.dropped_by && (
+              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
+                <span className="flex flex-row gap-1">
+                  <p>Dropped By</p>
+                </span>
+                <span className="grid grid-cols-4 gap-2">
+
+                  {itemDetailsData?.dropped_by &&
+                    itemDetailsData.dropped_by.map((bestiary, index) => (
+                      <Link to={`/bestiary?id=${bestiary.creature_id}`}>
+                      <RarityBorder rarity="vanilla" className="items-center flex flex-col gap-0 h-full">
+                        <img src={bestiary.image}/>
+                        <p className="text-xs leading-none text-center">{bestiary.name}</p>
+                        <span className="text-xs flex flex-row items-center justify-between w-full px-1 mt-auto">
+                          <p>{bestiary.chance}%</p>
+                          <p>{bestiary.amount}</p>
+                        </span>
+                      </RarityBorder>
+                      </Link>
+                    ))}
+                </span>
+              </Card>
+            )}
           </div>
         )}
       </div>
