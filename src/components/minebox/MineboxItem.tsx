@@ -12,14 +12,14 @@ export function MineboxItem({ id, name, rarity, image, level, onClick }:
         onClick?: (id: string) => void
     }) {
     return (
-        <RarityBorder rarity={rarity} className="h-full">
+        <RarityBorder rarity={rarity} className="group h-full">
             <span
                 role="button"
                 tabIndex={0}
                 onClick={() => onClick?.(id)}
                 onKeyDown={(e) => { if (e.key === 'Enter') onClick?.(id); }}
                 className="flex flex-col items-center justify-center cursor-pointer h-full">
-                <ItemImage itemId={id} className="size-16 mb-2" />
+                <ItemImage itemId={id} className="size-16 mb-2 group-hover:scale-110 transition-transform" />
                 
                 <span className="flex flex-col gap-0 ">
                 <span className="w-full flex flex-row items-center justify-center">

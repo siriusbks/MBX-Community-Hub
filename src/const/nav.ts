@@ -164,6 +164,13 @@ export const useNavLinks = (): NavItem[] => {
       desc: t("mainpage.features.community.description"),
     },
     {
+      id: "shops",
+      to: "/shops",
+      icon: Store,
+      label: t("mainpage.features.shops.title"),
+      desc: t("mainpage.features.shops.description"),
+    },
+    {
       id: "profile",
       to: "/profile",
       icon: User,

@@ -9,7 +9,7 @@ import "./i18n";
 import { Ripple } from "@components/ripple";
 import { TooltipProvider } from "@components/ui/tooltip";
 
-const FULLSCREEN_LAYOUT_PATHS = ["/items", "/codex/ships", "/codex/classes", "/codex/bestiary"];
+const FULLSCREEN_LAYOUT_PATHS = ["/items", "/ships", "/classes", "/bestiary"];
 
 function shouldUseFullscreenLayout(pathname: string) {
     return FULLSCREEN_LAYOUT_PATHS.some((path) =>
