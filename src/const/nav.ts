@@ -16,6 +16,7 @@ import {
   Tent,
   Gem,
   User,
+  Album,
 } from "lucide-react"
 import { useTranslation } from 'react-i18next';
 
@@ -107,6 +108,14 @@ export const useNavLinks = (): NavItem[] => {
           icon: Anvil,
           label: t("mainpage.features.equipment.title"),
           desc: t("mainpage.features.equipment.description"),
+          badge: "Soon",
+        },
+        {
+          id: "museum",
+          to: "/tools/museum",
+          icon:Album,
+          label: t("mainpage.features.museum.title"),
+          desc: t("mainpage.features.museum.description"),
           badge: "Soon",
         },
         {
