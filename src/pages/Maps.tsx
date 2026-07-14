@@ -15,7 +15,7 @@ import {
 } from "@components/ui/popover"
 import { RarityBadge, RarityBorder } from "@const/rarities";
 import { Link } from "react-router-dom";
-import { FindItemName, ItemImage } from "@const/elements";
+import { FindItemName, ItemImage, getCleanItemId } from "@const/elements";
 
 const player_islands = [
   { id: "island_home", level: 0, command: "/is" },
@@ -34,7 +34,7 @@ const islands = [
 ];
 
 export function Maps() {
-  const { t } = useTranslation("maps");
+  const { t } = useTranslation(["maps", "items_maps"]);
   const [mapsData, setMapsData] = useState<any | null>(null);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null);
 
@@ -141,7 +141,7 @@ export function Maps() {
                           <span key={id} className="flex flex-row gap-0 items-center justify-start mt-1">
                             <ItemImage itemId={id} className="aspect-square size-6" />
                             <LevelBadge level={levelNum} className="w-16 scale-80">Lvl. {levelNum}</LevelBadge>
-                            <p className="items-center leading-none text-xs">{FindItemName({ itemId: id })}</p>
+                            <p className="items-center leading-none text-xs">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
                             
                           </span>
                         );

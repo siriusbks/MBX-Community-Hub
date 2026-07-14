@@ -16,7 +16,7 @@ import {
 } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
-import { ItemImage, FindItemName, ItemImageUrl } from "@const/elements"
+import { ItemImage, FindItemName, ItemImageUrl, getCleanItemId } from "@const/elements"
 import { BestiaryItem } from "@components/minebox/bestiary"
 import {
   Select,
@@ -282,7 +282,7 @@ export function MapPreview() {
 
   const params = useParams()
   const mapId = params["*"] ?? ""
-  const { t, i18n } = useTranslation("maps");
+  const { t } = useTranslation(["maps", "items_maps"]);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
@@ -651,7 +651,7 @@ export function MapPreview() {
                         />
                         <span className="flex flex-col items-start justify-center gap-0">
                           <p className="font-bold text-primary">
-                            {FindItemName({ itemId: m.cat })}
+                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], { defaultValue: FindItemName({ itemId: m.cat }) })}
                           </p>
                           <p className="flex flex-row gap-1 text-xs font-bold">
                             <span className="font-normal text-muted-foreground">
@@ -791,7 +791,7 @@ export function MapPreview() {
                               />
 
                               <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
-                                {FindItemName({ itemId: id })}
+                                {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}
                               </p>
 
                               <LevelBadge
@@ -842,7 +842,7 @@ export function MapPreview() {
                             className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                           />
                           <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
-                            {FindItemName({ itemId: id })}
+                            {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}
                           </p>
                         </div>
                       )
@@ -898,7 +898,7 @@ export function MapPreview() {
                     className="aspect-square size-4/5"
                   />
                   <p className="text-center text-xs font-bold text-primary">
-                    {FindItemName({ itemId: insect.id })}
+                    {t([`items.${getCleanItemId(insect.id)}`, `items_maps:items.${getCleanItemId(insect.id)}`], { defaultValue: FindItemName({ itemId: insect.id }) })}
                   </p>
                   <div className="flex flex-col items-center gap-0.5 text-[0.65rem] text-muted-foreground">
                     <p>
@@ -935,6 +935,7 @@ export function MapPreview() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {bestiaryData?.creatures.map((creature) => (
               <BestiaryItem
+                key={creature.id}
                 id={creature.id}
                 name={creature.name}
                 image={creature.image}
