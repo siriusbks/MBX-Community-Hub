@@ -28,21 +28,6 @@ const ALL_PROFESSIONS: StoreProfessionId[] = [
     "jeweling", "lumberjack", "mining", "shoemaking", "tailoring", "tinkering", "runeforging"
 ];
 
-const JOB_DISPLAY_NAMES: Record<StoreProfessionId, string> = {
-    alchemy: "Alchemist",
-    blacksmithing: "Blacksmith",
-    cooking: "Cook",
-    farming: "Farmer",
-    fishing: "Fisherman",
-    hunting: "Hunter",
-    jeweling: "Jeweler",
-    lumberjack: "Lumberjack",
-    mining: "Miner",
-    shoemaking: "Shoemaker",
-    tailoring: "Tailor",
-    tinkering: "Tinkerer",
-    runeforging: "Runeforger"
-};
 
 interface SkillInfo {
     totalXp: number;
@@ -113,7 +98,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
                 .sort((a, b) => b.info.level === a.info.level ? b.info.totalXp - a.info.totalXp : b.info.level - a.info.level)
                 .map(({ jobKey, info }, index) => {
                     const { level, currentXp, nextLevelXp, progressPercent, totalXp } = info;
-                    const formattedName = JOB_DISPLAY_NAMES[jobKey];
+                    const formattedName = t(`profile.skills.${jobKey}`);
                     const iconPath = `/media/jobs/${jobKey}.png`;
 
                     const isFeatured = index === 0 && totalXp > 0;

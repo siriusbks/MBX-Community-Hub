@@ -4,6 +4,7 @@ import { Badge } from "@components/ui/badge"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
 import { RarityBorder } from "@const/rarities"
 import { useEffect, useState } from "react"
+import { useTranslation } from 'react-i18next'
 
 type BazaarItem = {
   item_id: string
@@ -18,10 +19,10 @@ type BazaarResponse = {
   total: number
 }
 
-const categoryMap = {
+const getCategoryMap = (t: any) => ({
   categories: [
     {
-      category: "Farming",
+      category: t("market.bazaar.categorie.farming"),
       items: [
         "material-bamboo",
         "mbi-transformed_material-bamboo",
@@ -118,7 +119,7 @@ const categoryMap = {
       ],
     },
     {
-      category: "Harvestables",
+      category: t("market.bazaar.categorie.harvestables"),
       items: [
         "mbi-crop_barley",
         "mbi-seed_barley",
@@ -176,9 +177,11 @@ const categoryMap = {
       ],
     },
   ],
-}
+})
 
 export default function BazaarGrid() {
+  const { t } = useTranslation("market")
+  const categoryMap = getCategoryMap(t)
   const [items, setItems] = useState<BazaarItem[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -240,13 +243,14 @@ export default function BazaarGrid() {
   })
 
   const otherItems = items.filter((item) => !usedIds.has(item.item_id))
+  const otherCategoryName = t("market.bazaar.categorie.others")
   if (otherItems.length > 0) {
-    groupedItems["Other"] = otherItems
+    groupedItems[otherCategoryName] = otherItems
   }
 
   const orderedCategories = [
     ...categoryMap.categories.map((c) => c.category),
-    ...(groupedItems["Other"] ? ["Other"] : []),
+    ...(groupedItems[otherCategoryName] ? [otherCategoryName] : []),
   ]
 
   return (
@@ -282,12 +286,12 @@ export default function BazaarGrid() {
                     </p>
                     <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        STOCK
+                        {t("market.bazaar.stock")}
                       </p>
                       {item.stock > 0 ? (
                         <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
                       ) : (
-                        <Badge variant="secondary">No Stock</Badge>
+                        <Badge variant="secondary">{t("market.bazaar.no_stock")}</Badge>
                       )}
                     </span>
                   </span>
@@ -296,12 +300,12 @@ export default function BazaarGrid() {
                 <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
                   {item.unavailable ? (
                     <span className="flex w-full flex-row justify-center px-2">
-                      <Badge variant="secondary">Unavailable</Badge>
+                      <Badge variant="secondary">{t("market.bazaar.unavailable")}</Badge>
                     </span>
                   ) : (
                     <>
                       <span className="flex flex-row justify-between gap-2 px-2">
-                        <p className="text-[0.65rem] text-muted-foreground">SELL</p>
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.sell")}</p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.sell_price.toLocaleString()}
                           <img
@@ -313,7 +317,7 @@ export default function BazaarGrid() {
                       </span>
 
                       <span className="flex flex-row justify-between gap-2 px-2 text-xs items-center">
-                        <p className="text-[0.65rem] text-muted-foreground">BUY</p>
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.buy")}</p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.buy_price.toLocaleString()}
                           <img

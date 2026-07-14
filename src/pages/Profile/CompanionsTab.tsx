@@ -83,7 +83,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                         {Object.values(data.data.COMPANIONS.mounts || {}).map(mount => (
                             <div key={mount.id} className={`relative overflow-hidden flex flex-col items-center p-3 rounded-xl border transition-all hover:-translate-y-1 hover:shadow-lg ${data.data?.COMPANIONS?.active_mount === mount.id ? 'border-primary/50 shadow-[0_0_15px_rgba(var(--primary),0.15)] bg-primary/10' : 'border-border/40 bg-secondary/20 hover:bg-secondary/40'}`}>
                                 {data.data?.COMPANIONS?.active_mount === mount.id && (
-                                    <Badge variant="default" className="absolute top-2 right-2 text-[9px] px-1.5 py-0 h-4 bg-primary text-primary-foreground shadow-sm">Active</Badge>
+                                    <Badge variant="default" className="absolute top-2 right-2 text-[9px] px-1.5 py-0 h-4 bg-primary text-primary-foreground shadow-sm">{t('profile.companions.active')}</Badge>
                                 )}
                                 {mount.enchanted && (
                                     <Badge variant="secondary" className="absolute top-2 left-2 text-[9px] px-1.5 py-0 h-4 bg-purple-500/20 text-purple-400 border-purple-500/30">Enchant</Badge>

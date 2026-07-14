@@ -3,6 +3,7 @@ import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { ArrowRight } from "lucide-react"
 import { PlayerFooter } from "@components/minebox/smth"
+import { useTranslation } from 'react-i18next'
 
 type GemExchangeOrder = {
   id: number
@@ -38,6 +39,7 @@ async function fetchOrders(type: "buy" | "sell") {
 }
 
 export function GemExchange() {
+  const { t } = useTranslation("market")
   const [buyOrders, setBuyOrders] = useState<GemExchangeOrder[]>([])
   const [sellOrders, setSellOrders] = useState<GemExchangeOrder[]>([])
   const [loading, setLoading] = useState(true)
@@ -79,13 +81,13 @@ export function GemExchange() {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">{label}</h3>
-        <Badge variant="outline">{orders.length} ofert</Badge>
+        <Badge variant="outline">{orders.length} {t("market.gem_exchange.offers")}</Badge>
       </div>
       {loading ? (
-        <div className="text-sm text-muted-foreground">Ładowanie...</div>
+        <div className="text-sm text-muted-foreground">Loading...</div>
       ) : orders.length === 0 ? (
         <div className="text-sm text-muted-foreground">
-          Brak danych w tej chwili.
+          No data at this time.
         </div>
       ) : (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -93,7 +95,7 @@ export function GemExchange() {
             <Card key={order.id} className="p-4">
               <div className="flex items-center justify-center gap-2">
                 <div className="flex flex-col items-center justify-center -space-y-1">
-                  <Badge className="z-5">GIVE</Badge>
+                  <Badge className="z-5 uppercase">{t("market.gem_exchange.give")}</Badge>
                   <img
                     src={`/media/currency/${order.order_type === "SELL" ? "GOLD" : "GEM"}.png`}
                     className="h-20 w-20"
@@ -109,7 +111,7 @@ export function GemExchange() {
                   <ArrowRight />
                 </div>
                 <div className="flex flex-col items-center justify-center -space-y-1">
-                  <Badge className="z-5">TAKE</Badge>
+                  <Badge className="z-5 uppercase">{t("market.gem_exchange.take")}</Badge>
                   <img
                     src={`/media/currency/${order.order_type === "BUY" ? "GOLD" : "GEM"}.png`}
                     className="h-20 w-20"

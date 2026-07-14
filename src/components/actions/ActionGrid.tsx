@@ -21,6 +21,7 @@ import {
   HoverCardTrigger,
 } from "@components/ui/hover-card"
 import { Button } from "@components/ui/button"
+import { useTranslation } from "react-i18next"
 
 type AuctionListing = {
   id: number
@@ -52,6 +53,7 @@ function getDaysLeft(expiresAt: string) {
 }
 
 export default function ActionGrid() {
+  const { t } = useTranslation("market")
   const [listings, setListings] = useState<AuctionListing[]>([])
   const [offset, setOffset] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -116,7 +118,7 @@ export default function ActionGrid() {
     <div className="flex flex-col items-center gap-4">
       <span className="flex w-full gap-2">
         <Input
-          placeholder="Search items..."
+          placeholder={t("market.action_house.search_placeholder")}
           className="h-8 w-full minebox-shadow"
           value={itemId}
           onChange={(e) => setItemId(e.target.value)}
@@ -130,9 +132,9 @@ export default function ActionGrid() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="time">Time</SelectItem>
-              <SelectItem value="price">Price</SelectItem>
-              <SelectItem value="level">Level</SelectItem>
+              <SelectItem value="time">{t("market.action_house.sort_by_time")}</SelectItem>
+              <SelectItem value="price">{t("market.action_house.sort_by_price")}</SelectItem>
+              <SelectItem value="level">{t("market.action_house.sort_by_level")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -146,8 +148,8 @@ export default function ActionGrid() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="asc">Ascending</SelectItem>
-              <SelectItem value="desc">Descending</SelectItem>
+              <SelectItem value="asc">{t("market.action_house.order_asc")}</SelectItem>
+              <SelectItem value="desc">{t("market.action_house.order_desc")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -190,7 +192,7 @@ export default function ActionGrid() {
                     </span>
                   )}
                   <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    Time Left: <p>{getDaysLeft(listing.expires_at)} Days</p>
+                    {t("market.action_house.time_left")} <p>{getDaysLeft(listing.expires_at)} {t("market.action_house.days")}</p>
                   </span>
                 </HoverCardContent>
               </HoverCard>
@@ -218,7 +220,7 @@ export default function ActionGrid() {
           size="lg"
           className=""
         >
-          {loading ? "Ładowanie..." : "Load More"}
+          {loading ? "Loading..." : t("market.action_house.load_more")}
         </Button>
       )}
     </div>
