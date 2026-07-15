@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react"
 import { Button } from "@ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@ui/alert"
-import { Globe, InfoIcon } from "lucide-react"
+import { BookOpen, InfoIcon, User } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { useTranslation } from "react-i18next"
@@ -116,13 +116,13 @@ export function Home() {
         <span className="mt-4 flex gap-2">
           <Link to="/items">
             <Button size="lg" className="tracking-wider">
-              <Globe className="mt-0.5" />
-              Codex
+              <BookOpen className="mt-0.5" />
+              {t("mainpage.features.codex.title")}
             </Button>
           </Link>
           <Link to="/profile">
             <Button size="lg" className="tracking-wider" variant="secondary">
-              <Globe className="mt-0.5" /> Profile
+              <User className="mt-0.5" /> {t("mainpage.features.profile.title")}
             </Button>
           </Link>
         </span>

@@ -122,7 +122,7 @@ export function Maps() {
                 </PopoverTrigger>
                 <PopoverContent className="gap-0 minebox-shadow bg-linear-to-b from-card to-card-dark">
                   <PopoverHeader className="gap-0">
-                    <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">Available Resources</PopoverTitle>
+                    <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">{t("maps.availabe_resources")}</PopoverTitle>
                   </PopoverHeader>
                   <div className="max-w-xs">
                     {harvestablesData?.locations?.servers?.[map.id] ? (

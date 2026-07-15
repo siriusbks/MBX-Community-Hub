@@ -17,6 +17,7 @@ import {
   Gem,
   User,
   Album,
+  Scale,
 } from "lucide-react"
 import { useTranslation } from 'react-i18next';
 
@@ -136,7 +137,7 @@ export const useNavLinks = (): NavItem[] => {
         {
           id: "action-house",
           to: "/market/action-house",
-          icon: Gavel,
+          icon: Scale,
           label: t("mainpage.features.action-house.title"),
           desc: t("mainpage.features.action-house.description"),
         },

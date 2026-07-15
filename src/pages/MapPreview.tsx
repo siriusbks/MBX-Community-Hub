@@ -854,14 +854,14 @@ export function MapPreview() {
 
           {/* Settings */}
           <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
-            <p>Preview Settings</p>
+            <p>{t("maps:maps.preview_settings")}</p>
             <div className="flex items-center space-x-2">
               <Switch id="regions" checked={showRegions} onCheckedChange={setShowRegions} />
-              <Label htmlFor="regions">Show Regions</Label>
+              <Label htmlFor="regions">{t("maps:maps.show_regions")}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Switch id="bestairy" checked={showBestiary} onCheckedChange={setShowBestiary} />
-              <Label htmlFor="bestairy">Shop Bestiary Spawn</Label>
+              <Label htmlFor="bestairy">{t("maps:maps.show_bestiary")}</Label>
             </div>
           </Card>
         </Card>
@@ -870,7 +870,7 @@ export function MapPreview() {
       {/* Insects */}
       <div className="w-full gap-2">
         <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
-          Insects
+          {t("maps:maps.insects")}
         </p>
 
         {isInsectsLoading ? (
@@ -920,7 +920,7 @@ export function MapPreview() {
       {/* Bestiary */}
       <div className="w-full gap-2 mt-8">
         <p className="text-xl mb-2 text-center font-bold text-primary uppercase">
-          Bestiary
+          {t("maps:maps.bestiary")}
         </p>
 
         {isBestiaryLoading ? (
