@@ -1,6 +1,6 @@
 
 import type { Equipment, EquippedItems, PlayerStats } from "types/equipment";
-import { computePetBoostedStats } from "./petStat";
+import { computePetBoostedStats } from "./petStats";
 
 export const calculateTotalStats = (equippedItems: {
     [key: string]: Equipment | null;

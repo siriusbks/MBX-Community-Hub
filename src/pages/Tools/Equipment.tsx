@@ -36,6 +36,7 @@ import {
 import { useClasses } from "@components/equipment/useClass";
 import type { MineboxClass } from "types/class";
 import { getClassNumericStats } from "@components/utils/classStats";
+import { usePlayerStats } from "@components/equipment/usePlayerStats";
 
 function addFlatToRanges(
     base: Record<string, number[]>,
@@ -74,6 +75,12 @@ const Equipment: React.FC = () => {
 
     const { classes, loadingClasses, errorClasses } = useClasses();
     const [classTier, setClassTier] = useState(1);
+
+    // If the person is logged in (nick stored the same way Navbar/Profile do
+    // it), fetch and add their own base stats to the total. Soft-fails: no
+    // nick, or the fetch failing, just means 0 contribution — it never
+    // blocks the rest of the page.
+    const { playerStats, loadingPlayerStats } = usePlayerStats();
 
     const classEquipment = useMemo<Equipment[]>(
         () =>
@@ -227,8 +234,9 @@ const Equipment: React.FC = () => {
         const withSkulls = addFlatToRanges(base, flatFromSkulls);
         const withSets = addFlatToRanges(withSkulls, flatFromSets);
         const withClass = addFlatToRanges(withSets, flatFromClass);
-        return withClass;
-    }, [equippedItems, petGeneration, petTrait, petEnchanted, flatFromSkulls, flatFromSets, flatFromClass]);
+        const withPlayer = addFlatToRanges(withClass, playerStats);
+        return withPlayer;
+    }, [equippedItems, petGeneration, petTrait, petEnchanted, flatFromSkulls, flatFromSets, flatFromClass, playerStats]);
 
     const selectedSlotData = selectedSlot ? EQUIPMENT_SLOTS.find((s) => s.id === selectedSlot) : null;
 
@@ -237,7 +245,7 @@ const Equipment: React.FC = () => {
         [selectedSkulls]
     );
 
-    if (loading || loadingSets || loadingClasses) {
+    if (loading || loadingSets || loadingClasses || loadingPlayerStats) {
         return (
             <div className="h-screen w-screen flex items-center justify-center bg-gray-900 text-white">
                 <Loader2 className="w-6 h-6 mr-2 animate-spin" />
@@ -371,6 +379,7 @@ const Equipment: React.FC = () => {
                                             classes={classes}
                                             classTier={classTier}
                                             setClassTier={setClassTier}
+                                            flatFromPlayer={playerStats}
                                         />
                                     </div>
                                 )}

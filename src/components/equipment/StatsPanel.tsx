@@ -10,10 +10,10 @@
 import { useMemo } from "react";
 import type { Equipment, PlayerStats } from "types/equipment";
 import type { SetBonus } from "./useSet";
-import { computePetBoostedStats, TRAIT_STAT_MAP } from "./petStat";
+import { computePetBoostedStats, TRAIT_STAT_MAP } from "./petStats";
 import { formatStatRange } from "./statsCalculator";
 import { stats as statList, SmallStatItem } from "@const/statsAndDamage";
-import { TrendingUp, Plus, Package, Squirrel, Dna, Skull, Swords } from "lucide-react";
+import { TrendingUp, Plus, Package, Squirrel, Dna, Skull, Swords, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SKULLS } from "@const/skulls";
 import type { MineboxClass } from "types/class";
@@ -40,6 +40,7 @@ interface Props {
     equippedItems: { [key: string]: Equipment | null };
     setsById: Record<string, SetBonus>;
     flatFromSets?: Record<string, number>;
+    flatFromPlayer?: Record<string, number>;
     skullIds?: string[];
     skullNames?: string[];
     flatFromSkulls?: Record<string, number>;
@@ -63,6 +64,7 @@ export const StatsPanel: React.FC<Props> = ({
     equippedItems,
     setsById,
     flatFromSets,
+    flatFromPlayer,
     skullIds,
     skullNames = [],
     flatFromSkulls,
@@ -250,6 +252,11 @@ export const StatsPanel: React.FC<Props> = ({
                             (flatFromSets as Record<string, number>)[name] !== 0;
  
                         const isBoostedByClass = classNumericStatNames.has(name);
+
+                        const isBoostedByPlayer =
+                            flatFromPlayer &&
+                            Object.prototype.hasOwnProperty.call(flatFromPlayer, name) &&
+                            (flatFromPlayer as Record<string, number>)[name] !== 0;
  
                         const fromPet = !!petBoosted[name];
                         let showIconTrait = false;
@@ -280,9 +287,9 @@ export const StatsPanel: React.FC<Props> = ({
                                     />
                                     {name}
 
+                                    {isBoostedByPlayer && <User className="w-4 h-4 text-cyan-400" />}
                                     {isBoostedBySkull && <Skull className="w-4 h-4 text-yellow-400" />}
                                     {isBoostedBySet && <Package className="w-4 h-4 text-fuchsia-500" />}
-                                    {isBoostedByClass && <Swords className="w-4 h-4 text-blue-400" />}
                                     {showIconTrait && <Squirrel className="w-4 h-4 text-yellow-600" />}
                                     {showIconGen && <Dna className="w-4 h-4 text-yellow-600" />}
                                     {isBoostedByPass && (
@@ -290,6 +297,7 @@ export const StatsPanel: React.FC<Props> = ({
                                             PASS
                                         </span>
                                     )}
+                                    {isBoostedByClass && <Swords className="w-4 h-4 text-blue-400" />}
                                 </span>
 
                                 <span className="ml-auto font-bold text-white max-[430px]:basis-full max-[430px]:text-right">
