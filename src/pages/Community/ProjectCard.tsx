@@ -32,7 +32,7 @@ export interface ProjectProps {
 
 export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     const { links } = project;
-    const { t } = useTranslation("projects");
+    const { t } = useTranslation(["projects", "community"]);
     const [version, setVersion] = useState<string | null>(null);
     const [fetchedDescription, setFetchedDescription] = useState<string | null>(null);
 
@@ -107,7 +107,7 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                 {project.badge && project.badge.length > 0 && (
                     <div className="absolute top-0 right-0 z-20">
                         <Badge className="rounded-none rounded-bl-xl shadow-md uppercase tracking-wider font-bold px-3 py-1 bg-primary text-primary-foreground">
-                            {t(`badge.${project.badge}`, project.badge)}
+                            {t(`community:badge.${project.badge}`, project.badge)}
                         </Badge>
                     </div>
                 )}

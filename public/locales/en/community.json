@@ -1,4 +1,6 @@
 {
     "community.title": "Community Projects",
-    "community.description": "Discover amazing projects created by the Minebox community, including Mods, Resource Packs, and more."
+    "community.description": "Discover amazing projects created by the Minebox community, including Mods, Resource Packs, and more.",
+    "badge.Recommended": "Recommended",
+    "badge.Popular": "Popular"
 }
