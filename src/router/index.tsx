@@ -5,7 +5,7 @@ import ContributePage from "@pages/Contribute";
 import { EventTemplate } from "@pages/Events/template";
 import MapPreview from "@pages/MapPreview";
 import ProfilePage from "@pages/Profile";
-import { ShopsPage } from "@pages/UnnamedPage";
+import { ShopsPage } from "@pages/Shops";
 import VillagePreview from "@pages/VillagePreview";
 import { VotePage } from "@pages/Votes";
 import { lazy, type FC } from "react";

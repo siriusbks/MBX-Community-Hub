@@ -24,5 +24,19 @@
     "market.gem_exchange.description": "The gem exchange is a place where players can exchange gems.",
     "market.gem_exchange.offers": "Offers",
     "market.gem_exchange.give": "Give",
-    "market.gem_exchange.take": "Take"
+    "market.gem_exchange.take": "Take",
+    "market.shops.title": "Shops",
+    "market.shops.description": "Last known shop offers.",
+    "market.shops.Buckstar": "BuckStar",
+    "market.shops.Bakery": "Bakery",
+    "market.shops.Sharkoffe": "Sharkoffe",
+    "market.shops.PAINTINGS_SELLER": "Paintings Seller",
+    "market.shops.SUSHI_SELLER": "Sushi Seller",
+    "market.shops.Mouse": "Mouse",
+    "market.shops.REGGAE_DEALER": "Reggae Dealer",
+    "market.shops.open_hours": "Open hours:",
+    "market.shops.open": "Open",
+    "market.shops.closed": "Closed",
+    "market.shops.offert": "Offert",
+    "market.shops.not_found": "Not found"
 }
