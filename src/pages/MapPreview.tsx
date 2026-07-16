@@ -282,7 +282,7 @@ export function MapPreview() {
 
   const params = useParams()
   const mapId = params["*"] ?? ""
-  const { t } = useTranslation(["maps", "items_maps"]);
+  const { t } = useTranslation(["maps", "items_maps", "insects"]);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
@@ -898,7 +898,7 @@ export function MapPreview() {
                     className="aspect-square size-4/5"
                   />
                   <p className="text-center text-xs font-bold text-primary">
-                    {t([`items.${getCleanItemId(insect.id)}`, `items_maps:items.${getCleanItemId(insect.id)}`], { defaultValue: FindItemName({ itemId: insect.id }) })}
+                    {t(`insects:insects.${getCleanItemId(insect.id)}`, { defaultValue: FindItemName({ itemId: insect.id }) })}
                   </p>
                   <div className="flex flex-col items-center gap-0.5 text-[0.65rem] text-muted-foreground">
                     <p>
