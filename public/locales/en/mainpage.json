@@ -9,6 +9,7 @@
     "mainpage.features.maps.description": "Explore the world of Minebox",
     "mainpage.features.codex.title": "Codex",
     "mainpage.features.items.title": "Items",
+    "mainpage.features.market.title": "Market",
     "mainpage.features.items.description": "Browse all items in the game",
     "mainpage.features.bestiary.title": "Bestiary",
     "mainpage.features.bestiary.description": "Discover all creatures and monsters",
@@ -33,7 +34,7 @@
     "mainpage.features.profile.title": "Profile",
     "mainpage.features.profile.description": "View and edit your profile",
     "mainpage.features.votes.title": "Votes",
-    "mainpage.features.votes.description": "Vote for your favorite features and content",
+    "mainpage.features.votes.description": "Vote on different international websites to support Minebox and get rewards!",
     "mainpage.features.shops.title": "Shops",
     "mainpage.features.shops.description": "Browse available shops and their inventory"
 }

@@ -342,7 +342,7 @@ export function CollectionsPage() {
                                                                 <div className="flex justify-between text-[10px] text-muted-foreground/80 font-medium mt-1.5">
                                                                     <span><strong className="text-white/90 text-[11px]">{formatNumber(currentValue)}</strong> {t("collections.progress.harvested")}</span>
                                                                     {!isMaxed ? (
-                                                                        <span><strong className="text-white/90 text-[11px]">{formatNumber(toNextLevel)}</strong> {t("collections.until-next-level")}</span>
+                                                                        <span><strong className="text-white/90 text-[11px]">{formatNumber(toNextLevel)} </strong> {t("collections.until-next-level")}</span>
                                                                     ) : (
                                                                         <span className="text-yellow-400/90 font-bold uppercase tracking-wider">{t("collections.progress.maxed")}</span>
                                                                     )}
@@ -386,7 +386,7 @@ export function CollectionsPage() {
                                                                                 <span className={`text-sm font-black tracking-tight ${isCompleted ? 'text-white' : 'text-white/80'}`}>
                                                                                     {formatNumber(level.amount)}
                                                                                 </span>
-                                                                                <span className="text-[10px] text-muted-foreground hidden sm:inline">{t("collection.progress.harvested")}</span>
+                                                                                <span className="text-[10px] text-muted-foreground hidden sm:inline">{t("collections.progress.harvested")}</span>
                                                                             </div>
                                                                         </div>
                                                                         <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded shadow-inner">
