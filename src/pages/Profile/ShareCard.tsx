@@ -90,7 +90,7 @@ export function ShareCard({ data, nick }: { data: PlayerData, nick: string | nul
                 </div>
                     
                     {/* Stats */}
-                <span className="w-full grid grid-cols-4 gap-4">
+                <span className="w-full grid grid-cols-4 gap-2">
                     <div className="backdrop-blur-xs bg-background/40 rounded flex flex-col items-center border border border-foreground/20 p-2">
                         <SwordsIcon className="w-2/3" />
                         <p className="text-[0.6rem] uppercase">Playtime</p>
@@ -116,35 +116,38 @@ export function ShareCard({ data, nick }: { data: PlayerData, nick: string | nul
             </span>
 
             <span className="z-3 absolute top-0 right-0 w-6/11 h-full p-4 pl-1 flex flex-col">
-                <p>TEXT</p>
-                <span className="grid grid-cols-3 gap-4 h-full">
+                <p>PVP Stats</p>
+                <span className="grid grid-cols-3 gap-2 h-full">
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                 </span>
-                <p className="mt-[1rem]">TEXT</p>
-                <span className="grid grid-cols-4 gap-4 h-full">
+                <p className="mt-[1rem]">Jobs Professions</p>
+                <span className="grid grid-cols-4 gap-2 h-full">
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                 </span>
-                <span className="grid grid-cols-3 gap-4 mt-4 h-full">
+                <span className="grid grid-cols-3 gap-2 mt-2 h-full">
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                 </span>
-                <span className="grid grid-cols-3 gap-4 mt-4  h-full">
+                <span className="grid grid-cols-3 gap-2 mt-2  h-full">
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                 </span>
-                <span className="grid grid-cols-3 gap-4 mt-4  h-full">
+                <span className="grid grid-cols-3 gap-2 mt-2  h-full">
                     <Card></Card>
                     <Card></Card>
                     <Card></Card>
                 </span>
             </span>
+
+            {/* WATERMARK */}
+            <p className="z-3 absolute w-full bottom-0 left-0 text-center text-[0.6rem] text-muted-foreground">TINY WATERMARK FOR FUTURE :o</p>
         </div>
     )
 }

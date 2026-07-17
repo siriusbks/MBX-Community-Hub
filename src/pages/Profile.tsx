@@ -39,6 +39,7 @@ import {
   SwordsIcon,
   Skull,
   Network,
+  Share2Icon,
 } from "lucide-react"
 import { LevelBadge } from "@const/levels"
 import { GuildDialog } from "@pages/Profile/GuildDialog"
@@ -478,17 +479,16 @@ export function ProfilePage() {
                     </span>
                   </div>
                 </div>
+              </div>
 
-                {/* Profile Card Button at Bottom Left */}
-                
-                                <div>
+              
                                     <Dialog>
                                         <DialogTrigger asChild>
-                                            <Button variant="secondary" size="sm" className="gap-2 bg-background/40 backdrop-blur-md hover:bg-secondary/80 border border-white/5 shadow-sm transition-all">
-                                                <Eye className="w-4 h-4" /> <span>Preview Profile Card</span>
+                                            <Button variant="secondary" size="icon-lg" className="absolute top-0 left-4 gap-2 bg-background/40 backdrop-blur-md hover:bg-secondary/80 border border-white/5 shadow-sm transition-all">
+                                                <Share2Icon className="w-4 h-4" />
                                             </Button>
                                         </DialogTrigger>
-                                        <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl z-[100]">
+                                        <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl  z-9999">                                            
                                             <DialogHeader>
                                                 <DialogTitle>Share your Player Card</DialogTitle>
                                                 <DialogDescription>
@@ -509,8 +509,6 @@ export function ProfilePage() {
                                             </Button>
                                         </DialogContent>
                                     </Dialog>
-                                </div>
-              </div>
             </CardContent>
           </Card>
 
