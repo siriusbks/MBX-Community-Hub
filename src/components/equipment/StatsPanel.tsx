@@ -265,7 +265,9 @@ export const StatsPanel: React.FC<Props> = ({
                         } else if (petTrait && fromPet) {
                             const petJob = Object.entries(TRAIT_STAT_MAP).find(([, val]) => val.trait === petTrait)?.[0];
                             const statConcerned = petJob ? TRAIT_STAT_MAP[petJob].stat : null;
-                            if (statConcerned === name) showIconTrait = true;
+                            if (statConcerned === name || (statConcerned === "FORTUNE" && isFortuneStat(name))) {
+                                showIconTrait = true;
+                            } 
                         }
                         let showIconGen = false;
                         if (petGeneration !== 1 && fromPet) showIconGen = true;

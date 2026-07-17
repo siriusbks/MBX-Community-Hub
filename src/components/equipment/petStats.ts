@@ -12,6 +12,10 @@ export const TRAIT_STAT_MAP: Record<string, { stat: string; trait: string }> = {
   eating:       { stat: "HEALTH", trait: "glutton" }
 };
 
+// FORTUNE-type stats (FORTUNE itself, plus every *_FORTUNE variant like
+// FARMING_FORTUNE, MINING_FORTUNE, etc.) are all treated as one family.
+const isFortuneStat = (stat: string) => stat === "FORTUNE" || stat.endsWith("_FORTUNE");
+
 export function jobFromTrait(trait: string | null): string | null {
   if (!trait) return null;
   return (
@@ -32,6 +36,7 @@ export function computePetBoostedStats(
 
   const { generation, trait, enchanted } = options;
   const petJob = jobFromTrait(trait);
+  const jobStat = petJob ? TRAIT_STAT_MAP[petJob]?.stat : null;
   const out: { [key: string]: [number, number] } = {};
 
   Object.entries(pet.stats).forEach(([statKey, [min, max]]) => {
@@ -43,9 +48,9 @@ export function computePetBoostedStats(
       trait &&
       petJob &&
       TRAIT_STAT_MAP[petJob]?.trait === trait &&
-      TRAIT_STAT_MAP[petJob]?.stat === statKey
+      (jobStat === statKey || (jobStat === "FORTUNE" && isFortuneStat(statKey)))
     ) {
-      coef += 0.2; // Trait bonus : +20% this stat (if it's a stat affected by the job's trait)
+      coef += 0.2; // Trait bonus : +20% this stat (or any *_FORTUNE stat, for the "persistent"/farming trait)
     }
     out[statKey] = [Math.round(min * coef), Math.round(max * coef)];
   });
