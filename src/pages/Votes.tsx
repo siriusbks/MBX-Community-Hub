@@ -146,7 +146,7 @@ export function VotePage() {
     if (error || !votes) {
         return (
             <div className="py-auto relative flex flex-col page-container">
-                <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
+                <PageTitle title={t("votes.title")} description={t("votes.desc")} />
                 <Alert variant="destructive">
                     <InfoIcon className="h-4 w-4" />
                     <AlertTitle>{t("votes.error")}</AlertTitle>
@@ -161,7 +161,7 @@ export function VotePage() {
             {/* Background */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 bg-center -z-1 top-0 w-full aspect-21/9 mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
 
-            <PageTitle title="Vote Page" description="Vote on different international websites to support Minebox and get rewards!" />
+            <PageTitle title={t("votes.title")} description={t("votes.desc")} />
 
             {!nick && (
                 <Alert className="mb-4">

@@ -132,7 +132,7 @@ export const useNavLinks = (): NavItem[] => {
       id: "market",
       dropdown: true,
       icon: Store,
-      label: "Market",
+      label: t("mainpage.features.market.title"),
       items: [
         {
           id: "action-house",
