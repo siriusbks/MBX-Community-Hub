@@ -1,4 +1,5 @@
 import { Ripple } from "@components/ripple";
+import { CloudDownloadIcon } from "lucide-react";
 
 {
   /* I Dont Know What To name that :) */
@@ -19,10 +20,14 @@ export function PlayerFooter({ playerName, className }: { playerName: string; cl
 }
 
 export function LoadingElement() {
-  return(
-    <div>
-      <Ripple className="size-16" />
-      <p>Loading...</p>
+  return (
+    <div className="mx-auto flex flex-col items-center justify-center min-h-24 -space-y-2">
+      <span className="relative inline-flex items-center justify-center">
+        <Ripple className="size-20 text-primary-dark" />
+        <CloudDownloadIcon className="text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      </span>
+      <p>Loading API Data</p>
+      <p className="text-xs text-muted-foreground mt-0.5">Please wait</p>
     </div>
   )
 }
