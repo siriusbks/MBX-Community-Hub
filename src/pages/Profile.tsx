@@ -27,6 +27,7 @@ import { SkillsTab } from "@pages/Profile/SkillsTab"
 import { CompanionsTab } from "@pages/Profile/CompanionsTab"
 import { ObjectivesTab } from "@pages/Profile/ObjectivesTab"
 import { ShipsTab } from "@pages/Profile/ShipsTab"
+import { PvpTab } from "@pages/Profile/PvpTab"
 import {
   Download,
   Activity,
@@ -38,16 +39,36 @@ import {
   SwordsIcon,
   Skull,
   Network,
+  Share2Icon,
 } from "lucide-react"
 import { LevelBadge } from "@const/levels"
 import { GuildDialog } from "@pages/Profile/GuildDialog"
 import { SkullsTab } from "@pages/Profile/SkullsTab"
+import { ShareCard } from "./Profile/ShareCard"
+
+export interface PvpStats {
+  user_id: string
+  username: string
+  elo: number
+  wins: number
+  losses: number
+  draws: number
+  trophies: number
+  win_streak: number
+  best_win_streak: number
+  total_kills: number
+  total_deaths: number
+  rank_tier: string
+}
 
 export function ProfilePage() {
   const [nick, setNick] = useState<string | null>(null)
   const [data, setData] = useState<PlayerData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const [pvpData, setPvpData] = useState<PvpStats | null>(null)
+  const [pvpLoading, setPvpLoading] = useState(false)
 
   const shareCardRef = useRef<HTMLDivElement>(null)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -129,6 +150,40 @@ export function ProfilePage() {
     }
   }, [nick])
 
+  // Fetch PvP stats when nick changes
+  useEffect(() => {
+    if (!nick) return
+
+    let mounted = true
+    setPvpLoading(true)
+
+    const fetchPvpStats = async () => {
+      try {
+        const res = await fetch(
+          `https://api.minebox.co/pvp/stats/${encodeURIComponent(nick)}`
+        )
+        if (!mounted) return
+
+        if (res.ok) {
+          const j = await res.json()
+          setPvpData(j)
+        } else {
+          setPvpData(null)
+        }
+      } catch (err) {
+        if (mounted) setPvpData(null)
+      } finally {
+        if (mounted) setPvpLoading(false)
+      }
+    }
+
+    void fetchPvpStats()
+
+    return () => {
+      mounted = false
+    }
+  }, [nick])
+
   const formatPlaytime = (seconds: number) => {
     const d = Math.floor(seconds / (3600 * 24))
     const h = Math.floor((seconds % (3600 * 24)) / 3600)
@@ -138,6 +193,13 @@ export function ProfilePage() {
     if (h > 0) parts.push(`${h}h`)
     if (m > 0 || parts.length === 0) parts.push(`${m}m`)
     return parts.join(" ")
+  }
+
+  const getWinrate = (p: PvpStats | null) => {
+    if (!p) return null
+    const total = p.wins + p.losses + p.draws
+    if (total === 0) return 0
+    return Math.round((p.wins / total) * 100)
   }
 
   const handleDownloadImage = async () => {
@@ -189,7 +251,9 @@ export function ProfilePage() {
             ref={shareCardRef}
             className="relative flex h-[480px] w-[850px] overflow-hidden rounded-2xl shadow-2xl"
             style={{ fontFamily: "Inter, sans-serif" }}
-          ></div>
+          >
+            <ShareCard data={data} nick={nick}/>
+          </div>
         </div>
       )}
 
@@ -239,7 +303,11 @@ export function ProfilePage() {
                       {t('profile.pvp_rank')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
-                      ...
+                      {pvpLoading
+                        ? "..."
+                        : pvpData
+                          ? `${pvpData.rank_tier}`
+                          : "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between gap-4">
@@ -247,7 +315,11 @@ export function ProfilePage() {
                       {t('profile.pvp_winrate')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
-                      ...
+                      {pvpLoading
+                        ? "..."
+                        : pvpData
+                          ? `${getWinrate(pvpData)}%`
+                          : "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center justify-between gap-4">
@@ -255,7 +327,11 @@ export function ProfilePage() {
                       {t('profile.pvp_streak')}
                     </span>
                     <span className="rounded bg-secondary/40 px-1.5 py-0.5 font-semibold text-foreground">
-                      ...
+                      {pvpLoading
+                        ? "..."
+                        : pvpData
+                          ? pvpData.win_streak
+                          : "N/A"}
                     </span>
                   </div>
                 </div>
@@ -403,17 +479,16 @@ export function ProfilePage() {
                     </span>
                   </div>
                 </div>
+              </div>
 
-                {/* Profile Card Button at Bottom Left */}
-                {/*}
-                                <div>
+              
                                     <Dialog>
                                         <DialogTrigger asChild>
-                                            <Button variant="secondary" size="sm" className="gap-2 bg-background/40 backdrop-blur-md hover:bg-secondary/80 border border-white/5 shadow-sm transition-all">
-                                                <Eye className="w-4 h-4" /> <span>Preview Profile Card</span>
+                                            <Button variant="secondary" size="icon-lg" className="absolute top-0 left-4 gap-2 bg-background/40 backdrop-blur-md hover:bg-secondary/80 border border-white/5 shadow-sm transition-all">
+                                                <Share2Icon className="w-4 h-4" />
                                             </Button>
                                         </DialogTrigger>
-                                        <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl z-[100]">
+                                        <DialogContent className="sm:max-w-xl border-primary/20 bg-background/95 backdrop-blur-xl  z-9999">                                            
                                             <DialogHeader>
                                                 <DialogTitle>Share your Player Card</DialogTitle>
                                                 <DialogDescription>
@@ -423,7 +498,8 @@ export function ProfilePage() {
                                             
                                             <div className="flex justify-center items-center py-8 bg-secondary/20 rounded-xl border border-border/50 overflow-hidden my-2">
                                                 <div className="relative group transition-transform duration-500 hover:scale-105">
-                                                    <div className="w-[850px] h-[480px] scale-[0.35] sm:scale-[0.55] origin-center pointer-events-none rounded-2xl overflow-hidden relative shadow-2xl ring-4 ring-primary/20">
+                                                    <div className=" w-[850px] h-[480px] scale-[0.35] sm:scale-[0.55] origin-center pointer-events-none rounded-2xl overflow-hidden relative shadow-2xl ring-4 ring-primary/20">
+                                                      <ShareCard data={data} nick={nick}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -433,8 +509,6 @@ export function ProfilePage() {
                                             </Button>
                                         </DialogContent>
                                     </Dialog>
-                                </div>*/}
-              </div>
             </CardContent>
           </Card>
 
@@ -524,6 +598,16 @@ export function ProfilePage() {
                 className="mt-0 focus-visible:ring-0 focus-visible:outline-none"
               >
                 <CompanionsTab data={data} />
+              </TabsContent>
+            )}
+
+            {/* PVP TAB */}
+            {data.data?.OBJECTIVES && (
+              <TabsContent
+                value="pvp"
+                className="mt-0 focus-visible:ring-0 focus-visible:outline-none"
+              >
+                <PvpTab pvpStats={pvpData} loading={pvpLoading} />
               </TabsContent>
             )}
 

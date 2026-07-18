@@ -5,13 +5,15 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@ui/alert"
-import { Globe, InfoIcon, Clock, CheckCircle2 } from "lucide-react"
+import { Globe, InfoIcon, Clock, CheckCircle2, WifiOffIcon, LoaderIcon } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { useLocation } from "react-router-dom";
 import { PageTitle } from "@components/layout/title";
 import { Card } from "@components/ui/card";
 import { Skeleton } from "@components/ui/skeleton"
 import { useTranslation } from "react-i18next"
+import { Ripple } from "@components/ripple"
+import { ErrorAlertElement } from "@components/minebox/smth"
 
 interface VoteSite {
     Name: string;
@@ -147,11 +149,12 @@ export function VotePage() {
         return (
             <div className="py-auto relative flex flex-col page-container">
                 <PageTitle title={t("votes.title")} description={t("votes.desc")} />
-                <Alert variant="destructive">
+                {/*<Alert >
                     <InfoIcon className="h-4 w-4" />
                     <AlertTitle>{t("votes.error")}</AlertTitle>
                     <AlertDescription>{error ?? t("votes.error.loadError")}</AlertDescription>
-                </Alert>
+                </Alert>*/}
+                <ErrorAlertElement title={t("votes.error")} desc={t("votes.error.loadError")}/>
             </div>
         );
     }
