@@ -101,7 +101,7 @@ export const useNavLinks = (): NavItem[] => {
       id: "tools",
       dropdown: true,
       icon: Wrench,
-      label: "Tools",
+      label: t("mainpage.features.tools.title"),
       items: [
         {
           id: "equipment",
