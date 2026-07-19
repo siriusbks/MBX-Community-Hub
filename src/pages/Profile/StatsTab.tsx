@@ -57,15 +57,15 @@ export function StatsTab({ data }: { data: PlayerData }) {
                                 </h3>
 
                                 <div className="flex items-center justify-between ">
-                                    <div className="flex flex-col gap-0.5">
-                                        <span className="text-[0.9rem] font-black text-green-400 drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] leading-none uppercase">{t('profile.attributes.base')} {baseValue}</span>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[0.9rem]  text-green-400 drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] leading-none uppercase">{t('profile.attributes.base')} {baseValue}</span>
                                         <span className="flex flex-row gap-4">
                                         {scrollsValue > 0 && (
                                             <span className="text-xs text-foreground font-bold tracking-wider leading-none flex flex-row gap-1"><ScrollIcon className="size-4" strokeWidth={2}/> +{scrollsValue}</span>
                                         )}
-                                        {scrollsValue > 0 && (
+                                        {/*{scrollsValue > 0 && (
                                             <span className="text-xs text-foreground font-bold tracking-wider leading-none flex flex-row gap-1"><SkullIcon className="size-4" strokeWidth={2}/> +???</span>
-                                        )}
+                                        )}*/}
                                         </span>
                                     </div>
 

@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@ui/card";
 import { Badge } from "@ui/badge";
 import { Skeleton } from "@ui/skeleton";
-import { Swords, Trophy, Flame, Skull, SwordsIcon } from "lucide-react";
+import { Swords, Trophy, Flame, Skull, SwordsIcon, MedalIcon, AwardIcon, FlameIcon, SwordIcon, SkullIcon, TargetIcon, BoneFracture, AstroidIcon } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import type { PvpStats } from "@pages/Profile";
 
@@ -48,7 +48,7 @@ export function PvpTab({
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <img
-                            src={"https://cdn2.minebox.co/data/mobs/skull.gif"}
+                            src="/media/ranks/BRONZE.png"
                             className="object-contain drop-shadow-md z-10 relative size-12"
                             style={{ imageRendering: "pixelated" }}
                             onError={(e) => {
@@ -56,7 +56,7 @@ export function PvpTab({
                             }}
                         />
                         <img
-                            src={"https://cdn2.minebox.co/data/mobs/skull.gif"}
+                            src="/media/ranks/BRONZE.png"
                             alt=""
                             className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[2px] grayscale"
                             onError={(e) => {
@@ -74,8 +74,8 @@ export function PvpTab({
                 <Card className="p-4 flex flex-row gap-4 items-center">
 
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <AstroidIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <AstroidIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">ELO</p>
@@ -87,8 +87,8 @@ export function PvpTab({
                 <Card className="p-4 flex flex-row gap-4 items-center">
 
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <Trophy className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <Trophy className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Trophies</p>
@@ -98,8 +98,8 @@ export function PvpTab({
                 {/* Winrate */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <MedalIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <MedalIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Winrate</p>
@@ -112,8 +112,8 @@ export function PvpTab({
                 {/* WIns */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <AwardIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <AwardIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Wins</p>
@@ -123,8 +123,8 @@ export function PvpTab({
                 {/* Draws */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <TargetIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <TargetIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Draws</p>
@@ -134,8 +134,8 @@ export function PvpTab({
                 {/* LOsses */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <BoneFracture  className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <BoneFracture  className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Losses</p>
@@ -159,8 +159,8 @@ export function PvpTab({
                 {/* Streaks */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <FlameIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <FlameIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Actual Win Streak</p>
@@ -170,8 +170,8 @@ export function PvpTab({
                 {/* BEst Streaks */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <FlameIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <FlameIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Best Win Streak</p>
@@ -184,8 +184,8 @@ export function PvpTab({
                 {/* TOtalKills */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <SwordIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <SwordIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Total Kills</p>
@@ -195,8 +195,8 @@ export function PvpTab({
                 {/* TOtal Deaths */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
-                        <SwordsIcon className="object-contain drop-shadow-md z-10 relative size-12" />
-                        <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
+                        <SkullIcon className="object-contain drop-shadow-md z-10 relative size-12" />
+                        <SkullIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
                         <p className="text-md uppercase text-primary">Total Deaths</p>
