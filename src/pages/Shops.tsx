@@ -153,6 +153,8 @@ export function ShopsPage() {
                         >
                             <p className="uppercase inline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider text-center">{t(`market.shops.${shop.id}`)}</p>
 
+                            <img src={`/media/shops/${shop.id}.png`} className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50" />
+                            
                             <span className="flex flex-col gap-0">
                                 <p className="text-xs text-muted-foreground">{t("market.shops.open_hours")}</p>
                                 <span className="flex gap-2">
@@ -163,28 +165,28 @@ export function ShopsPage() {
                             </span>
 
 
-                            <Badge className={shop.isOpen ? "bg-green-500 text-green-100 uppercase" : "bg-red-500 text-red-100 uppercase"}>
+                            <Badge className={shop.isOpen ? "bg-green-500 text-green-100 uppercase" : "bg-red-500 text-white uppercase"}>
                                 {shop.isOpen ? t("market.shops.open") : t("market.shops.closed")}
                             </Badge>
 
 
                             {shop.offer && (
-                                <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0">
-                                    <p className="text-xs text-muted-foreground">
+                                <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
+                                    <p className="text-xs text-muted-foreground drop-shadow-lg">
                                         {t("market.shops.offert")}:
                                     </p>
-                                    <ItemImage itemId={shop.offer.item} className="size-12 object-contain" />
-                                    <p className="text-sm max-w-24 leading-none ">
+                                    <ItemImage itemId={shop.offer.item} className="size-12 object-contain drop-shadow-lg" />
+                                    <p className="text-sm max-w-24 leading-none drop-shadow-lg">
                                         {FindItemName({ itemId: shop.offer.item })}
                                     </p>
                                 </div>
                             )}
                             {!shop.offer && shop.isOpen && (
-                                <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0">
-                                    <p className="text-xs text-muted-foreground">
+                                <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
+                                    <p className="text-xs text-muted-foreground drop-shadow-lg">
                                         {t("market.shops.offert")}:
                                     </p>
-                                    <p className="text-sm max-w-24 leading-none ">
+                                    <p className="text-sm max-w-24 leading-none drop-shadow-lg">
                                         {t("market.shops.not_found")}
                                     </p>
                                 </div>

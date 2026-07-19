@@ -189,6 +189,7 @@ export function ShopsPage() {
                                     </p>
                                 </div>
                             )}
+
                         </Card>
                     ))}
             </span>
