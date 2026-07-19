@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { Badge } from "@components/ui/badge"
 import { Card } from "@components/ui/card"
 import { LevelBadge } from "@const/levels"
@@ -159,6 +160,7 @@ export function ShareCard({
   pvp: PvpStats
   nick: string | null
 }) {
+  const { t } = useTranslation("profile")
   const skillsInfo = useSkillsInfo(data)
 
   return (
@@ -247,28 +249,28 @@ export function ShareCard({
         <span className="grid w-full grid-cols-4 gap-2">
           <div className="flex flex-col items-center rounded border border-foreground/20 bg-background/40 p-2 pb-1 backdrop-blur-xs">
             <Clock10Icon className="w-2/3" strokeWidth={2.5} />
-            <p className="text-[0.6rem] uppercase">Playtime</p>
+            <p className="text-[0.6rem] uppercase">{t("profile.shared.playtime")}</p>
             <p className="text-[0.9rem]">
               {Math.floor(data?.playtime / 3600) || "0"} H
             </p>
           </div>
           <div className="flex flex-col items-center rounded border border-foreground/20 bg-background/40 p-2 pb-1 backdrop-blur-xs">
             <CalendarCheck className="w-2/3" strokeWidth={2.5} />
-            <p className="text-[0.6rem] uppercase">Daily</p>
+            <p className="text-[0.6rem] uppercase">{t("profile.shared.daily")}</p>
             <p className="text-[0.9rem]">
               {data?.data?.OBJECTIVES?.completed_quests.DAILY || "0"}
             </p>
           </div>
           <div className="flex flex-col items-center rounded border border-foreground/20 bg-background/40 p-2 pb-1 backdrop-blur-xs">
             <CalendarCheck2 className="w-2/3" strokeWidth={2.5} />
-            <p className="text-[0.6rem] uppercase">Weekly</p>
+            <p className="text-[0.6rem] uppercase">{t("profile.shared.weekly")}</p>
             <p className="text-[0.9rem]">
               {data?.data?.OBJECTIVES?.completed_quests.WEEKLY || "0"}
             </p>
           </div>
           <div className="flex flex-col items-center rounded border border-foreground/20 bg-background/40 p-2 pb-1 backdrop-blur-xs">
             <ScrollText className="w-2/3" strokeWidth={2.5} />
-            <p className="text-[0.6rem] uppercase">Museum</p>
+            <p className="text-[0.6rem] uppercase">{t("profile.shared.museum")}</p>
             <p className="text-[0.9rem]">
               {data?.data?.OBJECTIVES?.museum.length || "0"}
             </p>
@@ -277,7 +279,7 @@ export function ShareCard({
       </span>
 
       <span className="absolute top-0 right-0 z-3 flex h-full w-6/11 flex-col p-4 pl-1">
-        <p>PVP Stats</p>
+        <p>{t("profile.shared.pvp_stats")}</p>
         <span className="grid h-full grid-cols-3 gap-2">
           <Card
             className={`flex flex-row items-center justify-center gap-2 p-2`}
@@ -298,7 +300,7 @@ export function ShareCard({
               />
             </div>
             <span className="w-full -space-y-1">
-              <p className={`text-[0.6rem] text-muted-foreground`}>Rank</p>
+              <p className={`text-[0.6rem] text-muted-foreground`}>{t("profile.pvp.rank")}</p>
               <p className={`text-xs font-bold`}>{pvp?.rank_tier || "N/A"}</p>
             </span>
           </Card>
@@ -310,7 +312,7 @@ export function ShareCard({
               <MedalIcon className="absolute inset-0 h-full w-full scale-125 object-cover opacity-7 blur-[3px] grayscale-70" />
             </div>
             <span className="w-full -space-y-1">
-              <p className={`text-[0.6rem] text-muted-foreground`}>Winrate</p>
+              <p className={`text-[0.6rem] text-muted-foreground`}>{t("profile.pvp.winrate")}</p>
               <p className={`text-xs font-bold`}>
                 {(pvp?.wins / (pvp?.wins + pvp?.losses + pvp?.draws)) * 100 ||
                   "---"}
@@ -325,39 +327,39 @@ export function ShareCard({
               <SwordsIcon className="absolute inset-0 h-full w-full scale-125 object-cover opacity-7 blur-[3px] grayscale-70" />
             </div>
             <span className="w-full -space-y-1">
-              <p className={`text-[0.6rem] text-muted-foreground`}>K/D</p>
+              <p className={`text-[0.6rem] text-muted-foreground`}>{t("profile.pvp.kd")}</p>
               <p className={`text-xs font-bold`}>
                 {pvp?.total_kills / (pvp?.total_deaths || 1) || "---"}
               </p>
             </span>
           </Card>
         </span>
-        <p className="mt-[1rem]">Jobs Professions</p>
+        <p className="mt-[1rem]">{t("profile.shared.jobs_professions")}</p>
         <span className="grid h-full grid-cols-4 gap-2">
           <SkillCard
             orientation="vertical"
-            skill="ALCHEMIST"
+            skill={t("profile.skills.alchemy").toUpperCase()}
             image="/media/jobs/alchemy.png"
             level={skillsInfo["alchemy"]?.level}
             progressPercent={skillsInfo["alchemy"]?.progressPercent}
           />
           <SkillCard
             orientation="vertical"
-            skill="FISHERMAN"
+            skill={t("profile.skills.fishing").toUpperCase()}
             image="/media/jobs/fishing.png"
             level={skillsInfo["fishing"]?.level}
             progressPercent={skillsInfo["fishing"]?.progressPercent}
           />
           <SkillCard
             orientation="vertical"
-            skill="LUMBERJACK"
+            skill={t("profile.skills.lumberjack").toUpperCase()}
             image="/media/jobs/lumberjack.png"
             level={skillsInfo["lumberjack"]?.level}
             progressPercent={skillsInfo["lumberjack"]?.progressPercent}
           />
           <SkillCard
             orientation="vertical"
-            skill="MINER"
+            skill={t("profile.skills.mining").toUpperCase()}
             image="/media/jobs/mining.png"
             level={skillsInfo["mining"]?.level}
             progressPercent={skillsInfo["mining"]?.progressPercent}
@@ -365,19 +367,19 @@ export function ShareCard({
         </span>
         <span className="mt-2 grid h-full grid-cols-3 gap-2">
           <SkillCard
-            skill="BLACKSMITH"
+            skill={t("profile.skills.blacksmithing").toUpperCase()}
             image="/media/jobs/blacksmithing.png"
             level={skillsInfo["blacksmithing"]?.level}
             progressPercent={skillsInfo["blacksmithing"]?.progressPercent}
           />
           <SkillCard
-            skill="COOK"
+            skill={t("profile.skills.cooking").toUpperCase()}
             image="/media/jobs/cooking.png"
             level={skillsInfo["cooking"]?.level}
             progressPercent={skillsInfo["cooking"]?.progressPercent}
           />
           <SkillCard
-            skill="FARMER"
+            skill={t("profile.skills.farming").toUpperCase()}
             image="/media/jobs/farming.png"
             level={skillsInfo["farming"]?.level}
             progressPercent={skillsInfo["farming"]?.progressPercent}
@@ -385,19 +387,19 @@ export function ShareCard({
         </span>
         <span className="mt-2 grid h-full grid-cols-3 gap-2">
           <SkillCard
-            skill="HUNTER"
+            skill={t("profile.skills.hunting").toUpperCase()}
             image="/media/jobs/hunting.png"
             level={skillsInfo["hunting"]?.level}
             progressPercent={skillsInfo["hunting"]?.progressPercent}
           />
           <SkillCard
-            skill="JEWELER"
+            skill={t("profile.skills.jeweling").toUpperCase()}
             image="/media/jobs/jeweling.png"
             level={skillsInfo["jeweling"]?.level}
             progressPercent={skillsInfo["jeweling"]?.progressPercent}
           />
           <SkillCard
-            skill="SHOEMAKER"
+            skill={t("profile.skills.shoemaking").toUpperCase()}
             image="/media/jobs/shoemaking.png"
             level={skillsInfo["shoemaking"]?.level}
             progressPercent={skillsInfo["shoemaking"]?.progressPercent}
@@ -405,19 +407,19 @@ export function ShareCard({
         </span>
         <span className="mt-2 grid h-full grid-cols-3 gap-2">
           <SkillCard
-            skill="TAILOR"
+            skill={t("profile.skills.tailoring").toUpperCase()}
             image="/media/jobs/tailoring.png"
             level={skillsInfo["tailoring"]?.level}
             progressPercent={skillsInfo["tailoring"]?.progressPercent}
           />
           <SkillCard
-            skill="TINKERER"
+            skill={t("profile.skills.tinkering").toUpperCase()}
             image="/media/jobs/tinkering.png"
             level={skillsInfo["tinkering"]?.level}
             progressPercent={skillsInfo["tinkering"]?.progressPercent}
           />
           <SkillCard
-            skill="RUNEFORGER"
+            skill={t("profile.skills.runeforging").toUpperCase()}
             image="/media/jobs/runeforging.png"
             level={skillsInfo["runeforging"]?.level}
             progressPercent={skillsInfo["runeforging"]?.progressPercent}

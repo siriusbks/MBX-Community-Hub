@@ -493,10 +493,9 @@ export function ProfilePage() {
                 </DialogTrigger>
                 <DialogContent className="z-9999 border-primary/20 bg-background/95 backdrop-blur-xl sm:max-w-full md:max-w-2xl lg:max-w-4xl xl:max-w-6xl">
                   <DialogHeader>
-                    <DialogTitle>Share your Player Card</DialogTitle>
+                    <DialogTitle>{t("profile.preview.title")}</DialogTitle>
                     <DialogDescription>
-                      Download this beautiful card to share your stats on
-                      Discord!
+                      {t("profile.preview.description")}
                     </DialogDescription>
                   </DialogHeader>
 
@@ -514,10 +513,11 @@ export function ProfilePage() {
                     className="w-full gap-2"
                   >
                     {isGenerating ? (
-                      "Generating..."
+                      t("profile.preview.generating")
                     ) : (
                       <>
-                        <Download className="h-4 w-4" /> Download Image
+                        <Download className="h-4 w-4" /> {" "}
+                        {t("profile.preview.download")}
                       </>
                     )}
                   </Button>

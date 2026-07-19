@@ -65,7 +65,7 @@ export function PvpTab({
                         />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Range</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.rank")}</p>
                         <p className="text-2xl">{pvpStats.rank_tier}</p>
                     </span>
                 </Card>
@@ -78,7 +78,7 @@ export function PvpTab({
                         <AstroidIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">ELO</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.elo")}</p>
                         <p className="text-2xl">{pvpStats.elo}</p>
                     </span>
                 </Card>
@@ -91,7 +91,7 @@ export function PvpTab({
                         <Trophy className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Trophies</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.trophies")}</p>
                         <p className="text-2xl">{pvpStats.trophies}</p>
                     </span>
                 </Card>
@@ -102,7 +102,7 @@ export function PvpTab({
                         <MedalIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Winrate</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.winrate")}</p>
                         <p className="text-2xl">{winrate}%</p>
                     </span>
                 </Card>
@@ -116,7 +116,7 @@ export function PvpTab({
                         <AwardIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Wins</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.wins")}</p>
                         <p className="text-2xl">{pvpStats.wins}</p>
                     </span>
                 </Card>
@@ -127,7 +127,7 @@ export function PvpTab({
                         <TargetIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Draws</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.draws")}</p>
                         <p className="text-2xl">{pvpStats.draws}</p>
                     </span>
                 </Card>
@@ -138,7 +138,7 @@ export function PvpTab({
                         <BoneFracture  className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Losses</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.losses")}</p>
                         <p className="text-2xl">{pvpStats.losses}</p>
                     </span>
                 </Card>
@@ -149,7 +149,7 @@ export function PvpTab({
                         <SwordsIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">K/D</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.kd")}</p>
                         <p className="text-2xl">{pvpStats.total_kills / pvpStats.total_deaths}</p>
                     </span>
                 </Card>
@@ -163,7 +163,7 @@ export function PvpTab({
                         <FlameIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Actual Win Streak</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.win_streak")}</p>
                         <p className="text-2xl">{pvpStats.win_streak}</p>
                     </span>
                 </Card>
@@ -174,7 +174,7 @@ export function PvpTab({
                         <FlameIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Best Win Streak</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.best_streak")}</p>
                         <p className="text-2xl">{pvpStats.best_win_streak}</p>
                     </span>
                 </Card>
@@ -188,7 +188,7 @@ export function PvpTab({
                         <SwordIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Total Kills</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.total_kills")}</p>
                         <p className="text-2xl">{pvpStats.total_kills}</p>
                     </span>
                 </Card>
@@ -199,7 +199,7 @@ export function PvpTab({
                         <SkullIcon className="absolute inset-0 w-full h-full object-cover opacity-10 scale-150 blur-[4px] grayscale" />
                     </div>
                     <span className="flex flex-col -space-y-2">
-                        <p className="text-md uppercase text-primary">Total Deaths</p>
+                        <p className="text-md uppercase text-primary">{t("profile.pvp.total_deaths")}</p>
                         <p className="text-2xl">{pvpStats.total_deaths}</p>
                     </span>
                 </Card>
