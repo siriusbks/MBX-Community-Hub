@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Badge } from "@ui/badge"
-import { Card } from "@ui/card"
+import { Card, CardFooter } from "@ui/card"
 import { Button } from "@ui/button"
 import ReactMarkdown from "react-markdown"
 import { useTranslation } from "react-i18next"
@@ -28,7 +28,7 @@ export default function Changelog() {
         <div className="relative flex flex-col page-container pb-24 min-h-[80vh]">
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-21/9 mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
             <div className="items-center justify-center flex flex-col py-16">
-                <Badge variant="secondary" className="font-light tracking-wide mb-4">{t("changelog.tag")}</Badge>
+                {/*<Badge variant="secondary" className="font-light tracking-wide mb-4">{t("changelog.tag")}</Badge>*/}
                 <h1 className="inline-block text-5xl font-bold
       bg-gradient-to-b from-primary to-primary-dark
       bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider mb-2">{t("changelog.title")}</h1>
@@ -47,15 +47,16 @@ export default function Changelog() {
                         {changelogs.slice(0, visibleCount).map((log, index) => (
                             <Card key={log.id} className="p-6 relative bg-card/80 backdrop-blur-sm border-primary/20 shadow-lg">
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="flex flex-col items-start gap-1">
+                                    <div className="flex flex-col items-start gap-1 w-full">
                                         <div className="flex gap-2 mb-1">
-                                            {index === 0 && <Badge variant="secondary" className="font-light tracking-wide">LATEST</Badge>}
-                                            <Badge variant="secondary" className="font-light tracking-wide">{log.version}</Badge>
+                                            {index === 0 && <Badge variant="default" className="font-light tracking-wide">LATEST</Badge>}
                                         </div>
-                                        <h3 className="text-2xl font-bold text-primary drop-shadow-sm">{log.title}</h3>
-                                        <div className="text-xs text-muted-foreground mt-1">
-                                            {t("changelog.published_on")} {new Date(log.createdAt).toLocaleDateString()}
-                                        </div>
+                                        <h3 className="text-4xl font-bold text-primary drop-shadow-sm">{log.title}</h3>
+                                        <span className="text-xs text-muted-foreground mt-1 flex flex-row justify-between w-full">
+                                            
+                                            <p>Version {log.version}</p>
+                                            <p>{t("changelog.published_on")} {new Date(log.createdAt).toLocaleDateString()}</p>
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="text-sm text-foreground/90 font-light leading-relaxed [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:mb-4 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-3 [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:mt-5 [&>h3]:mb-2 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4 [&>ol]:list-decimal [&>ol]:ml-6 [&>ol]:mb-4 [&>li]:mb-1 [&>strong]:font-semibold [&>a]:text-primary [&>a]:underline [&>blockquote]:border-l-4 [&>blockquote]:border-primary/50 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-muted-foreground [&>code]:bg-muted [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded-md [&>pre]:bg-muted/50 [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:overflow-x-auto [&>pre>code]:bg-transparent [&>pre>code]:p-0">

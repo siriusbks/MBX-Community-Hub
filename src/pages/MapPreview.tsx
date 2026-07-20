@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select"
+import { EyeClosedIcon, EyeIcon } from "lucide-react"
 
 
 const mapsConfig: Record<
@@ -305,6 +306,10 @@ export function MapPreview() {
 
   const params = useParams()
   const mapId = params["*"] ?? ""
+
+  // --- MAP CONFIG (looked up early so hooks below can safely reference it) ---
+  const config = mapsConfig[mapId as keyof typeof mapsConfig]
+
   const { t } = useTranslation(["maps", "items_maps", "insects"]);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
@@ -337,11 +342,16 @@ export function MapPreview() {
     setBaseZoom((prev) => (prev === null ? z : prev))
   }
 
+  // Marker scale is clamped to the min/max defined per-map in mapsConfig
+  // instead of hardcoded bounds, so each island can tune its own zoom feel.
+  const iconScaleMin = config?.iconScale.min ?? 1
+  const iconScaleMax = config?.iconScale.max ?? 2.5
+
   const markerScale = useMemo(() => {
     if (zoom === null || baseZoom === null) return 1
     const raw = Math.pow(2, zoom - baseZoom)
-    return Math.min(Math.max(raw, 1), 2.5)
-  }, [zoom, baseZoom])
+    return Math.min(Math.max(raw, iconScaleMin), iconScaleMax)
+  }, [zoom, baseZoom, iconScaleMin, iconScaleMax])
 
   useEffect(() => {
     setZoom(null)
@@ -352,9 +362,6 @@ export function MapPreview() {
   const handleValueChange = (value: string) => {
     navigate(`/maps/${value}`)
   }
-
-  // --- MAP CONFIG ---
-  const config = mapsConfig[mapId as keyof typeof mapsConfig]
 
   if (!config) {
     return (
@@ -647,6 +654,33 @@ export function MapPreview() {
     })
   }
 
+  // Bulk-visibility helpers, shared by the "select all / deselect all"
+  // controls both per-category and globally.
+  const setItemsVisibility = (ids: string[], visible: boolean) => {
+    if (ids.length === 0) return
+    setHiddenResources((prev) => {
+      const next = { ...prev }
+      ids.forEach((id) => {
+        if (visible) {
+          delete next[id]
+        } else {
+          next[id] = true
+        }
+      })
+      return next
+    })
+  }
+
+  const isFullyHidden = (ids: string[]) =>
+    ids.length > 0 && ids.every((id) => hiddenResources[id])
+
+  // All item ids currently placed on the map (across every category/group),
+  // used by the global select-all / deselect-all controls.
+  const allItemIds = useMemo(
+    () => Array.from(new Set(allMarkers.map((m) => m.cat as string))),
+    [allMarkers]
+  )
+
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
       <LeafletTooltipStyleOverrides />
@@ -782,6 +816,29 @@ export function MapPreview() {
             </SelectContent>
           </Select>
 
+          {/* Global select all / deselect all across every category */}
+          <div className="flex items-center justify-between gap-2 px-2 pt-2 text-[0.7rem]">
+            <span className="font-bold uppercase text-primary">
+              {t("maps:maps.resources")}
+            </span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setItemsVisibility(allItemIds, true)}
+                className="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+              >
+                {t("maps:maps.select_all")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setItemsVisibility(allItemIds, false)}
+                className="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+              >
+                {t("maps:maps.deselect_all")}
+              </button>
+            </div>
+          </div>
+
           {/* Resources */}
           <div className="custom-scrollbar my-2 h-full w-full scroll-fade overflow-x-hidden overflow-y-auto px-2">
             {harvestablesData?.locations?.servers?.[mapId] ? (
@@ -799,11 +856,25 @@ export function MapPreview() {
                     serverKeys.includes(id)
                   )
                   if (itemsInCat.length === 0) return null
+                  const categoryHidden = isFullyHidden(itemsInCat)
                   return (
                     <span key={catKey} className="w-full px-2">
-                      <p className="font-bold text-primary uppercase">
-                        {catKey}
-                      </p>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-bold text-primary uppercase">
+                          {catKey}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setItemsVisibility(itemsInCat, categoryHidden)
+                          }
+                          className="text-[0.6rem] font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+                        >
+                          {categoryHidden
+                            ? <EyeClosedIcon className="size-4"/>
+                            : <EyeIcon className="size-4"/>}
+                        </button>
+                      </div>
                       <div className="grid grid-cols-4 gap-2">
                         {itemsInCat.map((id) => {
                           const minLevel = cat[id]?.min_level ?? "0"
@@ -858,42 +929,59 @@ export function MapPreview() {
 
             {/* Additional categories loaded from maps.json (treasure, and any future groups) */}
             {mapsData?.[mapId] &&
-              Object.entries(mapsData[mapId]).map(([group, itemsObj]: any) => (
-                <span key={group} className="w-full px-2">
-                  <p className="font-bold text-primary uppercase">{group}</p>
-                  <div className="grid grid-cols-4 gap-2">
-                    {Object.keys(itemsObj).map((id) => {
-                      const isHidden = Boolean(hiddenResources[id])
-                      return (
-                        <div
-                          key={id}
-                          onClick={() => toggleResourceVisibility(id)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(event) => {
-                            if (event.key === "Enter" || event.key === " ") {
-                              event.preventDefault()
-                              toggleResourceVisibility(id)
-                            }
-                          }}
-                          className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
-                            ? "bg-red-500/40"
-                            : "bg-transparent hover:bg-accent/40"
-                            }`}
-                        >
-                          <ItemImage
-                            itemId={id}
-                            className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
-                          />
-                          <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
-                            {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}
-                          </p>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </span>
-              ))}
+              Object.entries(mapsData[mapId]).map(([group, itemsObj]: any) => {
+                const groupIds = Object.keys(itemsObj)
+                const groupHidden = isFullyHidden(groupIds)
+                return (
+                  <span key={group} className="w-full px-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-bold text-primary uppercase">{group}</p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setItemsVisibility(groupIds, groupHidden)
+                        }
+                        className="text-[0.6rem] font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+                      >
+                        {groupHidden
+                          ? t("maps:maps.select_all")
+                          : t("maps:maps.deselect_all")}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {groupIds.map((id) => {
+                        const isHidden = Boolean(hiddenResources[id])
+                        return (
+                          <div
+                            key={id}
+                            onClick={() => toggleResourceVisibility(id)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault()
+                                toggleResourceVisibility(id)
+                              }
+                            }}
+                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
+                              ? "bg-red-500/40"
+                              : "bg-transparent hover:bg-accent/40"
+                              }`}
+                          >
+                            <ItemImage
+                              itemId={id}
+                              className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                            />
+                            <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
+                              {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}
+                            </p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </span>
+                )
+              })}
           </div>
 
           {/* Settings */}
