@@ -13,6 +13,7 @@ import {
   Tooltip,
   Polygon,
   Popup,
+  useMapEvents,
 } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
@@ -35,7 +36,7 @@ const mapsConfig: Record<
     width: number
     height: number
     referencePoint: { x: number; y: number }
-    // zone key used by the insects API (mineboxadditions.strings.zones.<zoneKey>)
+    iconScale: { min: number; max: number }
     zoneKey: string
   }
 > = {
@@ -44,6 +45,7 @@ const mapsConfig: Record<
     width: 791,
     height: 839,
     referencePoint: { x: 220, y: 388 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "overworld",
   },
   island_home: {
@@ -51,6 +53,7 @@ const mapsConfig: Record<
     width: 320,
     height: 320,
     referencePoint: { x: 34, y: 284 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "",
   },
   island_nether: {
@@ -58,6 +61,7 @@ const mapsConfig: Record<
     width: 160,
     height: 176,
     referencePoint: { x: 17, y: 143 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "",
   },
   island_end: {
@@ -65,6 +69,7 @@ const mapsConfig: Record<
     width: 160,
     height: 176,
     referencePoint: { x: 17, y: 143 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "",
   },
   island_tropical: {
@@ -72,6 +77,7 @@ const mapsConfig: Record<
     width: 528,
     height: 528,
     referencePoint: { x: 0, y: 0 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "island_tropical",
   },
   island_plain: {
@@ -79,6 +85,7 @@ const mapsConfig: Record<
     width: 608,
     height: 560,
     referencePoint: { x: 81, y: 16 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "island_plain",
   },
   island_bamboo: {
@@ -86,6 +93,7 @@ const mapsConfig: Record<
     width: 1256,
     height: 608,
     referencePoint: { x: 633, y: 611 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "island_bamboo",
   },
   island_snow: {
@@ -93,6 +101,7 @@ const mapsConfig: Record<
     width: 720,
     height: 720,
     referencePoint: { x: 129, y: 64 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "island_snow",
   },
   island_desert: {
@@ -100,6 +109,7 @@ const mapsConfig: Record<
     width: 752,
     height: 752,
     referencePoint: { x: 128, y: 720 },
+    iconScale: { min: 1, max: 2.5 },
     zoneKey: "island_desert",
   },
 }
@@ -130,6 +140,19 @@ function LeafletTooltipStyleOverrides() {
       }
     `}</style>
   )
+}
+
+function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMapEvents({
+    zoom: () => onZoomChange(map.getZoom()),
+    zoomend: () => onZoomChange(map.getZoom()),
+  })
+
+  useEffect(() => {
+    onZoomChange(map.getZoom())
+  }, [map])
+
+  return null
 }
 
 function RegionPolygon({ positions, color, label }: {
@@ -304,6 +327,26 @@ export function MapPreview() {
   const [bestiaryZonesData, setBestiaryZonesData] = useState<any | null>(null);
   const [showBestiary, setShowBestiary] = useState(false);
   const [mobNamesData, setMobNamesData] = useState<Record<string, MobInfo>>({})
+
+
+  const [zoom, setZoom] = useState<number | null>(null)
+  const [baseZoom, setBaseZoom] = useState<number | null>(null)
+
+  const handleZoomChange = (z: number) => {
+    setZoom(z)
+    setBaseZoom((prev) => (prev === null ? z : prev))
+  }
+
+  const markerScale = useMemo(() => {
+    if (zoom === null || baseZoom === null) return 1
+    const raw = Math.pow(2, zoom - baseZoom)
+    return Math.min(Math.max(raw, 1), 2.5)
+  }, [zoom, baseZoom])
+
+  useEffect(() => {
+    setZoom(null)
+    setBaseZoom(null)
+  }, [mapId])
 
   const navigate = useNavigate()
   const handleValueChange = (value: string) => {
@@ -628,6 +671,7 @@ export function MapPreview() {
               }}
               attributionControl={false}
             >
+              <ZoomWatcher onZoomChange={handleZoomChange} />
               <ImageOverlay url={image} bounds={imageBounds} />
               {allMarkers
                 .filter((m) => !hiddenResources[m.cat])
@@ -637,13 +681,13 @@ export function MapPreview() {
                     position={[m.py, m.px]}
                     icon={L.icon({
                       iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
-                      iconSize: [24, 24],
-                      iconAnchor: [12, 12],
-                      popupAnchor: [0, -16],
+                      iconSize: [24 * markerScale, 24 * markerScale],
+                      iconAnchor: [12 * markerScale, 12 * markerScale],
+                      popupAnchor: [0, -16 * markerScale],
                       className: `filter drop-shadow-[0_0_4px_#00000099]`,
                     })}
                   >
-                    <Tooltip direction="top" offset={[0, -8]} opacity={1}>
+                    <Tooltip direction="top" offset={[0, -8 * markerScale]} opacity={1}>
                       <div className="flex min-w-32 !w-max flex-row items-center gap-1 rounded-md px-2 py-1.5 text-xs bg-linear-to-b from-card to-card-dark minebox-shadow">
                         <ItemImage
                           itemId={m.cat}

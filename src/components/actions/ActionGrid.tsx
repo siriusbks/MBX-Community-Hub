@@ -157,67 +157,70 @@ export default function ActionGrid() {
       </span>
       <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
         {listings.map((listing) => (
-          
-              <HoverCard>
-                <HoverCardTrigger>
-          <Link to={`/items?id=${listing.item_id.replace(/^mbi-/, '')}`}>
-          <RarityBorder
-            key={listing.id}
-            rarity={FindItemRarity({ itemId: listing.item_id })}
-            className="group relative flex flex-col items-center gap-0"
-          >
-            <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
-              <p>{FindItemName({ itemId: listing.item_id })}</p>
-            </span>
 
-            <span className="relative">
+          <HoverCard>
+            <HoverCardTrigger>
+              <RarityBorder
+                key={listing.id}
+                rarity={FindItemRarity({ itemId: listing.item_id })}
+                className="group relative flex flex-col items-center gap-0"
+              >
+                <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
+                  <p>{FindItemName({ itemId: listing.item_id })}</p>
+                </span>
+
+                <span className="relative">
                   <ItemImage
                     itemId={listing.item_id}
                     className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated] group-hover:scale-110 transition-all"
                   />
-            </span>
+                </span>
 
-            <span className="mt-2">
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {listing.price_per_unit.toLocaleString()}
-                <img src={`/media/currency/GOLD.png`} className="!size-6" />
-              </p>
-            </span>
+                <span className="mt-2">
+                  <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                    {listing.price_per_unit.toLocaleString()}
+                    <img src={`/media/currency/GOLD.png`} className="!size-6" />
+                  </p>
+                </span>
 
-            <PlayerFooter
-              playerName={listing.author}
-              className="!text-[0.6rem]"
-            />
-          </RarityBorder>
-          </Link>
+                <PlayerFooter
+                  playerName={listing.author}
+                  className="!text-[0.6rem]"
+                />
+              </RarityBorder>
 
-          
-                </HoverCardTrigger>
-                <HoverCardContent className="p-0">
-                  <RarityBorder rarity={FindItemRarity({ itemId: listing.item_id })}>
-                  <span className="flex flex-row  gap-2 items-center leading-none">
-                    <RarityBadge rarity={FindItemRarity({ itemId: listing.item_id })} />
-                    <p className="text-lg mb-1 leading-none">{FindItemName({ itemId: listing.item_id })}</p>
+
+            </HoverCardTrigger>
+            <HoverCardContent className="p-0">
+              <RarityBorder rarity={FindItemRarity({ itemId: listing.item_id })}>
+                <span className="flex flex-row  gap-2 items-center leading-none">
+                  <RarityBadge rarity={FindItemRarity({ itemId: listing.item_id })} />
+                  <p className="text-lg mb-1 leading-none">{FindItemName({ itemId: listing.item_id })}</p>
+                </span>
+
+                {listing.stats && (
+                  <span className="flex w-full flex-col gap-1 text-xs">
+                    {Object.entries(listing.stats).map(([stat, value]) => (
+                      <StatItem
+                        key={stat}
+                        stat={stat}
+                        from={value}
+                        to={value}
+                      />
+                    ))}
                   </span>
+                )}
 
-                  {listing.stats && (
-                    <span className="flex w-full flex-col gap-1 text-xs">
-                      {Object.entries(listing.stats).map(([stat, value]) => (
-                        <StatItem
-                          key={stat}
-                          stat={stat}
-                          from={value}
-                          to={value}
-                        />
-                      ))}
-                    </span>
-                  )}
-                  <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    {t("market.action_house.time_left")} <p>{getDaysLeft(listing.expires_at)} {t("market.action_house.days")}</p>
-                  </span>
-                  </RarityBorder>
-                </HoverCardContent>
-              </HoverCard>
+                <Link to={`/items?id=${listing.item_id.replace(/^mbi-/, '')}`}>
+                  <p className="pointer-coarse:block h2idden">View item in Codex</p>
+                </Link>
+
+                <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+                  {t("market.action_house.time_left")} <p>{getDaysLeft(listing.expires_at)} {t("market.action_house.days")}</p>
+                </span>
+              </RarityBorder>
+            </HoverCardContent>
+          </HoverCard>
         ))}
       </div>
 
