@@ -1203,7 +1203,7 @@ export function MapPreview() {
                         })}
                       </p>
                       <p className="cursor-pointer text-center text-[0.6rem] text-muted-foreground group-hover:text-primary group-hover:underline">
-                        View Conditions
+                        {t("insects:insects.view_conditions")}
                       </p>
                     </RarityBorder>
                   </PopoverTrigger>
@@ -1212,7 +1212,9 @@ export function MapPreview() {
                       <RarityBadge
                         rarity={FindItemRarity({ itemId: insect.id })}
                       />
-                      <p>{FindItemName({ itemId: insect.id })}</p>
+                      <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
+                          defaultValue: FindItemName({ itemId: insect.id }),
+                        })}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">

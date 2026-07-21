@@ -28,5 +28,9 @@
     "maps.island.island_plain": "Tétra-Plaines",
     "maps.island.island_bamboo": "Pic Bambou",
     "maps.island.island_snow": "Forteresse d'En-gelure",
-    "maps.island.island_desert": "Dunes de sable murmurant"
+    "maps.island.island_desert": "Dunes de sable murmurant",
+
+    "maps.resources": "Afficher les ressources",
+    "maps.select_all": "Tout sélectionner",
+    "maps.deselect_all": "Tout désélectionner"
 }
