@@ -29,9 +29,7 @@ import {
 import { CodexNav } from "@components/minebox/codex-nav"
 import { BestiaryItem } from "@components/minebox/bestiary"
 import { Link } from "react-router-dom"
-
-// Katalog przedmiotów (~4MB, z osadzonymi obrazkami base64) — NIE importowany statycznie,
-// żeby nie trafiał do głównego bundla. Wczytywany asynchronicznie po zamontowaniu strony (patrz useEffect niżej).
+import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
 
 type LocalizedText = Record<string, string>
 
@@ -162,7 +160,7 @@ export function ItemsCodex() {
 
         const ids = new Set<string>()
         Object.values(json as Record<string, string[]>).forEach((list) => {
-          ; (list ?? []).forEach((itemId) => ids.add(itemId))
+          ;(list ?? []).forEach((itemId) => ids.add(itemId))
         })
 
         setMuseumItemIds(ids)
@@ -293,9 +291,7 @@ export function ItemsCodex() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Coming Soon </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -306,20 +302,18 @@ export function ItemsCodex() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Coming Soon </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
       </span>
 
-      <div className="flex min-h-0 flex-1 flex-row gap-4">
+      <div className="flex min-h-0 flex-1 flex-row gap-4 scroll-fade">
         <div
-          className={`pr-2 h-full ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar overflow-y-auto scroll-fade`}
+          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth `}
         >
           <div
-            className={`w-full grid ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2  `}
+            className={`grid w-full ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2 overflow-x-hidden`}
           >
             {itemsMap === null && (
               <div className="col-span-full py-8 text-center text-muted-foreground">
@@ -343,7 +337,13 @@ export function ItemsCodex() {
                   }}
                   className="cursor-pointer"
                 >
-                  <MineboxItem id={id} name={name} rarity={rarity} image={image} level={item.level ?? 0} />
+                  <MineboxItem
+                    id={id}
+                    name={name}
+                    rarity={rarity}
+                    image={image}
+                    level={item.level ?? 0}
+                  />
                 </div>
               )
             })}
@@ -362,7 +362,7 @@ export function ItemsCodex() {
         </div>
 
         {itemDetailsData && (
-          <div className="flex  min-h-0  w-1/3 flex-col gap-2 custom-scrollbar overflow-y-auto pr-2">
+          <div className="custom-scrollbar flex min-h-0 w-1/3 flex-col gap-2 overflow-y-auto pr-2">
             <RarityBorder
               rarity={itemDetailsData.rarity.toLowerCase()}
               className="rounded-lg border-[8px]"
@@ -426,7 +426,8 @@ export function ItemsCodex() {
                         ? "Can be donated"
                         : "Not donatable"}
                   </p>
-                </span>{/*}
+                </span>
+                {/*}
                 <span className="flex flex-row gap-1 text-xs">
                   <p className="mr-auto">Buy (Bazaar)</p>
                   <p>
@@ -447,19 +448,21 @@ export function ItemsCodex() {
                         : "????"}
                   </p>
                 </span>*/}
-                {auctionData && auctionData.price_per_unit !== 0 && !auctionLoading && (
-                  <span className="flex flex-row gap-1 text-xs">
-                    <p className="mr-auto">Price (Action House)</p>
-                    <p>
-                      {auctionLoading
-                        ? "..."
-                        : auctionData
-                          ? auctionData.price_per_unit.toLocaleString()
-                          : "????"}
-                    </p>
-                    <img src="/media/currency/GOLD.png" className="size-4" />
-                  </span>
-                )}
+                {auctionData &&
+                  auctionData.price_per_unit !== 0 &&
+                  !auctionLoading && (
+                    <span className="flex flex-row gap-1 text-xs">
+                      <p className="mr-auto">Price (Action House)</p>
+                      <p>
+                        {auctionLoading
+                          ? "..."
+                          : auctionData
+                            ? auctionData.price_per_unit.toLocaleString()
+                            : "????"}
+                      </p>
+                      <img src="/media/currency/GOLD.png" className="size-4" />
+                    </span>
+                  )}
                 {itemDetailsData?.stats && (
                   <div>
                     <p className="text-xs">Stats</p>
@@ -506,15 +509,22 @@ export function ItemsCodex() {
             </RarityBorder>
 
             {itemDetailsData?.extra_image && (
-              <img src={itemDetailsData.extra_image} />
+              <img src={itemDetailsData.extra_image} className="aspect-square object-cover w-2/3 mx-auto drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
             )}
 
             {itemDetailsData?.recipe && (
-              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
-                  <Button size="icon-xs">
-                    <Globe />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button size="icon-xs">
+                        <Globe />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Recipe Calculator Coming Soon</p>
+                    </TooltipContent>
+                  </Tooltip>
                   <p>Recipes</p>
                   <p className="ml-auto text-xs">
                     {itemDetailsData.recipe.job}
@@ -535,6 +545,7 @@ export function ItemsCodex() {
                               rarity="vanilla"
                               level={0}
                               className="aspect-square"
+                              count={ingredient.amount}
                             />
                           )
                         } else {
@@ -549,6 +560,7 @@ export function ItemsCodex() {
                               level={0}
                               fetchFromApi={false}
                               className="aspect-square"
+                              count={ingredient.amount}
                             />
                           )
                         }
@@ -559,7 +571,7 @@ export function ItemsCodex() {
             )}
 
             {itemDetailsData?.used_in_recipes && (
-              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
                   <p>Used in Recipes</p>
                 </span>
@@ -581,23 +593,45 @@ export function ItemsCodex() {
               </Card>
             )}
             {itemDetailsData?.dropped_by && (
-              <Card className="flex flex-col gap-1 p-2 pb-3 !overflow-visible">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
                   <p>Dropped By</p>
                 </span>
-                <span className="grid grid-cols-4 gap-2">
-
+                <span className="grid grid-cols-3 gap-2">
                   {itemDetailsData?.dropped_by &&
                     itemDetailsData.dropped_by.map((bestiary, index) => (
                       <Link to={`/bestiary?id=${bestiary.creature_id}`}>
-                      <RarityBorder rarity="vanilla" className="items-center flex flex-col gap-0 h-full">
-                        <img src={bestiary.image}/>
-                        <p className="text-xs leading-none text-center">{bestiary.name}</p>
-                        <span className="text-xs flex flex-row items-center justify-between w-full px-1 mt-auto">
-                          <p>{bestiary.chance}%</p>
-                          <p>{bestiary.amount}</p>
+                        <span className="group flex h-full rounded-lg bg-card p-1 minebox-shadow">
+                          <span className="flex flex-col items-center justify-center gap-1 w-full">
+                            <img
+                              src={bestiary.image}
+                              className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110"
+                            />
+                            <span className="flex w-full flex-col items-center my-auto">
+                              <p className="w-full text-center text-xs leading-none mb-1">
+                                {bestiary.name}
+                              </p>
+                              <span className="mt-auto flex w-full flex-col items-center justify-between px-1 text-xs">
+                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                  <p className="text-[0.65rem] text-muted-foreground">
+                                    Change
+                                  </p>
+                                  <p className="text-[0.65rem]">{bestiary.chance}%</p>
+                                </span>
+                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                  <p className="text-[0.65rem] text-muted-foreground">
+                                    Drop
+                                  </p>
+<p className="text-[0.65rem]">
+  {bestiary.amount[0] === bestiary.amount[1] 
+    ? bestiary.amount[0] 
+    : bestiary.amount.join(' - ')}
+</p>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
                         </span>
-                      </RarityBorder>
                       </Link>
                     ))}
                 </span>
