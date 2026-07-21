@@ -28,5 +28,10 @@
     "maps.island.island_plain": "Quadra Plains",
     "maps.island.island_bamboo": "Bamboo Peak",
     "maps.island.island_snow": "Frostbite Fortress",
-    "maps.island.island_desert": "Sandwhisper Dunes"
+    "maps.island.island_desert": "Sandwhisper Dunes",
+
+
+    "maps.resources": "Show Resources",
+    "maps.select_all": "Select All",
+    "maps.deselect_all": "Deselect All"
 }
