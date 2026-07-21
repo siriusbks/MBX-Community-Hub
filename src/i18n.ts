@@ -18,8 +18,8 @@ i18n.use(HttpBackend)
             lookupCookie: "mbxcom_lang",
             cookieMinutes: 10080,
         },
-        ns: ["common", "navbar", "homepage"],
-        defaultNS: "homepage",
+        ns: ["common", "navbar", "mainpage"],
+        defaultNS: "mainpage",
         fallbackNS: "common",
         interpolation: {
             escapeValue: false,

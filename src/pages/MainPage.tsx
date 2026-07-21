@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Button } from "@ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@ui/alert"
-import { Globe, InfoIcon } from "lucide-react"
+import { BookOpen, InfoIcon, User } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { NAV_LINKS } from "@const/nav"
-
-
+import { useNavLinks } from "@const/nav"
 
 interface ServerStatus {
   online: boolean
@@ -18,39 +16,46 @@ interface ServerStatus {
   }
 }
 
-// Spłaszcza NAV_LINKS: zwykłe linki + wszystkie items z dropdownów
-const FEATURE_ITEMS = NAV_LINKS.flatMap((item) =>
-  "dropdown" in item && item.dropdown
-    ? item.items.map((sub) => ({
-        id: sub.id,
-        to: sub.to,
-        icon: sub.icon,
-        label: sub.label,
-        desc: sub.desc,
-        badge: sub.badge,
-      }))
-    : [
-        {
-          id: item.id,
-          to: item.to,
-          icon: item.icon,
-          label: item.label,
-          desc: item.desc,
-          badge: undefined,
-        },
-      ],
-)
-
 export function Home() {
+  const NAV_LINKS = useNavLinks()
   const { t } = useTranslation()
   const [status, setStatus] = useState<ServerStatus | null>(null)
+
+  // Spłaszcza NAV_LINKS: zwykłe linki + wszystkie items z dropdownów
+  const FEATURE_ITEMS = useMemo(
+    () =>
+      NAV_LINKS.flatMap((item) =>
+        "dropdown" in item && item.dropdown
+          ? item.items.map((sub) => ({
+              id: sub.id,
+              to: sub.to,
+              icon: sub.icon,
+              label: sub.label,
+              desc: sub.desc,
+              badge: sub.badge,
+            }))
+          : [
+              {
+                id: item.id,
+                to: item.to,
+                icon: item.icon,
+                label: item.label,
+                desc: item.desc,
+                badge: undefined,
+              },
+            ]
+      ),
+    [NAV_LINKS]
+  )
 
   useEffect(() => {
     let cancelled = false
 
     async function loadStatus() {
       try {
-        const res = await fetch("https://mcapi.us/server/status?ip=play.minebox.co")
+        const res = await fetch(
+          "https://mcapi.us/server/status?ip=play.minebox.co"
+        )
         if (!res.ok) throw new Error("Failed to fetch server status")
         const data: ServerStatus = await res.json()
         if (!cancelled) setStatus(data)
@@ -69,26 +74,29 @@ export function Home() {
 
   const playersLabel =
     status?.online && status.players
-      ? `${status.players.now} Players Online`
+      ? `${status.players.now} ${t("mainpage.players_online")}`
       : status && !status.online
-        ? "Server Offline"
-        : "??? Players Online"
+        ? t("mainpage.server_offline")
+        : `??? ${t("mainpage.players_online")}`
 
   return (
     <div className="relative page-container flex flex-col pb-24">
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
 
       {/* Contribution Alert */}
-      <Alert variant="default" className="flex items-center justify-center gap-0 sm:gap-4 flex-col sm:flex-row">
-        <span className="flex flex-row w-full sm:w-fit">
-        <span className="items-center justify-center">
-          <InfoIcon className="mr-1 size-4" />
-        </span>
-          <p className="w-fit px-2flex items-center justify-center break-none">
+      <Alert
+        variant="default"
+        className="flex flex-col items-center justify-center gap-0 sm:flex-row sm:gap-4"
+      >
+        <span className="flex w-full flex-row sm:w-fit">
+          <span className="items-center justify-center">
+            <InfoIcon className="mr-1 size-4" />
+          </span>
+          <p className="px-2flex break-none w-fit items-center justify-center">
             We need your help!
           </p>
-          </span>
-        <span className="flex w-full sm:flex-1 flex-row gap-4 justify-between">
+        </span>
+        <span className="flex w-full flex-row justify-between gap-4 sm:flex-1">
           <AlertDescription className="mr-auto flex items-center justify-center">
             Help translate MBX Community on Crowdin!
           </AlertDescription>
@@ -98,30 +106,51 @@ export function Home() {
         </span>
       </Alert>
 
+            <Card className="p-2 flex flex-row gap-2">
+        <span className="flex flex-col gap-2">
+        <p className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-xl font-bold tracking-wider text-transparent drop-shadow-[0_2px_0_#5d3a00]  uppercase">Minebox Community is currently in Beta!</p>
+        <p>
+          The website has been completely rewritten and is currently in the testing phase. Please
+          report any bugs on Discord.
+          <br />
+          The remaining features from the previous version, as well as other new features, will be
+          introduced in future updates.
+        </p>
+        </span>
+        <span className="h-full flex flex-col items-center gap-2 ml-auto justify-center items-center my-auto">
+          <Link to="/contribute">
+            <Button >English Forum</Button>
+          </Link>
+          <Link to="/contribute">
+            <Button>French Forum</Button>
+          </Link>
+        </span>
+      </Card>
+
       {/* Welcome Hero */}
       <div className="flex flex-col items-center justify-center py-24">
         <Badge variant="secondary" className="font-light tracking-wide">
           {playersLabel}
         </Badge>
         <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">
-          {t("homepage.title")}
+          {t("mainpage.title")}
         </h2>
-        <h1 className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-transparent drop-shadow-[0_4px_0_#5d3a00]">
+        <h1 className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-4xl font-bold tracking-wider text-transparent drop-shadow-[0_4px_0_#5d3a00] sm:text-5xl md:text-6xl">
           MBX COMMUNITY
         </h1>
         <p className="mt-2 max-w-xl text-center text-sm font-light">
-          {t("homepage.description")}
+          {t("mainpage.description")}
         </p>
         <span className="mt-4 flex gap-2">
           <Link to="/items">
             <Button size="lg" className="tracking-wider">
-              <Globe className="mt-0.5" />
-              Codex
+              <BookOpen className="mt-0.5" />
+              {t("mainpage.features.codex.title")}
             </Button>
           </Link>
           <Link to="/profile">
             <Button size="lg" className="tracking-wider" variant="secondary">
-              <Globe className="mt-0.5" /> Profile
+              <User className="mt-0.5" /> {t("mainpage.features.profile.title")}
             </Button>
           </Link>
         </span>
@@ -129,11 +158,13 @@ export function Home() {
 
       {/* Website Features */}
       <div className="gap mx-auto flex w-full max-w-4xl flex-col">
-        <span className="text-lg text-primary">Website Features</span>
-        <span className="mb-4 text-xs leading-none">
-          Website Features Description
+        <span className="text-lg text-primary">
+          {t("mainpage.features.web.title")}
         </span>
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+        <span className="mb-4 text-xs leading-none">
+          {t("mainpage.features.web.description")}
+        </span>
+        <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
           {FEATURE_ITEMS.map(({ id, to, icon: Icon, label, desc, badge }) => (
             <Link key={id} to={to}>
               <Card className="group h-full gap-2 px-4">

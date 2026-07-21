@@ -4,13 +4,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs"
 import { RarityBadge } from "@const/rarities"
 import { ItemImage, FindItemRarity, FindItemName } from "@const/elements"
 import BazaarGrid from "@components/actions/BazaarGrid"
+import { useTranslation } from 'react-i18next'
 
 export function GemExchangePage() {
+  const { t } = useTranslation("market")
+
   return (
     <div className="relative page-container flex flex-col pb-24">
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
 
-      <PageTitle title="Gem Exchange" description="Some Info Later" />
+      <PageTitle title={t("market.gem_exchange.title")} description={t("market.gem_exchange.description")} />
 
       <GemExchange />
     </div>

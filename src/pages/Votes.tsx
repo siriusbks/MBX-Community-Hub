@@ -5,13 +5,15 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@ui/alert"
-import { Globe, InfoIcon, Clock, CheckCircle2 } from "lucide-react"
+import { Globe, InfoIcon, Clock, CheckCircle2, WifiOffIcon, LoaderIcon } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { useLocation } from "react-router-dom";
 import { PageTitle } from "@components/layout/title";
 import { Card } from "@components/ui/card";
 import { Skeleton } from "@components/ui/skeleton"
 import { useTranslation } from "react-i18next"
+import { Ripple } from "@components/ripple"
+import { ErrorAlertElement } from "@components/minebox/smth"
 
 interface VoteSite {
     Name: string;
@@ -73,7 +75,7 @@ function getDailyResetInLocalTime(tz: string): string {
 
 export function VotePage() {
     const location = useLocation();
-  const { t } = useTranslation("votes")
+    const { t } = useTranslation("votes")
 
     const [votes, setVotes] = useState<VotesList | null>(null);
     const [cooldowns, setCooldowns] = useState<CooldownMap>({});
@@ -124,19 +126,20 @@ export function VotePage() {
         return (
             <div className="py-auto relative flex flex-col page-container">
                 <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
-                
-            <span className="flex grid grid-cols-3 gap-2">
-                {}
-                <Skeleton className="">
-                    <Skeleton className="w-1/2 h-6 m-4"/>
-                    <Skeleton className="w-1/4 h-4 m-2 mx-4"/>
-                    <span className="flex flex-row justify-between">
 
-                    <Skeleton className="w-1/4 h-4 mx-4"/>
-                    <Skeleton className="w-1/6 h-4 mx-4"/>
-                    </span>
-                    <Skeleton className=" h-8 m-4"/>
-                </Skeleton>
+                <span className="flex grid grid-cols-3 gap-2">
+                    {Array(6).fill().map((_, i) => (
+                        <Skeleton className="">
+                            <Skeleton className="w-1/2 h-6 m-4" />
+                            <Skeleton className="w-1/4 h-4 m-2 mx-4" />
+                            <span className="flex flex-row justify-between">
+
+                                <Skeleton className="w-1/4 h-4 mx-4" />
+                                <Skeleton className="w-1/6 h-4 mx-4" />
+                            </span>
+                            <Skeleton className=" h-8 m-4" />
+                        </Skeleton>
+                    ))}
                 </span>
             </div>
         );
@@ -145,12 +148,13 @@ export function VotePage() {
     if (error || !votes) {
         return (
             <div className="py-auto relative flex flex-col page-container">
-                <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
-                <Alert variant="destructive">
+                <PageTitle title={t("votes.title")} description={t("votes.desc")} />
+                {/*<Alert >
                     <InfoIcon className="h-4 w-4" />
                     <AlertTitle>{t("votes.error")}</AlertTitle>
                     <AlertDescription>{error ?? t("votes.error.loadError")}</AlertDescription>
-                </Alert>
+                </Alert>*/}
+                <ErrorAlertElement title={t("votes.error")} desc={t("votes.error.loadError")}/>
             </div>
         );
     }
@@ -160,7 +164,7 @@ export function VotePage() {
             {/* Background */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 bg-center -z-1 top-0 w-full aspect-21/9 mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
 
-            <PageTitle title="Vote Page" description="Vote on different international websites to support Minebox and get rewards!" />
+            <PageTitle title={t("votes.title")} description={t("votes.desc")} />
 
             {!nick && (
                 <Alert className="mb-4">

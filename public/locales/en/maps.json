@@ -3,9 +3,21 @@
     "maps.description.part1": "Hover over the",
     "maps.description.part2": "to view resources.",
 
+    "maps.players_island": "Player Islands",
+    "maps.exploration_island": "Exploration Islands",
+    "maps.some_info": "SOME INFO",
+
+    "maps.availabe_resources": "Availabe Resources",
     "maps.no_required": "No Required Level",
     "maps.required": "Required Level: ",
     "maps.view_map": "View Interactive Map",
+
+    "maps.preview_settings": "Preview Settings",
+    "maps.show_regions": "Show Regions",
+    "maps.show_bestiary": "Show Bestiary Spawn",
+
+    "maps.insects": "Insects",
+    "maps.bestiary": "Bestiary",
 
     "maps.island.spawn": "Spawn Island",
     "maps.island.island_home": "Player Island",
@@ -16,5 +28,10 @@
     "maps.island.island_plain": "Quadra Plains",
     "maps.island.island_bamboo": "Bamboo Peak",
     "maps.island.island_snow": "Frostbite Fortress",
-    "maps.island.island_desert": "Sandwhisper Dunes"
+    "maps.island.island_desert": "Sandwhisper Dunes",
+
+
+    "maps.resources": "Show Resources",
+    "maps.select_all": "Select All",
+    "maps.deselect_all": "Deselect All"
 }

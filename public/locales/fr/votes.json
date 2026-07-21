@@ -1,0 +1,16 @@
+{
+    "votes.title": "Page de vote",
+    "votes.desc": "Vote sur différents sites internationaux pour soutenir Minebox et obtenir des récompenses !",
+    "votes.readyToVote": "Prêt à voter",
+    "votes.nextVoteTime": "Prochain vote dans",
+    "votes.resetAt": "Réinitialisation à",
+    "votes.resetAfter": "Réinitialisation après",
+    "votes.VoteNow": "Voter maintenant !",
+    "votes.localTime": "Heure locale",
+    "votes.minutes": "minutes",
+
+
+    "votes.error": "Erreur",
+    "votes.error.loadError": "Échec du chargement des votes. Veuillez réessayer plus tard.",
+    "votes.error.noNickname": "Surnom non défini. Veuillez définir votre surnom dans les paramètres du profil pour voter."
+}

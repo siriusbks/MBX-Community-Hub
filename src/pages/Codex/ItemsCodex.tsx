@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef, useCallback } from "react"
 import { Button } from "@ui/button"
 import { Globe } from "lucide-react"
 import { Card } from "@ui/card"
 import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities"
 import { Input } from "@components/ui/input"
-import { CodexGrid } from "@components/minebox/codex-grid"
 import { MineboxItem } from "@components/minebox/MineboxItem"
 import {
   Sheet,
@@ -28,83 +27,151 @@ import {
   SelectValue,
 } from "@components/ui/select"
 import { CodexNav } from "@components/minebox/codex-nav"
+import { BestiaryItem } from "@components/minebox/bestiary"
+import { Link } from "react-router-dom"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
+
+type LocalizedText = Record<string, string>
+
+type LocalItem = {
+  name: LocalizedText
+  lore: LocalizedText
+  description: LocalizedText
+  image: string
+  rarity: string
+}
+
+type AuctionListing = {
+  id: number
+  author: string
+  item_id: string
+  order_type: string
+  quantity: number
+  price_per_unit: number
+  created_at: string
+  expires_at: string
+}
+
+type BazaarEntry = {
+  item_id: string
+  sell_price: number
+  buy_price: number
+  stock: number
+}
+
+// Na razie ustawione na sztywno — docelowo będzie pochodzić z globalnego ustawienia języka
+const locale = "en"
+
+// Ile elementów renderujemy na raz w gridzie (kolejne doładowywane przy scrollu)
+const PAGE_SIZE = 60
+
+// Proxy używany WYŁĄCZNIE do zapytań o cenę z aukcji (market/auction)
+const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy"
 
 export function ItemsCodex() {
   const [search, setSearch] = useState("")
   const [itemDetailsData, setItemDetailsData] = useState<any | null>(null)
-  const [mineboxItems, setMineboxItems] = useState<Record<string, any>>({})
-  const [currentPage, setCurrentPage] = useState(1)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const [totalPages, setTotalPages] = useState<number | null>(null)
-  const [totalItems, setTotalItems] = useState<number | null>(null)
+  const [auctionData, setAuctionData] = useState<AuctionListing | null>(null)
+  const [auctionLoading, setAuctionLoading] = useState(false)
+  const [bazaarData, setBazaarData] = useState<BazaarEntry | null>(null)
+  const [bazaarLoading, setBazaarLoading] = useState(false)
+  const [museumItemIds, setMuseumItemIds] = useState<Set<string> | null>(null)
+  const [itemsMap, setItemsMap] = useState<Record<string, LocalItem> | null>(
+    null
+  )
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const sentinelRef = useRef<HTMLDivElement | null>(null)
 
-  // Pobieranie danych z API
-  const fetchItems = async (page: number, searchQuery = search) => {
-    try {
-      const params = new URLSearchParams({
-        locale: "en",
-        page: page.toString(),
-      })
+  // Filtrowanie lokalne: po ID przedmiotu oraz po nazwie w aktywnym języku
+  const filteredItems = useMemo(() => {
+    if (!itemsMap) return []
 
-      if (searchQuery.trim() !== "") {
-        params.append("search", searchQuery.trim())
-      }
+    const query = search.trim().toLowerCase()
+    const entries = Object.entries(itemsMap)
 
-      const res = await fetch(
-        `https://api.minebox.co/Items?${params.toString()}`
-      )
+    if (query === "") return entries
 
-      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+    return entries.filter(([id, item]) => {
+      const nameInLocale = (item.name?.[locale] ?? "").toLowerCase()
+      return id.toLowerCase().includes(query) || nameInLocale.includes(query)
+    })
+  }, [search, itemsMap])
 
-      const json = await res.json()
+  const totalItems = itemsMap ? Object.keys(itemsMap).length : 0
 
-      const itemsObject: Record<string, any> = {}
-
-      json.items.forEach((item: any) => {
-        itemsObject[item.id] = item
-      })
-
-      if (page === 1) {
-        setMineboxItems(itemsObject)
-      } else {
-        setMineboxItems((prev) => ({ ...prev, ...itemsObject }))
-      }
-
-      setTotalPages(json.pages ?? null)
-      setTotalItems(json.total ?? null)
-
-      return json
-    } catch (e) {
-      console.error(e)
-      return null
-    }
-  }
-
-  // Ładowanie przy pierwszym renderowaniu
+  // Reset paginacji gridu przy każdej zmianie wyszukiwania / katalogu
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCurrentPage(1)
-      fetchItems(1, search)
-    }, 300)
+    setVisibleCount(PAGE_SIZE)
+  }, [search, itemsMap])
 
-    return () => clearTimeout(timeout)
-  }, [search])
+  // Elementy faktycznie renderowane w gridzie na tę chwilę
+  const visibleItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount]
+  )
 
-  // Obsługa Load More
-  const handleLoadMore = async () => {
-    if (isLoadingMore) return
+  // Doładowywanie kolejnych stron przy scrollu — obserwujemy "wartownika" pod gridem
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
 
-    setIsLoadingMore(true)
-    const nextPage = currentPage + 1
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((prev) =>
+            Math.min(prev + PAGE_SIZE, filteredItems.length)
+          )
+        }
+      },
+      { rootMargin: "400px" }
+    )
 
-    const result = await fetchItems(nextPage)
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [filteredItems.length])
 
-    if (result) {
-      setCurrentPage(nextPage)
+  // Katalog przedmiotów (~4MB) doczytywany asynchronicznie, poza głównym bundlem
+  useEffect(() => {
+    let cancelled = false
+
+    import("@const/APIPreload/items.json").then((mod) => {
+      if (cancelled) return
+      const data = (mod as any).default ?? mod
+      setItemsMap(data as Record<string, LocalItem>)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  // Katalog muzeum (kategoria -> lista item_id) — pobierany raz przez proxy i spłaszczany do zbioru ID
+  useEffect(() => {
+    const loadMuseumCatalog = async () => {
+      try {
+        const minebox_api = "https://api.minebox.co/museum"
+        const url = `${PROXY_BASE}?${new URLSearchParams({
+          url: minebox_api,
+        }).toString()}`
+
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+        const json = await res.json()
+
+        const ids = new Set<string>()
+        Object.values(json as Record<string, string[]>).forEach((list) => {
+          ;(list ?? []).forEach((itemId) => ids.add(itemId))
+        })
+
+        setMuseumItemIds(ids)
+      } catch (e) {
+        console.error("Failed to fetch museum catalog", e)
+        setMuseumItemIds(null)
+      }
     }
 
-    setIsLoadingMore(false)
-  }
+    loadMuseumCatalog()
+  }, [])
 
   const fetchItemDetails = async (id: string) => {
     try {
@@ -119,23 +186,89 @@ export function ItemsCodex() {
     }
   }
 
-  // Określenie czy pokazać przycisk Load More
-  const shouldShowLoadMore = () => {
-    const itemsCount = Object.keys(mineboxItems).length
+  // Cena najtańszej oferty z aukcji — pobierana przez proxy, zgodnie z ustalonym wzorcem
+  const fetchAuctionPrice = async (id: string) => {
+    setAuctionLoading(true)
+    setAuctionData(null)
+    try {
+      const minebox_api = `https://api.minebox.co/market/auction?item_id=${encodeURIComponent(
+        id
+      )}&sort=price&sort_direction=asc&limit=1`
+      const url = `${PROXY_BASE}?${new URLSearchParams({
+        url: minebox_api,
+      }).toString()}`
 
-    // Jeśli API zwraca totalPages, używamy tego
-    if (totalPages !== null) {
-      return currentPage < totalPages
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+      const json = await res.json()
+      setAuctionData(json?.listings?.[0] ?? null)
+    } catch (e) {
+      console.error("Failed to fetch auction price", e)
+      setAuctionData(null)
+    } finally {
+      setAuctionLoading(false)
     }
-
-    // Jeśli API zwraca total items, sprawdzamy czy załadowaliśmy wszystkie
-    if (totalItems !== null) {
-      return itemsCount < totalItems
-    }
-
-    // Fallback: zawsze pokazuj jeśli mamy jakieś itemy (może być więcej)
-    return itemsCount > 0
   }
+
+  // Ceny kupna/sprzedaży z bazaru — pobierane przez ten sam proxy co aukcje
+  const fetchBazaarPrice = async (id: string) => {
+    setBazaarLoading(true)
+    setBazaarData(null)
+    try {
+      const minebox_api = `https://api.minebox.co/market/bazaar?item_id=${encodeURIComponent(
+        id
+      )}`
+      const url = `${PROXY_BASE}?${new URLSearchParams({
+        url: minebox_api,
+      }).toString()}`
+
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+      const json = await res.json()
+      setBazaarData(json?.items?.[0] ?? null)
+    } catch (e) {
+      console.error("Failed to fetch bazaar price", e)
+      setBazaarData(null)
+    } finally {
+      setBazaarLoading(false)
+    }
+  }
+
+  const handleItemClick = (id: string) => {
+    fetchItemDetails(id)
+    fetchAuctionPrice(id)
+    fetchBazaarPrice(id)
+  }
+
+  // Wybór itemu: pobiera dane ORAZ zapisuje ?id= w adresie strony (bez przeładowania)
+  const selectItem = useCallback((id: string) => {
+    handleItemClick(id)
+
+    const url = new URL(window.location.href)
+    url.searchParams.set("id", id)
+    window.history.pushState({}, "", url)
+  }, [])
+
+  // Przy wejściu na stronę z ?id= w linku — od razu wczytaj szczegóły tego przedmiotu
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("id")
+    if (id) {
+      handleItemClick(id)
+    }
+
+    // Obsługa przycisków wstecz/dalej w przeglądarce
+    const onPopState = () => {
+      const currentId = new URLSearchParams(window.location.search).get("id")
+      if (currentId) {
+        handleItemClick(currentId)
+      } else {
+        setItemDetailsData(null)
+      }
+    }
+
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [])
 
   return (
     <div className="relative page-container flex h-dvh flex-col overflow-hidden">
@@ -149,23 +282,16 @@ export function ItemsCodex() {
           placeholder="Search items..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={async (e) => {
-            if (e.key === "Enter") {
-              setCurrentPage(1)
-              await fetchItems(1, e.currentTarget.value)
-            }
-          }}
           className="h-8 w-full minebox-shadow"
         />
+
         <Select>
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Coming Soon </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -176,77 +302,67 @@ export function ItemsCodex() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="light">Coming Soon </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-
-<span className="flex px-2 !h-8 w-fit items-center justify-center rounded bg-linear-to-t from-secondary to-secondary-lighter text-xs text-muted-foreground minebox-shadow whitespace-nowrap">
-  {totalItems && (
-    <p className="w-fit">{Object.keys(mineboxItems).length}/{totalItems} items</p>
-  )}
-</span>
       </span>
 
-      <div className="flex min-h-0 flex-1 flex-row gap-4">
-        <div className={`pr-2 h-full ${itemDetailsData ? 'w-2/3' : 'w-full'} custom-scrollbar overflow-y-auto scroll-fade`}>
-          
-        <div className={`w-full grid ${itemDetailsData ? 'grid-cols-5' : 'grid-cols-7'} gap-2 `}>
-            {Object.entries(mineboxItems).map(([id, item]) => {
-              const nameEn =
-                (item as any)?.name?.en ?? (item as any)?.name ?? id
-              const rarity = ((item as any)?.rarity ?? "")
-                .toString()
-                .toLowerCase()
-              const image = (item as any)?.image
-                ? `data:image/png;base64,${(item as any).image}`
+      <div className="flex min-h-0 flex-1 flex-row gap-4 scroll-fade">
+        <div
+          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth `}
+        >
+          <div
+            className={`grid w-full ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2 overflow-x-hidden`}
+          >
+            {itemsMap === null && (
+              <div className="col-span-full py-8 text-center text-muted-foreground">
+                Loading item catalog...
+              </div>
+            )}
+
+            {visibleItems.map(([id, item]) => {
+              const name = item.name?.[locale] ?? item.name?.en ?? id
+              const rarity = (item.rarity ?? "").toString().toLowerCase()
+              const image = item.image
+                ? `data:image/png;base64,${item.image}`
                 : ""
+
               return (
                 <div
                   key={id}
                   onClick={(e) => {
                     e.stopPropagation()
-                    fetchItemDetails(id)
+                    selectItem(id)
                   }}
                   className="cursor-pointer"
                 >
                   <MineboxItem
                     id={id}
-                    name={nameEn}
+                    name={name}
                     rarity={rarity}
                     image={image}
+                    level={item.level ?? 0}
                   />
                 </div>
               )
             })}
           </div>
 
-          {/* Przycisk Load More */}
-          <div className="my-4 flex flex-col items-center gap-2">
-            {shouldShowLoadMore() && (
-              <Button
-                onClick={handleLoadMore}
-                disabled={isLoadingMore}
-                variant="secondary"
-                size="lg"
-              >
-                {isLoadingMore ? "Loading..." : "Load More"}
-              </Button>
-            )}
-          </div>
+          {/* Wartownik obserwowany przez IntersectionObserver — doładowuje kolejną stronę wyników */}
+          {visibleCount < filteredItems.length && (
+            <div ref={sentinelRef} className="h-8 w-full" />
+          )}
 
-          {/* Informacja o ładowaniu przy pierwszym załadowaniu */}
-          {Object.keys(mineboxItems).length === 0 && (
+          {itemsMap !== null && filteredItems.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">
-              Loading items...
+              No items found.
             </div>
           )}
         </div>
 
         {itemDetailsData && (
-          <div className="flex h-full w-1/3 flex-col gap-2 custom-scrollbar overflow-y-auto pr-2">
+          <div className="custom-scrollbar flex min-h-0 w-1/3 flex-col gap-2 overflow-y-auto pr-2">
             <RarityBorder
               rarity={itemDetailsData.rarity.toLowerCase()}
               className="rounded-lg border-[8px]"
@@ -303,8 +419,50 @@ export function ItemsCodex() {
                 )}
                 <span className="flex flex-row gap-1 text-xs">
                   <p className="mr-auto">Museum</p>
-                  <p>????</p>
+                  <p>
+                    {museumItemIds === null
+                      ? "..."
+                      : museumItemIds.has(itemDetailsData.id)
+                        ? "Can be donated"
+                        : "Not donatable"}
+                  </p>
                 </span>
+                {/*}
+                <span className="flex flex-row gap-1 text-xs">
+                  <p className="mr-auto">Buy (Bazaar)</p>
+                  <p>
+                    {bazaarLoading
+                      ? "..."
+                      : bazaarData
+                        ? bazaarData.buy_price.toLocaleString()
+                        : "????"}
+                  </p>
+                </span>
+                <span className="flex flex-row gap-1 text-xs">
+                  <p className="mr-auto">Sell (Bazaar)</p>
+                  <p>
+                    {bazaarLoading
+                      ? "..."
+                      : bazaarData
+                        ? bazaarData.sell_price.toLocaleString()
+                        : "????"}
+                  </p>
+                </span>*/}
+                {auctionData &&
+                  auctionData.price_per_unit !== 0 &&
+                  !auctionLoading && (
+                    <span className="flex flex-row gap-1 text-xs">
+                      <p className="mr-auto">Price (Action House)</p>
+                      <p>
+                        {auctionLoading
+                          ? "..."
+                          : auctionData
+                            ? auctionData.price_per_unit.toLocaleString()
+                            : "????"}
+                      </p>
+                      <img src="/media/currency/GOLD.png" className="size-4" />
+                    </span>
+                  )}
                 {itemDetailsData?.stats && (
                   <div>
                     <p className="text-xs">Stats</p>
@@ -351,15 +509,22 @@ export function ItemsCodex() {
             </RarityBorder>
 
             {itemDetailsData?.extra_image && (
-              <img src={itemDetailsData.extra_image} />
+              <img src={itemDetailsData.extra_image} className="aspect-square object-cover w-2/3 mx-auto drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
             )}
 
             {itemDetailsData?.recipe && (
-              <Card className="flex flex-col gap-1 p-2 pb-3">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
-                  <Button size="icon-xs">
-                    <Globe />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button size="icon-xs">
+                        <Globe />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Recipe Calculator Coming Soon</p>
+                    </TooltipContent>
+                  </Tooltip>
                   <p>Recipes</p>
                   <p className="ml-auto text-xs">
                     {itemDetailsData.recipe.job}
@@ -380,6 +545,7 @@ export function ItemsCodex() {
                               rarity="vanilla"
                               level={0}
                               className="aspect-square"
+                              count={ingredient.amount}
                             />
                           )
                         } else {
@@ -394,6 +560,7 @@ export function ItemsCodex() {
                               level={0}
                               fetchFromApi={false}
                               className="aspect-square"
+                              count={ingredient.amount}
                             />
                           )
                         }
@@ -404,7 +571,7 @@ export function ItemsCodex() {
             )}
 
             {itemDetailsData?.used_in_recipes && (
-              <Card className="flex flex-col gap-1 p-2 pb-3">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
                   <p>Used in Recipes</p>
                 </span>
@@ -425,12 +592,51 @@ export function ItemsCodex() {
                 </span>
               </Card>
             )}
-            <Card className="flex flex-col gap-1 p-2 pb-3">
-              <span className="flex flex-row gap-1">
-                <p>Dropped By</p>
-              </span>
-              <span className="grid grid-cols-7 gap-1"></span>
-            </Card>
+            {itemDetailsData?.dropped_by && (
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
+                <span className="flex flex-row gap-1">
+                  <p>Dropped By</p>
+                </span>
+                <span className="grid grid-cols-3 gap-2">
+                  {itemDetailsData?.dropped_by &&
+                    itemDetailsData.dropped_by.map((bestiary, index) => (
+                      <Link to={`/bestiary?id=${bestiary.creature_id}`}>
+                        <span className="group flex h-full rounded-lg bg-card p-1 minebox-shadow">
+                          <span className="flex flex-col items-center justify-center gap-1 w-full">
+                            <img
+                              src={bestiary.image}
+                              className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110"
+                            />
+                            <span className="flex w-full flex-col items-center my-auto">
+                              <p className="w-full text-center text-xs leading-none mb-1">
+                                {bestiary.name}
+                              </p>
+                              <span className="mt-auto flex w-full flex-col items-center justify-between px-1 text-xs">
+                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                  <p className="text-[0.65rem] text-muted-foreground">
+                                    Change
+                                  </p>
+                                  <p className="text-[0.65rem]">{bestiary.chance}%</p>
+                                </span>
+                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                  <p className="text-[0.65rem] text-muted-foreground">
+                                    Drop
+                                  </p>
+<p className="text-[0.65rem]">
+  {bestiary.amount[0] === bestiary.amount[1] 
+    ? bestiary.amount[0] 
+    : bestiary.amount.join(' - ')}
+</p>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                </span>
+              </Card>
+            )}
           </div>
         )}
       </div>

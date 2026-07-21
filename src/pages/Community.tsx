@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { ProjectCard, type ProjectProps } from "@pages/Community/ProjectCard";
-import { Badge } from "@ui/badge";
 import { PageTitle } from "@components/layout/title";
 import { Ripple } from "@components/ripple";
+import { useTranslation } from "react-i18next";
 
 export function CommunityPage() {
     const [projects, setProjects] = useState<ProjectProps["project"][]>([]);
+    const { t } = useTranslation('community');
 
     useEffect(() => {
         fetch("/assets/data/projects.json")
@@ -19,8 +20,8 @@ export function CommunityPage() {
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
 
             <PageTitle
-                title="COMMUNITY PROJECTS"
-                description="Discover amazing projects created by the Minebox community, including Mods, Resource Packs, and more."
+                title={t("community.title")}
+                description={t("community.description")}
             />
 
             <div className="w-full  mx-auto px-4 z-10">

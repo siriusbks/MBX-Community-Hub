@@ -21,6 +21,8 @@ import {
   HoverCardTrigger,
 } from "@components/ui/hover-card"
 import { Button } from "@components/ui/button"
+import { useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 
 type AuctionListing = {
   id: number
@@ -52,6 +54,7 @@ function getDaysLeft(expiresAt: string) {
 }
 
 export default function ActionGrid() {
+  const { t } = useTranslation("market")
   const [listings, setListings] = useState<AuctionListing[]>([])
   const [offset, setOffset] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -116,7 +119,7 @@ export default function ActionGrid() {
     <div className="flex flex-col items-center gap-4">
       <span className="flex w-full gap-2">
         <Input
-          placeholder="Search items..."
+          placeholder={t("market.action_house.search_placeholder")}
           className="h-8 w-full minebox-shadow"
           value={itemId}
           onChange={(e) => setItemId(e.target.value)}
@@ -130,9 +133,15 @@ export default function ActionGrid() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="time">Time</SelectItem>
-              <SelectItem value="price">Price</SelectItem>
-              <SelectItem value="level">Level</SelectItem>
+              <SelectItem value="time">
+                {t("market.action_house.sort_by_time")}
+              </SelectItem>
+              <SelectItem value="price">
+                {t("market.action_house.sort_by_price")}
+              </SelectItem>
+              <SelectItem value="level">
+                {t("market.action_house.sort_by_level")}
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -146,68 +155,93 @@ export default function ActionGrid() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="asc">Ascending</SelectItem>
-              <SelectItem value="desc">Descending</SelectItem>
+              <SelectItem value="asc">
+                {t("market.action_house.order_asc")}
+              </SelectItem>
+              <SelectItem value="desc">
+                {t("market.action_house.order_desc")}
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
       </span>
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-7">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
         {listings.map((listing) => (
-          <RarityBorder
-            key={listing.id}
-            rarity={FindItemRarity({ itemId: listing.item_id })}
-            className="relative flex flex-col items-center gap-0"
-          >
-            <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
-              <p>{FindItemName({ itemId: listing.item_id })}</p>
-            </span>
+          <HoverCard>
+            <HoverCardTrigger>
+              <RarityBorder
+                key={listing.id}
+                rarity={FindItemRarity({ itemId: listing.item_id })}
+                className="group relative flex flex-col items-center gap-0"
+              >
+                <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
+                  <p>{FindItemName({ itemId: listing.item_id })}</p>
+                </span>
 
-            <span className="relative">
-              <HoverCard>
-                <HoverCardTrigger>
+                <span className="relative">
                   <ItemImage
                     itemId={listing.item_id}
-                    className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
+                    className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-all [image-rendering:pixelated] group-hover:scale-110"
                   />
-                </HoverCardTrigger>
-                <HoverCardContent>
-                  <span className="flex flex-row  gap-2 items-center leading-none">
-                    <RarityBadge rarity={FindItemRarity({ itemId: listing.item_id })} />
-                    <p className="text-lg mb-1">{FindItemName({ itemId: listing.item_id })}</p>
+                </span>
+
+                <span className="mt-2">
+                  <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                    {listing.price_per_unit.toLocaleString()}
+                    <img src={`/media/currency/GOLD.png`} className="!size-6" />
+                  </p>
+                </span>
+
+                
+
+                <Link to={`/items?id=${listing.item_id.replace(/^mbi-/, "")}`}>
+                  <p className="text-[0.6rem] text-center uppercase text-muted-foreground hover:text-primary">
+                    View item in Codex
+                  </p>
+                </Link>
+
+                  <PlayerFooter
+                    playerName={listing.author}
+                    className="!text-[0.6rem]"
+                  />
+              </RarityBorder>
+            </HoverCardTrigger>
+            <HoverCardContent className="p-0">
+              <RarityBorder
+                rarity={FindItemRarity({ itemId: listing.item_id })}
+              >
+                <span className="flex flex-row items-center gap-2 leading-none">
+                  <RarityBadge
+                    rarity={FindItemRarity({ itemId: listing.item_id })}
+                  />
+                  <p className="mb-1 text-lg leading-none">
+                    {FindItemName({ itemId: listing.item_id })}
+                  </p>
+                </span>
+
+                {listing.stats && (
+                  <span className="flex w-full flex-col gap-1 text-xs">
+                    {Object.entries(listing.stats).map(([stat, value]) => (
+                      <StatItem
+                        key={stat}
+                        stat={stat}
+                        from={value}
+                        to={value}
+                      />
+                    ))}
                   </span>
+                )}
 
-                  {listing.stats && (
-                    <span className="flex w-full flex-col gap-1 text-xs">
-                      {Object.entries(listing.stats).map(([stat, value]) => (
-                        <StatItem
-                          key={stat}
-                          stat={stat}
-                          from={value}
-                          to={value}
-                        />
-                      ))}
-                    </span>
-                  )}
-                  <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    Time Left: <p>{getDaysLeft(listing.expires_at)} Days</p>
-                  </span>
-                </HoverCardContent>
-              </HoverCard>
-            </span>
-
-            <span className="mt-2">
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {listing.price_per_unit.toLocaleString()}
-                <img src={`/media/currency/GOLD.png`} className="!size-6" />
-              </p>
-            </span>
-
-            <PlayerFooter
-              playerName={listing.author}
-              className="!text-[0.6rem]"
-            />
-          </RarityBorder>
+                <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+                  {t("market.action_house.time_left")}{" "}
+                  <p>
+                    {getDaysLeft(listing.expires_at)}{" "}
+                    {t("market.action_house.days")}
+                  </p>
+                </span>
+              </RarityBorder>
+            </HoverCardContent>
+          </HoverCard>
         ))}
       </div>
 
@@ -218,7 +252,7 @@ export default function ActionGrid() {
           size="lg"
           className=""
         >
-          {loading ? "Ładowanie..." : "Load More"}
+          {loading ? "Loading..." : t("market.action_house.load_more")}
         </Button>
       )}
     </div>

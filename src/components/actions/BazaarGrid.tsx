@@ -4,6 +4,7 @@ import { Badge } from "@components/ui/badge"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
 import { RarityBorder } from "@const/rarities"
 import { useEffect, useState } from "react"
+import { useTranslation } from 'react-i18next'
 
 type BazaarItem = {
   item_id: string
@@ -18,10 +19,47 @@ type BazaarResponse = {
   total: number
 }
 
-const categoryMap = {
+const PROXY_URL = "https://mineboxadditions.bartier.me/proxy"
+
+// Wraps a target URL so it goes through the proxy, e.g.
+// proxied("https://api.minebox.co/market/bazaar?limit=100&offset=0")
+function proxied(targetUrl: string) {
+  const params = new URLSearchParams({ url: targetUrl })
+  return `${PROXY_URL}?${params.toString()}`
+}
+
+// Runs a list of fetches in batches of `maxPerSecond`, waiting out the
+// remainder of each second before firing the next batch, so we never
+// exceed the proxy's rate limit (10 req/s).
+async function fetchJsonRateLimited<T>(
+  urls: string[],
+  maxPerSecond = 10
+): Promise<T[]> {
+  const results: T[] = []
+
+  for (let i = 0; i < urls.length; i += maxPerSecond) {
+    const batch = urls.slice(i, i + maxPerSecond)
+    const batchStart = Date.now()
+
+    const batchResults = await Promise.all(
+      batch.map((url) => fetch(url).then((r) => r.json() as Promise<T>))
+    )
+    results.push(...batchResults)
+
+    const elapsed = Date.now() - batchStart
+    const hasMore = i + maxPerSecond < urls.length
+    if (hasMore && elapsed < 1000) {
+      await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
+    }
+  }
+
+  return results
+}
+
+const getCategoryMap = (t: any) => ({
   categories: [
     {
-      category: "Farming",
+      category: t("market.bazaar.categorie.farming"),
       items: [
         "material-bamboo",
         "mbi-transformed_material-bamboo",
@@ -29,96 +67,96 @@ const categoryMap = {
         "mbi-crate_material-bamboo",
         "mbi-barrel_material-bamboo",
         "mbi-enchanted_material-bamboo",
-        
+
         "material-carrot",
         "mbi-transformed_material-carrot",
         "mbi-bag_material-carrot",
         "mbi-crate_material-carrot",
         "mbi-barrel_material-carrot",
         "mbi-enchanted_material-carrot",
-        
+
         "material-beetroot",
         "mbi-transformed_material-beetroot",
         "mbi-bag_material-beetroot",
         "mbi-crate_material-beetroot",
         "mbi-barrel_material-beetroot",
         "mbi-enchanted_material-beetroot",
-        
+
         "material-cactus",
         "mbi-transformed_material-cactus",
         "mbi-bag_material-cactus",
         "mbi-crate_material-cactus",
         "mbi-barrel_material-cactus",
         "mbi-enchanted_material-cactus",
-        
+
         "material-cocoa_beans",
         "mbi-transformed_material-cocoa_beans",
         "mbi-bag_material-cocoa_beans",
         "mbi-crate_material-cocoa_beans",
         "mbi-barrel_material-cocoa_beans",
         "mbi-enchanted_material-cocoa_beans",
-        
+
         "material-kelp",
         "mbi-transformed_material-kelp",
         "mbi-bag_material-kelp",
         "mbi-crate_material-kelp",
         "mbi-barrel_material-kelp",
         "mbi-enchanted_material-kelp",
-        
+
         "material-melon_slice",
         "mbi-transformed_material-melon_slice",
         "mbi-bag_material-melon_slice",
         "mbi-crate_material-melon_slice",
         "mbi-barrel_material-melon_slice",
         "mbi-enchanted_material-melon_slice",
-        
+
         "material-nether_wart",
         "mbi-transformed_material-nether_wart",
         "mbi-bag_material-nether_wart",
         "mbi-crate_material-nether_wart",
         "mbi-barrel_material-nether_wart",
         "mbi-enchanted_material-nether_wart",
-        
+
         "material-potato",
         "mbi-transformed_material-potato",
         "mbi-bag_material-potato",
         "mbi-crate_material-potato",
         "mbi-barrel_material-potato",
         "mbi-enchanted_material-potato",
-        
+
         "material-pumpkin",
         "mbi-transformed_material-pumpkin",
         "mbi-bag_material-pumpkin",
         "mbi-crate_material-pumpkin",
         "mbi-barrel_material-pumpkin",
         "mbi-enchanted_material-pumpkin",
-        
+
         "material-sugar_cane",
         "mbi-transformed_material-sugar_cane",
         "mbi-bag_material-sugar_cane",
         "mbi-crate_material-sugar_cane",
         "mbi-barrel_material-sugar_cane",
         "mbi-enchanted_material-sugar_cane",
-        
+
         "material-sweet_berries",
         "mbi-transformed_material-sweet_berries",
         "mbi-bag_material-sweet_berries",
         "mbi-crate_material-sweet_berries",
         "mbi-barrel_material-sweet_berries",
         "mbi-enchanted_material-sweet_berries",
-        
+
         "material-wheat",
         "mbi-transformed_material-wheat",
         "mbi-bag_material-wheat",
         "mbi-crate_material-wheat",
         "mbi-barrel_material-wheat",
         "mbi-enchanted_material-wheat",
-        
+
         "material-honeycomb",
       ],
     },
     {
-      category: "Harvestables",
+      category: t("market.bazaar.categorie.harvestables"),
       items: [
         "mbi-crop_barley",
         "mbi-seed_barley",
@@ -176,9 +214,11 @@ const categoryMap = {
       ],
     },
   ],
-}
+})
 
 export default function BazaarGrid() {
+  const { t } = useTranslation("market")
+  const categoryMap = getCategoryMap(t)
   const [items, setItems] = useState<BazaarItem[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -186,24 +226,25 @@ export default function BazaarGrid() {
     const loadAllPages = async () => {
       const limit = 100
 
-      const firstPage = (await fetch(
+      const firstPageUrl = proxied(
         `https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`
-      ).then((r) => r.json())) as BazaarResponse
+      )
+      const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([firstPageUrl])
 
       const allItems = [...firstPage.items]
       const totalPages = Math.ceil(firstPage.total / limit)
 
-      const requests = []
+      const remainingUrls: string[] = []
       for (let page = 2; page <= totalPages; page++) {
-        requests.push(
-          fetch(
+        remainingUrls.push(
+          proxied(
             `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
-          ).then((r) => r.json())
+          )
         )
       }
 
-      const results = await Promise.all(requests)
-      results.forEach((result: BazaarResponse) => {
+      const results = await fetchJsonRateLimited<BazaarResponse>(remainingUrls)
+      results.forEach((result) => {
         allItems.push(...result.items)
       })
 
@@ -240,13 +281,14 @@ export default function BazaarGrid() {
   })
 
   const otherItems = items.filter((item) => !usedIds.has(item.item_id))
+  const otherCategoryName = t("market.bazaar.categorie.others")
   if (otherItems.length > 0) {
-    groupedItems["Other"] = otherItems
+    groupedItems[otherCategoryName] = otherItems
   }
 
   const orderedCategories = [
     ...categoryMap.categories.map((c) => c.category),
-    ...(groupedItems["Other"] ? ["Other"] : []),
+    ...(groupedItems[otherCategoryName] ? [otherCategoryName] : []),
   ]
 
   return (
@@ -282,12 +324,12 @@ export default function BazaarGrid() {
                     </p>
                     <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        STOCK
+                        {t("market.bazaar.stock")}
                       </p>
                       {item.stock > 0 ? (
                         <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
                       ) : (
-                        <Badge variant="secondary">No Stock</Badge>
+                        <Badge variant="secondary">{t("market.bazaar.no_stock")}</Badge>
                       )}
                     </span>
                   </span>
@@ -296,12 +338,12 @@ export default function BazaarGrid() {
                 <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
                   {item.unavailable ? (
                     <span className="flex w-full flex-row justify-center px-2">
-                      <Badge variant="secondary">Unavailable</Badge>
+                      <Badge variant="secondary">{t("market.bazaar.unavailable")}</Badge>
                     </span>
                   ) : (
                     <>
                       <span className="flex flex-row justify-between gap-2 px-2">
-                        <p className="text-[0.65rem] text-muted-foreground">SELL</p>
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.sell")}</p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.sell_price.toLocaleString()}
                           <img
@@ -313,7 +355,7 @@ export default function BazaarGrid() {
                       </span>
 
                       <span className="flex flex-row justify-between gap-2 px-2 text-xs items-center">
-                        <p className="text-[0.65rem] text-muted-foreground">BUY</p>
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.buy")}</p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.buy_price.toLocaleString()}
                           <img

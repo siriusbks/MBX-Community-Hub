@@ -2,8 +2,11 @@ import { Card, CardContent } from "@ui/card";
 import { Activity, ScrollIcon, SkullIcon } from "lucide-react";
 import { type PlayerData } from "../../types/profile";
 import { Separator } from "@components/ui/separator";
+import { useTranslation } from 'react-i18next';
 
 export function StatsTab({ data }: { data: PlayerData }) {
+    const { t } = useTranslation('profile');
+
     if (!data.data?.ATTRIBUTED_STATS?.base || Object.keys(data.data.ATTRIBUTED_STATS.base).length === 0) {
         return (
             <div className="col-span-full flex flex-col items-center justify-center p-8 text-muted-foreground bg-secondary/20 rounded-lg border-dashed border border-border/50">
@@ -20,6 +23,7 @@ export function StatsTab({ data }: { data: PlayerData }) {
                 const totalValue = baseValue + scrollsValue;
 
                 const imageSrc = `/media/attributes/${statName}.png`;
+
 
                 return (
                     <Card
@@ -48,26 +52,26 @@ export function StatsTab({ data }: { data: PlayerData }) {
                             </div>
 
                             <div className="flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                                <h3 className="font-bold tracking-tight uppercase tracking-widest text-foreground drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] truncate group-hover:text-primary transition-colors text-sm sm:text-base" title={statName.replace(/_/g, ' ')}>
-                                    {statName.replace(/_/g, ' ')}
+                                <h3 className="font-bold tracking-tight uppercase tracking-widest text-foreground drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] truncate group-hover:text-primary transition-colors text-sm sm:text-base" title={t(`profile.attributes.${statName.toLowerCase()}`)}>
+                                    {t(`profile.attributes.${statName.toLowerCase()}`)}
                                 </h3>
 
                                 <div className="flex items-center justify-between ">
-                                    <div className="flex flex-col gap-0.5">
-                                        <span className="text-[0.9rem] font-black text-green-400 drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] leading-none">BASE: {baseValue}</span>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[0.9rem]  text-green-400 drop-shadow-[0_2px_0_rgba(0,0,0,0.3)] leading-none uppercase">{t('profile.attributes.base')} {baseValue}</span>
                                         <span className="flex flex-row gap-4">
                                         {scrollsValue > 0 && (
                                             <span className="text-xs text-foreground font-bold tracking-wider leading-none flex flex-row gap-1"><ScrollIcon className="size-4" strokeWidth={2}/> +{scrollsValue}</span>
                                         )}
-                                        {scrollsValue > 0 && (
+                                        {/*{scrollsValue > 0 && (
                                             <span className="text-xs text-foreground font-bold tracking-wider leading-none flex flex-row gap-1"><SkullIcon className="size-4" strokeWidth={2}/> +???</span>
-                                        )}
+                                        )}*/}
                                         </span>
                                     </div>
 
                                     {scrollsValue > 0 && (
                                         <div className="flex flex-col items-end leading-none">
-                                            <span className="text-[8px] text-muted-foreground font-medium uppercase tracking-wider mb-0">Total</span>
+                                            <span className="text-[8px] text-muted-foreground font-medium uppercase tracking-wider mb-0">{t('profile.attributes.total')}</span>
                                             <span className="text-2xl text-primary font-bold">{totalValue}</span>
                                         </div>
                                     )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PageTitle } from "@components/layout/title";
 import { Card } from "@ui/card";
+import { useTranslation } from "react-i18next";
 import { Skeleton } from "@ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/tabs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@ui/accordion";
@@ -8,24 +9,25 @@ import { type PlayerData } from "../types/profile";
 import { Leaf, Pickaxe, Fish, Axe, Book, ChevronDown, Check, Star, Lock, Sprout, Apple, Sword } from 'lucide-react';
 import { ItemImage, FindItemName } from "@const/elements";
 
-const CATEGORIES = [
-    { id: 'farming', label: 'Farming', icon: Leaf },
-    { id: 'mining', label: 'Mining', icon: Pickaxe },
-    { id: 'fishing', label: 'Fishing', icon: Fish },
-    { id: 'woodcutting', label: 'Woodcutting', icon: Axe },
-    { id: 'picking', label: 'Picking', icon: Sprout },
-    { id: 'fruits', label: 'Fruits', icon: Apple },
-    { id: 'looting', label: 'Looting', icon: Sword },
-];
-
-const PROGRESS_FILTERS = [
-    { id: 'all', label: 'All' },
-    { id: 'in_progress', label: 'In Progress' },
-    { id: 'not_started', label: 'Not Started' },
-    { id: 'completed', label: 'Completed' },
-];
-
 export function CollectionsPage() {
+    const { t } = useTranslation('collections');
+
+    const CATEGORIES = [
+        { id: 'farming', label: t("collections.tab.farming"), icon: Leaf },
+        { id: 'mining', label: t("collections.tab.mining"), icon: Pickaxe },
+        { id: 'fishing', label: t("collections.tab.fishing"), icon: Fish },
+        { id: 'woodcutting', label: t("collections.tab.woodcutting"), icon: Axe },
+        { id: 'picking', label: t("collections.tab.picking"), icon: Sprout },
+        { id: 'fruits', label: t("collections.tab.fruits"), icon: Apple },
+        { id: 'looting', label: t("collections.tab.looting"), icon: Sword },
+    ];
+
+    const PROGRESS_FILTERS = [
+        { id: 'all', label: t('collections.filter.all') },
+        { id: 'in_progress', label: t('collections.filter.in_progress') },
+        { id: 'not_started', label: t('collections.filter.not_started') },
+        { id: 'completed', label: t('collections.filter.completed') },
+    ];
     const [nick, setNick] = useState<string | null>(null);
     const [playerData, setPlayerData] = useState<PlayerData | null>(null);
     const [collections, setCollections] = useState<any[]>([]);
@@ -158,7 +160,7 @@ export function CollectionsPage() {
     return (
         <div className="relative flex flex-col page-container gap-4 pb-12 min-h-dvh">
             <div className="absolute opacity-30 bg-center -z-1 top-0 w-full aspect-[21/9] mask-x-from-80% mask-y-from-50% mask-radial-to-100% bg-[url(/media/backgrounds/MainBackground.webp)]" />
-            <PageTitle title="Collections" description="Track your resource gathering progress" />
+            <PageTitle title={t("collections.title")} description={t("collections.description")} />
 
             {error && !loadingProfile ? (
                 <Card className="border-destructive/50 bg-destructive/10 mt-2">
@@ -248,24 +250,24 @@ export function CollectionsPage() {
                                                 <div className="flex items-baseline gap-1 text-sm">
                                                     <span className="font-bold text-white drop-shadow-sm">{stats.currentTiers}</span>
                                                     <span className="text-muted-foreground/80 font-medium">/{stats.maxTiers}</span>
-                                                    <span className="text-muted-foreground ml-1">tiers</span>
+                                                    <span className="text-muted-foreground ml-1">{t('collections.tiers')}</span>
                                                 </div>
                                                 <div className="w-px h-3.5 bg-white/10 hidden sm:block" />
                                                 <div className="flex items-baseline gap-1 text-sm">
                                                     <span className="font-bold text-white drop-shadow-sm">{stats.unlockedRecipes}</span>
                                                     <span className="text-muted-foreground/80 font-medium">/{stats.totalRecipes}</span>
-                                                    <span className="text-muted-foreground ml-1">recipes</span>
+                                                    <span className="text-muted-foreground ml-1">{t('collections.recipes')}</span>
                                                 </div>
                                                 <div className="w-px h-3.5 bg-white/10 hidden sm:block" />
                                                 <div className="flex items-baseline gap-1 text-sm">
                                                     <span className="font-bold text-white drop-shadow-sm">{stats.completed}</span>
-                                                    <span className="text-muted-foreground ml-1">complete</span>
+                                                    <span className="text-muted-foreground ml-1">{t('collections.complete')}</span>
                                                 </div>
                                                 <div className="w-px h-3.5 bg-white/10 hidden sm:block" />
                                                 <div className="flex items-baseline gap-1 text-sm">
                                                     <span className="font-bold text-white drop-shadow-sm">{stats.started}</span>
                                                     <span className="text-muted-foreground/80 font-medium">/{stats.total}</span>
-                                                    <span className="text-muted-foreground ml-1">started</span>
+                                                    <span className="text-muted-foreground ml-1">{t('collections.started')}</span>
                                                 </div>
                                             </div>
                                         );
@@ -338,11 +340,11 @@ export function CollectionsPage() {
                                                                 </div>
                                                                 
                                                                 <div className="flex justify-between text-[10px] text-muted-foreground/80 font-medium mt-1.5">
-                                                                    <span><strong className="text-white/90 text-[11px]">{formatNumber(currentValue)}</strong> harvested</span>
+                                                                    <span><strong className="text-white/90 text-[11px]">{formatNumber(currentValue)}</strong> {t("collections.progress.harvested")}</span>
                                                                     {!isMaxed ? (
-                                                                        <span><strong className="text-white/90 text-[11px]">{formatNumber(toNextLevel)}</strong> until next Lvl</span>
+                                                                        <span><strong className="text-white/90 text-[11px]">{formatNumber(toNextLevel)} </strong> {t("collections.until-next-level")}</span>
                                                                     ) : (
-                                                                        <span className="text-yellow-400/90 font-bold uppercase tracking-wider">Collection Maxed!</span>
+                                                                        <span className="text-yellow-400/90 font-bold uppercase tracking-wider">{t("collections.progress.maxed")}</span>
                                                                     )}
                                                                 </div>
                                                             </div>
@@ -384,7 +386,7 @@ export function CollectionsPage() {
                                                                                 <span className={`text-sm font-black tracking-tight ${isCompleted ? 'text-white' : 'text-white/80'}`}>
                                                                                     {formatNumber(level.amount)}
                                                                                 </span>
-                                                                                <span className="text-[10px] text-muted-foreground hidden sm:inline">harvested</span>
+                                                                                <span className="text-[10px] text-muted-foreground hidden sm:inline">{t("collections.progress.harvested")}</span>
                                                                             </div>
                                                                         </div>
                                                                         <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded shadow-inner">
@@ -401,28 +403,28 @@ export function CollectionsPage() {
 
                                                                                 if (reward.type === 'recipe') {
                                                                                     iconId = reward.value;
-                                                                                    title = 'Recipe';
+                                                                                    title = t("collections.rewards.recipe");
                                                                                     subtitle = FindItemName({itemId: reward.value}) || reward.value?.replace(/_/g, ' ') || 'Unknown Recipe';
                                                                                 } else if (reward.type === 'skill_experience') {
                                                                                     iconId = 'material-experience_bottle';
-                                                                                    title = 'Skill XP';
+                                                                                    title = t("collections.rewards.skill_xp");
                                                                                     subtitle = `+${formatNumber(reward.amount)} ${reward.skill}`;
                                                                                 } else if (reward.type === 'sell_multiplier') {
                                                                                     iconId = reward.item_id;
-                                                                                    title = 'Sell Bonus';
+                                                                                    title = t("collections.rewards.sell_bonus");
                                                                                     subtitle = `+${Math.round(reward.multiplier * 100)}% Price`;
                                                                                 } else if (reward.type === 'stats') {
                                                                                     iconId = 'material-nether_star';
-                                                                                    title = 'Stats';
+                                                                                    title = t("collections.rewards.stats");
                                                                                     const statsArr = Object.entries(reward.stats || {}).map(([k, v]) => `+${v} ${k.replace(/_/g, ' ')}`);
                                                                                     subtitle = statsArr.join(', ') || 'Bonus';
                                                                                 } else if (reward.type === 'title') {
                                                                                     iconId = 'material-name_tag';
-                                                                                    title = 'Title';
+                                                                                    title = t("collections.rewards.title");
                                                                                     subtitle = reward.value?.replace(/_/g, ' ');
                                                                                 } else if (reward.type === 'item') {
                                                                                     iconId = reward.value || reward.item_id || '';
-                                                                                    title = 'Item';
+                                                                                    title = t("collections.rewards.item");
                                                                                     subtitle = FindItemName({itemId: iconId}) || iconId?.replace(/_/g, ' ') || 'Unknown Item';
                                                                                     if (reward.amount) subtitle = `${subtitle} x${reward.amount}`;
                                                                                 } else {
@@ -460,7 +462,7 @@ export function CollectionsPage() {
                                     
                                     {filteredCollections.length === 0 && (
                                         <div className="py-12 text-center text-muted-foreground bg-card/20 rounded-lg border border-border/50">
-                                            No collections found for this filter.
+                                            {t("collections.no-collections")}
                                         </div>
                                     )}
                                 </Accordion>

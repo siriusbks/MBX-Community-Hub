@@ -1,0 +1,13 @@
+{
+    "contribute.title": "Contribute",
+    "contribute.description": "Help us improve the MBX Community!",
+    "contribute.code_features": "Code & Features",
+    "contribute.code_features.description": "Whether you're a developer eager to submit a PR, or a user who spotted a bug or has a brilliant idea, our GitHub is the place to be. Join the open-source effort to make the hub better for everyone!",
+    "contribute.localization": "Localization",
+    "contribute.localization.description": "The hub aims to be accessible globally. If you're fluent in another language, you can make a huge impact by helping us translate the platform on Crowdin. Join our localization team!",
+    "contribute.help_ideas": "Help & Ideas",
+    "contribute.help_ideas.description": "Have a quick question, need some help, or want to discuss a new idea before making it official? Hop into our dedicated Discord forums! Chat directly with the community and developers.",
+    "contribute.contributors": "The contributors",
+    "contribute.creator": "Creator",
+    "contribute.contributor": "Contributor"
+}

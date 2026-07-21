@@ -15,7 +15,7 @@ import {
 } from "@components/ui/popover"
 import { RarityBadge, RarityBorder } from "@const/rarities";
 import { Link } from "react-router-dom";
-import { FindItemName, ItemImage } from "@const/elements";
+import { FindItemName, ItemImage, getCleanItemId } from "@const/elements";
 
 const player_islands = [
   { id: "island_home", level: 0, command: "/is" },
@@ -34,7 +34,7 @@ const islands = [
 ];
 
 export function Maps() {
-  const { t, i18n } = useTranslation("maps");
+  const { t } = useTranslation(["maps", "items_maps"]);
   const [mapsData, setMapsData] = useState<any | null>(null);
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null);
 
@@ -67,8 +67,8 @@ export function Maps() {
       />
 
       <span className="flex flex-row items-center justify-between w-full">
-        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Player Islands</p>
-        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.players_island")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full  z-10">
         {player_islands.map((map, index) => (
@@ -104,8 +104,8 @@ export function Maps() {
       </div>
 
       <span className="flex flex-row items-center justify-between w-full mt-8">
-        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Exploration Islands</p>
-        <p className="text-muted-foreground text-xs">SOME_INFO</p>
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.exploration_island")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  z-10">
 
@@ -122,7 +122,7 @@ export function Maps() {
                 </PopoverTrigger>
                 <PopoverContent className="gap-0 minebox-shadow bg-linear-to-b from-card to-card-dark">
                   <PopoverHeader className="gap-0">
-                    <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">Available Resources</PopoverTitle>
+                    <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">{t("maps.availabe_resources")}</PopoverTitle>
                   </PopoverHeader>
                   <div className="max-w-xs">
                     {harvestablesData?.locations?.servers?.[map.id] ? (
@@ -141,7 +141,7 @@ export function Maps() {
                           <span key={id} className="flex flex-row gap-0 items-center justify-start mt-1">
                             <ItemImage itemId={id} className="aspect-square size-6" />
                             <LevelBadge level={levelNum} className="w-16 scale-80">Lvl. {levelNum}</LevelBadge>
-                            <p className="items-center leading-none text-xs">{FindItemName({ itemId: id })}</p>
+                            <p className="items-center leading-none text-xs">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
                             
                           </span>
                         );

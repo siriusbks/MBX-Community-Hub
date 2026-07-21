@@ -131,7 +131,7 @@ body {
     --accent: oklch(0.275 0.011 216.9);
     --accent-foreground: oklch(0.987 0.002 197.1);
     --destructive: #b91c1c;
-    --destructive-dark: #991b1b;
+    --destructive-dark: #610513;
     --destructive-foreground: oklch(0.985 0.002 247.839);
     --success: oklch(0.527 0.154 150.069);
     --success-dark: oklch(42.091% 0.11781 149.346);

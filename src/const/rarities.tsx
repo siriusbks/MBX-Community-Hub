@@ -12,7 +12,7 @@ export const rarities = [
 
     badgeColor: "#457192",
     textColor: "text-[#ddd]",
-    backgroundColor: "bg-[#21334980]",
+    backgroundColor: "bg-[#213349]",
     border: "border-x-[#457192] border-y-[#55a0ac] border-[3px]",
     innerBorder: "",
   },
@@ -23,8 +23,8 @@ export const rarities = [
 
     badgeColor: "#4d3323",
     textColor: "text-[#ddd]",
-    backgroundColor: "bg-[#302c2a80]",
-    border: "border-x-[#422b1b] border-y-[#7e7867] border-[3px]",
+    backgroundColor: "bg-[#1b1a19]",
+    border: "border-x-[#3d2719] border-y-[#694d3d] border-[3px]",
     innerBorder: "",
   },
   {
@@ -34,7 +34,7 @@ export const rarities = [
 
     badgeColor: "#665466",
     textColor: "text-[#eee]",
-    backgroundColor: "bg-[#45494c80]",
+    backgroundColor: "bg-[#20252c]",
     border: "border-x-[#d2d2d3] border-y-[#9ea59f] border-[3px]",
     innerBorder: "",
   },
@@ -45,7 +45,7 @@ export const rarities = [
 
     badgeColor: "#00c06f",
     textColor: "text-[#00c06f]",
-    backgroundColor: "bg-[#07ff7b20]",
+    backgroundColor: "bg-[#0d342d]",
     border: "border-x-[#07ff7b] border-y-[#00dca8] border-[3px]",
     innerBorder: "",
   },
@@ -56,7 +56,7 @@ export const rarities = [
 
     badgeColor: "#00a5fc",
     textColor: "text-[#00a5fc]",
-    backgroundColor: "bg-[#10374180]",
+    backgroundColor: "bg-[#0c1f2d]",
     border: "border-x-[#2dd0d9] border-y-[#2291b9] border-[3px]",
     innerBorder: "",
   },
@@ -78,8 +78,8 @@ export const rarities = [
 
     badgeColor: "#faba34",
     textColor: "text-[#faba34]",
-    backgroundColor: "bg-[#202027]",
-    border: "bg-[#ffbf6620] border-x-[#ffbf66] border-y-[#f59b20] border-[4px]",
+    backgroundColor: "bg-[#1f1f26]",
+    border: "border-x-[#ffbf66] border-y-[#f59b20] border-[4px]",
     innerBorder: "border-[#758ea4] border-[2px]",
   },
   {
@@ -89,8 +89,8 @@ export const rarities = [
 
     badgeColor: "#a0060a",
     textColor: "text-[#a0060a]",
-    backgroundColor: "bg-[#201a27]",
-    border: "bg-[#c9324b20] border-x-[#c9324b] border-y-[#961f32] border-[5px]",
+    backgroundColor: "bg-[#1f1926]",
+    border: "border-x-[#c9324b] border-y-[#961f32] border-[5px]",
     innerBorder: "border-[#758ea4] border-[2px]",
   },
   {
