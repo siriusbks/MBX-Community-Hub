@@ -9,7 +9,6 @@ const API_BASE = "https://api.minebox.co/items";
 export interface ItemDetails {
     id: string;
     name: string;
-    /** The new API exposes this as "type"; normalised to "category" here. */
     category: string;
     rarity?: string;
     image?: string;
@@ -28,14 +27,11 @@ export type Ingredient =
     | { type: "vanilla"; id: string; amount?: number }
     | { [key: string]: any };
 
-// Simple in-memory cache keyed by "locale:id"
 const cache = new Map<string, ItemDetails>();
 
-/** Normalise a raw API response so downstream code always sees `category`. */
 function normalizeDetails(raw: any): ItemDetails {
     return {
         ...raw,
-        // The new API field is "type", old code expects "category"
         category: raw.category ?? raw.type ?? "UNKNOWN",
     };
 }
@@ -75,7 +71,6 @@ export function useItemDetails(
                 setLoading(true);
                 setError(null);
 
-                // New API: GET /items/{id}?locale={locale}
                 const url = new URL(`${API_BASE}/${encodeURIComponent(id)}`);
                 url.searchParams.set("locale", locale);
 

@@ -1,13 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Ported to `rework`: getRarityColor/getRarityBadge -> @const/rarities,
- * museum image fallback chain -> @const/elements ItemImage,
- * ItemTranslation -> item.name directly.
- */
-
 import { useState } from "react";
 import type { Equipment } from "types/equipment";
 import { RarityBorder, RarityBadge } from "@const/rarities";

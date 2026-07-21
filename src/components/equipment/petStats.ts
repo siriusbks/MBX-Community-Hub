@@ -12,8 +12,7 @@ export const TRAIT_STAT_MAP: Record<string, { stat: string; trait: string }> = {
   eating:       { stat: "HEALTH", trait: "glutton" }
 };
 
-// FORTUNE-type stats (FORTUNE itself, plus every *_FORTUNE variant like
-// FARMING_FORTUNE, MINING_FORTUNE, etc.) are all treated as one family.
+
 const isFortuneStat = (stat: string) => stat === "FORTUNE" || stat.endsWith("_FORTUNE");
 
 export function jobFromTrait(trait: string | null): string | null {

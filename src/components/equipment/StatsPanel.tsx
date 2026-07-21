@@ -1,12 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Ported to `rework`: local `color`/`iconMap` -> @const/statsAndDamage (stats, SmallStatItem),
- * SKULLS import path -> @const/skulls, ItemTranslation -> plain text / stat id.
- */
-
 import { useMemo } from "react";
 import type { Equipment, PlayerStats } from "types/equipment";
 import type { SetBonus } from "./useSet";
@@ -19,22 +10,21 @@ import { SKULLS } from "@const/skulls";
 import type { MineboxClass } from "types/class";
 import { getClassNumericStats, getClassStatEntries } from "@components/utils/classStats";
 
-
 const statColor = (stat: string) => statList.find((s) => s.id === stat)?.color ?? "#ccc";
- 
+
 const isFortuneStat = (stat: string) => stat === "FORTUNE" || stat.endsWith("_FORTUNE");
- 
+
 const getPassMultiplier = (stat: string) => {
     if (stat === "WISDOM") return 1.5;
     if (isFortuneStat(stat)) return 1.25;
     return 1;
 };
- 
+
 const boostRange = (range: [number, number], multiplier: number): [number, number] => [
     Math.round(range[0] * multiplier),
     Math.round(range[1] * multiplier),
 ];
- 
+
 interface Props {
     stats: PlayerStats;
     equippedItems: { [key: string]: Equipment | null };
@@ -58,7 +48,7 @@ interface Props {
     classTier: number;
     setClassTier: (n: number) => void;
 }
- 
+
 export const StatsPanel: React.FC<Props> = ({
     stats,
     equippedItems,
@@ -83,7 +73,7 @@ export const StatsPanel: React.FC<Props> = ({
     setClassTier,
 }) => {
     const { t: tEquip } = useTranslation("equipment");
- 
+
     const selectedSkullLabels = useMemo(() => {
         if (skullIds?.length) {
             return skullIds.map((id) => SKULLS.find((s) => s.id === id)?.name ?? id);
@@ -91,8 +81,7 @@ export const StatsPanel: React.FC<Props> = ({
         if (skullNames.length) return skullNames;
         return [];
     }, [skullIds, skullNames]);
- 
-    // Calculate equipped sets and the tier reached (regardless of whether a bonus is active)
+
     const setCounts = useMemo(() => {
         const counts: Record<string, number> = {};
         Object.values(equippedItems).forEach((item) => {
@@ -100,8 +89,7 @@ export const StatsPanel: React.FC<Props> = ({
         });
         return counts;
     }, [equippedItems]);
- 
-    // Generate the display set list (includes incomplete sets, shown greyed out)
+
     const setsDisplay = useMemo(() => {
         return Object.entries(setCounts)
             .map(([setName, count]) => {
@@ -124,7 +112,7 @@ export const StatsPanel: React.FC<Props> = ({
             })
             .filter(Boolean);
     }, [setCounts, setsById]);
- 
+
     const petBoosted = useMemo(() => {
         if (!pet) return {};
         return computePetBoostedStats(pet, {
@@ -133,24 +121,18 @@ export const StatsPanel: React.FC<Props> = ({
             enchanted: petEnchanted,
         });
     }, [pet, petGeneration, petTrait, petEnchanted]);
- 
+
     const selectedClass = useMemo(() => {
         const equippedClassId = equippedItems.class?.id;
         if (!equippedClassId) return null;
         return classes.find((c) => c.id === equippedClassId) ?? null;
     }, [equippedItems, classes]);
- 
-    // Tier-specific stats, plus the "all" tier's stats but only when tier 1
-    // is selected (tiers 2-5 already define their own value for stats that
-    // "all" would otherwise duplicate/conflict with).
+
     const classStatEntries = useMemo(
         () => getClassStatEntries(selectedClass, classTier),
         [selectedClass, classTier]
     );
- 
-    // Only the numeric ones actually get added into the main stats total
-    // (percentage stats like "-70%" can't be summed linearly), so this is
-    // what drives the "Swords" icon in the stats list below.
+
     const classNumericStatNames = useMemo(
         () => new Set(Object.keys(getClassNumericStats(selectedClass, classTier))),
         [selectedClass, classTier]
@@ -164,11 +146,8 @@ export const StatsPanel: React.FC<Props> = ({
         [classStatEntries]
     );
 
-    // Core attributes (e.g. TRIPLE_JUMP) aren't stats, so they stay visible
-    // regardless of the selected tier.
     const classCoreAttributes = selectedClass?.tiers.all?.core_attributes ?? [];
- 
-    // Displayed stats with the Pass buff applied
+
     const displayedStats = useMemo<PlayerStats>(() => {
         if (!hasPass) return stats;
  
@@ -180,12 +159,12 @@ export const StatsPanel: React.FC<Props> = ({
                 boostedStats[stat] = boostRange(range, multiplier);
             }
         });
- 
+
         return boostedStats as PlayerStats;
     }, [stats, hasPass]);
- 
+
     const allZero = Object.values(displayedStats).every(([a, b]) => a + b === 0);
- 
+
     return (
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col h-full">
             {/* Header */}
@@ -194,7 +173,7 @@ export const StatsPanel: React.FC<Props> = ({
                     <TrendingUp className="w-7 h-7 text-green-400" />
                     <h2 className="font-bold text-white">{tEquip("equip.stats.title")}</h2>
                 </div>
- 
+
                 <div className="flex items-center gap-2">
                     <label
                         className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded border border-emerald-600/40 bg-emerald-900/30 text-emerald-300 hover:bg-emerald-900/50 transition cursor-pointer"
@@ -208,7 +187,7 @@ export const StatsPanel: React.FC<Props> = ({
                         />
                         <span>{tEquip("equip.stats.pass", { defaultValue: "Pass" })}</span>
                     </label>
- 
+
                     {onOpenSkulls && (
                         <button
                             onClick={onOpenSkulls}
@@ -221,7 +200,7 @@ export const StatsPanel: React.FC<Props> = ({
                     )}
                 </div>
             </div>
- 
+
             {selectedSkullLabels.length > 0 && (
                 <div className="mb-3 -mt-1">
                     {selectedSkullLabels.map((label, index) => (
@@ -234,7 +213,7 @@ export const StatsPanel: React.FC<Props> = ({
                     ))}
                 </div>
             )}
- 
+
             {!allZero && (
                 <div className="space-y-3">
                     {/* Stats section */}
@@ -308,10 +287,8 @@ export const StatsPanel: React.FC<Props> = ({
                             </div>
                         );
                     })}
-
-                    {/* Percentage-type class stats (e.g. "-70%" Defense) — can't be
-                        summed into the numeric total above, but still shown as
-                        extra rows in the recap, independent of allZero. */}
+                    
+                    {/* Class other stats */}
                     {classPercentEntries.length > 0 && (
                         <div className="space-y-0">
                             {classPercentEntries.map(([key, statName, value]) => (
@@ -336,7 +313,7 @@ export const StatsPanel: React.FC<Props> = ({
                             ))}
                         </div>
                     )}
- 
+
                     {/* Sets section */}
                     {setsDisplay.length > 0 && (
                         <div className="mt-8">
@@ -385,7 +362,7 @@ export const StatsPanel: React.FC<Props> = ({
                             </div>
                         </div>
                     )}
- 
+
                     {/* Pet section */}
                     {pet && (
                         <div className="mt-8">
@@ -434,7 +411,7 @@ export const StatsPanel: React.FC<Props> = ({
                                     />
                                 </label>
                             </div>
- 
+
                             <div className="rounded p-2 bg-gray-900/80 mb-2">
                                 <div className="font-semibold text-sx text-blue-200 mb-2">{pet.name}</div>
                                 {Object.entries(
@@ -473,9 +450,7 @@ export const StatsPanel: React.FC<Props> = ({
                 </div>
             )}
 
-            {/* Class section — shown whenever a class is equipped, even if
-                every other stat happens to be at zero (e.g. only a class,
-                no items, is equipped). */}
+            {/* Class section */}
             {selectedClass && (
                 <div className="mt-8">
                     <div className="flex items-center justify-between gap-2 mb-2">
@@ -501,7 +476,7 @@ export const StatsPanel: React.FC<Props> = ({
                             </select>
                         </label>
                     </div>
- 
+
                     <div className="rounded p-2 bg-gray-900/80">
                         <div className="font-semibold text-sx text-blue-200 mb-2">{selectedClass.name}</div>
  
@@ -524,7 +499,7 @@ export const StatsPanel: React.FC<Props> = ({
                                 <span className="font-bold text-white">{value}</span>
                             </div>
                         ))}
- 
+
                         {classCoreAttributes.map((attr) => (
                             <div key={attr} className="flex items-center gap-2 py-1 text-sm text-blue-200 italic">
                                 {attr}
@@ -533,7 +508,7 @@ export const StatsPanel: React.FC<Props> = ({
                     </div>
                 </div>
             )}
- 
+
             {allZero && (
                 <div className="text-center py-8 text-gray-400">
                     <p>{tEquip("equip.stats.emptyTitle")}</p>

@@ -1,17 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Ported from EquipmentPageV2 to the `rework` architecture:
- * - old getRarityColor/getRarityBadge (equipmentSlots.ts) -> @const/rarities (RarityBorder, RarityBadge)
- * - old custom base64/museum image fallback chain -> @const/elements (ItemImage)
- * - old custom portal-positioned tooltip -> native @ui/tooltip (Radix, already
- *   wrapped app-wide by <TooltipProvider> in App.tsx)
- * - old <ItemTranslation mbxId .../> -> item.name directly (item.name.en is
- *   already normalised by useEquipment)
- */
-
 import { Plus } from "lucide-react";
 import type { Equipment, EquipmentSlot as SlotType} from "types/equipment";
 import { RarityBorder, RarityBadge } from "@const/rarities";
@@ -36,7 +22,6 @@ export const EquipmentSlot: React.FC<Props> = ({
         defaultValue: slot.name || slot.id,
     });
  
-    // Normalise the item's rarity id to match @const/rarities ids (lowercase).
     const rarityId = equippedItem?.rarity?.toLowerCase() ?? "common";
  
     return (

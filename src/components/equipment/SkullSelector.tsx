@@ -1,12 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Ported to `rework`: SKULLS import path -> @const/skulls, local iconMap ->
- * @const/statsAndDamage (SmallStatItem), ItemTranslation -> plain text.
- */
-
 import { useMemo, useState } from "react";
 import { X, Check, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";

@@ -1,12 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Encodes/decodes an equipment build into a compact URL-friendly string
- * (used by the "Share" button on the Equipment page).
- */
-
 import { EQUIPMENT_SLOTS } from "@const/equipmentSlots";
 import { SKULLS } from "@const/skulls";
  
@@ -26,12 +17,9 @@ export type SharedBuild = {
     tab?: RightTab;
 };
  
-// Fixed slot order used to encode/decode builds positionally instead of
-// repeating each slot's name as a JSON key.
+
 const SLOT_ORDER = EQUIPMENT_SLOTS.map((s) => s.id);
  
-// Single-letter codes for pet traits (fixed width: always exactly 1 char,
-// "-" means "no trait selected").
 const TRAIT_CODES: Record<string, string> = {
     mining: "m",
     woodcutting: "w",

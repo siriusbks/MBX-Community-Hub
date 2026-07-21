@@ -1,14 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Fetches the connected player's own base stats (ATTRIBUTED_STATS.base +
- * ATTRIBUTED_STATS.scrolls) from api.minebox.co/data/{nick}, so they can be
- * added to the equipment build's stat total — the "nick" comes from the
- * same localStorage key ("minebox_nick") used by Navbar/Profile/Collections.
- */
-
 import { useEffect, useState } from "react";
 
 const API_BASE = "https://api.minebox.co/data";
@@ -27,9 +16,6 @@ export const usePlayerStats = () => {
         }
 
         if (!nick) {
-            // Resolve via a microtask so this setState happens inside a
-            // .then callback rather than synchronously in the effect body,
-            // same as every other setState in this hook.
             Promise.resolve().then(() => setLoading(false));
             return;
         }

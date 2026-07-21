@@ -1,14 +1,3 @@
-/*
- * MBX, Community Based Project
- * Copyright (c) 2024 SiriusB_
- * SPDX-License-Identifier: MIT
- *
- * Ported from EquipmentPageV2's EquipPage.tsx to the `rework` architecture.
- * Fixes applied along the way:
- * - the dead /tools/equipment-builder nav link (src/const/nav.ts) now has a
- *   matching route (see router patch instructions in chat)
- */
-
 import { useEffect, useMemo, useState, useRef } from "react";
 import { AlertTriangle, Loader2, RotateCcw, Check, Share2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -18,7 +7,7 @@ import { useSets } from "@components/equipment/useSet";
 import { CharacterDisplay } from "@components/equipment/CharacterDisplay";
 import { StatsPanel } from "@components/equipment/StatsPanel";
 import { EquipmentSelector } from "@components/equipment/EquipmentSelector";
-import { CraftingBreakdown } from "@components/equipment/CraftingBreakdown";
+//import { CraftingBreakdown } from "@components/equipment/CraftingBreakdown";
 import { SkullSelector } from "@components/equipment/SkullSelector";
 
 import { EQUIPMENT_SLOTS } from "@const/equipmentSlots";
@@ -76,10 +65,6 @@ const Equipment: React.FC = () => {
     const { classes, loadingClasses, errorClasses } = useClasses();
     const [classTier, setClassTier] = useState(1);
 
-    // If the person is logged in (nick stored the same way Navbar/Profile do
-    // it), fetch and add their own base stats to the total. Soft-fails: no
-    // nick, or the fetch failing, just means 0 contribution — it never
-    // blocks the rest of the page.
     const { playerStats, loadingPlayerStats } = usePlayerStats();
 
     const classEquipment = useMemo<Equipment[]>(
@@ -386,7 +371,8 @@ const Equipment: React.FC = () => {
 
                                 {activeTab === "craft" && (
                                     <div className="h-full animate-in fade-in duration-150">
-                                        <CraftingBreakdown equippedItems={equippedItems} locale="en" />
+                                        {/* <CraftingBreakdown equippedItems={equippedItems} locale="en" /> */}
+                                        <div className="text-yellow-300">SOON</div>
                                     </div>
                                 )}
                             </div>

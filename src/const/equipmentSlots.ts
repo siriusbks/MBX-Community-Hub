@@ -9,11 +9,7 @@ import type { EquipmentSlot } from "types/equipment";
  *  necklace      helmet        ring1         row 1  top ~8%
  *  backpack      chestplate    ring2         row 2  top ~28%
  *  belt          leggings      gloves        row 3  top ~48%
- *  pet           boots         (–)           row 4  top ~68%
- *
- * NOTE: rarity color helpers (getRarityColor / getRarityBadge) used to live
- * here. They have been removed in favor of the rework-native rarity system
- * in `@const/rarities` (RarityBorder, RarityBadge, RarityTooltip).
+ *  pet           boots         class           row 4  top ~68%
  */
 export const EQUIPMENT_SLOTS: EquipmentSlot[] = [
     // Row 1

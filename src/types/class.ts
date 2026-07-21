@@ -1,6 +1,4 @@
 export interface ClassTier {
-    // Stats can be a plain number (e.g. AGILITY: 25) or a percentage string
-    // (e.g. Assassin's DEFENSE: "-70%") — displayed as-is either way.
     stats?: Record<string, number | string>;
     core_attributes?: string[];
 }
