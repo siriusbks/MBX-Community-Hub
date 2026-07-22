@@ -388,13 +388,22 @@ const Equipment: React.FC = () => {
 
       <main className="min-h-0 flex-1 overflow-hidden p-4">
         <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 xl:grid-cols-3">
-          <span className="flex min-h-0 flex-col xl:col-span-1 gap-3">
+          <span className="flex min-h-0 flex-col gap-3 xl:col-span-1">
             <CharacterDisplay
               equippedItems={equippedItems}
               onSlotClick={onSlotClick}
             />
-            <div className="flex w-full items-center justify-between gap-3">
 
+            <Button
+              size="lg"
+              className="minebox-shadow"
+
+            >
+              <RotateCcw className="h-4 w-4" />
+              {t("equip.crafing")}
+            </Button>
+
+            <div className="flex w-full items-center justify-between gap-3">
               <Button
                 variant="default"
                 size="lg"
@@ -414,7 +423,17 @@ const Equipment: React.FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="minebox-shadow"
+                className="minebox-shadow font-normal"
+                onClick={onResetAll}
+              >
+                <RotateCcw className="h-4 w-4" />
+                {t("equip.suggestedBuilds")}
+              </Button>
+
+              <Button
+                variant="secondary"
+                size="lg"
+                className="minebox-shadow font-normal"
                 onClick={onResetAll}
               >
                 <RotateCcw className="h-4 w-4" />

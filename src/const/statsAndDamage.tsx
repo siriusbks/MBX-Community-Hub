@@ -177,8 +177,8 @@ export function StatItem({
   to,
 }: {
   stat: string
-  from: number
-  to: number
+  from: number | string
+  to: number | string
 }) {
   let statData = stats.find((r) => r.id === stat)
   if (!statData) statData = stats[0]

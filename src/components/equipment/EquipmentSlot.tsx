@@ -41,7 +41,7 @@ export const EquipmentSlot: React.FC<Props> = ({
             {equippedItem ? (
               <RarityBorder
                 rarity={rarityId}
-                className="flex h-24 w-24 items-center justify-center transition-transform duration-200 group-hover:scale-110"
+                className="flex h-24 w-24 items-center justify-center transition-transform duration-200 group-hover:scale-110 border-[6px]"
               >
                 <ItemImage
                   itemId={equippedItem.id}
