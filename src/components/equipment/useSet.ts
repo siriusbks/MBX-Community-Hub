@@ -15,6 +15,20 @@ export interface SetWithBonus {
     bonuses: Record<string, number>;
 }
 
+const API_BASE = "https://api.minebox.co/sets";
+const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy";
+
+function buildProxyUrl(locale: string): string {
+    // 1. Budujemy docelowy URL do Minebox API
+    const mineboxUrl = new URL(API_BASE);
+    mineboxUrl.searchParams.set("locale", locale);
+
+    // 2. Owijamy go w proxy jako zakodowany parametr "url"
+    const proxyParams = new URLSearchParams({ url: mineboxUrl.toString() });
+
+    return `${PROXY_BASE}?${proxyParams.toString()}`;
+}
+
 export function useSets(locale: "en" | "fr" | "pl" = "en") {
     const [sets, setSets] = useState<SetBonus[]>([]);
     const [loadingSets, setLoading] = useState(true);
@@ -24,7 +38,7 @@ export function useSets(locale: "en" | "fr" | "pl" = "en") {
         let aborted = false;
         setError(null);
 
-        fetch(`https://api.minebox.co/sets?locale=${locale}`)
+        fetch(buildProxyUrl(locale))
             .then((res) => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 return res.json();

@@ -18,6 +18,7 @@ const EQUIPMENT_CATEGORIES = [
 ] as const;
 
 const API_BASE = "https://api.minebox.co/items";
+const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy";
 const PAGE_SIZE = 50;
 
 const toApiLocale = (locale: Locale): string => locale;
@@ -39,6 +40,31 @@ const normalizeItem = (raw: any): Equipment => {
     };
 };
 
+function buildProxyUrl(params: {
+    locale: string;
+    page: number;
+    pageSize: number;
+    sort: string;
+    category: string;
+    levelMin: string;
+    levelMax: string;
+}): string {
+    // 1. Budujemy docelowy URL do Minebox API
+    const mineboxUrl = new URL(API_BASE);
+    mineboxUrl.searchParams.set("locale", params.locale);
+    mineboxUrl.searchParams.set("page", String(params.page));
+    mineboxUrl.searchParams.set("pageSize", String(params.pageSize));
+    mineboxUrl.searchParams.set("sort", params.sort);
+    mineboxUrl.searchParams.set("categories", params.category);
+    mineboxUrl.searchParams.set("levelMin", params.levelMin);
+    mineboxUrl.searchParams.set("levelMax", params.levelMax);
+
+    // 2. Owijamy go w proxy jako zakodowany parametr "url"
+    const proxyParams = new URLSearchParams({ url: mineboxUrl.toString() });
+
+    return `${PROXY_BASE}?${proxyParams.toString()}`;
+}
+
 async function fetchCategory(
     category: string,
     locale: string,
@@ -48,16 +74,17 @@ async function fetchCategory(
     let page = 1;
 
     while (true) {
-        const url = new URL(API_BASE);
-        url.searchParams.set("locale", locale);
-        url.searchParams.set("page", String(page));
-        url.searchParams.set("pageSize", String(PAGE_SIZE));
-        url.searchParams.set("sort", "level");
-        url.searchParams.set("categories", category);
-        url.searchParams.set("levelMin", "0");
-        url.searchParams.set("levelMax", "100");
+        const url = buildProxyUrl({
+            locale,
+            page,
+            pageSize: PAGE_SIZE,
+            sort: "level",
+            category,
+            levelMin: "0",
+            levelMax: "100",
+        });
 
-        const res = await fetch(url.toString(), { signal, cache: "no-store" });
+        const res = await fetch(url, { signal, cache: "no-store" });
 
         if (!res.ok) {
             throw new Error(

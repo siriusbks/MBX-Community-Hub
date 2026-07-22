@@ -1,10 +1,10 @@
-
 import { useEffect, useRef, useState } from "react";
 
-// ─── New API base ────────────────────────────────────────────────────────────
-// The old endpoint was https://api.mineboxcommunity.com/items/{locale}/{id}
-// The new endpoint is  https://api.minebox.co/items/{id}?locale={locale}
-const API_BASE = "https://api.minebox.co/items";
+// ─── API base (przez proxy) ──────────────────────────────────────────────────
+// Docelowe API:   https://api.minebox.co/items/{id}?locale={locale}
+// Wywoływane przez proxy: https://mineboxadditions.bartier.me/proxy?url=<encoded minebox url>
+const MINEBOX_API_BASE = "https://api.minebox.co/items";
+const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy";
 
 export interface ItemDetails {
     id: string;
@@ -34,6 +34,17 @@ function normalizeDetails(raw: any): ItemDetails {
         ...raw,
         category: raw.category ?? raw.type ?? "UNKNOWN",
     };
+}
+
+function buildProxyUrl(id: string, locale: string): string {
+    // 1. Budujemy docelowy URL do Minebox API
+    const mineboxUrl = new URL(`${MINEBOX_API_BASE}/${encodeURIComponent(id)}`);
+    mineboxUrl.searchParams.set("locale", locale);
+
+    // 2. Owijamy go w proxy, jako zakodowany parametr "url"
+    const proxyParams = new URLSearchParams({ url: mineboxUrl.toString() });
+
+    return `${PROXY_BASE}?${proxyParams.toString()}`;
 }
 
 export function useItemDetails(
@@ -71,10 +82,9 @@ export function useItemDetails(
                 setLoading(true);
                 setError(null);
 
-                const url = new URL(`${API_BASE}/${encodeURIComponent(id)}`);
-                url.searchParams.set("locale", locale);
+                const url = buildProxyUrl(id, locale);
 
-                const res = await fetch(url.toString(), {
+                const res = await fetch(url, {
                     signal: controller.signal,
                     cache: "no-store",
                 });

@@ -28,7 +28,7 @@ export const EQUIPMENT_SLOTS: EquipmentSlot[] = [
     { id: "gloves", name: "Gloves", category: "GLOVES", image: "", position: { top: "58%", left: "80%" } },
  
     // Row 4
-    { id: "pet", name: "Pet", category: "PET", image: "", position: { top: "82%", left: "20%" } },
+    { id: "pet", name: "Pet", category: "PET", image: "", position: { top: "82%", left: "80%" }, isPetSlot: true },
     { id: "boots", name: "Boots", category: "BOOTS", image: "", position: { top: "82%", left: "50%" } },
-    { id: "class", name: "Class", category: "CLASS", image: "", position: { top: "82%", left: "80%" } },
+    { id: "class", name: "Class", category: "CLASS", image: "", position: { top: "82%", left: "20%" }, isClassSlot: true },
 ];

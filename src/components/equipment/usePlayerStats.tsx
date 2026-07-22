@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 
 const API_BASE = "https://api.minebox.co/data";
+const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy";
+
+function buildProxyUrl(nick: string): string {
+    // 1. Budujemy docelowy URL do Minebox API
+    const mineboxUrl = `${API_BASE}/${encodeURIComponent(nick)}`;
+
+    // 2. Owijamy go w proxy jako zakodowany parametr "url"
+    const proxyParams = new URLSearchParams({ url: mineboxUrl });
+
+    return `${PROXY_BASE}?${proxyParams.toString()}`;
+}
 
 export const usePlayerStats = () => {
     const [playerStats, setPlayerStats] = useState<Record<string, number>>({});
@@ -22,7 +33,7 @@ export const usePlayerStats = () => {
 
         const controller = new AbortController();
 
-        fetch(`${API_BASE}/${encodeURIComponent(nick)}`, {
+        fetch(buildProxyUrl(nick), {
             signal: controller.signal,
             cache: "no-store",
         })

@@ -15,6 +15,8 @@ export interface EquipmentSlot {
     name: string;
     category: string;
     position: { top: string; left: string };
+    isClassSlot?: boolean;
+    isPetSlot?: boolean;
 }
 
 export interface PlayerStats {

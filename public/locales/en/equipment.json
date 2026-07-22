@@ -12,7 +12,7 @@
     "equip.tooltip.action": "Click to manage equipment.",
     "equip.buttons.resetAllEquipment": "Reset All Equipment",
     "equip.buttons.removeEquipped": "Remove equipped item",
-    "equip.character.title": "Your Character",
+    "equip.character.title": "Your Loadout",
     "equip.character.hint": "Click on a slot to equip an item",
     "equip.selector.title": "Select {{category}}",
     "equip.selector.search": "Search equipment...",
