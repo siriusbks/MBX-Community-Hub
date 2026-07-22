@@ -6,6 +6,7 @@ import { SmallStatItem } from "@const/statsAndDamage"
 import { PageTitle } from "@components/layout/title"
 import { Badge } from "@components/ui/badge"
 import { CodexNav } from "@components/minebox/codex-nav"
+import i18next from "i18next"
 
 const PlayableClasses = ["assassin", "mage", "archer", "gunner"]
 
@@ -63,7 +64,11 @@ export function ClassCodexPage() {
       setLoading(true)
       setError(null)
       try {
-        const res = await fetch(buildProxyUrl("https://api.minebox.co/classes"))
+        const res = await fetch(
+          buildProxyUrl(
+            `https://api.minebox.co/classes?locale=${i18next.language}`
+          )
+        )
         if (!res.ok) throw new Error(`Request failed: ${res.status}`)
         const data = await res.json()
         const list = Array.isArray(data) ? data : (data.classes ?? [])
@@ -207,7 +212,7 @@ export function ClassCodexPage() {
                       className={`group relative flex h-full flex-col items-center justify-center gap-2`}
                     >
                       {!playable && (
-                        <span className="absolute bottom-0 left-0 z-2 flex h-full w-full items-center justify-center bg-linear-to-t from-red-600 to-transparent text-center text-xs opacity-0 saturate-100 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
+                        <span className="absolute bottom-0 left-0 z-2 flex h-full w-full items-center justify-center bg-linear-to-t from-red-900 to-transparent text-center text-xs opacity-0 saturate-100 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
                           <p className="z-3 w-2/3 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                             This Class is currently disabled and cannot be
                             played in-game

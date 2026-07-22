@@ -1,0 +1,23 @@
+{
+    "codex.tab.items": "Items",
+    "codex.tab.bestiary": "Bestiary",
+    "codex.tab.ships": "Ships",
+    "codex.tab.classes": "Classes",
+
+    "codex.class.unavailable": "This Class is currently disabled and cannot be played in-game.",
+    "codex.class.passive": "Passive",
+    "codex.class.auto_attack": "Auto Attack",
+    "codex.class.spells": "Spells",
+
+    "codex.class.ultimate": "Ultimate",
+    
+    "codex.class.weapon.GUN": "Spells",
+    "codex.class.weapon.DAGGER": "Spells",
+    "codex.class.weapon.BOW": "Spells",
+    "codex.class.weapon.STAFF": "Spells",
+    
+    "codex.class.type.DAMAGE": "Spells",
+    "codex.class.type.SUPPORT": "Spells",
+    "codex.class.type.TANK": "Spells"
+
+}
