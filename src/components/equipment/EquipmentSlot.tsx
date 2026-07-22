@@ -43,10 +43,22 @@ export const EquipmentSlot: React.FC<Props> = ({
                                 rarity={rarityId}
                                 className="w-24 h-24 flex items-center justify-center transition-transform duration-200 group-hover:scale-110"
                             >
-                                <ItemImage
-                                    itemId={equippedItem.id}
-                                    className="size-full object-contain"
-                                />
+                                {equippedItem.category === "CLASS" ? (
+                                    <img
+                                        src={
+                                            equippedItem.image
+                                                ? `${equippedItem.image}`
+                                                : "/media/missingClass.png"
+                                        }
+                                        alt={equippedItem.name}
+                                        className="size-full [image-rendering:pixelated]"
+                                    />
+                                ) : (
+                                    <ItemImage
+                                        itemId={equippedItem.id}
+                                        className="size-full object-contain"
+                                    />
+                                )}
                             </RarityBorder>
                         ) : (
                             <div className="w-24 h-24 rounded-lg flex items-center justify-center border border-gray-600 bg-gray-700 transition-all duration-200 group-hover:scale-110 hover:border-gray-500">

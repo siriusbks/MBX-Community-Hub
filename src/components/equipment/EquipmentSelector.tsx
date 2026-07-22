@@ -174,10 +174,22 @@ export const EquipmentSelector: React.FC<Props> = ({
                                         }
                                     >
                                         <div className="flex items-center gap-3">
-                                            <ItemImage
-                                                itemId={item.id}
-                                                className="w-12 h-12 shrink-0"
-                                            />
+                                            {item.category === "CLASS" ? (
+                                                <img
+                                                    src={
+                                                        item.image
+                                                            ? `${item.image}`
+                                                            : "/media/missingClass.png"
+                                                    }
+                                                    alt={item.name}
+                                                    className="w-12 h-12 shrink-0 [image-rendering:pixelated]"
+                                                />
+                                            ) : (
+                                                <ItemImage
+                                                    itemId={item.id}
+                                                    className="w-12 h-12 shrink-0"
+                                                />
+                                            )}
  
                                             <div className="min-w-0">
                                                 <h3 className="font-semibold text-white truncate">
