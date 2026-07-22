@@ -1,4 +1,5 @@
 import itemsData from "@const/APIPreload/items.json"
+import i18next from "i18next"
 
 const resolvedImageUrlCache = new Map<string, Promise<string>>()
 const itemsDataMap = itemsData as Record<string, any>
@@ -161,6 +162,12 @@ export function FindItemRarity({ itemId }: { itemId: string }) {
 export function FindItemName({ itemId }: { itemId: string }) {
   let cleanId = getCleanItemId(itemId)
   const itemData = itemsDataMap[cleanId]
-  const name = itemData?.name?.en || cleanId
+
+  const currentLang = i18next.language
+  const name =
+    itemData?.name?.[currentLang] ||
+    itemData?.name?.en ||
+    cleanId
+
   return name
 }
