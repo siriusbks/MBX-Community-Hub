@@ -12,6 +12,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--background);
+
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -173,6 +177,10 @@ body {
   }
 }
 
+@theme {
+  --breakpoint-3xl: 2000px;
+}
+
 @utility minebox-shadow {
   box-shadow: inset 0 2px #ffffff1f, 
               inset 0 -3px #0000004d, 
@@ -230,7 +238,10 @@ body::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
 }
 
-
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
