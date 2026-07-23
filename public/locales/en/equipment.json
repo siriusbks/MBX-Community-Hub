@@ -73,5 +73,16 @@
     "equip.apiError.body": "The Minebox item API could not be reached. Please try again later.",
     "equip.description": "Build and theory-craft your gear, pets and skull loadouts.",
     "equip.classSection.title": "Class",
-    "equip.classSection.tier": "Tier"
+    "equip.classSection.tier": "Tier",
+
+
+
+
+    "equip.loadoutSettings": "Loadout Settings",
+    "equip.playerStats": "Player Stats",
+    "equip.seasonPass.off": "No Season Pass",
+    "equip.seasonPass.on": "Season Pass Active",
+    "equip.skull.title": "Relics",
+    "equip.craftingList": "Crafting List",
+    "equip.suggestedBuilds": "Suggested Builds"
 }

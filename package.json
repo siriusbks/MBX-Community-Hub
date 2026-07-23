@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
     "@fontsource-variable/montserrat": "^5.2.8",
     "@tailwindcss/vite": "^4.3.2",
     "class-variance-authority": "^0.7.1",

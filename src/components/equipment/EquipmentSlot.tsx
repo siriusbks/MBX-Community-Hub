@@ -5,16 +5,19 @@ import { ItemImage } from "@const/elements"
 import { StatItem } from "@const/statsAndDamage"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip"
 import { useTranslation } from "react-i18next"
+import { Badge } from "@components/ui/badge"
 
 interface Props {
   slot: SlotType
   equippedItem: Equipment | null
+  playerLevel: number
   onSlotClick: (slotId: string) => void
 }
 
 export const EquipmentSlot: React.FC<Props> = ({
   slot,
   equippedItem,
+  playerLevel,
   onSlotClick,
 }) => {
   const { t } = useTranslation("equipment")
@@ -43,10 +46,22 @@ export const EquipmentSlot: React.FC<Props> = ({
                 rarity={rarityId}
                 className="flex h-24 w-24 items-center justify-center transition-transform duration-200 group-hover:scale-110 border-[6px]"
               >
-                <ItemImage
-                  itemId={equippedItem.id}
-                  className="size-full object-contain"
-                />
+{equippedItem.category === "CLASS" ? (
+                                    <img
+                                        src={
+                                            equippedItem.image
+                                                ? `${equippedItem.image}`
+                                                : "/media/missingClass.png"
+                                        }
+                                        alt={equippedItem.name}
+                                        className="size-full [image-rendering:pixelated]"
+                                    />
+                                ) : (
+                                    <ItemImage
+                                        itemId={equippedItem.id}
+                                        className="size-full object-contain"
+                                    />
+                                )}
               </RarityBorder>
             ) : (
               <div className="flex h-24 w-24 items-center justify-center rounded-lg border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50 transition-all duration-200 group-hover:scale-110 hover:border-card">
@@ -64,20 +79,31 @@ export const EquipmentSlot: React.FC<Props> = ({
               </div>
             )}
 
+            
+            {equippedItem?.level != null && playerLevel < equippedItem.level &&(
+              <div className="absolute inset-x-0 top-1 flex justify-center">
+                <span className="mb-0.5 inline-flex items-center gap-1 rounded-t bg-black/70 px-1.5 py-0.5 text-[10px]  text-red-400">
+                  Level Too Low
+                </span>
+              </div>
+
+            )}
+
 
            
 
           </div>
         </TooltipTrigger>
 
-        <TooltipContent className="w-64 p-2">
+        <TooltipContent className="min-w-64 p-0">
           {equippedItem ? (
+            <RarityBorder rarity={rarityId} className="flex w-full text-muted-foreground">
             <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between gap-2">
-                <span className="truncate text-xs font-semibold">
+              <div className="flex items-center  gap-1">
+                <RarityBadge rarity={rarityId} className="text-[10px]" />
+                <span className="truncate text-xs text-white" title={equippedItem.name}>
                   {equippedItem.name}
                 </span>
-                <RarityBadge rarity={rarityId} className="text-[10px]" />
               </div>
 
               {equippedItem.stats && (
@@ -94,16 +120,19 @@ export const EquipmentSlot: React.FC<Props> = ({
                 </ul>
               )}
             </div>
+            </RarityBorder>
           ) : (
+            <RarityBorder rarity="vanilla" className="flex w-full text-muted-foreground">
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-semibold">{slotLabel}</span>
+              <span className="text-xs text-white">{slotLabel}</span>
               <p className="text-[11px] text-muted-foreground">
                 {t("equip.tooltip.empty")}
               </p>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-[11px] text-primary">
                 {t("equip.tooltip.action")}
               </p>
             </div>
+            </RarityBorder>
           )}
         </TooltipContent>
       </Tooltip>

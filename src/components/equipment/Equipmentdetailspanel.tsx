@@ -130,7 +130,7 @@ export const EquipmentDetailsPanel: React.FC<EquipmentDetailsPanelProps> = ({
       <div className="mb-3 flex items-center justify-between gap-2">
         <p className="text-xs text-muted-foreground">Season Pass</p>
         <label
-          className="inline-flex cursor-pointer items-center gap-2 rounded border border-emerald-600/40 bg-emerald-900/30 px-2.5 py-1.5 text-xs text-emerald-300 shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d] transition hover:bg-emerald-900/50"
+          className={`inline-flex cursor-pointer items-center gap-2 rounded  px-2.5 py-1.5 text-xs shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d] transition  ${hasPass ? "bg-linear-to-b from-primary to-primary-dark text-primary-foreground" : "bg-linear-to-b from-secondary-lighter/30 to-secondary/30 text-foreground"}`}
           title="+25% Fortune / +50% Wisdom"
         >
           <input
@@ -177,7 +177,7 @@ export const EquipmentDetailsPanel: React.FC<EquipmentDetailsPanelProps> = ({
                   .replace(/\s+/g, "-")
                   .replace(/-skull$/, "")}.png`}
                 alt={label}
-                className="h-8 w-8"
+                className="h-8 w-8 [image-rendering:pixelated] drop-shadow-[0_0_3px_rgba(0,0,0,0.4)]"
               />
             </span>
           ))}

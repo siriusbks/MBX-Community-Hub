@@ -6,6 +6,8 @@ import {
   Check,
   Share2,
   TrendingDownIcon,
+  SparklesIcon,
+  SettingsIcon,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -33,7 +35,6 @@ import { useClasses } from "@components/equipment/useClass"
 import type { MineboxClass } from "types/class"
 import { getClassNumericStats } from "@components/utils/classStats"
 import { usePlayerStats } from "@components/equipment/usePlayerStats"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs"
 import { EquipmentDetailsPanel } from "@components/equipment/Equipmentdetailspanel"
 import { Card } from "@components/ui/card"
 
@@ -57,9 +58,6 @@ const Equipment: React.FC = () => {
 
   const [, setFocusedItemId] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<RightTab>("stats")
-
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isScrolledRight, setIsScrolledRight] = useState(false)
 
   const [shareCopied, setShareCopied] = useState(false)
   const hasLoadedSharedBuild = useRef(false)
@@ -151,6 +149,37 @@ const Equipment: React.FC = () => {
       )
     }
   }
+
+  // Player Level
+  const [playerLevel, setPlayerLevel] = useState(100)
+
+  useEffect(() => {
+    const nick = localStorage.getItem("minebox_nick")
+
+    if (!nick) {
+      setPlayerLevel(100)
+      return
+    }
+
+    let cancelled = false
+
+    fetch(`https://api.minebox.co/data/${nick}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch player data")
+        return res.json()
+      })
+      .then((data) => {
+        if (cancelled) return
+        setPlayerLevel(typeof data?.level === "number" ? data.level : 100)
+      })
+      .catch(() => {
+        if (!cancelled) setPlayerLevel(100)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   // Load a build from URL
   useEffect(() => {
@@ -391,16 +420,13 @@ const Equipment: React.FC = () => {
           <span className="flex min-h-0 flex-col gap-3 xl:col-span-1">
             <CharacterDisplay
               equippedItems={equippedItems}
+          playerLevel={playerLevel}
               onSlotClick={onSlotClick}
             />
 
-            <Button
-              size="lg"
-              className="minebox-shadow"
-
-            >
+            <Button size="lg" className="minebox-shadow" disabled>
               <RotateCcw className="h-4 w-4" />
-              {t("equip.crafing")}
+              {t("equip.craftingList")}
             </Button>
 
             <div className="flex w-full items-center justify-between gap-3">
@@ -423,8 +449,9 @@ const Equipment: React.FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="minebox-shadow font-normal"
+                className="font-normal minebox-shadow"
                 onClick={onResetAll}
+                disabled
               >
                 <RotateCcw className="h-4 w-4" />
                 {t("equip.suggestedBuilds")}
@@ -433,7 +460,7 @@ const Equipment: React.FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="minebox-shadow font-normal"
+                className="font-normal minebox-shadow"
                 onClick={onResetAll}
               >
                 <RotateCcw className="h-4 w-4" />
@@ -446,9 +473,9 @@ const Equipment: React.FC = () => {
             <Card className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-2 pr-0">
               {/* Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <TrendingDownIcon className="h-7 w-7 text-green-400" />
-                  <h2 className="font-bold text-white">TITLE</h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <SparklesIcon className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]" strokeWidth={2} />
+                  <h2 className="text-lg">{t("equip.playerStats")}</h2>
                 </div>
               </div>
 
@@ -476,9 +503,9 @@ const Equipment: React.FC = () => {
             <Card className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-2 pr-0">
               {/* Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <TrendingDownIcon className="h-7 w-7 text-green-400" />
-                  <h2 className="font-bold text-white">TITLE</h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <SettingsIcon className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]" strokeWidth={2} />
+                  <h2 className="text-lg">{t("equip.loadoutSettings")}</h2>
                 </div>
               </div>
 
@@ -520,6 +547,7 @@ const Equipment: React.FC = () => {
           equippedItems={equippedItems}
           selectedSlotId={selectedSlot}
           classesById={classesById}
+          playerLevel={playerLevel}
         />
       )}
 
