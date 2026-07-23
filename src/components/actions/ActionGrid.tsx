@@ -196,7 +196,7 @@ export default function ActionGrid() {
 
                 <Link to={`/items?id=${listing.item_id.replace(/^mbi-/, "")}`}>
                   <p className="text-[0.6rem] text-center uppercase text-muted-foreground hover:text-primary">
-                    View item in Codex
+                    {t("market.action_house.view_in_codex")}
                   </p>
                 </Link>
 
