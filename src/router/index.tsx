@@ -16,6 +16,7 @@ const ProfilePage = lazy(() => import("@pages/Profile"));
 const ShopsPage = lazy(() => import("@pages/Shops"));
 const VillagePreview = lazy(() => import("@pages/VillagePreview"));
 const VotePage = lazy(() => import("@pages/Votes"));
+const EquipmentPage = lazy(() => import( "@pages/Tools/Equipment"));
 const CollectionsPage = lazy(() => import("@pages/Collections"));
 const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
@@ -34,6 +35,7 @@ export const AppRoutes: FC = () => {
             <Route path="/maps/*" element={<MapPreview />} />
 
             {/* Tools Tab */}
+            <Route path="/tools/equipment-builder" element={<EquipmentPage />} />
             <Route path="/tools/collections" element={<CollectionsPage />} />
 
             {/* Codex */}
