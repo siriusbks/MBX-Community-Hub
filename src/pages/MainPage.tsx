@@ -7,6 +7,7 @@ import { Card } from "@ui/card"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { useNavLinks } from "@const/nav"
+import { EN_Flag, FR_Flag } from "@const/flags"
 
 interface ServerStatus {
   online: boolean
@@ -106,23 +107,27 @@ export function Home() {
         </span>
       </Alert>
 
-            <Card className="p-2 flex flex-row gap-2">
+      
+
+      <Card className="flex flex-row gap-2 p-2">
         <span className="flex flex-col gap-2">
-        <p className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-xl font-bold tracking-wider text-transparent drop-shadow-[0_2px_0_#5d3a00]  uppercase">Minebox Community is currently in Beta!</p>
-        <p>
-          The website has been completely rewritten and is currently in the testing phase. Please
-          report any bugs on Discord.
-          <br />
-          The remaining features from the previous version, as well as other new features, will be
-          introduced in future updates.
-        </p>
+          <p className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-xl font-bold tracking-wider text-transparent uppercase drop-shadow-[0_2px_0_#5d3a00]">
+            Minebox Community is currently in Beta!
+          </p>
+          <p className="text-xs text-muted-foreground">
+            The website has been completely rewritten and is currently in the
+            testing phase. Please report any bugs on Discord.
+            <br />
+            The remaining features from the previous version, as well as other
+            new features, will be introduced in future updates.
+          </p>
         </span>
-        <span className="h-full flex flex-col items-center gap-2 ml-auto justify-center items-center my-auto">
+        <span className="my-auto ml-auto flex h-full flex-col items-center justify-center gap-2">
           <Link to="/contribute">
-            <Button >English Forum</Button>
+            <Button><EN_Flag/>  English Forum</Button>
           </Link>
           <Link to="/contribute">
-            <Button>French Forum</Button>
+            <Button><FR_Flag/>  French Forum</Button>
           </Link>
         </span>
       </Card>
@@ -157,7 +162,7 @@ export function Home() {
       </div>
 
       {/* Website Features */}
-      <div className="gap mx-auto flex w-full max-w-4xl flex-col">
+      <div className="gap mx-auto flex w-full flex-col">
         <span className="text-lg text-primary">
           {t("mainpage.features.web.title")}
         </span>
@@ -169,7 +174,7 @@ export function Home() {
             <Link key={id} to={to}>
               <Card className="group h-full gap-2 px-4">
                 <span className="flex flex-row items-center gap-4">
-                  <Icon className="size-12 rounded bg-linear-to-b from-primary to-primary-dark p-2 text-primary-foreground minebox-shadow-light" />
+                  <Icon className="size-12 rounded bg-linear-to-b from-primary to-primary-dark p-2 text-primary-foreground minebox-shadow-light transition-transform duration-200 group-hover:scale-110" />
                   <span className="mb-1 flex flex-col items-start justify-center space-y-0.5">
                     <p className="bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-lg leading-none font-bold tracking-wider text-transparent uppercase drop-shadow-[0_3px_0_var(--primary-foreground)]">
                       {label}

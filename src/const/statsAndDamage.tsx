@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 export const stats = [
   {
     id: "HEALTH",
@@ -126,7 +128,7 @@ export const stats = [
     icon: "",
   },
   {
-    id: "AIR)RESISTANCE",
+    id: "AIR_RESISTANCE",
     name: "AIR_RESISTANCE",
     color: "#85c062",
     icon: "",
@@ -141,6 +143,12 @@ export const stats = [
     id: "WATER_RESISTANCE",
     name: "WATER_RESISTANCE",
     color: "#7ccbf9",
+    icon: "",
+  },
+  {
+    id: "NEUTRAL_RESISTANCE",
+    name: "universal.stats.NEUTRAL_RESISTANCE",
+    color: "#ffffff",
     icon: "",
   },
 ]
@@ -183,13 +191,15 @@ export function StatItem({
   let statData = stats.find((r) => r.id === stat)
   if (!statData) statData = stats[0]
 
+  const { t } = useTranslation("universal")
+
   return (
     <span className="flex flex-row gap-1 text-xs">
       <img
         src={`/media/attributes/${statData.id.toLowerCase()}.png`}
         className="size-4 shadow-sm"
       />
-      <p className="mr-auto">{statData.name}</p>
+      <p className="mr-auto">{t(`universal.stats.${statData.id.toUpperCase()}`)}</p>
       {from === to ? (
         <p>{to}</p>
       ) : (

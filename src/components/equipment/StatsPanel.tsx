@@ -80,6 +80,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({
   classTier,
 }) => {
   const { t: tEquip } = useTranslation("equipment")
+  const { t: tUniversal } = useTranslation("universal")
 
   const petBoosted = useMemo(() => {
     if (!pet) return {}
@@ -187,7 +188,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({
                     alt={name}
                     className="h-4 w-4"
                   />
-                  {name}
+                  {tUniversal(`universal.stats.${name.toUpperCase()}`)}
 
                   {isBoostedByPlayer && (
                     <User className="h-4 w-4 text-cyan-400" />

@@ -3,6 +3,7 @@ import { Badge } from "@ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip"
 import { levels } from "@const/levels"
 import { ItemImage } from "./elements"
+import { useTranslation } from "react-i18next"
 
 export const rarities = [
   {
@@ -172,12 +173,14 @@ export function RarityBadge({
   let rarityData = rarities.find((r) => r.id === rarity)
   if (!rarityData) rarityData = rarities[0] // default to "vanilla" if not found
 
+  const { t } = useTranslation("universal")
+
   return (
     <Badge
       className={`tracking-wider text-white text-shadow-[1px_1px_2px_#0000006f] ${className}`}
       style={{ backgroundColor: rarityData.badgeColor }}
     >
-      {rarityData.name.toUpperCase()}
+      {t(`universal.rarity.${rarityData.id}`).toUpperCase()}
     </Badge>
   )
 }
