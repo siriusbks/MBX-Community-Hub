@@ -37,6 +37,7 @@ import { getClassNumericStats } from "@components/utils/classStats"
 import { usePlayerStats } from "@components/equipment/usePlayerStats"
 import { EquipmentDetailsPanel } from "@components/equipment/Equipmentdetailspanel"
 import { Card } from "@components/ui/card"
+import { Skeleton } from "@components/ui/skeleton"
 
 function addFlatToRanges(
   base: Record<string, number[]>,
@@ -318,9 +319,25 @@ const Equipment: React.FC = () => {
 
   if (loading || loadingSets || loadingClasses || loadingPlayerStats) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-gray-900 text-white">
-        <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-        <span>{t("equip.loading", { defaultValue: "Loading data…" })}</span>
+      <div className="relative page-container flex h-full min-h-0 w-full flex-col overflow-hidden">
+        <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
+
+        <div className="shrink-0">
+          <PageTitle
+            title="EQUIPMENT BUILDER"
+            description="Build and theory-craft your gear, pets and skull loadouts."
+          />
+        </div>
+
+      <span className="h-full grid grid-cols-3 gap-3">
+        <Skeleton className="h-full">
+        </Skeleton>
+
+        <Skeleton className="h-full" />
+
+        <Skeleton className="h-full" />
+      </span>
+
       </div>
     )
   }
@@ -420,7 +437,7 @@ const Equipment: React.FC = () => {
           <span className="flex min-h-0 flex-col gap-3 xl:col-span-1">
             <CharacterDisplay
               equippedItems={equippedItems}
-          playerLevel={playerLevel}
+              playerLevel={playerLevel}
               onSlotClick={onSlotClick}
             />
 
@@ -473,8 +490,11 @@ const Equipment: React.FC = () => {
             <Card className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-2 pr-0">
               {/* Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 mt-1">
-                  <SparklesIcon className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]" strokeWidth={2} />
+                <div className="mt-1 flex items-center gap-2">
+                  <SparklesIcon
+                    className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]"
+                    strokeWidth={2}
+                  />
                   <h2 className="text-lg">{t("equip.playerStats")}</h2>
                 </div>
               </div>
@@ -503,8 +523,11 @@ const Equipment: React.FC = () => {
             <Card className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-2 pr-0">
               {/* Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 mt-1">
-                  <SettingsIcon className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]" strokeWidth={2} />
+                <div className="mt-1 flex items-center gap-2">
+                  <SettingsIcon
+                    className="size-6 text-primary drop-shadow-[0_3px_0_#5d3a00]"
+                    strokeWidth={2}
+                  />
                   <h2 className="text-lg">{t("equip.loadoutSettings")}</h2>
                 </div>
               </div>
