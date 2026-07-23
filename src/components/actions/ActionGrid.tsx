@@ -60,7 +60,7 @@ export default function ActionGrid() {
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
 
-  const [itemId, setItemId] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
   const [sort, setSort] = useState<SortField>("time")
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
 
@@ -77,9 +77,7 @@ export default function ActionGrid() {
           sort,
           sort_direction: sortDirection,
         })
-        if (itemId.trim()) {
-          params.set("item_id", itemId.trim())
-        }
+        // We no longer send item_id to the API since we filter locally by name
 
         const res = await fetch(
           `https://api.minebox.co/market/auction?${params.toString()}`
@@ -101,7 +99,7 @@ export default function ActionGrid() {
         }
       }
     },
-    [sort, sortDirection, itemId]
+    [sort, sortDirection]
   )
 
   useEffect(() => {
@@ -121,8 +119,8 @@ export default function ActionGrid() {
         <Input
           placeholder={t("market.action_house.search_placeholder")}
           className="h-8 w-full minebox-shadow"
-          value={itemId}
-          onChange={(e) => setItemId(e.target.value)}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <Select
           value={sort}
@@ -166,11 +164,16 @@ export default function ActionGrid() {
         </Select>
       </span>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
-        {listings.map((listing) => (
-          <HoverCard>
+        {listings
+          .filter((listing) => {
+            if (!searchQuery.trim()) return true
+            const name = FindItemName({ itemId: listing.item_id })
+            return name.toLowerCase().includes(searchQuery.toLowerCase())
+          })
+          .map((listing) => (
+          <HoverCard key={listing.id}>
             <HoverCardTrigger>
               <RarityBorder
-                key={listing.id}
                 rarity={FindItemRarity({ itemId: listing.item_id })}
                 className="group relative flex flex-col items-center gap-0"
               >
