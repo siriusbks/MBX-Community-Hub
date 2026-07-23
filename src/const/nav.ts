@@ -109,7 +109,7 @@ export const useNavLinks = (): NavItem[] => {
           icon: Anvil,
           label: t("mainpage.features.equipment.title"),
           desc: t("mainpage.features.equipment.description"),
-          badge: "Soon",
+          badge: "Beta Version",
         },
         {
           id: "museum",
@@ -117,7 +117,7 @@ export const useNavLinks = (): NavItem[] => {
           icon:Album,
           label: t("mainpage.features.museum.title"),
           desc: t("mainpage.features.museum.description"),
-          badge: "Soon",
+          badge: "Coming Soon",
         },
         {
           id: "collections",

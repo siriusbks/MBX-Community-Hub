@@ -1,0 +1,53 @@
+{
+    "universal.rarity.vanilla": "Vanilla",
+    "universal.rarity.trash": "Trash",
+    "universal.rarity.common": "Common",
+    "universal.rarity.uncommon": "Uncommon",
+    "universal.rarity.rare": "Rare",
+    "universal.rarity.epic": "Epic",
+    "universal.rarity.legendary": "Legendary",
+    "universal.rarity.mythic": "Mythic",
+    "universal.rarity.contraband": "Contraband",
+    "universal.rarity.prototype": "Prototype",
+    "universal.rarity.attack": "Attack",
+    "universal.rarity.passive": "Passive",
+    "universal.rarity.skill": "Skill",
+    "universal.rarity.ultimate": "Ultimate",
+
+
+
+    "universal.stats.HEALTH": "Health",
+    "universal.stats.AGILITY": "Agility",
+    "universal.stats.STRENGTH": "Strength",
+    "universal.stats.INTELLIGENCE": "Intelligence",
+    "universal.stats.WISDOM": "Wisdom",
+    "universal.stats.LUCK": "Luck",
+    "universal.stats.FORTUNE": "Fortune",
+    "universal.stats.DEFENSE": "Defense",
+    "universal.stats.ATTACK_SPEED": "Attack Speed",
+    "universal.stats.ENDURANCE": "Endurance",
+    "universal.stats.CHARISMA": "Charisma",
+    "universal.stats.MOVEMENT_SPEED": "Movement Speed",
+    "universal.stats.DEXTERITY": "Dexterity",
+    "universal.stats.VITALITY": "Vitality",
+
+    "universal.stats.FARMING_FORTUNE": "Farming Fortune",
+    "universal.stats.WOODCUTTING_FORTUNE": "Woodcutting Fortune",
+    "universal.stats.MINING_FORTUNE": "Mining Fortune",
+    "universal.stats.FISHING_FORTUNE": "Fishing Fortune",
+    "universal.stats.GATHERING_FORTUNE": "Gathering Fortune",
+    "universal.stats.LOOTING_FORTUNE": "Looting Fortune",
+
+    "universal.stats.EARTH_RESISTANCE": "Earth Resistance",
+    "universal.stats.AIR_RESISTANCE": "Air Resistance",
+    "universal.stats.FIRE_RESISTANCE": "Fire Resistance",
+    "universal.stats.WATER_RESISTANCE": "Water Resistance",
+    "universal.stats.NEUTRAL_RESISTANCE": "Neutral Resistance",
+
+
+
+    "universal.damage.WATER": "Water",
+    "universal.damage.FIRE": "Fire",
+    "universal.damage.EARTH": "Earth",
+    "universal.damage.AIR": "Air"
+}
