@@ -84,6 +84,9 @@ export function ShipCodexPage() {
   const [selectedShip, setSelectedShip] = useState<Ship | null>(null)
   const [selectedLevel, setSelectedLevel] = useState<number>(1)
 
+  // Sheet Panel State
+  const [isOpen, setIsOpen] = useState(false)
+
   const slotIcons = [
     { key: "HULL", icon: ShipIcon },
     { key: "MAST", icon: WindIcon },
@@ -175,10 +178,10 @@ export function ShipCodexPage() {
 
       <div className="flex min-h-0 flex-1 flex-row gap-4">
         <div
-          className={`custom-scrollbar h-full ${selectedShip ? "w-2/3" : "w-full"} scroll-fade overflow-y-auto pr-2`}
+          className={`custom-scrollbar h-full ${selectedShip ? "w-full lg:w-2/3" : "w-full"} scroll-fade overflow-y-auto pr-2`}
         >
           <div
-            className={`grid w-full ${selectedShip ? "grid-cols-3" : "grid-cols-5"} gap-4`}
+            className={`grid w-full ${selectedShip ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"} gap-4`}
           >
             {ships.map((ship) => {
               const levelData = ship.levels[0] // Default to level 1 for overview
@@ -187,7 +190,11 @@ export function ShipCodexPage() {
                   key={ship.id}
                   rarity={getRarityClass(ship.rarity)}
                   className="relative flex cursor-pointer flex-col items-center gap-0 transition-transform hover:scale-101"
-                  onClick={() => setSelectedShip(ship)}
+
+                  onClick={() => {
+                    setSelectedShip(ship)
+                    if (window.innerWidth < 1024) setIsOpen(true)
+                  }}
                 >
                   <img
                     src={
@@ -234,184 +241,112 @@ export function ShipCodexPage() {
           </div>
         </div>
 
-        {selectedShip && (
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetContent className="gap-2 overflow-y-auto from-secondary-lighter to-secondary p-2">
+            <ShipInfoPanel />
+          </SheetContent>
+        </Sheet>
+
+        {selectedShip && window.innerWidth > 1024 && (
           <div className="custom-scrollbar flex min-h-0 w-1/3 flex-col gap-2 overflow-y-auto pr-2">
-            <div className="flex flex-col gap-2">
-              <RarityBorder rarity={getRarityClass(selectedShip.rarity)}>
-                <div className="flex flex-col gap-0">
-                  <img
-                    src={
-                      selectedShip.images[0] ||
-                      `https://cdn2.minebox.co/data/ships/${selectedShip.model}.gif`
-                    }
-                    alt={selectedShip.name}
-                    className="mx-auto aspect-square w-3/4 object-contain [image-rendering:pixelated]"
-                  />
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-lg">{selectedShip.name}</h2>
-                    <RarityBadge rarity={getRarityClass(selectedShip.rarity)} />
-                  </div>
-
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {selectedShip.lore}
-                  </p>
-                </div>
-              </RarityBorder>
-
-              <Card className="flex flex-row items-center justify-between gap-1 px-2 py-2">
-                <p>Available slots:</p>
-                <span className="flex flex-row gap-1">
-                  {slotIcons.map(({ key, icon: Icon }) => {
-                    const available = selectedShip.component_slots.includes(key)
-
-                    return (
-                      <span
-                        key={key}
-                        className={
-                          available
-                            ? "flex size-8 items-center justify-center rounded-md bg-linear-to-b from-primary to-primary-dark p-2"
-                            : "flex size-8 items-center justify-center rounded-md bg-secondary p-2"
-                        }
-                      >
-                        <Icon
-                          className={
-                            available
-                              ? "size-4 text-primary-foreground"
-                              : "size-4"
-                          }
-                          strokeWidth={3}
-                        />
-                      </span>
-                    )
-                  })}
-                </span>
-              </Card>
-
-              <Card className="flex flex-col gap-2 px-2 py-2">
-                {selectedShip.levels.map((level) => (
-                  <span
-                    key={level.level}
-                    className="flex flex-row items-center gap-3"
-                  >
-                    <p className="mr-auto w-24">Level {level.level}</p>
-
-                    <p className="flex items-center gap-1">
-                      <ZapIcon className="size-4" strokeWidth={3} />
-                      {level.speed}
-                    </p>
-
-                    <p className="flex items-center gap-1">
-                      <Package2Icon className="size-4" strokeWidth={3} />
-                      {level.cargo}
-                    </p>
-
-                    <Separator
-                      orientation="vertical"
-                      className="my-auto h-4 bg-card"
-                    />
-
-                    {Object.entries(level.player_stats).map(([stat, value]) => (
-                      <SmallStatItem
-                        key={stat}
-                        stat={stat.toUpperCase()}
-                        value={value}
-                        className="w-5"
-                      />
-                    ))}
-                  </span>
-                ))}
-              </Card>
-            </div>
-            {/*
-            <div className="flex flex-wrap gap-1">
-              <span className="text-sm font-semibold">Slots:</span>
-              {selectedShip.component_slots.map((slot) => (
-                <span
-                  key={slot}
-                  className="rounded-md bg-secondary px-2 py-1 text-xs"
-                >
-                  {slot}
-                </span>
-              ))}
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-semibold">Level:</label>
-              <Select
-                value={selectedLevel.toString()}
-                onValueChange={(value) => setSelectedLevel(parseInt(value))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {selectedShip.levels.map((level) => (
-                      <SelectItem
-                        key={level.level}
-                        value={level.level.toString()}
-                      >
-                        Level {level.level} (EXP:{" "}
-                        {level.experience_required.toLocaleString()})
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {(() => {
-              const currentLevel = getCurrentLevelData(selectedShip)
-              return (
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="flex items-center gap-1 text-sm">
-                      <ZapIcon className="size-4" strokeWidth={3} /> Speed
-                    </span>
-                    <span className="text-sm">{currentLevel.speed}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="flex items-center gap-1 text-sm">
-                      <Package2Icon className="size-4" strokeWidth={3} /> Cargo
-                    </span>
-                    <span className="text-sm">{currentLevel.cargo}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="flex items-center gap-1 text-sm">
-                      <Grid2x2Icon className="size-4" strokeWidth={3} /> Slots
-                    </span>
-                    <span className="text-sm">
-                      {selectedShip.component_slots.length}
-                    </span>
-                  </div>
-
-                  {Object.entries(currentLevel.player_stats).length > 0 && (
-                    <div className="mt-4">
-                      <h4 className="mb-2 text-sm font-semibold">Stats:</h4>
-                      {Object.entries(currentLevel.player_stats).map(
-                        ([stat, value]) => (
-                          <div
-                            key={stat}
-                            className="flex justify-between text-sm"
-                          >
-                            <span className="capitalize">
-                              {stat.replace(/_/g, " ")}
-                            </span>
-                            <span>{value}</span>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  )}
-                </div>
-              )
-            })()}*/}
+            <ShipInfoPanel />
           </div>
         )}
       </div>
     </div>
   )
+
+  function ShipInfoPanel() {
+    if (!selectedShip) return null
+
+    return (
+      <div className="flex flex-col gap-2">
+        <RarityBorder rarity={getRarityClass(selectedShip.rarity)}>
+          <div className="flex flex-col gap-0">
+            <img
+              src={
+                selectedShip.images[0] ||
+                `https://cdn2.minebox.co/data/ships/${selectedShip.model}.gif`
+              }
+              alt={selectedShip.name}
+              className="mx-auto aspect-square w-3/4 object-contain [image-rendering:pixelated]"
+            />
+
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg">{selectedShip.name}</h2>
+              <RarityBadge rarity={getRarityClass(selectedShip.rarity)} />
+            </div>
+
+            <p className="text-xs leading-none text-muted-foreground">
+              {selectedShip.lore}
+            </p>
+          </div>
+        </RarityBorder>
+
+        <Card className="flex flex-row items-center justify-between gap-1 px-2 py-2">
+          <p>Available slots:</p>
+          <span className="flex flex-row gap-1">
+            {slotIcons.map(({ key, icon: Icon }) => {
+              const available = selectedShip.component_slots.includes(key)
+
+              return (
+                <span
+                  key={key}
+                  className={
+                    available
+                      ? "flex size-8 items-center justify-center rounded-md bg-linear-to-b from-primary to-primary-dark p-2"
+                      : "flex size-8 items-center justify-center rounded-md bg-secondary p-2"
+                  }
+                >
+                  <Icon
+                    className={
+                      available ? "size-4 text-primary-foreground" : "size-4"
+                    }
+                    strokeWidth={3}
+                  />
+                </span>
+              )
+            })}
+          </span>
+        </Card>
+
+        <Card className="flex flex-col gap-2 px-2 py-2">
+          {selectedShip.levels.map((level) => (
+            <span
+              key={level.level}
+              className="flex flex-row items-center gap-3"
+            >
+              <p className="mr-auto w-24">Level {level.level}</p>
+
+              <p className="flex items-center gap-1">
+                <ZapIcon className="size-4" strokeWidth={3} />
+                {level.speed}
+              </p>
+
+              <p className="flex items-center gap-1">
+                <Package2Icon className="size-4" strokeWidth={3} />
+                {level.cargo}
+              </p>
+
+              <Separator
+                orientation="vertical"
+                className="my-auto h-4 bg-card"
+              />
+
+              {Object.entries(level.player_stats).map(([stat, value]) => (
+                <SmallStatItem
+                  key={stat}
+                  stat={stat.toUpperCase()}
+                  value={value}
+                  className="w-5"
+                />
+              ))}
+            </span>
+          ))}
+        </Card>
+      </div>
+    )
+  }
 }
 
 export default ShipCodexPage

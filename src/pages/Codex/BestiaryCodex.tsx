@@ -9,6 +9,7 @@ import { BestiaryItem } from "@components/minebox/bestiary"
 import { LevelBadge } from "@const/levels"
 import { ItemSlot } from "@const/rarities"
 import { CodexNav } from "@components/minebox/codex-nav"
+import { Sheet, SheetContent } from "@components/ui/sheet"
 
 type BestiaryCreature = {
   id: string
@@ -205,6 +206,13 @@ export function BestiaryCodexPage() {
   const [isDetailsLoading, setIsDetailsLoading] = useState(false)
   const [detailsError, setDetailsError] = useState<string | null>(null)
 
+  // Sheet Panel State
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window === "undefined") return false
+    const hasId = new URLSearchParams(window.location.search).get("id")
+    return Boolean(hasId) && window.innerWidth < 1024
+  })
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (selectedCreatureId) {
@@ -318,7 +326,7 @@ export function BestiaryCodexPage() {
     getRecipeIngredientSlotsWithoutIntermediates(selectedCreature)
 
   return (
-    <div className="relative page-container flex h-dvh flex-col overflow-hidden">
+    <div className="relative page-container flex lg:h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle title="Bestiary Codex" />
 
@@ -326,9 +334,9 @@ export function BestiaryCodexPage() {
 
       <div className="flex min-h-0 flex-1 flex-row gap-4 overflow-hidden">
         <div
-          className={`custom-scrollbar ${selectedCreatureId ? "w-2/3" : "w-full"} scroll-fade overflow-y-auto pr-2`}
+          className={`custom-scrollbar ${selectedCreatureId ? "w-full lg:w-2/3" : "w-full"} lg:scroll-fade  lg:overflow-y-auto pr-2`}
         >
-          <div className={`grid scroll-fade grid-cols-6 gap-4`}>
+          <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-6 gap-4`}>
             {isLoading && (
               <div className="col-span-3 text-center">Loading bestiary...</div>
             )}
@@ -360,15 +368,35 @@ export function BestiaryCodexPage() {
                 minHealth={c.health?.[0] ?? 0}
                 maxHealth={c.health?.[1] ?? 0}
                 type={c.type}
-                onClick={() => setSelectedCreatureId(c.id)}
+                                    onClick={() => {
+                      setSelectedCreatureId(c.id)
+                      if (window.innerWidth < 1024) setIsOpen(true)
+                    }}
                 isSelected={selectedCreatureId === c.id}
               />
             ))}
           </div>
         </div>
-        {selectedCreatureId && (
+
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetContent className="gap-2 overflow-y-auto from-secondary-lighter to-secondary p-2">
+            <BestiaryInfoPanel />
+          </SheetContent>
+        </Sheet>
+
+        {selectedCreatureId && window.innerWidth > 1024 && (
           <div className="custom-scrollbar flex h-full min-h-0 w-1/3 scroll-fade flex-col gap-4 overflow-y-auto pr-1">
-            <Card className="flex w-full shrink-0 flex-col justify-center gap-0 px-4">
+            <BestiaryInfoPanel/>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+
+  function BestiaryInfoPanel() {
+    return (
+      <>
+                  <Card className="flex w-full shrink-0 flex-col justify-center gap-0 px-4">
               {isDetailsLoading && (
                 <p className="py-6 text-center text-sm text-muted-foreground">
                   Loading creature details...
@@ -423,10 +451,6 @@ export function BestiaryCodexPage() {
                 </>
               )}
             </Card>
-            {/*}
-          <Card className="flex w-full flex-col justify-center gap-0 px-4">
-            <p className="text-xs text-primary drop-shadow-[0_2px_0_#5d3a00]">Family:</p>
-          </Card>*/}
             <Card className="flex w-full shrink-0 flex-col justify-center gap-0 px-4">
               <p className="text-xs text-primary drop-shadow-[0_2px_0_#5d3a00]">
                 Drops:
@@ -452,11 +476,9 @@ export function BestiaryCodexPage() {
                 ))}
               </div>
             </Card>
-          </div>
-        )}
-      </div>
-    </div>
-  )
+      </>
+    )
+  }
 }
 
 export default BestiaryCodexPage

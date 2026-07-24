@@ -13,6 +13,13 @@ import { Badge } from "@components/ui/badge"
 import { CodexNav } from "@components/minebox/codex-nav"
 import i18next from "i18next"
 import { FindItemRarity } from "@const/elements"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@components/ui/sheet"
 
 const PlayableClasses = ["assassin", "mage", "archer", "gunner"]
 
@@ -62,6 +69,9 @@ export function ClassCodexPage() {
   const [classSpells, setClassSpells] = useState([])
   const [spellDataLoading, setSpellDataLoading] = useState(false)
   const [spellDataError, setSpellDataError] = useState(null)
+
+  // Sheet Panel State
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -178,15 +188,15 @@ export function ClassCodexPage() {
     })
 
   return (
-    <div className="relative page-container flex h-dvh flex-col overflow-hidden">
+    <div className="relative page-container flex flex-col overflow-hidden lg:h-dvh">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle title="Class Codex" />
 
       <CodexNav />
 
-      <div className="flex min-h-0 flex-1 flex-row gap-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row">
         {/* LEFT: all classes from the API, sorted by rarity */}
-        <div className="custom-scrollbar h-full w-full scroll-fade overflow-y-auto pr-2">
+        <div className="custom-scrollbar h-full w-full scroll-fade pr-2 lg:overflow-y-auto">
           {loading && (
             <p className="text-xs text-muted-foreground">Loading classes...</p>
           )}
@@ -198,7 +208,7 @@ export function ClassCodexPage() {
           )}
 
           {!loading && !error && (
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
               {sortedClasses.map((cls) => {
                 const rarity = (cls.rarity ?? "prototype").toLowerCase()
                 const isSelected = cls.id === selectedId
@@ -208,7 +218,10 @@ export function ClassCodexPage() {
                   <button
                     key={cls.id}
                     type="button"
-                    onClick={() => setSelectedId(cls.id)}
+                    onClick={() => {
+                      setSelectedId(cls.id)
+                      if (window.innerWidth < 1024) setIsOpen(true)
+                    }}
                     className={`text-left ${
                       isSelected ? "rounded-lg ring-0 ring-primary" : ""
                     }`}
@@ -264,210 +277,213 @@ export function ClassCodexPage() {
           )}
         </div>
 
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetContent className="gap-2 p-2 from-secondary-lighter to-secondary overflow-y-auto ">
+            <ClassInfoPanel />
+          </SheetContent>
+        </Sheet>
+
         {/* RIGHT: selected class detail */}
-        <div className="custom-scrollbar flex min-h-0 w-2/5 flex-col gap-2 overflow-y-auto pr-2">
-          {selectedClass && (
-            <>
-              <RarityBorder
-                rarity={(selectedClass.rarity ?? "prototype").toLowerCase()}
-                className="flex flex-col"
-              >
-                <span className="flex flex-row items-center justify-center gap-2">
-                  <img
-                    src={
-                      selectedClass.image
-                        ? `data:image/png;base64,${selectedClass.image}`
-                        : "/media/missingClass.png"
-                    }
-                    alt={selectedClass.name}
-                    className="aspect-square h-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
-                  />
-
-                  <span className="items-col mt-1 flex w-full flex-col -space-y-0">
-                    <span className="flex flex-row items-center gap-1">
-                      <RarityBadge
-                        rarity={(
-                          selectedClass.rarity ?? "prototype"
-                        ).toLowerCase()}
-                      />
-                      <p className="mb-1 leading-none">{selectedClass.name}</p>
-                    </span>
-
-                    <span className="mt-1 flex flex-row gap-1">
-                      {(selectedClass.types ?? []).map((type) => (
-                        <Badge
-                          key={type}
-                          variant="secondary"
-                          className="text-[0.6rem] uppercase"
-                        >
-                          {type}
-                        </Badge>
-                      ))}
-                    </span>
-
-                    <p className="mt-2 text-[0.7rem] leading-none text-muted-foreground">
-                      {selectedClass.lore}
-                    </p>
-                  </span>
-                </span>
-                <p className="mt-2 text-[0.7rem] leading-none text-muted-foreground">
-                  {selectedClass.description}
-                </p>
-
-                {!isPlayableClass(selectedClass) && (
-                  <span>
-                    <p className="my-2 text-[0.6rem] leading-none text-muted-foreground text-red-500">
-                      This Class is currently disabled and cannot be played
-                      in-game.
-                    </p>
-                  </span>
-                )}
-
-                {tierEntries.length > 0 && (
-                  <span className="mt-1 flex flex-col gap-1">
-                    {tierEntries.map(([tierNumber, tierData]) => (
-                      <span
-                        key={tierNumber}
-                        className="flex flex-row items-center text-center"
-                      >
-                        <p className="mr-auto text-[0.7rem]">
-                          TIER {tierNumber}
-                        </p>
-                        <span className="flex flex-row gap-2">
-                          {Object.entries(tierData.stats ?? {}).map(
-                            ([stat, value]) => (
-                              <SmallStatItem
-                                key={stat}
-                                stat={stat}
-                                value={value}
-                                className="flex-row-reverse !justify-between gap-0.5 px-0"
-                              />
-                            )
-                          )}
-                        </span>
-                      </span>
-                    ))}
-                  </span>
-                )}
-
-                {coreAttributes.length > 0 && (
-                  <span className="flex w-full flex-row items-center justify-between text-sm">
-                    <p className="text-muted-foreground">All Tiers</p>
-                    <p>...</p>
-                  </span>
-                )}
-              </RarityBorder>
-
-              {spellDataLoading && (
-                <p className="text-xs text-muted-foreground"></p>
-              )}
-
-              {spellDataError && (
-                <p className="text-xs text-destructive">
-                  Error loading skills: {spellDataError}
-                </p>
-              )}
-              {passiveSpell && (
-                <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-                  <p className="text-sm text-primary">Passive</p>
-                  <span className="flex flex-row gap-2">
-                    <img
-                      src={
-                        passiveSpell?.icon
-                          ? `data:image/png;base64,${passiveSpell.icon}`
-                          : "/media/missing.png"
-                      }
-                      className="size-12 rounded"
-                    />
-                    <span className="my-auto flex w-full flex-col gap-0">
-                      <span className="flex w-full flex-row items-center justify-between">
-                        <p>{passiveSpell?.name ?? "Passive Name"}</p>
-                        <p className="flex flex-row items-center gap-1">
-                          {formatCooldown(passiveSpell?.cooldown)}{" "}
-                          <ClockIcon strokeWidth={3} className="size-5" />
-                        </p>
-                      </span>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        {passiveSpell?.description ?? "Lorem Ipsum"}
-                      </p>
-                    </span>
-                  </span>
-                </Card>
-              )}
-              {autoAttackSpell && (
-                <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-                  <p className="text-sm text-primary">Auto Attack</p>
-                  <span className="flex flex-row gap-2">
-                    <img
-                      src={
-                        autoAttackSpell?.icon
-                          ? `data:image/png;base64,${autoAttackSpell.icon}`
-                          : "/media/missing.png"
-                      }
-                      className="size-12 rounded"
-                    />
-                    <span className="my-auto flex w-full flex-col gap-0">
-                      <span className="flex w-full flex-row items-center gap-1">
-                        {autoAttackWeapon && <Badge>{autoAttackWeapon}</Badge>}
-                        <p>{autoAttackSpell?.name ?? "Auto Attack Name"}</p>
-                        <p className="ml-auto flex flex-row items-center gap-1">
-                          {formatCooldown(autoAttackSpell?.cooldown)}{" "}
-                          <ClockIcon strokeWidth={3} className="size-5" />
-                        </p>
-                      </span>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        {autoAttackSpell?.description ?? "Lorem Ipsum"}
-                      </p>
-                    </span>
-                  </span>
-                </Card>
-              )}
-
-              {otherSpells.length > 0 && (
-                <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-                  <p className="text-sm text-primary">Spells</p>
-                  <span className="flex flex-col gap-2">
-                    {otherSpells.map((spell) => (
-                      <span key={spell.id} className="flex flex-row gap-2">
-                        <img
-                          src={
-                            spell.icon
-                              ? `data:image/png;base64,${spell.icon}`
-                              : "/media/missing.png"
-                          }
-                          className="size-12 rounded"
-                        />
-                        <span className="my-auto flex w-full flex-col gap-0">
-                          <span className="flex w-full flex-row items-center">
-                            {(spell.categories ?? []).includes("ULTIMATE") && (
-                              <Badge className="mr-1">ULTIMATE</Badge>
-                            )}
-                            <p>{spell.name}</p>
-                            <p className="ml-auto flex flex-row items-center gap-1">
-                              {formatCooldown(spell.cooldown)}{" "}
-                              <ClockIcon strokeWidth={3} className="size-5" />
-                            </p>
-                            {spellLevelById[spell.id] && (
-                              <p className="ml-1 flex flex-row items-center gap-1">
-                                Lv. {spellLevelById[spell.id]}
-                              </p>
-                            )}
-                          </span>
-                          <p className="text-xs leading-none text-muted-foreground">
-                            {spell.description}
-                          </p>
-                        </span>
-                      </span>
-                    ))}
-                  </span>
-                </Card>
-              )}
-            </>
-          )}
+        <div className="custom-scrollbar flex min-h-0 flex-col gap-2 overflow-y-auto pr-2 lg:w-2/5 hidden lg:flex">
+          {selectedClass && <ClassInfoPanel />}
         </div>
       </div>
     </div>
   )
+
+  function ClassInfoPanel() {
+    return (
+      <>
+        <RarityBorder
+          rarity={(selectedClass.rarity ?? "prototype").toLowerCase()}
+          className="flex flex-col"
+        >
+          <span className="flex flex-row items-center justify-center gap-2">
+            <img
+              src={
+                selectedClass.image
+                  ? `data:image/png;base64,${selectedClass.image}`
+                  : "/media/missingClass.png"
+              }
+              alt={selectedClass.name}
+              className="aspect-square h-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
+            />
+
+            <span className="items-col mt-1 flex w-full flex-col -space-y-0">
+              <span className="flex flex-row items-center gap-1">
+                <RarityBadge
+                  rarity={(selectedClass.rarity ?? "prototype").toLowerCase()}
+                />
+                <p className="mb-1 leading-none">{selectedClass.name}</p>
+              </span>
+
+              <span className="mt-1 flex flex-row gap-1">
+                {(selectedClass.types ?? []).map((type) => (
+                  <Badge
+                    key={type}
+                    variant="secondary"
+                    className="text-[0.6rem] uppercase"
+                  >
+                    {type}
+                  </Badge>
+                ))}
+              </span>
+
+              <p className="mt-2 text-[0.7rem] leading-none text-muted-foreground">
+                {selectedClass.lore}
+              </p>
+            </span>
+          </span>
+          <p className="mt-2 text-[0.7rem] leading-none text-muted-foreground">
+            {selectedClass.description}
+          </p>
+
+          {!isPlayableClass(selectedClass) && (
+            <span>
+              <p className="my-2 text-[0.6rem] leading-none text-muted-foreground text-red-500">
+                This Class is currently disabled and cannot be played in-game.
+              </p>
+            </span>
+          )}
+
+          {tierEntries.length > 0 && (
+            <span className="mt-1 flex flex-col gap-1">
+              {tierEntries.map(([tierNumber, tierData]) => (
+                <span
+                  key={tierNumber}
+                  className="flex flex-row items-center text-center"
+                >
+                  <p className="mr-auto text-[0.7rem]">TIER {tierNumber}</p>
+                  <span className="flex flex-row gap-2">
+                    {Object.entries(tierData.stats ?? {}).map(
+                      ([stat, value]) => (
+                        <SmallStatItem
+                          key={stat}
+                          stat={stat}
+                          value={value}
+                          className="flex-row-reverse !justify-between gap-0.5 px-0"
+                        />
+                      )
+                    )}
+                  </span>
+                </span>
+              ))}
+            </span>
+          )}
+
+          {coreAttributes.length > 0 && (
+            <span className="flex w-full flex-row items-center justify-between text-sm">
+              <p className="text-muted-foreground">All Tiers</p>
+              <p>...</p>
+            </span>
+          )}
+        </RarityBorder>
+
+        {spellDataLoading && <p className="text-xs text-muted-foreground"></p>}
+
+        {spellDataError && (
+          <p className="text-xs text-destructive">
+            Error loading skills: {spellDataError}
+          </p>
+        )}
+        {passiveSpell && (
+          <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
+            <p className="text-sm text-primary">Passive</p>
+            <span className="flex flex-row gap-2">
+              <img
+                src={
+                  passiveSpell?.icon
+                    ? `data:image/png;base64,${passiveSpell.icon}`
+                    : "/media/missing.png"
+                }
+                className="size-12 rounded"
+              />
+              <span className="my-auto flex w-full flex-col gap-0">
+                <span className="flex w-full flex-row items-center justify-between">
+                  <p>{passiveSpell?.name ?? "Passive Name"}</p>
+                  <p className="flex flex-row items-center gap-1">
+                    {formatCooldown(passiveSpell?.cooldown)}{" "}
+                    <ClockIcon strokeWidth={3} className="size-5" />
+                  </p>
+                </span>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {passiveSpell?.description ?? "Lorem Ipsum"}
+                </p>
+              </span>
+            </span>
+          </Card>
+        )}
+        {autoAttackSpell && (
+          <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
+            <p className="text-sm text-primary">Auto Attack</p>
+            <span className="flex flex-row gap-2">
+              <img
+                src={
+                  autoAttackSpell?.icon
+                    ? `data:image/png;base64,${autoAttackSpell.icon}`
+                    : "/media/missing.png"
+                }
+                className="size-12 rounded"
+              />
+              <span className="my-auto flex w-full flex-col gap-0">
+                <span className="flex w-full flex-row items-center gap-1">
+                  {autoAttackWeapon && <Badge>{autoAttackWeapon}</Badge>}
+                  <p>{autoAttackSpell?.name ?? "Auto Attack Name"}</p>
+                  <p className="ml-auto flex flex-row items-center gap-1">
+                    {formatCooldown(autoAttackSpell?.cooldown)}{" "}
+                    <ClockIcon strokeWidth={3} className="size-5" />
+                  </p>
+                </span>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {autoAttackSpell?.description ?? "Lorem Ipsum"}
+                </p>
+              </span>
+            </span>
+          </Card>
+        )}
+
+        {otherSpells.length > 0 && (
+          <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
+            <p className="text-sm text-primary">Spells</p>
+            <span className="flex flex-col gap-2">
+              {otherSpells.map((spell) => (
+                <span key={spell.id} className="flex flex-row gap-2">
+                  <img
+                    src={
+                      spell.icon
+                        ? `data:image/png;base64,${spell.icon}`
+                        : "/media/missing.png"
+                    }
+                    className="size-12 rounded"
+                  />
+                  <span className="my-auto flex w-full flex-col gap-0">
+                    <span className="flex w-full flex-row items-center">
+                      {(spell.categories ?? []).includes("ULTIMATE") && (
+                        <Badge className="mr-1">ULTIMATE</Badge>
+                      )}
+                      <p>{spell.name}</p>
+                      <p className="ml-auto flex flex-row items-center gap-1">
+                        {formatCooldown(spell.cooldown)}{" "}
+                        <ClockIcon strokeWidth={3} className="size-5" />
+                      </p>
+                      {spellLevelById[spell.id] && (
+                        <p className="ml-1 flex flex-row items-center gap-1">
+                          Lv. {spellLevelById[spell.id]}
+                        </p>
+                      )}
+                    </span>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {spell.description}
+                    </p>
+                  </span>
+                </span>
+              ))}
+            </span>
+          </Card>
+        )}
+      </>
+    )
+  }
 }
 
 export default ClassCodexPage

@@ -433,7 +433,7 @@ const Equipment: React.FC = () => {
       </div>*/}
 
       <main className="min-h-0 flex-1 overflow-hidden p-4">
-        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 xl:grid-cols-3">
+        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 lg:grid-cols-3">
           <span className="flex min-h-0 flex-col gap-3 xl:col-span-1">
             <CharacterDisplay
               equippedItems={equippedItems}

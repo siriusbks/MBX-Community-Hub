@@ -178,7 +178,7 @@ body {
 }
 
 @theme {
-  --breakpoint-3xl: 2000px;
+  --breakpoint-3xl: 1950px;
 }
 
 @utility minebox-shadow {
