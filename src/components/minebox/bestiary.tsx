@@ -35,6 +35,9 @@ export function BestiaryItem({
     >
       <img
         src={image}
+        loading="lazy"
+        decoding="async"
+        alt={name}
         className="ml-2 inline-block w-full transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0px_8px_#00000099]"
         style={{ imageRendering: "pixelated" }}
       />
