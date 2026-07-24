@@ -56,9 +56,11 @@ async function resolveFirstAvailableImageUrl(urls: string[]): Promise<string> {
 export function ItemImage({
   itemId,
   className,
+  style,
 }: {
   itemId: string
   className?: string
+  style?: React.CSSProperties
 }) {
   const cleanId = getCleanItemId(itemId)
 
@@ -85,6 +87,7 @@ export function ItemImage({
           target.src = fallbackGeneric
         }}
         className={`[image-rendering:pixelated] ${className}`}
+        style={style}
       />
     )
   }
@@ -103,6 +106,7 @@ export function ItemImage({
         target.src = fallbackGeneric
       }}
       className={`[image-rendering:pixelated] ${className}`}
+        style={style}
     />
   )
 }
@@ -151,6 +155,19 @@ export function FindItemRarity({ itemId }: { itemId: string }) {
     return "legendary"
   }
 
+  {/* SCROLLS ITEMS */}
+  if (itemId.startsWith("scroll_small_")) { return "uncommon" }
+  if (itemId.startsWith("scroll_big_")) { return "rare" }
+  if (itemId.startsWith("scroll_enchanted_")) { return "epic" }
+
+  {/* RUNES ITEMS */}
+  if (itemId.startsWith("rune_small_")) { return "common" }
+  if (itemId.startsWith("rune_big_")) { return "rare" }
+  if (itemId.startsWith("rune_enchanted_")) { return "epic" }
+
+  {/* CANDY ITEMS */}
+  if (itemId.startsWith("candy_enchanted_")) { return "epic" }
+  if (itemId.startsWith("candy_")) { return "rare" }
 
 
 

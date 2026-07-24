@@ -3,6 +3,7 @@ import { Button } from "@ui/button"
 import { Globe } from "lucide-react"
 import { Card } from "@ui/card"
 import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities"
+import { rarities } from "@const/rarities"
 import { Input } from "@components/ui/input"
 import { MineboxItem } from "@components/minebox/MineboxItem"
 import {
@@ -30,6 +31,7 @@ import { CodexNav } from "@components/minebox/codex-nav"
 import { BestiaryItem } from "@components/minebox/bestiary"
 import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
+import { FindItemRarity } from "@const/elements"
 
 type LocalizedText = Record<string, string>
 
@@ -39,6 +41,8 @@ type LocalItem = {
   description: LocalizedText
   image: string
   rarity: string
+  type?: string
+  level?: number
 }
 
 type AuctionListing = {
@@ -59,6 +63,9 @@ type BazaarEntry = {
   stock: number
 }
 
+type SortBy = "level" | "rarity" | "type"
+type SortDirection = "asc" | "desc"
+
 // Na razie ustawione na sztywno — docelowo będzie pochodzić z globalnego ustawienia języka
 const locale = "en"
 
@@ -68,8 +75,21 @@ const PAGE_SIZE = 60
 // Proxy używany WYŁĄCZNIE do zapytań o cenę z aukcji (market/auction)
 const PROXY_BASE = "https://mineboxadditions.bartier.me/proxy"
 
+// Mapa id rarity -> order, budowana raz z @const/rarities
+const rarityOrderMap: Record<string, number> = rarities.reduce(
+  (acc, r) => {
+    acc[r.id] = r.order
+    return acc
+  },
+  {} as Record<string, number>
+)
+
+const getRarityOrder = (rarity: string) => rarityOrderMap[rarity] ?? -1
+
 export function ItemsCodex() {
   const [search, setSearch] = useState("")
+  const [sortBy, setSortBy] = useState<SortBy>("type")
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [itemDetailsData, setItemDetailsData] = useState<any | null>(null)
   const [auctionData, setAuctionData] = useState<AuctionListing | null>(null)
   const [auctionLoading, setAuctionLoading] = useState(false)
@@ -97,17 +117,55 @@ export function ItemsCodex() {
     })
   }, [search, itemsMap])
 
+const sortedItems = useMemo(() => {
+  const dirMultiplier = sortDirection === "asc" ? 1 : -1
+
+  const withKeys = filteredItems.map(([id, item]) => ({
+    id,
+    item,
+    level: item.level ?? 0,
+    rarityOrder: getRarityOrder(FindItemRarity({ itemId: id }) ?? "vanilla"),
+    type: (item.type ?? "").toString(),
+  }))
+
+  withKeys.sort((a, b) => {
+    let primaryDiff: number
+    let secondaryDiff: number
+    let tertiaryDiff = 0
+
+    if (sortBy === "level") {
+      primaryDiff = a.level - b.level
+      secondaryDiff = a.rarityOrder - b.rarityOrder
+    } else if (sortBy === "rarity") {
+      primaryDiff = a.rarityOrder - b.rarityOrder
+      secondaryDiff = a.level - b.level
+    } else {
+      // type: type -> rarity -> level
+      primaryDiff = a.type.localeCompare(b.type)
+      secondaryDiff = a.rarityOrder - b.rarityOrder
+      tertiaryDiff = a.level - b.level
+    }
+
+    if (primaryDiff !== 0) return primaryDiff * dirMultiplier
+    if (secondaryDiff !== 0) return secondaryDiff * dirMultiplier
+    if (tertiaryDiff !== 0) return tertiaryDiff * dirMultiplier
+    return 0
+  })
+
+  return withKeys.map(({ id, item }) => [id, item] as [string, LocalItem])
+}, [filteredItems, sortBy, sortDirection])
+
   const totalItems = itemsMap ? Object.keys(itemsMap).length : 0
 
-  // Reset paginacji gridu przy każdej zmianie wyszukiwania / katalogu
+  // Reset paginacji gridu przy każdej zmianie wyszukiwania / katalogu / sortowania
   useEffect(() => {
     setVisibleCount(PAGE_SIZE)
-  }, [search, itemsMap])
+  }, [search, itemsMap, sortBy, sortDirection])
 
   // Elementy faktycznie renderowane w gridzie na tę chwilę
   const visibleItems = useMemo(
-    () => filteredItems.slice(0, visibleCount),
-    [filteredItems, visibleCount]
+    () => sortedItems.slice(0, visibleCount),
+    [sortedItems, visibleCount]
   )
 
   // Doładowywanie kolejnych stron przy scrollu — obserwujemy "wartownika" pod gridem
@@ -119,7 +177,7 @@ export function ItemsCodex() {
       (entries) => {
         if (entries[0]?.isIntersecting) {
           setVisibleCount((prev) =>
-            Math.min(prev + PAGE_SIZE, filteredItems.length)
+            Math.min(prev + PAGE_SIZE, sortedItems.length)
           )
         }
       },
@@ -128,7 +186,7 @@ export function ItemsCodex() {
 
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [filteredItems.length])
+  }, [sortedItems.length])
 
   // Katalog przedmiotów (~4MB) doczytywany asynchronicznie, poza głównym bundlem
   useEffect(() => {
@@ -285,32 +343,42 @@ export function ItemsCodex() {
           className="h-8 w-full minebox-shadow"
         />
 
-        <Select>
+        <Select
+          value={sortBy}
+          onValueChange={(value) => setSortBy(value as SortBy)}
+        >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Coming Soon </SelectItem>
+              <SelectItem value="type">Type</SelectItem>
+              <SelectItem value="level">Level</SelectItem>
+              <SelectItem value="rarity">Rarity</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
 
-        <Select>
+        <Select
+          value={sortDirection}
+          onValueChange={(value) => setSortDirection(value as SortDirection)}
+        >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
-            <SelectValue placeholder="Rarity" />
+            <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="light">Coming Soon </SelectItem>
+              <SelectItem value="asc">Asc</SelectItem>
+              <SelectItem value="desc">Desc</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
+
       </span>
 
-      <div className="flex min-h-0 flex-1 flex-row gap-4 scroll-fade">
+      <div className="flex min-h-0 flex-1 scroll-fade flex-row gap-4">
         <div
-          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth `}
+          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth`}
         >
           <div
             className={`grid w-full ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2 overflow-x-hidden`}
@@ -323,7 +391,8 @@ export function ItemsCodex() {
 
             {visibleItems.map(([id, item]) => {
               const name = item.name?.[locale] ?? item.name?.en ?? id
-              const rarity = (item.rarity ?? "").toString().toLowerCase()
+              //const rarity = (item.rarity ?? "").toString().toLowerCase()
+              const rarity = FindItemRarity({ itemId: id }) ?? "vanilla"
               const image = item.image
                 ? `data:image/png;base64,${item.image}`
                 : ""
@@ -350,11 +419,11 @@ export function ItemsCodex() {
           </div>
 
           {/* Wartownik obserwowany przez IntersectionObserver — doładowuje kolejną stronę wyników */}
-          {visibleCount < filteredItems.length && (
+          {visibleCount < sortedItems.length && (
             <div ref={sentinelRef} className="h-8 w-full" />
           )}
 
-          {itemsMap !== null && filteredItems.length === 0 && (
+          {itemsMap !== null && sortedItems.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">
               No items found.
             </div>
@@ -509,7 +578,10 @@ export function ItemsCodex() {
             </RarityBorder>
 
             {itemDetailsData?.extra_image && (
-              <img src={itemDetailsData.extra_image} className="aspect-square object-cover w-2/3 mx-auto drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
+              <img
+                src={itemDetailsData.extra_image}
+                className="mx-auto aspect-square w-2/3 object-cover drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+              />
             )}
 
             {itemDetailsData?.recipe && (
@@ -602,31 +674,33 @@ export function ItemsCodex() {
                     itemDetailsData.dropped_by.map((bestiary, index) => (
                       <Link to={`/bestiary?id=${bestiary.creature_id}`}>
                         <span className="group flex h-full rounded-lg bg-card p-1 minebox-shadow">
-                          <span className="flex flex-col items-center justify-center gap-1 w-full">
+                          <span className="flex w-full flex-col items-center justify-center gap-1">
                             <img
                               src={bestiary.image}
                               className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110"
                             />
-                            <span className="flex w-full flex-col items-center my-auto">
-                              <p className="w-full text-center text-xs leading-none mb-1">
+                            <span className="my-auto flex w-full flex-col items-center">
+                              <p className="mb-1 w-full text-center text-xs leading-none">
                                 {bestiary.name}
                               </p>
                               <span className="mt-auto flex w-full flex-col items-center justify-between px-1 text-xs">
-                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
                                     Change
                                   </p>
-                                  <p className="text-[0.65rem]">{bestiary.chance}%</p>
+                                  <p className="text-[0.65rem]">
+                                    {bestiary.chance}%
+                                  </p>
                                 </span>
-                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
                                     Drop
                                   </p>
-<p className="text-[0.65rem]">
-  {bestiary.amount[0] === bestiary.amount[1] 
-    ? bestiary.amount[0] 
-    : bestiary.amount.join(' - ')}
-</p>
+                                  <p className="text-[0.65rem]">
+                                    {bestiary.amount[0] === bestiary.amount[1]
+                                      ? bestiary.amount[0]
+                                      : bestiary.amount.join(" - ")}
+                                  </p>
                                 </span>
                               </span>
                             </span>

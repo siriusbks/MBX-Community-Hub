@@ -163,6 +163,13 @@ export const rarities = [
   },
 ]
 
+export function GetRarityColor(rarity: string) {
+  let rarityData = rarities.find((r) => r.id === rarity)
+  if (!rarityData) rarityData = rarities[0] // default to "vanilla" if not found
+
+  return rarityData.badgeColor
+}
+
 export function RarityBadge({
   rarity,
   className,
@@ -233,10 +240,15 @@ export const ItemSlot = React.forwardRef<
           <div
             className={`relative size-full ${rarityData.innerBorder} ${rarityData.backgroundColor}`}
           >
-            <ItemImage itemId={id || ""} className="size-full object-contain p-1" />
-            {count && <p className="absolute right-1 bottom-0 text-lg">x{count}</p>}
+            <ItemImage
+              itemId={id || ""}
+              className="size-full object-contain p-1"
+            />
+            {count && (
+              <p className="absolute right-1 bottom-0 text-lg">x{count}</p>
+            )}
             {change && (
-              <p className="absolute left-1 top-0 text-xs font-bold">
+              <p className="absolute top-0 left-1 text-xs font-bold">
                 {change}
                 {change > 0 ? "%" : ""}
               </p>
@@ -285,11 +297,13 @@ export function RarityTooltip({
 export function RarityBorder({
   rarity,
   className,
+  innerClassName,
   children,
   onClick,
 }: {
   rarity: string
   className?: string
+  innerClassName?: string
   children?: React.ReactNode
   onClick?: () => void
 }) {
@@ -302,7 +316,7 @@ export function RarityBorder({
       onClick={onClick}
     >
       <span
-        className={`w-full block flex flex-col gap-1 p-2 ${rarityData.innerBorder} h-full`}
+        className={`block flex w-full flex-col gap-1 p-2 ${rarityData.innerBorder} h-full ${innerClassName}`}
       >
         {children}
       </span>

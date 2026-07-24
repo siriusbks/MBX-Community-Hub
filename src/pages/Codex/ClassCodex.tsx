@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react"
 import { ClockIcon } from "lucide-react"
 import { Card } from "@ui/card"
-import { RarityBadge, RarityBorder, rarities } from "@const/rarities"
+import {
+  GetRarityColor,
+  RarityBadge,
+  RarityBorder,
+  rarities,
+} from "@const/rarities"
 import { SmallStatItem } from "@const/statsAndDamage"
 import { PageTitle } from "@components/layout/title"
 import { Badge } from "@components/ui/badge"
 import { CodexNav } from "@components/minebox/codex-nav"
 import i18next from "i18next"
+import { FindItemRarity } from "@const/elements"
 
 const PlayableClasses = ["assassin", "mage", "archer", "gunner"]
 
@@ -230,7 +236,10 @@ export function ClassCodexPage() {
                                   : "/media/missingClass.png"
                               }
                               alt={cls.name}
-                              className="aspect-square w-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-transform duration-300 [image-rendering:pixelated] group-hover:scale-105"
+                              className="aspect-square w-full transition-transform duration-300 [image-rendering:pixelated] group-hover:scale-105"
+                              style={{
+                                filter: `drop-shadow(0 0 8px ${GetRarityColor(rarity)}30)`,
+                              }}
                             />
                           </span>
 

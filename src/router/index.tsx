@@ -22,6 +22,7 @@ const CommunityPage = lazy(() => import("@pages/Community"));
 const Error404 = lazy(() => import("@pages/Error404"));
 const MapsPage = lazy(() => import("@pages/Maps"));
 const ChangelogPage = lazy(() => import("@pages/Changelog"));
+const MuseumPage = lazy(() => import("@pages/Tools/Museum"));
 
 export const AppRoutes: FC = () => {
     return (
@@ -36,6 +37,7 @@ export const AppRoutes: FC = () => {
 
             {/* Tools Tab */}
             <Route path="/tools/equipment-builder" element={<EquipmentPage />} />
+            <Route path="/tools/museum" element={<MuseumPage />} />
             <Route path="/tools/collections" element={<CollectionsPage />} />
 
             {/* Codex */}

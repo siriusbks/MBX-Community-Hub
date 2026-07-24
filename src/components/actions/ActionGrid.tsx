@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@components/ui/select"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
-import { RarityBadge, RarityBorder } from "@const/rarities"
+import { GetRarityColor, RarityBadge, RarityBorder } from "@const/rarities"
 import { StatItem } from "@const/statsAndDamage"
 import { useCallback, useEffect, useRef, useState } from "react"
 import {
@@ -171,81 +171,87 @@ export default function ActionGrid() {
             return name.toLowerCase().includes(searchQuery.toLowerCase())
           })
           .map((listing) => (
-          <HoverCard key={listing.id}>
-            <HoverCardTrigger>
-              <RarityBorder
-                rarity={FindItemRarity({ itemId: listing.item_id })}
-                className="group relative flex flex-col items-center gap-0"
-              >
-                <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
-                  <p>{FindItemName({ itemId: listing.item_id })}</p>
-                </span>
+            <HoverCard key={listing.id}>
+              <HoverCardTrigger>
+                <RarityBorder
+                  rarity={FindItemRarity({ itemId: listing.item_id })}
+                  className="group relative flex flex-col items-center gap-0"
+                >
+                  <span className="flex h-8 flex-col items-center justify-center gap-0 text-center text-sm leading-none">
+                    <p>{FindItemName({ itemId: listing.item_id })}</p>
+                  </span>
 
-                <span className="relative">
-                  <ItemImage
-                    itemId={listing.item_id}
-                    className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-all [image-rendering:pixelated] group-hover:scale-110"
-                  />
-                </span>
+                  <span className="relative">
+                    <ItemImage
+                      itemId={listing.item_id}
+                      className="mx-auto size-24 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-all [image-rendering:pixelated] group-hover:scale-110"
+                      style={{
+                        filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: listing.item_id }))}40)`,
+                      }}
+                    />
+                  </span>
 
-                <span className="mt-2">
-                  <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                    {listing.price_per_unit.toLocaleString()}
-                    <img src={`/media/currency/GOLD.png`} className="!size-6" />
-                  </p>
-                </span>
+                  <span className="mt-2">
+                    <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                      {listing.price_per_unit.toLocaleString()}
+                      <img
+                        src={`/media/currency/GOLD.png`}
+                        className="!size-6"
+                      />
+                    </p>
+                  </span>
 
-                
-
-                <Link to={`/items?id=${listing.item_id.replace(/^mbi-/, "")}`}>
-                  <p className="text-[0.6rem] text-center uppercase text-muted-foreground hover:text-primary">
-                    {t("market.action_house.view_in_codex")}
-                  </p>
-                </Link>
+                  <Link
+                    to={`/items?id=${listing.item_id.replace(/^mbi-/, "")}`}
+                  >
+                    <p className="text-center text-[0.6rem] text-muted-foreground uppercase hover:text-primary">
+                      {t("market.action_house.view_in_codex")}
+                    </p>
+                  </Link>
 
                   <PlayerFooter
                     playerName={listing.author}
                     className="!text-[0.6rem]"
                   />
-              </RarityBorder>
-            </HoverCardTrigger>
-            <HoverCardContent className="p-0">
-              <RarityBorder
-                rarity={FindItemRarity({ itemId: listing.item_id })}
-              >
-                <span className="flex flex-row items-center gap-2 leading-none">
-                  <RarityBadge
-                    rarity={FindItemRarity({ itemId: listing.item_id })}
-                  />
-                  <p className="mb-1 text-lg leading-none">
-                    {FindItemName({ itemId: listing.item_id })}
-                  </p>
-                </span>
-
-                {listing.stats && (
-                  <span className="flex w-full flex-col gap-1 text-xs">
-                    {Object.entries(listing.stats).map(([stat, value]) => (
-                      <StatItem
-                        key={stat}
-                        stat={stat}
-                        from={value}
-                        to={value}
-                      />
-                    ))}
+                </RarityBorder>
+              </HoverCardTrigger>
+              <HoverCardContent className="p-0">
+                <RarityBorder
+                  rarity={FindItemRarity({ itemId: listing.item_id })}
+                >
+                  <span className="flex flex-row items-center gap-2 leading-none">
+                    <RarityBadge
+                      rarity={FindItemRarity({ itemId: listing.item_id })}
+                    />
+                    <p className="mb-1 text-lg leading-none">
+                      {FindItemName({ itemId: listing.item_id })}
+                    </p>
                   </span>
-                )}
 
-                <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                  {t("market.action_house.time_left")}{" "}
-                  <p>
-                    {getDaysLeft(listing.expires_at)}{" "}
-                    {t("market.action_house.days")}
-                  </p>
-                </span>
-              </RarityBorder>
-            </HoverCardContent>
-          </HoverCard>
-        ))}
+                  {listing.stats && (
+                    <span className="flex w-full flex-col gap-1 text-xs">
+                      {Object.entries(listing.stats).map(([stat, value]) => (
+                        <StatItem
+                          key={stat}
+                          stat={stat}
+                          from={value}
+                          to={value}
+                        />
+                      ))}
+                    </span>
+                  )}
+
+                  <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+                    {t("market.action_house.time_left")}{" "}
+                    <p>
+                      {getDaysLeft(listing.expires_at)}{" "}
+                      {t("market.action_house.days")}
+                    </p>
+                  </span>
+                </RarityBorder>
+              </HoverCardContent>
+            </HoverCard>
+          ))}
       </div>
 
       {hasMore && (
