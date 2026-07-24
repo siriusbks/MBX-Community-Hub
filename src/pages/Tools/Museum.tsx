@@ -1,23 +1,124 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { PageTitle } from "@components/layout/title"
 import { Card } from "@components/ui/card"
 import { Button } from "@components/ui/button"
 import { ItalicIcon, ScrollIcon, LoaderIcon } from "lucide-react"
-import { Toggle } from "@components/ui/toggle"
+import { FindItemName, FindItemRarity, ItemImage } from "@const/elements"
+import { GetRarityColor, RarityBadge, RarityBorder, rarities } from "@const/rarities"
+import { Badge } from "@components/ui/badge"
+import { Skeleton } from "@components/ui/skeleton"
 
 type MuseumData = Record<string, string[]>
 
+type MuseumItem = {
+  id: string
+  name: string
+  rarity: string
+}
+
+// Mapa id -> order zbudowana raz z prawdziwej listy rzadkości.
+// Wpisy z order === -1 (vanilla, attack, passive, skill, ultimate) nie należą
+// do hierarchii rzadkości przedmiotów, więc lądują na końcu sortowania.
+const RARITY_ORDER_MAP = new Map(
+  rarities.map((rarity) => [
+    rarity.id,
+    rarity.order === -1 ? Number.POSITIVE_INFINITY : rarity.order,
+  ])
+)
+
+const getRarityWeight = (rarity: string) => {
+  const weight = RARITY_ORDER_MAP.get(rarity?.toLowerCase?.() ?? "")
+  return weight ?? Number.POSITIVE_INFINITY
+}
+
+const formatCategoryLabel = (category: string) =>
+  category
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+
+const CategoryNavButton = memo(function CategoryNavButton({
+  category,
+  unlockedCount,
+  totalCount,
+  onClick,
+}: {
+  category: string
+  unlockedCount: number
+  totalCount: number
+  onClick: (category: string) => void
+}) {
+  return (
+    <Button
+      variant="secondary"
+      aria-label={`Scroll to ${category}`}
+      onClick={() => onClick(category)}
+      className="flex h-12 flex-row items-center justify-start gap-2  py-1 shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d] bg-secondary"
+    >
+      <img src={`/media/museum/${category}.png`} className="size-8 [image-rendering:pixelated] mb-0.5" />
+
+      <span className="mb-0.5 flex flex-col items-start justify-start -space-y-1.5 text-left font-normal">
+        <p className="text-[0.9rem]">{formatCategoryLabel(category)}</p>
+        <p className="text-[0.6rem] text-muted-foreground">
+          [{unlockedCount.toString().padStart(2, "0")} /{" "}
+          {totalCount.toString().padStart(2, "0")}]
+        </p>
+      </span>
+    </Button>
+  )
+})
+
+const MuseumItemCard = memo(function MuseumItemCard({
+  item,
+  isUnlocked,
+}: {
+  item: MuseumItem
+  isUnlocked: boolean
+}) {
+  return (
+    <RarityBorder
+      rarity={item.rarity}
+      className={`group relative flex flex-col ${isUnlocked ? "!border-x-emerald-400 !border-y-emerald-600 bg-emerald-900" : "opacity-100"}`}
+    >
+      {isUnlocked && (
+        <Badge className="absolute top-0 left-1/2 z-1 -translate-x-1/2 rounded-t-none bg-emerald-600 text-white shadow-[inset_0_-3px_#0000004d]">
+          DONATED
+        </Badge>
+      )}
+      <span className="my-auto flex flex-col items-center justify-center gap-1 py-1">
+        <ItemImage
+          itemId={item.id}
+          className={`size-16 transition-transform duration-200 group-hover:scale-110 ${isUnlocked ? "opacity-50" : "opacity-100"}`}
+          style={{
+            filter: `drop-shadow(0 0 8px ${GetRarityColor(item.rarity)}40)`,
+          }}
+        />
+        <p
+          className={`mb-1 text-center text-xs leading-none ${isUnlocked ? "opacity-50" : "opacity-100"}`}
+        >
+          {item.name}
+        </p>
+        <RarityBadge
+          rarity={item.rarity}
+          className={`${isUnlocked ? "opacity-50" : "opacity-100"}`}
+        />
+      </span>
+    </RarityBorder>
+  )
+})
+
 export default function MuseumPage() {
   const [museumData, setMuseumData] = useState<MuseumData | null>(null)
-  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set())
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [unlockedItems, setUnlockedItems] = useState<Set<string>>(new Set())
   const [hideDonated, setHideDonated] = useState(false)
 
-  const fetchMuseumData = async () => {
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  const fetchMuseumData = useCallback(async () => {
     setIsLoading(true)
     setError(null)
     try {
@@ -26,13 +127,15 @@ export default function MuseumPage() {
       const data: MuseumData = await res.json()
       setMuseumData(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nie udało się wczytać kategorii")
+      setError(
+        err instanceof Error ? err.message : "Nie udało się wczytać kategorii"
+      )
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
-  const fetchUnlockedItems = async () => {
+  const fetchUnlockedItems = useCallback(async () => {
     try {
       const nick = localStorage.getItem("minebox_nick")
       if (!nick) return
@@ -44,46 +147,59 @@ export default function MuseumPage() {
     } catch (err) {
       console.error("Nie udało się wczytać odblokowanych przedmiotów", err)
     }
-  }
-
-  useEffect(() => {
-    fetchMuseumData()
-    fetchUnlockedItems()
   }, [])
 
   useEffect(() => {
-    if (museumData) {
-      const allCategories = Object.keys(museumData).filter(
-        (category) => museumData[category].length > 0
-      )
-      setSelectedCategories(new Set(allCategories))
+    // Odpalamy oba requesty równolegle zamiast czekać sekwencyjnie.
+    fetchMuseumData()
+    fetchUnlockedItems()
+  }, [fetchMuseumData, fetchUnlockedItems])
+
+  // Nazwy/rzadkości i sortowanie liczone raz na zmianę museumData,
+  // zamiast przy każdym renderze i dla każdego RarityBorder/RarityBadge osobno.
+  const sortedCategoryItems = useMemo(() => {
+    if (!museumData) return {} as Record<string, MuseumItem[]>
+
+    const result: Record<string, MuseumItem[]> = {}
+    for (const category of Object.keys(museumData)) {
+      const ids = museumData[category]
+      if (!ids.length) continue
+
+      result[category] = ids
+        .map((id) => ({
+          id,
+          name: FindItemName({ itemId: id }),
+          rarity: FindItemRarity({ itemId: id }),
+        }))
+        .sort((a, b) => {
+          const rarityDiff = getRarityWeight(a.rarity) - getRarityWeight(b.rarity)
+          if (rarityDiff !== 0) return rarityDiff
+          return a.name.localeCompare(b.name)
+        })
     }
+    return result
   }, [museumData])
 
-  const categories = museumData
-    ? Object.keys(museumData).filter((category) => museumData[category].length > 0)
-    : []
-  const totalItems = museumData
-    ? Object.values(museumData).reduce((sum, items) => sum + items.length, 0)
-    : 0
+  const categories = useMemo(
+    () => Object.keys(sortedCategoryItems),
+    [sortedCategoryItems]
+  )
 
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) => {
-      const next = new Set(prev)
-      if (next.has(category)) {
-        next.delete(category)
-      } else {
-        next.add(category)
-      }
-      return next
+  const totalItems = useMemo(
+    () =>
+      Object.values(sortedCategoryItems).reduce(
+        (sum, items) => sum + items.length,
+        0
+      ),
+    [sortedCategoryItems]
+  )
+
+  const scrollToCategory = useCallback((category: string) => {
+    sectionRefs.current[category]?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     })
-  }
-
-  const formatCategoryLabel = (category: string) =>
-    category
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
+  }, [])
 
   return (
     <div className="relative page-container flex flex-col pb-24">
@@ -99,7 +215,10 @@ export default function MuseumPage() {
             {totalItems.toString().padStart(4, "0")}]
           </p>
           <p className="text-lg text-primary">
-            {totalItems > 0 ? ((unlockedItems.size / totalItems) * 100).toFixed(1) : "0.0"}%
+            {totalItems > 0
+              ? ((unlockedItems.size / totalItems) * 100).toFixed(1)
+              : "0.0"}
+            %
           </p>
           <Button
             size="lg"
@@ -110,16 +229,22 @@ export default function MuseumPage() {
             }}
             disabled={isLoading}
           >
-            {isLoading ? <LoaderIcon className="size-4 animate-spin" /> : "Refresh"}
+            {isLoading ? (
+              <LoaderIcon className="size-4 animate-spin" />
+            ) : (
+              "Refresh"
+            )}
           </Button>
         </Card>
       </span>
 
-      <Card className="grid grid-cols-7 gap-2 p-2">
+      <Card className="grid grid-cols-7 gap-1 p-2">
         {isLoading && (
-          <p className="col-span-7 py-4 text-center text-sm text-muted-foreground">
-            Wczytywanie kategorii...
-          </p>
+          <>
+            {Array.from({ length: 42 }).map((_, index) => (
+              <Skeleton key={index} className="h-12" />
+            ))}
+          </>
         )}
 
         {error && (
@@ -131,21 +256,20 @@ export default function MuseumPage() {
         {!isLoading &&
           !error &&
           categories.map((category) => {
-            const itemCount = museumData?.[category]?.length ?? 0
+            const items = sortedCategoryItems[category]
+            const unlockedCount = items.reduce(
+              (count, item) => count + (unlockedItems.has(item.id) ? 1 : 0),
+              0
+            )
+
             return (
-              <Toggle
+              <CategoryNavButton
                 key={category}
-                aria-label={`Toggle ${category}`}
-                pressed={selectedCategories.has(category)}
-                onPressedChange={() => toggleCategory(category)}
-                className="flex h-8 flex-row items-center justify-start gap-2"
-              >
-                <ItalicIcon className="size-6" />
-                <span className="mb-0.5 flex -space-y-0.5 flex-col items-start justify-start text-left">
-                  <p className="text-[0.7rem]">{formatCategoryLabel(category)}</p>
-                  <p className="text-[0.5rem]">{itemCount} items</p>
-                </span>
-              </Toggle>
+                category={category}
+                unlockedCount={unlockedCount}
+                totalCount={items.length}
+                onClick={scrollToCategory}
+              />
             )
           })}
       </Card>
@@ -164,42 +288,47 @@ export default function MuseumPage() {
 
       {!isLoading && !error && (
         <div className="flex flex-col gap-2">
-          {categories
-            .filter((category) => selectedCategories.has(category))
-            .map((category) => {
-              const items = museumData?.[category] ?? []
-              const visibleItems = hideDonated
-                ? items.filter((id) => !unlockedItems.has(id))
-                : items
+          {categories.map((category) => {
+            const items = sortedCategoryItems[category]
+            const unlockedCount = items.reduce(
+              (count, item) => count + (unlockedItems.has(item.id) ? 1 : 0),
+              0
+            )
+            const visibleItems = hideDonated
+              ? items.filter((item) => !unlockedItems.has(item.id))
+              : items
 
-              return (
-                <Card key={`items-${category}`} className="flex flex-col gap-2 p-2">
-                  <p className="text-sm font-semibold">
-                    {formatCategoryLabel(category)}{" "}
-                    <span className="text-muted-foreground">
-                      ({items.filter((id) => unlockedItems.has(id)).length} / {items.length})
-                    </span>
+            return (
+              <div
+                key={`items-${category}`}
+                ref={(node) => {
+                  sectionRefs.current[category] = node
+                }}
+                className="flex scroll-mt-4 flex-col gap-2 p-2"
+              >
+                <span className="flex w-full flex-row items-center justify-center gap-2">
+                  <img
+                    src={`/media/museum/${category}.png`}
+                    className="size-6  [image-rendering:pixelated]"
+                  />
+                  <p>{formatCategoryLabel(category)}</p>
+                  <p className="ml-auto">
+                    ({unlockedCount} / {items.length})
                   </p>
-                  <div className="flex flex-wrap gap-1">
-                    {visibleItems.map((itemId) => {
-                      const isUnlocked = unlockedItems.has(itemId)
-                      return (
-                        <span
-                          key={itemId}
-                          className={
-                            isUnlocked
-                              ? "rounded border border-primary bg-primary/20 px-1.5 py-0.5 text-[0.65rem] font-medium text-primary"
-                              : "rounded bg-muted px-1.5 py-0.5 text-[0.65rem] text-muted-foreground"
-                          }
-                        >
-                          {itemId}
-                        </span>
-                      )
-                    })}
-                  </div>
-                </Card>
-              )
-            })}
+                </span>
+
+                <div className="grid grid-cols-8 gap-2">
+                  {visibleItems.map((item) => (
+                    <MuseumItemCard
+                      key={item.id}
+                      item={item}
+                      isUnlocked={unlockedItems.has(item.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

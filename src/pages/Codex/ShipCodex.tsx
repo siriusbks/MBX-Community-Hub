@@ -16,7 +16,12 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { Card } from "@ui/card"
-import { RarityBadge, RarityBorder, ItemSlot } from "@const/rarities"
+import {
+  RarityBadge,
+  RarityBorder,
+  ItemSlot,
+  GetRarityColor,
+} from "@const/rarities"
 import { Input } from "@components/ui/input"
 import { CodexGrid } from "@components/minebox/codex-grid"
 import { MineboxItem } from "@components/minebox/MineboxItem"
@@ -42,6 +47,7 @@ import {
   SelectValue,
 } from "@components/ui/select"
 import { CodexNav } from "@components/minebox/codex-nav"
+import { FindItemRarity } from "@const/elements"
 
 interface ShipLevel {
   level: number
@@ -78,13 +84,13 @@ export function ShipCodexPage() {
   const [selectedShip, setSelectedShip] = useState<Ship | null>(null)
   const [selectedLevel, setSelectedLevel] = useState<number>(1)
 
-const slotIcons = [
-  { key: "HULL", icon: ShipIcon },
-  { key: "MAST", icon: WindIcon },
-  { key: "BOW", icon: ArrowUpRightIcon },
-  { key: "CANNON", icon: Rocket },
-  { key: "CREW", icon: Users2Icon },
-]
+  const slotIcons = [
+    { key: "HULL", icon: ShipIcon },
+    { key: "MAST", icon: WindIcon },
+    { key: "BOW", icon: ArrowUpRightIcon },
+    { key: "CANNON", icon: Rocket },
+    { key: "CREW", icon: Users2Icon },
+  ]
 
   useEffect(() => {
     const fetchShips = async () => {
@@ -165,11 +171,15 @@ const slotIcons = [
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle title="Ship Codex" />
 
-      <CodexNav/>
+      <CodexNav />
 
       <div className="flex min-h-0 flex-1 flex-row gap-4">
-        <div className={`custom-scrollbar h-full ${selectedShip ? 'w-2/3' : 'w-full'} scroll-fade overflow-y-auto pr-2`}>
-          <div className={`grid w-full ${selectedShip ? 'grid-cols-3' : 'grid-cols-5'} gap-4`}>
+        <div
+          className={`custom-scrollbar h-full ${selectedShip ? "w-2/3" : "w-full"} scroll-fade overflow-y-auto pr-2`}
+        >
+          <div
+            className={`grid w-full ${selectedShip ? "grid-cols-3" : "grid-cols-5"} gap-4`}
+          >
             {ships.map((ship) => {
               const levelData = ship.levels[0] // Default to level 1 for overview
               return (
@@ -186,6 +196,9 @@ const slotIcons = [
                     }
                     alt={ship.name}
                     className="mx-auto aspect-square w-3/5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
+                    style={{
+                      filter: `drop-shadow(0 0 8px ${GetRarityColor(getRarityClass(ship.rarity))}40)`,
+                    }}
                   />
                   <span className="flex flex-row-reverse items-center justify-center gap-1 text-center text-sm leading-none">
                     <p>{ship.name}</p>
@@ -232,7 +245,7 @@ const slotIcons = [
                       `https://cdn2.minebox.co/data/ships/${selectedShip.model}.gif`
                     }
                     alt={selectedShip.name}
-                    className="aspect-square w-3/4 mx-auto object-contain [image-rendering:pixelated]"
+                    className="mx-auto aspect-square w-3/4 object-contain [image-rendering:pixelated]"
                   />
 
                   <div className="flex items-center justify-between">
@@ -249,29 +262,29 @@ const slotIcons = [
               <Card className="flex flex-row items-center justify-between gap-1 px-2 py-2">
                 <p>Available slots:</p>
                 <span className="flex flex-row gap-1">
-{slotIcons.map(({ key, icon: Icon }) => {
-      const available = selectedShip.component_slots.includes(key)
+                  {slotIcons.map(({ key, icon: Icon }) => {
+                    const available = selectedShip.component_slots.includes(key)
 
-      return (
-        <span
-          key={key}
-          className={
-            available
-              ? "flex size-8 items-center justify-center rounded-md bg-linear-to-b from-primary to-primary-dark p-2"
-              : "flex size-8 items-center justify-center rounded-md bg-secondary p-2"
-          }
-        >
-          <Icon
-            className={
-              available
-                ? "size-4 text-primary-foreground"
-                : "size-4"
-            }
-            strokeWidth={3}
-          />
-        </span>
-      )
-    })}
+                    return (
+                      <span
+                        key={key}
+                        className={
+                          available
+                            ? "flex size-8 items-center justify-center rounded-md bg-linear-to-b from-primary to-primary-dark p-2"
+                            : "flex size-8 items-center justify-center rounded-md bg-secondary p-2"
+                        }
+                      >
+                        <Icon
+                          className={
+                            available
+                              ? "size-4 text-primary-foreground"
+                              : "size-4"
+                          }
+                          strokeWidth={3}
+                        />
+                      </span>
+                    )
+                  })}
                 </span>
               </Card>
 

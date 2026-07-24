@@ -2,9 +2,9 @@
 
 import { Badge } from "@components/ui/badge"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
-import { RarityBorder } from "@const/rarities"
+import { GetRarityColor, RarityBorder } from "@const/rarities"
 import { useEffect, useState } from "react"
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next"
 
 type BazaarItem = {
   item_id: string
@@ -229,7 +229,9 @@ export default function BazaarGrid() {
       const firstPageUrl = proxied(
         `https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`
       )
-      const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([firstPageUrl])
+      const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([
+        firstPageUrl,
+      ])
 
       const allItems = [...firstPage.items]
       const totalPages = Math.ceil(firstPage.total / limit)
@@ -314,11 +316,14 @@ export default function BazaarGrid() {
                 <span className="flex w-full flex-row items-center justify-center gap-0">
                   <ItemImage
                     itemId={item.item_id}
-                    className="w-12 aspect-square object-fill drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [image-rendering:pixelated]"
+                    className="aspect-square w-12 object-fill [image-rendering:pixelated]"
+                    style={{
+                      filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}40)`,
+                    }}
                   />
 
                   {/* Name and Stock */}
-                  <span className="flex h-8 flex-col  justify-center gap-2 pl-2  text-sm leading-none">
+                  <span className="flex h-8 flex-col justify-center gap-2 pl-2 text-sm leading-none">
                     <p className="text-xs leading-none">
                       {FindItemName({ itemId: item.item_id })}
                     </p>
@@ -327,9 +332,13 @@ export default function BazaarGrid() {
                         {t("market.bazaar.stock")}
                       </p>
                       {item.stock > 0 ? (
-                        <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
+                        <Badge className="scale-90">
+                          {item.stock.toLocaleString()}
+                        </Badge>
                       ) : (
-                        <Badge variant="secondary">{t("market.bazaar.no_stock")}</Badge>
+                        <Badge variant="secondary">
+                          {t("market.bazaar.no_stock")}
+                        </Badge>
                       )}
                     </span>
                   </span>
@@ -338,12 +347,16 @@ export default function BazaarGrid() {
                 <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
                   {item.unavailable ? (
                     <span className="flex w-full flex-row justify-center px-2">
-                      <Badge variant="secondary">{t("market.bazaar.unavailable")}</Badge>
+                      <Badge variant="secondary">
+                        {t("market.bazaar.unavailable")}
+                      </Badge>
                     </span>
                   ) : (
                     <>
                       <span className="flex flex-row justify-between gap-2 px-2">
-                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.sell")}</p>
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">
+                          {t("market.bazaar.sell")}
+                        </p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.sell_price.toLocaleString()}
                           <img
@@ -354,8 +367,10 @@ export default function BazaarGrid() {
                         </p>
                       </span>
 
-                      <span className="flex flex-row justify-between gap-2 px-2 text-xs items-center">
-                        <p className="text-[0.65rem] text-muted-foreground uppercase">{t("market.bazaar.buy")}</p>
+                      <span className="flex flex-row items-center justify-between gap-2 px-2 text-xs">
+                        <p className="text-[0.65rem] text-muted-foreground uppercase">
+                          {t("market.bazaar.buy")}
+                        </p>
                         <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                           {item.buy_price.toLocaleString()}
                           <img

@@ -30,6 +30,7 @@ import { CodexNav } from "@components/minebox/codex-nav"
 import { BestiaryItem } from "@components/minebox/bestiary"
 import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
+import { FindItemRarity } from "@const/elements"
 
 type LocalizedText = Record<string, string>
 
@@ -308,9 +309,9 @@ export function ItemsCodex() {
         </Select>
       </span>
 
-      <div className="flex min-h-0 flex-1 flex-row gap-4 scroll-fade">
+      <div className="flex min-h-0 flex-1 scroll-fade flex-row gap-4">
         <div
-          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth `}
+          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth`}
         >
           <div
             className={`grid w-full ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2 overflow-x-hidden`}
@@ -323,7 +324,8 @@ export function ItemsCodex() {
 
             {visibleItems.map(([id, item]) => {
               const name = item.name?.[locale] ?? item.name?.en ?? id
-              const rarity = (item.rarity ?? "").toString().toLowerCase()
+              //const rarity = (item.rarity ?? "").toString().toLowerCase()
+              const rarity = FindItemRarity({ itemId: id }) ?? "vanilla"
               const image = item.image
                 ? `data:image/png;base64,${item.image}`
                 : ""
@@ -509,7 +511,10 @@ export function ItemsCodex() {
             </RarityBorder>
 
             {itemDetailsData?.extra_image && (
-              <img src={itemDetailsData.extra_image} className="aspect-square object-cover w-2/3 mx-auto drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
+              <img
+                src={itemDetailsData.extra_image}
+                className="mx-auto aspect-square w-2/3 object-cover drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+              />
             )}
 
             {itemDetailsData?.recipe && (
@@ -602,31 +607,33 @@ export function ItemsCodex() {
                     itemDetailsData.dropped_by.map((bestiary, index) => (
                       <Link to={`/bestiary?id=${bestiary.creature_id}`}>
                         <span className="group flex h-full rounded-lg bg-card p-1 minebox-shadow">
-                          <span className="flex flex-col items-center justify-center gap-1 w-full">
+                          <span className="flex w-full flex-col items-center justify-center gap-1">
                             <img
                               src={bestiary.image}
                               className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110"
                             />
-                            <span className="flex w-full flex-col items-center my-auto">
-                              <p className="w-full text-center text-xs leading-none mb-1">
+                            <span className="my-auto flex w-full flex-col items-center">
+                              <p className="mb-1 w-full text-center text-xs leading-none">
                                 {bestiary.name}
                               </p>
                               <span className="mt-auto flex w-full flex-col items-center justify-between px-1 text-xs">
-                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
                                     Change
                                   </p>
-                                  <p className="text-[0.65rem]">{bestiary.chance}%</p>
+                                  <p className="text-[0.65rem]">
+                                    {bestiary.chance}%
+                                  </p>
                                 </span>
-                                <span className="flex flex-row items-center justify-between gap-1 w-full">
+                                <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
                                     Drop
                                   </p>
-<p className="text-[0.65rem]">
-  {bestiary.amount[0] === bestiary.amount[1] 
-    ? bestiary.amount[0] 
-    : bestiary.amount.join(' - ')}
-</p>
+                                  <p className="text-[0.65rem]">
+                                    {bestiary.amount[0] === bestiary.amount[1]
+                                      ? bestiary.amount[0]
+                                      : bestiary.amount.join(" - ")}
+                                  </p>
                                 </span>
                               </span>
                             </span>
