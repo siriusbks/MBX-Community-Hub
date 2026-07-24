@@ -534,7 +534,7 @@ const sortedItems = useMemo(() => {
                   )}
                 {itemDetailsData?.stats && (
                   <div>
-                    <p className="text-xs">Stats</p>
+                    <p className="text-xs mt-2">Stats</p>
                     {Object.entries(itemDetailsData.stats).map(
                       ([stat, values]) => (
                         <StatItem
@@ -549,7 +549,7 @@ const sortedItems = useMemo(() => {
                 )}
                 {itemDetailsData?.damages && (
                   <div>
-                    <p className="text-xs">Damage</p>
+                    <p className="text-xs mt-2">Damage</p>
                     {Object.entries(itemDetailsData.damages).map(
                       ([stat, values]) => (
                         <DamageItem

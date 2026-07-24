@@ -1,5 +1,5 @@
 import { AppRoutes } from "./router/index";
-import { useEffect, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { BrowserRouter, matchPath, useLocation } from "react-router-dom";
 import { GA4Tracking } from "@components/utils/GA4Tracking";
 import { ThemeProvider } from "@components/theme-provider";
@@ -10,8 +10,33 @@ import { Ripple } from "@components/ripple";
 import { TooltipProvider } from "@components/ui/tooltip";
 
 const FULLSCREEN_LAYOUT_PATHS = ["/items", "/ships", "/classes", "/bestiary", "/tools/equipment-builder"];
+const MOBILE_BREAKPOINT = 768;
 
-function shouldUseFullscreenLayout(pathname: string) {
+function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
+    const [isMobile, setIsMobile] = useState(() => {
+        if (typeof window === "undefined") return false;
+        return !window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
+    });
+
+    useEffect(() => {
+        const mql = window.matchMedia(`(min-width: ${breakpoint}px)`);
+        const handleChange = (event: MediaQueryListEvent) => setIsMobile(!event.matches);
+
+        // ustaw aktualną wartość od razu (np. gdyby zmieniła się między renderem a montowaniem)
+        setIsMobile(!mql.matches);
+
+        mql.addEventListener("change", handleChange);
+        return () => mql.removeEventListener("change", handleChange);
+    }, [breakpoint]);
+
+    return isMobile;
+}
+
+function shouldUseFullscreenLayout(pathname: string, isMobile: boolean) {
+    if (isMobile) {
+        return false;
+    }
+
     return FULLSCREEN_LAYOUT_PATHS.some((path) =>
         Boolean(matchPath({ path, end: true }, pathname))
     );
@@ -19,7 +44,8 @@ function shouldUseFullscreenLayout(pathname: string) {
 
 function AppShell() {
     const { pathname } = useLocation();
-    const useFullscreenLayout = shouldUseFullscreenLayout(pathname);
+    const isMobile = useIsMobile();
+    const useFullscreenLayout = shouldUseFullscreenLayout(pathname, isMobile);
 
     return (
         <>
@@ -75,4 +101,3 @@ export default function App() {
         </ThemeProvider>
     );
 }
-
