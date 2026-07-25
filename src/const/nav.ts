@@ -117,7 +117,7 @@ export const useNavLinks = (): NavItem[] => {
           icon:Album,
           label: t("mainpage.features.museum.title"),
           desc: t("mainpage.features.museum.description"),
-          badge: "Coming Soon",
+          badge: "Beta Version",
         },
         {
           id: "collections",

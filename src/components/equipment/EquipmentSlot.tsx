@@ -44,7 +44,7 @@ export const EquipmentSlot: React.FC<Props> = ({
             {equippedItem ? (
               <RarityBorder
                 rarity={rarityId}
-                className="flex h-24 w-24 items-center justify-center border-[6px] transition-transform duration-200 group-hover:scale-110"
+                className="flex size-24 lg:size-20 xl:size-20 2xl:size-20 3xl:size-24  items-center justify-center border-[6px] transition-transform duration-200 group-hover:scale-110"
               >
                 {equippedItem.category === "CLASS" ? (
                   <img
@@ -64,7 +64,7 @@ export const EquipmentSlot: React.FC<Props> = ({
                 )}
               </RarityBorder>
             ) : (
-              <div className="flex size-18 3xl:size-24 items-center justify-center rounded-lg border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50 transition-all duration-200 group-hover:scale-110 hover:border-card">
+              <div className="flex  size-24 lg:size-20 xl:size-20 2xl:size-20 3xl:size-24 items-center justify-center rounded-lg border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50 transition-all duration-200 group-hover:scale-110 hover:border-card">
                 <Plus className="pointer-events-none h-9 w-9 text-foreground/50" />
               </div>
             )}
@@ -82,7 +82,7 @@ export const EquipmentSlot: React.FC<Props> = ({
             {equippedItem?.level != null &&
               playerLevel < equippedItem.level && (
                 <div className="absolute inset-x-0 top-1 flex justify-center">
-                  <span className="mb-0.5 inline-flex items-center gap-1 rounded-t bg-black/70 px-1.5 py-0.5 text-[10px] text-red-400">
+                  <span className="mb-0.5 inline-flex items-center gap-1 rounded-t bg-black/70 px-1.5 py-0.5 text-[8px] 3xl:text-[8px] text-red-400">
                     Level Too Low
                   </span>
                 </div>

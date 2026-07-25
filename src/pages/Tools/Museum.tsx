@@ -4,7 +4,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { PageTitle } from "@components/layout/title"
 import { Card } from "@components/ui/card"
 import { Button } from "@components/ui/button"
-import { ItalicIcon, ScrollIcon, LoaderIcon } from "lucide-react"
+import { ScrollIcon, LoaderIcon } from "lucide-react"
 import { FindItemName, FindItemRarity, ItemImage } from "@const/elements"
 import { GetRarityColor, RarityBadge, RarityBorder, rarities } from "@const/rarities"
 import { Badge } from "@components/ui/badge"
@@ -18,9 +18,6 @@ type MuseumItem = {
   rarity: string
 }
 
-// Mapa id -> order zbudowana raz z prawdziwej listy rzadkości.
-// Wpisy z order === -1 (vanilla, attack, passive, skill, ultimate) nie należą
-// do hierarchii rzadkości przedmiotów, więc lądują na końcu sortowania.
 const RARITY_ORDER_MAP = new Map(
   rarities.map((rarity) => [
     rarity.id,
@@ -57,7 +54,12 @@ const CategoryNavButton = memo(function CategoryNavButton({
       onClick={() => onClick(category)}
       className="flex h-12 flex-row items-center justify-start gap-2  py-1 shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d] bg-secondary"
     >
-      <img src={`/media/museum/${category}.png`} className="size-8 [image-rendering:pixelated] mb-0.5" />
+      <img
+        src={`/media/museum/${category}.png`}
+        loading="lazy"
+        decoding="async"
+        className="size-8 [image-rendering:pixelated] mb-0.5"
+      />
 
       <span className="mb-0.5 flex flex-col items-start justify-start -space-y-1.5 text-left font-normal">
         <p className="text-[0.9rem]">{formatCategoryLabel(category)}</p>
@@ -109,6 +111,57 @@ const MuseumItemCard = memo(function MuseumItemCard({
   )
 })
 
+const CategorySection = memo(function CategorySection({
+  category,
+  items,
+  unlockedCount,
+  unlockedItems,
+  hideDonated,
+  sectionRef,
+}: {
+  category: string
+  items: MuseumItem[]
+  unlockedCount: number
+  unlockedItems: Set<string>
+  hideDonated: boolean
+  sectionRef: (node: HTMLDivElement | null) => void
+}) {
+  const visibleItems = hideDonated
+    ? items.filter((item) => !unlockedItems.has(item.id))
+    : items
+
+  return (
+    <div
+      ref={sectionRef}
+      className="flex scroll-mt-4 flex-col gap-2 p-2"
+      style={{ contentVisibility: "auto", containIntrinsicSize: "0 500px" }}
+    >
+      <span className="flex w-full flex-row items-center justify-center gap-2">
+        <img
+          src={`/media/museum/${category}.png`}
+          loading="lazy"
+          decoding="async"
+          className="size-6  [image-rendering:pixelated]"
+        />
+        <p>{formatCategoryLabel(category)}</p>
+        <p className="ml-auto">
+          ({unlockedCount} / {items.length})
+        </p>
+      </span>
+
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2">
+        {visibleItems.map((item) => (
+          <MuseumItemCard
+            key={item.id}
+            item={item}
+            isUnlocked={unlockedItems.has(item.id)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+})
+
 export default function MuseumPage() {
   const [museumData, setMuseumData] = useState<MuseumData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -117,6 +170,16 @@ export default function MuseumPage() {
   const [hideDonated, setHideDonated] = useState(false)
 
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const sectionRefSetters = useRef<Record<string, (node: HTMLDivElement | null) => void>>({})
+
+  const getSectionRefSetter = useCallback((category: string) => {
+    if (!sectionRefSetters.current[category]) {
+      sectionRefSetters.current[category] = (node: HTMLDivElement | null) => {
+        sectionRefs.current[category] = node
+      }
+    }
+    return sectionRefSetters.current[category]
+  }, [])
 
   const fetchMuseumData = useCallback(async () => {
     setIsLoading(true)
@@ -150,13 +213,10 @@ export default function MuseumPage() {
   }, [])
 
   useEffect(() => {
-    // Odpalamy oba requesty równolegle zamiast czekać sekwencyjnie.
     fetchMuseumData()
     fetchUnlockedItems()
   }, [fetchMuseumData, fetchUnlockedItems])
 
-  // Nazwy/rzadkości i sortowanie liczone raz na zmianę museumData,
-  // zamiast przy każdym renderze i dla każdego RarityBorder/RarityBadge osobno.
   const sortedCategoryItems = useMemo(() => {
     if (!museumData) return {} as Record<string, MuseumItem[]>
 
@@ -185,6 +245,19 @@ export default function MuseumPage() {
     [sortedCategoryItems]
   )
 
+  const categoryStats = useMemo(() => {
+    const stats: Record<string, { unlockedCount: number; total: number }> = {}
+    for (const category of categories) {
+      const items = sortedCategoryItems[category]
+      let unlocked = 0
+      for (const item of items) {
+        if (unlockedItems.has(item.id)) unlocked++
+      }
+      stats[category] = { unlockedCount: unlocked, total: items.length }
+    }
+    return stats
+  }, [categories, sortedCategoryItems, unlockedItems])
+
   const totalItems = useMemo(
     () =>
       Object.values(sortedCategoryItems).reduce(
@@ -195,11 +268,35 @@ export default function MuseumPage() {
   )
 
   const scrollToCategory = useCallback((category: string) => {
-    sectionRefs.current[category]?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
+    const el = sectionRefs.current[category]
+    if (!el) return
+
+    let lastTop = -1
+    let attempts = 0
+    const maxAttempts = 15
+
+    const correct = () => {
+      const top = el.getBoundingClientRect().top
+      attempts++
+
+      if (Math.abs(top - lastTop) > 2 && attempts < maxAttempts) {
+        lastTop = top
+        el.scrollIntoView({ behavior: "auto", block: "start" })
+        requestAnimationFrame(() => requestAnimationFrame(correct))
+        return
+      }
+
+      el.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+
+    el.scrollIntoView({ behavior: "auto", block: "start" })
+    requestAnimationFrame(() => requestAnimationFrame(correct))
   }, [])
+
+  const handleRefresh = useCallback(() => {
+    fetchMuseumData()
+    fetchUnlockedItems()
+  }, [fetchMuseumData, fetchUnlockedItems])
 
   return (
     <div className="relative page-container flex flex-col pb-24">
@@ -223,10 +320,7 @@ export default function MuseumPage() {
           <Button
             size="lg"
             variant="default"
-            onClick={() => {
-              fetchMuseumData()
-              fetchUnlockedItems()
-            }}
+            onClick={handleRefresh}
             disabled={isLoading}
           >
             {isLoading ? (
@@ -238,7 +332,7 @@ export default function MuseumPage() {
         </Card>
       </span>
 
-      <Card className="grid grid-cols-7 gap-1 p-2">
+      <Card className="grid grid-cols-3 sm:grid-cols-4  md:grid-cols-5  lg:grid-cols-6  xl:grid-cols-7 gap-1 p-2">
         {isLoading && (
           <>
             {Array.from({ length: 42 }).map((_, index) => (
@@ -255,23 +349,15 @@ export default function MuseumPage() {
 
         {!isLoading &&
           !error &&
-          categories.map((category) => {
-            const items = sortedCategoryItems[category]
-            const unlockedCount = items.reduce(
-              (count, item) => count + (unlockedItems.has(item.id) ? 1 : 0),
-              0
-            )
-
-            return (
-              <CategoryNavButton
-                key={category}
-                category={category}
-                unlockedCount={unlockedCount}
-                totalCount={items.length}
-                onClick={scrollToCategory}
-              />
-            )
-          })}
+          categories.map((category) => (
+            <CategoryNavButton
+              key={category}
+              category={category}
+              unlockedCount={categoryStats[category].unlockedCount}
+              totalCount={categoryStats[category].total}
+              onClick={scrollToCategory}
+            />
+          ))}
       </Card>
 
       <Card className="flex flex-row items-center justify-center gap-2 p-2">
@@ -288,47 +374,17 @@ export default function MuseumPage() {
 
       {!isLoading && !error && (
         <div className="flex flex-col gap-2">
-          {categories.map((category) => {
-            const items = sortedCategoryItems[category]
-            const unlockedCount = items.reduce(
-              (count, item) => count + (unlockedItems.has(item.id) ? 1 : 0),
-              0
-            )
-            const visibleItems = hideDonated
-              ? items.filter((item) => !unlockedItems.has(item.id))
-              : items
-
-            return (
-              <div
-                key={`items-${category}`}
-                ref={(node) => {
-                  sectionRefs.current[category] = node
-                }}
-                className="flex scroll-mt-4 flex-col gap-2 p-2"
-              >
-                <span className="flex w-full flex-row items-center justify-center gap-2">
-                  <img
-                    src={`/media/museum/${category}.png`}
-                    className="size-6  [image-rendering:pixelated]"
-                  />
-                  <p>{formatCategoryLabel(category)}</p>
-                  <p className="ml-auto">
-                    ({unlockedCount} / {items.length})
-                  </p>
-                </span>
-
-                <div className="grid grid-cols-8 gap-2">
-                  {visibleItems.map((item) => (
-                    <MuseumItemCard
-                      key={item.id}
-                      item={item}
-                      isUnlocked={unlockedItems.has(item.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-            )
-          })}
+          {categories.map((category) => (
+            <CategorySection
+              key={`items-${category}`}
+              category={category}
+              items={sortedCategoryItems[category]}
+              unlockedCount={categoryStats[category].unlockedCount}
+              unlockedItems={unlockedItems}
+              hideDonated={hideDonated}
+              sectionRef={getSectionRefSetter(category)}
+            />
+          ))}
         </div>
       )}
     </div>
