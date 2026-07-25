@@ -1,5 +1,6 @@
 import { EQUIPMENT_SLOTS } from "@const/equipmentSlots";
 import { SKULLS } from "@const/skulls";
+import { TRAIT_STAT_MAP } from "./petStats";
  
 export type RightTab = "stats" | "craft";
  
@@ -20,7 +21,7 @@ export type SharedBuild = {
 
 const SLOT_ORDER = EQUIPMENT_SLOTS.map((s) => s.id);
  
-const TRAIT_CODES: Record<string, string> = {
+const JOB_CODES: Record<string, string> = {
     mining: "m",
     woodcutting: "w",
     gathering: "g",
@@ -30,6 +31,9 @@ const TRAIT_CODES: Record<string, string> = {
     crafting: "c",
     eating: "e",
 };
+const TRAIT_CODES: Record<string, string> = Object.fromEntries(
+    Object.entries(TRAIT_STAT_MAP).map(([job, { trait }]) => [trait, JOB_CODES[job]])
+);
 const TRAIT_CODES_REVERSE: Record<string, string> = Object.fromEntries(
     Object.entries(TRAIT_CODES).map(([trait, code]) => [code, trait])
 );
