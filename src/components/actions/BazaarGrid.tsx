@@ -3,7 +3,7 @@
 import { Badge } from "@components/ui/badge"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
 import { GetRarityColor, RarityBorder } from "@const/rarities"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 type BazaarItem = {
@@ -17,6 +17,24 @@ type BazaarItem = {
 type BazaarResponse = {
   items: BazaarItem[]
   total: number
+}
+
+type CatalogSubcategory = {
+  id: string
+  market_type: string
+  items: string[]
+}
+
+type CatalogCategory = {
+  id: string
+  subcategories: CatalogSubcategory[]
+}
+
+type CatalogResponse = {
+  bazaar: {
+    categories: CatalogCategory[]
+    items: { id: string; category: string; subcategory: string; market_type: string }[]
+  }
 }
 
 const PROXY_URL = "https://mineboxadditions.bartier.me/proxy"
@@ -56,186 +74,214 @@ async function fetchJsonRateLimited<T>(
   return results
 }
 
-const getCategoryMap = (t: any) => ({
-  categories: [
-    {
-      category: t("market.bazaar.categorie.farming"),
-      items: [
-        "material-bamboo",
-        "mbi-transformed_material-bamboo",
-        "mbi-bag_material-bamboo",
-        "mbi-crate_material-bamboo",
-        "mbi-barrel_material-bamboo",
-        "mbi-enchanted_material-bamboo",
+// Mounts children only once the wrapper scrolls near the viewport, so we
+// don't build/measure DOM for hundreds of off-screen items up front.
+// Once it becomes visible it stays mounted.
+function useInView<T extends HTMLElement>(rootMargin = "600px") {
+  const ref = useRef<T | null>(null)
+  const [inView, setInView] = useState(false)
 
-        "material-carrot",
-        "mbi-transformed_material-carrot",
-        "mbi-bag_material-carrot",
-        "mbi-crate_material-carrot",
-        "mbi-barrel_material-carrot",
-        "mbi-enchanted_material-carrot",
+  useEffect(() => {
+    if (inView) return
+    const node = ref.current
+    if (!node) return
 
-        "material-beetroot",
-        "mbi-transformed_material-beetroot",
-        "mbi-bag_material-beetroot",
-        "mbi-crate_material-beetroot",
-        "mbi-barrel_material-beetroot",
-        "mbi-enchanted_material-beetroot",
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin }
+    )
 
-        "material-cactus",
-        "mbi-transformed_material-cactus",
-        "mbi-bag_material-cactus",
-        "mbi-crate_material-cactus",
-        "mbi-barrel_material-cactus",
-        "mbi-enchanted_material-cactus",
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [inView, rootMargin])
 
-        "material-cocoa_beans",
-        "mbi-transformed_material-cocoa_beans",
-        "mbi-bag_material-cocoa_beans",
-        "mbi-crate_material-cocoa_beans",
-        "mbi-barrel_material-cocoa_beans",
-        "mbi-enchanted_material-cocoa_beans",
+  return { ref, inView }
+}
 
-        "material-kelp",
-        "mbi-transformed_material-kelp",
-        "mbi-bag_material-kelp",
-        "mbi-crate_material-kelp",
-        "mbi-barrel_material-kelp",
-        "mbi-enchanted_material-kelp",
+function ItemCard({ item }: { item: BazaarItem }) {
+  const { t } = useTranslation("market")
 
-        "material-melon_slice",
-        "mbi-transformed_material-melon_slice",
-        "mbi-bag_material-melon_slice",
-        "mbi-crate_material-melon_slice",
-        "mbi-barrel_material-melon_slice",
-        "mbi-enchanted_material-melon_slice",
+  return (
+    <RarityBorder
+      rarity={FindItemRarity({ itemId: item.item_id })}
+      className={`flex flex-row items-center gap-0 ${
+        item.unavailable ? "opacity-50 grayscale" : ""
+      }`}
+    >
+      <span className="flex w-full flex-row items-center justify-center gap-0">
+        <ItemImage
+          itemId={item.item_id}
+          loading="lazy"
+          className="aspect-square w-12 object-fill [image-rendering:pixelated]"
+          style={{
+            filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}40)`,
+          }}
+        />
 
-        "material-nether_wart",
-        "mbi-transformed_material-nether_wart",
-        "mbi-bag_material-nether_wart",
-        "mbi-crate_material-nether_wart",
-        "mbi-barrel_material-nether_wart",
-        "mbi-enchanted_material-nether_wart",
+        {/* Name and Stock */}
+        <span className="flex h-8 flex-col justify-center gap-2 pl-2 text-sm leading-none">
+          <p className="text-xs leading-none">
+            {FindItemName({ itemId: item.item_id })}
+          </p>
+          <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
+            <p className="text-[0.65rem] text-muted-foreground">
+              {t("market.bazaar.stock")}
+            </p>
+            {item.stock > 0 ? (
+              <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
+            ) : (
+              <Badge variant="secondary">{t("market.bazaar.no_stock")}</Badge>
+            )}
+          </span>
+        </span>
+      </span>
 
-        "material-potato",
-        "mbi-transformed_material-potato",
-        "mbi-bag_material-potato",
-        "mbi-crate_material-potato",
-        "mbi-barrel_material-potato",
-        "mbi-enchanted_material-potato",
+      <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
+        {item.unavailable ? (
+          <span className="flex w-full flex-row justify-center px-2">
+            <Badge variant="secondary">{t("market.bazaar.unavailable")}</Badge>
+          </span>
+        ) : (
+          <>
+            <span className="flex flex-row justify-between gap-2 px-2">
+              <p className="text-[0.65rem] text-muted-foreground uppercase">
+                {t("market.bazaar.sell")}
+              </p>
+              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                {item.sell_price.toLocaleString()}
+                <img
+                  src="/media/currency/GOLD.png"
+                  className="!size-4"
+                  alt="Gold"
+                  loading="lazy"
+                />
+              </p>
+            </span>
 
-        "material-pumpkin",
-        "mbi-transformed_material-pumpkin",
-        "mbi-bag_material-pumpkin",
-        "mbi-crate_material-pumpkin",
-        "mbi-barrel_material-pumpkin",
-        "mbi-enchanted_material-pumpkin",
+            <span className="flex flex-row items-center justify-between gap-2 px-2 text-xs">
+              <p className="text-[0.65rem] text-muted-foreground uppercase">
+                {t("market.bazaar.buy")}
+              </p>
+              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+                {item.buy_price.toLocaleString()}
+                <img
+                  src="/media/currency/GOLD.png"
+                  className="!size-4"
+                  alt="Gold"
+                  loading="lazy"
+                />
+              </p>
+            </span>
+          </>
+        )}
+      </span>
+    </RarityBorder>
+  )
+}
 
-        "material-sugar_cane",
-        "mbi-transformed_material-sugar_cane",
-        "mbi-bag_material-sugar_cane",
-        "mbi-crate_material-sugar_cane",
-        "mbi-barrel_material-sugar_cane",
-        "mbi-enchanted_material-sugar_cane",
+function SubcategorySection({
+  title,
+  items,
+}: {
+  title: string
+  items: BazaarItem[]
+}) {
+  const { ref, inView } = useInView<HTMLDivElement>()
 
-        "material-sweet_berries",
-        "mbi-transformed_material-sweet_berries",
-        "mbi-bag_material-sweet_berries",
-        "mbi-crate_material-sweet_berries",
-        "mbi-barrel_material-sweet_berries",
-        "mbi-enchanted_material-sweet_berries",
+  return (
+    <div ref={ref}>
+      <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
+        {title}
+        <Badge variant="secondary" className="text-xs">
+          {items.length} items
+        </Badge>
+      </h3>
 
-        "material-wheat",
-        "mbi-transformed_material-wheat",
-        "mbi-bag_material-wheat",
-        "mbi-crate_material-wheat",
-        "mbi-barrel_material-wheat",
-        "mbi-enchanted_material-wheat",
+      {!inView ? (
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+          {Array.from({ length: Math.min(items.length, 6) }).map((_, i) => (
+            <div key={i} className="h-16 animate-pulse rounded-md bg-muted/40" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+          {items.map((item) => (
+            <ItemCard key={item.item_id} item={item} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
-        "material-honeycomb",
-      ],
-    },
-    {
-      category: t("market.bazaar.categorie.harvestables"),
-      items: [
-        "mbi-crop_barley",
-        "mbi-seed_barley",
-        "mbi-seed_corn",
-        "mbi-seed_quinoa",
-        "mbi-seed_rice",
-        "mbi-seed_rye",
-        "mbi-crop_quinoa_green",
-        "mbi-crop_corn",
-        "mbi-crop_quinoa_yellow",
-        "mbi-crop_rice",
-        "mbi-crop_quinoa_orange",
-        "mbi-crop_quinoa_purple",
-        "mbi-crop_rye",
-        "mbi-crop_quinoa_red",
+function CategorySection({
+  title,
+  subcategories,
+}: {
+  title: string
+  subcategories: { id: string; items: BazaarItem[] }[]
+}) {
+  const { t } = useTranslation("market")
+  const totalItems = subcategories.reduce((sum, s) => sum + s.items.length, 0)
 
-        "mbi-coconut",
-        "mbi-banana",
-        "mbi-avocado",
-        "mbi-lemon",
-        "mbi-chestnut",
-        "mbi-hazelnut",
-        "mbi-olive",
-        "mbi-walnut",
-        "mbi-pineapple",
-        "mbi-dark_coconut",
-        "mbi-mystic_hornbeam_leaf",
-        "mbi-mango",
-        "mbi-sacred_coconut",
+  return (
+    <div>
+      <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold">
+        {title}
+        <Badge variant="secondary" className="text-sm">
+          {totalItems} items
+        </Badge>
+      </h2>
 
-        "material-jungle_log",
-        "material-oak_log",
-        "material-spruce_log",
-        "material-birch_log",
-        "material-acacia_log",
-        "material-dark_oak_log",
-        "material-mangrove_log",
-        "material-cherry_log",
-        "material-pale_oak_log",
-        "mbi-log_coconut",
-        "mbi-log_banana",
-        "mbi-log_chestnut",
-        "mbi-log_mahogany",
-        "mbi-log_hazel",
-        "mbi-log_olive_tree",
-        "mbi-log_walnut",
-        "mbi-log_dark_coconut",
-        "mbi-log_maple",
-        "mbi-log_eucalyptus",
-        "mbi-log_yew",
-        "mbi-log_elm",
-        "mbi-log_laughing_tree",
-        "mbi-log_mystic_hornbeam",
-        "mbi-log_sacred_coconut",
-      ],
-    },
-  ],
-})
+      <div className="space-y-6">
+        {subcategories.map((sub) => (
+          <SubcategorySection
+            key={sub.id}
+            title={t(`market.bazaar.subcategorie.${sub.id}`, {
+              defaultValue: sub.id,
+            })}
+            items={sub.items}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function BazaarGrid() {
   const { t } = useTranslation("market")
-  const categoryMap = getCategoryMap(t)
   const [items, setItems] = useState<BazaarItem[]>([])
+  const [catalog, setCatalog] = useState<CatalogResponse | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const loadAllPages = async () => {
+    let cancelled = false
+
+    const loadCatalog = async () => {
+      const [data] = await fetchJsonRateLimited<CatalogResponse>([
+        proxied("https://api.minebox.co/market/catalog"),
+      ])
+      if (!cancelled) setCatalog(data)
+    }
+
+    const loadBazaar = async () => {
       const limit = 100
 
-      const firstPageUrl = proxied(
-        `https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`
-      )
       const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([
-        firstPageUrl,
+        proxied(`https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`),
       ])
+      if (cancelled) return
 
-      const allItems = [...firstPage.items]
+      // Show the first page right away instead of waiting for every page.
+      setItems(firstPage.items)
+      setLoading(false)
+
       const totalPages = Math.ceil(firstPage.total / limit)
-
       const remainingUrls: string[] = []
       for (let page = 2; page <= totalPages; page++) {
         remainingUrls.push(
@@ -245,148 +291,109 @@ export default function BazaarGrid() {
         )
       }
 
-      const results = await fetchJsonRateLimited<BazaarResponse>(remainingUrls)
-      results.forEach((result) => {
-        allItems.push(...result.items)
-      })
+      // Fetch the rest in the background, batch by batch, appending as we
+      // go so the grid fills in progressively instead of blocking on all
+      // remaining pages.
+      const batchSize = 10
+      for (let i = 0; i < remainingUrls.length; i += batchSize) {
+        const batch = remainingUrls.slice(i, i + batchSize)
+        const batchStart = Date.now()
 
-      setItems(allItems)
-      setLoading(false)
+        const batchResults = await Promise.all(
+          batch.map((url) =>
+            fetch(url).then((r) => r.json() as Promise<BazaarResponse>)
+          )
+        )
+        if (cancelled) return
+
+        setItems((prev) => [...prev, ...batchResults.flatMap((r) => r.items)])
+
+        const elapsed = Date.now() - batchStart
+        const hasMore = i + batchSize < remainingUrls.length
+        if (hasMore && elapsed < 1000) {
+          await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
+        }
+      }
     }
 
-    loadAllPages()
+    loadCatalog()
+    loadBazaar()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  if (loading) {
-    return <div className="py-10 text-center">Loading...</div>
-  }
+  const categories = useMemo(() => {
+    if (!catalog) return []
 
-  const itemsById = new Map(items.map((item) => [item.item_id, item]))
-  const usedIds = new Set<string>()
+    const itemsById = new Map(items.map((item) => [item.item_id, item]))
 
-  const groupedItems: Record<string, BazaarItem[]> = {}
-
-  categoryMap.categories.forEach((category) => {
-    groupedItems[category.category] = category.items.map((itemId) => {
-      usedIds.add(itemId)
+    // An item counts as unavailable whenever both prices are 0 — whether
+    // that's because it wasn't returned by the bazaar endpoint at all, or
+    // because it came back with zeroed-out prices.
+    const toBazaarItem = (itemId: string): BazaarItem => {
       const found = itemsById.get(itemId)
-      if (found) return found
+      const sell_price = found?.sell_price ?? 0
+      const buy_price = found?.buy_price ?? 0
+      const stock = found?.stock ?? 0
 
       return {
         item_id: itemId,
-        sell_price: 0,
-        buy_price: 0,
-        stock: 0,
-        unavailable: true,
-      } satisfies BazaarItem
-    })
-  })
+        sell_price,
+        buy_price,
+        stock,
+        unavailable: sell_price === 0 && buy_price === 0,
+      }
+    }
 
-  const otherItems = items.filter((item) => !usedIds.has(item.item_id))
-  const otherCategoryName = t("market.bazaar.categorie.others")
-  if (otherItems.length > 0) {
-    groupedItems[otherCategoryName] = otherItems
+    const usedIds = new Set<string>()
+
+    const result = catalog.bazaar.categories.map((category) => ({
+      id: category.id,
+      subcategories: category.subcategories.map((sub) => {
+        sub.items.forEach((id) => usedIds.add(id))
+        return {
+          id: sub.id,
+          items: sub.items.map(toBazaarItem),
+        }
+      }),
+    }))
+
+    // Anything present in bazaar results but not covered by any known
+    // subcategory falls into a catch-all "others" bucket.
+    const otherIds = items
+      .map((item) => item.item_id)
+      .filter((id) => !usedIds.has(id))
+    if (otherIds.length > 0) {
+      result.push({
+        id: "others",
+        subcategories: [
+          {
+            id: "others",
+            items: otherIds.map(toBazaarItem),
+          },
+        ],
+      })
+    }
+
+    return result
+  }, [catalog, items])
+
+  if (loading || !catalog) {
+    return <div className="py-10 text-center">Loading...</div>
   }
 
-  const orderedCategories = [
-    ...categoryMap.categories.map((c) => c.category),
-    ...(groupedItems[otherCategoryName] ? [otherCategoryName] : []),
-  ]
-
   return (
-    <div className="space-y-8">
-      {orderedCategories.map((category) => (
-        <div key={category}>
-          <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold">
-            {category}
-            <Badge variant="secondary" className="text-sm">
-              {groupedItems[category].length} items
-            </Badge>
-          </h2>
-
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
-            {groupedItems[category].map((item) => (
-              <RarityBorder
-                key={item.item_id}
-                rarity={FindItemRarity({ itemId: item.item_id })}
-                className={`flex flex-row items-center gap-0 ${
-                  item.unavailable ? "opacity-50 grayscale" : ""
-                }`}
-              >
-                <span className="flex w-full flex-row items-center justify-center gap-0">
-                  <ItemImage
-                    itemId={item.item_id}
-                    className="aspect-square w-12 object-fill [image-rendering:pixelated]"
-                    style={{
-                      filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}40)`,
-                    }}
-                  />
-
-                  {/* Name and Stock */}
-                  <span className="flex h-8 flex-col justify-center gap-2 pl-2 text-sm leading-none">
-                    <p className="text-xs leading-none">
-                      {FindItemName({ itemId: item.item_id })}
-                    </p>
-                    <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
-                      <p className="text-[0.65rem] text-muted-foreground">
-                        {t("market.bazaar.stock")}
-                      </p>
-                      {item.stock > 0 ? (
-                        <Badge className="scale-90">
-                          {item.stock.toLocaleString()}
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary">
-                          {t("market.bazaar.no_stock")}
-                        </Badge>
-                      )}
-                    </span>
-                  </span>
-                </span>
-
-                <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
-                  {item.unavailable ? (
-                    <span className="flex w-full flex-row justify-center px-2">
-                      <Badge variant="secondary">
-                        {t("market.bazaar.unavailable")}
-                      </Badge>
-                    </span>
-                  ) : (
-                    <>
-                      <span className="flex flex-row justify-between gap-2 px-2">
-                        <p className="text-[0.65rem] text-muted-foreground uppercase">
-                          {t("market.bazaar.sell")}
-                        </p>
-                        <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                          {item.sell_price.toLocaleString()}
-                          <img
-                            src="/media/currency/GOLD.png"
-                            className="!size-4"
-                            alt="Gold"
-                          />
-                        </p>
-                      </span>
-
-                      <span className="flex flex-row items-center justify-between gap-2 px-2 text-xs">
-                        <p className="text-[0.65rem] text-muted-foreground uppercase">
-                          {t("market.bazaar.buy")}
-                        </p>
-                        <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                          {item.buy_price.toLocaleString()}
-                          <img
-                            src="/media/currency/GOLD.png"
-                            className="!size-4"
-                            alt="Gold"
-                          />
-                        </p>
-                      </span>
-                    </>
-                  )}
-                </span>
-              </RarityBorder>
-            ))}
-          </div>
-        </div>
+    <div className="space-y-10">
+      {categories.map((category) => (
+        <CategorySection
+          key={category.id}
+          title={t(`market.bazaar.categorie.${category.id}`, {
+            defaultValue: category.id,
+          })}
+          subcategories={category.subcategories}
+        />
       ))}
     </div>
   )

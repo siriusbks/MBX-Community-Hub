@@ -18,6 +18,7 @@ import {
   User,
   Album,
   Scale,
+  TreePalmIcon,
 } from "lucide-react"
 import { useTranslation } from 'react-i18next';
 
@@ -185,6 +186,13 @@ export const useNavLinks = (): NavItem[] => {
       icon: VoteIcon,
       label: t("mainpage.features.votes.title"),
       desc: t("mainpage.features.votes.description"),
+    },
+    {
+      id: "summer2026",
+      to: "/events/summer-2026",
+      icon: TreePalmIcon,
+      label: t("mainpage.features.summer2026.title"),
+      desc: t("mainpage.features.summer2026.description"),
     },
   ];
 };

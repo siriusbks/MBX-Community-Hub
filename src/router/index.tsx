@@ -23,6 +23,7 @@ const Error404 = lazy(() => import("@pages/Error404"));
 const MapsPage = lazy(() => import("@pages/Maps"));
 const ChangelogPage = lazy(() => import("@pages/Changelog"));
 const MuseumPage = lazy(() => import("@pages/Tools/Museum"));
+const Summer2026EventPage = lazy(() => import("@pages/Events/Summer2026"));
 
 export const AppRoutes: FC = () => {
     return (
@@ -56,6 +57,9 @@ export const AppRoutes: FC = () => {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/votes" element={<VotePage />} />
             <Route path="/shops" element={<ShopsPage />} /> 
+
+            {/* Events */}
+            <Route path="/events/summer-2026" element={<Summer2026EventPage />} />
 
             {/* Others */}
             <Route path="/contribute" element={<ContributePage />} />

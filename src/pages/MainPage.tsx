@@ -169,7 +169,7 @@ export function Home() {
         <span className="mb-4 text-xs leading-none">
           {t("mainpage.features.web.description")}
         </span>
-        <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
           {FEATURE_ITEMS.map(({ id, to, icon: Icon, label, desc, badge }) => (
             <Link key={id} to={to}>
               <Card className="group h-full gap-2 px-4">
