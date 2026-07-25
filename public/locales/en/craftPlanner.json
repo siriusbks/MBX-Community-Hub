@@ -9,5 +9,7 @@
     "craftPlanner.copyCSV.button": "Copy CSV",
     "craftPlanner.requiredResources.title": "Required resources",
     "craftPlanner.requiredResources.description": "Resources needed to craft the selected items.",
-    "craftPlanner.requiredResources.noSelected": "Select a section above to see the required resources."
+    "craftPlanner.requiredResources.noSelected": "Select a section above to see the required resources.",
+    "craftPlanner.recipeTree.title": "Recipe Tree",
+    "craftPlanner.recipeTree.quantity": "Quantity"
 }

@@ -13,17 +13,16 @@ type CraftPlannerContentProps = {
     classImages?: Record<string, string>;
 };
 
-const ResourceList: React.FC<{
+export const ResourceList: React.FC<{
     resources: Record<string, number>;
     locale: string;
-    emptyKey: string;
     classImages: Record<string, string>;
-}> = ({ resources, locale, emptyKey, classImages }) => {
+}> = ({ resources, locale, classImages }) => {
     const { t } = useTranslation("craftPlanner");
     const entries = Object.entries(resources).sort(([, a], [, b]) => b - a);
 
     if (entries.length === 0) {
-        return <p className="text-sm text-gray-400">{t(emptyKey, { defaultValue: "No resources required." })}</p>;
+        return <p className="text-sm text-gray-400">{t("craftPlanner.noResourceRquired")}</p>;
     }
 
     return (
@@ -43,7 +42,7 @@ const ResourceList: React.FC<{
                         />
                     )}
                     <span className="truncate flex-1">{getLocalItemName(id, locale)}</span>
-                    <span className="shrink-0 text-xs font-bold bg-primary/20 text-primary px-2 py-1 rounded">
+                    <span className="shrink-0 text-sm bg-primary/20 text-primary px-2 py-1 rounded">
                         {qty.toLocaleString()}
                     </span>
                 </li>
@@ -136,7 +135,7 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                             onClick={() => setShowCrafts((v) => !v)}
                         >
                             {showCrafts ? <SquareAsterisk className="w-4 h-4" /> : <Square className="w-4 h-4" />}
-                            {t("craftPlanner.craftedResources.title", { defaultValue: "Crafted resources" })}
+                            {t("craftPlanner.craftedResources.title")}
                         </button>
 
                         <button
@@ -144,7 +143,7 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                             onClick={() => setShowBasic((v) => !v)}
                         >
                             {showBasic ? <SquareAsterisk className="w-4 h-4" /> : <Square className="w-4 h-4" />}
-                            {t("craftPlanner.basicResources.title", { defaultValue: "Basic resources" })}
+                            {t("craftPlanner.basicResources.title")}
                         </button>
 
                         <button
@@ -153,7 +152,7 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                             onClick={onCopyCSV}
                         >
                             {copied ? <Check className="w-4 h-4" /> : <ClipboardCopy className="w-4 h-4" />}
-                            {t("craftPlanner.copyCSV.button", { defaultValue: "Copy CSV" })}
+                            {t("craftPlanner.copyCSV.button")}
                         </button>
                     </div>
                 </div>
@@ -161,7 +160,7 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                 {loading && (
                     <div className="flex items-center gap-2 text-sm text-gray-400 py-4">
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        {t("craftPlanner.resolving", { defaultValue: "Loading recipes…" })}
+                        {t("craftPlanner.resolving")}
                     </div>
                 )}
 
@@ -172,12 +171,11 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                         {showCrafts && (
                             <div>
                                 <div className="text-sm font-semibold mb-2">
-                                    {t("craftPlanner.craftedResources.title", { defaultValue: "Crafted resources" })}
+                                    {t("craftPlanner.craftedResources.title")}
                                 </div>
                                 <ResourceList
                                     resources={craftsOnly}
                                     locale={locale}
-                                    emptyKey="craftPlanner.noResourceRquired"
                                     classImages={classImages}
                                 />
                             </div>
@@ -186,12 +184,11 @@ const CraftPlannerContent: React.FC<CraftPlannerContentProps> = ({
                         {showBasic && (
                             <div>
                                 <div className="text-sm font-semibold mb-2">
-                                    {t("craftPlanner.basicResources.title", { defaultValue: "Basic resources" })}
+                                    {t("craftPlanner.basicResources.title")}
                                 </div>
                                 <ResourceList
                                     resources={basicResources}
                                     locale={locale}
-                                    emptyKey="craftPlanner.noResourceRquired"
                                     classImages={classImages}
                                 />
                             </div>

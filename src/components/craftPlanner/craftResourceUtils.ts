@@ -74,3 +74,9 @@ export function mergeQuantityMaps(maps: Record<string, number>[]): Record<string
     }
     return total;
 }
+
+/** Scales every quantity in a {id: qty} map by a factor (e.g. the recipe tree's root multiplier). */
+export function scaleQuantityMap(map: Record<string, number>, factor: number): Record<string, number> {
+    if (factor === 1) return map;
+    return Object.fromEntries(Object.entries(map).map(([id, qty]) => [id, qty * factor]));
+}

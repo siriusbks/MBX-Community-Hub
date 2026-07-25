@@ -32,6 +32,7 @@ import { BestiaryItem } from "@components/minebox/bestiary"
 import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
 import { FindItemRarity } from "@const/elements"
+import RecipeTreeModal from "@components/craftPlanner/RecipTreeModal"
 
 type LocalizedText = Record<string, string>
 
@@ -96,11 +97,10 @@ export function ItemsCodex() {
   const [bazaarData, setBazaarData] = useState<BazaarEntry | null>(null)
   const [bazaarLoading, setBazaarLoading] = useState(false)
   const [museumItemIds, setMuseumItemIds] = useState<Set<string> | null>(null)
-  const [itemsMap, setItemsMap] = useState<Record<string, LocalItem> | null>(
-    null
-  )
+  const [itemsMap, setItemsMap] = useState<Record<string, LocalItem> | null>(null)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
+  const [recipeTreeOpen, setRecipeTreeOpen] = useState(false)
 
   // Filtrowanie lokalne: po ID przedmiotu oraz po nazwie w aktywnym języku
   const filteredItems = useMemo(() => {
@@ -587,16 +587,12 @@ const sortedItems = useMemo(() => {
             {itemDetailsData?.recipe && (
               <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Button size="icon-xs">
-                        <Globe />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Recipe Calculator Coming Soon</p>
-                    </TooltipContent>
-                  </Tooltip>
+                  <Button 
+                    size="icon-xs"
+                    onClick={() => setRecipeTreeOpen(true)}
+                  >
+                    <Globe />
+                  </Button>
                   <p>Recipes</p>
                   <p className="ml-auto text-xs">
                     {itemDetailsData.recipe.job}
@@ -714,6 +710,13 @@ const sortedItems = useMemo(() => {
           </div>
         )}
       </div>
+      
+      <RecipeTreeModal
+        open={recipeTreeOpen}
+        onClose={() => setRecipeTreeOpen(false)}
+        itemId={itemDetailsData?.id ?? null}
+        locale={locale}
+      />
     </div>
   )
 }
