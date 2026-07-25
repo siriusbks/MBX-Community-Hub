@@ -1,0 +1,13 @@
+{
+    "craftPlanner.title": "Craft Planner",
+    "craftPlanner.resolving": "Loading recipes…",
+    "craftPlanner.noItems": "No items selected yet.",
+    "craftPlanner.noResourceRquired": "No resources required.",
+    "craftPlanner.selectedItems.sentence": "item(s) selected",
+    "craftPlanner.basicResources.title": "Basic resources",
+    "craftPlanner.craftedResources.title": "Crafted resources",
+    "craftPlanner.copyCSV.button": "Copy CSV",
+    "craftPlanner.requiredResources.title": "Required resources",
+    "craftPlanner.requiredResources.description": "Resources needed to craft the selected items.",
+    "craftPlanner.requiredResources.noSelected": "Select a section above to see the required resources."
+}
