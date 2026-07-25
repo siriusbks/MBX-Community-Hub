@@ -102,13 +102,6 @@ export function ItemsCodex() {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const [recipeTreeOpen, setRecipeTreeOpen] = useState(false)
 
-  // Sheet Panel State
-  const [isOpen, setIsOpen] = useState(() => {
-    if (typeof window === "undefined") return false
-    const hasId = new URLSearchParams(window.location.search).get("id")
-    return Boolean(hasId) && window.innerWidth < 1024
-  })
-
   // Filtrowanie lokalne: po ID przedmiotu oraz po nazwie w aktywnym języku
   const filteredItems = useMemo(() => {
     if (!itemsMap) return []
@@ -336,7 +329,7 @@ const sortedItems = useMemo(() => {
   }, [])
 
   return (
-    <div className="relative page-container flex lg:h-dvh flex-col overflow-hidden">
+    <div className="relative page-container flex h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
       <PageTitle title="Item Codex" />
 
@@ -385,10 +378,10 @@ const sortedItems = useMemo(() => {
 
       <div className="flex min-h-0 flex-1 scroll-fade flex-row gap-4">
         <div
-          className={`h-full pr-2 ${itemDetailsData ? "w-full lg:w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth`}
+          className={`h-full pr-2 ${itemDetailsData ? "w-2/3" : "w-full"} custom-scrollbar scroll-fade overflow-y-auto scroll-smooth`}
         >
           <div
-            className={`grid w-full ${itemDetailsData ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-5" : "grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7"} gap-2 overflow-x-hidden`}
+            className={`grid w-full ${itemDetailsData ? "grid-cols-5" : "grid-cols-7"} gap-2 overflow-x-hidden`}
           >
             {itemsMap === null && (
               <div className="col-span-full py-8 text-center text-muted-foreground">
@@ -410,7 +403,6 @@ const sortedItems = useMemo(() => {
                   onClick={(e) => {
                     e.stopPropagation()
                     selectItem(id)
-                      if (window.innerWidth < 1024) setIsOpen(true)
                   }}
                   className="cursor-pointer"
                 >
@@ -438,24 +430,8 @@ const sortedItems = useMemo(() => {
           )}
         </div>
 
-                <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetContent className="gap-2 overflow-y-auto from-secondary-lighter to-secondary p-2">
-            <ItemInfoPanel />
-          </SheetContent>
-        </Sheet>
-
-        {itemDetailsData && window.innerWidth > 1024 && (
-          <ItemInfoPanel />
-        )}
-      </div>
-    </div>
-  )
-
-  function ItemInfoPanel(){
-    if (!itemDetailsData) return null
-
-    return (
-                <div className="custom-scrollbar flex min-h-0 lg:w-1/3 flex-col gap-2 overflow-y-auto pr-2">
+        {itemDetailsData && (
+          <div className="custom-scrollbar flex min-h-0 w-1/3 flex-col gap-2 overflow-y-auto pr-2">
             <RarityBorder
               rarity={itemDetailsData.rarity.toLowerCase()}
               className="rounded-lg border-[8px]"
@@ -558,7 +534,7 @@ const sortedItems = useMemo(() => {
                   )}
                 {itemDetailsData?.stats && (
                   <div>
-                    <p className="text-xs mt-2">Stats</p>
+                    <p className="text-xs">Stats</p>
                     {Object.entries(itemDetailsData.stats).map(
                       ([stat, values]) => (
                         <StatItem
@@ -573,7 +549,7 @@ const sortedItems = useMemo(() => {
                 )}
                 {itemDetailsData?.damages && (
                   <div>
-                    <p className="text-xs mt-2">Damage</p>
+                    <p className="text-xs">Damage</p>
                     {Object.entries(itemDetailsData.damages).map(
                       ([stat, values]) => (
                         <DamageItem
