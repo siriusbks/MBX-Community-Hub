@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState, useRef } from "react"
 import {
   AlertTriangle,
-  Loader2,
   RotateCcw,
   Check,
   Share2,
-  TrendingDownIcon,
   SparklesIcon,
   SettingsIcon,
+  Sheet,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -16,7 +15,6 @@ import { useSets } from "@components/equipment/useSet"
 import { CharacterDisplay } from "@components/equipment/CharacterDisplay"
 import { StatsPanel } from "@components/equipment/StatsPanel"
 import { EquipmentSelector } from "@components/equipment/EquipmentSelector"
-//import { CraftingBreakdown } from "@components/equipment/CraftingBreakdown";
 import { SkullSelector } from "@components/equipment/SkullSelector"
 
 import { EQUIPMENT_SLOTS } from "@const/equipmentSlots"
@@ -38,6 +36,7 @@ import { usePlayerStats } from "@components/equipment/usePlayerStats"
 import { EquipmentDetailsPanel } from "@components/equipment/Equipmentdetailspanel"
 import { Card } from "@components/ui/card"
 import { Skeleton } from "@components/ui/skeleton"
+import CraftPlannerModal from "@components/craftPlanner/CraftPlannerModal"
 
 function addFlatToRanges(
   base: Record<string, number[]>,
@@ -52,7 +51,7 @@ function addFlatToRanges(
 }
 
 const Equipment: React.FC = () => {
-  const { t } = useTranslation("equipment")
+  const { t, i18n } = useTranslation("equipment")
   const { equipment, loading, error } = useEquipment()
   const [equippedItems, setEquippedItems] = useState<EquippedItems>({})
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
@@ -79,6 +78,8 @@ const Equipment: React.FC = () => {
 
   const { playerStats, loadingPlayerStats } = usePlayerStats()
 
+  const [craftPlannerOpen, setCraftPlannerOpen] = useState(false)
+
   const classEquipment = useMemo<Equipment[]>(
     () =>
       classes.map((cls) => ({
@@ -88,6 +89,14 @@ const Equipment: React.FC = () => {
         rarity: cls.rarity,
         image: cls.image ? `data:image/png;base64,${cls.image}` : "",
       })),
+    [classes]
+  )
+
+  const classImageById = useMemo<Record<string, string>>(
+    () =>
+      Object.fromEntries(
+        classes.map((cls) => [cls.id, cls.image ? `data:image/png;base64,${cls.image}` : ""])
+      ),
     [classes]
   )
 
@@ -258,6 +267,14 @@ const Equipment: React.FC = () => {
     setHasPass(false)
     setClassTier(1)
   }
+
+  const equippedItemIds = useMemo(
+    () =>
+      Object.values(equippedItems)
+        .filter((it): it is Equipment => !!it?.id)
+        .map((it) => it.id),
+    [equippedItems]
+  )
 
   const flatFromSkulls = useMemo(
     () => sumSkullStats(selectedSkulls),
@@ -441,8 +458,12 @@ const Equipment: React.FC = () => {
               onSlotClick={onSlotClick}
             />
 
-            <Button size="lg" className="minebox-shadow" disabled>
-              <RotateCcw className="h-4 w-4" />
+            <Button 
+              size="lg" 
+              className="minebox-shadow" 
+              onClick={() => setCraftPlannerOpen(true)}
+            >
+              <Sheet className="h-4 w-4" />
               {t("equip.craftingList")}
             </Button>
 
@@ -579,6 +600,14 @@ const Equipment: React.FC = () => {
         selected={selectedSkulls}
         onChange={setSelectedSkulls}
         onClose={() => setSkullModalOpen(false)}
+      />
+
+      <CraftPlannerModal
+        open={craftPlannerOpen}
+        onClose={() => setCraftPlannerOpen(false)}
+        preselectedItems={equippedItemIds}
+        locale={i18n.language as "en" | "fr" | "pl"}
+        classImages={classImageById}
       />
     </div>
   )
