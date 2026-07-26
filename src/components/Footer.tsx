@@ -1,6 +1,7 @@
 import { Button } from "@ui/button";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { HandHelpingIcon, HeartHandshake, WrenchIcon } from "lucide-react";
 
 export const Footer = () => {
 
@@ -16,13 +17,22 @@ export const Footer = () => {
                 </span>
                 <span className="text-sm justify-self-end gap-1 flex">
 
+                    <Link to="/changelog">
+                        <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
+                            <WrenchIcon className="size-4" />
+                            {t("footer.changelog")}
+                        </Button>
+                    </Link>
+
                     <Link to="/contribute">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
+                            <HandHelpingIcon className="size-4" />
                             {t("footer.contribute")}
                         </Button>
                     </Link>
                     <a href="https://ko-fi.com/6rius" target="_blank" rel="noopener noreferrer">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
+                            <HeartHandshake  className="size-4" />
                             {t("footer.supportUs")}
                         </Button>
                     </a>
@@ -40,14 +50,24 @@ export const Footer = () => {
                 <p className="text-xs">MIT License © 2026</p>
                 <span className="text-sm justify-self-end gap-1 flex">
 
-                    <Link to="/contribute">
+                    <Link to="/changelog">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
-                            Contribute
+                            <WrenchIcon className="size-4" />
+                            {t("footer.changelog")}
                         </Button>
                     </Link>
+
+                    <Link to="/contribute">
+                        <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
+                            <HandHelpingIcon  className="size-4" />
+                            {t("footer.contribute")}
+                        </Button>
+                    </Link>
+
                     <a href="https://ko-fi.com/6rius" target="_blank" rel="noopener noreferrer">
                         <Button variant="secondary" size="sm" className="font-normal px-2 py-1">
-                            Support Us
+                            <HeartHandshake  className="size-4" />
+                            {t("footer.supportUs")}
                         </Button>
                     </a>
                 </span>
