@@ -667,7 +667,14 @@ const sortedItems = useMemo(() => {
                           <span className="flex w-full flex-col items-center justify-center gap-1">
                             <img
                               src={bestiary.image}
-                              className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110"
+                              className="mx-auto aspect-square size-16 transition-transform group-hover:scale-110 [image-rendering:pixelated]"
+                              onError={(e) => {
+                    const img = e.currentTarget
+                    if (!img.dataset.fallback) {
+                      img.dataset.fallback = "true"
+                      img.src = "/media/missingBestiary.png"
+                    }
+                  }}
                             />
                             <span className="my-auto flex w-full flex-col items-center">
                               <p className="mb-1 w-full text-center text-xs leading-none">

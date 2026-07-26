@@ -417,7 +417,13 @@ export function BestiaryCodexPage() {
 
               {!isDetailsLoading && !detailsError && selectedCreature && (
                 <>
-                  <img src={detailsImage} className="mb-2 w-full p-4" />
+                  <img src={detailsImage} className="mb-2 w-full p-4 [image-rendering:pixelated] " onError={(e) => {
+                    const img = e.currentTarget
+                    if (!img.dataset.fallback) {
+                      img.dataset.fallback = "true"
+                      img.src = "/media/missingBestiary.png"
+                    }
+                  }} />
                   <span className="mt-2 flex flex-row items-center gap-2">
                     <LevelBadge level={detailsLevel}>
                       LVL {detailsLevel} - {detailsLevelMax}
