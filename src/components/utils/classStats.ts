@@ -13,7 +13,7 @@ export function hasClassTiers(cls: MineboxClass): boolean {
 }
 
 export function ifClassEnabled(cls: MineboxClass): boolean {
-    return cls.enabled ?? true;
+    return true;
 }
 
 

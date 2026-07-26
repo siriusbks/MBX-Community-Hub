@@ -65,6 +65,7 @@ export function ItemImage({
   const cleanId = getCleanItemId(itemId)
 
   const fallbackById = `/media/missing/${cleanId}.png`
+  const fallbackByIdAnimated = `/media/missing/${cleanId}.gif`
   const fallbackGeneric = "/media/missing.png"
 
   const itemData = itemsDataMap[cleanId]
@@ -79,6 +80,11 @@ export function ItemImage({
         onError={(e) => {
           const target = e.currentTarget
           if (target.src.endsWith(fallbackById)) {
+            target.src = fallbackByIdAnimated
+            return
+          }
+
+          if (target.src.endsWith(fallbackByIdAnimated)) {
             target.src = vanillaUrl
             return
           }
@@ -98,6 +104,11 @@ export function ItemImage({
       onError={(e) => {
         const target = e.currentTarget
         if (target.src.endsWith(fallbackById)) {
+          target.src = fallbackByIdAnimated
+          return
+        }
+
+        if (target.src.endsWith(fallbackByIdAnimated)) {
           target.src = imageUrl
           return
         }
@@ -106,7 +117,7 @@ export function ItemImage({
         target.src = fallbackGeneric
       }}
       className={`[image-rendering:pixelated] ${className}`}
-        style={style}
+      style={style}
     />
   )
 }

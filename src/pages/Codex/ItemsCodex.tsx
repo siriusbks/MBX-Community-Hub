@@ -31,7 +31,7 @@ import { CodexNav } from "@components/minebox/codex-nav"
 import { BestiaryItem } from "@components/minebox/bestiary"
 import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
-import { FindItemRarity } from "@const/elements"
+import { FindItemRarity, ItemImage } from "@const/elements"
 import RecipeTreeModal from "@components/craftPlanner/RecipTreeModal"
 
 type LocalizedText = Record<string, string>
@@ -437,13 +437,7 @@ const sortedItems = useMemo(() => {
               className="rounded-lg border-[8px]"
             >
               <span className="flex flex-row gap-2 p-1">
-                <img
-                  src={`data:image/png;base64,${itemDetailsData.image}`}
-                  className="size-24 object-scale-down"
-                  style={{
-                    imageRendering: "pixelated",
-                  }}
-                />
+                <ItemImage itemId={itemDetailsData.id} className="size-24" />
                 <span className="flex h-full flex-col items-start justify-center">
                   <p>{itemDetailsData.name}</p>
                   <span className="flex flex-row gap-2">
