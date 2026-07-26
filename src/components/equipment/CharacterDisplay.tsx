@@ -31,7 +31,7 @@ export const CharacterDisplay: React.FC<Props> = ({
         </span>
       </span>
 
-      <div className="relative mx-auto h-140 max-w-96 w-full grid grid-cols-3 gap-8 px-4 pb-8">
+      <div className="relative mx-auto h-140 max-w-96 w-full grid grid-cols-3 gap-2 gap-y-6 px-4 pb-8">
         {EQUIPMENT_SLOTS.map((slot) => (
           <EquipmentSlot
             key={slot.id}
