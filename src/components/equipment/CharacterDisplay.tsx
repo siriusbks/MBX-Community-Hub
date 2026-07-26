@@ -19,7 +19,7 @@ export const CharacterDisplay: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation("equipment")
   return (
-    <Card className="p-2 py-1">
+    <Card className="p-2 py-1 gap-0">
       <span className="mt-2 mb-4 flex flex-row items-center justify-center gap-2">
         <span className="-space-y-0 text-center">
           <h3 className="text-lg leading-none text-primary">
@@ -31,7 +31,7 @@ export const CharacterDisplay: React.FC<Props> = ({
         </span>
       </span>
 
-      <div className="relative mx-auto h-140 max-w-96 w-full">
+      <div className="relative mx-auto h-140 max-w-96 w-full grid grid-cols-3 gap-8 px-4 pb-8">
         {EQUIPMENT_SLOTS.map((slot) => (
           <EquipmentSlot
             key={slot.id}

@@ -184,7 +184,15 @@ export function FindItemName({ itemId }: { itemId: string }) {
   const name =
     itemData?.name?.[currentLang] ||
     itemData?.name?.en ||
+    convertIdToName(cleanId) ||
     cleanId
 
   return name
+}
+
+function convertIdToName(id: string): string {
+  return id
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
 }
