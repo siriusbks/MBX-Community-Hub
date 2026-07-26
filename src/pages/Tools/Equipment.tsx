@@ -520,7 +520,7 @@ const Equipment: React.FC = () => {
                 </div>
               </div>
 
-              <div className="custom-scrollbar mr-3 scroll-fade  pr-3">
+              <div className="custom-scrollbar mr-3  pr-3">
                 <div className="animate-in duration-150 fade-in">
                   <StatsPanel
                     stats={totalStats}
@@ -553,7 +553,7 @@ const Equipment: React.FC = () => {
                 </div>
               </div>
 
-              <div className="custom-scrollbar mr-3 min-h-0 flex-1 scroll-fade overflow-y-auto pr-3">
+              <div className="custom-scrollbar mr-3 min-h-0 flex-1  overflow-y-auto pr-3">
                 <div className="h-full animate-in duration-150 fade-in">
                   <EquipmentDetailsPanel
                     equippedItems={equippedItems}
