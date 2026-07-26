@@ -1,6 +1,7 @@
 "use client"
 
 import { Badge } from "@components/ui/badge"
+import { Skeleton } from "@components/ui/skeleton"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
 import { GetRarityColor, RarityBorder } from "@const/rarities"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -33,7 +34,12 @@ type CatalogCategory = {
 type CatalogResponse = {
   bazaar: {
     categories: CatalogCategory[]
-    items: { id: string; category: string; subcategory: string; market_type: string }[]
+    items: {
+      id: string
+      category: string
+      subcategory: string
+      market_type: string
+    }[]
   }
 }
 
@@ -74,6 +80,13 @@ async function fetchJsonRateLimited<T>(
   return results
 }
 
+function formatCategoryLabel(id: string): string {
+  return id
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
 // Mounts children only once the wrapper scrolls near the viewport, so we
 // don't build/measure DOM for hundreds of off-screen items up front.
 // Once it becomes visible it stays mounted.
@@ -109,76 +122,72 @@ function ItemCard({ item }: { item: BazaarItem }) {
   return (
     <RarityBorder
       rarity={FindItemRarity({ itemId: item.item_id })}
-      className={`flex flex-row items-center gap-0 ${
+      className={`group flex flex-row items-center gap-0 ${
         item.unavailable ? "opacity-50 grayscale" : ""
       }`}
     >
-      <span className="flex w-full flex-row items-center justify-center gap-0">
+      <span className="flex w-full flex-col items-center justify-center gap-0">
         <ItemImage
           itemId={item.item_id}
           loading="lazy"
-          className="aspect-square w-12 object-fill [image-rendering:pixelated]"
+          className={`aspect-square w-16 object-fill [image-rendering:pixelated] ${
+            item.unavailable ? "" : "transition-transform duration-200 group-hover:scale-110"
+          }`}
           style={{
-            filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}40)`,
+            filter: `drop-shadow(0 0 12px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}50)`,
           }}
         />
 
         {/* Name and Stock */}
-        <span className="flex h-8 flex-col justify-center gap-2 pl-2 text-sm leading-none">
-          <p className="text-xs leading-none">
+        <span className="flex h-8 w-full flex-col justify-center gap-2 pl-2 text-sm leading-none">
+          <p className="text-xs leading-none w-full text-center ">
             {FindItemName({ itemId: item.item_id })}
           </p>
-          <span className="flex w-full flex-row items-center justify-between gap-2 text-xs">
-            <p className="text-[0.65rem] text-muted-foreground">
-              {t("market.bazaar.stock")}
-            </p>
-            {item.stock > 0 ? (
-              <Badge className="scale-90">{item.stock.toLocaleString()}</Badge>
-            ) : (
-              <Badge variant="secondary">{t("market.bazaar.no_stock")}</Badge>
-            )}
-          </span>
         </span>
       </span>
 
       <span className="mt-1 flex w-full flex-col justify-evenly gap-1 text-xs">
-        {item.unavailable ? (
-          <span className="flex w-full flex-row justify-center px-2">
-            <Badge variant="secondary">{t("market.bazaar.unavailable")}</Badge>
+        <>
+          <span className="flex flex-row justify-between gap-2 px-2">
+            <p className="text-[0.65rem] text-muted-foreground uppercase">
+              {t("market.bazaar.stock")}
+            </p>
+            <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+              {item.stock}
+            </p>
           </span>
-        ) : (
-          <>
-            <span className="flex flex-row justify-between gap-2 px-2">
-              <p className="text-[0.65rem] text-muted-foreground uppercase">
-                {t("market.bazaar.sell")}
-              </p>
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {item.sell_price.toLocaleString()}
-                <img
-                  src="/media/currency/GOLD.png"
-                  className="!size-4"
-                  alt="Gold"
-                  loading="lazy"
-                />
-              </p>
-            </span>
 
-            <span className="flex flex-row items-center justify-between gap-2 px-2 text-xs">
-              <p className="text-[0.65rem] text-muted-foreground uppercase">
-                {t("market.bazaar.buy")}
-              </p>
-              <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                {item.buy_price.toLocaleString()}
-                <img
-                  src="/media/currency/GOLD.png"
-                  className="!size-4"
-                  alt="Gold"
-                  loading="lazy"
-                />
-              </p>
-            </span>
-          </>
-        )}
+          
+          <span className="flex flex-row justify-between gap-2 px-2">
+            <p className="text-[0.65rem] text-muted-foreground uppercase">
+              {t("market.bazaar.sell")}
+            </p>
+            <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+              {item.sell_price.toLocaleString()}
+              <img
+                src="/media/currency/GOLD.png"
+                className="!size-4"
+                alt="Gold"
+                loading="lazy"
+              />
+            </p>
+          </span>
+
+          <span className="flex flex-row items-center justify-between gap-2 px-2 text-xs">
+            <p className="text-[0.65rem] text-muted-foreground uppercase">
+              {t("market.bazaar.buy")}
+            </p>
+            <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
+              {item.buy_price.toLocaleString()}
+              <img
+                src="/media/currency/GOLD.png"
+                className="!size-4"
+                alt="Gold"
+                loading="lazy"
+              />
+            </p>
+          </span>
+        </>
       </span>
     </RarityBorder>
   )
@@ -195,7 +204,7 @@ function SubcategorySection({
 
   return (
     <div ref={ref}>
-      <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold">
+      <h3 className="mb-2 flex w-full items-center justify-between gap-2 text-lg">
         {title}
         <Badge variant="secondary" className="text-xs">
           {items.length} items
@@ -205,11 +214,11 @@ function SubcategorySection({
       {!inView ? (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
           {Array.from({ length: Math.min(items.length, 6) }).map((_, i) => (
-            <div key={i} className="h-16 animate-pulse rounded-md bg-muted/40" />
+            <Skeleton className="h-16" />
           ))}
         </div>
       ) : (
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {items.map((item) => (
             <ItemCard key={item.item_id} item={item} />
           ))}
@@ -231,7 +240,7 @@ function CategorySection({
 
   return (
     <div>
-      <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold">
+      <h2 className="mb-4 flex w-full items-center justify-between gap-3 text-2xl font-bold">
         {title}
         <Badge variant="secondary" className="text-sm">
           {totalItems} items
@@ -243,7 +252,7 @@ function CategorySection({
           <SubcategorySection
             key={sub.id}
             title={t(`market.bazaar.subcategorie.${sub.id}`, {
-              defaultValue: sub.id,
+              defaultValue: formatCategoryLabel(sub.id),
             })}
             items={sub.items}
           />
@@ -390,7 +399,7 @@ export default function BazaarGrid() {
         <CategorySection
           key={category.id}
           title={t(`market.bazaar.categorie.${category.id}`, {
-            defaultValue: category.id,
+            defaultValue: formatCategoryLabel(category.id),
           })}
           subcategories={category.subcategories}
         />
