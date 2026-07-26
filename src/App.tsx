@@ -9,7 +9,7 @@ import "./i18n";
 import { Ripple } from "@components/ripple";
 import { TooltipProvider } from "@components/ui/tooltip";
 
-const FULLSCREEN_LAYOUT_PATHS = ["/items", "/ships", "/classes", "/bestiary", "/tools/equipment-builder"];
+const FULLSCREEN_LAYOUT_PATHS = ["/items", "/ships", "/classes", "/bestiary"];
 const MOBILE_BREAKPOINT = 1024;
 
 function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {

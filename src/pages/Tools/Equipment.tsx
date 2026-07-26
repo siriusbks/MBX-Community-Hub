@@ -450,7 +450,7 @@ const Equipment: React.FC = () => {
       </div>*/}
 
       <main className="min-h-0 flex-1 overflow-hidden p-4">
-        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 lg:grid-cols-3">
+        <div className="grid min-h-0 w-full grid-cols-1 gap-3 lg:grid-cols-3">
           <span className="flex min-h-0 flex-col gap-3 xl:col-span-1">
             <CharacterDisplay
               equippedItems={equippedItems}
@@ -520,8 +520,8 @@ const Equipment: React.FC = () => {
                 </div>
               </div>
 
-              <div className="custom-scrollbar mr-3 min-h-0 flex-1 scroll-fade overflow-y-auto pr-3">
-                <div className="h-full animate-in duration-150 fade-in">
+              <div className="custom-scrollbar mr-3 scroll-fade  pr-3">
+                <div className="animate-in duration-150 fade-in">
                   <StatsPanel
                     stats={totalStats}
                     flatFromSets={flatFromSets}

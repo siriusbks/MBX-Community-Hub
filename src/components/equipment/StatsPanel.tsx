@@ -134,7 +134,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({
   const allZero = Object.values(displayedStats).every(([a, b]) => a + b === 0)
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex  flex-col">
       {!allZero ? (
         <div className="space-y-2">
           {Object.entries(displayedStats).map(([name, range]) => {
