@@ -1,0 +1,23 @@
+{
+    "codex.tab.items": "Items",
+    "codex.tab.bestiary": "Bestiaire",
+    "codex.tab.ships": "Navires",
+    "codex.tab.classes": "Classes",
+
+    "codex.class.unavailable": "Cette classe est actuellement désactivée et ne peut pas être jouée.",
+    "codex.class.passive": "Passif",
+    "codex.class.auto_attack": "Attaque automatique",
+    "codex.class.spells": "Sorts",
+
+    "codex.class.ultimate": "Ultime",
+    
+    "codex.class.weapon.GUN": "Sorts",
+    "codex.class.weapon.DAGGER": "Sorts",
+    "codex.class.weapon.BOW": "Sorts",
+    "codex.class.weapon.STAFF": "Sorts",
+    
+    "codex.class.type.DAMAGE": "Sorts",
+    "codex.class.type.SUPPORT": "Sorts",
+    "codex.class.type.TANK": "Sorts"
+
+}

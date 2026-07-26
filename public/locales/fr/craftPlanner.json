@@ -1,0 +1,15 @@
+{
+    "craftPlanner.title": "Planificateur de craft",
+    "craftPlanner.resolving": "Chargement des recettes…",
+    "craftPlanner.noItems": "Aucun objet sélectionné.",
+    "craftPlanner.noResourceRquired": "Aucune ressource requise.",
+    "craftPlanner.selectedItems.sentence": "objet(s) sélectionné(s)",
+    "craftPlanner.basicResources.title": "Ressources basiques",
+    "craftPlanner.craftedResources.title": "Ressources fabriquées",
+    "craftPlanner.copyCSV.button": "Copier CSV",
+    "craftPlanner.requiredResources.title": "Ressources requises",
+    "craftPlanner.requiredResources.description": "Ressources nécessaires pour fabriquer les objets sélectionnés.",
+    "craftPlanner.requiredResources.noSelected": "Sélectionnez une section ci-dessus pour voir les ressources requises.",
+    "craftPlanner.recipeTree.title": "Arbre de recettes",
+    "craftPlanner.recipeTree.quantity": "Quantité"
+}

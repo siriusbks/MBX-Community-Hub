@@ -341,8 +341,8 @@ const Equipment: React.FC = () => {
 
         <div className="shrink-0">
           <PageTitle
-            title="EQUIPMENT BUILDER"
-            description="Build and theory-craft your gear, pets and skull loadouts."
+            title={t("equip.title")}
+            description={t("equip.description")}
           />
         </div>
 
@@ -411,8 +411,8 @@ const Equipment: React.FC = () => {
 
       <div className="shrink-0">
         <PageTitle
-          title="EQUIPMENT BUILDER"
-          description="Build and theory-craft your gear, pets and skull loadouts."
+          title={t("equip.title")}
+          description={t("equip.description")}
         />
       </div>
 

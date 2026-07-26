@@ -1,0 +1,53 @@
+{
+    "universal.rarity.vanilla": "Vanilla",
+    "universal.rarity.trash": "Trash",
+    "universal.rarity.common": "Commun",
+    "universal.rarity.uncommon": "Peu commun",
+    "universal.rarity.rare": "Rare",
+    "universal.rarity.epic": "Épique",
+    "universal.rarity.legendary": "Legendaire",
+    "universal.rarity.mythic": "Mythique",
+    "universal.rarity.contraband": "Contrebande",
+    "universal.rarity.prototype": "Prototype",
+    "universal.rarity.attack": "Attaque",
+    "universal.rarity.passive": "Passif",
+    "universal.rarity.skill": "Compétence",
+    "universal.rarity.ultimate": "Ultime",
+
+
+
+    "universal.stats.HEALTH": "Santé",
+    "universal.stats.AGILITY": "Agilité",
+    "universal.stats.STRENGTH": "Force",
+    "universal.stats.INTELLIGENCE": "Intelligence",
+    "universal.stats.WISDOM": "Sagesse",
+    "universal.stats.LUCK": "Chance",
+    "universal.stats.FORTUNE": "Fortune",
+    "universal.stats.DEFENSE": "Defense",
+    "universal.stats.ATTACK_SPEED": "Vitesse d'attaque",
+    "universal.stats.ENDURANCE": "Endurance",
+    "universal.stats.CHARISMA": "Charisme",
+    "universal.stats.MOVEMENT_SPEED": "Vitesse de déplacement",
+    "universal.stats.DEXTERITY": "Dextérité",
+    "universal.stats.VITALITY": "Vitalité",
+
+    "universal.stats.FARMING_FORTUNE": "Fortune de récolte",
+    "universal.stats.WOODCUTTING_FORTUNE": "Fortune de coupe de bois",
+    "universal.stats.MINING_FORTUNE": "Fortune de minage",
+    "universal.stats.FISHING_FORTUNE": "Fortune de pêche",
+    "universal.stats.GATHERING_FORTUNE": "Fortune de cueillette",
+    "universal.stats.LOOTING_FORTUNE": "Fortune de butin",
+
+    "universal.stats.EARTH_RESISTANCE": "Résistance Terre",
+    "universal.stats.AIR_RESISTANCE": "Résistance Air",
+    "universal.stats.FIRE_RESISTANCE": "Résistance Feu",
+    "universal.stats.WATER_RESISTANCE": "Résistance Eau",
+    "universal.stats.NEUTRAL_RESISTANCE": "Résistance Neutre",
+
+
+
+    "universal.damage.WATER": "Eau",
+    "universal.damage.FIRE": "Feu",
+    "universal.damage.EARTH": "Terre",
+    "universal.damage.AIR": "Air"
+}

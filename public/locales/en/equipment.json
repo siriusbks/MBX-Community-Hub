@@ -22,6 +22,7 @@
     "equip.stats.emptyTitle": "No equipment equipped",
     "equip.stats.emptySubtitle": "Start selecting equipment to see your stats!",
     "equip.stats.breakdownTitle": "Detailed Stats by Slot",
+    "equip.stats.noSkulls": "No Skulls",
     "equip.title.job": "Job:",
     "equip.craftingBySlot": "Crafting by Slot",
     "equip.seerecipe": "Equip an item to see its recipe.",
