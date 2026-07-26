@@ -40,6 +40,13 @@ export function BestiaryItem({
         alt={name}
         className="ml-2 inline-block w-full transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0px_8px_#00000099]"
         style={{ imageRendering: "pixelated" }}
+          onError={(e) => {
+    const img = e.currentTarget
+    if (!img.dataset.fallback) {
+      img.dataset.fallback = "true"
+      img.src = "/media/missingBestiary.png"
+    }
+  }}
       />
       <p className="justify-middle flex h-6 items-center text-center text-sm leading-none transition-all duration-300 group-hover:font-bold group-hover:text-primary-dark group-hover:drop-shadow-[0_2px_0_#5d3a00]">
         {name}
