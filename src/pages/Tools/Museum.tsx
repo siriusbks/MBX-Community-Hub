@@ -9,6 +9,7 @@ import { FindItemName, FindItemRarity, ItemImage } from "@const/elements"
 import { GetRarityColor, RarityBadge, RarityBorder, rarities } from "@const/rarities"
 import { Badge } from "@components/ui/badge"
 import { Skeleton } from "@components/ui/skeleton"
+import { useTranslation } from 'react-i18next';
 
 type MuseumData = Record<string, string[]>
 
@@ -47,6 +48,7 @@ const CategoryNavButton = memo(function CategoryNavButton({
   totalCount: number
   onClick: (category: string) => void
 }) {
+  const { t } = useTranslation("museum");
   return (
     <Button
       variant="secondary"
@@ -62,7 +64,7 @@ const CategoryNavButton = memo(function CategoryNavButton({
       />
 
       <span className="mb-0.5 flex flex-col items-start justify-start -space-y-1.5 text-left font-normal">
-        <p className="text-[0.9rem]">{formatCategoryLabel(category)}</p>
+        <p className="text-[0.9rem]">{t(`museum.category.${category}`, formatCategoryLabel(category))}</p>
         <p className="text-[0.6rem] text-muted-foreground">
           [{unlockedCount.toString().padStart(2, "0")} /{" "}
           {totalCount.toString().padStart(2, "0")}]
@@ -79,6 +81,7 @@ const MuseumItemCard = memo(function MuseumItemCard({
   item: MuseumItem
   isUnlocked: boolean
 }) {
+  const { t } = useTranslation("museum");
   return (
     <RarityBorder
       rarity={item.rarity}
@@ -86,7 +89,7 @@ const MuseumItemCard = memo(function MuseumItemCard({
     >
       {isUnlocked && (
         <Badge className="absolute top-0 left-1/2 z-1 -translate-x-1/2 rounded-t-none bg-emerald-600 text-white shadow-[inset_0_-3px_#0000004d]">
-          DONATED
+          {t("museum.donated")}
         </Badge>
       )}
       <span className="my-auto flex flex-col items-center justify-center gap-1 py-1">
@@ -126,6 +129,7 @@ const CategorySection = memo(function CategorySection({
   hideDonated: boolean
   sectionRef: (node: HTMLDivElement | null) => void
 }) {
+  const { t } = useTranslation("museum");
   const visibleItems = hideDonated
     ? items.filter((item) => !unlockedItems.has(item.id))
     : items
@@ -143,7 +147,7 @@ const CategorySection = memo(function CategorySection({
           decoding="async"
           className="size-6  [image-rendering:pixelated]"
         />
-        <p>{formatCategoryLabel(category)}</p>
+        <p>{t(`museum.category.${category}`, formatCategoryLabel(category))}</p>
         <p className="ml-auto">
           ({unlockedCount} / {items.length})
         </p>
@@ -163,6 +167,7 @@ const CategorySection = memo(function CategorySection({
 })
 
 export default function MuseumPage() {
+  const { t } = useTranslation("museum")
   const [museumData, setMuseumData] = useState<MuseumData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -191,7 +196,7 @@ export default function MuseumPage() {
       setMuseumData(data)
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Nie udało się wczytać kategorii"
+        err instanceof Error ? err.message : "Failed to load categories"
       )
     } finally {
       setIsLoading(false)
@@ -208,7 +213,7 @@ export default function MuseumPage() {
       const museum: string[] = data?.data?.OBJECTIVES?.museum ?? []
       setUnlockedItems(new Set(museum))
     } catch (err) {
-      console.error("Nie udało się wczytać odblokowanych przedmiotów", err)
+      console.error("Failed to load unlocked items", err)
     }
   }, [])
 
@@ -301,12 +306,12 @@ export default function MuseumPage() {
   return (
     <div className="relative page-container flex flex-col pb-24">
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-      <PageTitle title="MUSEUM" description="SIEMA" />
+      <PageTitle title={t("museum.title")} description={t("museum.description")} />
 
       <span className="flex flex-row items-center justify-center gap-2">
         <Card className="flex flex-1 flex-row items-center gap-2 px-2 py-2">
           <ScrollIcon className="size-6 text-foreground/50" />
-          <p className="text-[0.9rem]">Museum Completion</p>
+          <p className="text-[0.9rem]">{t("museum.completion")}</p>
           <p className="ml-auto text-muted-foreground">
             [{unlockedItems.size.toString().padStart(4, "0")} /{" "}
             {totalItems.toString().padStart(4, "0")}]
@@ -326,7 +331,7 @@ export default function MuseumPage() {
             {isLoading ? (
               <LoaderIcon className="size-4 animate-spin" />
             ) : (
-              "Refresh"
+              t("museum.refresh")
             )}
           </Button>
         </Card>
@@ -361,14 +366,14 @@ export default function MuseumPage() {
       </Card>
 
       <Card className="flex flex-row items-center justify-center gap-2 p-2">
-        <p className="mr-auto">Museum Options</p>
-        <Button variant="default" disabled>Missing Resources</Button>
-        <Button variant="default" disabled>Items Summary</Button>
+        <p className="mr-auto">{t("museum.options")}</p>
+        <Button variant="default" disabled>{t("museum.options.missingresources")}</Button>
+        <Button variant="default" disabled>{t("museum.options.itemssummary")}</Button>
         <Button
           variant={hideDonated ? "secondary" : "default"}
           onClick={() => setHideDonated((prev) => !prev)}
         >
-          Hide Donated
+          {t("museum.options.hidedonated")}
         </Button>
       </Card>
 
