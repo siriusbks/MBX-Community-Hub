@@ -5,6 +5,7 @@ import { useCraftResources } from "./useCraftResources";
 import { copyResourcesAsCSV } from "./copyResourcesAsCSV";
 import { getLocalItemName } from "./localCraftItems";
 import { ItemImage } from "@const/elements";
+import { Badge } from "@components/ui/badge";
 
 type CraftPlannerContentProps = {
     itemIds: string[];
@@ -28,7 +29,7 @@ export const ResourceList: React.FC<{
     return (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {entries.map(([id, qty]) => (
-                <li key={id} className="flex items-center gap-2 bg-gray-700/60 p-2 rounded-lg text-sm">
+                <li key={id} className="group flex items-center gap-2 bg-gray-700/60 p-2 rounded-lg text-sm border-[3px] border-card/60 bg-linear-to-b from-secondary-lighter/80 to-secondary/80">
                     {id in classImages ? (
                         <img
                             src={classImages[id] || "/media/missingClass.png"}
@@ -38,13 +39,11 @@ export const ResourceList: React.FC<{
                     ) : (
                         <ItemImage 
                             itemId={id} 
-                            className="h-6 w-6 shrink-0 rounded" 
+                            className="size-6 shrink-0 rounded group-hover:scale-125 transition-transform" 
                         />
                     )}
                     <span className="truncate flex-1">{getLocalItemName(id, locale)}</span>
-                    <span className="shrink-0 text-sm bg-primary/20 text-primary px-2 py-1 rounded">
-                        {qty.toLocaleString()}
-                    </span>
+                    <Badge className="min-w-12">{qty.toLocaleString()}</Badge>
                 </li>
             ))}
         </ul>
