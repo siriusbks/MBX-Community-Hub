@@ -75,6 +75,7 @@
     "equip.description": "Build and theory-craft your gear, pets and skull loadouts.",
     "equip.classSection.title": "Class",
     "equip.classSection.tier": "Tier",
+    "equip.tooLowLevel": "Level too Low",
 
 
 
