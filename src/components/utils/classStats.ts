@@ -12,6 +12,11 @@ export function hasClassTiers(cls: MineboxClass): boolean {
     return [1, 2, 3, 4, 5].some((n) => !!cls.tiers[String(n)]?.stats);
 }
 
+export function ifClassEnabled(cls: MineboxClass): boolean {
+    return true;
+}
+
+
 /**
  * Active tier's stat entries, including the "all" tier's stats but only
  * when tier 1 is selected (tiers 2-5 already define their own value for

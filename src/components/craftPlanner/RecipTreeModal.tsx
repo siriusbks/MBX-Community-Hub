@@ -23,7 +23,7 @@ import {
 } from "./craftResourceUtils"
 import { copyResourcesAsCSV } from "./copyResourcesAsCSV"
 import { ResourceList } from "./CraftPlannerContent"
-import { ItemImage } from "@const/elements"
+import { FindItemRarity, ItemImage } from "@const/elements"
 import { Card } from "@components/ui/card"
 import { RarityBadge } from "@const/rarities"
 import { Badge } from "@components/ui/badge"
@@ -184,10 +184,10 @@ const RecipeTreeModal: React.FC<RecipeTreeModalProps> = ({
                   itemId={data.id}
                   className="h-10 w-10 shrink-0 rounded [image-rendering:pixelated]"
                 />
-                <span className="flex flex-1 flex-col gap-1">
+                <span className="flex flex-1 flex-col gap-0">
                   <span className="truncate text-base">{data.name}</span>
                   {/* TODO: FIX RARITY */}
-                  {/*<RarityBadge rarity={data.rarity || "prototype"} />*/}
+                  <RarityBadge rarity={FindItemRarity({ itemId: data.id })} />
                 </span>
                 <label className="flex shrink-0 items-center gap-2 text-sm">
                   {t("craftPlanner.recipeTree.quantity")}
