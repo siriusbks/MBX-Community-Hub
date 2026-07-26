@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import type { Equipment } from "types/equipment"
-import { RarityBorder, RarityBadge } from "@const/rarities"
-import { ItemImage } from "@const/elements"
+import { RarityBorder, RarityBadge, GetRarityColor } from "@const/rarities"
+import { FindItemRarity, ItemImage } from "@const/elements"
 import { StatItem } from "@const/statsAndDamage"
 import { Search, X, Trash2, ChevronDown, Filter, BoldIcon } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -10,6 +10,7 @@ import {
   formatClassStatRange,
   getClassTier1To5Range,
   hasClassTiers,
+  ifClassEnabled,
 } from "@components/utils/classStats"
 import { Card } from "@components/ui/card"
 import { Button } from "@components/ui/button"
@@ -231,7 +232,7 @@ export const EquipmentSelector: React.FC<Props> = ({
               const cls =
                 category === "CLASS" ? classesById[item.id] : undefined
               const isUnimplementedClass = !!cls && !hasClassTiers(cls)
-              const isDisabled = isEquippedSameRing || isUnimplementedClass
+              const isDisabled = isEquippedSameRing || !ifClassEnabled(cls)
               const classStatRange = cls ? getClassTier1To5Range(cls) : []
 
               return (
@@ -273,6 +274,10 @@ export const EquipmentSelector: React.FC<Props> = ({
                         <ItemImage
                           itemId={item.id}
                           className="h-12 w-12 shrink-0"
+
+                    style={{
+                      filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: item.id }))}40)`,
+                    }}
                         />
                       )}
 

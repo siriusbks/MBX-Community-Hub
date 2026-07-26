@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react"
 import type { Equipment, EquipmentSlot as SlotType } from "types/equipment"
-import { RarityBorder, RarityBadge } from "@const/rarities"
-import { ItemImage } from "@const/elements"
+import { RarityBorder, RarityBadge, GetRarityColor } from "@const/rarities"
+import { FindItemRarity, ItemImage } from "@const/elements"
 import { StatItem } from "@const/statsAndDamage"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui/tooltip"
 import { useTranslation } from "react-i18next"
@@ -29,7 +29,7 @@ export const EquipmentSlot: React.FC<Props> = ({
 
   return (
     <div
-      className="flex cursor-pointer flex-col items-center aspect-square size-full  "
+      className="flex aspect-square size-full cursor-pointer flex-col items-center"
       onClick={() => onSlotClick(slot.id)}
     >
       <Tooltip>
@@ -43,7 +43,7 @@ export const EquipmentSlot: React.FC<Props> = ({
             {equippedItem ? (
               <RarityBorder
                 rarity={rarityId}
-                className="flex aspect-square size-full items-center justify-center border-[6px] transition-transform duration-200 group-hover:scale-110 "
+                className="flex aspect-square size-full items-center justify-center border-[6px] transition-transform duration-200 group-hover:scale-110"
               >
                 {equippedItem.category === "CLASS" ? (
                   <img
@@ -54,16 +54,24 @@ export const EquipmentSlot: React.FC<Props> = ({
                     }
                     alt={equippedItem.name}
                     className="size-full [image-rendering:pixelated]"
+
+                    style={{
+                      filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: equippedItem.id }))}40)`,
+                    }}
                   />
                 ) : (
                   <ItemImage
                     itemId={equippedItem.id}
-                    className="size-full object-contain"
+                    className="size-full object-fill [image-rendering:pixelated]"
+
+                    style={{
+                      filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: equippedItem.id }))}40)`,
+                    }}
                   />
                 )}
               </RarityBorder>
             ) : (
-              <div className="flex aspect-square size-full items-center justify-center rounded-lg border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50 transition-all duration-200 group-hover:scale-110 hover:border-card ">
+              <div className="flex aspect-square size-full items-center justify-center rounded-lg border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50 transition-all duration-200 group-hover:scale-110 hover:border-card">
                 <Plus className="pointer-events-none h-9 w-9 text-foreground/50" />
               </div>
             )}

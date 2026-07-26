@@ -362,8 +362,8 @@ export default function MuseumPage() {
 
       <Card className="flex flex-row items-center justify-center gap-2 p-2">
         <p className="mr-auto">Museum Options</p>
-        <Button variant="default">Missing Resources</Button>
-        <Button variant="default">Items Summary</Button>
+        <Button variant="default" disabled>Missing Resources</Button>
+        <Button variant="default" disabled>Items Summary</Button>
         <Button
           variant={hideDonated ? "secondary" : "default"}
           onClick={() => setHideDonated((prev) => !prev)}

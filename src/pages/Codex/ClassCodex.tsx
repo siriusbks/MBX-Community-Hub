@@ -12,7 +12,6 @@ import { PageTitle } from "@components/layout/title"
 import { Badge } from "@components/ui/badge"
 import { CodexNav } from "@components/minebox/codex-nav"
 import i18next from "i18next"
-import { FindItemRarity } from "@const/elements"
 import {
   Sheet,
   SheetContent,
@@ -21,7 +20,7 @@ import {
   SheetTrigger,
 } from "@components/ui/sheet"
 
-const PlayableClasses = ["assassin", "mage", "archer", "gunner"]
+const PlayableClasses = ["assassin", "mage", "archer", "gunner", "monk", "bard"]
 
 // Builds a proxied URL for any Minebox API endpoint
 function buildProxyUrl(minebox_api) {
@@ -231,7 +230,14 @@ export function ClassCodexPage() {
                       className={`group relative flex h-full flex-col items-center justify-center gap-2`}
                     >
                       {!playable && (
-                        <span className="absolute bottom-0 left-0 z-2 flex h-full w-full items-center justify-center bg-linear-to-t from-red-900 to-transparent text-center text-xs opacity-0 saturate-100 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
+                        <span
+                          className="absolute bottom-0 left-0 z-2 flex h-full w-full items-center justify-center bg-linear-to-t from-red-500 to-transparent text-center text-xs opacity-0 saturate-100 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100"
+                          style={
+                            {
+                              "--tw-gradient-from": GetRarityColor(rarity),
+                            } as React.CSSProperties
+                          }
+                        >
                           <p className="z-3 w-2/3 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
                             This Class is currently disabled and cannot be
                             played in-game
@@ -278,13 +284,13 @@ export function ClassCodexPage() {
         </div>
 
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetContent className="gap-2 p-2 from-secondary-lighter to-secondary overflow-y-auto ">
+          <SheetContent className="gap-2 overflow-y-auto from-secondary-lighter to-secondary p-2">
             <ClassInfoPanel />
           </SheetContent>
         </Sheet>
 
         {/* RIGHT: selected class detail */}
-        <div className="custom-scrollbar flex min-h-0 flex-col gap-2 overflow-y-auto pr-2 lg:w-2/5 hidden lg:flex">
+        <div className="custom-scrollbar flex hidden min-h-0 flex-col gap-2 overflow-y-auto pr-2 lg:flex lg:w-2/5">
           {selectedClass && <ClassInfoPanel />}
         </div>
       </div>
