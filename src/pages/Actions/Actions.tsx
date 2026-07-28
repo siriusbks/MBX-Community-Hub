@@ -13,7 +13,7 @@ export function ActionsPage() {
     <div className="relative page-container flex flex-col pb-24">
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
 
-      <PageTitle title={t("market.action_house.title")} description={t("market.action_house.description")} />
+      <PageTitle title={t("market.auction_house.title")} description={t("market.auction_house.description")} />
 
       <ActionGrid />
     </div>

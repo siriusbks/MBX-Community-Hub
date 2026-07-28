@@ -49,7 +49,7 @@ export const AppRoutes: FC = () => {
 
             {/* Market Tab */}
             <Route path="/market" element={<ActionsPage />} />
-            <Route path="/market/action-house" element={<ActionsPage />} />
+            <Route path="/market/auction-house" element={<ActionsPage />} />
             <Route path="/market/bazaar" element={<BazaarPage />} />
             <Route path="/market/gem-exchange" element={<GemExchangePage />} />
 

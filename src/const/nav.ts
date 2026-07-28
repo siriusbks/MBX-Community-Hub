@@ -136,11 +136,11 @@ export const useNavLinks = (): NavItem[] => {
       label: t("mainpage.features.market.title"),
       items: [
         {
-          id: "action-house",
-          to: "/market/action-house",
+          id: "auction-house",
+          to: "/market/auction-house",
           icon: Scale,
-          label: t("mainpage.features.action-house.title"),
-          desc: t("mainpage.features.action-house.description"),
+          label: t("mainpage.features.auction-house.title"),
+          desc: t("mainpage.features.auction-house.description"),
         },
         {
           id: "bazaar",

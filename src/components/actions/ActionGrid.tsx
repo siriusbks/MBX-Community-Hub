@@ -117,7 +117,7 @@ export default function ActionGrid() {
     <div className="flex flex-col items-center gap-4">
       <span className="flex w-full gap-2">
         <Input
-          placeholder={t("market.action_house.search_placeholder")}
+          placeholder={t("market.auction_house.search_placeholder")}
           className="h-8 w-full minebox-shadow"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -132,13 +132,13 @@ export default function ActionGrid() {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="time">
-                {t("market.action_house.sort_by_time")}
+                {t("market.auction_house.sort_by_time")}
               </SelectItem>
               <SelectItem value="price">
-                {t("market.action_house.sort_by_price")}
+                {t("market.auction_house.sort_by_price")}
               </SelectItem>
               <SelectItem value="level">
-                {t("market.action_house.sort_by_level")}
+                {t("market.auction_house.sort_by_level")}
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -154,10 +154,10 @@ export default function ActionGrid() {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="asc">
-                {t("market.action_house.order_asc")}
+                {t("market.auction_house.order_asc")}
               </SelectItem>
               <SelectItem value="desc">
-                {t("market.action_house.order_desc")}
+                {t("market.auction_house.order_desc")}
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -205,7 +205,7 @@ export default function ActionGrid() {
                     to={`/items?id=${listing.item_id.replace(/^mbi-/, "")}`}
                   >
                     <p className="text-center text-[0.6rem] text-muted-foreground uppercase hover:text-primary">
-                      {t("market.action_house.view_in_codex")}
+                      {t("market.auction_house.view_in_codex")}
                     </p>
                   </Link>
 
@@ -242,10 +242,10 @@ export default function ActionGrid() {
                   )}
 
                   <span className="mt-1 flex flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    {t("market.action_house.time_left")}{" "}
+                    {t("market.auction_house.time_left")}{" "}
                     <p>
                       {getDaysLeft(listing.expires_at)}{" "}
-                      {t("market.action_house.days")}
+                      {t("market.auction_house.days")}
                     </p>
                   </span>
                 </RarityBorder>
@@ -261,7 +261,7 @@ export default function ActionGrid() {
           size="lg"
           className=""
         >
-          {loading ? "Loading..." : t("market.action_house.load_more")}
+          {loading ? "Loading..." : t("market.auction_house.load_more")}
         </Button>
       )}
     </div>
