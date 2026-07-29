@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Badge } from "@ui/badge"
 import { Card } from "@ui/card"
 import { ArrowRight } from "lucide-react"
@@ -20,6 +20,15 @@ type GemExchangeResponse = {
   total: number
 }
 
+type ExchangeDirection = "GOLD_TO_GEM" | "GEM_TO_GOLD"
+
+type ExchangeCalculation = {
+  cost: number // ile drugiej waluty trzeba wydać / otrzymasz
+  filled: boolean
+  ordersUsed: number
+  averageRate: number
+}
+
 const formatNumber = (value: number) =>
   new Intl.NumberFormat("pl-PL", {
     maximumFractionDigits: 0,
@@ -36,6 +45,184 @@ async function fetchOrders(type: "buy" | "sell") {
 
   const data = (await response.json()) as GemExchangeResponse
   return data.orders ?? []
+}
+
+// Dla zadanej ilości GEM (targetGem) liczy najlepszy możliwy koszt/przychód,
+// przechodząc po ofertach od najkorzystniejszej ceny w górę.
+function calculateForTargetGem(
+  targetGem: number,
+  direction: ExchangeDirection,
+  buyOrders: GemExchangeOrder[],
+  sellOrders: GemExchangeOrder[]
+): ExchangeCalculation {
+  if (!targetGem || targetGem <= 0) {
+    return { cost: 0, filled: true, ordersUsed: 0, averageRate: 0 }
+  }
+
+  let remainingGem = targetGem
+  let cost = 0 // GOLD_TO_GEM: ile GOLD trzeba wydać | GEM_TO_GOLD: ile GOLD dostaniesz
+  let ordersUsed = 0
+
+  if (direction === "GOLD_TO_GEM") {
+    // Kupujemy GEM od sprzedających -> najtańsza cena najpierw
+    const sorted = [...sellOrders]
+      .filter((o) => o.order_type === "SELL")
+      .sort((a, b) => a.price_per_unit - b.price_per_unit)
+
+    for (const order of sorted) {
+      if (remainingGem <= 0) break
+      const take = Math.min(order.quantity, remainingGem)
+      cost += take * order.price_per_unit
+      remainingGem -= take
+      ordersUsed += 1
+    }
+  } else {
+    // Sprzedajemy GEM kupującym -> najwyższa cena najpierw
+    const sorted = [...buyOrders]
+      .filter((o) => o.order_type === "BUY")
+      .sort((a, b) => b.price_per_unit - a.price_per_unit)
+
+    for (const order of sorted) {
+      if (remainingGem <= 0) break
+      const take = Math.min(order.quantity, remainingGem)
+      cost += take * order.price_per_unit
+      remainingGem -= take
+      ordersUsed += 1
+    }
+  }
+
+  const filled = remainingGem <= 0.0001
+  const gemActuallyTraded = targetGem - Math.max(remainingGem, 0)
+  const averageRate = gemActuallyTraded > 0 ? cost / gemActuallyTraded : 0
+
+  return { cost, filled, ordersUsed, averageRate }
+}
+
+function ExchangeCalculator({
+  buyOrders,
+  sellOrders,
+}: {
+  buyOrders: GemExchangeOrder[]
+  sellOrders: GemExchangeOrder[]
+}) {
+  const [direction, setDirection] = useState<ExchangeDirection>("GOLD_TO_GEM")
+  const [targetGem, setTargetGem] = useState(0)
+
+  const relevantOrders = direction === "GOLD_TO_GEM" ? sellOrders : buyOrders
+  const relevantType = direction === "GOLD_TO_GEM" ? "SELL" : "BUY"
+
+  const maxGem = useMemo(
+    () =>
+      relevantOrders
+        .filter((o) => o.order_type === relevantType)
+        .reduce((sum, o) => sum + o.quantity, 0),
+    [relevantOrders, relevantType]
+  )
+
+  // Jeśli max się zmieni (np. po fetchu) i aktualna wartość slidera go przekracza, przytnij
+  useEffect(() => {
+    setTargetGem((prev) => Math.min(prev, maxGem))
+  }, [maxGem])
+
+  const result = useMemo(
+    () => calculateForTargetGem(targetGem, direction, buyOrders, sellOrders),
+    [targetGem, direction, buyOrders, sellOrders]
+  )
+
+  const fromCurrency = direction === "GOLD_TO_GEM" ? "GOLD" : "GEM"
+  const toCurrency = direction === "GOLD_TO_GEM" ? "GEM" : "GOLD"
+
+  return (
+<Card className="p-0 gap-0">
+      <div className="flex items-center justify-between border-b-2 border-card-dark bg-secondary/20 p-4">
+        <h3 className="text-lg font-semibold">Exchange Calculator</h3>
+        <button
+          type="button"
+          onClick={() => {
+            setDirection((prev) =>
+              prev === "GOLD_TO_GEM" ? "GEM_TO_GOLD" : "GOLD_TO_GEM"
+            )
+            setTargetGem(0)
+          }}
+          className="flex items-center gap-2 rounded-md border px-3 py-1 text-sm hover:bg-muted"
+        >
+          <img src={`/media/currency/${fromCurrency}.png`} className="!size-4" />
+          {fromCurrency}
+          <ArrowRight className="size-4" />
+          <img src={`/media/currency/${toCurrency}.png`} className="!size-4" />
+          {toCurrency}
+        </button>
+      </div>
+
+      {maxGem <= 0 ? (
+        <p className="text-sm text-muted-foreground">
+          No offers available for this exchange direction.
+        </p>
+      ) : (
+        <span>
+          <div className="space-y-1 px-4 py-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">How many GEM do you want to {direction === "GOLD_TO_GEM" ? "buy" : "sell"}:</span>
+              <span className="flex items-center gap-1 font-semibold">
+                {formatNumber(targetGem)}
+                <img src="/media/currency/GEM.png" className="!size-4" />
+              </span>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={maxGem}
+              step={Math.max(1, Math.round(maxGem / 1000))}
+              value={targetGem}
+              onChange={(e) => setTargetGem(Number(e.target.value))}
+              className="w-full accent-[#44d560]"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>0</span>
+              <span>max. {formatNumber(maxGem)}</span>
+            </div>
+          </div>
+
+          {targetGem > 0 && (
+            <div className="space-y-1 border-t-2 border-secondary-dark bg-secondary/40 p-4 grid grid-cols-3">
+
+
+              <div className="flex flex-col items-start gap-0 -space-y-1.5 text-lg ">
+                <p className="text-muted-foreground text-xs">Used</p>
+                <p className="uppercase">{result.ordersUsed}{" "}{result.ordersUsed === 1 ? "offer" : "offers"}</p>
+              </div>
+
+
+              <div className="flex flex-col gap-0 -space-y-1.5 items-center text-lg  mx-auto">
+                <p className="text-muted-foreground text-xs">{direction === "GOLD_TO_GEM"
+                  ? "Minimum cost in GOLD"
+                  : "Maximum proceeds in GOLD"}</p>
+                <span className="flex flex-row items-center gap-1">
+                  <span>{formatNumber(targetGem)}</span>
+                  <img src="/media/currency/GEM.png" className="!size-4" />
+                  <ArrowRight className="size-4" />
+                  <span>{formatNumber(result.cost)}</span>
+                  <img src="/media/currency/GOLD.png" className="!size-4" />
+                </span>
+              </div>
+              
+              <div className="flex flex-col items-end gap-0 -space-y-1.5 text-lg ">
+                <p className="text-muted-foreground text-xs">Average rate</p>
+                <p className="uppercase">{formatNumber(result.averageRate)} GOLD per 1 GEM</p>
+              </div>
+
+              {!result.filled && (
+                <p className="text-xs text-red-500">
+                  Note: the selected amount exceeds the available offers — the
+                  result reflects the maximum portion that can be fulfilled.
+                </p>
+              )}
+            </div>
+          )}
+        </span>
+      )}
+    </Card>
+  )
 }
 
 export function GemExchange() {
@@ -90,29 +277,12 @@ export function GemExchange() {
           No data at this time.
         </div>
       ) : (
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
           {orders.map((order) => (
-            <Card key={order.id} className="p-4">
+            <Card key={order.id} className="p-0 pt-4">
 
-
-              {/* Main Row */}
-              <div className="flex items-center justify-center gap-2 w-full">
-                <div className="flex flex-col items-center justify-center -space-y-1 flex-1">
-                  <img
-                    src={`/media/currency/${order.order_type === "SELL" ? "GOLD" : "GEM"}.png`}
-                    className="h-20 w-20"
-                  />
-                  <Badge className="z-5">
-                    {formatNumber(
-                      order.quantity *
-                        (order.order_type === "BUY" ? 1 : order.price_per_unit)
-                    )}
-                  </Badge>
-                </div>
-                <div>
-                  <ArrowRight className="size-8 bg-background/20 p-1 rounded-lg" />
-                </div>
-                <div className="flex flex-col items-center justify-center -space-y-1 flex-1">
+              <div className="flex items-center justify-between gap-2 w-full">
+                <div className="flex flex-col items-center justify-end -space-y-1 flex-1">
                   <img
                     src={`/media/currency/${order.order_type === "BUY" ? "GOLD" : "GEM"}.png`}
                     className="h-20 w-20"
@@ -120,139 +290,52 @@ export function GemExchange() {
                   <Badge className="z-5">
                     {formatNumber(
                       order.quantity *
-                        (order.order_type === "SELL" ? 1 : order.price_per_unit)
+                      (order.order_type === "SELL" ? 1 : order.price_per_unit)
                     )}
                   </Badge>
                 </div>
-
               </div>
-
-
-
 
               <div className="flex items-center justify-center gap-2">
                 {order.order_type === "BUY" ? (
                   <span className="flex flex-row items-center justify-center gap-2">
                     <p className="text-md flex flex-row items-center justify-center gap-1 text-[#44d560]">
                       1
-                      <img
-                        src={`/media/currency/GEM.png`}
-                        className="!size-6"
-                      />
+                      <img src={`/media/currency/GEM.png`} className="!size-4" />
                     </p>
                     =
                     <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                       {formatNumber(order.price_per_unit)}
-                      <img
-                        src={`/media/currency/GOLD.png`}
-                        className="!size-6"
-                      />
+                      <img src={`/media/currency/GOLD.png`} className="!size-4" />
                     </p>
                   </span>
                 ) : (
                   <span className="flex flex-row items-center justify-center gap-2">
                     <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
                       {formatNumber(order.price_per_unit)}
-                      <img
-                        src={`/media/currency/GOLD.png`}
-                        className="!size-6"
-                      />
+                      <img src={`/media/currency/GOLD.png`} className="!size-4" />
                     </p>
                     =
                     <p className="text-md flex flex-row items-center justify-center gap-1 text-[#44d560]">
                       1
-                      <img
-                        src={`/media/currency/GEM.png`}
-                        className="!size-6"
-                      />
+                      <img src={`/media/currency/GEM.png`} className="!size-4" />
                     </p>
                   </span>
                 )}
               </div>
-              <PlayerFooter playerName={order.username} />
+              <span className="border-t-2 border-secondary-dark bg-secondary/40 p-4 pt-0">
+                <PlayerFooter playerName={order.username} />
+              </span>
             </Card>
-
-            
           ))}
         </div>
       )}
     </div>
   )
 
-  {/* <Card key={order.id} className="p-4">
-              <div className="flex items-center justify-center gap-2">
-                <div className="flex flex-col items-center justify-center -space-y-1">
-                  <img
-                    src={`/media/currency/${order.order_type === "SELL" ? "GOLD" : "GEM"}.png`}
-                    className="h-20 w-20"
-                  />
-                  <Badge className="z-5">
-                    {formatNumber(
-                      order.quantity *
-                        (order.order_type === "BUY" ? 1 : order.price_per_unit)
-                    )}
-                  </Badge>
-                </div>
-                <div>
-                  <ArrowRight />
-                </div>
-                <div className="flex flex-col items-center justify-center -space-y-1">
-                  <img
-                    src={`/media/currency/${order.order_type === "BUY" ? "GOLD" : "GEM"}.png`}
-                    className="h-20 w-20"
-                  />
-                  <Badge className="z-5">
-                    {formatNumber(
-                      order.quantity *
-                        (order.order_type === "SELL" ? 1 : order.price_per_unit)
-                    )}
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                {order.order_type === "BUY" ? (
-                  <span className="flex flex-row items-center justify-center gap-2">
-                    <p className="text-md flex flex-row items-center justify-center gap-1 text-[#44d560]">
-                      1
-                      <img
-                        src={`/media/currency/GEM.png`}
-                        className="!size-6"
-                      />
-                    </p>
-                    =
-                    <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                      {formatNumber(order.price_per_unit)}
-                      <img
-                        src={`/media/currency/GOLD.png`}
-                        className="!size-6"
-                      />
-                    </p>
-                  </span>
-                ) : (
-                  <span className="flex flex-row items-center justify-center gap-2">
-                    <p className="text-md flex flex-row items-center justify-center gap-1 text-[#ffea00]">
-                      {formatNumber(order.price_per_unit)}
-                      <img
-                        src={`/media/currency/GOLD.png`}
-                        className="!size-6"
-                      />
-                    </p>
-                    =
-                    <p className="text-md flex flex-row items-center justify-center gap-1 text-[#44d560]">
-                      1
-                      <img
-                        src={`/media/currency/GEM.png`}
-                        className="!size-6"
-                      />
-                    </p>
-                  </span>
-                )}
-              </div>
-              <PlayerFooter playerName={order.username} />
-            </Card> */}
-
   return (
     <div className="space-y-8">
+      <ExchangeCalculator buyOrders={buyOrders} sellOrders={sellOrders} />
       {renderOrders(sellOrders, "GOLD > GEMS")}
       {renderOrders(buyOrders, "GEMS > GOLD")}
     </div>
