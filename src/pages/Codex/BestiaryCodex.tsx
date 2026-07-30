@@ -336,7 +336,7 @@ export function BestiaryCodexPage() {
         <div
           className={`custom-scrollbar ${selectedCreatureId ? "w-full lg:w-2/3" : "w-full"} lg:scroll-fade  lg:overflow-y-auto pr-2`}
         >
-          <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-6 gap-4`}>
+          <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-5 gap-4`}>
             {isLoading && (
               <div className="col-span-3 text-center">Loading bestiary...</div>
             )}
