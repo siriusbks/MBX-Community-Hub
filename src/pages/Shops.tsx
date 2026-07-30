@@ -148,12 +148,12 @@ export function ShopsPage() {
                     shops.map((shop) => (
                         <Card
                             key={shop.id}
-                            className={`relative col-span-1 flex flex-col items-start justify-center gap-2 min-h-40 p-4 ${shop.isOpen ? "border-green-500" : "border-red-500"
+                            className={`group relative col-span-1 flex flex-col items-start justify-center gap-2 min-h-40 p-4 ${shop.isOpen ? "border-green-500" : "border-red-500"
                                 }`}
                         >
                             <p className="uppercase inline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider text-center">{t(`market.shops.${shop.id}`)}</p>
 
-                            <img src={`/media/shops/${shop.id}.png`} className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50" />
+                            <img src={`/media/shops/${shop.id}.png`} className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50 group-hover:scale-110 group-hover:saturate-100 transition-all" />
                             
                             <span className="flex flex-col gap-0">
                                 <p className="text-xs text-muted-foreground">{t("market.shops.open_hours")}</p>

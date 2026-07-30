@@ -4,6 +4,7 @@ import { Card } from "@ui/card"
 import { ArrowRight } from "lucide-react"
 import { PlayerFooter } from "@components/minebox/smth"
 import { useTranslation } from 'react-i18next'
+import { Slider } from "@components/ui/slider"
 
 type GemExchangeOrder = {
   id: number
@@ -23,7 +24,7 @@ type GemExchangeResponse = {
 type ExchangeDirection = "GOLD_TO_GEM" | "GEM_TO_GOLD"
 
 type ExchangeCalculation = {
-  cost: number // ile drugiej waluty trzeba wydać / otrzymasz
+  cost: number // How much of the other currency you'll spend/receive
   filled: boolean
   ordersUsed: number
   averageRate: number
@@ -47,8 +48,8 @@ async function fetchOrders(type: "buy" | "sell") {
   return data.orders ?? []
 }
 
-// Dla zadanej ilości GEM (targetGem) liczy najlepszy możliwy koszt/przychód,
-// przechodząc po ofertach od najkorzystniejszej ceny w górę.
+// For a given amount of GEM (targetGem), calculates the best possible cost/revenue,
+// iterating through offers from the most favorable price upwards.
 function calculateForTargetGem(
   targetGem: number,
   direction: ExchangeDirection,
@@ -60,11 +61,11 @@ function calculateForTargetGem(
   }
 
   let remainingGem = targetGem
-  let cost = 0 // GOLD_TO_GEM: ile GOLD trzeba wydać | GEM_TO_GOLD: ile GOLD dostaniesz
+  let cost = 0 // GOLD_TO_GEM: how much GOLD you'll spend | GEM_TO_GOLD: how much GOLD you'll receive
   let ordersUsed = 0
 
   if (direction === "GOLD_TO_GEM") {
-    // Kupujemy GEM od sprzedających -> najtańsza cena najpierw
+    // Buying GEM from sellers -> cheapest price first
     const sorted = [...sellOrders]
       .filter((o) => o.order_type === "SELL")
       .sort((a, b) => a.price_per_unit - b.price_per_unit)
@@ -77,7 +78,7 @@ function calculateForTargetGem(
       ordersUsed += 1
     }
   } else {
-    // Sprzedajemy GEM kupującym -> najwyższa cena najpierw
+    // Selling GEM to buyers -> highest price first
     const sorted = [...buyOrders]
       .filter((o) => o.order_type === "BUY")
       .sort((a, b) => b.price_per_unit - a.price_per_unit)
@@ -119,7 +120,7 @@ function ExchangeCalculator({
     [relevantOrders, relevantType]
   )
 
-  // Jeśli max się zmieni (np. po fetchu) i aktualna wartość slidera go przekracza, przytnij
+  // If max changes (e.g. after fetch) and current slider value exceeds it, trim it
   useEffect(() => {
     setTargetGem((prev) => Math.min(prev, maxGem))
   }, [maxGem])
@@ -133,7 +134,7 @@ function ExchangeCalculator({
   const toCurrency = direction === "GOLD_TO_GEM" ? "GEM" : "GOLD"
 
   return (
-<Card className="p-0 gap-0">
+    <Card className="p-0 gap-0">
       <div className="flex items-center justify-between border-b-2 border-card-dark bg-secondary/20 p-4">
         <h3 className="text-lg font-semibold">Exchange Calculator</h3>
         <button
@@ -144,7 +145,7 @@ function ExchangeCalculator({
             )
             setTargetGem(0)
           }}
-          className="flex items-center gap-2 rounded-md border px-3 py-1 text-sm hover:bg-muted"
+          className="flex items-center gap-2 rounded-md border px-3 py-1 text-sm hover:bg-secondary/50"
         >
           <img src={`/media/currency/${fromCurrency}.png`} className="!size-4" />
           {fromCurrency}
@@ -168,14 +169,13 @@ function ExchangeCalculator({
                 <img src="/media/currency/GEM.png" className="!size-4" />
               </span>
             </div>
-            <input
-              type="range"
-              min={0}
+            <Slider
+              value={[targetGem]}
+              onValueChange={(value) => setTargetGem(value[0])}
               max={maxGem}
-              step={Math.max(1, Math.round(maxGem / 1000))}
-              value={targetGem}
-              onChange={(e) => setTargetGem(Number(e.target.value))}
-              className="w-full accent-[#44d560]"
+              step={1}
+              min={0}
+              className="mx-auto w-full"
             />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>0</span>
@@ -185,15 +185,12 @@ function ExchangeCalculator({
 
           {targetGem > 0 && (
             <div className="space-y-1 border-t-2 border-secondary-dark bg-secondary/40 p-4 grid grid-cols-3">
-
-
               <div className="flex flex-col items-start gap-0 -space-y-1.5 text-lg ">
                 <p className="text-muted-foreground text-xs">Used</p>
                 <p className="uppercase">{result.ordersUsed}{" "}{result.ordersUsed === 1 ? "offer" : "offers"}</p>
               </div>
 
-
-              <div className="flex flex-col gap-0 -space-y-1.5 items-center text-lg  mx-auto">
+              <div className="flex flex-col gap-0 -space-y-1.5 items-center text-lg mx-auto">
                 <p className="text-muted-foreground text-xs">{direction === "GOLD_TO_GEM"
                   ? "Minimum cost in GOLD"
                   : "Maximum proceeds in GOLD"}</p>
@@ -208,7 +205,9 @@ function ExchangeCalculator({
               
               <div className="flex flex-col items-end gap-0 -space-y-1.5 text-lg ">
                 <p className="text-muted-foreground text-xs">Average rate</p>
-                <p className="uppercase">{formatNumber(result.averageRate)} GOLD per 1 GEM</p>
+                <p className="uppercase flex flex-row items-center gap-2 mt-1">{formatNumber(result.averageRate)} 
+                  <img src="/media/currency/GOLD.png" className="!size-5" /> / 
+                  <img src="/media/currency/GEM.png" className="!size-5" /></p>
               </div>
 
               {!result.filled && (
@@ -336,8 +335,8 @@ export function GemExchange() {
   return (
     <div className="space-y-8">
       <ExchangeCalculator buyOrders={buyOrders} sellOrders={sellOrders} />
-      {renderOrders(sellOrders, "GOLD > GEMS")}
-      {renderOrders(buyOrders, "GEMS > GOLD")}
+      {renderOrders(sellOrders, "Exchange Gold to Gems")}
+      {renderOrders(buyOrders, "Exchange Gems to Gold")}
     </div>
   )
 }
