@@ -7,10 +7,12 @@ import {
 import { Globe, InfoIcon } from "lucide-react"
 import { Badge } from "@ui/badge"
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Error404() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { t } = useTranslation(["error404"]);
 
     return (
         <div className="py-auto relative flex flex-col page-container ">
@@ -20,14 +22,14 @@ export function Error404() {
 
             {/* Welcome Hero */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center flex flex-col my-auto">
-                <Badge variant="secondary" className="font-light tracking-wide">API Status: <p className="">ONLINE</p></Badge>
-                <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">Error 404</h2>
+                <Badge variant="secondary" className="font-light tracking-wide">{t("error404.apiStatus")}: <p className="">{t("error404.online")}</p></Badge>
+                <h2 className="text-4xl drop-shadow-[0_3px_0_#00000040]">{t("error404.title")}</h2>
                 <h1 className="inline-block text-6xl font-bold
       bg-gradient-to-b from-primary to-primary-dark
-      bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider ">PAGE NOT FOUND</h1>
-                <p className="text-sm max-w-xl text-center mt-2 font-light"><span className="text-primary">{location.pathname}</span> doesn't exist in this world.</p>
+      bg-clip-text text-transparent drop-shadow-[0_4px_0_#5d3a00] tracking-wider ">{t("error404.pageNotFound")}</h1>
+                <p className="text-sm max-w-xl text-center mt-2 font-light"><span className="text-primary">{location.pathname}</span> {t("error404.doesNotExist")}</p>
                 <span className="mt-4 flex gap-2">
-                    <Button size="lg" className="tracking-wider" onClick={() => navigate(-1)}><Globe className="mt-0.5" />Go Back</Button>
+                    <Button size="lg" className="tracking-wider" onClick={() => navigate(-1)}><Globe className="mt-0.5" />{t("error404.goBack")}</Button>
                 </span>
             </div>
         </div>

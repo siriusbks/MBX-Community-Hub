@@ -48,6 +48,7 @@ import {
 } from "@components/ui/select"
 import { CodexNav } from "@components/minebox/codex-nav"
 import { FindItemRarity } from "@const/elements"
+import { useTranslation } from "react-i18next"
 
 interface ShipLevel {
   level: number
@@ -78,6 +79,7 @@ interface ApiResponse {
 }
 
 export function ShipCodexPage() {
+  const { t } = useTranslation("codex")
   const [ships, setShips] = useState<Ship[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -109,7 +111,7 @@ export function ShipCodexPage() {
         setShips(data.ships)
         setError(null)
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch ships")
+        setError(err instanceof Error ? err.message : t("codex.ship.error.fetchFailed"))
         console.error("Error fetching ships:", err)
       } finally {
         setLoading(false)
@@ -117,7 +119,7 @@ export function ShipCodexPage() {
     }
 
     fetchShips()
-  }, [])
+  }, [t])
 
   const getRarityClass = (rarity: string): string => {
     switch (rarity.toUpperCase()) {
@@ -149,9 +151,9 @@ export function ShipCodexPage() {
     return (
       <div className="relative page-container flex h-dvh flex-col overflow-hidden">
         <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-        <PageTitle title="Ship Codex" />
+        <PageTitle title={t("codex.ship.title")} />
         <div className="flex flex-1 items-center justify-center">
-          <div className="text-lg">Loading ships...</div>
+          <div className="text-lg">{t("codex.ship.loading")}</div>
         </div>
       </div>
     )
@@ -161,9 +163,9 @@ export function ShipCodexPage() {
     return (
       <div className="relative page-container flex h-dvh flex-col overflow-hidden">
         <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-        <PageTitle title="Ship Codex" />
+        <PageTitle title={t("codex.ship.title")} />
         <div className="flex flex-1 items-center justify-center">
-          <div className="text-lg text-red-500">Error: {error}</div>
+          <div className="text-lg text-red-500">{t("codex.ship.error")}: {error}</div>
         </div>
       </div>
     )
@@ -172,7 +174,7 @@ export function ShipCodexPage() {
   return (
     <div className="relative page-container flex h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-      <PageTitle title="Ship Codex" />
+      <PageTitle title={t("codex.ship.title")} />
 
       <CodexNav />
 
@@ -217,20 +219,20 @@ export function ShipCodexPage() {
                   <span className="mt-2 flex w-full flex-row items-center justify-between gap-1 px-1 text-center text-sm leading-none">
                     <span>
                       <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <ZapIcon className="size-3" strokeWidth={3} /> Speed
+                        <ZapIcon className="size-3" strokeWidth={3} /> {t("codex.ship.speed")}
                       </p>
                       <p>{levelData.speed}</p>
                     </span>
                     <span>
                       <p className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Package2Icon className="size-3" strokeWidth={3} />{" "}
-                        Cargo
+                        {t("codex.ship.cargo")}
                       </p>
                       <p>{levelData.cargo}</p>
                     </span>
                     <span>
                       <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Grid2x2Icon className="size-3" strokeWidth={3} /> Slots
+                        <Grid2x2Icon className="size-3" strokeWidth={3} /> {t("codex.ship.slots")}
                       </p>
                       <p>{ship.component_slots.length}</p>
                     </span>
@@ -284,7 +286,7 @@ export function ShipCodexPage() {
         </RarityBorder>
 
         <Card className="flex flex-row items-center justify-between gap-1 px-2 py-2">
-          <p>Available slots:</p>
+          <p>{t("codex.ship.availableSlots")}</p>
           <span className="flex flex-row gap-1">
             {slotIcons.map(({ key, icon: Icon }) => {
               const available = selectedShip.component_slots.includes(key)
@@ -316,7 +318,7 @@ export function ShipCodexPage() {
               key={level.level}
               className="flex flex-row items-center gap-3"
             >
-              <p className="mr-auto w-24">Level {level.level}</p>
+              <p className="mr-auto w-24">{t("codex.ship.level")} {level.level}</p>
 
               <p className="flex items-center gap-1">
                 <ZapIcon className="size-4" strokeWidth={3} />

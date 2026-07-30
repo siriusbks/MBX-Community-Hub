@@ -196,12 +196,12 @@ export default function MuseumPage() {
       setMuseumData(data)
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to load categories"
+        err instanceof Error ? err.message : t("museum.error.loadFailed")
       )
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [t])
 
   const fetchUnlockedItems = useCallback(async () => {
     try {
@@ -213,9 +213,9 @@ export default function MuseumPage() {
       const museum: string[] = data?.data?.OBJECTIVES?.museum ?? []
       setUnlockedItems(new Set(museum))
     } catch (err) {
-      console.error("Failed to load unlocked items", err)
+      console.error(t("museum.error.unlockedItems"), err)
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
     fetchMuseumData()
@@ -348,7 +348,7 @@ export default function MuseumPage() {
 
         {error && (
           <p className="col-span-7 py-4 text-center text-sm text-destructive">
-            Błąd: {error}
+            {t("museum.error")}: {error}
           </p>
         )}
 

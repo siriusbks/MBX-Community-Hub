@@ -32,7 +32,7 @@ export interface ProjectProps {
 
 export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
     const { links } = project;
-    const { t } = useTranslation(["projects", "community"]);
+    const { t } = useTranslation(["community"]);
     const [version, setVersion] = useState<string | null>(null);
     const [fetchedDescription, setFetchedDescription] = useState<string | null>(null);
 
@@ -56,11 +56,11 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                     }
                 }
             } catch (e) {
-                console.error("Failed to fetch modrinth data", e);
+                console.error(t("community.error.fetchFailed"), e);
             }
         };
         fetchData();
-    }, [project.modrinthId, project.description]);
+    }, [project.modrinthId, project.description, t]);
 
     const description = project.description || fetchedDescription || t(`description.${project.id}`, "");
     const isValidLink = (url?: string) => url && url.trim().length > 0;
@@ -86,13 +86,13 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                     </Badge>
                     {project.modrinthId && version && (
                         <Badge variant="secondary" className="flex items-center gap-1.5 backdrop-blur-md shadow-sm">
-                            <Layers2 size={14} className="text-primary" /> v{version}
+                            <Layers2 size={14} className="text-primary" /> {t("community.version")} {version}
                         </Badge>
                     )}
                 </div>
                 <div className="absolute bottom-2 right-2 flex flex-row flex-wrap gap-1 z-10">
                     {project.language && project.language.length > 0 && (
-                        <div className="ml-auto flex space-x-2" title="Supported Languages">
+                        <div className="ml-auto flex space-x-2" title={t("community.supportedLanguages")}>
                             {project.language.map((lang, idx) => (
                                 <span key={idx} className="inline-flex items-center justify-center text-xs z-10 hover:z-20 hover:scale-110 transition-all cursor-default">
                                     {lang}
@@ -131,7 +131,7 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                                     </h4>
                                 )}
                                 <p className="text-xs text-muted-foreground  flex items-center">
-                                    by <span className="text-foreground font-medium ml-1">{project.creator}</span>
+                                    {t("community.by")} <span className="text-foreground font-medium ml-1">{project.creator}</span>
 
                                 </p>
                             </div>
@@ -151,35 +151,35 @@ export const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
                     {isValidLink(links?.website) && (
                         <Button variant="default" size="sm" className="h-9 gap-1.5 shadow-sm" asChild>
                             <a href={links?.website} target="_blank" rel="noopener noreferrer">
-                                <Globe size={16} /> Website
+                                <Globe size={16} /> {t("community.website")}
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.modrinth) && (
                         <Button size="lg" className="" asChild>
                             <a href={links?.modrinth} target="_blank" rel="noopener noreferrer">
-                                <SiModrinth className="size-3 mt-0.5" /> Modrinth
+                                <SiModrinth className="size-3 mt-0.5" /> {t("community.modrinth")}
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.curseforge) && (
                         <Button size="lg" className="" asChild>
                             <a href={links?.curseforge} target="_blank" rel="noopener noreferrer">
-                                <SiCurseforge className="size-3 mt-0.5" /> Curse Forge
+                                <SiCurseforge className="size-3 mt-0.5" /> {t("community.curseforge")}
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.github) && (
                         <Button variant="secondary" size="lg" className="" asChild>
                             <a href={links?.github} target="_blank" rel="noopener noreferrer">
-                                <SiGithub className="size-3 mt-0.5" /> GitHub
+                                <SiGithub className="size-3 mt-0.5" /> {t("community.github")}
                             </a>
                         </Button>
                     )}
                     {isValidLink(links?.discord) && (
                         <Button variant="secondary" size="lg" className="" asChild>
                             <a href={links?.discord} target="_blank" rel="noopener noreferrer">
-                                <SiDiscord className="size-3 mt-0.5" /> Discord
+                                <SiDiscord className="size-3 mt-0.5" /> {t("community.discord")}
                             </a>
                         </Button>
                     )}

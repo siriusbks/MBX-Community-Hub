@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 function EventMissionElement({
   stars,
@@ -23,6 +24,7 @@ function EventMissionElement({
   stars: number
   children: React.ReactNode
 }) {
+  const { t } = useTranslation("summer2026")
   return (
     <span className="my-1 mt-1 flex flex-row items-center justify-between border-b-muted-foreground/20 px-2 py-0.5 pt-1 text-xs">
       <p className="flex flex-row items-center gap-1 text-[0.7rem] leading-none font-thin text-foreground/80">
@@ -49,13 +51,14 @@ function EventTitleElement({
   description: string
   icon: LucideIcon
 }) {
+  const { t } = useTranslation("summer2026")
   return (
     <span className="mt-8 flex flex-col gap-2">
       <p className="flex items-center gap-1 text-2xl leading-none text-primary drop-shadow-[0_2px_0_#5d3a00]">
-        <Icon className="size-6" /> {title}
+        <Icon className="size-6" /> {t(title)}
       </p>
       <p className="w-1/2 text-xs leading-tight text-muted-foreground">
-        {description}
+        {t(description)}
       </p>
     </span>
   )
@@ -63,39 +66,33 @@ function EventTitleElement({
 
 const FEATURE_ITEMS = [
   {
-    title: "Spawn Island Raid",
-    description:
-      "fight through districts of rising difficulty, solve the puzzles to crack open the locked zones, then extract before time runs out. It's the biggest expedition map so far!",
+    title: "summer2026.features.spawnRaid.title",
+    description: "summer2026.features.spawnRaid.description",
     icon: TreePalmIcon,
   },
   {
-    title: "SHELLS & BATTLEPASS",
-    description:
-      "Everything summer pays out in shells, the seasonal currency. Clear weekly missions (fish the warm sea, craft ice cream, hunt crabs and more) to stack shells and lottery tickets and climb the Summer Battlepass.",
+    title: "summer2026.features.shells.title",
+    description: "summer2026.features.shells.description",
     icon: ShellIcon,
   },
   {
-    title: "SUMMER STORYLINE AND MISSIONS",
-    description:
-      "Four beach locals send you all over the island: Captain Barnacle, Kai the artisan, Nalu and Zen. Their questlines are packed with exclusive summer gear and rewards.",
+    title: "summer2026.features.storyline.title",
+    description: "summer2026.features.storyline.description",
     icon: BookOpenIcon,
   },
   {
-    title: "NEW CATCHES & SHOALS",
-    description:
-      "30 new fish to reel in from fresh coastal shoals: jellyfish, seahorses, starfish, crabs and more.",
+    title: "summer2026.features.catches.title",
+    description: "summer2026.features.catches.description",
     icon: FishIcon,
   },
   {
-    title: "BEACH WORKSHOPS & CRAFTS",
-    description:
-      "New beach workshops: cook seafood dishes (seahorse salad, jellyfish smoothie, starfish skewer), churn ice cream, and craft a whole new line of summer items and armor sets",
+    title: "summer2026.features.workshops.title",
+    description: "summer2026.features.workshops.description",
     icon: ToolboxIcon,
   },
   {
-    title: "SUMMER MUSEUM",
-    description:
-      "A hidden seasonal collection: donate the 45+ summer items to complete it and claim 2 mythic + 2 legendary keys",
+    title: "summer2026.features.museum.title",
+    description: "summer2026.features.museum.description",
     icon: LandmarkIcon,
   },
 ]
@@ -253,13 +250,15 @@ const lotteryDrops = {
 }
 
 export function Summer2026EventPage() {
+  const { t } = useTranslation("summer2026")
+
   return (
     <div className="py-auto relative page-container flex flex-col pb-16">
       <div className="absolute top-0 -z-1 aspect-21/9 w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
 
       <PageTitle
-        title="Summer Event"
-        description="Join us for the Summer event!"
+        title={t("summer2026.pageTitle")}
+        description={t("summer2026.pageDescription")}
       />
 
       {/* Event Cards Section */}
@@ -269,11 +268,11 @@ export function Summer2026EventPage() {
             <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/40 px-2 py-3 text-xs">
               <Icon className="size-8 rounded-md bg-primary p-1.5 text-primary-foreground minebox-shadow" />
               <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                {title}
+                {t(title)}
               </p>
             </span>
             <span className="flex h-full flex-col items-center justify-center px-2 pb-2">
-              <p className="leading-tight">{description}</p>
+              <p className="leading-tight">{t(description)}</p>
             </span>
           </Card>
         ))}
@@ -281,8 +280,8 @@ export function Summer2026EventPage() {
 
       {/* Event Missions Section */}
       <EventTitleElement
-        title="Event Missions"
-        description="Complete the following missions to earn rewards during the Summer 2026 event."
+        title="summer2026.missions.title"
+        description="summer2026.missions.description"
         icon={CalendarDays}
       />
       <span className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -293,39 +292,38 @@ export function Summer2026EventPage() {
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  Week 1
+                  {t("summer2026.missions.week1.title")}
                 </p>
                 <p className="text-xs">25.07 - 31.07</p>
               </span>
             </span>
           </span>
           <EventMissionElement stars={2}>
-            Break washed-up bottles on the beach [50]
+            {t("summer2026.missions.week1.mission1")}
           </EventMissionElement>
           <EventMissionElement stars={3}>
-            Seahorse collection [64]
+            {t("summer2026.missions.week1.mission2")}
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Eat{" "}
+            {t("summer2026.missions.week1.mission3")}{" "}
             <Link to="/items?id=lemonade" className="text-[#ed15f1]">
               LEMONADE
-            </Link>[4]
+            </Link>
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Fish the wanm sea shoals [4]
+            {t("summer2026.missions.week1.mission4")}
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Craft ice creams at the galeto workshop [16]
+            {t("summer2026.missions.week1.mission5")}
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Slain{" "}
+            {t("summer2026.missions.week1.mission6")}{" "}
             <Link to="/bestiary?id=craboxer" className="text-primary">
               Craboxer
             </Link>
-            [16]
           </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
-            <p>Weekly Rewards:</p>
+            <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 <Link to="/items?id=coconut_hat">
@@ -347,23 +345,22 @@ export function Summer2026EventPage() {
         </span>
 
         <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
-          {/* Quests - Title */}
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  Week 2
+                  {t("summer2026.missions.week2.title")}
                 </p>
                 <p className="text-xs">01.08 - 07.08</p>
               </span>
             </span>
           </span>
           <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            Wait for details...
+            {t("summer2026.missions.waiting")}
           </p>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
-            <p>Weekly Rewards:</p>
+            <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 ???
@@ -373,23 +370,22 @@ export function Summer2026EventPage() {
         </span>
 
         <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
-          {/* Quests - Title */}
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  Week 3
+                  {t("summer2026.missions.week3.title")}
                 </p>
                 <p className="text-xs">08.08 - 14.08</p>
               </span>
             </span>
           </span>
           <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            Wait for details...
+            {t("summer2026.missions.waiting")}
           </p>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
-            <p>Weekly Rewards:</p>
+            <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 ???
@@ -399,23 +395,22 @@ export function Summer2026EventPage() {
         </span>
 
         <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
-          {/* Quests - Title */}
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  Week 4
+                  {t("summer2026.missions.week4.title")}
                 </p>
                 <p className="text-xs">15.08 - 21.08</p>
               </span>
             </span>
           </span>
           <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            Wait for details...
+            {t("summer2026.missions.waiting")}
           </p>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
-            <p>Weekly Rewards:</p>
+            <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 ???
@@ -425,23 +420,22 @@ export function Summer2026EventPage() {
         </span>
 
         <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
-          {/* Quests - Title */}
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  Final Week
+                  {t("summer2026.missions.finalWeek.title")}
                 </p>
                 <p className="text-xs">22.08 - 28.08</p>
               </span>
             </span>
           </span>
           <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            Wait for details...
+            {t("summer2026.missions.waiting")}
           </p>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
-            <p>Weekly Rewards:</p>
+            <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 ???
@@ -453,8 +447,8 @@ export function Summer2026EventPage() {
 
       {/* Event Battle Pass Section */}
       <EventTitleElement
-        title="Event Battle Pass"
-        description="Everything summer pays out in shells, the seasonal currency. Clear weekly missions (fish the warm sea, craft ice cream, hunt crabs and more) to stack shells and lottery tickets and climb the Summer Battlepass."
+        title="summer2026.battlePass.title"
+        description="summer2026.battlePass.description"
         icon={StarIcon}
       />
       <span className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
@@ -491,8 +485,8 @@ export function Summer2026EventPage() {
 
       {/* Event Lottery Section */}
       <EventTitleElement
-        title="Lottery Drops"
-        description="Win tickets from the quests and weekly missions, then gamble them for exclusive summer loot: cosmetics, gear and keys."
+        title="summer2026.lottery.title"
+        description="summer2026.lottery.description"
         icon={StarIcon}
       />
       <span className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-9">
@@ -515,7 +509,7 @@ export function Summer2026EventPage() {
             </p>
             <span className="flex w-full flex-row items-center justify-between text-xs">
               <p className="mt-0.5 text-[0.65rem] text-muted-foreground uppercase">
-                Chance
+                {t("summer2026.lottery.chance")}
               </p>
               <p className="text-[0.75rem]">{chance}%</p>
             </span>
@@ -523,7 +517,7 @@ export function Summer2026EventPage() {
               to={`/items?id=${itemId}`}
               className="text-center text-[0.6rem] text-muted-foreground uppercase hover:text-primary"
             >
-              View item in Codex
+              {t("summer2026.lottery.viewItem")}
             </Link>
           </RarityBorder>
         ))}
@@ -531,8 +525,8 @@ export function Summer2026EventPage() {
 
       {/* Event New Items Section */}
       <EventTitleElement
-        title="New Items"
-        description="The following items will be added to the game during the Summer 2026 event."
+        title="summer2026.newItems.title"
+        description="summer2026.newItems.description"
         icon={CalendarDays}
       />
       <span className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
@@ -556,7 +550,7 @@ export function Summer2026EventPage() {
               to={`/items?id=${item}`}
               className="text-center text-[0.6rem] text-muted-foreground uppercase hover:text-primary"
             >
-              View item in Codex
+              {t("summer2026.lottery.viewItem")}
             </Link>
           </RarityBorder>
         ))}

@@ -85,7 +85,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
         return (
             <div className="col-span-full flex flex-col items-center justify-center p-8 text-muted-foreground bg-secondary/20 rounded-lg border-dashed border border-border/50">
                 <Activity className="w-8 h-8 mb-2 opacity-20 animate-pulse" />
-                <p className="text-sm">Loading skills...</p>
+                <p className="text-sm">{t("profile.skills.loading")}</p>
             </div>
         );
     }
@@ -136,7 +136,7 @@ export function SkillsTab({ data }: { data: PlayerData }) {
                                                     {formattedName}
                                                 </h3>
                                             </div>
-                                            <span className="text-xs text-primary font-bold uppercase tracking-widest mt-0.5">Top Profession</span>
+                                            <span className="text-xs text-primary font-bold uppercase tracking-widest mt-0.5">{t("profile.skills.topProfession")}</span>
                                         </div>
                                     )}
                                 </div>
@@ -150,21 +150,17 @@ export function SkillsTab({ data }: { data: PlayerData }) {
                                             {isFeatured && <span className="hidden sm:inline-block px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider"><Star className="w-4 h-4" /></span>}
                                         </div>
                                         <LevelBadge level={level} className={`${isFeatured ? 'text-lg p-3 pb-4':'text-md p-2 pb-3'}`}>
-                                            Lvl {level}
+                                            {t("profile.level")} {level}
                                         </LevelBadge>
-                                        {/*}
-                                        <div className={`px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold whitespace-nowrap shadow-sm ${isFeatured ? 'text-sm sm:text-base px-4 py-1' : 'text-xs'}`}>
-                                            Lvl {level}
-                                        </div>*/}
                                     </div>
 
                                     <div className="flex flex-col gap-1.5 mt-0.5">
                                         <div className="flex items-end justify-between text-xs sm:text-sm">
                                             <span className="text-muted-foreground font-medium tabular-nums tracking-tight items-center justify-center flex gap-2">
                                                 {nextLevelXp ? (
-                                                    <><span className="text-foreground/90">{currentXp.toLocaleString()}</span> / {nextLevelXp.toLocaleString()} <Badge className="text-gray-900 bg-white px-1 tracking-wider">XP</Badge></>
+                                                    <><span className="text-foreground/90">{currentXp.toLocaleString()}</span> / {nextLevelXp.toLocaleString()} <Badge className="text-gray-900 bg-white px-1 tracking-wider">{t("profile.skills.xp")}</Badge></>
                                                 ) : (
-                                                    <Badge className="tracking-wider">MAX LEVEL</Badge>
+                                                    <Badge className="tracking-wider">{t("profile.skills.maxLevel")}</Badge>
                                                 )}
                                             </span>
                                             <span className="text-primary/90 font-bold tabular-nums">

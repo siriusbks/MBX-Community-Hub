@@ -25,7 +25,7 @@ const CraftPlannerModal: React.FC<CraftPlannerModalProps> = ({
 
     useEffect(() => {
         if (open) queueMicrotask(() => setItemIds(preselectedItems));
-    }, [open]);
+    }, [open, preselectedItems]);
 
     if (!open) return null;
 
@@ -48,7 +48,7 @@ const CraftPlannerModal: React.FC<CraftPlannerModalProps> = ({
                         type="button"
                         onClick={onClose}
                         className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-700"
-                        aria-label="Close Craft Planner"
+                        aria-label={t("craftPlanner.close")}
                     >
                         <X className="h-5 w-5" />
                     </button>

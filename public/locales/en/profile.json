@@ -69,5 +69,45 @@
     "profile.attributes.intelligence": "Intelligence",
     "profile.attributes.luck": "Luck",
     "profile.attributes.strength": "Strength",
-    "profile.attributes.wisdom": "Wisdom"
+    "profile.attributes.wisdom": "Wisdom",
+
+    
+    "profile.error.noNickname": "No nickname found. Please enter your nickname in the top navigation bar.",
+    "profile.error.apiDisabled": "Player has disabled API access. You must enable it in-game.",
+    "profile.error.notFound": "Player not found.",
+    "profile.error.fetchFailed": "Failed to fetch profile data.",
+    "profile.error.network": "Network error while fetching profile.",
+    "profile.error.imageGeneration": "Failed to generate image",
+    "profile.welcome": "Welcome to your Profile",
+    "profile.level": "Lvl",
+
+    
+    "profile.companions.trait": "Trait",
+    "profile.companions.gen": "Gen",
+    "profile.companions.xp": "XP",
+    "profile.companions.enchanted": "Enchant",
+    
+    "profile.guild.error.fetchFailed": "Failed to fetch guild data",
+    "profile.guild.error.loadFailed": "Unable to load guild information.",
+    "profile.guild.level": "Lvl",
+    "profile.guild.owner": "Owner",
+    "profile.guild.onlineBadge": "Online",
+    "profile.guild.offline": "Offline",
+    
+    "profile.objectives.dailyQuests": "Daily Quests Completed",
+    "profile.objectives.weeklyQuests": "Weekly Quests Completed",
+    "profile.objectives.museumItems": "Museum Items Discovered",
+    
+    "profile.pvp.noData": "No PvP data available.",
+
+        "profile.skills.loading": "Loading skills...",
+    "profile.skills.topProfession": "Top Profession",
+    "profile.skills.xp": "XP",
+    "profile.skills.maxLevel": "MAX LEVEL",
+
+        "profile.skulls.loading": "Loading relics...",
+    "profile.skulls.noData": "No relic data available.",
+    "profile.skulls.owned": "OWNED"
+
+
 }

@@ -17,15 +17,15 @@ export function ObjectivesTab({ data }: { data: PlayerData }) {
                 </CardHeader>
                 <CardContent className="p-4 pt-0 space-y-3">
                     <div className="flex justify-between items-center p-3 bg-secondary/30 rounded border border-border/30">
-                        <span className="text-sm font-medium">Daily Quests Completed</span>
+                        <span className="text-sm font-medium">{t('profile.objectives.dailyQuests')}</span>
                         <Badge variant="secondary">{data.data.OBJECTIVES.completed_quests?.DAILY || 0}</Badge>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-secondary/30 rounded border border-border/30">
-                        <span className="text-sm font-medium">Weekly Quests Completed</span>
+                        <span className="text-sm font-medium">{t('profile.objectives.weeklyQuests')}</span>
                         <Badge variant="secondary">{data.data.OBJECTIVES.completed_quests?.WEEKLY || 0}</Badge>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-secondary/30 rounded border border-border/30">
-                        <span className="text-sm font-medium">Museum Items Discovered</span>
+                        <span className="text-sm font-medium">{t('profile.objectives.museumItems')}</span>
                         <Badge variant="secondary">{data.data.OBJECTIVES.museum?.length || 0}</Badge>
                     </div>
                 </CardContent>

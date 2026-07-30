@@ -33,5 +33,48 @@
 
     "maps.resources": "Show Resources",
     "maps.select_all": "Select All",
-    "maps.deselect_all": "Deselect All"
+    "maps.deselect_all": "Deselect All",
+
+
+        "village.error.loadFailed": "Failed to load village data",
+    "village.loading": "Loading...",
+    "village.mapAlt": "Village Preview",
+    "village.tiers": "Village Tiers",
+    "village.tier": "Tier",
+    "village.chanceReduction": "Chance Reduction",
+    "village.requirements": "Requirements",
+    "village.unknownItem": "Unknown Item",
+    "village.player": "Player",
+    "village.level": "LV.",
+    "village.buildings": "Buildings",
+    "village.production": "Production",
+    "village.enclosure": "Enclosure",
+    "village.pets": "Pets",
+    "village.xp": "XP",
+    "village.upgrades": "Upgrades",
+    "village.soon": "SOON",
+
+    
+    "maps.loadedHarvestables": "loaded harvestables locations.servers keys:",
+    "maps.error.loadFailed": "Failed to load map or harvestable data",
+    "maps.levelShort": "Lvl.",
+    "maps.noData": "No data",
+    
+    "maps.region": "Region",
+    "maps.mapNotFound": "Map not found",
+    "maps.error.loadHarvestables": "Failed to load map or harvestable data",
+    "maps.error.loadMaps": "Failed to load maps.json data",
+    "maps.error.loadRegions": "Failed to load region data",
+    "maps.error.loadBestiaryZones": "Failed to load bestairy zones",
+    "maps.error.loadMobNames": "Failed to load mob names",
+    "maps.error.bestiaryFailed": "Failed to load bestiary",
+    "maps.error.insectsFailed": "Failed to load insects",
+    "maps.loadingMap": "Loading map…",
+    "maps.selectMap": "Select map",
+    "maps.loadingInsects": "Loading insects...",
+    "maps.noInsects": "No insects found for this island.",
+    "maps.loadingCreatures": "Loading creatures...",
+    "maps.noCreatures": "No creatures found for this island.",
+    "maps.chance": "Chance",
+    "maps.view_conditions": "View Conditions"
 }

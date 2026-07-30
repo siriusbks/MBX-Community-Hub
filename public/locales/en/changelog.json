@@ -3,5 +3,9 @@
     "changelog.title": "CHANGELOG",
     "changelog.description": "Discover the latest improvements, bug fixes, and new features added to the MBX Community Hub.",
     "changelog.published_on": "Published on",
-    "changelog.load_older_updates": "Load older updates"
+    "changelog.load_older_updates": "Load older updates",
+    "changelog.loading": "Loading changelogs...",
+    "changelog.noChangelogs": "No changelogs have been published yet.",
+    "changelog.latest": "LATEST",
+    "changelog.version": "Version"
 }

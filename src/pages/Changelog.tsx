@@ -41,9 +41,9 @@ export default function Changelog() {
 
             <div className="w-full max-w-3xl mx-auto flex flex-col gap-6 relative">
                 {loading ? (
-                    <div className="text-center text-muted-foreground py-10">Loading changelogs...</div>
+                    <div className="text-center text-muted-foreground py-10">{t("changelog.loading")}</div>
                 ) : changelogs.length === 0 ? (
-                    <div className="text-center text-muted-foreground py-10">No changelogs have been published yet.</div>
+                    <div className="text-center text-muted-foreground py-10">{t("changelog.noChangelogs")}</div>
                 ) : (
                     <>
                         {changelogs.slice(0, visibleCount).map((log, index) => (
@@ -51,12 +51,12 @@ export default function Changelog() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex flex-col items-start gap-1 w-full">
                                         <div className="flex gap-2 mb-1">
-                                            {index === 0 && <Badge variant="default" className="font-light tracking-wide">LATEST</Badge>}
+                                            {index === 0 && <Badge variant="default" className="font-light tracking-wide">{t("changelog.latest")}</Badge>}
                                         </div>
                                         <h3 className="text-4xl font-bold text-primary drop-shadow-sm">{isFr ? log.titleFr : log.titleEn}</h3>
                                         <span className="text-xs text-muted-foreground mt-1 flex flex-row justify-between w-full">
                                             
-                                            <p>Version {log.version}</p>
+                                            <p>{t("changelog.version")} {log.version}</p>
                                             <p>{t("changelog.published_on")} {new Date(log.createdAt).toLocaleDateString()}</p>
                                         </span>
                                     </div>

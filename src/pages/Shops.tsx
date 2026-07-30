@@ -52,6 +52,8 @@ function minutesToTime(totalMinutes: number): string {
 }
 
 export function ShopsPage() {
+
+    const { t } = useTranslation("market");
     const [shops, setShops] = useState<Shop[]>([])
     const [displayTime, setDisplayTime] = useState<string>("00:00")
     const [loading, setLoading] = useState(true)
@@ -90,9 +92,9 @@ export function ShopsPage() {
             setDisplayTime(data.currentTime)
             setLoading(false)
         } catch (err) {
-            console.error("Failed to retrieve shop data:", err)
+            console.error(t("market.shops.error.fetchFailed"), err)
         }
-    }, [])
+    }, [t])
 
     const fetchMermaid = useCallback(async () => {
         try {
@@ -100,9 +102,9 @@ export function ShopsPage() {
             const data: MermaidOffer = await res.json()
             setMermaidOffer(data)
         } catch (err) {
-            console.error("Unable to retrieve mermaid data:", err)
+            console.error(t("market.shops.error.mermaidFailed"), err)
         }
-    }, [])
+    }, [t])
 
     useEffect(() => {
         fetchShops()
@@ -157,8 +159,6 @@ export function ShopsPage() {
         return () => clearInterval(interval)
     }, [fetchShops, fetchMermaid])
 
-    const { t } = useTranslation("market");
-
     return (
         <div className="py-auto relative flex flex-col page-container ">
             {/* Background */}
@@ -175,15 +175,15 @@ export function ShopsPage() {
                             <InfoIcon className="mr-2 size-4" />
                         </span>
                         <p className="w-fit px-2flex items-center justify-center break-none">
-                            Third-party data:
+                            {t("market.shops.thirdParty")}:
                         </p>
                     </span>
                     <span className="flex w-full sm:flex-1 flex-row gap-4 justify-between items-center">
                         <AlertDescription className="mr-auto flex items-center justify-center">
-                            This data is fetched from the MineboxAdditions API.
+                            {t("market.shops.thirdPartyDesc")}
                         </AlertDescription>
                         <Link to="https://mineboxadditions.bartier.me/">
-                            <Button className="ml-auto my-auto">MineboxAdditions API</Button>
+                            <Button className="ml-auto my-auto">{t("market.shops.apiButton")}</Button>
                         </Link>
                     </span>
                 </Alert>
@@ -192,7 +192,7 @@ export function ShopsPage() {
             <span className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {loading && (
                     <Card className="col-span-7 flex flex-col items-center justify-center gap-2 p-4">
-                        <p>Loading shop data...</p>
+                        <p>{t("market.shops.loading")}</p>
                     </Card>
                 )}
 
@@ -211,7 +211,7 @@ export function ShopsPage() {
                         />
 
                         <span className="flex flex-col gap-0">
-                            <p className="text-xs text-muted-foreground">{t("market.shops.mermaidReset")}</p>
+                            <p className="text-xs text-muted-foreground">{t("market.shops.mermaidResetLabel")}</p>
                             <span className="flex gap-2">{localResetTime} {t("market.shops.localTime")}</span>
                         </span>
 
@@ -222,7 +222,7 @@ export function ShopsPage() {
                         {mermaidOffer && mermaidOffer.itemId && (
                             <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
                                 <p className="text-xs text-muted-foreground drop-shadow-lg">
-                                    {t("market.shops.offert")}:
+                                    {t("market.shops.offer")}:
                                 </p>
                                 <ItemImage
                                     itemId={mermaidOffer.itemId}
@@ -236,11 +236,11 @@ export function ShopsPage() {
                         {(!mermaidOffer || !mermaidOffer.itemId) && (
                             <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
                                 <p className="text-xs text-muted-foreground drop-shadow-lg">
-                                    {t("market.shops.offert")}:
+                                    {t("market.shops.offer")}:
                                 </p>
                                 <CircleQuestionMarkIcon className="size-12 p-2 opacity-60" />
                                 <p className="text-sm max-w-24 leading-none drop-shadow-lg">
-                                    {t("market.shops.not_found")}
+                                    {t("market.shops.notFound")}
                                 </p>
                             </div>
                         )}
@@ -265,7 +265,7 @@ export function ShopsPage() {
                             />
 
                             <span className="flex flex-col gap-0">
-                                <p className="text-xs text-muted-foreground">{t("market.shops.open_hours")}</p>
+                                <p className="text-xs text-muted-foreground">{t("market.shops.openHours")}</p>
                                 <span className="flex gap-2">
                                     <p>{shop.openFrom}</p>
                                     -<p>{shop.openUntil}</p>
@@ -285,7 +285,7 @@ export function ShopsPage() {
                             {shop.offer && (
                                 <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
                                     <p className="text-xs text-muted-foreground drop-shadow-lg">
-                                        {t("market.shops.offert")}:
+                                        {t("market.shops.offer")}:
                                     </p>
                                     <ItemImage
                                         itemId={shop.offer.item}
@@ -299,11 +299,11 @@ export function ShopsPage() {
                             {!shop.offer && shop.isOpen && (
                                 <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
                                     <p className="text-xs text-muted-foreground drop-shadow-lg">
-                                        {t("market.shops.offert")}:
+                                        {t("market.shops.offer")}:
                                     </p>
                                     <CircleQuestionMarkIcon className="size-12 p-2 opacity-60" />
                                     <p className="text-sm max-w-24 leading-none drop-shadow-lg">
-                                        {t("market.shops.not_found")}
+                                        {t("market.shops.notFound")}
                                     </p>
                                 </div>
                             )}

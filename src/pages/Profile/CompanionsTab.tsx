@@ -79,7 +79,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                     variant="default"
                     className="absolute top-2 right-2 h-4 bg-primary px-1.5 py-0 text-[9px] text-primary-foreground shadow-sm"
                   >
-                    Active
+                    {t("profile.companions.active")}
                   </Badge>
                 )}
                 <div className="mt-2 mb-3 flex h-16 w-16 items-center justify-center rounded-lg border border-white/10 bg-background/30 shadow-inner">
@@ -104,7 +104,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                 <div className="mt-3 w-full space-y-1.5 rounded-lg border border-white/5 bg-background/30 p-2.5">
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-medium text-muted-foreground">
-                      Trait
+                      {t("profile.companions.trait")}
                     </span>
                     <span className="font-semibold text-foreground capitalize">
                       {pet.trait}
@@ -112,7 +112,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                   </div>
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-medium text-muted-foreground">
-                      Gen
+                      {t("profile.companions.gen")}
                     </span>
                     <span className="font-semibold text-foreground">
                       {pet.generation}
@@ -120,7 +120,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                   </div>
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-medium text-muted-foreground">
-                      XP
+                      {t("profile.companions.xp")}
                     </span>
                     <span className="font-semibold text-primary">
                       {pet.experience.toLocaleString()}
@@ -159,7 +159,7 @@ export function CompanionsTab({ data }: { data: PlayerData }) {
                     variant="secondary"
                     className="absolute top-2 left-2 h-4 border-purple-500/30 bg-purple-500/20 px-1.5 py-0 text-[9px] text-purple-400"
                   >
-                    Enchant
+                    {t("profile.companions.enchanted")}
                   </Badge>
                 )}
                 <div className="mt-2 mb-3 flex h-16 w-16 items-center justify-center rounded-lg border border-white/10 bg-background/30 shadow-inner">

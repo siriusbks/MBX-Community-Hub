@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@components/ui/sheet"
+import { useTranslation } from "react-i18next"
 
 const PlayableClasses = ["assassin", "mage", "archer", "gunner", "monk", "bard"]
 
@@ -59,6 +60,7 @@ function isPlayableClass(cls) {
 }
 
 export function ClassCodexPage() {
+  const { t } = useTranslation("codex")
   const [classes, setClasses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -189,7 +191,7 @@ export function ClassCodexPage() {
   return (
     <div className="relative page-container flex flex-col overflow-hidden lg:h-dvh">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-      <PageTitle title="Class Codex" />
+      <PageTitle title={t("codex.class.title")} />
 
       <CodexNav />
 
@@ -197,12 +199,12 @@ export function ClassCodexPage() {
         {/* LEFT: all classes from the API, sorted by rarity */}
         <div className="custom-scrollbar h-full w-full scroll-fade pr-2 lg:overflow-y-auto">
           {loading && (
-            <p className="text-xs text-muted-foreground">Loading classes...</p>
+            <p className="text-xs text-muted-foreground">{t("codex.class.loading")}</p>
           )}
 
           {error && (
             <p className="text-xs text-destructive">
-              Error loading classes: {error}
+              {t("codex.class.error.loading")} {error}
             </p>
           )}
 
@@ -239,8 +241,7 @@ export function ClassCodexPage() {
                           }
                         >
                           <p className="z-3 w-2/3 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">
-                            This Class is currently disabled and cannot be
-                            played in-game
+                            {t("codex.class.disabled")}
                           </p>
                         </span>
                       )}
@@ -268,7 +269,7 @@ export function ClassCodexPage() {
                           </span>
 
                           <p className="text-xs text-primary uppercase">
-                            {countSpells(cls.spell_unlocks)} Spells
+                            {countSpells(cls.spell_unlocks)} {t("codex.class.spells")}
                           </p>
                         </span>
                         <p className="my-auto text-[0.7rem] leading-none text-muted-foreground">
@@ -347,7 +348,7 @@ export function ClassCodexPage() {
           {!isPlayableClass(selectedClass) && (
             <span>
               <p className="my-2 text-[0.6rem] leading-none text-muted-foreground text-red-500">
-                This Class is currently disabled and cannot be played in-game.
+                {t("codex.class.disabled")}
               </p>
             </span>
           )}
@@ -359,7 +360,7 @@ export function ClassCodexPage() {
                   key={tierNumber}
                   className="flex flex-row items-center text-center"
                 >
-                  <p className="mr-auto text-[0.7rem]">TIER {tierNumber}</p>
+                  <p className="mr-auto text-[0.7rem]">{t("codex.class.tier")} {tierNumber}</p>
                   <span className="flex flex-row gap-2">
                     {Object.entries(tierData.stats ?? {}).map(
                       ([stat, value]) => (
@@ -379,22 +380,22 @@ export function ClassCodexPage() {
 
           {coreAttributes.length > 0 && (
             <span className="flex w-full flex-row items-center justify-between text-sm">
-              <p className="text-muted-foreground">All Tiers</p>
+              <p className="text-muted-foreground">{t("codex.class.allTiers")}</p>
               <p>...</p>
             </span>
           )}
         </RarityBorder>
 
-        {spellDataLoading && <p className="text-xs text-muted-foreground"></p>}
+        {spellDataLoading && <p className="text-xs text-muted-foreground">{t("codex.class.loadingSpells")}</p>}
 
         {spellDataError && (
           <p className="text-xs text-destructive">
-            Error loading skills: {spellDataError}
+            {t("codex.class.error.spells")} {spellDataError}
           </p>
         )}
         {passiveSpell && (
           <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-            <p className="text-sm text-primary">Passive</p>
+            <p className="text-sm text-primary">{t("codex.class.passive")}</p>
             <span className="flex flex-row gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
               <img
                 src={
@@ -421,7 +422,7 @@ export function ClassCodexPage() {
         )}
         {autoAttackSpell && (
           <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-            <p className="text-sm text-primary">Auto Attack</p>
+            <p className="text-sm text-primary">{t("codex.class.autoAttack")}</p>
             <span className="flex flex-row gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
               <img
                 src={
@@ -450,7 +451,7 @@ export function ClassCodexPage() {
 
         {otherSpells.length > 0 && (
           <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
-            <p className="text-sm text-primary">Spells</p>
+            <p className="text-sm text-primary">{t("codex.class.spellsLabel")}</p>
             <span className="flex flex-col gap-2">
               {otherSpells.map((spell) => (
                 <span key={spell.id} className="flex flex-row gap-2 items-center border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">

@@ -99,7 +99,7 @@ export function VotePage() {
             setError(null);
             try {
                 const votesRes = await fetch(`${API_BASE}/votes`);
-                if (!votesRes.ok) throw new Error("Nie udało się pobrać listy voteów");
+                if (!votesRes.ok) throw new Error(t("votes.error.fetchFailed"));
                 const votesData: VotesList = await votesRes.json();
                 if (cancelled) return;
                 setVotes(votesData);
@@ -112,7 +112,7 @@ export function VotePage() {
                     }
                 }
             } catch (e) {
-                if (!cancelled) setError(e instanceof Error ? e.message : "Wystąpił nieznany błąd");
+                if (!cancelled) setError(e instanceof Error ? e.message : t("votes.error.unknown"));
             } finally {
                 if (!cancelled) setLoading(false);
             }
@@ -120,16 +120,16 @@ export function VotePage() {
 
         load();
         return () => { cancelled = true; };
-    }, [nick]);
+    }, [nick, t]);
 
     if (loading) {
         return (
             <div className="py-auto relative flex flex-col page-container">
-                <PageTitle title="Vote Page" description="Vote for your favorite features and help shape the future of Minebox!" />
+                <PageTitle title={t("votes.title")} description={t("votes.desc")} />
 
                 <span className="flex grid grid-cols-3 gap-2">
                     {Array(6).fill().map((_, i) => (
-                        <Skeleton className="">
+                        <Skeleton key={i} className="">
                             <Skeleton className="w-1/2 h-6 m-4" />
                             <Skeleton className="w-1/4 h-4 m-2 mx-4" />
                             <span className="flex flex-row justify-between">
@@ -149,12 +149,7 @@ export function VotePage() {
         return (
             <div className="py-auto relative flex flex-col page-container">
                 <PageTitle title={t("votes.title")} description={t("votes.desc")} />
-                {/*<Alert >
-                    <InfoIcon className="h-4 w-4" />
-                    <AlertTitle>{t("votes.error")}</AlertTitle>
-                    <AlertDescription>{error ?? t("votes.error.loadError")}</AlertDescription>
-                </Alert>*/}
-                <ErrorAlertElement title={t("votes.error")} desc={t("votes.error.loadError")}/>
+                <ErrorAlertElement title={t("votes.error")} desc={error ?? t("votes.error.loadError")}/>
             </div>
         );
     }

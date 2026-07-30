@@ -35,11 +35,11 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
         setError(null);
         try {
             const response = await fetch(`https://api.minebox.co/guild/${guildId}`);
-            if (!response.ok) throw new Error("Failed to fetch guild data");
+            if (!response.ok) throw new Error(t("profile.guild.error.fetchFailed"));
             const result = await response.json();
             setData(result);
         } catch (err) {
-            setError("Unable to load guild information.");
+            setError(t("profile.guild.error.loadFailed"));
         } finally {
             setLoading(false);
         }
@@ -60,7 +60,7 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
                 <DialogHeader>
                     <DialogTitle className="text-xl flex flex-col items-start -gap-2">
                         {guildName}
-                        {data?.level && <LevelBadge level={data.level * 10} className="text-sm py-1 pb-1.5 px-2">Lvl {data.level}</LevelBadge>}
+                        {data?.level && <LevelBadge level={data.level * 10} className="text-sm py-1 pb-1.5 px-2">{t("profile.guild.level")} {data.level}</LevelBadge>}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -113,10 +113,10 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
                                                 <div key={idx} className="flex justify-between items-center p-2 hover:bg-white/5 rounded-md transition-colors">
                                                     <div className="flex items-center gap-2">
                                                         <span className={`flex flex-row items-center gap-2 text-[0.9rem] font-medium ${member.is_owner ? 'text-yellow-500' : ''}`}>
-                                                            <img src={`https://minotar.net/avatar/${member.username}`} className="size-8" />
+                                                            <img src={`https://minotar.net/avatar/${member.username}`} className="size-8" alt={member.username} />
                                                             
                                                             {member.is_owner && (
-                                                                <Badge variant="default" className="uppercase">Owner</Badge>
+                                                                <Badge variant="default" className="uppercase">{t('profile.guild.owner')}</Badge>
                                                             )}
 
                                                             {member.username}
@@ -124,9 +124,9 @@ export function GuildDialog({ guildId, guildName }: { guildId: string; guildName
                                                     </div>
                                                     <div className="flex items-center gap-1.5">
                                                         {member.online ? (
-                                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">Online</Badge>
+                                                            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/30 shadow-sm uppercase tracking-wider">{t('profile.guild.onlineBadge')}</Badge>
                                                         ) : (
-                                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">Offline</Badge>
+                                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 opacity-70 bg-secondary/50 backdrop-blur-md border-border/30 uppercase tracking-wider">{t('profile.guild.offline')}</Badge>
                                                         )}
                                                     </div>
                                                 </div>

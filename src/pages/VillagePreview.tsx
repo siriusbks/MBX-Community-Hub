@@ -37,13 +37,13 @@ export function VillagePreview() {
       .then((data) => {
         setVillageData(data)
       })
-      .catch((e) => console.error("Failed to load village data", e))
-  }, [])
+      .catch((e) => console.error(t("village.error.loadFailed"), e))
+  }, [t])
   if (!villageData) {
     return (
       <div className="relative page-container flex flex-col items-center pb-24">
         <PageTitle>{t("village_preview")}</PageTitle>
-        <div>Loading...</div>
+        <div>{t("village.loading")}</div>
       </div>
     )
   }
@@ -78,47 +78,12 @@ export function VillagePreview() {
           {" "}
           <img
             src="/media/maps/island_village_map.png"
-            alt="Village Preview"
+            alt={t("village.mapAlt")}
             className="relative aspect-square w-full object-contain"
             style={{
               imageRendering: "pixelated",
             }}
           />
-          {/*
-          {cellEntries.map(([cellKey, cellData]) => (
-            <Popover key={cellKey}>
-              <PopoverTrigger asChild>
-                <div
-                  className="absolute size-1/14 hover:bg-white/10"
-                  style={{
-                    left: `${(cellData.x / 140) * 100}%`,
-                    top: `${(cellData.y / 138) * 100}%`,
-                  }}
-                />
-              </PopoverTrigger>
-              <PopoverContent className="gap-0">
-                <PopoverHeader>
-                  <PopoverTitle>
-                    Unlocked at Level {cellData.village_tier_required} Village
-                  </PopoverTitle>
-                  <PopoverDescription>
-                    Possible Buildings to Construct:
-                  </PopoverDescription>
-                </PopoverHeader>
-                <div className="p-2">
-                  {Array.isArray(cellData.allowed_buildings) ? (
-                    cellData.allowed_buildings.map(
-                      (building: string, index: number) => (
-                        <p key={index}>- {building}</p>
-                      )
-                    )
-                  ) : (
-                    <p>- {String(cellData.allowed_buildings)}</p>
-                  )}
-                </div>
-              </PopoverContent>
-            </Popover>
-          ))}*/}
         </span>
 
 
@@ -126,7 +91,7 @@ export function VillagePreview() {
         <Card className="w-1/3 p-0 gap-0">
 
           <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
-            <p className="text-primary text-md uppercase ">Village Tiers</p>
+            <p className="text-primary text-md uppercase ">{t("village.tiers")}</p>
           </Card>
 
           <Accordion type="single" collapsible defaultValue="item-1">
@@ -134,7 +99,7 @@ export function VillagePreview() {
               <AccordionItem value={tierKey}>
                 <AccordionTrigger className="gap-2">
                   <div className="w-full flex flex-row justify-between items-center mb-2">
-                    <h3 className="text-primary uppercase font-bold">Tier {tierKey}</h3>
+                    <h3 className="text-primary uppercase font-bold">{t("village.tier")} {tierKey}</h3>
                     <span className="flex-row flex gap-1 items-center text-xs">
                       <Clock10Icon className="size-3" />
                       {formatTime(tierData.construction_time)}
@@ -146,14 +111,14 @@ export function VillagePreview() {
 
 
                     <div className="flex flex-row w-full justify-between">
-                      <span className="text-gray-400">Chance Reduction</span>
+                      <span className="text-gray-400">{t("village.chanceReduction")}</span>
                       <div className="font-bold">{(tierData.chance_reduction * 100)}%</div>
                     </div>
 
                     {/* Requirements */}
                     {tierData.requirements && tierData.requirements.length > 0 && (
                       <div className="border-t border-gray-700 pt-3">
-                        <span className="text-sm font-semibold mb-2 block">Requirements</span>
+                        <span className="text-sm font-semibold mb-2 block">{t("village.requirements")}</span>
 
                         {/* Items */}
                         <div className="grid grid-cols-5 gap-2 mb-2">
@@ -167,7 +132,7 @@ export function VillagePreview() {
                                 <ItemSlot
                                   key={`${tierKey}-item-${index}`}
                                   id={req.id.replace(/^mbi-/, "")}
-                                  name={itemData?.name?.en || req.id.replace(/^mbi-/, "") || 'Unknown Item'}
+                                  name={itemData?.name?.en || req.id.replace(/^mbi-/, "") || t("village.unknownItem")}
                                   rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
                                   image={itemData?.image || ''}
                                   count={req.amount}
@@ -193,13 +158,13 @@ export function VillagePreview() {
                                   </span>
                                 ) : req.type === 'LEVEL' ? (
                                   <span className="flex flex-col text-xs items-center w-full">
-                                    Player
-                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                    {t("village.player")}
+                                    <Badge className="bg-white text-gray-900">{t("village.level")} {req.amount}</Badge>
                                   </span>
                                 ) : req.type === 'SKILL' ? (
                                   <span className="flex flex-col text-xs items-center w-full">
                                     {req.id}
-                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                    <Badge className="bg-white text-gray-900">{t("village.level")} {req.amount}</Badge>
                                   </span>
                                 ) : (
                                   `${req.amount} ${req.id}`
@@ -223,7 +188,7 @@ export function VillagePreview() {
 
 
 
-      <p>Buildings</p>
+      <p>{t("village.buildings")}</p>
       <div className="grid w-full grid-cols-3 gap-4">
         {buildingEntries.map(([buildingKey, buildingData]) => (
           <Card key={buildingKey} className="w-full p-0 gap-0 ">
@@ -241,7 +206,7 @@ export function VillagePreview() {
                 <AccordionItem value={tierKey}>
                   <AccordionTrigger className="gap-2">
                     <span className="w-full flex flex-row justify-between">
-                      <span className="text-primary uppercase">Tier {tierKey}</span>
+                      <span className="text-primary uppercase">{t("village.tier")} {tierKey}</span>
                       <span className="flex-row flex gap-1 items-center"><Clock10Icon className="size-4" /> {formatTime(tierData.construction_time)}</span>
                     </span>
                   </AccordionTrigger>
@@ -250,7 +215,7 @@ export function VillagePreview() {
                       <div className="flex flex-col gap-2 mt-2">
                         {/* Nagłówek */}
                         <span className="flex flex-row justify-between">
-                          <span>Requirements</span>
+                          <span>{t("village.requirements")}</span>
                         </span>
 
                         {/* Zawartość - wymagania */}
@@ -266,7 +231,7 @@ export function VillagePreview() {
                                 <ItemSlot
                                   key={index}
                                   id={req.id}
-                                  name={itemData?.name?.en || req.id || 'Unknown Item'}
+                                  name={itemData?.name?.en || req.id || t("village.unknownItem")}
                                   rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
                                   image={itemData?.image || ''}
                                   count={req.amount}
@@ -293,13 +258,13 @@ export function VillagePreview() {
                                   </span>
                                 ) : req.type === 'LEVEL' ? (
                                   <span className="flex flex-col text-xs items-center w-full">
-                                    Player
-                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                    {t("village.player")}
+                                    <Badge className="bg-white text-gray-900">{t("village.level")} {req.amount}</Badge>
                                   </span>
                                 ) : req.type === 'SKILL' ? (
                                   <span className="flex flex-col text-xs items-center w-full">
                                     {req.id}
-                                    <Badge className="bg-white text-gray-900">LV. {req.amount}</Badge>
+                                    <Badge className="bg-white text-gray-900">{t("village.level")} {req.amount}</Badge>
                                   </span>
                                 ) : (
                                   `${req.amount} ${req.id}`
@@ -312,7 +277,7 @@ export function VillagePreview() {
                     {tierData.production && (
                       <>
                         <span className="flex flex-row justify-between mt-4">
-                          <span className="text-lg">Production</span>
+                          <span className="text-lg">{t("village.production")}</span>
                           <span className="flex flex-row gap-2 leading-none items-center text-xs ">
                             <p className="!m-0 flex flex-row items-center gap-0.5"><Clock4Icon className="size-4"/> {tierData.production.base_rate}/h</p>
                             <p className="!m-0 flex flex-row items-center gap-0.5"><BoxIcon className="size-4"/> {tierData.production.storage_capacity * 64}</p>
@@ -333,7 +298,7 @@ export function VillagePreview() {
                                 <div key={index} className="relative">
                                   <ItemSlot
                                     id={req.item_id}
-                                    name={itemData?.name?.en || req.item_id || 'Unknown Item'}
+                                    name={itemData?.name?.en || req.item_id || t("village.unknownItem")}
                                     rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
                                     image={itemData?.image || ''}
                                     change={percentage || 0}
@@ -349,18 +314,18 @@ export function VillagePreview() {
                     {tierData.enclosure && (
                       <>
                         <span className="flex flex-row justify-between">
-                          <span>enclosure</span>
+                          <span>{t("village.enclosure")}</span>
                         </span>
 
                         <span className="flex flex-row justify-between">
-                          <span>{tierData.enclosure.pet_slots} Pets</span>
-                          <span>{tierData.enclosure.xp_per_hour} XP</span>
+                          <span>{tierData.enclosure.pet_slots} {t("village.pets")}</span>
+                          <span>{tierData.enclosure.xp_per_hour} {t("village.xp")}</span>
                         </span>
                       </>
                     )}
                     {tierData.upgrades && (
                       <span className="flex flex-row justify-between">
-                        <span>upgrades</span> (SOON)
+                        <span>{t("village.upgrades")}</span> ({t("village.soon")})
                       </span>
                     )}
                   </AccordionContent>
@@ -372,72 +337,6 @@ export function VillagePreview() {
           </Card>
         ))}
       </div>
-
-
-      {/*
-      <p>Buildings</p>
-      <div className="grid w-full grid-cols-3 gap-4">
-        {buildingEntries.map(([buildingKey, buildingData]) => (
-          <Card className="w-full p-0 gap-0 ">
-            <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
-              <p className="text-primary text-md uppercase ">{buildingKey}</p>
-            </Card>
-
-            {buildingData.map((level, index) => (
-              <div key={index} className="p-2 flex flex-col justify-between">
-\
-                <span className="flex flex-row justify-between">
-                  <span>Tier {index + 1}</span>
-                  <span>Prod: {level.production}/h | Mag: {level.storage}</span>
-                </span>
-
-                <p>Build Cost</p>
-                {level.cost && (
-                  <>
-                    <span className="w-full grid grid-cols-4 gap-2">
-                      {level.cost.map((costs, index) => {
-                        // Szukamy przedmiotu w mineboxItems
-                        const itemKey = Object.keys(mineboxItems).find(key => key === costs.id);
-                        const itemData = itemKey ? mineboxItems[itemKey] : null;
-
-                        return (
-                          <ItemSlot
-                            key={index}
-                            id={costs.id}
-                            name={itemData?.name?.en || 'Unknown Item'}
-                            rarity={itemData?.rarity ? itemData.rarity.toLowerCase() : "vanilla"}
-                            image={itemData?.image || ''}
-                            count={costs.quantity}
-                            className="aspect-square"
-                          />
-                        );
-                      })}
-                    </span>
-                    <span className="flex grid grid-cols-4 ">
-                      <span className="flex gap-1 text-sm items-center">
-                        <img src="/media/currency/Lux.png" className="size-4" /> {level.player_level}
-                      </span>
-                      <span className="flex gap-1 text-sm items-center">
-                        <img src="/media/currency/Crystal.png" className="size-4" /> {level.crystals}
-                      </span>
-                      <span className="flex gap-1 text-sm items-center">
-                        <img src="/media/currency/Lux.png" className="size-4" /> {level.gold}
-                      </span>
-                      <span className="flex gap-1 text-sm items-center">
-                        <img src="/media/currency/Lux.png" className="size-4" /> {level.gold}
-                      </span>
-                    </span>
-                  </>
-                )}
-
-                <p>Production</p>
-                <Separator />
-              </div>
-            ))}
-
-          </Card>
-        ))}
-      </div>*/}
     </div>
   )
 }

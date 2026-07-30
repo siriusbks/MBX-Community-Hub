@@ -52,6 +52,10 @@
     "museum.category.sword": "Sword",
     "museum.category.tool": "Tool",
     "museum.category.treasure": "Treasure",
-    "museum.category.utility_block": "Utility Block"
+    "museum.category.utility_block": "Utility Block",
     
+    "museum.error.loadFailed": "Failed to load categories",
+    "museum.error.unlockedItems": "Failed to load unlocked items",
+    "museum.error": "Error"
+
 }
