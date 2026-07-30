@@ -395,7 +395,7 @@ export function ClassCodexPage() {
         {passiveSpell && (
           <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
             <p className="text-sm text-primary">Passive</p>
-            <span className="flex flex-row gap-2">
+            <span className="flex flex-row gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
               <img
                 src={
                   passiveSpell?.icon
@@ -422,7 +422,7 @@ export function ClassCodexPage() {
         {autoAttackSpell && (
           <Card className="gap-1 !overflow-visible px-2 py-1 pb-2">
             <p className="text-sm text-primary">Auto Attack</p>
-            <span className="flex flex-row gap-2">
+            <span className="flex flex-row gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
               <img
                 src={
                   autoAttackSpell?.icon
@@ -432,7 +432,7 @@ export function ClassCodexPage() {
                 className="size-12 rounded"
               />
               <span className="my-auto flex w-full flex-col gap-0">
-                <span className="flex w-full flex-row items-center gap-1">
+                <span className="flex w-full flex-row items-center gap-1 ">
                   {autoAttackWeapon && <Badge>{autoAttackWeapon}</Badge>}
                   <p>{autoAttackSpell?.name ?? "Auto Attack Name"}</p>
                   <p className="ml-auto flex flex-row items-center gap-1">
@@ -453,7 +453,7 @@ export function ClassCodexPage() {
             <p className="text-sm text-primary">Spells</p>
             <span className="flex flex-col gap-2">
               {otherSpells.map((spell) => (
-                <span key={spell.id} className="flex flex-row gap-2">
+                <span key={spell.id} className="flex flex-row gap-2 items-center border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
                   <img
                     src={
                       spell.icon
@@ -468,15 +468,17 @@ export function ClassCodexPage() {
                         <Badge className="mr-1">ULTIMATE</Badge>
                       )}
                       <p>{spell.name}</p>
+                      
+                      {spellLevelById[spell.id] && (
+                        <p className="ml-1 flex flex-row items-center gap-1 text-muted-foreground">
+                          Lv. {spellLevelById[spell.id]}
+                        </p>
+                      )}
+
                       <p className="ml-auto flex flex-row items-center gap-1">
                         {formatCooldown(spell.cooldown)}{" "}
                         <ClockIcon strokeWidth={3} className="size-5" />
                       </p>
-                      {spellLevelById[spell.id] && (
-                        <p className="ml-1 flex flex-row items-center gap-1">
-                          Lv. {spellLevelById[spell.id]}
-                        </p>
-                      )}
                     </span>
                     <p className="text-xs leading-none text-muted-foreground">
                       {spell.description}

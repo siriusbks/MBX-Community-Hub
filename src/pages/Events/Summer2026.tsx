@@ -300,28 +300,29 @@ export function Summer2026EventPage() {
             </span>
           </span>
           <EventMissionElement stars={2}>
-            Break washed-up bottles on the beach
+            Break washed-up bottles on the beach [50]
           </EventMissionElement>
           <EventMissionElement stars={3}>
-            Seahorse collection
+            Seahorse collection [64]
           </EventMissionElement>
           <EventMissionElement stars={2}>
             Eat{" "}
             <Link to="/items?id=lemonade" className="text-[#ed15f1]">
               LEMONADE
-            </Link>
+            </Link>[4]
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Fish the wanm sea shoals
+            Fish the wanm sea shoals [4]
           </EventMissionElement>
           <EventMissionElement stars={2}>
-            Craft ice creams at the galeto workshop
+            Craft ice creams at the galeto workshop [16]
           </EventMissionElement>
           <EventMissionElement stars={2}>
             Slain{" "}
             <Link to="/bestiary?id=craboxer" className="text-primary">
               Craboxer
             </Link>
+            [16]
           </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
             <p>Weekly Rewards:</p>

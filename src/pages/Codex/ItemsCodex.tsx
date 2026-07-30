@@ -655,7 +655,7 @@ const sortedItems = useMemo(() => {
               </Card>
             )}
             {itemDetailsData?.dropped_by && (
-              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
+              <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3 ">
                 <span className="flex flex-row gap-1">
                   <p>Dropped By</p>
                 </span>
@@ -663,7 +663,7 @@ const sortedItems = useMemo(() => {
                   {itemDetailsData?.dropped_by &&
                     itemDetailsData.dropped_by.map((bestiary, index) => (
                       <Link to={`/bestiary?id=${bestiary.creature_id}`}>
-                        <span className="group flex h-full rounded-lg bg-card p-1 minebox-shadow">
+                        <span className="group flex h-full rounded-lg p-1 border-[3px] border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50">
                           <span className="flex w-full flex-col items-center justify-center gap-1">
                             <img
                               src={bestiary.image}

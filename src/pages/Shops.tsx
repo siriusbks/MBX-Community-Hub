@@ -6,11 +6,12 @@ import { FindItemName, ItemImage } from "@const/elements"
 import { Alert, AlertDescription } from "@components/ui/alert"
 import { Link } from "react-router"
 import { Button } from "@components/ui/button"
-import { InfoIcon } from "lucide-react"
+import { CircleQuestionMarkIcon, InfoIcon } from "lucide-react"
 import { Badge } from "@components/ui/badge"
 import { useTranslation } from "react-i18next";
 
 const API_URL = "https://mineboxadditions.bartier.me/shop"
+const MERMAID_API_URL = "https://mineboxadditions.bartier.me/mermaid"
 
 // In the game, 24h pass in 1 real hour (x24 multiplier)
 const TIME_SPEED_MULTIPLIER = 24
@@ -33,6 +34,11 @@ interface ShopsResponse {
     shops: Shop[]
 }
 
+interface MermaidOffer {
+    itemId: string
+    itemQty: number
+}
+
 function timeToMinutes(time: string): number {
     const [h, m] = time.split(":").map(Number)
     return h * 60 + m
@@ -49,6 +55,11 @@ export function ShopsPage() {
     const [shops, setShops] = useState<Shop[]>([])
     const [displayTime, setDisplayTime] = useState<string>("00:00")
     const [loading, setLoading] = useState(true)
+    const [mermaidOffer, setMermaidOffer] = useState<MermaidOffer | null>(null)
+
+    // States for mermaid reset countdown (real time, 01:00 UTC)
+    const [localResetTime, setLocalResetTime] = useState<string>("")
+    const [resetCountdown, setResetCountdown] = useState<string>("")
 
     // Reference point: game minute from API + real time of its fetching
     const baseGameMinutesRef = useRef<number>(0)
@@ -79,14 +90,26 @@ export function ShopsPage() {
             setDisplayTime(data.currentTime)
             setLoading(false)
         } catch (err) {
-            console.error("Nie udało się pobrać danych sklepów:", err)
+            console.error("Failed to retrieve shop data:", err)
+        }
+    }, [])
+
+    const fetchMermaid = useCallback(async () => {
+        try {
+            const res = await fetch(MERMAID_API_URL)
+            const data: MermaidOffer = await res.json()
+            setMermaidOffer(data)
+        } catch (err) {
+            console.error("Unable to retrieve mermaid data:", err)
         }
     }, [])
 
     useEffect(() => {
         fetchShops()
+        fetchMermaid()
 
         const interval = setInterval(() => {
+            // Game time update
             const realElapsedMs = Date.now() - baseRealTimeRef.current
             const gameElapsedMinutes = (realElapsedMs / 60000) * TIME_SPEED_MULTIPLIER
             const currentGameMinutes = baseGameMinutesRef.current + gameElapsedMinutes
@@ -99,12 +122,41 @@ export function ShopsPage() {
 
                 if (thresholdsRef.current.includes(flooredMinute)) {
                     fetchShops()
+                    fetchMermaid()
                 }
             }
+
+            // Mermaid reset countdown (real time, 01:00 UTC daily)
+            const nowUtc = new Date();
+            const nextReset = new Date(Date.UTC(
+                nowUtc.getUTCFullYear(),
+                nowUtc.getUTCMonth(),
+                nowUtc.getUTCDate(),
+                0, 0, 0
+            ));
+            if (nowUtc.getTime() >= nextReset.getTime()) {
+                nextReset.setUTCDate(nextReset.getUTCDate() + 1);
+            }
+
+            const diffMs = nextReset.getTime() - nowUtc.getTime();
+            const diffSec = Math.floor(diffMs / 1000);
+            const hours = Math.floor(diffSec / 3600);
+            const minutes = Math.floor((diffSec % 3600) / 60);
+            const seconds = diffSec % 60;
+            const countdown = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            setResetCountdown(countdown);
+
+            // Local time representation of 01:00 UTC
+            const localTimeStr = nextReset.toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            setLocalResetTime(localTimeStr);
         }, 1000)
 
         return () => clearInterval(interval)
-    }, [fetchShops])
+    }, [fetchShops, fetchMermaid])
+
     const { t } = useTranslation("market");
 
     return (
@@ -144,38 +196,101 @@ export function ShopsPage() {
                     </Card>
                 )}
 
+                {!loading && (
+                    <Card
+                        key="mermaid"
+                        className="group relative col-span-1 flex flex-col items-start justify-center gap-2 min-h-40 p-4 border-green-500"
+                    >
+                        <p className="uppercase inline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider text-center">
+                            {t(`market.shops.mermaid`)}
+                        </p>
+
+                        <img
+                            src={`/media/shops/mermaid.png`}
+                            className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50 group-hover:scale-110 group-hover:saturate-100 transition-all"
+                        />
+
+                        <span className="flex flex-col gap-0">
+                            <p className="text-xs text-muted-foreground">{t("market.shops.mermaidReset")}</p>
+                            <span className="flex gap-2">{localResetTime} {t("market.shops.localTime")}</span>
+                        </span>
+
+                        <Badge className="bg-green-500 text-green-100 uppercase z-10">
+                            {t("market.shops.reset")}: {resetCountdown}
+                        </Badge>
+
+                        {mermaidOffer && mermaidOffer.itemId && (
+                            <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
+                                <p className="text-xs text-muted-foreground drop-shadow-lg">
+                                    {t("market.shops.offert")}:
+                                </p>
+                                <ItemImage
+                                    itemId={mermaidOffer.itemId}
+                                    className="size-12 object-contain drop-shadow-lg"
+                                />
+                                <p className="text-sm max-w-24 leading-none drop-shadow-lg">
+                                    {FindItemName({ itemId: mermaidOffer.itemId })} x{mermaidOffer.itemQty}
+                                </p>
+                            </div>
+                        )}
+                        {(!mermaidOffer || !mermaidOffer.itemId) && (
+                            <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
+                                <p className="text-xs text-muted-foreground drop-shadow-lg">
+                                    {t("market.shops.offert")}:
+                                </p>
+                                <CircleQuestionMarkIcon className="size-12 p-2 opacity-60" />
+                                <p className="text-sm max-w-24 leading-none drop-shadow-lg">
+                                    {t("market.shops.not_found")}
+                                </p>
+                            </div>
+                        )}
+                    </Card>
+                )}
+
                 {!loading &&
                     shops.map((shop) => (
                         <Card
                             key={shop.id}
-                            className={`relative col-span-1 flex flex-col items-start justify-center gap-2 min-h-40 p-4 ${shop.isOpen ? "border-green-500" : "border-red-500"
-                                }`}
+                            className={`group relative col-span-1 flex flex-col items-start justify-center gap-2 min-h-40 p-4 ${
+                                shop.isOpen ? "border-green-500" : "border-red-500"
+                            }`}
                         >
-                            <p className="uppercase inline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider text-center">{t(`market.shops.${shop.id}`)}</p>
+                            <p className="uppercase inline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_2px_0_#5d3a00] tracking-wider text-center">
+                                {t(`market.shops.${shop.id}`)}
+                            </p>
 
-                            <img src={`/media/shops/${shop.id}.png`} className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50" />
-                            
+                            <img
+                                src={`/media/shops/${shop.id}.png`}
+                                className="absolute right-0 h-full object-contain !rounded-r-lg mask-l-from-0% opacity-50 saturate-50 group-hover:scale-110 group-hover:saturate-100 transition-all"
+                            />
+
                             <span className="flex flex-col gap-0">
                                 <p className="text-xs text-muted-foreground">{t("market.shops.open_hours")}</p>
                                 <span className="flex gap-2">
                                     <p>{shop.openFrom}</p>
-                                    -
-                                    <p>{shop.openUntil}</p>
+                                    -<p>{shop.openUntil}</p>
                                 </span>
                             </span>
 
-
-                            <Badge className={shop.isOpen ? "bg-green-500 text-green-100 uppercase" : "bg-red-500 text-white uppercase"}>
+                            <Badge
+                                className={
+                                    shop.isOpen
+                                        ? "bg-green-500 text-green-100 uppercase"
+                                        : "bg-red-500 text-white uppercase"
+                                }
+                            >
                                 {shop.isOpen ? t("market.shops.open") : t("market.shops.closed")}
                             </Badge>
-
 
                             {shop.offer && (
                                 <div className="absolute top-1/2 right-5 -translate-y-1/2 text-center items-center justify-center flex flex-col gap-0 z-10">
                                     <p className="text-xs text-muted-foreground drop-shadow-lg">
                                         {t("market.shops.offert")}:
                                     </p>
-                                    <ItemImage itemId={shop.offer.item} className="size-12 object-contain drop-shadow-lg" />
+                                    <ItemImage
+                                        itemId={shop.offer.item}
+                                        className="size-12 object-contain drop-shadow-lg"
+                                    />
                                     <p className="text-sm max-w-24 leading-none drop-shadow-lg">
                                         {FindItemName({ itemId: shop.offer.item })}
                                     </p>
@@ -186,6 +301,7 @@ export function ShopsPage() {
                                     <p className="text-xs text-muted-foreground drop-shadow-lg">
                                         {t("market.shops.offert")}:
                                     </p>
+                                    <CircleQuestionMarkIcon className="size-12 p-2 opacity-60" />
                                     <p className="text-sm max-w-24 leading-none drop-shadow-lg">
                                         {t("market.shops.not_found")}
                                     </p>

@@ -33,8 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select"
-import { EyeClosedIcon, EyeIcon } from "lucide-react"
-import { RarityBadge, RarityBorder } from "@const/rarities"
+import { EyeClosedIcon, EyeIcon, FishIcon } from "lucide-react"
+import { GetRarityColor, RarityBadge, RarityBorder } from "@const/rarities"
 import {
   Popover,
   PopoverContent,
@@ -44,6 +44,7 @@ import {
   PopoverTrigger,
 } from "@components/ui/popover"
 import { Button } from "@components/ui/button"
+import { Badge } from "@components/ui/badge"
 
 const mapsConfig: Record<
   string,
@@ -596,7 +597,7 @@ export function MapPreview() {
       z: number
     }> = []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ;(arr as string[]).forEach((s) => {
+      ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
         if (parts.length >= 4) {
           const x = Number(parts[1])
@@ -679,7 +680,7 @@ export function MapPreview() {
       return
     }
 
-    ;(async () => {
+    ; (async () => {
       try {
         const resolvedEntries = await Promise.all(
           uniqueCategories.map(async (cat) => {
@@ -956,6 +957,7 @@ export function MapPreview() {
                   )
                   if (itemsInCat.length === 0) return null
                   const categoryHidden = isFullyHidden(itemsInCat)
+
                   return (
                     <span key={catKey} className="w-full px-2">
                       <div className="flex items-center justify-between gap-2">
@@ -1015,11 +1017,10 @@ export function MapPreview() {
                                   toggleResourceVisibility(id)
                                 }
                               }}
-                              className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
-                                isHidden
-                                  ? "bg-red-500/40"
-                                  : "bg-transparent hover:bg-accent/40"
-                              }`}
+                              className={`relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
+                                ? "bg-red-500/40"
+                                : "bg-transparent hover:bg-accent/40"
+                                }`}
                             >
                               <ItemImage
                                 itemId={id}
@@ -1042,12 +1043,15 @@ export function MapPreview() {
                               >
                                 Lvl. {levelNum}
                               </LevelBadge>
+
+
                             </div>
                           )
                         })}
                       </div>
                     </span>
                   )
+
                 })
               })()
             ) : (
@@ -1113,11 +1117,10 @@ export function MapPreview() {
                                 toggleResourceVisibility(id)
                               }
                             }}
-                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
-                              isHidden
-                                ? "bg-red-500/40"
-                                : "bg-transparent hover:bg-accent/40"
-                            }`}
+                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
+                              ? "bg-red-500/40"
+                              : "bg-transparent hover:bg-accent/40"
+                              }`}
                           >
                             <ItemImage
                               itemId={id}
@@ -1164,6 +1167,83 @@ export function MapPreview() {
         </Card>
       </div>
 
+      {/* Fish Drops */}
+      {(() => {
+        const fishCat = harvestablesData?.harvestables?.fish ?? {}
+        const serverKeys = harvestablesData?.locations?.servers?.[mapId]
+          ? Object.keys(harvestablesData.locations.servers[mapId])
+          : []
+        const fishIds = Object.keys(fishCat).filter((id) =>
+          serverKeys.includes(id)
+        )
+
+        if (fishIds.length === 0) return null
+
+        return fishIds.map((id) => {
+          const fishData = fishCat[id]
+          const drops = (fishData?.drops ?? [])
+            .slice()
+            .sort((a: any, b: any) => Number(b.chance) - Number(a.chance))
+
+          const fishTitle = t(
+            [
+              `items.${getCleanItemId(id)}`,
+              `items_maps:items.${getCleanItemId(id)}`,
+            ],
+            { defaultValue: FindItemName({ itemId: id }) }
+          )
+
+          return (
+            <div key={id} className="mt-8 w-full gap-2">
+              <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
+                {fishTitle}
+              </p>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
+                {drops.map((drop: any, dropIndex: number) => (
+                  <RarityBorder
+                    rarity={FindItemRarity({ itemId: drop.item })}
+                    key={`${drop.item}-${dropIndex}`}
+                    className="group flex flex-col items-center gap-2"
+                  >
+                    <ItemImage
+                      itemId={drop.item}
+                      className="mx-auto mb-auto aspect-square w-4/5  group-hover:scale-105 transition-transform"
+                      style={{
+                        filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: drop.item }))}40)`,
+                      }}
+                    />
+                    <p className="text-center text-xs leading-none">
+                      {t(
+                        [
+                          `items.${getCleanItemId(drop.item)}`,
+                          `items_maps:items.${getCleanItemId(drop.item)}`,
+                        ],
+                        { defaultValue: FindItemName({ itemId: drop.item }) }
+                      )}
+                    </p>
+                    <span className="flex flex-col gap-0 -space-y-1 -mt-1">{/*}
+                    <span className="flex flex-row justify-between items-center">
+                      <p className="text-[0.60rem] text-muted-foreground leading-none">Time:</p>
+                      <p className="text-[0.70rem] ">00:00 - 00:00</p>
+                    </span>
+                    <span className="flex flex-row justify-between items-center">
+                      <p className="text-[0.60rem] text-muted-foreground leading-none">Condition:</p>
+                      <p className="text-[0.70rem] ">Full Moon</p>
+                    </span>*/}
+                      <span className="flex flex-row justify-between items-center">
+                        <p className="text-[0.60rem] text-muted-foreground leading-none">Change:</p>
+                        <p className="text-[0.70rem] ">{Number(drop.chance).toFixed(2)}%</p>
+                      </span>
+                    </span>
+                  </RarityBorder>
+                ))}
+              </div>
+            </div>
+          )
+        })
+      })()}
+
       {/* Insects */}
       <div className="w-full gap-2">
         <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
@@ -1191,11 +1271,14 @@ export function MapPreview() {
                     <RarityBorder
                       rarity={FindItemRarity({ itemId: insect.id })}
                       key={insect.id}
-                      className="group flex flex-col items-center gap-2"
+                      className="group flex flex-col items-center gap-2 h-full"
                     >
                       <ItemImage
                         itemId={insect.id}
-                        className="mx-auto mb-auto aspect-square size-4/5 drop-shadow-[0_0_8px_#00000099] transition-transform group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_#00000099]"
+                        className="mx-auto mb-auto aspect-square size-4/5 transition-transform group-hover:scale-105"
+                                            style={{
+                        filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: insect.id }))}40)`,
+                      }}
                       />
                       <p className="text-center text-xs">
                         {t(`insects:insects.${getCleanItemId(insect.id)}`, {
@@ -1213,8 +1296,8 @@ export function MapPreview() {
                         rarity={FindItemRarity({ itemId: insect.id })}
                       />
                       <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
-                          defaultValue: FindItemName({ itemId: insect.id }),
-                        })}</p>
+                        defaultValue: FindItemName({ itemId: insect.id }),
+                      })}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">

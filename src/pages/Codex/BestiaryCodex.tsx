@@ -336,7 +336,7 @@ export function BestiaryCodexPage() {
         <div
           className={`custom-scrollbar ${selectedCreatureId ? "w-full lg:w-2/3" : "w-full"} lg:scroll-fade  lg:overflow-y-auto pr-2`}
         >
-          <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-6 gap-4`}>
+          <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-5 gap-4`}>
             {isLoading && (
               <div className="col-span-3 text-center">Loading bestiary...</div>
             )}
@@ -396,7 +396,7 @@ export function BestiaryCodexPage() {
   function BestiaryInfoPanel() {
     return (
       <>
-                  <Card className="flex w-full shrink-0 flex-col justify-center gap-0 px-4">
+                  <Card className="flex w-full shrink-0 flex-col justify-center gap-0 py-0">
               {isDetailsLoading && (
                 <p className="py-6 text-center text-sm text-muted-foreground">
                   Loading creature details...
@@ -417,20 +417,25 @@ export function BestiaryCodexPage() {
 
               {!isDetailsLoading && !detailsError && selectedCreature && (
                 <>
-                  <img src={detailsImage} className="mb-2 w-full p-4 [image-rendering:pixelated] " onError={(e) => {
+                
+      <span className="border-b-2 bg-secondary/40 w-full py-2 px-3 flex flex-row gap-2 items-center">
+      
+                  <span className="flex flex-row items-center gap-2 w-full">
+                    <LevelBadge level={detailsLevel} className="scale-110 mx-0.5">
+                      LVL {detailsLevel} - {detailsLevelMax}
+                    </LevelBadge>
+                    <p className="text-lg">{detailsName}</p>
+                    <Badge className="ml-auto">{detailsType}</Badge>
+                  </span>
+      </span>
+                  <img src={detailsImage} className="mb-2 w-4/5 mx-auto [image-rendering:pixelated] " onError={(e) => {
                     const img = e.currentTarget
                     if (!img.dataset.fallback) {
                       img.dataset.fallback = "true"
                       img.src = "/media/missingBestiary.png"
                     }
                   }} />
-                  <span className="mt-2 flex flex-row items-center gap-2">
-                    <LevelBadge level={detailsLevel}>
-                      LVL {detailsLevel} - {detailsLevelMax}
-                    </LevelBadge>
-                    <p>{detailsName}</p>
-                    <Badge className="ml-auto">{detailsType}</Badge>
-                  </span>
+                  <span className="flex flex-col px-4 pb-4">
                   <span className="mt-1 flex w-full flex-row items-center justify-center gap-1 rounded border border-red-500/80 bg-red-500/40 py-0.5 text-[0.7rem]">
                     {detailsHealth[0]} - {detailsHealth[1]} HP
                   </span>
@@ -453,6 +458,7 @@ export function BestiaryCodexPage() {
                   <span className="mt-2 flex items-center">
                     <MapPin className="mr-1 size-4" /> Family:
                     <span className="ml-auto font-bold">{detailsFamily}</span>
+                  </span>
                   </span>
                 </>
               )}
