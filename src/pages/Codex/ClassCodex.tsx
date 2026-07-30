@@ -331,7 +331,7 @@ export function ClassCodexPage() {
                     variant="secondary"
                     className="text-[0.6rem] uppercase"
                   >
-                    {type}
+                    {t(`codex.class.type.${type}`)}
                   </Badge>
                 ))}
               </span>
@@ -434,7 +434,8 @@ export function ClassCodexPage() {
               />
               <span className="my-auto flex w-full flex-col gap-0">
                 <span className="flex w-full flex-row items-center gap-1 ">
-                  {autoAttackWeapon && <Badge>{autoAttackWeapon}</Badge>}
+                  {autoAttackWeapon && <Badge className="uppercase">
+                    {t(`codex.class.weapon.${autoAttackWeapon}`)}</Badge>}
                   <p>{autoAttackSpell?.name ?? "Auto Attack Name"}</p>
                   <p className="ml-auto flex flex-row items-center gap-1">
                     {formatCooldown(autoAttackSpell?.cooldown)}{" "}
@@ -466,7 +467,7 @@ export function ClassCodexPage() {
                   <span className="my-auto flex w-full flex-col gap-0">
                     <span className="flex w-full flex-row items-center">
                       {(spell.categories ?? []).includes("ULTIMATE") && (
-                        <Badge className="mr-1">ULTIMATE</Badge>
+                        <Badge className="mr-1 uppercase">{t("codex.class.ultimate")}</Badge>
                       )}
                       <p>{spell.name}</p>
                       
