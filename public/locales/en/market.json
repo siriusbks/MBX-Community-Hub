@@ -35,9 +35,14 @@
     "market.shops.SUSHI_SELLER": "Sushi Seller",
     "market.shops.Mouse": "Mouse",
     "market.shops.REGGAE_DEALER": "Reggae Dealer",
+    "market.shops.mermaid": "Mermaid",
     "market.shops.open_hours": "Open hours:",
     "market.shops.open": "Open",
     "market.shops.closed": "Closed",
     "market.shops.offert": "Offert",
-    "market.shops.not_found": "Not found"
+    "market.shops.not_found": "Not found",
+
+    "market.shops.reset": "Reset",
+    "market.shops.mermaidReset": "New Offer",
+    "market.shops.localTime": "(Local Time)"
 }
