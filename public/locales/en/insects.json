@@ -30,5 +30,10 @@
     "insects.insect_tarantula": "Tarantula",
     "insects.insect_locust": "Locust",
     "insects.insect_ant_brown": "Brown Ant",
-    "insects.view_conditions": "View Conditions"
+    "insects.view_conditions": "View Conditions",
+    "insects.spawnTime": "Spawn Time",
+    "insects.weather": "Weather",
+    "insects.spawnArea": "Spawn Area",
+    "insects.extraConditions": "Extra Conditions",
+    "insects.fullMoon": "Full Moon"
 }

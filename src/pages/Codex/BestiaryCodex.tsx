@@ -10,6 +10,7 @@ import { LevelBadge } from "@const/levels"
 import { ItemSlot } from "@const/rarities"
 import { CodexNav } from "@components/minebox/codex-nav"
 import { Sheet, SheetContent } from "@components/ui/sheet"
+import { useTranslation } from "react-i18next"
 
 type BestiaryCreature = {
   id: string
@@ -143,7 +144,7 @@ function getDropsSlots(source: JsonObject | null): DropItemSlot[] {
         getStringValue(item, "description") ||
         getStringValue(item, "lore") ||
         "",
-      change: Math.round(chance * 100 * 100) / 100, // np. 0.75 -> 75, 0.006 -> 0.6
+      change: Math.round(chance * 100 * 100) / 100,
     })
 
     return acc
@@ -166,7 +167,6 @@ function getRecipeIngredientSlotsWithoutIntermediates(
     ingredients.forEach((ingredient) => {
       if (!isJsonObject(ingredient)) return
 
-      // Show only direct/basic recipe ingredients and skip intermediate/custom components.
       if (getStringValue(ingredient, "type").toLowerCase() !== "vanilla") return
 
       const id = getStringValue(ingredient, "id")
@@ -191,6 +191,7 @@ function buildProxyUrl(targetUrl: string): string {
 }
 
 export function BestiaryCodexPage() {
+  const { t } = useTranslation("codex")
   const [creatures, setCreatures] = useState<BestiaryCreature[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -206,7 +207,6 @@ export function BestiaryCodexPage() {
   const [isDetailsLoading, setIsDetailsLoading] = useState(false)
   const [detailsError, setDetailsError] = useState<string | null>(null)
 
-  // Sheet Panel State
   const [isOpen, setIsOpen] = useState(() => {
     if (typeof window === "undefined") return false
     const hasId = new URLSearchParams(window.location.search).get("id")
@@ -313,14 +313,14 @@ export function BestiaryCodexPage() {
   const detailsName = getStringValue(
     selectedCreature,
     "name",
-    "Unknown creature"
+    t("codex.bestiary.unknownCreature")
   )
   const detailsType = getStringValue(selectedCreature, "type", "UNKNOWN")
   const detailsHealth = getRangeValue(selectedCreature, "health")
   const detailsFamily =
     getStringValue(selectedCreature, "family_name") ||
     getStringValue(selectedCreature, "family") ||
-    "Unknown"
+    t("codex.bestiary.unknownFamily")
   const detailsDrops = getDropsSlots(selectedCreature)
   const detailsRecipeIngredients =
     getRecipeIngredientSlotsWithoutIntermediates(selectedCreature)
@@ -328,7 +328,7 @@ export function BestiaryCodexPage() {
   return (
     <div className="relative page-container flex lg:h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-      <PageTitle title="Bestiary Codex" />
+      <PageTitle title={t("codex.bestiary.title")} />
 
       <CodexNav />
 
@@ -338,24 +338,24 @@ export function BestiaryCodexPage() {
         >
           <div className={`grid scroll-fade grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-5 gap-4`}>
             {isLoading && (
-              <div className="col-span-3 text-center">Loading bestiary...</div>
+              <div className="col-span-3 text-center">{t("codex.bestiary.loading")}</div>
             )}
             {error && (
               <div className="col-span-6 flex flex-col items-center justify-center gap-3 py-16 text-center">
                 <p className="text-sm text-red-500">{error}</p>
                 <p className="text-xs text-muted-foreground">
-                  Nie udało się załadować bestiariusza.
+                  {t("codex.bestiary.error.loadFailed")}
                 </p>
                 <Button
                   variant="default"
                   onClick={() => window.location.reload()}
                 >
-                  Try Again
+                  {t("codex.bestiary.tryAgain")}
                 </Button>
               </div>
             )}
             {!isLoading && !error && creatures.length === 0 && (
-              <div className="col-span-3 text-center">No creatures found.</div>
+              <div className="col-span-3 text-center">{t("codex.bestiary.noCreatures")}</div>
             )}
             {creatures.map((c) => (
               <BestiaryItem
@@ -399,7 +399,7 @@ export function BestiaryCodexPage() {
                   <Card className="flex w-full shrink-0 flex-col justify-center gap-0 py-0">
               {isDetailsLoading && (
                 <p className="py-6 text-center text-sm text-muted-foreground">
-                  Loading creature details...
+                  {t("codex.bestiary.loadingDetails")}
                 </p>
               )}
 
@@ -411,7 +411,7 @@ export function BestiaryCodexPage() {
 
               {!isDetailsLoading && !detailsError && !selectedCreature && (
                 <p className="py-6 text-center text-sm text-muted-foreground">
-                  Select creature to view details
+                  {t("codex.bestiary.selectCreature")}
                 </p>
               )}
 
@@ -422,7 +422,7 @@ export function BestiaryCodexPage() {
       
                   <span className="flex flex-row items-center gap-2 w-full">
                     <LevelBadge level={detailsLevel} className="scale-110 mx-0.5">
-                      LVL {detailsLevel} - {detailsLevelMax}
+                      {t("codex.bestiary.lvl")} {detailsLevel} - {detailsLevelMax}
                     </LevelBadge>
                     <p className="text-lg">{detailsName}</p>
                     <Badge className="ml-auto">{detailsType}</Badge>
@@ -437,13 +437,13 @@ export function BestiaryCodexPage() {
                   }} />
                   <span className="flex flex-col px-4 pb-4">
                   <span className="mt-1 flex w-full flex-row items-center justify-center gap-1 rounded border border-red-500/80 bg-red-500/40 py-0.5 text-[0.7rem]">
-                    {detailsHealth[0]} - {detailsHealth[1]} HP
+                    {detailsHealth[0]} - {detailsHealth[1]} {t("codex.bestiary.hp")}
                   </span>
                   <span className="mt-2 flex flex-col gap-0.5">
-                    <p className="text-xs text-muted-foreground">Stats</p>
+                    <p className="text-xs text-muted-foreground">{t("codex.bestiary.stats")}</p>
                     {detailsStats.length === 0 && (
                       <p className="text-xs text-muted-foreground">
-                        No stats data
+                        {t("codex.bestiary.noStats")}
                       </p>
                     )}
                     {detailsStats.map(([statKey, value]) => (
@@ -456,7 +456,7 @@ export function BestiaryCodexPage() {
                     ))}
                   </span>
                   <span className="mt-2 flex items-center">
-                    <MapPin className="mr-1 size-4" /> Family:
+                    <MapPin className="mr-1 size-4" /> {t("codex.bestiary.family")}:
                     <span className="ml-auto font-bold">{detailsFamily}</span>
                   </span>
                   </span>
@@ -465,12 +465,12 @@ export function BestiaryCodexPage() {
             </Card>
             <Card className="flex w-full shrink-0 flex-col justify-center gap-0 px-4">
               <p className="text-xs text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                Drops:
+                {t("codex.bestiary.drops")}:
               </p>
               <div className="mt-2 grid grid-cols-5 gap-2 pb-3">
                 {detailsDrops.length === 0 && (
                   <p className="col-span-4 text-xs text-muted-foreground">
-                    No drops data
+                    {t("codex.bestiary.noDrops")}
                   </p>
                 )}
                 {detailsDrops.map((drop) => (

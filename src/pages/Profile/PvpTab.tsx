@@ -28,7 +28,7 @@ export function PvpTab({
             <Card className="border-primary/10 bg-card/40">
                 <CardContent className="p-4">
                     <p className="text-center text-sm text-muted-foreground">
-                        No PvP data available.
+                        {t("profile.pvp.noData")}
                     </p>
                 </CardContent>
             </Card>
@@ -109,7 +109,7 @@ export function PvpTab({
 
 
 
-                {/* WIns */}
+                {/* Wins */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <AwardIcon className="object-contain drop-shadow-md z-10 relative size-12" />
@@ -131,7 +131,7 @@ export function PvpTab({
                         <p className="text-2xl">{pvpStats.draws}</p>
                     </span>
                 </Card>
-                {/* LOsses */}
+                {/* Losses */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <BoneFracture  className="object-contain drop-shadow-md z-10 relative size-12" />
@@ -167,7 +167,7 @@ export function PvpTab({
                         <p className="text-2xl">{pvpStats.win_streak}</p>
                     </span>
                 </Card>
-                {/* BEst Streaks */}
+                {/* Best Streaks */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <FlameIcon className="object-contain drop-shadow-md z-10 relative size-12" />
@@ -181,7 +181,7 @@ export function PvpTab({
 
 
 
-                {/* TOtalKills */}
+                {/* Total Kills */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <SwordIcon className="object-contain drop-shadow-md z-10 relative size-12" />
@@ -192,7 +192,7 @@ export function PvpTab({
                         <p className="text-2xl">{pvpStats.total_kills}</p>
                     </span>
                 </Card>
-                {/* TOtal Deaths */}
+                {/* Total Deaths */}
                 <Card className="p-4 flex flex-row gap-4 items-center">
                     <div className="relative shrink-0 rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/20 border border-border/50 flex items-center justify-center overflow-hidden2   shadow-inner size-18">
                         <SkullIcon className="object-contain drop-shadow-md z-10 relative size-12" />

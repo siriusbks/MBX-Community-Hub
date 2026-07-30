@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // ─── API base (przez proxy) ──────────────────────────────────────────────────
 // Docelowe API:   https://api.minebox.co/items/{id}?locale={locale}
@@ -51,6 +52,7 @@ export function useItemDetails(
     id?: string | null,
     locale: "en" | "fr" | "pl" = "en"
 ) {
+    const { t } = useTranslation("equipment");
     const [data, setData] = useState<ItemDetails | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -94,14 +96,14 @@ export function useItemDetails(
                 setData(json);
             } catch (e: any) {
                 if (e?.name === "AbortError") return;
-                setError(e?.message || "Failed to load item details");
+                setError(e?.message || t("equip.itemDetails.error"));
             } finally {
                 setLoading(false);
             }
         })();
 
         return () => controller.abort();
-    }, [id, locale]);
+    }, [id, locale, t]);
 
     return { data, loading, error };
 }

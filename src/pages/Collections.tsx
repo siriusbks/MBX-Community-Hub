@@ -45,7 +45,7 @@ export function CollectionsPage() {
             setNick(storedNick);
         } else {
             setLoadingProfile(false);
-            setError("No nickname found. Please enter your nickname in the top navigation bar.");
+            setError(t("collections.error.noNickname"));
         }
 
         const handleStorageChange = () => {
@@ -57,7 +57,7 @@ export function CollectionsPage() {
 
         const intervalId = setInterval(handleStorageChange, 1000);
         return () => clearInterval(intervalId);
-    }, [nick]);
+    }, [nick, t]);
 
     useEffect(() => {
         if (!nick) return;
@@ -75,14 +75,14 @@ export function CollectionsPage() {
                     setPlayerData(j);
                     setError(null);
                 } else if (res.status === 401) {
-                    setError("Player has disabled API access. You must enable it in-game.");
+                    setError(t("collections.error.apiDisabled"));
                 } else if (res.status === 404) {
-                    setError("Player not found.");
+                    setError(t("collections.error.notFound"));
                 } else {
-                    setError("Failed to fetch profile data.");
+                    setError(t("collections.error.fetchFailed"));
                 }
             } catch (err) {
-                if (mounted) setError("Network error while fetching profile.");
+                if (mounted) setError(t("collections.error.network"));
             } finally {
                 if (mounted) setLoadingProfile(false);
             }
@@ -90,7 +90,7 @@ export function CollectionsPage() {
 
         void fetchProfile();
         return () => { mounted = false; };
-    }, [nick]);
+    }, [nick, t]);
 
     useEffect(() => {
         let mounted = true;
@@ -113,10 +113,10 @@ export function CollectionsPage() {
                         setCollections([]);
                     }
                 } else {
-                    console.error("Failed to fetch collections");
+                    console.error(t("collections.error.fetchCollections"), res.status);
                 }
             } catch (err) {
-                console.error("Network error while fetching collections", err);
+                console.error(t("collections.error.fetchCollectionsNetwork"), err);
             } finally {
                 if (mounted) setLoadingCollections(false);
             }
@@ -124,7 +124,7 @@ export function CollectionsPage() {
 
         void fetchCollections();
         return () => { mounted = false; };
-    }, [activeTab]);
+    }, [activeTab, t]);
 
     const successes = playerData?.data?.OBJECTIVES?.successes || {};
 
@@ -146,10 +146,10 @@ export function CollectionsPage() {
     if (!nick && !loadingProfile && error) {
         return (
             <div className="relative flex flex-col page-container items-center justify-center min-h-[50vh]">
-                <PageTitle title="Collections" description="View your collection progress" />
+                <PageTitle title={t("collections.title")} description={t("collections.description")} />
                 <Card className="max-w-md w-full mt-4 text-center bg-card/50">
                     <div className="p-4">
-                        <h3 className="text-lg font-bold">Welcome to Collections</h3>
+                        <h3 className="text-lg font-bold">{t("collections.welcome")}</h3>
                         <p className="text-sm text-muted-foreground">{error}</p>
                     </div>
                 </Card>
@@ -352,7 +352,7 @@ export function CollectionsPage() {
 
                                                         <div className="flex items-center gap-3 pl-4 pr-2 border-l border-[#2e3c54]/50 h-full ">
                                                             <div className="flex flex-col items-center justify-center bg-[#131926] border border-[#2e3c54]/50 rounded-md px-3 py-1.5 min-w-[4.5rem] bg-card-dark shadow-[0_0_5px_rgba(0,0,0,0.10)]">
-                                                                <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider mb-0.5">Tier</span>
+                                                                <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider mb-0.5">{t("collections.tier")}</span>
                                                                 <span className="text-sm font-black text-primary drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] leading-none">{currentLevel}</span>
                                                                 <span className="text-[9px] text-muted-foreground/60 leading-none mt-0.5">/ {maxLevel}</span>
                                                             </div>
@@ -381,7 +381,7 @@ export function CollectionsPage() {
                                                                             </div>
                                                                             <div className="flex items-baseline gap-2">
                                                                                 <span className={`text-[11px] uppercase tracking-wider font-bold ${isCompleted ? 'text-emerald-500' : isCurrent ? 'text-primary' : 'text-muted-foreground'}`}>
-                                                                                    Lvl {idx + 1}
+                                                                                    {t("collections.levelShort")} {idx + 1}
                                                                                 </span>
                                                                                 <span className={`text-sm font-black tracking-tight ${isCompleted ? 'text-white' : 'text-white/80'}`}>
                                                                                     {formatNumber(level.amount)}
@@ -404,20 +404,20 @@ export function CollectionsPage() {
                                                                                 if (reward.type === 'recipe') {
                                                                                     iconId = reward.value;
                                                                                     title = t("collections.rewards.recipe");
-                                                                                    subtitle = FindItemName({itemId: reward.value}) || reward.value?.replace(/_/g, ' ') || 'Unknown Recipe';
+                                                                                    subtitle = FindItemName({itemId: reward.value}) || reward.value?.replace(/_/g, ' ') || t("collections.unknownRecipe");
                                                                                 } else if (reward.type === 'skill_experience') {
                                                                                     iconId = 'material-experience_bottle';
-                                                                                    title = t("collections.rewards.skill_xp");
+                                                                                    title = t("collections.rewards.skillXp");
                                                                                     subtitle = `+${formatNumber(reward.amount)} ${reward.skill}`;
                                                                                 } else if (reward.type === 'sell_multiplier') {
                                                                                     iconId = reward.item_id;
-                                                                                    title = t("collections.rewards.sell_bonus");
+                                                                                    title = t("collections.rewards.sellBonus");
                                                                                     subtitle = `+${Math.round(reward.multiplier * 100)}% Price`;
                                                                                 } else if (reward.type === 'stats') {
                                                                                     iconId = 'material-nether_star';
                                                                                     title = t("collections.rewards.stats");
                                                                                     const statsArr = Object.entries(reward.stats || {}).map(([k, v]) => `+${v} ${k.replace(/_/g, ' ')}`);
-                                                                                    subtitle = statsArr.join(', ') || 'Bonus';
+                                                                                    subtitle = statsArr.join(', ') || t("collections.bonus");
                                                                                 } else if (reward.type === 'title') {
                                                                                     iconId = 'material-name_tag';
                                                                                     title = t("collections.rewards.title");
@@ -425,12 +425,12 @@ export function CollectionsPage() {
                                                                                 } else if (reward.type === 'item') {
                                                                                     iconId = reward.value || reward.item_id || '';
                                                                                     title = t("collections.rewards.item");
-                                                                                    subtitle = FindItemName({itemId: iconId}) || iconId?.replace(/_/g, ' ') || 'Unknown Item';
+                                                                                    subtitle = FindItemName({itemId: iconId}) || iconId?.replace(/_/g, ' ') || t("collections.unknownItem");
                                                                                     if (reward.amount) subtitle = `${subtitle} x${reward.amount}`;
                                                                                 } else {
                                                                                     iconId = reward.value || reward.item_id || '';
-                                                                                    title = reward.type?.replace(/_/g, ' ') || 'Reward';
-                                                                                    subtitle = reward.value || `${reward.amount || ''}` || 'Unknown';
+                                                                                    title = reward.type?.replace(/_/g, ' ') || t("collections.reward");
+                                                                                    subtitle = reward.value || `${reward.amount || ''}` || t("collections.unknown");
                                                                                 }
 
                                                                                 return (

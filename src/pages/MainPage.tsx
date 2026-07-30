@@ -57,7 +57,7 @@ export function Home() {
         const res = await fetch(
           "https://mcapi.us/server/status?ip=play.minebox.co"
         )
-        if (!res.ok) throw new Error("Failed to fetch server status")
+        if (!res.ok) throw new Error(t("mainpage.error.fetchStatus"))
         const data: ServerStatus = await res.json()
         if (!cancelled) setStatus(data)
       } catch {
@@ -71,7 +71,7 @@ export function Home() {
       cancelled = true
       clearInterval(interval)
     }
-  }, [])
+  }, [t])
 
   const playersLabel =
     status?.online && status.players
@@ -94,21 +94,21 @@ export function Home() {
             <InfoIcon className="mr-1 size-4" />
           </span>
           <p className="px-2flex break-none w-fit items-center justify-center">
-            We need your help!
+            {t("mainpage.contribution.title")}
           </p>
         </span>
         <span className="flex w-full flex-row justify-between gap-4 sm:flex-1">
           <AlertDescription className="mr-auto flex items-center justify-center">
-            Help translate MBX Community on Crowdin!
+            {t("mainpage.contribution.description")}
           </AlertDescription>
           <Link to="/contribute">
-            <Button className="ml-auto">Contribute Now!</Button>
+            <Button className="ml-auto">{t("mainpage.contribution.button")}</Button>
           </Link>
         </span>
       </Alert>
 
       
-
+{/*
       <Card className="flex flex-row gap-2 p-2">
         <span className="flex flex-col gap-2">
           <p className="inline-block bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-xl font-bold tracking-wider text-transparent uppercase drop-shadow-[0_2px_0_#5d3a00]">
@@ -130,7 +130,7 @@ export function Home() {
             <Button><FR_Flag/>  French Forum</Button>
           </Link>
         </span>
-      </Card>
+      </Card>*/}
 
       {/* Welcome Hero */}
       <div className="flex flex-col items-center justify-center py-24">

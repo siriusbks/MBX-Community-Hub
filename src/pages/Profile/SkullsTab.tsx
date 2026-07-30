@@ -46,7 +46,7 @@ export function SkullsTab({ data }: { data: PlayerData }) {
     if (loading) {
         return (
             <div className="rounded-lg border border-dashed border-border/50 bg-secondary/20 p-6 text-sm text-muted-foreground">
-                Loading relics...
+                {t("profile.skulls.loading")}
             </div>
         );
     }
@@ -54,7 +54,7 @@ export function SkullsTab({ data }: { data: PlayerData }) {
     if (!relics.length) {
         return (
             <div className="rounded-lg border border-dashed border-border/50 bg-secondary/20 p-6 text-sm text-muted-foreground">
-                No relic data available.
+                {t("profile.skulls.noData")}
             </div>
         );
     }
@@ -94,7 +94,7 @@ export function SkullsTab({ data }: { data: PlayerData }) {
                                     }}
                                 />
                                 {isOwned && (<Badge className="absolute bottom-0 translate-y-1/2">
-                                    OWNED
+                                    {t("profile.skulls.owned")}
                                     </Badge>)}
                             </div>
 

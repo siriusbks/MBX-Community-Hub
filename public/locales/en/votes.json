@@ -9,6 +9,8 @@
     "votes.localTime": "Local Time",
     "votes.minutes": "minutes",
 
+    "votes.error.fetchFailed": "Failed to fetch votes list",
+    "votes.error.unknown": "An unknown error occurred",
 
     "votes.error": "Error",
     "votes.error.loadError": "Failed to load votes. Please try again later.",

@@ -2,5 +2,18 @@
     "community.title": "Community Projects",
     "community.description": "Discover amazing projects created by the Minebox community, including Mods, Resource Packs, and more.",
     "badge.Recommended": "Recommended",
-    "badge.Popular": "Popular"
+    "badge.Popular": "Popular",
+    
+    "community.error.loadFailed": "Failed to load projects",
+    "community.loading": "Loading projects...",
+        "community.error.fetchFailed": "Failed to fetch modrinth data",
+    "community.version": "v",
+    "community.supportedLanguages": "Supported Languages",
+    "community.by": "by",
+    "community.website": "Website",
+    "community.modrinth": "Modrinth",
+    "community.curseforge": "Curse Forge",
+    "community.github": "GitHub",
+    "community.discord": "Discord"
+
 }

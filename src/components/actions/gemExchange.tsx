@@ -106,6 +106,7 @@ function ExchangeCalculator({
   buyOrders: GemExchangeOrder[]
   sellOrders: GemExchangeOrder[]
 }) {
+  const { t } = useTranslation("market")
   const [direction, setDirection] = useState<ExchangeDirection>("GOLD_TO_GEM")
   const [targetGem, setTargetGem] = useState(0)
 
@@ -136,7 +137,7 @@ function ExchangeCalculator({
   return (
     <Card className="p-0 gap-0">
       <div className="flex items-center justify-between border-b-2 border-card-dark bg-secondary/20 p-4">
-        <h3 className="text-lg font-semibold">Exchange Calculator</h3>
+        <h3 className="text-lg font-semibold">{t("market.gem_exchange.calculator")}</h3>
         <button
           type="button"
           onClick={() => {
@@ -157,13 +158,13 @@ function ExchangeCalculator({
 
       {maxGem <= 0 ? (
         <p className="text-sm text-muted-foreground">
-          No offers available for this exchange direction.
+          {t("market.gem_exchange.no_offers")}
         </p>
       ) : (
         <span>
           <div className="space-y-1 px-4 py-4">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">How many GEM do you want to {direction === "GOLD_TO_GEM" ? "buy" : "sell"}:</span>
+              <span className="text-muted-foreground">{direction === "GOLD_TO_GEM" ? t("market.gem_exchange.how_many_buy") : t("market.gem_exchange.how_many_sell")}</span>
               <span className="flex items-center gap-1 font-semibold">
                 {formatNumber(targetGem)}
                 <img src="/media/currency/GEM.png" className="!size-4" />
@@ -179,21 +180,21 @@ function ExchangeCalculator({
             />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>0</span>
-              <span>max. {formatNumber(maxGem)}</span>
+              <span>{t("market.gem_exchange.max")} {formatNumber(maxGem)}</span>
             </div>
           </div>
 
           {targetGem > 0 && (
             <div className="space-y-1 border-t-2 border-secondary-dark bg-secondary/40 p-4 grid grid-cols-3">
               <div className="flex flex-col items-start gap-0 -space-y-1.5 text-lg ">
-                <p className="text-muted-foreground text-xs">Used</p>
-                <p className="uppercase">{result.ordersUsed}{" "}{result.ordersUsed === 1 ? "offer" : "offers"}</p>
+                <p className="text-muted-foreground text-xs">{t("market.gem_exchange.used")}</p>
+                <p className="uppercase">{result.ordersUsed}{" "}{result.ordersUsed === 1 ? t("market.gem_exchange.offer") : t("market.gem_exchange.offers")}</p>
               </div>
 
               <div className="flex flex-col gap-0 -space-y-1.5 items-center text-lg mx-auto">
                 <p className="text-muted-foreground text-xs">{direction === "GOLD_TO_GEM"
-                  ? "Minimum cost in GOLD"
-                  : "Maximum proceeds in GOLD"}</p>
+                  ? t("market.gem_exchange.min_cost")
+                  : t("market.gem_exchange.max_proceeds")}</p>
                 <span className="flex flex-row items-center gap-1">
                   <span>{formatNumber(targetGem)}</span>
                   <img src="/media/currency/GEM.png" className="!size-4" />
@@ -204,7 +205,7 @@ function ExchangeCalculator({
               </div>
               
               <div className="flex flex-col items-end gap-0 -space-y-1.5 text-lg ">
-                <p className="text-muted-foreground text-xs">Average rate</p>
+                <p className="text-muted-foreground text-xs">{t("market.gem_exchange.average_rate")}</p>
                 <p className="uppercase flex flex-row items-center gap-2 mt-1">{formatNumber(result.averageRate)} 
                   <img src="/media/currency/GOLD.png" className="!size-5" /> / 
                   <img src="/media/currency/GEM.png" className="!size-5" /></p>
@@ -212,8 +213,7 @@ function ExchangeCalculator({
 
               {!result.filled && (
                 <p className="text-xs text-red-500">
-                  Note: the selected amount exceeds the available offers — the
-                  result reflects the maximum portion that can be fulfilled.
+                  {t("market.gem_exchange.note")}
                 </p>
               )}
             </div>
@@ -270,10 +270,10 @@ export function GemExchange() {
         <Badge variant="outline">{orders.length} {t("market.gem_exchange.offers")}</Badge>
       </div>
       {loading ? (
-        <div className="text-sm text-muted-foreground">Loading...</div>
+        <div className="text-sm text-muted-foreground">{t("market.gem_exchange.loading")}</div>
       ) : orders.length === 0 ? (
         <div className="text-sm text-muted-foreground">
-          No data at this time.
+          {t("market.gem_exchange.no_data")}
         </div>
       ) : (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
@@ -335,8 +335,8 @@ export function GemExchange() {
   return (
     <div className="space-y-8">
       <ExchangeCalculator buyOrders={buyOrders} sellOrders={sellOrders} />
-      {renderOrders(sellOrders, "Exchange Gold to Gems")}
-      {renderOrders(buyOrders, "Exchange Gems to Gold")}
+      {renderOrders(sellOrders, t("market.gem_exchange.gold_to_gems"))}
+      {renderOrders(buyOrders, t("market.gem_exchange.gems_to_gold"))}
     </div>
   )
 }

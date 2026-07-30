@@ -25,6 +25,23 @@
     "collections.rewards.sell_bonus": "Sell Bonus",
     "collections.rewards.stats": "Stats",
     "collections.rewards.title": "Title",
-    "collections.rewards.item": "Item"
-    
+    "collections.rewards.item": "Item",
+ 
+    "collections.error.noNickname": "No nickname found. Please enter your nickname in the top navigation bar.",
+    "collections.error.apiDisabled": "Player has disabled API access. You must enable it in-game.",
+    "collections.error.notFound": "Player not found.",
+    "collections.error.fetchFailed": "Failed to fetch profile data.",
+    "collections.error.network": "Network error while fetching profile.",
+    "collections.error.fetchCollections": "Failed to fetch collections",
+    "collections.error.fetchCollectionsNetwork": "Network error while fetching collections",
+    "collections.welcome": "Welcome to Collections",
+    "collections.tier": "Tier",
+    "collections.levelShort": "Lvl",
+    "collections.rewards.skillXp": "Skill XP",
+    "collections.rewards.sellBonus": "Sell Bonus",
+    "collections.bonus": "Bonus",
+    "collections.unknownRecipe": "Unknown Recipe",
+    "collections.unknownItem": "Unknown Item",
+    "collections.reward": "Reward",
+    "collections.unknown": "Unknown"
 }

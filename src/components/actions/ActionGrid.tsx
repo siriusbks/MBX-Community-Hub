@@ -77,7 +77,6 @@ export default function ActionGrid() {
           sort,
           sort_direction: sortDirection,
         })
-        // We no longer send item_id to the API since we filter locally by name
 
         const res = await fetch(
           `https://api.minebox.co/market/auction?${params.toString()}`
@@ -127,7 +126,7 @@ export default function ActionGrid() {
           onValueChange={(value) => setSort(value as SortField)}
         >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
-            <SelectValue placeholder="sort" />
+            <SelectValue placeholder={t("market.auction_house.sort")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -149,7 +148,7 @@ export default function ActionGrid() {
           onValueChange={(value) => setSortDirection(value as SortDirection)}
         >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
-            <SelectValue placeholder="sort_direction" />
+            <SelectValue placeholder={t("market.auction_house.sort_direction")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -261,7 +260,7 @@ export default function ActionGrid() {
           size="lg"
           className=""
         >
-          {loading ? "Loading..." : t("market.auction_house.load_more")}
+          {loading ? t("market.auction_house.loading") : t("market.auction_house.load_more")}
         </Button>
       )}
     </div>

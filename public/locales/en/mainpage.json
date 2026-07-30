@@ -39,5 +39,11 @@
     "mainpage.features.shops.title": "Shops",
     "mainpage.features.shops.description": "Browse available shops and their inventory",
     "mainpage.features.summer2026.title": "Summer Event",
-    "mainpage.features.summer2026.description": "Experience the exciting Summer event!"
+    "mainpage.features.summer2026.description": "Experience the exciting Summer event!",
+
+
+        "mainpage.error.fetchStatus": "Failed to fetch server status",
+    "mainpage.contribution.title": "We need your help!",
+    "mainpage.contribution.description": "Help translate MBX Community on Crowdin!",
+    "mainpage.contribution.button": "Contribute Now!"
 }

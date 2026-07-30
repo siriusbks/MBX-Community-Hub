@@ -233,7 +233,7 @@ function RegionPolygon({
           style={{ borderLeftColor: color }}
         >
           <span className="text-sm font-bold tracking-wide text-primary">
-            <p className="text-xs text-muted-foreground">Region</p>
+            <p className="text-xs text-muted-foreground">{t("maps.region")}</p>
             {label}
           </span>
         </div>
@@ -275,7 +275,7 @@ function BestiaryPolygon({
           className="max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
-          <p className="text-xs font-bold text-muted-foreground">Region</p>
+          <p className="text-xs font-bold text-muted-foreground">{t("maps.region")}</p>
           <p className="text-sm font-bold tracking-wide text-primary">
             {zoneName}
           </p>
@@ -420,7 +420,7 @@ export function MapPreview() {
   if (!config) {
     return (
       <div className="flex h-full items-center justify-center">
-        Map not found
+        {t("maps.mapNotFound")}
       </div>
     )
   }
@@ -436,31 +436,31 @@ export function MapPreview() {
     fetch("/assets/data/harvestables.json")
       .then((r) => r.json())
       .then((harvestablesJson) => setHarvestablesData(harvestablesJson))
-      .catch((e) => console.error("Failed to load map or harvestable data", e))
-  }, [])
+      .catch((e) => console.error(t("maps.error.loadHarvestables"), e))
+  }, [t])
 
   useEffect(() => {
     fetch("/assets/data/maps.json")
       .then((r) => r.json())
       .then((mapsJson) => setMapsData(mapsJson))
-      .catch((e) => console.error("Failed to load maps.json data", e))
-  }, [])
+      .catch((e) => console.error(t("maps.error.loadMaps"), e))
+  }, [t])
 
   useEffect(() => {
     // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
     fetch("/assets/data/maps_region.json")
       .then((r) => r.json())
       .then((json) => setRegionsData(json[mapId] ?? null))
-      .catch((e) => console.error("Failed to load region data", e))
-  }, [mapId])
+      .catch((e) => console.error(t("maps.error.loadRegions"), e))
+  }, [mapId, t])
 
   useEffect(() => {
     // https://polydraw.v1v2.io/ can help to draw region, offset [+109,+102] on coord of spawn
     fetch("/assets/data/maps_bestiary_region.json")
       .then((r) => r.json())
       .then((json) => setBestiaryZonesData(json))
-      .catch((e) => console.error("Failed to load bestairy zones", e))
-  }, [])
+      .catch((e) => console.error(t("maps.error.loadBestiaryZones"), e))
+  }, [t])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -487,11 +487,11 @@ export function MapPreview() {
       })
       .catch((e) => {
         if (e?.name === "AbortError") return
-        console.error("Failed to load mob names", e)
+        console.error(t("maps.error.loadMobNames"), e)
       })
 
     return () => controller.abort()
-  }, [])
+  }, [t])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -514,7 +514,7 @@ export function MapPreview() {
       .catch((error) => {
         if (error?.name === "AbortError") return
         setBestiaryData(null)
-        setBestiaryError("Failed to load bestiary")
+        setBestiaryError(t("maps.error.bestiaryFailed"))
       })
       .finally(() => {
         if (!controller.signal.aborted) {
@@ -525,7 +525,7 @@ export function MapPreview() {
     return () => {
       controller.abort()
     }
-  }, [mapId])
+  }, [mapId, t])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -547,7 +547,7 @@ export function MapPreview() {
       .catch((error) => {
         if (error?.name === "AbortError") return
         setInsectsData(null)
-        setInsectsError("Failed to load insects")
+        setInsectsError(t("maps.error.insectsFailed"))
       })
       .finally(() => {
         if (!controller.signal.aborted) {
@@ -558,7 +558,7 @@ export function MapPreview() {
     return () => {
       controller.abort()
     }
-  }, [])
+  }, [t])
 
   const zoneFullKey = `mineboxadditions.strings.zones.${zoneKey}`
 
@@ -753,7 +753,7 @@ export function MapPreview() {
         <span className="h-full w-3/4 rounded-xl">
           {!harvestablesData ? (
             <div className="flex h-full items-center justify-center">
-              Loading map…
+              {t("maps.loadingMap")}
             </div>
           ) : (
             <MapContainer
@@ -799,7 +799,7 @@ export function MapPreview() {
                         />
                         <span className="flex flex-col items-start justify-center gap-0">
                           <p className="font-bold text-primary">
-                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
+                            {t([`items_items.${getCleanItemId(m.cat)}`], {
                               defaultValue: FindItemName({ itemId: m.cat }),
                             })}
                           </p>
@@ -890,7 +890,7 @@ export function MapPreview() {
             <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
               <SelectValue
                 className="text-md text-primary uppercase"
-                placeholder="Wybierz mapę"
+                placeholder={t("maps.selectMap")}
               />
             </SelectTrigger>
             <SelectContent>
@@ -918,7 +918,7 @@ export function MapPreview() {
               }}
               className="cursor-pointer font-bold text-primary uppercase hover:underline"
             >
-              {t("maps:maps.resources")}
+              {t("maps.resources")}
             </p>
             <button
               type="button"
@@ -927,12 +927,12 @@ export function MapPreview() {
             >
               {allItemsHidden ? (
                 <span className="flex items-center gap-1">
-                  {t("maps:maps.select_all")}
+                  {t("maps.select_all")}
                   <EyeClosedIcon className="size-4" />
                 </span>
               ) : (
                 <span className="flex items-center gap-1">
-                  {t("maps:maps.deselect_all")}
+                  {t("maps.deselect_all")}
                   <EyeIcon className="size-4" />
                 </span>
               )}
@@ -986,12 +986,12 @@ export function MapPreview() {
                         >
                           {categoryHidden ? (
                             <span className="flex items-center gap-1">
-                              {t("maps:maps.select_all")}
+                              {t("maps.select_all")}
                               <EyeClosedIcon className="size-4" />
                             </span>
                           ) : (
                             <span className="flex items-center gap-1">
-                              {t("maps:maps.deselect_all")}
+                              {t("maps.deselect_all")}
                               <EyeIcon className="size-4" />
                             </span>
                           )}
@@ -1031,7 +1031,7 @@ export function MapPreview() {
                                 {t(
                                   [
                                     `items.${getCleanItemId(id)}`,
-                                    `items_maps:items.${getCleanItemId(id)}`,
+                                    `items_items.${getCleanItemId(id)}`,
                                   ],
                                   { defaultValue: FindItemName({ itemId: id }) }
                                 )}
@@ -1041,7 +1041,7 @@ export function MapPreview() {
                                 level={levelNum}
                                 className="-mt-1 scale-90 uppercase"
                               >
-                                Lvl. {levelNum}
+                                {t("maps.levelShort")} {levelNum}
                               </LevelBadge>
 
 
@@ -1091,12 +1091,12 @@ export function MapPreview() {
                       >
                         {groupHidden ? (
                           <span className="flex items-center gap-1">
-                            {t("maps:maps.select_all")}
+                            {t("maps.select_all")}
                             <EyeClosedIcon className="size-4" />
                           </span>
                         ) : (
                           <span className="flex items-center gap-1">
-                            {t("maps:maps.deselect_all")}
+                            {t("maps.deselect_all")}
                             <EyeIcon className="size-4" />
                           </span>
                         )}
@@ -1130,7 +1130,7 @@ export function MapPreview() {
                               {t(
                                 [
                                   `items.${getCleanItemId(id)}`,
-                                  `items_maps:items.${getCleanItemId(id)}`,
+                                  `items_items.${getCleanItemId(id)}`,
                                 ],
                                 { defaultValue: FindItemName({ itemId: id }) }
                               )}
@@ -1146,14 +1146,14 @@ export function MapPreview() {
 
           {/* Settings */}
           <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
-            <p>{t("maps:maps.preview_settings")}</p>
+            <p>{t("maps.preview_settings")}</p>
             <div className="flex items-center space-x-2">
               <Switch
                 id="regions"
                 checked={showRegions}
                 onCheckedChange={setShowRegions}
               />
-              <Label htmlFor="regions">{t("maps:maps.show_regions")}</Label>
+              <Label htmlFor="regions">{t("maps.show_regions")}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Switch
@@ -1161,7 +1161,7 @@ export function MapPreview() {
                 checked={showBestiary}
                 onCheckedChange={setShowBestiary}
               />
-              <Label htmlFor="bestairy">{t("maps:maps.show_bestiary")}</Label>
+              <Label htmlFor="bestairy">{t("maps.show_bestiary")}</Label>
             </div>
           </Card>
         </Card>
@@ -1188,7 +1188,7 @@ export function MapPreview() {
           const fishTitle = t(
             [
               `items.${getCleanItemId(id)}`,
-              `items_maps:items.${getCleanItemId(id)}`,
+              `items_items.${getCleanItemId(id)}`,
             ],
             { defaultValue: FindItemName({ itemId: id }) }
           )
@@ -1217,22 +1217,14 @@ export function MapPreview() {
                       {t(
                         [
                           `items.${getCleanItemId(drop.item)}`,
-                          `items_maps:items.${getCleanItemId(drop.item)}`,
+                          `items_items.${getCleanItemId(drop.item)}`,
                         ],
                         { defaultValue: FindItemName({ itemId: drop.item }) }
                       )}
                     </p>
-                    <span className="flex flex-col gap-0 -space-y-1 -mt-1">{/*}
-                    <span className="flex flex-row justify-between items-center">
-                      <p className="text-[0.60rem] text-muted-foreground leading-none">Time:</p>
-                      <p className="text-[0.70rem] ">00:00 - 00:00</p>
-                    </span>
-                    <span className="flex flex-row justify-between items-center">
-                      <p className="text-[0.60rem] text-muted-foreground leading-none">Condition:</p>
-                      <p className="text-[0.70rem] ">Full Moon</p>
-                    </span>*/}
+                    <span className="flex flex-col gap-0 -space-y-1 -mt-1">
                       <span className="flex flex-row justify-between items-center">
-                        <p className="text-[0.60rem] text-muted-foreground leading-none">Change:</p>
+                        <p className="text-[0.60rem] text-muted-foreground leading-none">{t("maps.chance")}</p>
                         <p className="text-[0.70rem] ">{Number(drop.chance).toFixed(2)}%</p>
                       </span>
                     </span>
@@ -1247,16 +1239,16 @@ export function MapPreview() {
       {/* Insects */}
       <div className="w-full gap-2">
         <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
-          {t("maps:maps.insects")}
+          {t("maps.insects")}
         </p>
 
         {isInsectsLoading ? (
-          <p className="text-xs text-muted-foreground">Loading insects...</p>
+          <p className="text-xs text-muted-foreground">{t("maps.loadingInsects")}</p>
         ) : insectsError ? (
           <p className="text-xs text-red-400">{insectsError}</p>
         ) : insectsForZone.length === 0 ? (
           <p className="text-xs text-muted-foreground">
-            No insects found for this island.
+            {t("maps.noInsects")}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
@@ -1281,12 +1273,12 @@ export function MapPreview() {
                       }}
                       />
                       <p className="text-center text-xs">
-                        {t(`insects:insects.${getCleanItemId(insect.id)}`, {
+                        {t(`insects.${getCleanItemId(insect.id)}`, {
                           defaultValue: FindItemName({ itemId: insect.id }),
                         })}
                       </p>
                       <p className="cursor-pointer text-center text-[0.6rem] text-muted-foreground group-hover:text-primary group-hover:underline">
-                        {t("insects:insects.view_conditions")}
+                        {t("maps.view_conditions")}
                       </p>
                     </RarityBorder>
                   </PopoverTrigger>
@@ -1295,14 +1287,14 @@ export function MapPreview() {
                       <RarityBadge
                         rarity={FindItemRarity({ itemId: insect.id })}
                       />
-                      <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
+                      <p>{t(`insects.${getCleanItemId(insect.id)}`, {
                         defaultValue: FindItemName({ itemId: insect.id }),
                       })}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        Spawn Time
+                        {t("insects.spawnTime")}
                       </p>
                       <p className="text-[0.65rem]">
                         {insect.time_ranges
@@ -1313,14 +1305,14 @@ export function MapPreview() {
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        Weather
+                        {t("insects.weather")}
                       </p>
                       <p className="text-[0.65rem]">{insect.weather}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        Spawn Area
+                        {t("insects.spawnArea")}
                       </p>
                       <span>
                         {subareas.map((area, index) => (
@@ -1334,9 +1326,9 @@ export function MapPreview() {
                     {insect.requires_moon && (
                       <span className="flex w-full flex-row items-center justify-between gap-2">
                         <p className="text-[0.65rem] text-muted-foreground">
-                          Extra Conditions
+                          {t("insects.extraConditions")}
                         </p>
-                        <p className="text-[0.65rem]">Full Moon</p>
+                        <p className="text-[0.65rem]">{t("insects.fullMoon")}</p>
                       </span>
                     )}
                   </PopoverContent>
@@ -1350,16 +1342,16 @@ export function MapPreview() {
       {/* Bestiary */}
       <div className="mt-8 w-full gap-2">
         <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
-          {t("maps:maps.bestiary")}
+          {t("maps.bestiary")}
         </p>
 
         {isBestiaryLoading ? (
-          <p className="text-xs text-muted-foreground">Loading creatures...</p>
+          <p className="text-xs text-muted-foreground">{t("maps.loadingCreatures")}</p>
         ) : bestiaryError ? (
           <p className="text-xs text-red-400">{bestiaryError}</p>
         ) : (bestiaryData?.creatures?.length ?? 0) === 0 ? (
           <p className="text-xs text-muted-foreground">
-            No creatures found for this island.
+            {t("maps.noCreatures")}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">

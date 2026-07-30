@@ -33,6 +33,7 @@ import { Link } from "react-router-dom"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
 import { FindItemRarity, ItemImage } from "@const/elements"
 import RecipeTreeModal from "@components/craftPlanner/RecipTreeModal"
+import { useTranslation } from "react-i18next"
 
 type LocalizedText = Record<string, string>
 
@@ -88,6 +89,7 @@ const rarityOrderMap: Record<string, number> = rarities.reduce(
 const getRarityOrder = (rarity: string) => rarityOrderMap[rarity] ?? -1
 
 export function ItemsCodex() {
+  const { t } = useTranslation("codex")
   const [search, setSearch] = useState("")
   const [sortBy, setSortBy] = useState<SortBy>("type")
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
@@ -331,13 +333,13 @@ const sortedItems = useMemo(() => {
   return (
     <div className="relative page-container flex h-dvh flex-col overflow-hidden">
       <div className="absolute top-0 -z-1 aspect-[21/9] w-full bg-[url(/media/backgrounds/MainBackground.webp)] mask-y-from-50% mask-x-from-80% mask-radial-to-100% bg-center opacity-30" />
-      <PageTitle title="Item Codex" />
+      <PageTitle title={t("codex.item.title")} />
 
       <CodexNav />
 
       <span className="flex gap-2">
         <Input
-          placeholder="Search items..."
+          placeholder={t("codex.item.search")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="h-8 w-full minebox-shadow"
@@ -348,13 +350,13 @@ const sortedItems = useMemo(() => {
           onValueChange={(value) => setSortBy(value as SortBy)}
         >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
-            <SelectValue placeholder="Category" />
+            <SelectValue placeholder={t("codex.item.category")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="type">Type</SelectItem>
-              <SelectItem value="level">Level</SelectItem>
-              <SelectItem value="rarity">Rarity</SelectItem>
+              <SelectItem value="type">{t("codex.item.type")}</SelectItem>
+              <SelectItem value="level">{t("codex.item.level")}</SelectItem>
+              <SelectItem value="rarity">{t("codex.item.rarity")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -364,12 +366,12 @@ const sortedItems = useMemo(() => {
           onValueChange={(value) => setSortDirection(value as SortDirection)}
         >
           <SelectTrigger className="!h-8 w-[180px] minebox-shadow">
-            <SelectValue placeholder="Category" />
+            <SelectValue placeholder={t("codex.item.category")} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="asc">Asc</SelectItem>
-              <SelectItem value="desc">Desc</SelectItem>
+              <SelectItem value="asc">{t("codex.item.asc")}</SelectItem>
+              <SelectItem value="desc">{t("codex.item.desc")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -385,13 +387,12 @@ const sortedItems = useMemo(() => {
           >
             {itemsMap === null && (
               <div className="col-span-full py-8 text-center text-muted-foreground">
-                Loading item catalog...
+                {t("codex.item.loadingCatalog")}
               </div>
             )}
 
             {visibleItems.map(([id, item]) => {
               const name = item.name?.[locale] ?? item.name?.en ?? id
-              //const rarity = (item.rarity ?? "").toString().toLowerCase()
               const rarity = FindItemRarity({ itemId: id }) ?? "vanilla"
               const image = item.image
                 ? `data:image/png;base64,${item.image}`
@@ -425,7 +426,7 @@ const sortedItems = useMemo(() => {
 
           {itemsMap !== null && sortedItems.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">
-              No items found.
+              {t("codex.item.noItems")}
             </div>
           )}
         </div>
@@ -449,7 +450,7 @@ const sortedItems = useMemo(() => {
                       className="my-0.5 bg-muted-foreground"
                     ></Separator>
                     <p className="text-xs text-muted-foreground">
-                      Lv. {itemDetailsData.level}
+                      {t("codex.item.lv")} {itemDetailsData.level}
                     </p>
                     {itemDetailsData?.mount?.flyable && (
                       <>
@@ -457,7 +458,7 @@ const sortedItems = useMemo(() => {
                           orientation="vertical"
                           className="my-0.5 bg-muted-foreground"
                         ></Separator>
-                        <p className="text-xs text-primary">FLYABLE</p>
+                        <p className="text-xs text-primary">{t("codex.item.flyable")}</p>
                       </>
                     )}
                   </span>
@@ -468,54 +469,33 @@ const sortedItems = useMemo(() => {
               </span>
               <span className="px-1 pb-1">
                 <span className="flex flex-row gap-1 text-xs">
-                  <p className="mr-auto">ID:</p>
+                  <p className="mr-auto">{t("codex.item.id")}:</p>
                   <p>{itemDetailsData.id}</p>
                 </span>
                 {itemDetailsData.recipe?.unlock_collection && (
                   <span className="flex flex-row gap-1 text-xs">
-                    <p className="">Unlocked By </p>
+                    <p className="">{t("codex.item.unlockedBy")} </p>
                     <p className="mr-auto text-primary">
                       {itemDetailsData.recipe?.unlock_collection}
                     </p>
-                    <p>Level {itemDetailsData.recipe?.unlock_level}</p>
+                    <p>{t("codex.item.level")} {itemDetailsData.recipe?.unlock_level}</p>
                   </span>
                 )}
                 <span className="flex flex-row gap-1 text-xs">
-                  <p className="mr-auto">Museum</p>
+                  <p className="mr-auto">{t("codex.item.museum")}</p>
                   <p>
                     {museumItemIds === null
                       ? "..."
                       : museumItemIds.has(itemDetailsData.id)
-                        ? "Can be donated"
-                        : "Not donatable"}
+                        ? t("codex.item.canDonate")
+                        : t("codex.item.cannotDonate")}
                   </p>
                 </span>
-                {/*}
-                <span className="flex flex-row gap-1 text-xs">
-                  <p className="mr-auto">Buy (Bazaar)</p>
-                  <p>
-                    {bazaarLoading
-                      ? "..."
-                      : bazaarData
-                        ? bazaarData.buy_price.toLocaleString()
-                        : "????"}
-                  </p>
-                </span>
-                <span className="flex flex-row gap-1 text-xs">
-                  <p className="mr-auto">Sell (Bazaar)</p>
-                  <p>
-                    {bazaarLoading
-                      ? "..."
-                      : bazaarData
-                        ? bazaarData.sell_price.toLocaleString()
-                        : "????"}
-                  </p>
-                </span>*/}
                 {auctionData &&
                   auctionData.price_per_unit !== 0 &&
                   !auctionLoading && (
                     <span className="flex flex-row gap-1 text-xs">
-                      <p className="mr-auto">Price (Action House)</p>
+                      <p className="mr-auto">{t("codex.item.priceAH")}</p>
                       <p>
                         {auctionLoading
                           ? "..."
@@ -528,7 +508,7 @@ const sortedItems = useMemo(() => {
                   )}
                 {itemDetailsData?.stats && (
                   <div>
-                    <p className="text-xs">Stats</p>
+                    <p className="text-xs">{t("codex.item.stats")}</p>
                     {Object.entries(itemDetailsData.stats).map(
                       ([stat, values]) => (
                         <StatItem
@@ -543,7 +523,7 @@ const sortedItems = useMemo(() => {
                 )}
                 {itemDetailsData?.damages && (
                   <div>
-                    <p className="text-xs">Damage</p>
+                    <p className="text-xs">{t("codex.item.damage")}</p>
                     {Object.entries(itemDetailsData.damages).map(
                       ([stat, values]) => (
                         <DamageItem
@@ -559,11 +539,11 @@ const sortedItems = useMemo(() => {
                 {itemDetailsData?.mount && (
                   <>
                     <span className="flex flex-row gap-1 text-xs">
-                      <p className="mr-auto">Speed</p>
+                      <p className="mr-auto">{t("codex.item.speed")}</p>
                       <p>{itemDetailsData.mount.speed * 100}%</p>
                     </span>
                     <span className="flex flex-row gap-1 text-xs">
-                      <p className="mr-auto">Jump Height</p>
+                      <p className="mr-auto">{t("codex.item.jumpHeight")}</p>
                       <p>{itemDetailsData.mount.jump_height}</p>
                     </span>
                   </>
@@ -587,7 +567,7 @@ const sortedItems = useMemo(() => {
                   >
                     <Globe />
                   </Button>
-                  <p>Recipes</p>
+                  <p>{t("codex.item.recipes")}</p>
                   <p className="ml-auto text-xs">
                     {itemDetailsData.recipe.job}
                   </p>
@@ -635,7 +615,7 @@ const sortedItems = useMemo(() => {
             {itemDetailsData?.used_in_recipes && (
               <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3">
                 <span className="flex flex-row gap-1">
-                  <p>Used in Recipes</p>
+                  <p>{t("codex.item.usedInRecipes")}</p>
                 </span>
                 <span className="grid grid-cols-7 gap-1">
                   {itemDetailsData?.used_in_recipes &&
@@ -657,7 +637,7 @@ const sortedItems = useMemo(() => {
             {itemDetailsData?.dropped_by && (
               <Card className="flex flex-col gap-1 !overflow-visible p-2 pb-3 ">
                 <span className="flex flex-row gap-1">
-                  <p>Dropped By</p>
+                  <p>{t("codex.item.droppedBy")}</p>
                 </span>
                 <span className="grid grid-cols-3 gap-2">
                   {itemDetailsData?.dropped_by &&
@@ -683,7 +663,7 @@ const sortedItems = useMemo(() => {
                               <span className="mt-auto flex w-full flex-col items-center justify-between px-1 text-xs">
                                 <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
-                                    Change
+                                    {t("codex.item.chance")}
                                   </p>
                                   <p className="text-[0.65rem]">
                                     {bestiary.chance}%
@@ -691,7 +671,7 @@ const sortedItems = useMemo(() => {
                                 </span>
                                 <span className="flex w-full flex-row items-center justify-between gap-1">
                                   <p className="text-[0.65rem] text-muted-foreground">
-                                    Drop
+                                    {t("codex.item.drop")}
                                   </p>
                                   <p className="text-[0.65rem]">
                                     {bestiary.amount[0] === bestiary.amount[1]

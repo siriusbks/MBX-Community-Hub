@@ -207,14 +207,14 @@ function SubcategorySection({
       <h3 className="mb-2 flex w-full items-center justify-between gap-2 text-lg">
         {title}
         <Badge variant="secondary" className="text-xs">
-          {items.length} items
+          {items.length} {useTranslation("market").t("market.bazaar.items")}
         </Badge>
       </h3>
 
       {!inView ? (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
           {Array.from({ length: Math.min(items.length, 6) }).map((_, i) => (
-            <Skeleton className="h-16" />
+            <Skeleton key={i} className="h-16" />
           ))}
         </div>
       ) : (
@@ -243,7 +243,7 @@ function CategorySection({
       <h2 className="mb-4 flex w-full items-center justify-between gap-3 text-2xl font-bold">
         {title}
         <Badge variant="secondary" className="text-sm">
-          {totalItems} items
+          {totalItems} {t("market.bazaar.items")}
         </Badge>
       </h2>
 
@@ -390,7 +390,7 @@ export default function BazaarGrid() {
   }, [catalog, items])
 
   if (loading || !catalog) {
-    return <div className="py-10 text-center">Loading...</div>
+    return <div className="py-10 text-center">{t("market.bazaar.loading")}</div>
   }
 
   return (

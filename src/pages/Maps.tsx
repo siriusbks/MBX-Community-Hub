@@ -46,10 +46,10 @@ export function Maps() {
       .then(([mapsJson, harvestablesJson]) => {
         setMapsData(mapsJson);
         setHarvestablesData(harvestablesJson);
-        console.log('loaded harvestables locations.servers keys:', Object.keys(harvestablesJson?.locations?.servers ?? {}));
+        console.log(t("maps.loadedHarvestables"), Object.keys(harvestablesJson?.locations?.servers ?? {}));
       })
-      .catch((e) => console.error('Failed to load map or harvestable data', e));
-  }, []);
+      .catch((e) => console.error(t("maps.error.loadFailed"), e));
+  }, [t]);
 
   return (
     <div className="relative flex flex-col page-container pb-24 items-center">
@@ -140,36 +140,15 @@ export function Maps() {
                         return (
                           <span key={id} className="flex flex-row gap-0 items-center justify-start mt-1">
                             <ItemImage itemId={id} className="aspect-square size-6" />
-                            <LevelBadge level={levelNum} className="w-16 scale-80">Lvl. {levelNum}</LevelBadge>
+                            <LevelBadge level={levelNum} className="w-16 scale-80">{t("maps.levelShort")} {levelNum}</LevelBadge>
                             <p className="items-center leading-none text-xs">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
                             
                           </span>
                         );
                       })
                     ) : (
-                      <div className="text-xs text-muted-foreground">No data</div>
+                      <div className="text-xs text-muted-foreground">{t("maps.noData")}</div>
                     )}
-                    {/*
-                    {mapsData && harvestablesData && mapsData[map.id] ? (
-                      // collect item IDs from arrays or objects in the map entry
-                      Object.values(mapsData[map.id])
-                        .flatMap((items: any) => (Array.isArray(items) ? items : Object.keys(items)))
-                        .map((itemId: string) => {
-                          const info = harvestablesData[itemId] ?? null;
-                          const level = info?.min_level ?? 0;
-                          const locale = i18n?.language ?? 'en';
-                          const displayName = info?.name?.[locale] ?? info?.name?.en ?? itemId;
-
-                          return (
-                            <span key={itemId} className="flex flex-row gap-2 items-center justify-start mt-1">
-                              <LevelBadge level={level} >Level {level}</LevelBadge>
-                              <p className="items-center leading-none">{displayName}</p>
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <div className="text-xs text-muted-foreground">No data</div>
-                    )}*/}
                   </div>
                 </PopoverContent>
               </Popover>

@@ -154,9 +154,7 @@ const Equipment: React.FC = () => {
       setShareCopied(true)
       window.setTimeout(() => setShareCopied(false), 2000)
     } catch {
-      alert(
-        `${t("equip.share.copyFailed", { defaultValue: "Could not copy the build link:" })}\n\n${shareUrl}`
-      )
+      alert(t("equip.share.copyFailed", { defaultValue: "Could not copy the build link:" }) + "\n\n" + shareUrl)
     }
   }
 
@@ -175,7 +173,7 @@ const Equipment: React.FC = () => {
 
     fetch(`https://api.minebox.co/data/${nick}`)
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch player data")
+        if (!res.ok) throw new Error(t("equip.error.fetchPlayerData"))
         return res.json()
       })
       .then((data) => {
@@ -189,7 +187,7 @@ const Equipment: React.FC = () => {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [t])
 
   // Load a build from URL
   useEffect(() => {
@@ -415,39 +413,6 @@ const Equipment: React.FC = () => {
           description={t("equip.description")}
         />
       </div>
-
-      {/*}
-      <div className="flex w-full items-center justify-end gap-3">
-        <span className="text-xs text-gray-400">
-          {t("equip.itemsLoaded", { count: equipment.length })}
-        </span>
-
-        <Button
-          variant="default"
-          size="lg"
-          className="gap-2"
-          onClick={onShareBuild}
-        >
-          {shareCopied ? (
-            <Check className="h-4 w-4" />
-          ) : (
-            <Share2 className="h-4 w-4" />
-          )}
-          {shareCopied
-            ? t("equip.share.copied", { defaultValue: "Copied" })
-            : t("equip.share.button", { defaultValue: "Share" })}
-        </Button>
-
-        <Button
-          variant="secondary"
-          size="lg"
-          className="minebox-shadow"
-          onClick={onResetAll}
-        >
-          <RotateCcw className="h-4 w-4" />
-          {t("equip.resetAll")}
-        </Button>
-      </div>*/}
 
       <main className="min-h-0 flex-1 overflow-hidden p-4">
         <div className="grid min-h-0 w-full grid-cols-1 gap-3 lg:grid-cols-3">

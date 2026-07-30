@@ -12,8 +12,8 @@ export function CommunityPage() {
         fetch("/assets/data/projects.json")
             .then((res) => res.json())
             .then((data) => setProjects(data))
-            .catch((err) => console.error("Failed to load projects", err));
-    }, []);
+            .catch((err) => console.error(t("community.error.loadFailed"), err));
+    }, [t]);
 
     return (
         <div className="relative flex flex-col page-container pb-24">
@@ -33,7 +33,7 @@ export function CommunityPage() {
                 {projects.length === 0 && (
                     <div className="w-full text-center py-20 text-muted-foreground flex flex-col items-center gap-4">
                         <Ripple className="size-16 text-primary" />
-                        <p>Loading projects...</p>
+                        <p>{t("community.loading")}</p>
                     </div>
                 )}
             </div>

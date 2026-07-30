@@ -89,9 +89,7 @@ export function ProfilePage() {
         setNick(storedNick)
       } else {
         setLoading(false)
-        setError(
-          "No nickname found. Please enter your nickname in the top navigation bar."
-        )
+        setError(t("profile.error.noNickname"))
       }
     }
 
@@ -107,7 +105,7 @@ export function ProfilePage() {
 
     const intervalId = setInterval(handleStorageChange, 1000)
     return () => clearInterval(intervalId)
-  }, [nick])
+  }, [nick, t])
 
   // Fetch data when nick changes
   useEffect(() => {
@@ -128,16 +126,14 @@ export function ProfilePage() {
           setData(j)
           setError(null)
         } else if (res.status === 401) {
-          setError(
-            "Player has disabled API access. You must enable it in-game."
-          )
+          setError(t("profile.error.apiDisabled"))
         } else if (res.status === 404) {
-          setError("Player not found.")
+          setError(t("profile.error.notFound"))
         } else {
-          setError("Failed to fetch profile data.")
+          setError(t("profile.error.fetchFailed"))
         }
       } catch (err) {
-        if (mounted) setError("Network error while fetching profile.")
+        if (mounted) setError(t("profile.error.network"))
       } finally {
         if (mounted) setLoading(false)
       }
@@ -148,7 +144,7 @@ export function ProfilePage() {
     return () => {
       mounted = false
     }
-  }, [nick])
+  }, [nick, t])
 
   // Fetch PvP stats when nick changes
   useEffect(() => {
@@ -216,7 +212,7 @@ export function ProfilePage() {
       link.href = dataUrl
       link.click()
     } catch (err) {
-      console.error("Failed to generate image", err)
+      console.error(t("profile.error.imageGeneration"), err)
     } finally {
       setIsGenerating(false)
     }
@@ -225,10 +221,10 @@ export function ProfilePage() {
   if (!nick && !loading && error) {
     return (
       <div className="relative page-container flex min-h-[50vh] flex-col items-center justify-center">
-        <PageTitle title="Profile" description="View your Minebox statistics" />
+        <PageTitle title={t("profile.title")} description={t("profile.description")} />
         <Card className="mt-4 w-full max-w-md bg-card/50 text-center">
           <CardHeader className="p-4">
-            <CardTitle className="text-lg">Welcome to your Profile</CardTitle>
+            <CardTitle className="text-lg">{t("profile.welcome")}</CardTitle>
             <CardDescription>{error}</CardDescription>
           </CardHeader>
         </Card>
@@ -366,7 +362,7 @@ export function ProfilePage() {
                       level={data.level}
                       className="py-3 pb-4 text-lg"
                     >
-                      Lvl {data.level}
+                      {t("profile.level")} {data.level}
                     </LevelBadge>
                     <p className="tracking-wider">{data.username}</p>
                     {data.online ? (
@@ -516,7 +512,7 @@ export function ProfilePage() {
                       t("profile.preview.generating")
                     ) : (
                       <>
-                        <Download className="h-4 w-4" /> {" "}
+                        <Download className="h-4 w-4" />{" "}
                         {t("profile.preview.download")}
                       </>
                     )}
