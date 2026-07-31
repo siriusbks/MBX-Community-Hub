@@ -228,7 +228,7 @@ function RegionPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="top" offset={[0, -5]}>
+      <Tooltip sticky direction="top">
         <div
           className="pointer-events-none rounded-md border-l-4 bg-linear-to-b from-card to-card-dark px-3 py-1.5 minebox-shadow"
           style={{ borderLeftColor: color }}
@@ -272,12 +272,12 @@ function BestiaryPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="top" offset={[0, -15]}>
+      <Tooltip sticky direction="top">
         <div
           className="pointer-events-none max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
-          <p className="text-xs font-bold text-muted-foreground">{t("maps.region")}</p>
+          <p className="text-xs font-bold text-muted-foreground">{t("maps:maps.region")}</p>
           <p className="text-sm font-bold tracking-wide text-primary">
             {zoneName}
           </p>
