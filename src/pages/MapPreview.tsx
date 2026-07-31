@@ -211,6 +211,7 @@ function RegionPolygon({
   color: string
   label: string
 }) {
+  const { t } = useTranslation("maps")
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -227,9 +228,9 @@ function RegionPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="center">
+      <Tooltip sticky direction="top" offset={[0, -5]}>
         <div
-          className="rounded-md border-l-4 bg-linear-to-b from-card to-card-dark px-3 py-1.5 minebox-shadow"
+          className="pointer-events-none rounded-md border-l-4 bg-linear-to-b from-card to-card-dark px-3 py-1.5 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
           <span className="text-sm font-bold tracking-wide text-primary">
@@ -253,6 +254,7 @@ function BestiaryPolygon({
   zoneName: string
   mobs: { id: string; name: string; image: string }[]
 }) {
+  const { t } = useTranslation()
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -270,9 +272,9 @@ function BestiaryPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="center">
+      <Tooltip sticky direction="top" offset={[0, -15]}>
         <div
-          className="max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
+          className="pointer-events-none max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
           <p className="text-xs font-bold text-muted-foreground">{t("maps.region")}</p>
@@ -359,7 +361,7 @@ export function MapPreview() {
   // --- MAP CONFIG (looked up early so hooks below can safely reference it) ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
 
-  const { t } = useTranslation(["maps", "items_maps", "insects"])
+  const { t } = useTranslation(["maps", "items_maps", "insects", "universal"])
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
@@ -1258,11 +1260,10 @@ export function MapPreview() {
                 .map((loc) => formatSubarea(loc.subarea))
 
               return (
-                <Popover>
-                  <PopoverTrigger >
+                <Popover key={insect.id}>
+                  <PopoverTrigger>
                     <RarityBorder
                       rarity={FindItemRarity({ itemId: insect.id })}
-                      key={insect.id}
                       className="group flex flex-col items-center gap-2 h-full"
                     >
                       <ItemImage
@@ -1273,7 +1274,7 @@ export function MapPreview() {
                       }}
                       />
                       <p className="text-center text-xs">
-                        {t(`insects.${getCleanItemId(insect.id)}`, {
+                        {t(`insects:insects.${getCleanItemId(insect.id)}`, {
                           defaultValue: FindItemName({ itemId: insect.id }),
                         })}
                       </p>
@@ -1287,14 +1288,14 @@ export function MapPreview() {
                       <RarityBadge
                         rarity={FindItemRarity({ itemId: insect.id })}
                       />
-                      <p>{t(`insects.${getCleanItemId(insect.id)}`, {
+                      <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
                         defaultValue: FindItemName({ itemId: insect.id }),
                       })}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        {t("insects.spawnTime")}
+                        {t("insects:insects.spawnTime")}
                       </p>
                       <p className="text-[0.65rem]">
                         {insect.time_ranges
@@ -1305,14 +1306,14 @@ export function MapPreview() {
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        {t("insects.weather")}
+                        {t("insects:insects.weather")}
                       </p>
                       <p className="text-[0.65rem]">{insect.weather}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
-                        {t("insects.spawnArea")}
+                        {t("insects:insects.spawnArea")}
                       </p>
                       <span>
                         {subareas.map((area, index) => (
@@ -1328,7 +1329,7 @@ export function MapPreview() {
                         <p className="text-[0.65rem] text-muted-foreground">
                           {t("insects.extraConditions")}
                         </p>
-                        <p className="text-[0.65rem]">{t("insects.fullMoon")}</p>
+                        <p className="text-[0.65rem]">{t("insects:insects.fullMoon")}</p>
                       </span>
                     )}
                   </PopoverContent>
