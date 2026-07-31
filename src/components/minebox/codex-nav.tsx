@@ -1,30 +1,32 @@
 import { Button } from "@components/ui/button"
 import { Globe, PawPrintIcon, Sailboat, ShapesIcon, SwordsIcon } from "lucide-react"
 import { useLocation, Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 export function CodexNav() {
+  const { t } = useTranslation("codex")
   const location = useLocation()
   const currentPath = location.pathname
 
   const navItems = [
     {
       icon: <ShapesIcon strokeWidth={3} />,
-      label: "Items",
+      label: t("codex.tab.items"),
       path: "/items",
     },
     {
       icon: <PawPrintIcon strokeWidth={3} />,
-      label: "Bestiary",
+      label: t("codex.tab.bestiary"),
       path: "/bestiary",
     },
     {
       icon: <Sailboat strokeWidth={3} />,
-      label: "Ships",
+      label: t("codex.tab.ships"),
       path: "/ships",
     },
     {
       icon: <SwordsIcon strokeWidth={3} />,
-      label: "Classes",
+      label: t("codex.tab.classes"),
       path: "/classes",
     },
   ]
