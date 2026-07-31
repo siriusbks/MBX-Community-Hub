@@ -32,5 +32,47 @@
 
     "maps.resources": "Afficher les ressources",
     "maps.select_all": "Tout sélectionner",
-    "maps.deselect_all": "Tout désélectionner"
+    "maps.deselect_all": "Tout désélectionner",
+
+    "village.error.loadFailed": "Échec du chargement des données du village",
+    "village.loading": "Chargement...",
+    "village.mapAlt": "Aperçu du village",
+    "village.tiers": "Paliers du village",
+    "village.tier": "Palier",
+    "village.chanceReduction": "Réduction de chance",
+    "village.requirements": "Conditions requises",
+    "village.unknownItem": "Objet inconnu",
+    "village.player": "Joueur",
+    "village.level": "LV.",
+    "village.buildings": "Bâtiments",
+    "village.production": "Production",
+    "village.enclosure": "Enclos",
+    "village.pets": "Compagnons",
+    "village.xp": "XP",
+    "village.upgrades": "Améliorations",
+    "village.soon": "Bientôt",
+
+    
+    "maps.loadedHarvestables": "loaded harvestables locations.servers keys:",
+    "maps.error.loadFailed": "Échec du chargement de la carte ou des données de récolte",
+    "maps.levelShort": "Lvl.",
+    "maps.noData": "Aucune donnée",
+    
+    "maps.region": "Région",
+    "maps.mapNotFound": "Carte non trouvée",
+    "maps.error.loadHarvestables": "Échec du chargement de la carte ou des données de récolte",
+    "maps.error.loadMaps": "Échec du chargement des données maps.json",
+    "maps.error.loadRegions": "Échec du chargement des données de région",
+    "maps.error.loadBestiaryZones": "Échec du chargement des zones de bestiaire",
+    "maps.error.loadMobNames": "Échec du chargement des noms de créatures",
+    "maps.error.bestiaryFailed": "Échec du chargement du bestiaire",
+    "maps.error.insectsFailed": "Échec du chargement des insectes",
+    "maps.loadingMap": "Chargement de la carte…",
+    "maps.selectMap": "Sélectionner une carte",
+    "maps.loadingInsects": "Chargement des insectes...",
+    "maps.noInsects": "Aucun insecte trouvé pour cette île.",
+    "maps.loadingCreatures": "Chargement des créatures...",
+    "maps.noCreatures": "Aucune créature trouvée pour cette île.",
+    "maps.chance": "Chance",
+    "maps.view_conditions": "Voir les conditions"
 }

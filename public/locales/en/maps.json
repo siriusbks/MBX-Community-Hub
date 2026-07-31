@@ -36,7 +36,7 @@
     "maps.deselect_all": "Deselect All",
 
 
-        "village.error.loadFailed": "Failed to load village data",
+    "village.error.loadFailed": "Failed to load village data",
     "village.loading": "Loading...",
     "village.mapAlt": "Village Preview",
     "village.tiers": "Village Tiers",

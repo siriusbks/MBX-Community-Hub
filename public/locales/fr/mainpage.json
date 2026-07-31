@@ -39,5 +39,11 @@
     "mainpage.features.shops.title": "Boutiques",
     "mainpage.features.shops.description": "Découvrez les boutiques disponibles et leur listes",
     "mainpage.features.summer2026.title": "Événement d'été",
-    "mainpage.features.summer2026.description": "Vivez l'événement estival passionnant !"
+    "mainpage.features.summer2026.description": "Vivez l'événement estival passionnant !",
+    
+
+    "mainpage.error.fetchStatus": "Échec de la récupération du statut du serveur",
+    "mainpage.contribution.title": "Nous avons besoin de votre aide !",
+    "mainpage.contribution.description": "Aidez à traduire MBX Community sur Crowdin !",
+    "mainpage.contribution.button": "Contribuer maintenant !"
 }

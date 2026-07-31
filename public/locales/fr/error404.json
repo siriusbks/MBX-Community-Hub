@@ -1,0 +1,8 @@
+{
+    "error404.apiStatus": "Statut de l'API",
+    "error404.online": "EN LIGNE",
+    "error404.title": "Erreur 404",
+    "error404.pageNotFound": "PAGE NON TROUVÉE",
+    "error404.doesNotExist": "n'existe pas dans ce monde.",
+    "error404.goBack": "Retour"
+}

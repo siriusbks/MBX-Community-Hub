@@ -52,6 +52,10 @@
     "museum.category.sword": "Épée",
     "museum.category.tool": "Outil",
     "museum.category.treasure": "Trésor",
-    "museum.category.utility_block": "Bloc utilitaire"
+    "museum.category.utility_block": "Bloc utilitaire",
+
+    "museum.error.loadFailed": "Échec du chargement des catégories",
+    "museum.error.unlockedItems": "Échec du chargement des objets débloqués",
+    "museum.error": "Erreur"
     
 }

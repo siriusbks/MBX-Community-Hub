@@ -6,7 +6,7 @@
     
     "community.error.loadFailed": "Failed to load projects",
     "community.loading": "Loading projects...",
-        "community.error.fetchFailed": "Failed to fetch modrinth data",
+    "community.error.fetchFailed": "Failed to fetch modrinth data",
     "community.version": "v",
     "community.supportedLanguages": "Supported Languages",
     "community.by": "by",

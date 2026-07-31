@@ -2,5 +2,17 @@
     "community.title": "Projets de la communauté",
     "community.description": "Découvrez des projets incroyables créés par la communauté Minebox, y compris des Mods, des Packs de textures, et bien plus encore.",
     "badge.Recommended": "Recommandé",
-    "badge.Popular": "Populaire"
+    "badge.Popular": "Populaire",
+
+    "community.error.loadFailed": "Échec du chargement des projets",
+    "community.loading": "Chargement des projets...",
+    "community.error.fetchFailed": "Échec de la récupération des données de Modrinth",
+    "community.version": "v",
+    "community.supportedLanguages": "Langues supportées",
+    "community.by": "par",
+    "community.website": "Site web",
+    "community.modrinth": "Modrinth",
+    "community.curseforge": "Curse Forge",
+    "community.github": "GitHub",
+    "community.discord": "Discord"
 }

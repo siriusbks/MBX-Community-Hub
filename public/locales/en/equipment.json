@@ -84,5 +84,5 @@
     "equip.craftingList": "Crafting List",
     "equip.suggestedBuilds": "Suggested Builds",
     "equip.error.fetchPlayerData": "Failed to fetch player data",
-        "equip.itemDetails.error": "Failed to load item details"
+    "equip.itemDetails.error": "Failed to load item details"
 }

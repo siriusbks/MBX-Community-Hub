@@ -100,12 +100,12 @@
     
     "profile.pvp.noData": "No PvP data available.",
 
-        "profile.skills.loading": "Loading skills...",
+    "profile.skills.loading": "Loading skills...",
     "profile.skills.topProfession": "Top Profession",
     "profile.skills.xp": "XP",
     "profile.skills.maxLevel": "MAX LEVEL",
 
-        "profile.skulls.loading": "Loading relics...",
+    "profile.skulls.loading": "Loading relics...",
     "profile.skulls.noData": "No relic data available.",
     "profile.skulls.owned": "OWNED"
 

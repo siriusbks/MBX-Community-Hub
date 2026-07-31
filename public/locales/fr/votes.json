@@ -9,6 +9,10 @@
     "votes.localTime": "Heure locale",
     "votes.minutes": "minutes",
 
+    
+    "votes.error.fetchFailed": "Échec de la récupération de la liste des votes",
+    "votes.error.unknown": "Une erreur inconnue s'est produite",
+
 
     "votes.error": "Erreur",
     "votes.error.loadError": "Échec du chargement des votes. Veuillez réessayer plus tard.",

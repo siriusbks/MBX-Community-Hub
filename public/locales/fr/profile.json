@@ -69,5 +69,42 @@
     "profile.attributes.intelligence": "Intelligence",
     "profile.attributes.luck": "Chance",
     "profile.attributes.strength": "Force",
-    "profile.attributes.wisdom": "Sagesse"
+    "profile.attributes.wisdom": "Sagesse",
+
+    "profile.error.noNickname": "Aucun pseudo trouvé. Veuillez entrer votre pseudo dans la barre de navigation supérieure.",
+    "profile.error.apiDisabled": "Le joueur a désactivé l'accès à l'API. Vous devez l'activer dans le jeu.",
+    "profile.error.notFound": "Joueur non trouvé.",
+    "profile.error.fetchFailed": "Échec de la récupération des données du profil.",
+    "profile.error.network": "Erreur réseau lors de la récupération du profil.",
+    "profile.error.imageGeneration": "Échec de la génération de l'image",
+    "profile.welcome": "Bienvenue sur votre profil",
+    "profile.level": "Niv",
+
+    
+    "profile.companions.trait": "Trait",
+    "profile.companions.gen": "Gen",
+    "profile.companions.xp": "XP",
+    "profile.companions.enchanted": "Enchanté",
+    
+    "profile.guild.error.fetchFailed": "Échec de la récupération des données de la guilde",
+    "profile.guild.error.loadFailed": "Impossible de charger les informations de la guilde.",
+    "profile.guild.level": "Niv",
+    "profile.guild.owner": "Propriétaire",
+    "profile.guild.onlineBadge": "En ligne",
+    "profile.guild.offline": "Hors ligne",
+    
+    "profile.objectives.dailyQuests": "Quêtes quotidiennes complétées",
+    "profile.objectives.weeklyQuests": "Quêtes hebdomadaires complétées",
+    "profile.objectives.museumItems": "Objets du musée découverts",
+    
+    "profile.pvp.noData": "Aucune donnée PvP disponible.",
+
+    "profile.skills.loading": "Chargement des compétences...",
+    "profile.skills.topProfession": "Métier principal",
+    "profile.skills.xp": "XP",
+    "profile.skills.maxLevel": "NIVEAU MAX",
+
+    "profile.skulls.loading": "Chargement des crânes...",
+    "profile.skulls.noData": "Aucune donnée de crânes disponible.",
+    "profile.skulls.owned": "POSSÉDÉ"
 }

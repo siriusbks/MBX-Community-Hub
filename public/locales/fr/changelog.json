@@ -3,5 +3,9 @@
     "changelog.title": "Journal des modifications",
     "changelog.description": "Découvrez les dernières améliorations, corrections de bugs et nouvelles fonctionnalités ajoutées a MBX Community.",
     "changelog.published_on": "Publié le",
-    "changelog.load_older_updates": "Charger les mises à jour plus anciennes"
+    "changelog.load_older_updates": "Charger les mises à jour plus anciennes",
+    "changelog.loading": "Chargement des journaux de modifications...",
+    "changelog.noChangelogs": "Aucun journal de modifications n'a été publié.",
+    "changelog.latest": "DERNIÈRE",
+    "changelog.version": "Version"
 }

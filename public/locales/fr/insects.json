@@ -30,5 +30,10 @@
     "insects.insect_tarantula": "Tarentule",
     "insects.insect_locust": "Sauterelle",
     "insects.insect_ant_brown": "Fourmi Marron",
-    "insects.view_conditions": "Conditions d'apparition"
+    "insects.view_conditions": "Conditions d'apparition",
+    "insects.spawnTime": "Heure d'apparition",
+    "insects.weather": "Météo",
+    "insects.spawnArea": "Zone d'apparition",
+    "insects.extraConditions": "Conditions supplémentaires",
+    "insects.fullMoon": "Pleine lune"
 }

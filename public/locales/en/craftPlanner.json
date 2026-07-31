@@ -12,5 +12,5 @@
     "craftPlanner.requiredResources.noSelected": "Select a section above to see the required resources.",
     "craftPlanner.recipeTree.title": "Recipe Tree",
     "craftPlanner.recipeTree.quantity": "Quantity",
-        "craftPlanner.close": "Close Craft Planner"
+    "craftPlanner.close": "Close Craft Planner"
 }

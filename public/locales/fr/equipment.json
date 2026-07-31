@@ -81,5 +81,7 @@
     "equip.seasonPass.on": "Pass de saison actif",
     "equip.skull.title": "Crânes",
     "equip.craftingList": "Liste d'artisanat",
-    "equip.suggestedBuilds": "Suggestions Build"
+    "equip.suggestedBuilds": "Suggestions Build",
+    "equip.error.fetchPlayerData": "Échec de la récupération des données du joueur",
+    "equip.itemDetails.error": "Échec du chargement des détails de l'objet"
 }

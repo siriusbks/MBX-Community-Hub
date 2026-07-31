@@ -11,5 +11,6 @@
     "craftPlanner.requiredResources.description": "Ressources nécessaires pour fabriquer les objets sélectionnés.",
     "craftPlanner.requiredResources.noSelected": "Sélectionnez une section ci-dessus pour voir les ressources requises.",
     "craftPlanner.recipeTree.title": "Arbre de recettes",
-    "craftPlanner.recipeTree.quantity": "Quantité"
+    "craftPlanner.recipeTree.quantity": "Quantité",
+    "craftPlanner.close": "Fermer le planificateur de craft"
 }
