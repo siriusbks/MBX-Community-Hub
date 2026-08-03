@@ -211,6 +211,7 @@ function RegionPolygon({
   color: string
   label: string
 }) {
+  const { t } = useTranslation("maps")
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -227,9 +228,9 @@ function RegionPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="center">
+      <Tooltip sticky direction="top">
         <div
-          className="rounded-md border-l-4 bg-linear-to-b from-card to-card-dark px-3 py-1.5 minebox-shadow"
+          className="pointer-events-none rounded-md border-l-4 bg-linear-to-b from-card to-card-dark px-3 py-1.5 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
           <span className="text-sm font-bold tracking-wide text-primary">
@@ -253,6 +254,7 @@ function BestiaryPolygon({
   zoneName: string
   mobs: { id: string; name: string; image: string }[]
 }) {
+  const { t } = useTranslation()
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -270,12 +272,12 @@ function BestiaryPolygon({
         mouseout: () => setHovered(false),
       }}
     >
-      <Tooltip sticky direction="center">
+      <Tooltip sticky direction="top">
         <div
-          className="max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
+          className="pointer-events-none max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
-          <p className="text-xs font-bold text-muted-foreground">{t("maps.region")}</p>
+          <p className="text-xs font-bold text-muted-foreground">{t("maps:maps.region")}</p>
           <p className="text-sm font-bold tracking-wide text-primary">
             {zoneName}
           </p>
@@ -387,7 +389,7 @@ export function MapPreview() {
   // --- MAP CONFIG (looked up early so hooks below can safely reference it) ---
   const config = mapsConfig[mapId as keyof typeof mapsConfig]
 
-  const { t } = useTranslation(["maps", "items_maps", "insects"])
+  const { t } = useTranslation(["maps", "items_maps", "insects", "universal"])
   const [harvestablesData, setHarvestablesData] = useState<any | null>(null)
   const [mapsData, setMapsData] = useState<any | null>(null)
   const [hiddenResources, setHiddenResources] = useState<
@@ -1317,7 +1319,7 @@ export function MapPreview() {
                         }}
                       />
                       <p className="text-center text-xs">
-                        {t(`insects.${getCleanItemId(insect.id)}`, {
+                        {t(`insects:insects.${getCleanItemId(insect.id)}`, {
                           defaultValue: FindItemName({ itemId: insect.id }),
                         })}
                       </p>

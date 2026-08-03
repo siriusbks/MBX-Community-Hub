@@ -33,6 +33,12 @@ const islands = [
   { id: "island_desert", level: 40 },
 ];
 
+const raids = [
+  { id: "maya_temple", level: 10, players: [1, 5], duration: 30 },
+  { id: "orc", level: 20, players: [1, 5], duration: 15 },
+  { id: "nether", level: 30, players: [1, 5], duration: 10 }
+]
+
 export function Maps() {
   const { t } = useTranslation(["maps", "items_maps"]);
   const [mapsData, setMapsData] = useState<any | null>(null);
@@ -76,9 +82,9 @@ export function Maps() {
             <div className="relative h-48 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
 
 
-              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
-                        imageRendering: "pixelated",
-                    }}/>
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
             </div>
 
             <div className="p-4 flex flex-col items-center bg-card-dark">
@@ -95,9 +101,9 @@ export function Maps() {
               )}
 
               <Link to={`/maps/${map.id}`}>
-              <Button size="lg" className="">
-                {t("maps.view_map")}
-              </Button></Link>
+                <Button size="lg" className="">
+                  {t("maps.view_map")}
+                </Button></Link>
             </div>
           </Card>
         ))}
@@ -142,7 +148,7 @@ export function Maps() {
                             <ItemImage itemId={id} className="aspect-square size-6" />
                             <LevelBadge level={levelNum} className="w-16 scale-80">{t("maps.levelShort")} {levelNum}</LevelBadge>
                             <p className="items-center leading-none text-xs">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
-                            
+
                           </span>
                         );
                       })
@@ -154,9 +160,9 @@ export function Maps() {
               </Popover>
 
 
-              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
-                        imageRendering: "pixelated",
-                    }}/>
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
             </div>
 
             <div className="p-4 flex flex-col items-center bg-card-dark">
@@ -173,9 +179,38 @@ export function Maps() {
               )}
 
               <Link to={`/maps/${map.id}`}>
-              <Button size="lg" className="">
-                {t("maps.view_map")}
-              </Button>
+                <Button size="lg" className="">
+                  {t("maps.view_map")}
+                </Button>
+              </Link>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+
+
+      <span className="flex flex-row items-center justify-between w-full mt-8">
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.raids")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-6 w-full  z-10">
+        {raids.map((map, index) => (
+          <Card key={index} className="group p-0 gap-0 overflow-hidden ring-1 ring-border/50">
+            <div className="relative h-32 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
+
+              <img src={`/media/maps/raid.png`} className="size-24  group-hover:size-28 object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
+            </div>
+
+            <div className="p-4 flex flex-col items-center bg-card-dark w-full">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1">{t(("maps.raid.") + map.id)}</h3>
+
+              <Link to={`/maps/${map.id}`} className="w-full">
+                <Button size="lg" className="w-full" disabled>
+                  {t("maps.view_map")}
+                </Button>
               </Link>
             </div>
           </Card>
