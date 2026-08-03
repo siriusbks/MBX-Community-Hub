@@ -1,6 +1,6 @@
 import { Card } from "@ui/card"
 import { LevelBadge } from "@const/levels"
-import React, { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
@@ -212,7 +212,6 @@ function RegionPolygon({
   label: string
 }) {
   const { t } = useTranslation("maps")
-  const { t } = useTranslation("maps")
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -304,34 +303,6 @@ function BestiaryPolygon({
       </Tooltip>
     </Polygon>
   )
-}
-
-function SafeItemImage({ itemId, className, style }: { itemId: string; className?: string; style?: React.CSSProperties }) {
-  try {
-    return <ItemImage itemId={itemId} className={className} style={style} />
-  } catch {
-    return <img src="/media/missing.png" className={className} style={style} alt="?" />
-  }
-}
-
-class MapErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: any) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="flex h-full items-center justify-center text-red-400">
-          {this.props.children && typeof this.props.children === 'object' ? 'Map error' : 'Map error'}
-        </div>
-      );
-    }
-    return this.props.children;
-  }
 }
 
 export function MapPreview() {
@@ -613,21 +584,6 @@ export function MapPreview() {
     {}
   )
 
-  // Stabilne ikony tworzone tylko gdy zmieni się skala lub url
-  const markerIcons = useMemo(() => {
-    const icons: Record<string, L.Icon> = {}
-    Object.entries(markerIconUrls).forEach(([cat, url]) => {
-      icons[cat] = L.icon({
-        iconUrl: url ?? "/media/missing.png",
-        iconSize: [24 * markerScale, 24 * markerScale],
-        iconAnchor: [12 * markerScale, 12 * markerScale],
-        popupAnchor: [0, -16 * markerScale],
-        className: `filter drop-shadow-[0_0_4px_#00000099]`,
-      })
-    })
-    return icons
-  }, [markerIconUrls, markerScale])
-
   useEffect(() => {
     if (!harvestablesData) return
     const serverData = harvestablesData?.locations?.servers?.[mapId]
@@ -643,7 +599,7 @@ export function MapPreview() {
       z: number
     }> = []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ;(arr as string[]).forEach((s) => {
+      ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
         if (parts.length >= 4) {
           const x = Number(parts[1])
@@ -726,7 +682,7 @@ export function MapPreview() {
       return
     }
 
-    ;(async () => {
+    ; (async () => {
       try {
         const resolvedEntries = await Promise.all(
           uniqueCategories.map(async (cat) => {
@@ -802,133 +758,131 @@ export function MapPreview() {
               {t("maps.loadingMap")}
             </div>
           ) : (
-            <MapErrorBoundary>
-              <MapContainer
-                crs={L.CRS.Simple}
-                bounds={imageBounds}
-                maxBounds={imageBounds}
-                minZoom={mapZoom.min}
-                maxZoom={mapZoom.max}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  imageRendering: "pixelated",
-                  borderRadius: "0.5rem",
-                  backgroundColor: "#00000000",
-                }}
-                attributionControl={false}
-              >
-                <ZoomWatcher onZoomChange={handleZoomChange} />
-                <ImageOverlay url={image} bounds={imageBounds} />
-                {allMarkers
-                  .filter((m) => !hiddenResources[m.cat])
-                  .map((m, i) => (
-                    <Marker
-                      key={`${m.cat}-${i}`}
-                      position={[m.py, m.px]}
-                      icon={markerIcons[m.cat] ?? L.icon({
-                        iconUrl: "/media/missing.png",
-                        iconSize: [24 * markerScale, 24 * markerScale],
-                        iconAnchor: [12 * markerScale, 12 * markerScale],
-                        popupAnchor: [0, -16 * markerScale],
-                        className: `filter drop-shadow-[0_0_4px_#00000099]`,
-                      })}
+            <MapContainer
+              crs={L.CRS.Simple}
+              bounds={imageBounds}
+              maxBounds={imageBounds}
+              minZoom={mapZoom.min}
+              maxZoom={mapZoom.max}
+              style={{
+                height: "100%",
+                width: "100%",
+                imageRendering: "pixelated",
+                borderRadius: "0.5rem",
+                backgroundColor: "#00000000",
+              }}
+              attributionControl={false}
+            >
+              <ZoomWatcher onZoomChange={handleZoomChange} />
+              <ImageOverlay url={image} bounds={imageBounds} />
+              {allMarkers
+                .filter((m) => !hiddenResources[m.cat])
+                .map((m, i) => (
+                  <Marker
+                    key={`${m.cat}-${i}`}
+                    position={[m.py, m.px]}
+                    icon={L.icon({
+                      iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
+                      iconSize: [24 * markerScale, 24 * markerScale],
+                      iconAnchor: [12 * markerScale, 12 * markerScale],
+                      popupAnchor: [0, -16 * markerScale],
+                      className: `filter drop-shadow-[0_0_4px_#00000099]`,
+                    })}
+                  >
+                    <Tooltip
+                      direction="top"
+                      offset={[0, -8 * markerScale]}
+                      opacity={1}
                     >
-                      <Tooltip
-                        direction="top"
-                        offset={[0, -8 * markerScale]}
-                        opacity={1}
-                      >
-                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
-                          <SafeItemImage
-                            itemId={m.cat}
-                            className="aspect-square size-10"
-                          />
-                          <span className="flex flex-col items-start justify-center gap-0">
-                            <p className="font-bold text-primary">
-                              {t([`items_items.${getCleanItemId(m.cat)}`], {
-                                defaultValue: FindItemName({ itemId: m.cat }),
-                              })}
-                            </p>
-                            <p className="flex flex-row gap-1 text-xs font-bold">
-                              <span className="font-normal text-muted-foreground">
-                                x:
-                              </span>{" "}
-                              {m.x}
-                              <span className="font-normal text-muted-foreground">
-                                y:
-                              </span>{" "}
-                              {m.y}
-                              <span className="font-normal text-muted-foreground">
-                                z:
-                              </span>{" "}
-                              {m.z}
-                            </p>
-                          </span>
-                        </div>
-                      </Tooltip>
-                    </Marker>
-                  ))}
-                {showRegions &&
-                  regionsData &&
-                  (() => {
-                    const baseNames = Object.keys(regionsData).map((name) =>
-                      name.replace(/_\d+$/, "")
-                    )
-                    const uniqueBaseNames = [...new Set(baseNames)]
-                    const colorMap: Record<string, string> = {}
-                    uniqueBaseNames.forEach((base, i) => {
-                      colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
-                    })
-                    return Object.entries(regionsData).map(
-                      ([regionName, coords]) => {
-                        const baseName = regionName.replace(/_\d+$/, "")
-                        const color = colorMap[baseName]
-                        const positions: [number, number][] = coords.map(
-                          ([x, y]) => [y, x]
+                      <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                        <ItemImage
+                          itemId={m.cat}
+                          className="aspect-square size-10"
+                        />
+                        <span className="flex flex-col items-start justify-center gap-0">
+                          <p className="font-bold text-primary">
+                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
+                              defaultValue: FindItemName({ itemId: m.cat }),
+                            })}
+                          </p>
+                          <p className="flex flex-row gap-1 text-xs font-bold">
+                            <span className="font-normal text-muted-foreground">
+                              x:
+                            </span>{" "}
+                            {m.x}
+                            <span className="font-normal text-muted-foreground">
+                              y:
+                            </span>{" "}
+                            {m.y}
+                            <span className="font-normal text-muted-foreground">
+                              z:
+                            </span>{" "}
+                            {m.z}
+                          </p>
+                        </span>
+                      </div>
+                    </Tooltip>
+                  </Marker>
+                ))}
+              {showRegions &&
+                regionsData &&
+                (() => {
+                  const baseNames = Object.keys(regionsData).map((name) =>
+                    name.replace(/_\d+$/, "")
+                  )
+                  const uniqueBaseNames = [...new Set(baseNames)]
+                  const colorMap: Record<string, string> = {}
+                  uniqueBaseNames.forEach((base, i) => {
+                    colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
+                  })
+                  return Object.entries(regionsData).map(
+                    ([regionName, coords]) => {
+                      const baseName = regionName.replace(/_\d+$/, "")
+                      const color = colorMap[baseName]
+                      const positions: [number, number][] = coords.map(
+                        ([x, y]) => [y, x]
+                      )
+                      return (
+                        <RegionPolygon
+                          key={regionName}
+                          positions={positions}
+                          color={color}
+                          label={t(`maps.${baseName}`, {
+                            defaultValue: baseName,
+                          })}
+                        />
+                      )
+                    }
+                  )
+                })()}
+              {showBestiary &&
+                bestiaryZonesData &&
+                (() => {
+                  const mapZones = mapId ? bestiaryZonesData[mapId] : null
+                  if (!mapZones) return null
+                  return Object.entries(mapZones).flatMap(
+                    ([zoneName, zoneData]: any) =>
+                      (zoneData.zones as any[]).map((zone, idx) => {
+                        const positions: [number, number][] = zone.coords.map(
+                          ([x, y]: [number, number]) => [y, x]
                         )
                         return (
-                          <RegionPolygon
-                            key={regionName}
+                          <BestiaryPolygon
+                            key={`${zoneName}-${idx}`}
                             positions={positions}
-                            color={color}
-                            label={t(`maps.${baseName}`, {
-                              defaultValue: baseName,
-                            })}
+                            color={zone.color}
+                            zoneName={zoneName}
+                            mobs={(zone.mobs as string[]).map((id) => ({
+                              id,
+                              name: mobNamesData[id]?.name ?? id,
+                              image: mobNamesData[id]?.image ?? "",
+                            }))}
                           />
                         )
-                      }
-                    )
-                  })()}
-                {showBestiary &&
-                  bestiaryZonesData &&
-                  (() => {
-                    const mapZones = mapId ? bestiaryZonesData[mapId] : null
-                    if (!mapZones) return null
-                    return Object.entries(mapZones).flatMap(
-                      ([zoneName, zoneData]: any) =>
-                        (zoneData.zones as any[]).map((zone, idx) => {
-                          const positions: [number, number][] = zone.coords.map(
-                            ([x, y]: [number, number]) => [y, x]
-                          )
-                          return (
-                            <BestiaryPolygon
-                              key={`${zoneName}-${idx}`}
-                              positions={positions}
-                              color={zone.color}
-                              zoneName={zoneName}
-                              mobs={(zone.mobs as string[]).map((id) => ({
-                                id,
-                                name: mobNamesData[id]?.name ?? id,
-                                image: mobNamesData[id]?.image ?? "",
-                              }))}
-                            />
-                          )
-                        })
-                    )
-                  })()}
-              </MapContainer>
-            </MapErrorBoundary>
+                      })
+                  )
+                })()}
+            </MapContainer>
           )}
         </span>
 
@@ -1070,7 +1024,7 @@ export function MapPreview() {
                                 : "bg-transparent hover:bg-accent/40"
                                 }`}
                             >
-                              <SafeItemImage
+                              <ItemImage
                                 itemId={id}
                                 className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                               />
@@ -1079,7 +1033,7 @@ export function MapPreview() {
                                 {t(
                                   [
                                     `items.${getCleanItemId(id)}`,
-                                    `items_items.${getCleanItemId(id)}`,
+                                    `items_maps:items.${getCleanItemId(id)}`,
                                   ],
                                   { defaultValue: FindItemName({ itemId: id }) }
                                 )}
@@ -1170,7 +1124,7 @@ export function MapPreview() {
                               : "bg-transparent hover:bg-accent/40"
                               }`}
                           >
-                            <SafeItemImage
+                            <ItemImage
                               itemId={id}
                               className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                             />
@@ -1178,7 +1132,7 @@ export function MapPreview() {
                               {t(
                                 [
                                   `items.${getCleanItemId(id)}`,
-                                  `items_items.${getCleanItemId(id)}`,
+                                  `items_maps:items.${getCleanItemId(id)}`,
                                 ],
                                 { defaultValue: FindItemName({ itemId: id }) }
                               )}
@@ -1236,7 +1190,7 @@ export function MapPreview() {
           const fishTitle = t(
             [
               `items.${getCleanItemId(id)}`,
-              `items_items.${getCleanItemId(id)}`,
+              `items_maps:items.${getCleanItemId(id)}`,
             ],
             { defaultValue: FindItemName({ itemId: id }) }
           )
@@ -1254,7 +1208,7 @@ export function MapPreview() {
                     key={`${drop.item}-${dropIndex}`}
                     className="group flex flex-col items-center gap-2"
                   >
-                    <SafeItemImage
+                    <ItemImage
                       itemId={drop.item}
                       className="mx-auto mb-auto aspect-square w-4/5  group-hover:scale-105 transition-transform"
                       style={{
@@ -1265,7 +1219,7 @@ export function MapPreview() {
                       {t(
                         [
                           `items.${getCleanItemId(drop.item)}`,
-                          `items_items.${getCleanItemId(drop.item)}`,
+                          `items_maps:items.${getCleanItemId(drop.item)}`,
                         ],
                         { defaultValue: FindItemName({ itemId: drop.item }) }
                       )}
@@ -1299,7 +1253,7 @@ export function MapPreview() {
             {t("maps.noInsects")}
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-7">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {insectsForZone.map((insect) => {
               const subareas = insect.locations
                 .filter((loc) => loc.zone === zoneFullKey)
@@ -1314,10 +1268,10 @@ export function MapPreview() {
                     >
                       <ItemImage
                         itemId={insect.id}
-                        className="mx-auto mb-auto aspect-square w-4/5 transition-transform group-hover:scale-105"
-                        style={{
-                          filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: insect.id }))}40)`,
-                        }}
+                        className="mx-auto mb-auto aspect-square size-4/5 transition-transform group-hover:scale-105"
+                                            style={{
+                        filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: insect.id }))}40)`,
+                      }}
                       />
                       <p className="text-center text-xs">
                         {t(`insects:insects.${getCleanItemId(insect.id)}`, {
@@ -1343,7 +1297,7 @@ export function MapPreview() {
                       <p className="text-[0.65rem] text-muted-foreground">
                         {t("insects:insects.spawnTime")}
                       </p>
-                      <p className="text-[0.60rem]">
+                      <p className="text-[0.65rem]">
                         {insect.time_ranges
                           .map((range) => formatTimeRange(range))
                           .join(", ")}
@@ -1354,16 +1308,16 @@ export function MapPreview() {
                       <p className="text-[0.65rem] text-muted-foreground">
                         {t("insects:insects.weather")}
                       </p>
-                      <p className="text-[0.6rem]">{insect.weather}</p>
+                      <p className="text-[0.65rem]">{insect.weather}</p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
                       <p className="text-[0.65rem] text-muted-foreground">
                         {t("insects:insects.spawnArea")}
                       </p>
-                      <span className="flex flex-col -space-y-1">
+                      <span>
                         {subareas.map((area, index) => (
-                          <p key={index} className="text-right text-[0.6rem]">
+                          <p key={index} className="text-right text-[0.65rem]">
                             {area}
                           </p>
                         ))}

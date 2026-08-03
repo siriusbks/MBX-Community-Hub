@@ -2,18 +2,23 @@
     "maps.title": "EXPLORE MAPS",
     "maps.description.part1": "Hover over the",
     "maps.description.part2": "to view resources.",
+
     "maps.players_island": "Player Islands",
     "maps.exploration_island": "Exploration Islands",
     "maps.some_info": "SOME INFO",
+
     "maps.availabe_resources": "Availabe Resources",
     "maps.no_required": "No Required Level",
     "maps.required": "Required Level: ",
     "maps.view_map": "View Interactive Map",
+
     "maps.preview_settings": "Preview Settings",
     "maps.show_regions": "Show Regions",
     "maps.show_bestiary": "Show Bestiary Spawn",
+
     "maps.insects": "Insects",
     "maps.bestiary": "Bestiary",
+
     "maps.island.spawn": "Spawn Island",
     "maps.island.island_home": "Player Island",
     "maps.island.island_nether": "Nether Island",
@@ -24,9 +29,13 @@
     "maps.island.island_bamboo": "Bamboo Peak",
     "maps.island.island_snow": "Frostbite Fortress",
     "maps.island.island_desert": "Sandwhisper Dunes",
+
+
     "maps.resources": "Show Resources",
     "maps.select_all": "Select All",
     "maps.deselect_all": "Deselect All",
+
+
     "village.error.loadFailed": "Failed to load village data",
     "village.loading": "Loading...",
     "village.mapAlt": "Village Preview",
@@ -44,10 +53,13 @@
     "village.xp": "XP",
     "village.upgrades": "Upgrades",
     "village.soon": "SOON",
+
+    
     "maps.loadedHarvestables": "loaded harvestables locations.servers keys:",
     "maps.error.loadFailed": "Failed to load map or harvestable data",
     "maps.levelShort": "Lvl.",
     "maps.noData": "No data",
+    
     "maps.region": "Region",
     "maps.mapNotFound": "Map not found",
     "maps.error.loadHarvestables": "Failed to load map or harvestable data",
@@ -64,10 +76,5 @@
     "maps.loadingCreatures": "Loading creatures...",
     "maps.noCreatures": "No creatures found for this island.",
     "maps.chance": "Chance",
-    "maps.view_conditions": "View Conditions",
-    "maps.spawnTime": "Spawn Time",
-    "maps.weather": "Weather",
-    "maps.spawnArea": "Spawn Area",
-    "maps.extraConditions": "Extra Conditions",
-    "maps.fullMoon": "Full Moon"
+    "maps.view_conditions": "View Conditions"
 }
