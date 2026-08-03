@@ -212,6 +212,7 @@ function RegionPolygon({
   label: string
 }) {
   const { t } = useTranslation("maps")
+  const { t } = useTranslation("maps")
   const [hovered, setHovered] = useState(false)
   return (
     <Polygon
@@ -1305,11 +1306,11 @@ export function MapPreview() {
                 .map((loc) => formatSubarea(loc.subarea))
 
               return (
+                <Popover key={insect.id}>
+                  <PopoverTrigger>
                     <RarityBorder
                       rarity={FindItemRarity({ itemId: insect.id })}
-                      key={insect.id}
-                      className="group flex flex-col items-center gap-2 h-full "
-                      innerClassName=""
+                      className="group flex flex-col items-center gap-2 h-full"
                     >
                       <ItemImage
                         itemId={insect.id}
@@ -1323,11 +1324,24 @@ export function MapPreview() {
                           defaultValue: FindItemName({ itemId: insect.id }),
                         })}
                       </p>
+                      <p className="cursor-pointer text-center text-[0.6rem] text-muted-foreground group-hover:text-primary group-hover:underline">
+                        {t("maps.view_conditions")}
+                      </p>
+                    </RarityBorder>
+                  </PopoverTrigger>
+                  <PopoverContent className="gap-1">
+                    <span className="flex flex-row items-center gap-2">
+                      <RarityBadge
+                        rarity={FindItemRarity({ itemId: insect.id })}
+                      />
+                      <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
+                        defaultValue: FindItemName({ itemId: insect.id }),
+                      })}</p>
+                    </span>
 
-<span>
                     <span className="flex w-full flex-row items-center justify-between gap-2">
-                      <p className="text-[0.60rem] text-muted-foreground">
-                        {t("maps.spawnTime")}
+                      <p className="text-[0.65rem] text-muted-foreground">
+                        {t("insects:insects.spawnTime")}
                       </p>
                       <p className="text-[0.60rem]">
                         {insect.time_ranges
@@ -1337,26 +1351,15 @@ export function MapPreview() {
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
-                      <p className="text-[0.6rem] text-muted-foreground">
-                        {t("maps.weather")}
+                      <p className="text-[0.65rem] text-muted-foreground">
+                        {t("insects:insects.weather")}
                       </p>
                       <p className="text-[0.6rem]">{insect.weather}</p>
                     </span>
 
-                    
-                    {insect.requires_moon && (
-                      <span className="flex w-full flex-row items-center justify-between gap-2">
-                        <p className="text-[0.6rem] text-muted-foreground">
-                          {t("maps.extraConditions")}
-                        </p>
-                        <p className="text-[0.6rem]">{t("maps.fullMoon")}</p>
-                      </span>
-                    )}
-
-
                     <span className="flex w-full flex-row items-center justify-between gap-2">
-                      <p className="text-[0.60rem] text-muted-foreground">
-                        {t("maps.spawnArea")}
+                      <p className="text-[0.65rem] text-muted-foreground">
+                        {t("insects:insects.spawnArea")}
                       </p>
                       <span className="flex flex-col -space-y-1">
                         {subareas.map((area, index) => (
@@ -1366,8 +1369,17 @@ export function MapPreview() {
                         ))}
                       </span>
                     </span>
-                    </span>
-                    </RarityBorder>
+
+                    {insect.requires_moon && (
+                      <span className="flex w-full flex-row items-center justify-between gap-2">
+                        <p className="text-[0.65rem] text-muted-foreground">
+                          {t("insects.extraConditions")}
+                        </p>
+                        <p className="text-[0.65rem]">{t("insects:insects.fullMoon")}</p>
+                      </span>
+                    )}
+                  </PopoverContent>
+                </Popover>
               )
             })}
           </div>
