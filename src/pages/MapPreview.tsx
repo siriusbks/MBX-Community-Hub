@@ -801,7 +801,7 @@ export function MapPreview() {
                         />
                         <span className="flex flex-col items-start justify-center gap-0">
                           <p className="font-bold text-primary">
-                            {t([`items_items.${getCleanItemId(m.cat)}`], {
+                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
                               defaultValue: FindItemName({ itemId: m.cat }),
                             })}
                           </p>
@@ -1033,7 +1033,7 @@ export function MapPreview() {
                                 {t(
                                   [
                                     `items.${getCleanItemId(id)}`,
-                                    `items_items.${getCleanItemId(id)}`,
+                                    `items_maps:items.${getCleanItemId(id)}`,
                                   ],
                                   { defaultValue: FindItemName({ itemId: id }) }
                                 )}
@@ -1132,7 +1132,7 @@ export function MapPreview() {
                               {t(
                                 [
                                   `items.${getCleanItemId(id)}`,
-                                  `items_items.${getCleanItemId(id)}`,
+                                  `items_maps:items.${getCleanItemId(id)}`,
                                 ],
                                 { defaultValue: FindItemName({ itemId: id }) }
                               )}
@@ -1190,7 +1190,7 @@ export function MapPreview() {
           const fishTitle = t(
             [
               `items.${getCleanItemId(id)}`,
-              `items_items.${getCleanItemId(id)}`,
+              `items_maps:items.${getCleanItemId(id)}`,
             ],
             { defaultValue: FindItemName({ itemId: id }) }
           )
@@ -1219,7 +1219,7 @@ export function MapPreview() {
                       {t(
                         [
                           `items.${getCleanItemId(drop.item)}`,
-                          `items_items.${getCleanItemId(drop.item)}`,
+                          `items_maps:items.${getCleanItemId(drop.item)}`,
                         ],
                         { defaultValue: FindItemName({ itemId: drop.item }) }
                       )}
