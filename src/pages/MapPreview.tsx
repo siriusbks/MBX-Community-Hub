@@ -30,6 +30,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select"
@@ -56,19 +57,11 @@ const mapsConfig: Record<
     iconScale: { min: number; max: number }
     zoneKey: string
     mapZoom: { min: number; max: number }
-    scaleIconMultiplier: number
+    scaleIconMultiplier: number,
+    group: string
   }
 > = {
-  spawn: {
-    image: "/media/maps/spawn_map.png",
-    width: 791,
-    height: 839,
-    referencePoint: { x: 220, y: 388 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-  },
+
   island_home: {
     image: "/media/maps/home_island_map.png",
     width: 320,
@@ -78,6 +71,7 @@ const mapsConfig: Record<
     zoneKey: "",
     mapZoom: { min: 1.4, max: 3 },
     scaleIconMultiplier: 1,
+    group: "player_islands",
   },
   island_nether: {
     image: "/media/maps/island_nether_map.png",
@@ -88,6 +82,7 @@ const mapsConfig: Record<
     zoneKey: "",
     mapZoom: { min: 2, max: 3 },
     scaleIconMultiplier: 1,
+    group: "player_islands",  
   },
   island_end: {
     image: "/media/maps/island_end_map.png",
@@ -98,6 +93,20 @@ const mapsConfig: Record<
     zoneKey: "",
     mapZoom: { min: 1.5, max: 3 },
     scaleIconMultiplier: 1,
+    group: "player_islands",
+  },
+
+
+  spawn: {
+    image: "/media/maps/spawn_map.png",
+    width: 791,
+    height: 839,
+    referencePoint: { x: 220, y: 388 },
+    iconScale: { min: 1, max: 2.5 },
+    zoneKey: "overworld",
+    mapZoom: { min: 0, max: 3 },
+    scaleIconMultiplier: 0.4,
+    group: "exploration",
   },
   island_tropical: {
     image: "/media/maps/island_tropical_map.png",
@@ -108,6 +117,7 @@ const mapsConfig: Record<
     zoneKey: "island_tropical",
     mapZoom: { min: 0.2, max: 3 },
     scaleIconMultiplier: 0.5,
+    group: "exploration",
   },
   island_plain: {
     image: "/media/maps/island_plain_map.png",
@@ -118,6 +128,7 @@ const mapsConfig: Record<
     zoneKey: "island_plain",
     mapZoom: { min: 0, max: 3 },
     scaleIconMultiplier: 0.7,
+    group: "exploration",
   },
   island_bamboo: {
     image: "/media/maps/island_bamboo_map.png",
@@ -128,6 +139,7 @@ const mapsConfig: Record<
     zoneKey: "island_bamboo",
     mapZoom: { min: 0, max: 3 },
     scaleIconMultiplier: 0.7,
+    group: "exploration",
   },
   island_snow: {
     image: "/media/maps/island_snow_map.png",
@@ -138,6 +150,7 @@ const mapsConfig: Record<
     zoneKey: "island_snow",
     mapZoom: { min: 0, max: 2.5 },
     scaleIconMultiplier: 0.7,
+    group: "exploration",
   },
   island_desert: {
     image: "/media/maps/island_desert_map.png",
@@ -148,6 +161,42 @@ const mapsConfig: Record<
     zoneKey: "island_desert",
     mapZoom: { min: 0, max: 3 },
     scaleIconMultiplier: 0.7,
+    group: "exploration",
+  },
+
+  
+  summer: {
+    image: "/media/maps/spawn_map.png",
+    width: 791,
+    height: 839,
+    referencePoint: { x: 220, y: 388 },
+    iconScale: { min: 1, max: 2.5 },
+    zoneKey: "overworld",
+    mapZoom: { min: 0, max: 3 },
+    scaleIconMultiplier: 0.4,
+    group: "raids",
+  },
+  volcan: {
+    image: "/media/maps/raid_volcan.png",
+    width: 256,
+    height: 256,
+    referencePoint: { x: 128  , y: 128 },
+    iconScale: { min: 1, max: 2.5 },
+    zoneKey: "overworld",
+    mapZoom: { min: 0, max: 3 },
+    scaleIconMultiplier: 0.4,
+    group: "raids",
+  },
+  maya_temple: {
+    image: "/media/maps/raid_maya_temple.png",
+    width: 128,
+    height: 128,
+    referencePoint: { x: 64  , y: -12 },
+    iconScale: { min: 1, max: 2.5 },
+    zoneKey: "overworld",
+    mapZoom: { min: 0, max: 3 },
+    scaleIconMultiplier: 0.4,
+    group: "raids",
   },
 }
 
@@ -578,6 +627,28 @@ export function MapPreview() {
     return `${pad(range.from)}:00 - ${pad(range.to)}:00`
   }
 
+  // Merge harvestable locations coming from both "servers" and "raids"
+  // sections of harvestables.json for the current map, category by category.
+  // This is the single source of truth used everywhere we previously read
+  // harvestablesData.locations.servers[mapId] directly.
+  const mergedLocationData = useMemo(() => {
+    if (!harvestablesData) return null
+    const serverData = harvestablesData?.locations?.servers?.[mapId]
+    const raidData = harvestablesData?.locations?.raids?.[mapId]
+    if (!serverData && !raidData) return null
+
+    const merged: Record<string, string[]> = {}
+    const addAll = (src: Record<string, string[]> | undefined) => {
+      if (!src) return
+      Object.entries(src).forEach(([cat, arr]) => {
+        merged[cat] = (merged[cat] ?? []).concat(arr)
+      })
+    }
+    addAll(serverData)
+    addAll(raidData)
+    return merged
+  }, [harvestablesData, mapId])
+
   const [resourceMarkers, setResourceMarkers] = useState<any[]>([])
   const [mapsJsonMarkers, setMapsJsonMarkers] = useState<any[]>([])
   const [markerIconUrls, setMarkerIconUrls] = useState<Record<string, string>>(
@@ -586,7 +657,7 @@ export function MapPreview() {
 
   useEffect(() => {
     if (!harvestablesData) return
-    const serverData = harvestablesData?.locations?.servers?.[mapId]
+    const serverData = mergedLocationData
     if (!serverData) {
       setResourceMarkers([])
       return
@@ -601,12 +672,19 @@ export function MapPreview() {
     Object.entries(serverData).forEach(([cat, arr]: any) => {
       ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
-        if (parts.length >= 4) {
-          const x = Number(parts[1])
-          const y = Number(parts[2])
-          const z = Number(parts[3])
+        // "servers" entries are prefixed with a map/world name
+        // ("island_bamboo;-297;84;237;90.0;0.0"), while "raids" entries
+        // have no prefix and can be either "x;y;z;yaw;pitch" or just
+        // "x;y;z". Detect the prefix by checking whether the first token
+        // parses as a number rather than assuming a fixed offset.
+        const hasPrefix = parts.length > 0 && Number.isNaN(Number(parts[0]))
+        const offset = hasPrefix ? 1 : 0
+        if (parts.length >= offset + 3) {
+          const x = Number(parts[offset])
+          const y = Number(parts[offset + 1])
+          const z = Number(parts[offset + 2])
           if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
-            points.push({ cat, item: parts[0], x, y, z })
+            points.push({ cat, item: hasPrefix ? parts[0] : cat, x, y, z })
           }
         }
       })
@@ -620,7 +698,7 @@ export function MapPreview() {
     }))
 
     setResourceMarkers(mapped)
-  }, [harvestablesData, mapId, referencePoint])
+  }, [harvestablesData, mergedLocationData, mapId, referencePoint])
 
   // --- Additional categories loaded from maps.json (treasure, and any future groups) ---
   useEffect(() => {
@@ -888,23 +966,37 @@ export function MapPreview() {
 
         {/* Lists */}
         <Card className="h-[80vh] w-1/4 gap-0 py-0">
-          <Select value={params["*"]} onValueChange={handleValueChange}>
-            <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
-              <SelectValue
-                className="text-md text-primary uppercase"
-                placeholder={t("maps.selectMap")}
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {Object.entries(mapsConfig).map(([key, item]) => (
-                  <SelectItem key={key} value={key}>
-                    {t(`maps.island.${key}`)}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+<Select value={params["*"]} onValueChange={handleValueChange}>
+  <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
+    <SelectValue
+      className="text-md text-primary uppercase"
+      placeholder={t("maps.selectMap")}
+    />
+  </SelectTrigger>
+  <SelectContent>
+    {(() => {
+      // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia
+      const groups: Record<string, string[]> = {}
+      Object.entries(mapsConfig).forEach(([key, item]) => {
+        if (!groups[item.group]) groups[item.group] = []
+        groups[item.group].push(key)
+      })
+
+      return Object.entries(groups).map(([groupName, keys]) => (
+        <SelectGroup key={groupName}>
+          <SelectLabel className="uppercase text-muted-foreground">
+            {t(`maps.group.${groupName}`, { defaultValue: groupName })}
+          </SelectLabel>
+          {keys.map((key) => (
+            <SelectItem key={key} value={key}>
+              {t(`maps.island.${key}`)}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      ))
+    })()}
+  </SelectContent>
+</Select>
 
           {/* Global select all / deselect all across every category */}
           <div className="flex items-center justify-between gap-2 px-2 pt-2 text-[0.7rem]">
@@ -943,11 +1035,9 @@ export function MapPreview() {
 
           {/* Resources */}
           <div className="custom-scrollbar my-2 h-full w-full scroll-fade overflow-x-hidden overflow-y-auto px-2">
-            {harvestablesData?.locations?.servers?.[mapId] ? (
+            {mergedLocationData ? (
               (() => {
-                const serverKeys = Object.keys(
-                  harvestablesData.locations.servers[mapId]
-                )
+                const serverKeys = Object.keys(mergedLocationData)
                 const categories = Object.keys(
                   harvestablesData.harvestables ?? {}
                 )
@@ -1172,8 +1262,8 @@ export function MapPreview() {
       {/* Fish Drops */}
       {(() => {
         const fishCat = harvestablesData?.harvestables?.fish ?? {}
-        const serverKeys = harvestablesData?.locations?.servers?.[mapId]
-          ? Object.keys(harvestablesData.locations.servers[mapId])
+        const serverKeys = mergedLocationData
+          ? Object.keys(mergedLocationData)
           : []
         const fishIds = Object.keys(fishCat).filter((id) =>
           serverKeys.includes(id)
