@@ -34,19 +34,19 @@ const islands = [
 ];
 
 const raids = [
-  { id: "canyon", level: 11, players: [1, 5], duration: 11 },
-  { id: "field_island", level: 11, players: [1, 5], duration: 11 },
-  { id: "goblin", level: 11, players: [1, 5], duration: 11 },
-  { id: "maya_temple", level: 11, players: [1, 5], duration: 11 },
-  { id: "mushroom", level: 11, players: [1, 5], duration: 11 },
-  { id: "nether", level: 11, players: [1, 5], duration: 11 },
-  { id: "north", level: 11, players: [1, 5], duration: 11 },
-  { id: "orc", level: 11, players: [1, 5], duration: 11 },
-  { id: "pirate_temple", level: 11, players: [1, 5], duration: 11 },
-  { id: "pytamid", level: 11, players: [1, 5], duration: 11 },
-  { id: "shaft", level: 11, players: [1, 5], duration: 11 },
+  { id: "maya_temple", level: 15, players: [1, 5], duration: 10 },
+  { id: "shaft", level: 18, players: [1, 5], duration: 25 },
+  { id: "pirate_temple", level: 20, players: [1, 5], duration: 10 },
+  { id: "goblin", level: 25, players: [1, 5], duration: 20 },
+  { id: "field_island", level: 25, players: [1, 5], duration: 20 },
+  { id: "nether", level: 30, players: [1, 5], duration: 20 },
+  { id: "canyon", level: 30, players: [1, 5], duration: 25 },
   { id: "summer", level: 30, players: [1, 5], duration: 30 },
-  { id: "volcan", level: 11, players: [1, 5], duration: 11 },
+  { id: "orc", level: 35, players: [1, 5], duration: 20 },
+  { id: "pyramid", level: 35, players: [1, 5], duration: 20 },
+  { id: "volcan", level: 35, players: [1, 5], duration: 15 },
+  { id: "mushroom", level: 45, players: [1, 5], duration: 25 },
+  { id: "north", level: 55, players: [1, 5], duration: 25 },
 ]
 
 export function Maps() {
@@ -250,27 +250,31 @@ export function Maps() {
               </Popover>
 
 
-              <img src={`/media/maps/raid_missing.png`} className="size-24 drop-shadow-xl group-hover:size-28 object-contain transition-all duration-400" style={{
+              <img src={`/media/maps/raid_${map.id}_map.png`} className="w-full h-32 mask-y-from-50% mask-x-from-60% opacity-70 drop-shadow-xl group2-hover:size-28 mb-auto object-cover transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
+              <img src={`/media/maps/raid_icon.png`} className="absolute size-24 drop-shadow-xl group2-hover:size-28 mb-auto object-contain transition-all duration-400" style={{
                 imageRendering: "pixelated",
               }} />
             </div>
 
-            <div className="p-3 flex flex-col items-center bg-linear-to-b from-card-dark to-secondary rounded-t-lg">
-              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1 px-2">{t(("maps.raid.") + map.id, map.id)}</h3>
+            <div className="p-3 flex flex-col items-center bg-linear-to-b from-card-dark to-secondary rounded-t-lg h-full">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl px-2 text-center leading-none my-auto">{t(("maps.island.") + map.id, map.id)}</h3>
 
-              <span className="text-xs flex flex-row items-center justify-between w-full">
+              <span className="text-xs flex flex-row items-center justify-between w-full -mb-0 mt-3">
                 <p className="text-[0.65rem] text-muted-foreground">Required Level</p>
-                <p className="text-[0.65rem] ">{map.level}</p>
+                <p className="text-[0.65rem] "><LevelBadge level={map.level} className="">Level {map.level}</LevelBadge></p>
               </span>
+              <span className="w-full flex flex-row gap-4 mb-2 mt-1">
               <span className="text-xs flex flex-row items-center justify-between w-full">
                 <p className="text-[0.65rem] text-muted-foreground">Players</p>
                 <p className="text-[0.65rem] ">{map.players[0]} - {map.players[1]}</p>
               </span>
-              <span className="text-xs flex flex-row items-center justify-between w-full mb-2">
+              <span className="text-xs flex flex-row items-center justify-between w-full">
                 <p className="text-[0.65rem] text-muted-foreground">Duration</p>
                 <p className="text-[0.65rem] ">{map.duration} Min</p>
               </span>
-
+</span>
 
               <Link to={`/maps/${map.id}`} className="w-full">
                 <Button size="lg" className="w-full">

@@ -30,6 +30,20 @@
     "maps.island.island_snow": "Frostbite Fortress",
     "maps.island.island_desert": "Sandwhisper Dunes",
 
+    "maps.island.maya_temple": "Temple of Oof",
+    "maps.island.pyramid": "Sandydoom Pyramid",
+    "maps.island.volcan": "Spicy Mountain",
+    "maps.island.summer": "Spawn Island",
+    "maps.island.mushroom": "Shroom & Gloom",
+    "maps.island.goblin": "Gobbo Grotto",
+    "maps.island.orc": "Orcyard Keep",
+    "maps.island.north": "Frostyfrig North",
+    "maps.island.pirate_temple": "Captain's Hideout",
+    "maps.island.canyon": "Yeet Canyon",
+    "maps.island.shaft": "Diggydeep Shaft",
+    "maps.island.field_island": "Cropocalypse Field",
+    "maps.island.nether": "Blazebottom Reach",
+
 
     "maps.resources": "Show Resources",
     "maps.select_all": "Select All",
