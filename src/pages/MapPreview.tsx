@@ -47,6 +47,7 @@ import {
 import { Button } from "@components/ui/button"
 import { Badge } from "@components/ui/badge"
 import { mapsConfig } from "@const/maps"
+import { EN_Flag, FR_Flag } from "@const/flags"
 
 
 const REGION_COLORS = [
@@ -87,11 +88,10 @@ function LeafletTooltipStyleOverrides() {
          be applied to an <img>-based Leaflet icon. */
       .marker-icon-outline {
         filter:
-          drop-shadow(0 0 4px #00000099)
-          drop-shadow(3px 0 0 var(--primary))
-          drop-shadow(-3px 0 0 var(--primary))
-          drop-shadow(0 3px 0 var(--primary))
-          drop-shadow(0 -3px 0 var(--primary));
+          drop-shadow(2px 0 0 var(--primary))
+          drop-shadow(-2px 0 0 var(--primary))
+          drop-shadow(0 2px 0 var(--primary))
+          drop-shadow(0 -2px 0 var(--primary));
       }
     `}</style>
   )
@@ -697,6 +697,24 @@ export function MapPreview() {
   return (
     <div className="relative page-container flex flex-col items-center pb-24">
       <LeafletTooltipStyleOverrides />
+
+
+
+      {isRaid && (
+        <div className="w-full rounded-xl bg-linear-to-b from-card to-card-dark p-4 py-3  minebox-shadow items-center flex flex-row gap-2">
+          <span className="flex flex-col gap-0">
+          <p className="text-primary tracking-wider drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">
+            Help us fill in all the details!
+          </p>
+          <p className="text-xs">
+            If you know any: Spawn Points, Extraction Points, Puzzles, Code Locations, Gates with Puzzles, All Gate Locations, Insects, Bestiary (Mobs), let us know 
+          </p>
+          </span>
+          <Button size="lg" className="ml-auto"><EN_Flag /> Forum</Button>
+          <Button size="lg" ><FR_Flag/> Forum</Button>
+        </div>
+      )}
+
       <div className="flex h-[80vh] w-full flex-row gap-4">
         {/* Map */}
         <span className="relative h-full w-3/4">
@@ -843,52 +861,52 @@ export function MapPreview() {
 
         {/* Lists */}
         <Card className="h-[80vh] w-1/4 gap-0 py-0">
-<Select value={params["*"]} onValueChange={handleValueChange}>
-  <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
-    <SelectValue
-      className="text-md text-primary uppercase"
-      placeholder={t("maps.selectMap")}
-    />
-  </SelectTrigger>
-  <SelectContent>
-    {(() => {
-      // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia,
-      // trzymając od razu cały wpis configu (a nie tylko klucz), żeby móc pokazać level/command
-      const groups: Record<string, Array<[string, typeof mapsConfig[string]]>> = {}
-      Object.entries(mapsConfig).forEach(([key, item]) => {
-        if (!groups[item.group]) groups[item.group] = []
-        groups[item.group].push([key, item])
-      })
+          <Select value={params["*"]} onValueChange={handleValueChange}>
+            <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
+              <SelectValue
+                className="text-md text-primary uppercase"
+                placeholder={t("maps.selectMap")}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {(() => {
+                // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia,
+                // trzymając od razu cały wpis configu (a nie tylko klucz), żeby móc pokazać level/command
+                const groups: Record<string, Array<[string, typeof mapsConfig[string]]>> = {}
+                Object.entries(mapsConfig).forEach(([key, item]) => {
+                  if (!groups[item.group]) groups[item.group] = []
+                  groups[item.group].push([key, item])
+                })
 
-      return Object.entries(groups).map(([groupName, entries]) => (
-        <SelectGroup key={groupName}>
-          <SelectLabel className="uppercase text-muted-foreground text-[0.6rem] mb-0">
-            {t(`maps.group.${groupName}`, { defaultValue: groupName })}
-          </SelectLabel>
-          {entries.map(([key, item]) => (
-            <SelectItem key={key} value={key}>
-              <span className="flex w-full items-center justify-between gap-2 w-full">
-                
-                  <LevelBadge level={item.level === 0 ? 1 : item.level} className="scale-75 w-16 -mx-2 hover:none">
-                    {item.level === 0 ? <>{t("maps.levelShort")} 1</> : <>{t("maps.levelShort")} {item.level}</>}
-                    
-                  </LevelBadge>
-                <span>{t(`maps.island.${key}`)}</span>
-                <span className="flex shrink-0 items-center gap-1.5 ml-auto">
-                  {item.command && (
-                    <span className="text-[0.6rem] text-muted-foreground">
-                      {item.command}
-                    </span>
-                  )}
-                </span>
-              </span>
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      ))
-    })()}
-  </SelectContent>
-</Select>
+                return Object.entries(groups).map(([groupName, entries]) => (
+                  <SelectGroup key={groupName}>
+                    <SelectLabel className="uppercase text-muted-foreground text-[0.6rem] mb-0">
+                      {t(`maps.group.${groupName}`, { defaultValue: groupName })}
+                    </SelectLabel>
+                    {entries.map(([key, item]) => (
+                      <SelectItem key={key} value={key}>
+                        <span className="flex w-full items-center justify-between gap-2 w-full">
+
+                          <LevelBadge level={item.level === 0 ? 1 : item.level} className="scale-75 w-16 -mx-2 hover:none">
+                            {item.level === 0 ? <>{t("maps.levelShort")} 1</> : <>{t("maps.levelShort")} {item.level}</>}
+
+                          </LevelBadge>
+                          <span>{t(`maps.island.${key}`)}</span>
+                          <span className="flex shrink-0 items-center gap-1.5 ml-auto">
+                            {item.command && (
+                              <span className="text-[0.6rem] text-muted-foreground">
+                                {item.command}
+                              </span>
+                            )}
+                          </span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))
+              })()}
+            </SelectContent>
+          </Select>
 
           {/* Global select all / deselect all across every category */}
           <div className="flex items-center justify-between gap-2 px-2 pt-2 text-[0.7rem]">
@@ -1001,17 +1019,17 @@ export function MapPreview() {
                                   toggleResourceVisibility(id)
                                 }
                               }}
-                              className={`relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
-                                ? "bg-red-500/40"
-                                : "bg-transparent hover:bg-accent/40"
+                              className={`group relative flex border-[3px] cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors p-0.5 ${isHidden
+                                ? "bg-card/70 border-card-dark/70"
+                                : " border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
                                 }`}
                             >
                               <ItemImage
                                 itemId={id}
-                                className={`aspect-square size-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                                className={`aspect-square group-hover:scale-105 transition-transform w-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                               />
 
-                              <p className="-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none">
+                              <p className={`-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none ${isHidden ? "opacity-50 saturate-50" : ""}`}>
                                 {t(
                                   [
                                     `items.${getCleanItemId(id)}`,
@@ -1023,7 +1041,7 @@ export function MapPreview() {
 
                               <LevelBadge
                                 level={levelNum}
-                                className="-mt-1 scale-90 uppercase"
+                                className={`-mt-1 scale-90 uppercase ${isHidden ? "opacity-80 saturate-50" : ""}`}
                               >
                                 {t("maps.levelShort")} {levelNum}
                               </LevelBadge>
@@ -1129,7 +1147,7 @@ export function MapPreview() {
           </div>
 
           {/* Settings */}
-          <Card className="from-secondary-dark w-full gap-2 to-secondary p-2 py-3 pb-8">
+          <span className="border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 border-[3px] rounded m-2 mb-3 flex flex-col gap-1 p-2">
             <p>{t("maps.preview_settings")}</p>
             <div className="flex items-center space-x-2">
               <Switch
@@ -1157,20 +1175,19 @@ export function MapPreview() {
                 {t("maps.outline_resources", { defaultValue: "Outline resources" })}
               </Label>
             </div>
-          </Card>
+          </span>
         </Card>
       </div>
 
-      {/* Raid banner — placeholder, only shown for raid maps, sits above the Fish Drops ("shoals") section */}
       {isRaid && (
-        <div className="mt-8 w-full rounded-xl bg-linear-to-b from-card to-card-dark p-4 text-center minebox-shadow">
-          <p className="text-sm text-muted-foreground">
-            {/* TODO: replace with real raid-specific info (loot table, boss mechanics, etc.) */}
-            {t("maps.raid_placeholder", {
-              defaultValue: "Raid-specific info coming soon — stay tuned, adventurer.",
-            })}
-          </p>
-        </div>
+        <Card className="w-full px-4 gap-2">
+          <span className="flex flex-row items-center justify-between gap-0">
+            <p className="text-primary tracking-wider drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Raid Useful Data</p>
+            <p className="text-muted-foreground text-xs">Some Info Desc</p>  
+          </span>
+
+          <p>Over time, information will start appearing here about the locations of codes, where special rooms and chests may appear, tips on how to defeat the boss, and other useful information.</p>
+        </Card>
       )}
 
       {/* Fish Drops */}
@@ -1273,9 +1290,9 @@ export function MapPreview() {
                       <ItemImage
                         itemId={insect.id}
                         className="mx-auto mb-auto aspect-square size-4/5 transition-transform group-hover:scale-105"
-                                            style={{
-                        filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: insect.id }))}40)`,
-                      }}
+                        style={{
+                          filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: insect.id }))}40)`,
+                        }}
                       />
                       <p className="text-center text-xs">
                         {t(`insects:insects.${getCleanItemId(insect.id)}`, {
