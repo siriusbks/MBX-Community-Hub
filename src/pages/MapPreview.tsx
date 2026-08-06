@@ -1,7 +1,7 @@
 import { Card } from "@ui/card"
 import { LevelBadge } from "@const/levels"
 import { useEffect, useState, useMemo } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Switch } from "@components/ui/switch"
 import { Label } from "@components/ui/label"
 import { useTranslation } from "react-i18next"
@@ -46,269 +46,8 @@ import {
 } from "@components/ui/popover"
 import { Button } from "@components/ui/button"
 import { Badge } from "@components/ui/badge"
+import { mapsConfig } from "@const/maps"
 
-const mapsConfig: Record<
-  string,
-  {
-    image: string
-    width: number
-    height: number
-    referencePoint: { x: number; y: number }
-    iconScale: { min: number; max: number }
-    zoneKey: string
-    mapZoom: { min: number; max: number }
-    scaleIconMultiplier: number,
-    group: string
-  }
-> = {
-
-  island_home: {
-    image: "/media/maps/home_island_map.png",
-    width: 320,
-    height: 320,
-    referencePoint: { x: 34, y: 284 },
-    iconScale: { min: 1.25, max: 2 },
-    zoneKey: "",
-    mapZoom: { min: 1.4, max: 3 },
-    scaleIconMultiplier: 1,
-    group: "player_islands",
-  },
-  island_nether: {
-    image: "/media/maps/island_nether_map.png",
-    width: 160,
-    height: 176,
-    referencePoint: { x: 17, y: 143 },
-    iconScale: { min: 1.2, max: 2.5 },
-    zoneKey: "",
-    mapZoom: { min: 2, max: 3 },
-    scaleIconMultiplier: 1,
-    group: "player_islands",  
-  },
-  island_end: {
-    image: "/media/maps/island_end_map.png",
-    width: 160,
-    height: 176,
-    referencePoint: { x: 17, y: 143 },
-    iconScale: { min: 1.25, max: 2.5 },
-    zoneKey: "",
-    mapZoom: { min: 1.5, max: 3 },
-    scaleIconMultiplier: 1,
-    group: "player_islands",
-  },
-
-
-  spawn: {
-    image: "/media/maps/spawn_map.png",
-    width: 791,
-    height: 839,
-    referencePoint: { x: 220, y: 388 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "exploration",
-  },
-  island_tropical: {
-    image: "/media/maps/island_tropical_map.png",
-    width: 528,
-    height: 528,
-    referencePoint: { x: 0, y: 0 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "island_tropical",
-    mapZoom: { min: 0.2, max: 3 },
-    scaleIconMultiplier: 0.5,
-    group: "exploration",
-  },
-  island_plain: {
-    image: "/media/maps/island_plain_map.png",
-    width: 608,
-    height: 560,
-    referencePoint: { x: 81, y: 16 },
-    iconScale: { min: 1, max: 2 },
-    zoneKey: "island_plain",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.7,
-    group: "exploration",
-  },
-  island_bamboo: {
-    image: "/media/maps/island_bamboo_map.png",
-    width: 1256,
-    height: 608,
-    referencePoint: { x: 633, y: 611 },
-    iconScale: { min: 1.2, max: 2.5 },
-    zoneKey: "island_bamboo",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.7,
-    group: "exploration",
-  },
-  island_snow: {
-    image: "/media/maps/island_snow_map.png",
-    width: 720,
-    height: 720,
-    referencePoint: { x: 129, y: 64 },
-    iconScale: { min: 1.2, max: 2 },
-    zoneKey: "island_snow",
-    mapZoom: { min: 0, max: 2.5 },
-    scaleIconMultiplier: 0.7,
-    group: "exploration",
-  },
-  island_desert: {
-    image: "/media/maps/island_desert_map.png",
-    width: 752,
-    height: 752,
-    referencePoint: { x: 128, y: 720 },
-    iconScale: { min: 1, max: 2 },
-    zoneKey: "island_desert",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.7,
-    group: "exploration",
-  },
-
-  
-  maya_temple: {
-    image: "/media/maps/raid_maya_temple_map.png",
-    width: 128,
-    height: 128,
-    referencePoint: { x: 64  , y: -12 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  shaft: {
-    image: "/media/maps/raid_shaft_map.png",
-    width: 180,
-    height: 180,
-    referencePoint: { x: -129    , y: 341 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  pirate_temple: {
-    image: "/media/maps/raid_pirate_temple_map.png",
-    width: 192,
-    height: 192,
-    referencePoint: { x: 0     , y: 0 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  goblin: {
-    image: "/media/maps/raid_goblin_map.png",
-    width: 630,
-    height: 270,
-    referencePoint: { x: 208  , y: 250 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  field_island: {
-    image: "/media/maps/raid_field_island_map.png",
-    width: 500,
-    height: 500,
-    referencePoint: { x: 250     , y: 253 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  nether: {
-    image: "/media/maps/raid_nether_map.png",
-    width: 480,
-    height: 302,
-    referencePoint: { x: 178     , y: 498 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  canyon: {
-    image: "/media/maps/raid_canyon_map.png",
-    width: 500,
-    height: 500,
-    referencePoint: { x: 250     , y: 253 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  summer: {
-    image: "/media/maps/spawn_map.png",
-    width: 791,
-    height: 839,
-    referencePoint: { x: 220, y: 388 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  orc: {
-    image: "/media/maps/raid_orc_map.png",
-    width: 720,
-    height: 430,
-    referencePoint: { x: 229     , y: 452 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  pyramid: {
-    image: "/media/maps/raid_pyramid_map.png",
-    width: 340,
-    height: 350,
-    referencePoint: { x: -90  , y: 540 },
-    iconScale: { min: 0, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  volcan: {
-    image: "/media/maps/raid_volcan_map.png",
-    width: 256,
-    height: 256,
-    referencePoint: { x: 128  , y: 128 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 1.2, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  mushroom: {
-    image: "/media/maps/raid_mushroom_map.png",
-    width: 425,
-    height: 450,
-    referencePoint: { x: 194  , y: 234 },
-    iconScale: { min: 0, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-  north: {
-    image: "/media/maps/raid_north_map.png",
-    width: 600,
-    height: 760,
-    referencePoint: { x: 176     , y: 806 },
-    iconScale: { min: 1, max: 2.5 },
-    zoneKey: "overworld",
-    mapZoom: { min: 0, max: 3 },
-    scaleIconMultiplier: 0.4,
-    group: "raids",
-  },
-}
 
 const REGION_COLORS = [
   "#4ade80",
@@ -322,7 +61,9 @@ const REGION_COLORS = [
 ]
 
 // Shared CSS to strip Leaflet's default tooltip chrome (background, border,
-// forced nowrap sizing) so our own styled tooltip content controls layout.
+// forced nowrap sizing) so our own styled tooltip content controls layout,
+// plus the "outline resources" marker filter used when that preview
+// setting is toggled on.
 function LeafletTooltipStyleOverrides() {
   return (
     <style>{`
@@ -339,6 +80,18 @@ function LeafletTooltipStyleOverrides() {
       }
       .leaflet-tooltip-pane {
         z-index: 650;
+      }
+
+      /* Fakes a solid outline around a (mostly transparent) marker icon by
+         stacking a drop-shadow in each direction, since a real border can't
+         be applied to an <img>-based Leaflet icon. */
+      .marker-icon-outline {
+        filter:
+          drop-shadow(0 0 4px #00000099)
+          drop-shadow(3px 0 0 var(--primary))
+          drop-shadow(-3px 0 0 var(--primary))
+          drop-shadow(0 3px 0 var(--primary))
+          drop-shadow(0 -3px 0 var(--primary));
       }
     `}</style>
   )
@@ -546,6 +299,10 @@ export function MapPreview() {
   const [showBestiary, setShowBestiary] = useState(false)
   const [mobNamesData, setMobNamesData] = useState<Record<string, MobInfo>>({})
 
+  // Draws a colored outline around every resource marker on the map,
+  // shared between the general and the raid-specific preview settings.
+  const [outlineResources, setOutlineResources] = useState(false)
+
   const [zoom, setZoom] = useState<number | null>(null)
   const [baseZoom, setBaseZoom] = useState<number | null>(null)
 
@@ -573,9 +330,10 @@ export function MapPreview() {
     setBaseZoom(null)
   }, [mapId])
 
-  const navigate = useNavigate()
+  // Switching maps via the select fully reloads the page (rather than a
+  // client-side route change) so the whole map element/state starts fresh.
   const handleValueChange = (value: string) => {
-    navigate(`/maps/${value}`)
+    window.location.href = `/maps/${value}`
   }
 
   if (!config) {
@@ -586,6 +344,7 @@ export function MapPreview() {
     )
   }
   const { image, width, height, referencePoint, zoneKey, mapZoom } = config
+  const isRaid = config.group === "raids"
 
   // We calculate the bounds once and for all
   const imageBounds: [number, number][] = [
@@ -940,138 +699,146 @@ export function MapPreview() {
       <LeafletTooltipStyleOverrides />
       <div className="flex h-[80vh] w-full flex-row gap-4">
         {/* Map */}
-        <span className="h-full w-3/4 rounded-xl bg-linear-to-b from-card to-card-dark minebox-shadow">
-          {!harvestablesData ? (
-            <div className="flex h-full items-center justify-center">
-              {t("maps.loadingMap")}
-            </div>
-          ) : (
-            <MapContainer
-              crs={L.CRS.Simple}
-              bounds={imageBounds}
-              maxBounds={imageBounds}
-              minZoom={mapZoom.min}
-              maxZoom={mapZoom.max}
-              style={{
-                height: "100%",
-                width: "100%",
-                imageRendering: "pixelated",
-                borderRadius: "0.5rem",
-                backgroundColor: "#00000000",
-              }}
-              attributionControl={false}
-            >
-              <ZoomWatcher onZoomChange={handleZoomChange} />
-              <ImageOverlay url={image} bounds={imageBounds} />
-              {allMarkers
-                .filter((m) => !hiddenResources[m.cat])
-                .map((m, i) => (
-                  <Marker
-                    key={`${m.cat}-${i}`}
-                    position={[m.py, m.px]}
-                    icon={L.icon({
-                      iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
-                      iconSize: [24 * markerScale, 24 * markerScale],
-                      iconAnchor: [12 * markerScale, 12 * markerScale],
-                      popupAnchor: [0, -16 * markerScale],
-                      className: `filter drop-shadow-[0_0_4px_#00000099]`,
-                    })}
-                  >
-                    <Tooltip
-                      direction="top"
-                      offset={[0, -8 * markerScale]}
-                      opacity={1}
+        <span className="relative h-full w-3/4">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-8 -z-10 rounded-[2rem] opacity-70 blur-3xl transition-opacity duration-500"
+          />
+          <span className="relative block h-full w-full overflow-hidden rounded-xl bg-linear-to-b from-card to-card-dark minebox-shadow">
+            {!harvestablesData ? (
+              <div className="flex h-full items-center justify-center">
+                {t("maps.loadingMap")}
+              </div>
+            ) : (
+              <MapContainer
+                crs={L.CRS.Simple}
+                bounds={imageBounds}
+                maxBounds={imageBounds}
+                minZoom={mapZoom.min}
+                maxZoom={mapZoom.max}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  imageRendering: "pixelated",
+                  borderRadius: "0.5rem",
+                  backgroundColor: "#00000000",
+                }}
+                attributionControl={false}
+              >
+                <ZoomWatcher onZoomChange={handleZoomChange} />
+                <ImageOverlay url={image} bounds={imageBounds} />
+                {allMarkers
+                  .filter((m) => !hiddenResources[m.cat])
+                  .map((m, i) => (
+                    <Marker
+                      key={`${m.cat}-${i}`}
+                      position={[m.py, m.px]}
+                      icon={L.icon({
+                        iconUrl: markerIconUrls[m.cat] ?? "/media/missing.png",
+                        iconSize: [24 * markerScale, 24 * markerScale],
+                        iconAnchor: [12 * markerScale, 12 * markerScale],
+                        popupAnchor: [0, -16 * markerScale],
+                        className: outlineResources
+                          ? "marker-icon-outline"
+                          : "filter drop-shadow-[0_0_4px_#00000099]",
+                      })}
                     >
-                      <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
-                        <ItemImage
-                          itemId={m.cat}
-                          className="aspect-square size-10"
-                        />
-                        <span className="flex flex-col items-start justify-center gap-0">
-                          <p className="font-bold text-primary">
-                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
-                              defaultValue: FindItemName({ itemId: m.cat }),
-                            })}
-                          </p>
-                          <p className="flex flex-row gap-1 text-xs font-bold">
-                            <span className="font-normal text-muted-foreground">
-                              x:
-                            </span>{" "}
-                            {m.x}
-                            <span className="font-normal text-muted-foreground">
-                              y:
-                            </span>{" "}
-                            {m.y}
-                            <span className="font-normal text-muted-foreground">
-                              z:
-                            </span>{" "}
-                            {m.z}
-                          </p>
-                        </span>
-                      </div>
-                    </Tooltip>
-                  </Marker>
-                ))}
-              {showRegions &&
-                regionsData &&
-                (() => {
-                  const baseNames = Object.keys(regionsData).map((name) =>
-                    name.replace(/_\d+$/, "")
-                  )
-                  const uniqueBaseNames = [...new Set(baseNames)]
-                  const colorMap: Record<string, string> = {}
-                  uniqueBaseNames.forEach((base, i) => {
-                    colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
-                  })
-                  return Object.entries(regionsData).map(
-                    ([regionName, coords]) => {
-                      const baseName = regionName.replace(/_\d+$/, "")
-                      const color = colorMap[baseName]
-                      const positions: [number, number][] = coords.map(
-                        ([x, y]) => [y, x]
-                      )
-                      return (
-                        <RegionPolygon
-                          key={regionName}
-                          positions={positions}
-                          color={color}
-                          label={t(`maps.${baseName}`, {
-                            defaultValue: baseName,
-                          })}
-                        />
-                      )
-                    }
-                  )
-                })()}
-              {showBestiary &&
-                bestiaryZonesData &&
-                (() => {
-                  const mapZones = mapId ? bestiaryZonesData[mapId] : null
-                  if (!mapZones) return null
-                  return Object.entries(mapZones).flatMap(
-                    ([zoneName, zoneData]: any) =>
-                      (zoneData.zones as any[]).map((zone, idx) => {
-                        const positions: [number, number][] = zone.coords.map(
-                          ([x, y]: [number, number]) => [y, x]
+                      <Tooltip
+                        direction="top"
+                        offset={[0, -8 * markerScale]}
+                        opacity={1}
+                      >
+                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                          <ItemImage
+                            itemId={m.cat}
+                            className="aspect-square size-10"
+                          />
+                          <span className="flex flex-col items-start justify-center gap-0">
+                            <p className="font-bold text-primary">
+                              {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
+                                defaultValue: FindItemName({ itemId: m.cat }),
+                              })}
+                            </p>
+                            <p className="flex flex-row gap-1 text-xs font-bold">
+                              <span className="font-normal text-muted-foreground">
+                                x:
+                              </span>{" "}
+                              {m.x}
+                              <span className="font-normal text-muted-foreground">
+                                y:
+                              </span>{" "}
+                              {m.y}
+                              <span className="font-normal text-muted-foreground">
+                                z:
+                              </span>{" "}
+                              {m.z}
+                            </p>
+                          </span>
+                        </div>
+                      </Tooltip>
+                    </Marker>
+                  ))}
+                {showRegions &&
+                  regionsData &&
+                  (() => {
+                    const baseNames = Object.keys(regionsData).map((name) =>
+                      name.replace(/_\d+$/, "")
+                    )
+                    const uniqueBaseNames = [...new Set(baseNames)]
+                    const colorMap: Record<string, string> = {}
+                    uniqueBaseNames.forEach((base, i) => {
+                      colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
+                    })
+                    return Object.entries(regionsData).map(
+                      ([regionName, coords]) => {
+                        const baseName = regionName.replace(/_\d+$/, "")
+                        const color = colorMap[baseName]
+                        const positions: [number, number][] = coords.map(
+                          ([x, y]) => [y, x]
                         )
                         return (
-                          <BestiaryPolygon
-                            key={`${zoneName}-${idx}`}
+                          <RegionPolygon
+                            key={regionName}
                             positions={positions}
-                            color={zone.color}
-                            zoneName={zoneName}
-                            mobs={(zone.mobs as string[]).map((id) => ({
-                              id,
-                              name: mobNamesData[id]?.name ?? id,
-                              image: mobNamesData[id]?.image ?? "",
-                            }))}
+                            color={color}
+                            label={t(`maps.${baseName}`, {
+                              defaultValue: baseName,
+                            })}
                           />
                         )
-                      })
-                  )
-                })()}
-            </MapContainer>
-          )}
+                      }
+                    )
+                  })()}
+                {showBestiary &&
+                  bestiaryZonesData &&
+                  (() => {
+                    const mapZones = mapId ? bestiaryZonesData[mapId] : null
+                    if (!mapZones) return null
+                    return Object.entries(mapZones).flatMap(
+                      ([zoneName, zoneData]: any) =>
+                        (zoneData.zones as any[]).map((zone, idx) => {
+                          const positions: [number, number][] = zone.coords.map(
+                            ([x, y]: [number, number]) => [y, x]
+                          )
+                          return (
+                            <BestiaryPolygon
+                              key={`${zoneName}-${idx}`}
+                              positions={positions}
+                              color={zone.color}
+                              zoneName={zoneName}
+                              mobs={(zone.mobs as string[]).map((id) => ({
+                                id,
+                                name: mobNamesData[id]?.name ?? id,
+                                image: mobNamesData[id]?.image ?? "",
+                              }))}
+                            />
+                          )
+                        })
+                    )
+                  })()}
+              </MapContainer>
+            )}
+          </span>
         </span>
 
         {/* Lists */}
@@ -1085,21 +852,36 @@ export function MapPreview() {
   </SelectTrigger>
   <SelectContent>
     {(() => {
-      // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia
-      const groups: Record<string, string[]> = {}
+      // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia,
+      // trzymając od razu cały wpis configu (a nie tylko klucz), żeby móc pokazać level/command
+      const groups: Record<string, Array<[string, typeof mapsConfig[string]]>> = {}
       Object.entries(mapsConfig).forEach(([key, item]) => {
         if (!groups[item.group]) groups[item.group] = []
-        groups[item.group].push(key)
+        groups[item.group].push([key, item])
       })
 
-      return Object.entries(groups).map(([groupName, keys]) => (
+      return Object.entries(groups).map(([groupName, entries]) => (
         <SelectGroup key={groupName}>
-          <SelectLabel className="uppercase text-muted-foreground">
+          <SelectLabel className="uppercase text-muted-foreground text-[0.6rem] mb-0">
             {t(`maps.group.${groupName}`, { defaultValue: groupName })}
           </SelectLabel>
-          {keys.map((key) => (
+          {entries.map(([key, item]) => (
             <SelectItem key={key} value={key}>
-              {t(`maps.island.${key}`)}
+              <span className="flex w-full items-center justify-between gap-2 w-full">
+                
+                  <LevelBadge level={item.level === 0 ? 1 : item.level} className="scale-75 w-16 -mx-2 hover:none">
+                    {item.level === 0 ? <>{t("maps.levelShort")} 1</> : <>{t("maps.levelShort")} {item.level}</>}
+                    
+                  </LevelBadge>
+                <span>{t(`maps.island.${key}`)}</span>
+                <span className="flex shrink-0 items-center gap-1.5 ml-auto">
+                  {item.command && (
+                    <span className="text-[0.6rem] text-muted-foreground">
+                      {item.command}
+                    </span>
+                  )}
+                </span>
+              </span>
             </SelectItem>
           ))}
         </SelectGroup>
@@ -1365,9 +1147,31 @@ export function MapPreview() {
               />
               <Label htmlFor="bestairy">{t("maps.show_bestiary")}</Label>
             </div>
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="outline-resources"
+                checked={outlineResources}
+                onCheckedChange={setOutlineResources}
+              />
+              <Label htmlFor="outline-resources">
+                {t("maps.outline_resources", { defaultValue: "Outline resources" })}
+              </Label>
+            </div>
           </Card>
         </Card>
       </div>
+
+      {/* Raid banner — placeholder, only shown for raid maps, sits above the Fish Drops ("shoals") section */}
+      {isRaid && (
+        <div className="mt-8 w-full rounded-xl bg-linear-to-b from-card to-card-dark p-4 text-center minebox-shadow">
+          <p className="text-sm text-muted-foreground">
+            {/* TODO: replace with real raid-specific info (loot table, boss mechanics, etc.) */}
+            {t("maps.raid_placeholder", {
+              defaultValue: "Raid-specific info coming soon — stay tuned, adventurer.",
+            })}
+          </p>
+        </div>
+      )}
 
       {/* Fish Drops */}
       {(() => {
