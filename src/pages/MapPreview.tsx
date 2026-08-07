@@ -766,17 +766,18 @@ export function MapPreview() {
                           : "filter drop-shadow-[0_0_4px_#00000099]",
                       })}
                     >
-                      <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
-                        <ItemImage
-                          itemId={m.cat}
-                          className="aspect-square size-10"
-                        />
-                        <span className="flex flex-col items-start justify-center gap-0">
-                          <p className="font-bold text-primary">
-                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
-                              defaultValue: FindItemName({ itemId: m.cat }),
-                            })}
-                          </p>
+                      <Tooltip direction="top" offset={[0, -10]}>
+                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                          <ItemImage
+                            itemId={m.cat}
+                            className="aspect-square size-10"
+                          />
+                          <span className="flex flex-col items-start justify-center gap-0">
+                            <p className="font-bold text-primary">
+                              {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
+                                defaultValue: FindItemName({ itemId: m.cat }),
+                              })}
+                            </p>
                           <p className="flex flex-row gap-1 text-xs font-bold">
                             <span className="font-normal text-muted-foreground">
                               x:
@@ -848,9 +849,9 @@ export function MapPreview() {
                             })}
                           />
                         )
-                      }
+                      })
                     )
-                  })()}
+                })()}
                 {showBestiary &&
                   bestiaryZonesData &&
                   (() => {
