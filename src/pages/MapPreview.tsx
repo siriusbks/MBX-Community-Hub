@@ -766,61 +766,77 @@ export function MapPreview() {
                           : "filter drop-shadow-[0_0_4px_#00000099]",
                       })}
                     >
-                      <Tooltip
-                        direction="top"
-                        offset={[0, -8 * markerScale]}
-                        opacity={1}
-                      >
-                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
-                          <ItemImage
-                            itemId={m.cat}
-                            className="aspect-square size-10"
-                          />
-                          <span className="flex flex-col items-start justify-center gap-0">
-                            <p className="font-bold text-primary">
-                              {t(
-                                [`items_maps:items.${getCleanItemId(m.cat)}`],
-                                {
-                                  defaultValue: FindItemName({ itemId: m.cat }),
-                                }
-                              )}
-                            </p>
-                            <p className="flex flex-row gap-1 text-xs font-bold">
-                              <span className="font-normal text-muted-foreground">
-                                x:
-                              </span>{" "}
-                              {m.x}
-                              <span className="font-normal text-muted-foreground">
-                                y:
-                              </span>{" "}
-                              {m.y}
-                              <span className="font-normal text-muted-foreground">
-                                z:
-                              </span>{" "}
-                              {m.z}
-                            </p>
-                          </span>
-                        </div>
-                      </Tooltip>
-                    </Marker>
-                  ))}
-                {showRegions &&
-                  regionsData &&
-                  (() => {
-                    const baseNames = Object.keys(regionsData).map((name) =>
-                      name.replace(/_\d+$/, "")
-                    )
-                    const uniqueBaseNames = [...new Set(baseNames)]
-                    const colorMap: Record<string, string> = {}
-                    uniqueBaseNames.forEach((base, i) => {
-                      colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
-                    })
-                    return Object.entries(regionsData).map(
-                      ([regionName, coords]) => {
-                        const baseName = regionName.replace(/_\d+$/, "")
-                        const color = colorMap[baseName]
-                        const positions: [number, number][] = coords.map(
-                          ([x, y]) => [y, x]
+                      <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                        <ItemImage
+                          itemId={m.cat}
+                          className="aspect-square size-10"
+                        />
+                        <span className="flex flex-col items-start justify-center gap-0">
+                          <p className="font-bold text-primary">
+                            {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
+                              defaultValue: FindItemName({ itemId: m.cat }),
+                            })}
+                          </p>
+                          <p className="flex flex-row gap-1 text-xs font-bold">
+                            <span className="font-normal text-muted-foreground">
+                              x:
+                            </span>{" "}
+                            {m.x}
+                            <span className="font-normal text-muted-foreground">
+                              y:
+                            </span>{" "}
+                            {m.y}
+                            <span className="font-normal text-muted-foreground">
+                              z:
+                            </span>{" "}
+                            {m.z}
+                          </p>
+                        </span>
+                      </div>
+                    </Tooltip>
+                  </Marker>
+                ))}
+              {showRegions &&
+                regionsData &&
+                (() => {
+                  const baseNames = Object.keys(regionsData).map((name) =>
+                    name.replace(/_\d+$/, "")
+                  )
+                  const uniqueBaseNames = [...new Set(baseNames)]
+                  const colorMap: Record<string, string> = {}
+                  uniqueBaseNames.forEach((base, i) => {
+                    colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
+                  })
+                  return Object.entries(regionsData).map(
+                    ([regionName, coords]) => {
+                      const baseName = regionName.replace(/_\d+$/, "")
+                      const color = colorMap[baseName]
+                      const positions: [number, number][] = coords.map(
+                        ([x, y]) => [y, x]
+                      )
+                      return (
+                        <RegionPolygon
+                          key={regionName}
+                          positions={positions}
+                          color={color}
+                          label={t(`maps.${baseName}`, {
+                            defaultValue: baseName,
+                          })}
+                        />
+                      )
+                    }
+                  )
+                })()}
+              {showBestiary &&
+                bestiaryZonesData &&
+                (() => {
+                  const mapZones = mapId ? bestiaryZonesData[mapId] : null
+                  if (!mapZones) return null
+                  return Object.entries(mapZones).flatMap(
+                    ([zoneName, zoneData]: any) =>
+                      (zoneData.zones as any[]).map((zone, idx) => {
+                        const positions: [number, number][] = zone.coords.map(
+                          ([x, y]: [number, number]) => [y, x]
                         )
                         return (
                           <RegionPolygon

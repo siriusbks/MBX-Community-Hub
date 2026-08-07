@@ -356,14 +356,45 @@ export function Summer2026EventPage() {
               </span>
             </span>
           </span>
-          <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            {t("summer2026.missions.waiting")}
-          </p>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission1")}
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission2")}
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission3")}
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission4")}
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission5")}
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week2.mission6_start")}{" "}
+            <Link to="/items?id=summer_lottery_ticket" className="text-[#a0060a]">
+              Summer Lottery Ticket
+            </Link>{" "}
+            {t("summer2026.missions.week2.mission6_end")}
+          </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
             <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
-                ???
+                <Link to="/items?id=sand_castle_hat">
+                  <ItemImage itemId="sand_castle_hat" className="size-6" />
+                </Link>
+                <Separator
+                  orientation="vertical"
+                  className="mx-1 h-4 bg-card"
+                />
+                5{" "}
+                <img
+                  src="/media/other/summer2026_shell.png"
+                  alt="Shell"
+                  className="inline-block size-5 [image-rendering:pixelated]"
+                />
               </p>
             </span>
           </span>
