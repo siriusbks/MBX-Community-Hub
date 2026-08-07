@@ -75,7 +75,7 @@ export function Maps() {
 
       <span className="flex flex-row items-center justify-between w-full">
         <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.players_island")}</p>
-        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.player_island_description")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full  z-10">
         {player_islands.map((map, index) => (
@@ -83,7 +83,7 @@ export function Maps() {
             <div className="relative h-48 w-full flex items-center justify-center border-b border-border/20">
 
 
-              <img src={map.image} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
                 imageRendering: "pixelated",
               }} />
             </div>
@@ -112,7 +112,7 @@ export function Maps() {
 
       <span className="flex flex-row items-center justify-between w-full mt-8">
         <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.exploration_island")}</p>
-        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.exploration_description")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  z-10">
 
@@ -226,7 +226,7 @@ export function Maps() {
                 </SheetContent>
               </Sheet>
 
-              <img src={map.image} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
                 imageRendering: "pixelated",
               }} />
             </div>
@@ -258,7 +258,7 @@ export function Maps() {
 
       <span className="flex flex-row items-center justify-between w-full mt-8">
         <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.raids")}</p>
-        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.raids_description")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 w-full  z-10">
         {raids.sort((a, b) => a.level - b.level || (a.duration ?? 0) - (b.duration ?? 0)).map((map, index) => (

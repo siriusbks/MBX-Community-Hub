@@ -25,6 +25,16 @@ import {
 } from "@components/ui/accordion"
 import { Badge } from "@components/ui/badge"
 import { getCleanItemId, FindItemName, ItemImage } from "@const/elements"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select"
+import { mapsConfig } from "@const/maps"
 
 export function VillagePreview() {
   const { t, i18n } = useTranslation("maps")
@@ -48,6 +58,9 @@ export function VillagePreview() {
     )
   }
 
+  const handleValueChange = (value: string) => {
+    window.location.href = `/maps/${value}`
+  }
   const buildings = villageData.buildings ?? {}
   const buildingEntries = Object.entries(buildings)
   const cells = villageData.cells ?? {}
@@ -90,9 +103,62 @@ export function VillagePreview() {
 
         <Card className="w-1/3 p-0 gap-0">
 
-          <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
-            <p className="text-primary text-md uppercase ">{t("village.tiers")}</p>
-          </Card>
+          <Select value={"village"} onValueChange={handleValueChange}>
+            <SelectTrigger className="from-secondary-dark w-full bg-linear-to-b to-secondary !p-2 !py-5 text-primary uppercase minebox-shadow">
+              <SelectValue
+                className="text-md text-primary uppercase"
+                placeholder={t("maps.selectMap")}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {(() => {
+                const groups: Record<
+                  string,
+                  Array<[string, (typeof mapsConfig)[string]]>
+                > = {}
+                Object.entries(mapsConfig).forEach(([key, item]) => {
+                  if (!groups[item.group]) groups[item.group] = []
+                  groups[item.group].push([key, item])
+                })
+
+                return Object.entries(groups).map(([groupName, entries]) => (
+                  <SelectGroup key={groupName}>
+                    <SelectLabel className="mb-0 text-[0.6rem] text-muted-foreground uppercase">
+                      {t(`maps.group.${groupName}`, {
+                        defaultValue: groupName,
+                      })}
+                    </SelectLabel>
+                    {entries.map(([key, item]) => (
+                      <SelectItem key={key} value={key}>
+                        <span className="flex w-full items-center justify-between gap-2">
+                          <LevelBadge
+                            level={item.level === 0 ? 1 : item.level}
+                            className="hover:none -mx-2 w-16 scale-75"
+                          >
+                            {item.level === 0 ? (
+                              <>{t("maps.levelShort")} 1</>
+                            ) : (
+                              <>
+                                {t("maps.levelShort")} {item.level}
+                              </>
+                            )}
+                          </LevelBadge>
+                          <span>{t(`maps.island.${key}`)}</span>
+                          <span className="ml-auto flex shrink-0 items-center gap-1.5">
+                            {item.command && (
+                              <span className="text-[0.6rem] text-muted-foreground">
+                                {item.command}
+                              </span>
+                            )}
+                          </span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))
+              })()}
+            </SelectContent>
+          </Select>
 
           <Accordion type="single" collapsible defaultValue="item-1">
             {Object.entries(village_tiers).map(([tierKey, tierData]) => (

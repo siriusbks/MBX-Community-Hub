@@ -49,7 +49,6 @@ import { Badge } from "@components/ui/badge"
 import { mapsConfig } from "@const/maps"
 import { EN_Flag, FR_Flag } from "@const/flags"
 
-
 const REGION_COLORS = [
   "#4ade80",
   "#60a5fa",
@@ -189,7 +188,9 @@ function BestiaryPolygon({
           className="pointer-events-none max-w-[240px] min-w-[160px] rounded-md border-l-6 bg-linear-to-b from-card to-card-dark px-3 py-2 minebox-shadow"
           style={{ borderLeftColor: color }}
         >
-          <p className="text-xs font-bold text-muted-foreground">{t("maps:maps.region")}</p>
+          <p className="text-xs font-bold text-muted-foreground">
+            {t("maps:maps.region")}
+          </p>
           <p className="text-sm font-bold tracking-wide text-primary">
             {zoneName}
           </p>
@@ -539,7 +540,7 @@ export function MapPreview() {
       z: number
     }> = []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ; (arr as string[]).forEach((s) => {
+      ;(arr as string[]).forEach((s) => {
         const parts = s.split(";")
         // "servers" entries are prefixed with a map/world name
         // ("island_bamboo;-297;84;237;90.0;0.0"), while "raids" entries
@@ -629,7 +630,7 @@ export function MapPreview() {
       return
     }
 
-    ; (async () => {
+    ;(async () => {
       try {
         const resolvedEntries = await Promise.all(
           uniqueCategories.map(async (cat) => {
@@ -698,20 +699,24 @@ export function MapPreview() {
     <div className="relative page-container flex flex-col items-center pb-24">
       <LeafletTooltipStyleOverrides />
 
-
-
       {isRaid && (
-        <div className="w-full rounded-xl bg-linear-to-b from-card to-card-dark p-4 py-3  minebox-shadow items-center flex flex-row gap-2">
+        <div className="flex w-full flex-row items-center gap-2 rounded-xl bg-linear-to-b from-card to-card-dark p-4 py-3 minebox-shadow">
           <span className="flex flex-col gap-0">
-          <p className="text-primary tracking-wider drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">
-            Help us fill in all the details!
-          </p>
-          <p className="text-xs">
-            If you know any: Spawn Points, Extraction Points, Puzzles, Code Locations, Gates with Puzzles, All Gate Locations, Insects, Bestiary (Mobs), let us know 
-          </p>
+            <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+              Help us fill in all the details!
+            </p>
+            <p className="text-xs">
+              If you know any: Spawn Points, Extraction Points, Puzzles, Code
+              Locations, Gates with Puzzles, All Gate Locations, Insects,
+              Bestiary (Mobs), let us know
+            </p>
           </span>
-          <Button size="lg" className="ml-auto"><EN_Flag /> Forum</Button>
-          <Button size="lg" ><FR_Flag/> Forum</Button>
+          <Button size="lg" className="ml-auto">
+            <EN_Flag /> Forum
+          </Button>
+          <Button size="lg">
+            <FR_Flag /> Forum
+          </Button>
         </div>
       )}
 
@@ -773,9 +778,12 @@ export function MapPreview() {
                           />
                           <span className="flex flex-col items-start justify-center gap-0">
                             <p className="font-bold text-primary">
-                              {t([`items_maps:items.${getCleanItemId(m.cat)}`], {
-                                defaultValue: FindItemName({ itemId: m.cat }),
-                              })}
+                              {t(
+                                [`items_maps:items.${getCleanItemId(m.cat)}`],
+                                {
+                                  defaultValue: FindItemName({ itemId: m.cat }),
+                                }
+                              )}
                             </p>
                             <p className="flex flex-row gap-1 text-xs font-bold">
                               <span className="font-normal text-muted-foreground">
@@ -872,7 +880,10 @@ export function MapPreview() {
               {(() => {
                 // grupujemy klucze mapConfig po polu `group`, zachowując kolejność pierwszego wystąpienia,
                 // trzymając od razu cały wpis configu (a nie tylko klucz), żeby móc pokazać level/command
-                const groups: Record<string, Array<[string, typeof mapsConfig[string]]>> = {}
+                const groups: Record<
+                  string,
+                  Array<[string, (typeof mapsConfig)[string]]>
+                > = {}
                 Object.entries(mapsConfig).forEach(([key, item]) => {
                   if (!groups[item.group]) groups[item.group] = []
                   groups[item.group].push([key, item])
@@ -880,19 +891,28 @@ export function MapPreview() {
 
                 return Object.entries(groups).map(([groupName, entries]) => (
                   <SelectGroup key={groupName}>
-                    <SelectLabel className="uppercase text-muted-foreground text-[0.6rem] mb-0">
-                      {t(`maps.group.${groupName}`, { defaultValue: groupName })}
+                    <SelectLabel className="mb-0 text-[0.6rem] text-muted-foreground uppercase">
+                      {t(`maps.group.${groupName}`, {
+                        defaultValue: groupName,
+                      })}
                     </SelectLabel>
                     {entries.map(([key, item]) => (
                       <SelectItem key={key} value={key}>
-                        <span className="flex w-full items-center justify-between gap-2 w-full">
-
-                          <LevelBadge level={item.level === 0 ? 1 : item.level} className="scale-75 w-16 -mx-2 hover:none">
-                            {item.level === 0 ? <>{t("maps.levelShort")} 1</> : <>{t("maps.levelShort")} {item.level}</>}
-
+                        <span className="flex w-full items-center justify-between gap-2">
+                          <LevelBadge
+                            level={item.level === 0 ? 1 : item.level}
+                            className="hover:none -mx-2 w-16 scale-75"
+                          >
+                            {item.level === 0 ? (
+                              <>{t("maps.levelShort")} 1</>
+                            ) : (
+                              <>
+                                {t("maps.levelShort")} {item.level}
+                              </>
+                            )}
                           </LevelBadge>
                           <span>{t(`maps.island.${key}`)}</span>
-                          <span className="flex shrink-0 items-center gap-1.5 ml-auto">
+                          <span className="ml-auto flex shrink-0 items-center gap-1.5">
                             {item.command && (
                               <span className="text-[0.6rem] text-muted-foreground">
                                 {item.command}
@@ -1019,17 +1039,20 @@ export function MapPreview() {
                                   toggleResourceVisibility(id)
                                 }
                               }}
-                              className={`group relative flex border-[3px] cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors p-0.5 ${isHidden
-                                ? "bg-card/70 border-card-dark/70"
-                                : " border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
-                                }`}
+                              className={`group relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded border-[3px] p-0.5 transition-colors ${
+                                isHidden
+                                  ? "border-card-dark/70 bg-card/70"
+                                  : "border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
+                              }`}
                             >
                               <ItemImage
                                 itemId={id}
-                                className={`aspect-square group-hover:scale-105 transition-transform w-4/5 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                                className={`aspect-square w-4/5 transition-transform group-hover:scale-105 ${isHidden ? "opacity-80 saturate-50" : ""}`}
                               />
 
-                              <p className={`-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none ${isHidden ? "opacity-50 saturate-50" : ""}`}>
+                              <p
+                                className={`-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none ${isHidden ? "opacity-50 saturate-50" : ""}`}
+                              >
                                 {t(
                                   [
                                     `items.${getCleanItemId(id)}`,
@@ -1045,15 +1068,12 @@ export function MapPreview() {
                               >
                                 {t("maps.levelShort")} {levelNum}
                               </LevelBadge>
-
-
                             </div>
                           )
                         })}
                       </div>
                     </span>
                   )
-
                 })
               })()
             ) : (
@@ -1119,10 +1139,11 @@ export function MapPreview() {
                                 toggleResourceVisibility(id)
                               }
                             }}
-                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
-                              ? "bg-red-500/40"
-                              : "bg-transparent hover:bg-accent/40"
-                              }`}
+                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
+                              isHidden
+                                ? "bg-red-500/40"
+                                : "bg-transparent hover:bg-accent/40"
+                            }`}
                           >
                             <ItemImage
                               itemId={id}
@@ -1147,7 +1168,7 @@ export function MapPreview() {
           </div>
 
           {/* Settings */}
-          <span className="border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 border-[3px] rounded m-2 mb-3 flex flex-col gap-1 p-2">
+          <span className="m-2 mb-3 flex flex-col gap-1 rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-2">
             <p>{t("maps.preview_settings")}</p>
             <div className="flex items-center space-x-2">
               <Switch
@@ -1172,23 +1193,31 @@ export function MapPreview() {
                 onCheckedChange={setOutlineResources}
               />
               <Label htmlFor="outline-resources">
-                {t("maps.outline_resources", { defaultValue: "Outline resources" })}
+                {t("maps.outline_resources", {
+                  defaultValue: "Outline resources",
+                })}
               </Label>
             </div>
           </span>
         </Card>
       </div>
-
+{/*}
       {isRaid && (
-        <Card className="w-full px-4 gap-2">
+        <Card className="w-full gap-2 px-4 pt-3">
           <span className="flex flex-row items-center justify-between gap-0">
-            <p className="text-primary tracking-wider drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">Raid Useful Data</p>
-            <p className="text-muted-foreground text-xs">Some Info Desc</p>  
+            <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+              Raid Useful Data
+            </p>
+            <p className="text-xs text-muted-foreground">Some Info Desc</p>
           </span>
 
-          <p>Over time, information will start appearing here about the locations of codes, where special rooms and chests may appear, tips on how to defeat the boss, and other useful information.</p>
+          <p>
+            Over time, information will start appearing here about the locations
+            of codes, where special rooms and chests may appear, tips on how to
+            defeat the boss, and other useful information.
+          </p>
         </Card>
-      )}
+      )}*/}
 
       {/* Fish Drops */}
       {(() => {
@@ -1217,10 +1246,13 @@ export function MapPreview() {
           )
 
           return (
-            <div key={id} className="mt-8 w-full gap-2">
-              <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
-                {fishTitle}
-              </p>
+            <div className="flex w-full flex-col gap-2 pt-3">
+              <span className="flex flex-row items-center justify-between gap-0">
+                <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+                  {fishTitle}
+                </p>
+                <p className="text-xs text-muted-foreground">{t("maps.fish_description")}</p>
+              </span>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
                 {drops.map((drop: any, dropIndex: number) => (
@@ -1231,7 +1263,7 @@ export function MapPreview() {
                   >
                     <ItemImage
                       itemId={drop.item}
-                      className="mx-auto mb-auto aspect-square w-4/5  group-hover:scale-105 transition-transform"
+                      className="mx-auto mb-auto aspect-square w-4/5 transition-transform group-hover:scale-105"
                       style={{
                         filter: `drop-shadow(0 0 8px ${GetRarityColor(FindItemRarity({ itemId: drop.item }))}40)`,
                       }}
@@ -1245,10 +1277,14 @@ export function MapPreview() {
                         { defaultValue: FindItemName({ itemId: drop.item }) }
                       )}
                     </p>
-                    <span className="flex flex-col gap-0 -space-y-1 -mt-1">
-                      <span className="flex flex-row justify-between items-center">
-                        <p className="text-[0.60rem] text-muted-foreground leading-none">{t("maps.chance")}</p>
-                        <p className="text-[0.70rem] ">{Number(drop.chance).toFixed(2)}%</p>
+                    <span className="-mt-1 flex flex-col gap-0 -space-y-1">
+                      <span className="flex flex-row items-center justify-between">
+                        <p className="text-[0.60rem] leading-none text-muted-foreground">
+                          {t("maps.chance")}
+                        </p>
+                        <p className="text-[0.70rem]">
+                          {Number(drop.chance).toFixed(2)}%
+                        </p>
                       </span>
                     </span>
                   </RarityBorder>
@@ -1260,19 +1296,22 @@ export function MapPreview() {
       })()}
 
       {/* Insects */}
-      <div className="w-full gap-2">
-        <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
-          {t("maps.insects")}
-        </p>
+      <div className="flex w-full flex-col gap-2 pt-3">
+        <span className="flex flex-row items-center justify-between gap-0">
+          <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+            {t("maps.insects")}
+          </p>
+          <p className="text-xs text-muted-foreground">{t("maps.insects_description")}</p>
+        </span>
 
         {isInsectsLoading ? (
-          <p className="text-xs text-muted-foreground">{t("maps.loadingInsects")}</p>
+          <p className="text-xs text-muted-foreground">
+            {t("maps.loadingInsects")}
+          </p>
         ) : insectsError ? (
           <p className="text-xs text-red-400">{insectsError}</p>
         ) : insectsForZone.length === 0 ? (
-          <p className="text-xs text-muted-foreground">
-            {t("maps.noInsects")}
-          </p>
+          <p className="text-xs text-muted-foreground">{t("maps.noInsects")}</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {insectsForZone.map((insect) => {
@@ -1285,7 +1324,7 @@ export function MapPreview() {
                   <PopoverTrigger>
                     <RarityBorder
                       rarity={FindItemRarity({ itemId: insect.id })}
-                      className="group flex flex-col items-center gap-2 h-full"
+                      className="group flex h-full flex-col items-center gap-2"
                     >
                       <ItemImage
                         itemId={insect.id}
@@ -1309,9 +1348,11 @@ export function MapPreview() {
                       <RarityBadge
                         rarity={FindItemRarity({ itemId: insect.id })}
                       />
-                      <p>{t(`insects:insects.${getCleanItemId(insect.id)}`, {
-                        defaultValue: FindItemName({ itemId: insect.id }),
-                      })}</p>
+                      <p>
+                        {t(`insects:insects.${getCleanItemId(insect.id)}`, {
+                          defaultValue: FindItemName({ itemId: insect.id }),
+                        })}
+                      </p>
                     </span>
 
                     <span className="flex w-full flex-row items-center justify-between gap-2">
@@ -1350,7 +1391,9 @@ export function MapPreview() {
                         <p className="text-[0.65rem] text-muted-foreground">
                           {t("insects.extraConditions")}
                         </p>
-                        <p className="text-[0.65rem]">{t("insects:insects.fullMoon")}</p>
+                        <p className="text-[0.65rem]">
+                          {t("insects:insects.fullMoon")}
+                        </p>
                       </span>
                     )}
                   </PopoverContent>
@@ -1362,13 +1405,18 @@ export function MapPreview() {
       </div>
 
       {/* Bestiary */}
-      <div className="mt-8 w-full gap-2">
-        <p className="mb-2 text-center text-xl font-bold text-primary uppercase">
-          {t("maps.bestiary")}
-        </p>
+      <div className="flex w-full flex-col gap-2 pt-3">
+        <span className="flex flex-row items-center justify-between gap-0">
+          <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+            {t("maps.bestiary")}
+          </p>
+          <p className="text-xs text-muted-foreground">{t("maps.bestiary_description")}</p>
+        </span>
 
         {isBestiaryLoading ? (
-          <p className="text-xs text-muted-foreground">{t("maps.loadingCreatures")}</p>
+          <p className="text-xs text-muted-foreground">
+            {t("maps.loadingCreatures")}
+          </p>
         ) : bestiaryError ? (
           <p className="text-xs text-red-400">{bestiaryError}</p>
         ) : (bestiaryData?.creatures?.length ?? 0) === 0 ? (
