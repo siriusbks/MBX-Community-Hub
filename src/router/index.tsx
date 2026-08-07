@@ -33,7 +33,7 @@ export const AppRoutes: FC = () => {
 
             {/* Maps */}
             <Route path="/maps" element={<MapsPage />} />
-            <Route path="/maps/island_village" element={<VillagePreview />} />
+            <Route path="/maps/village" element={<VillagePreview />} />
             <Route path="/maps/*" element={<MapPreview />} />
 
             {/* Tools Tab */}

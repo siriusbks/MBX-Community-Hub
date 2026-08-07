@@ -15,23 +15,30 @@ import {
 } from "@components/ui/popover"
 import { RarityBadge, RarityBorder } from "@const/rarities";
 import { Link } from "react-router-dom";
-import { FindItemName, ItemImage, getCleanItemId } from "@const/elements";
+import { FindItemName, FindItemRarity, ItemImage, getCleanItemId } from "@const/elements";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@components/ui/sheet"
+import { mapsConfig } from "@const/maps"
 
-const player_islands = [
-  { id: "island_home", level: 0, command: "/is" },
-  { id: "island_nether", level: 20, command: "/isn" },
-  { id: "island_end", level: 40, command: "/ise" },
-  { id: "island_village", level: 0, command: "/v" },
-];
+const player_islands = Object.entries(mapsConfig)
+  .filter(([, cfg]) => cfg.group === "player_islands")
+  .map(([id, cfg]) => ({ id, ...cfg }));
 
-const islands = [
-  { id: "spawn", level: 0 },
-  { id: "island_tropical", level: 0 },
-  { id: "island_plain", level: 10 },
-  { id: "island_bamboo", level: 20 },
-  { id: "island_snow", level: 30 },
-  { id: "island_desert", level: 40 },
-];
+const islands = Object.entries(mapsConfig)
+  .filter(([, cfg]) => cfg.group === "exploration")
+  .map(([id, cfg]) => ({ id, ...cfg }));
+
+const raids = Object.entries(mapsConfig)
+  .filter(([, cfg]) => cfg.group === "raids")
+  .map(([id, cfg]) => ({ id, ...cfg }));
 
 export function Maps() {
   const { t } = useTranslation(["maps", "items_maps"]);
@@ -68,21 +75,21 @@ export function Maps() {
 
       <span className="flex flex-row items-center justify-between w-full">
         <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.players_island")}</p>
-        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.player_island_description")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full  z-10">
         {player_islands.map((map, index) => (
-          <Card key={index} className="group p-0 gap-0 overflow-hidden ring-1 ring-border/50">
-            <div className="relative h-48 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
+          <Card key={index} className="group p-0 from-[#187795] to-[#065a74] gap-0 overflow-hidden ring-1 ring-border/50">
+            <div className="relative h-48 w-full flex items-center justify-center border-b border-border/20">
 
 
-              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
-                        imageRendering: "pixelated",
-                    }}/>
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
             </div>
 
-            <div className="p-4 flex flex-col items-center bg-card-dark">
-              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1">{t(("maps.island.") + map.id)}</h3>
+            <div className="p-4 flex flex-col items-center bg-linear-to-b from-card-dark to-secondary rounded-t-lg">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-0">{t(("maps.island.") + map.id)}</h3>
               {map.level === 0 ? (
                 <p className="text-xs text-muted-foreground mb-4">
                   {t("maps.no_required")}
@@ -95,9 +102,9 @@ export function Maps() {
               )}
 
               <Link to={`/maps/${map.id}`}>
-              <Button size="lg" className="">
-                {t("maps.view_map")}
-              </Button></Link>
+                <Button size="lg" className="">
+                  {t("maps.view_map")}
+                </Button></Link>
             </div>
           </Card>
         ))}
@@ -105,15 +112,16 @@ export function Maps() {
 
       <span className="flex flex-row items-center justify-between w-full mt-8">
         <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.exploration_island")}</p>
-        <p className="text-muted-foreground text-xs">{t("maps.some_info")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.exploration_description")}</p>
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  z-10">
 
 
         {islands.map((map, index) => (
-          <Card key={index} className="group p-0 gap-0 overflow-hidden ring-1 ring-border/50">
-            <div className="relative h-48 bg-[#187795] w-full flex items-center justify-center border-b border-border/20">
+          <Card key={index} className="group p-0 gap-0 from-[#187795] to-[#065a74] overflow-hidden ring-1 ring-border/50">
+            <div className="relative h-48 w-full flex items-center justify-center border-b border-border/20">
 
+              {/*}
               <Popover>
                 <PopoverTrigger asChild>
                   <div className="absolute top-3 right-3 bg-black/30 rounded-full p-1 hover:bg-black/50 transition-colors">
@@ -142,7 +150,7 @@ export function Maps() {
                             <ItemImage itemId={id} className="aspect-square size-6" />
                             <LevelBadge level={levelNum} className="w-16 scale-80">{t("maps.levelShort")} {levelNum}</LevelBadge>
                             <p className="items-center leading-none text-xs">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
-                            
+
                           </span>
                         );
                       })
@@ -152,15 +160,79 @@ export function Maps() {
                   </div>
                 </PopoverContent>
               </Popover>
+*/}
 
+              <Sheet>
+                <SheetTrigger>
+                  <div className=" z-20 absolute top-3 right-3 bg-black/30 rounded-full p-1 hover:bg-black/50 transition-colors">
+                    <Info className="size-4 text-primary z-20" />
+                  </div>
+                </SheetTrigger>
+                <SheetContent className="">
+                  <SheetHeader className="border-b-2 bg-secondary/40 w-full py-2 px-3 gap-0">
+                    <SheetTitle>{t(("maps.island.") + map.id, map.id)}</SheetTitle>
+                    <SheetDescription className="flex flex-row items-center gap-2">
+                      Required Level: <LevelBadge level={map.level}>Level {map.level}</LevelBadge>
+                    </SheetDescription>
+                  </SheetHeader>
 
-              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400"  style={{
-                        imageRendering: "pixelated",
-                    }}/>
+                  <div className="p-3 flex flex-col gap-4 overflow-y-auto">
+                    {harvestablesData?.locations?.servers?.[map.id] ? (
+                      Object.keys(harvestablesData.harvestables ?? {}).map((catKey) => {
+                        const category = harvestablesData.harvestables[catKey] ?? {};
+                        const serverItems = harvestablesData.locations.servers[map.id];
+                        const itemsInMap = Object.keys(category)
+                          .filter((id) => serverItems[id])
+                          .sort((a, b) => (Number(category[a]?.min_level) || 0) - (Number(category[b]?.min_level) || 0));
+
+                        if (itemsInMap.length === 0) return null;
+
+                        return (
+                          <span key={catKey} className="w-full flex flex-col gap-2">
+                            <p className="text-primary text-sm font-bold uppercase tracking-wide">
+                              {t([`maps.category.${catKey}`, `items_maps:category.${catKey}`], { defaultValue: catKey })}
+                            </p>
+
+                            <span className="w-full grid grid-cols-2 gap-2">
+                              {itemsInMap.map((id) => {
+                                const itemData = category[id];
+                                const levelNum = Number(itemData?.min_level) || 0;
+
+                                return (
+                                  <span key={id} className="w-full h-full flex flex-row items-center justify-between gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
+                                    <ItemImage itemId={id} className="aspect-square size-12 mx-auto" />
+                                    <span className="flex flex-col items-center justify-center gap-0 w-full">
+                                      <p className="text-[0.65rem] leading-none w-full">
+                                        {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], {
+                                          defaultValue: FindItemName({ itemId: id }),
+                                        })}
+                                      </p>
+
+                                      <LevelBadge level={levelNum} className="scale-80 mr-auto -ml-1">
+                                        {t("maps.levelShort")} {levelNum}
+                                      </LevelBadge>
+                                    </span>
+                                  </span>
+                                );
+                              })}
+                            </span>
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <div className="text-xs text-muted-foreground">{t("maps.noData")}</div>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <img src={`/media/maps/${map.id}.png`} className="size-44 group-hover:size-48 object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
             </div>
 
-            <div className="p-4 flex flex-col items-center bg-card-dark">
-              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-1">{t(("maps.island.") + map.id)}</h3>
+            <div className="p-4 flex flex-col items-center bg-linear-to-b from-card-dark to-secondary rounded-t-lg">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl mb-0">{t(("maps.island.") + map.id)}</h3>
               {map.level === 0 ? (
                 <p className="text-xs text-muted-foreground mb-4">
                   {t("maps.no_required")}
@@ -173,9 +245,163 @@ export function Maps() {
               )}
 
               <Link to={`/maps/${map.id}`}>
-              <Button size="lg" className="">
-                {t("maps.view_map")}
-              </Button>
+                <Button size="lg" className="">
+                  {t("maps.view_map")}
+                </Button>
+              </Link>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+
+
+      <span className="flex flex-row items-center justify-between w-full mt-8">
+        <p className="text-primary tracking-widest drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl uppercase">{t("maps.raids")}</p>
+        <p className="text-muted-foreground text-xs">{t("maps.raids_description")}</p>
+      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 w-full  z-10">
+        {raids.sort((a, b) => a.level - b.level || (a.duration ?? 0) - (b.duration ?? 0)).map((map, index) => (
+          <Card key={index} className="group p-0 gap-0 from-[#187795] to-[#065a74] overflow-hidden ring-1 ring-border/50">
+            <div className="relative h-32 w-full flex items-center justify-center border-b border-border/20">
+
+              {/*}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div className=" z-20 absolute top-3 right-3 bg-black/30 rounded-full p-1 hover:bg-black/50 transition-colors">
+                    <Info className="size-4 text-primary z-20" />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="gap-0 minebox-shadow bg-linear-to-b from-card to-card-dark min-w-96">
+                  <PopoverHeader className="gap-0">
+                    <PopoverTitle className="text-lginline-block text-lg font-bold bg-gradient-to-b from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-[0_1px_0_#5d3a00] tracking-wider">{t("maps.availabe_resources")}</PopoverTitle>
+                  </PopoverHeader>
+                  <div className="w-full grid grid-cols-6 gap-2">
+                    {harvestablesData?.locations?.raids?.[map.id] ? (
+                      Object.keys(harvestablesData.locations.raids[map.id]).map((id) => {
+                        let minLevel = '0';
+                        const categories = harvestablesData.harvestables ?? {};
+                        for (const catKey of Object.keys(categories)) {
+                          const cat = categories[catKey];
+                          if (cat && cat[id]) {
+                            minLevel = cat[id]?.min_level ?? minLevel;
+                            break;
+                          }
+                        }
+                        const levelNum = Number(minLevel) || 0;
+                        return (
+                          <span key={id} className="flex flex-col gap-0 items-center justify-start mt-1">
+                            <ItemImage itemId={id} className="aspect-square size-12" />
+                            <LevelBadge level={levelNum} className="w-16 scale-80 -mt-1 mb-1">{t("maps.levelShort")} {levelNum}</LevelBadge>
+                            <p className="items-center leading-none text-[0.65rem] text-center">{t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], { defaultValue: FindItemName({ itemId: id }) })}</p>
+
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <div className="text-xs text-muted-foreground">{t("maps.noData")}</div>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+*/}
+
+              <Sheet>
+                <SheetTrigger>
+                  <div className=" z-20 absolute top-3 right-3 bg-black/30 rounded-full p-1 hover:bg-black/50 transition-colors">
+                    <Info className="size-4 text-primary z-20" />
+                  </div>
+                </SheetTrigger>
+                <SheetContent className="">
+                  <SheetHeader className="border-b-2 bg-secondary/40 w-full py-2 px-3 gap-0">
+                    <SheetTitle>{t(("maps.island.") + map.id, map.id)}</SheetTitle>
+                    <SheetDescription className="flex flex-row items-center gap-2">
+                      Required Level: <LevelBadge level={map.level}>Level {map.level}</LevelBadge>
+                    </SheetDescription>
+                  </SheetHeader>
+
+                  <div className="p-3 flex flex-col gap-4 overflow-y-auto">
+                    {harvestablesData?.locations?.raids?.[map.id] ? (
+                      Object.keys(harvestablesData.harvestables ?? {}).map((catKey) => {
+                        const category = harvestablesData.harvestables[catKey] ?? {};
+                        const raidItems = harvestablesData.locations.raids[map.id];
+                        const itemsInRaid = Object.keys(category)
+                          .filter((id) => raidItems[id])
+                          .sort((a, b) => (Number(category[a]?.min_level) || 0) - (Number(category[b]?.min_level) || 0));
+
+                        if (itemsInRaid.length === 0) return null;
+
+                        return (
+                          <span key={catKey} className="w-full flex flex-col gap-2">
+                            <p className="text-primary text-sm font-bold uppercase tracking-wide">
+                              {t([`maps.category.${catKey}`, `items_maps:category.${catKey}`], { defaultValue: catKey })}
+                            </p>
+
+                            <span className="w-full grid grid-cols-2 gap-2">
+                              {itemsInRaid.map((id) => {
+                                const itemData = category[id];
+                                const levelNum = Number(itemData?.min_level) || 0;
+
+                                return (
+                                  <span key={id} className="w-full h-full flex flex-row items-center justify-between gap-2 border-[3px] border-secondary/70 bg-linear-to-b from-secondary-lighter/50 to-secondary/50 rounded p-1">
+                                    <ItemImage itemId={id} className="aspect-square size-12 mx-auto" />
+                                    <span className="flex flex-col items-center justify-center gap-0 w-full">
+
+                                      <p className="text-[0.65rem] leading-none w-full">
+                                        {t([`items.${getCleanItemId(id)}`, `items_maps:items.${getCleanItemId(id)}`], {
+                                          defaultValue: FindItemName({ itemId: id }),
+                                        })}
+                                      </p>
+
+                                      <LevelBadge level={levelNum} className="scale-80 mr-auto -ml-1">
+                                        {t("maps.levelShort")} {levelNum}
+                                      </LevelBadge>
+                                    </span>
+                                  </span>
+                                );
+                              })}
+                            </span>
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <div className="text-xs text-muted-foreground">{t("maps.noData")}</div>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+
+              <img src={map.image} className="w-full h-32 mask-y-from-50% mask-x-from-60% opacity-70 drop-shadow-xl group2-hover:size-28 mb-auto object-cover transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
+              <img src={`/media/maps/raid_icon.png`} className="absolute size-24 drop-shadow-xl group2-hover:size-28 mb-auto object-contain transition-all duration-400" style={{
+                imageRendering: "pixelated",
+              }} />
+            </div>
+
+            <div className="p-3 flex flex-col items-center bg-linear-to-b from-card-dark to-secondary rounded-t-lg h-full">
+              <h3 className="text-primary tracking-wide drop-shadow-[0_3px_0_#5d3a00] font-bold text-xl px-2 text-center leading-none my-auto">{t(("maps.island.") + map.id, map.id)}</h3>
+
+              <span className="text-xs flex flex-row items-center justify-between w-full -mb-0 mt-3">
+                <p className="text-[0.65rem] text-muted-foreground">Required Level</p>
+                <p className="text-[0.65rem] "><LevelBadge level={map.level} className="">Level {map.level}</LevelBadge></p>
+              </span>
+              <span className="w-full flex flex-row gap-4 mb-2 mt-1">
+                <span className="text-xs flex flex-row items-center justify-between w-full">
+                  <p className="text-[0.65rem] text-muted-foreground">Players</p>
+                  <p className="text-[0.65rem] ">{map.players?.min} - {map.players?.max}</p>
+                </span>
+                <span className="text-xs flex flex-row items-center justify-between w-full">
+                  <p className="text-[0.65rem] text-muted-foreground">Duration</p>
+                  <p className="text-[0.65rem] ">{map.duration} Min</p>
+                </span>
+              </span>
+
+              <Link to={`/maps/${map.id}`} className="w-full">
+                <Button size="lg" className="w-full">
+                  {t("maps.view_map")}
+                </Button>
               </Link>
             </div>
           </Card>
