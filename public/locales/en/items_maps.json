@@ -17,6 +17,8 @@
     "items.shoal_bamboo_jungle": "Bamboo Jungle Shoal",
     "items.shoal_canyon": "Canyon Shoal",
     "items.shoal_desert": "Desert Shoal",
+    "items.shoal_warm_sea": "Warm Sea Shoal",
+    "items.shoal_summer_reef": "Sunken Reef Shoal",
     "items.coal": "Coal",
     "items.copper": "Copper",
     "items.diamond": "Diamond",
@@ -52,6 +54,7 @@
     "items.tree_maple": "Maple",
     "items.tree_yew": "Yew",
     "items.tree_olive": "Olive",
+    "items.tree_sacred_coconut": "Sacred Coconut",
     "items.plant_clover": "Clover",
     "items.plant_heart_blue": "Blue Heartvine",
     "items.plant_heart_red": "Red Heartvine",
@@ -77,5 +80,5 @@
     "items.coin": "Coin",
     "items.viewPoint": "Viewpoint",
     "items.bloon": "Bloon",
-    "items.npc": "PNJ"
+    "items.npc": "NPC"
 }
