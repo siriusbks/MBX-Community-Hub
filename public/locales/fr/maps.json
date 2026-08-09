@@ -23,16 +23,31 @@
     "maps.island.island_home": "Île joueur",
     "maps.island.island_nether": "Île du Nether",
     "maps.island.island_end": "Île de l'End",
-    "maps.island.island_village": "Village",
+    "maps.island.village": "Village",
     "maps.island.island_tropical": "Île de Kokoko",
     "maps.island.island_plain": "Tétra-Plaines",
     "maps.island.island_bamboo": "Pic Bambou",
     "maps.island.island_snow": "Forteresse d'En-gelure",
     "maps.island.island_desert": "Dunes de sable murmurant",
 
+    "maps.island.maya_temple": "Temple de Oof",
+    "maps.island.pyramid": "Pyramide Sabléance",
+    "maps.island.volcan": "Montagne Épicée",
+    "maps.island.summer": "Île du spawn",
+    "maps.island.mushroom": "Champi et Effroi",
+    "maps.island.goblin": "Grotte Gobelin",
+    "maps.island.orc": "Jardin d'Orc",
+    "maps.island.north": "Nord Givraltéré",
+    "maps.island.pirate_temple": "Cache du Capitaine",
+    "maps.island.canyon": "Lance-Canyon",
+    "maps.island.shaft": "Puits Creusedingue",
+    "maps.island.field_island": "Champ Agrocalyptique",
+    "maps.island.nether": "Étendue Incenbas",
+
     "maps.resources": "Afficher les ressources",
     "maps.select_all": "Tout sélectionner",
     "maps.deselect_all": "Tout désélectionner",
+    "maps.outline_resources": "Contour des ressources",
 
     "village.error.loadFailed": "Échec du chargement des données du village",
     "village.loading": "Chargement...",
@@ -52,7 +67,6 @@
     "village.upgrades": "Améliorations",
     "village.soon": "Bientôt",
 
-    
     "maps.loadedHarvestables": "loaded harvestables locations.servers keys:",
     "maps.error.loadFailed": "Échec du chargement de la carte ou des données de récolte",
     "maps.levelShort": "Lvl.",
@@ -74,5 +88,14 @@
     "maps.loadingCreatures": "Chargement des créatures...",
     "maps.noCreatures": "Aucune créature trouvée pour cette île.",
     "maps.chance": "Chance",
-    "maps.view_conditions": "Voir les conditions"
+    "maps.view_conditions": "Voir les conditions",
+    
+    "maps.fish_description": "Ici vous trouverez une liste complète des items que vous pouvez pêcher dans ce banc.",
+    "maps.insects_description": "Vous pourriez avoir la chance d'attraper ces insectes, qui ne sont pas très gros.",
+    "maps.bestiary_description": "En explorant cette île, vous pourriez rencontrer ces créatures.",
+
+    "maps.raids": "Expéditions",
+    "maps.player_island_description": "Vos propres îles où vous pouvez construire ce que vous voulez et les développer",
+    "maps.exploration_description": "Explorez les îles, récupérez des ressources et battez les créatures que vous rencontrez",
+    "maps.raids_description": "Arrivez, récupérez des ressources, battez le boss, récupérez vos récompenses, échappez-vous et recommencez"
 }

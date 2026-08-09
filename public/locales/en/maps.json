@@ -47,6 +47,7 @@
   "maps.resources": "Show Resources",
   "maps.select_all": "Select All",
   "maps.deselect_all": "Deselect All",
+  "maps.outline_resources": "Outline Resources",
 
   "village.error.loadFailed": "Failed to load village data",
   "village.loading": "Loading...",
