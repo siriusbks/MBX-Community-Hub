@@ -261,7 +261,7 @@ export function VillagePreview() {
 
             {/* Title */}
             <Card className="w-full p-2 py-3 from-secondary-dark to-secondary">
-              <p className="text-primary text-md uppercase ">{buildingData.id}</p>
+              <p className="text-primary text-md uppercase "> {t("maps:village." + buildingData.id)} </p>
             </Card>
 
             <Accordion type="single" collapsible defaultValue="item-1">
