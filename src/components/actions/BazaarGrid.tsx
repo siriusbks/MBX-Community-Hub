@@ -52,32 +52,47 @@ function proxied(targetUrl: string) {
   return `${PROXY_URL}?${params.toString()}`
 }
 
-// Runs a list of fetches in batches of `maxPerSecond`, waiting out the
-// remainder of each second before firing the next batch, so we never
-// exceed the proxy's rate limit (10 req/s).
-async function fetchJsonRateLimited<T>(
-  urls: string[],
-  maxPerSecond = 10
-): Promise<T[]> {
-  const results: T[] = []
+// Global rate limiter to ensure we don't exceed the proxy limit (10 req/s).
+const FETCH_QUEUE: (() => Promise<void>)[] = []
+let isProcessingQueue = false
 
-  for (let i = 0; i < urls.length; i += maxPerSecond) {
-    const batch = urls.slice(i, i + maxPerSecond)
+async function processFetchQueue() {
+  if (isProcessingQueue) return
+  isProcessingQueue = true
+
+  while (FETCH_QUEUE.length > 0) {
+    const batch = FETCH_QUEUE.splice(0, 5) // Safe limit: 5 per second
     const batchStart = Date.now()
 
-    const batchResults = await Promise.all(
-      batch.map((url) => fetch(url).then((r) => r.json() as Promise<T>))
-    )
-    results.push(...batchResults)
+    await Promise.all(batch.map((fn) => fn()))
 
     const elapsed = Date.now() - batchStart
-    const hasMore = i + maxPerSecond < urls.length
-    if (hasMore && elapsed < 1000) {
+    if (FETCH_QUEUE.length > 0 && elapsed < 1000) {
       await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
     }
   }
 
-  return results
+  isProcessingQueue = false
+}
+
+function fetchRateLimited<T>(url: string, signal?: AbortSignal): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const execute = async () => {
+      if (signal?.aborted) {
+        reject(new DOMException("Aborted", "AbortError"))
+        return
+      }
+      try {
+        const res = await fetch(url, { signal })
+        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`)
+        resolve(await res.json())
+      } catch (err) {
+        reject(err)
+      }
+    }
+    FETCH_QUEUE.push(execute)
+    processFetchQueue()
+  })
 }
 
 function formatCategoryLabel(id: string): string {
@@ -269,58 +284,60 @@ export default function BazaarGrid() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const abortController = new AbortController()
+    const { signal } = abortController
     let cancelled = false
 
     const loadCatalog = async () => {
-      const [data] = await fetchJsonRateLimited<CatalogResponse>([
-        proxied("https://api.minebox.co/market/catalog"),
-      ])
-      if (!cancelled) setCatalog(data)
+      try {
+        const data = await fetchRateLimited<CatalogResponse>(
+          proxied("https://api.minebox.co/market/catalog"),
+          signal
+        )
+        if (!cancelled) setCatalog(data)
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") {
+          console.error("Failed to load catalog", err)
+        }
+      }
     }
 
     const loadBazaar = async () => {
       const limit = 100
 
-      const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([
-        proxied(`https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`),
-      ])
-      if (cancelled) return
-
-      // Show the first page right away instead of waiting for every page.
-      setItems(firstPage.items)
-      setLoading(false)
-
-      const totalPages = Math.ceil(firstPage.total / limit)
-      const remainingUrls: string[] = []
-      for (let page = 2; page <= totalPages; page++) {
-        remainingUrls.push(
-          proxied(
-            `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
-          )
-        )
-      }
-
-      // Fetch the rest in the background, batch by batch, appending as we
-      // go so the grid fills in progressively instead of blocking on all
-      // remaining pages.
-      const batchSize = 10
-      for (let i = 0; i < remainingUrls.length; i += batchSize) {
-        const batch = remainingUrls.slice(i, i + batchSize)
-        const batchStart = Date.now()
-
-        const batchResults = await Promise.all(
-          batch.map((url) =>
-            fetch(url).then((r) => r.json() as Promise<BazaarResponse>)
-          )
+      try {
+        const firstPage = await fetchRateLimited<BazaarResponse>(
+          proxied(`https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`),
+          signal
         )
         if (cancelled) return
 
-        setItems((prev) => [...prev, ...batchResults.flatMap((r) => r.items)])
+        // Show the first page right away instead of waiting for every page.
+        setItems(firstPage.items)
+        setLoading(false)
 
-        const elapsed = Date.now() - batchStart
-        const hasMore = i + batchSize < remainingUrls.length
-        if (hasMore && elapsed < 1000) {
-          await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
+        const totalPages = Math.ceil(firstPage.total / limit)
+        for (let page = 2; page <= totalPages; page++) {
+          const url = proxied(
+            `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
+          )
+          
+          fetchRateLimited<BazaarResponse>(url, signal)
+            .then((res) => {
+              if (!cancelled) {
+                setItems((prev) => [...prev, ...res.items])
+              }
+            })
+            .catch((err) => {
+              if ((err as Error).name !== "AbortError") {
+                console.error("Failed to load bazaar page", err)
+              }
+            })
+        }
+      } catch (err) {
+        if (!cancelled && (err as Error).name !== "AbortError") {
+          console.error("Failed to load first page of bazaar", err)
+          setLoading(false)
         }
       }
     }
@@ -330,6 +347,7 @@ export default function BazaarGrid() {
 
     return () => {
       cancelled = true
+      abortController.abort()
     }
   }, [])
 
