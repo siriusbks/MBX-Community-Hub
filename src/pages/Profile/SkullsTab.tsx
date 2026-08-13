@@ -107,7 +107,7 @@ export function SkullsTab({ data }: { data: PlayerData }) {
                                         <div className="mt-3 flex flex-wrap gap-2">
                                             {relic.attributes.map((attribute) => (
                                                 <Badge key={attribute} variant="default" className="uppercase tracking-wide">
-                                                    {attribute.replace(/_/g, " ")}
+                                                    {t(`profile.attributes.${attribute}`, { defaultValue: attribute.replace(/_/g, " ") })}
                                                 </Badge>
                                             ))}
                                         </div>

@@ -70,7 +70,6 @@
     "profile.attributes.luck": "Luck",
     "profile.attributes.strength": "Strength",
     "profile.attributes.wisdom": "Wisdom",
-
     
     "profile.error.noNickname": "No nickname found. Please enter your nickname in the top navigation bar.",
     "profile.error.apiDisabled": "Player has disabled API access. You must enable it in-game.",
@@ -80,7 +79,6 @@
     "profile.error.imageGeneration": "Failed to generate image",
     "profile.welcome": "Welcome to your Profile",
     "profile.level": "Lvl",
-
     
     "profile.companions.trait": "Trait",
     "profile.companions.gen": "Gen",
@@ -107,7 +105,15 @@
 
     "profile.skulls.loading": "Loading relics...",
     "profile.skulls.noData": "No relic data available.",
-    "profile.skulls.owned": "OWNED"
+    "profile.skulls.owned": "OWNED",
 
+    "profile.attributes.DASH": "Dash",
+    "profile.attributes.NIGHT_VISION": "Night Vision",
+    "profile.attributes.SELL_PRICE_INCREASE": "Sell Price Increase",
+    "profile.attributes.FLY": "Fly",
+    "profile.attributes.AUTO_LOOT": "Auto Loot",
+    "profile.attributes.NO_FALL_DAMAGE": "No Fall Damage",
+    "profile.attributes.CONSUMABLE_TIME_INCREASE": "Consumable Time Increase",
+    "profile.attributes.WATER_BREATHING": "Water Breathing"
 
 }

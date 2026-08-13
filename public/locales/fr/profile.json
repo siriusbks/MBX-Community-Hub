@@ -79,7 +79,6 @@
     "profile.error.imageGeneration": "Échec de la génération de l'image",
     "profile.welcome": "Bienvenue sur votre profil",
     "profile.level": "Niv",
-
     
     "profile.companions.trait": "Trait",
     "profile.companions.gen": "Gen",
@@ -106,5 +105,14 @@
 
     "profile.skulls.loading": "Chargement des crânes...",
     "profile.skulls.noData": "Aucune donnée de crânes disponible.",
-    "profile.skulls.owned": "POSSÉDÉ"
+    "profile.skulls.owned": "POSSÉDÉ",
+
+    "profile.attributes.DASH": "Dash",
+    "profile.attributes.NIGHT_VISION": "Vision nocturne",
+    "profile.attributes.SELL_PRICE_INCREASE": "Augmentation du prix de vente",
+    "profile.attributes.FLY": "Vol",
+    "profile.attributes.AUTO_LOOT": "Auto-loot",
+    "profile.attributes.NO_FALL_DAMAGE": "Pas de dégâts de chute",
+    "profile.attributes.CONSUMABLE_TIME_INCREASE": "Augmentation du temps de consommation",
+    "profile.attributes.WATER_BREATHING": "Respiration aquatique"
 }
