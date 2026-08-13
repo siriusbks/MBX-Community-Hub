@@ -2,6 +2,8 @@
 
 import { Badge } from "@components/ui/badge"
 import { Skeleton } from "@components/ui/skeleton"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/ui/tabs"
+import { ScrollArea, ScrollBar } from "@components/ui/scroll-area"
 import { FindItemRarity, ItemImage, FindItemName } from "@const/elements"
 import { GetRarityColor, RarityBorder } from "@const/rarities"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -52,47 +54,32 @@ function proxied(targetUrl: string) {
   return `${PROXY_URL}?${params.toString()}`
 }
 
-// Global rate limiter to ensure we don't exceed the proxy limit (10 req/s).
-const FETCH_QUEUE: (() => Promise<void>)[] = []
-let isProcessingQueue = false
+// Runs a list of fetches in batches of `maxPerSecond`, waiting out the
+// remainder of each second before firing the next batch, so we never
+// exceed the proxy's rate limit (10 req/s).
+async function fetchJsonRateLimited<T>(
+  urls: string[],
+  maxPerSecond = 10
+): Promise<T[]> {
+  const results: T[] = []
 
-async function processFetchQueue() {
-  if (isProcessingQueue) return
-  isProcessingQueue = true
-
-  while (FETCH_QUEUE.length > 0) {
-    const batch = FETCH_QUEUE.splice(0, 5) // Safe limit: 5 per second
+  for (let i = 0; i < urls.length; i += maxPerSecond) {
+    const batch = urls.slice(i, i + maxPerSecond)
     const batchStart = Date.now()
 
-    await Promise.all(batch.map((fn) => fn()))
+    const batchResults = await Promise.all(
+      batch.map((url) => fetch(url).then((r) => r.json() as Promise<T>))
+    )
+    results.push(...batchResults)
 
     const elapsed = Date.now() - batchStart
-    if (FETCH_QUEUE.length > 0 && elapsed < 1000) {
+    const hasMore = i + maxPerSecond < urls.length
+    if (hasMore && elapsed < 1000) {
       await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
     }
   }
 
-  isProcessingQueue = false
-}
-
-function fetchRateLimited<T>(url: string, signal?: AbortSignal): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const execute = async () => {
-      if (signal?.aborted) {
-        reject(new DOMException("Aborted", "AbortError"))
-        return
-      }
-      try {
-        const res = await fetch(url, { signal })
-        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`)
-        resolve(await res.json())
-      } catch (err) {
-        reject(err)
-      }
-    }
-    FETCH_QUEUE.push(execute)
-    processFetchQueue()
-  })
+  return results
 }
 
 function formatCategoryLabel(id: string): string {
@@ -144,9 +131,10 @@ function ItemCard({ item }: { item: BazaarItem }) {
       <span className="flex w-full flex-col items-center justify-center gap-0">
         <ItemImage
           itemId={item.item_id}
-          loading="lazy"
           className={`aspect-square w-16 object-fill [image-rendering:pixelated] ${
-            item.unavailable ? "" : "transition-transform duration-200 group-hover:scale-110"
+            item.unavailable
+              ? ""
+              : "transition-transform duration-200 group-hover:scale-110"
           }`}
           style={{
             filter: `drop-shadow(0 0 12px ${GetRarityColor(FindItemRarity({ itemId: item.item_id }))}50)`,
@@ -155,7 +143,7 @@ function ItemCard({ item }: { item: BazaarItem }) {
 
         {/* Name and Stock */}
         <span className="flex h-8 w-full flex-col justify-center gap-2 pl-2 text-sm leading-none">
-          <p className="text-xs leading-none w-full text-center ">
+          <p className="w-full text-center text-xs leading-none">
             {FindItemName({ itemId: item.item_id })}
           </p>
         </span>
@@ -172,7 +160,6 @@ function ItemCard({ item }: { item: BazaarItem }) {
             </p>
           </span>
 
-          
           <span className="flex flex-row justify-between gap-2 px-2">
             <p className="text-[0.65rem] text-muted-foreground uppercase">
               {t("market.bazaar.sell")}
@@ -233,7 +220,7 @@ function SubcategorySection({
           ))}
         </div>
       ) : (
-        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {items.map((item) => (
             <ItemCard key={item.item_id} item={item} />
           ))}
@@ -266,7 +253,7 @@ function CategorySection({
         {subcategories.map((sub) => (
           <SubcategorySection
             key={sub.id}
-            title={t(`market.bazaar.subcategorie.${sub.id}`, {
+            title={t(`market.bazaar.sub.${sub.id}`, {
               defaultValue: formatCategoryLabel(sub.id),
             })}
             items={sub.items}
@@ -284,60 +271,60 @@ export default function BazaarGrid() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const abortController = new AbortController()
-    const { signal } = abortController
     let cancelled = false
 
     const loadCatalog = async () => {
-      try {
-        const data = await fetchRateLimited<CatalogResponse>(
-          proxied("https://api.minebox.co/market/catalog"),
-          signal
-        )
-        if (!cancelled) setCatalog(data)
-      } catch (err) {
-        if ((err as Error).name !== "AbortError") {
-          console.error("Failed to load catalog", err)
-        }
+      const [data] = await fetchJsonRateLimited<CatalogResponse>([
+        proxied("https://api.minebox.co/market/catalog"),
+      ])
+      if (!cancelled) {
+        setCatalog(data)
       }
     }
 
     const loadBazaar = async () => {
       const limit = 100
 
-      try {
-        const firstPage = await fetchRateLimited<BazaarResponse>(
-          proxied(`https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`),
-          signal
+      const [firstPage] = await fetchJsonRateLimited<BazaarResponse>([
+        proxied(`https://api.minebox.co/market/bazaar?limit=${limit}&offset=0`),
+      ])
+      if (cancelled) return
+
+      // Show the first page right away instead of waiting for every page.
+      setItems(firstPage.items)
+      setLoading(false)
+
+      const totalPages = Math.ceil(firstPage.total / limit)
+      const remainingUrls: string[] = []
+      for (let page = 2; page <= totalPages; page++) {
+        remainingUrls.push(
+          proxied(
+            `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
+          )
+        )
+      }
+
+      // Fetch the rest in the background, batch by batch, appending as we
+      // go so the grid fills in progressively instead of blocking on all
+      // remaining pages.
+      const batchSize = 10
+      for (let i = 0; i < remainingUrls.length; i += batchSize) {
+        const batch = remainingUrls.slice(i, i + batchSize)
+        const batchStart = Date.now()
+
+        const batchResults = await Promise.all(
+          batch.map((url) =>
+            fetch(url).then((r) => r.json() as Promise<BazaarResponse>)
+          )
         )
         if (cancelled) return
 
-        // Show the first page right away instead of waiting for every page.
-        setItems(firstPage.items)
-        setLoading(false)
+        setItems((prev) => [...prev, ...batchResults.flatMap((r) => r.items)])
 
-        const totalPages = Math.ceil(firstPage.total / limit)
-        for (let page = 2; page <= totalPages; page++) {
-          const url = proxied(
-            `https://api.minebox.co/market/bazaar?limit=${limit}&offset=${(page - 1) * limit}`
-          )
-          
-          fetchRateLimited<BazaarResponse>(url, signal)
-            .then((res) => {
-              if (!cancelled) {
-                setItems((prev) => [...prev, ...res.items])
-              }
-            })
-            .catch((err) => {
-              if ((err as Error).name !== "AbortError") {
-                console.error("Failed to load bazaar page", err)
-              }
-            })
-        }
-      } catch (err) {
-        if (!cancelled && (err as Error).name !== "AbortError") {
-          console.error("Failed to load first page of bazaar", err)
-          setLoading(false)
+        const elapsed = Date.now() - batchStart
+        const hasMore = i + batchSize < remainingUrls.length
+        if (hasMore && elapsed < 1000) {
+          await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed))
         }
       }
     }
@@ -347,7 +334,6 @@ export default function BazaarGrid() {
 
     return () => {
       cancelled = true
-      abortController.abort()
     }
   }, [])
 
@@ -411,17 +397,59 @@ export default function BazaarGrid() {
     return <div className="py-10 text-center">{t("market.bazaar.loading")}</div>
   }
 
+  if (categories.length === 0) {
+    return <div className="py-10 text-center">No items found</div>
+  }
+
   return (
-    <div className="space-y-10">
-      {categories.map((category) => (
-        <CategorySection
-          key={category.id}
-          title={t(`market.bazaar.categorie.${category.id}`, {
-            defaultValue: formatCategoryLabel(category.id),
-          })}
-          subcategories={category.subcategories}
-        />
-      ))}
-    </div>
+    <Tabs defaultValue="all" className="block space-y-6">
+      <div className="mx-auto w-fit max-w-full">
+        <ScrollArea className="w-full">
+          <div className="p-2">
+            <TabsList className="w-max">
+              <TabsTrigger value="all" className="px-4 text-sm">
+                {t("market.bazaar.categorie.all", { defaultValue: "All" })}
+              </TabsTrigger>
+              {categories.map((category) => (
+                <TabsTrigger
+                  key={category.id}
+                  value={category.id}
+                  className="px-4 text-sm"
+                >
+                  {t(`market.bazaar.categorie.${category.id}`, {
+                    defaultValue: formatCategoryLabel(category.id),
+                  })}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+          <ScrollBar orientation="horizontal" className="hidden" />
+        </ScrollArea>
+      </div>
+
+      <div className="px-1">
+        <TabsContent value="all" className="mt-0 space-y-10">
+          {categories.map((category) => (
+            <CategorySection
+              key={category.id}
+              title={t(`market.bazaar.categorie.${category.id}`, {
+                defaultValue: formatCategoryLabel(category.id),
+              })}
+              subcategories={category.subcategories}
+            />
+          ))}
+        </TabsContent>
+        {categories.map((category) => (
+          <TabsContent key={category.id} value={category.id} className="mt-0">
+            <CategorySection
+              title={t(`market.bazaar.categorie.${category.id}`, {
+                defaultValue: formatCategoryLabel(category.id),
+              })}
+              subcategories={category.subcategories}
+            />
+          </TabsContent>
+        ))}
+      </div>
+    </Tabs>
   )
 }
