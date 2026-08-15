@@ -242,7 +242,7 @@ const lotteryDrops = {
   water_gun_2: 0.75,
   mount_buggy_green: 0.75,
   paint_hidden_enderman: 0.37,
-  water_gun_3:0.37,
+  water_gun_3: 0.37,
   mount_buggy_yellow: 0.37,
   pet_ghastling: 0.37,
   mount_buggy_orange: 0.18,
@@ -285,7 +285,7 @@ export function Summer2026EventPage() {
         icon={CalendarDays}
       />
       <span className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
+        <span className="flex min-h-48 flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow">
           {/* Quests - Title */}
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
@@ -344,7 +344,7 @@ export function Summer2026EventPage() {
           </span>
         </span>
 
-        <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
+        <span className="flex min-h-48 flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow">
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
@@ -373,7 +373,10 @@ export function Summer2026EventPage() {
           </EventMissionElement>
           <EventMissionElement stars={3}>
             {t("summer2026.missions.week2.mission6_start")}{" "}
-            <Link to="/items?id=summer_lottery_ticket" className="text-[#a0060a]">
+            <Link
+              to="/items?id=summer_lottery_ticket"
+              className="text-[#a0060a]"
+            >
               Summer Lottery Ticket
             </Link>{" "}
             {t("summer2026.missions.week2.mission6_end")}
@@ -400,7 +403,7 @@ export function Summer2026EventPage() {
           </span>
         </span>
 
-        <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
+        <span className="flex min-h-48 flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow">
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
@@ -415,27 +418,27 @@ export function Summer2026EventPage() {
           <EventMissionElement stars={3}>
             {t("summer2026.missions.week3.mission1")} [30]
           </EventMissionElement>
-                    <EventMissionElement stars={4}>
+          <EventMissionElement stars={4}>
             {t("summer2026.missions.week3.mission2")} [48]
           </EventMissionElement>
-                    <EventMissionElement stars={4}>
+          <EventMissionElement stars={4}>
             {t("summer2026.missions.week3.mission3")} [64]
           </EventMissionElement>
-                    <EventMissionElement stars={3}>
+          <EventMissionElement stars={3}>
             {t("summer2026.missions.week3.mission4")}{" "}
             <Link to="/items?id=water_gun_1" className="text-[#00a5fc]">
               {FindItemName({ itemId: "water_gun_1" })}
             </Link>
           </EventMissionElement>
-                    <EventMissionElement stars={4}>
+          <EventMissionElement stars={4}>
             {t("summer2026.missions.week3.mission5")} [5]
           </EventMissionElement>
-                    <EventMissionElement stars={4}>
+          <EventMissionElement stars={4}>
             {t("summer2026.missions.week3.mission6")} [75]
           </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
             <p>{t("summer2026.missions.weeklyRewards")}</p>
-<span>
+            <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
                 <Link to="/items?id=starfish_hat">
                   <ItemImage itemId="starfish_hat" className="size-6" />
@@ -455,7 +458,7 @@ export function Summer2026EventPage() {
           </span>
         </span>
 
-        <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
+        <span className="flex min-h-48 flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow">
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
@@ -467,20 +470,54 @@ export function Summer2026EventPage() {
               </span>
             </span>
           </span>
-          <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            {t("summer2026.missions.waiting")}
-          </p>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.week4.mission1")} [32]
+          </EventMissionElement>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.week4.mission2")} [6]
+          </EventMissionElement>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.week4.mission3")} [32]
+          </EventMissionElement>
+          <EventMissionElement stars={3}>
+            {t("summer2026.missions.week4.mission4")} [60]
+          </EventMissionElement>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.week4.mission5")} [6]
+          </EventMissionElement>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.week4.mission6_start")}{" "}
+            <Link
+              to="/items?id=summer_lottery_ticket"
+              className="text-[#a0060a]"
+            >
+              Summer Lottery Ticket
+            </Link>{" "}
+            {t("summer2026.missions.week4.mission6_end")}
+          </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
             <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
-                ???
+                <Link to="/items?id=surfboard">
+                  <ItemImage itemId="surfboard" className="size-6" />
+                </Link>
+                <Separator
+                  orientation="vertical"
+                  className="mx-1 h-4 bg-card"
+                />
+                8{" "}
+                <img
+                  src="/media/other/summer2026_shell.png"
+                  alt="Shell"
+                  className="inline-block size-5 [image-rendering:pixelated]"
+                />
               </p>
             </span>
           </span>
         </span>
 
-        <span className="flex flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow min-h-48">
+        <span className="flex min-h-48 flex-col rounded-md bg-gradient-to-b from-card to-card-dark minebox-shadow">
           <span className="flex flex-row items-center gap-2 border-b-2 bg-secondary/50 px-3 py-2 pt-3 text-xs">
             <span className="flex flex-row items-center gap-2 px-0">
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
