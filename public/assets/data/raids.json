@@ -1,0 +1,66 @@
+{
+    "maya_temple": {
+        "points": {
+            "spawnpoint": [
+                "-22;67;-39"
+            ],
+            "extraction": [
+                "-19;68;-78",
+                "-13;69;-103",
+                "-22;68;-62"
+            ],
+            "gate_breakable": ["27;54;-93"],
+            "gate_channeling": ["31;84;-96"],
+            "gate_castle": ["19;68;-73"],
+
+            "gates": {
+                "boss_gate": {
+                    "name": "Boss Gate",
+                    "gate_location": "31;84;-90",
+                    "code_location": "23;84;-90",
+                    "solution_location": ["47;89;-91", "21;95;-95", "28;95;-105", "34;95;-105", "28;95;-89", "34;95;-89", "31;89;-103"]
+                },
+                "extra_gate": {
+                    "name": "Extra Gate",
+                    "gate_location": "18;75;-78",
+                    "code_location": "31;75;-78",
+                    "solution_location": ["31;84;-114"]
+                }
+            },
+
+            "tumbstone": ["36;69;-42"],
+            "safe": ["37;53;-78"],
+            "boss": ["33;73;-98"]
+        },
+        "insects": [
+            "insect_mantis",
+            "insect_mosquito",
+            "insect_dragonfly_blue",
+            "insect_dragonfly_yellow",
+            "insect_dragonfly_green",
+            "butterfly_yellow"
+        ],
+        "bestiary": [
+            "slime_king",
+            "slime_frost",
+            "slime_mage",
+            "slime_lava",
+            "slime_healer",
+            "slime_winged",
+            "alligator",
+            "snake_boa",
+            "snake_cobra",
+            "snake_coral",
+            "snake_corn",
+            "snake_viper",
+            "snake_python",
+            "monkey_base",
+            "monkey_banana",
+            "monkey_barrel",
+            "monkey_mage",
+            "spider_silkling",
+            "spider_spitter",
+            "spider_cocoon"
+        ]
+    }
+}

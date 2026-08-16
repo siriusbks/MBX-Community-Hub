@@ -57,8 +57,8 @@ export function ContributePage() {
                 </Card>
             </span>
 
-            <p>{t('contribute.contributors')}</p>
-            <span className="grid grid-cols-1 gap-4 mt-4 md:grid-cols-4">
+            <p>{t('contribute.mbx_team')}</p>
+            <span className="grid grid-cols-1 gap-4 md:grid-cols-4">
                 <Card className="gap-0 px-2 py-2 pb-0">
                     <p className="text-lg">6rius</p>
                     <Badge variant="default" className="font-light tracking-wide uppercase">{t('contribute.creator')}</Badge>
@@ -80,6 +80,15 @@ export function ContributePage() {
                     <img src="https://vzge.me/bust/256/Dampen59?y=-50" />
                 </Card>
             </span>
+            <p>{t('contribute.contributors')}</p>
+                <Card className="gap-0 px-2 py-2 pb-0 flex flex-row items-center gap-2 pr-6">
+                    <img src="https://vzge.me/bust/256/Axouuuuuu" className="h-24 w-22 pt-4" />
+                    <span>
+                    <p className="text-lg">Axouuuuuu</p>
+                    <Badge variant="default" className="font-light tracking-wide uppercase">{t('contribute.contributor')}</Badge>
+                    </span>
+                    <p className="text-sm text-muted-foreground ml-auto">{t('contribute.extra_raid_data')}</p>
+                </Card>
         </div>
     )
 }
