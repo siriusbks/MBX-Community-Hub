@@ -923,19 +923,17 @@ export function MapPreview() {
         <div className="flex w-full flex-row items-center gap-2 rounded-xl bg-linear-to-b from-card to-card-dark p-4 py-3 minebox-shadow">
           <span className="flex flex-col gap-0">
             <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
-              Help us fill in all the details!
+              {t("maps.raid_help_title")}
             </p>
             <p className="text-xs">
-              If you know any: Spawn Points, Extraction Points, Puzzles, Code
-              Locations, Gates with Puzzles, All Gate Locations, Insects,
-              Bestiary (Mobs), let us know
+              {t("maps.raid_help_description")}
             </p>
           </span>
           <Button size="lg" className="ml-auto">
-            <EN_Flag /> Forum
+            <EN_Flag /> {t("maps.forum")}
           </Button>
           <Button size="lg">
-            <FR_Flag /> Forum
+            <FR_Flag /> {t("maps.forum")}
           </Button>
         </div>
       )}
@@ -1080,7 +1078,11 @@ export function MapPreview() {
                     marker type belonging to that gate (gate location, code
                     location, every possible solution location) once
                     enabled. Icon differs per marker type so the three kinds
-                    stay visually distinct even though they share a toggle. */}
+                    stay visually distinct even though they share a toggle.
+                    The gate's display name is translated the same way as
+                    the sidebar tile and the puzzle card below, via
+                    maps.gate_names.<gateId>, falling back to the raw name
+                    coming from raids.json. */}
                 {gateMarkers
                   .filter((p) => !hiddenResources[p.gateId])
                   .map((p, i) => (
@@ -1109,7 +1111,9 @@ export function MapPreview() {
                           />
                           <span className="flex flex-col items-start justify-center gap-0">
                             <p className="font-bold text-primary">
-                              {p.gateName}
+                              {t(`maps.gate_names.${p.gateId}`, {
+                                defaultValue: p.gateName,
+                              })}
                             </p>
                             <p className="text-[0.65rem] text-muted-foreground">
                               {t(`maps.raid_point_types.${p.markerType}`, {
@@ -1596,7 +1600,9 @@ export function MapPreview() {
             {/* Gate puzzles (points.gates): one toggle tile PER GATE
                 (e.g. "Boss Gate", "Extra Gate"), not per marker type.
                 Enabling a tile shows that gate's location, code location,
-                and every possible solution location together. */}
+                and every possible solution location together. Each gate's
+                display name is translatable via maps.gate_names.<gateId>,
+                falling back to the raw name stored in raids.json. */}
             {isRaidZone && gateCategoryIds.length > 0 && (
               (() => {
                 const gatesHidden = isFullyHidden(gateCategoryIds)
@@ -1849,11 +1855,11 @@ export function MapPreview() {
 
                   <p className="text-center absolute top-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{gateLabel}</p>
                   <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
-                    Gate Location
+                    {t("maps.gate_location")}
                   </p>
                   <p className="text-center absolute bottom-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{formatCoords(gate.gate_location)}</p>
                   <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
-                    Coordinates
+                    {t("maps.coordinates")}
                   </p>
                 </span>
                 <span className="relative rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-0">
@@ -1868,13 +1874,13 @@ export function MapPreview() {
                   <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-bottom bg-secondary opacity-70 w-full h-full"></div>
                   <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-top bg-secondary opacity-70 w-full h-full"></div>
 
-                  <p className="text-center absolute top-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">Code Location</p>
+                  <p className="text-center absolute top-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{t("maps.code_location")}</p>
                   <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
                     {gateLabel}
                   </p>
                   <p className="text-center absolute bottom-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{formatCoords(gate.code_location)}</p>
                   <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
-                    Coordinates
+                    {t("maps.coordinates")}
                   </p>
                 </span>
                 {solutions.length > 0 ? (
@@ -1896,7 +1902,9 @@ export function MapPreview() {
                             <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-top bg-secondary opacity-70 w-full h-full"></div>
 
                             <p className="absolute top-2 left-0 right-0 text-center text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
-                              Possible Solution Location {index + 1}
+                              {t("maps.possible_solution_location", {
+                                index: index + 1,
+                              })}
                             </p>
                             <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
                               {gateLabel}
@@ -1905,7 +1913,7 @@ export function MapPreview() {
                               {formatCoords(solutionCoord)}
                             </p>
                             <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
-                              Coordinates
+                              {t("maps.coordinates")}
                             </p>
                           </div>
                         </CarouselItem>
