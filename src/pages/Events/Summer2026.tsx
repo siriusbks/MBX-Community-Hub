@@ -523,7 +523,7 @@ export function Summer2026EventPage() {
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  {t("summer2026.missions.week4.title")}
+                  {t("summer2026.missions.finalWeek.title")}
                 </p>
                 <p className="text-xs">22.08 - 28.08</p>
               </span>
