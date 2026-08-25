@@ -523,20 +523,54 @@ export function Summer2026EventPage() {
               <CalendarDays className="size-10 rounded-md bg-primary p-1.5 text-primary-foreground shadow-[inset_0_2px_#ffffff1f,_inset_0_-3px_#0000004d]" />
               <span className="mb-1 flex flex-col -space-y-1">
                 <p className="text-lg text-primary drop-shadow-[0_2px_0_#5d3a00]">
-                  {t("summer2026.missions.finalWeek.title")}
+                  {t("summer2026.missions.week4.title")}
                 </p>
                 <p className="text-xs">22.08 - 28.08</p>
               </span>
             </span>
           </span>
-          <p className="my-auto p-2 text-center text-xs text-muted-foreground">
-            {t("summer2026.missions.waiting")}
-          </p>
+          <EventMissionElement stars={4}>
+            {t("summer2026.missions.finalWeek.mission1")} [20]
+          </EventMissionElement>
+          <EventMissionElement stars={5}>
+            {t("summer2026.missions.finalWeek.mission2")} [20]
+          </EventMissionElement>
+          <EventMissionElement stars={6}>
+            {t("summer2026.missions.finalWeek.mission3")} [16]
+          </EventMissionElement>
+          <EventMissionElement stars={8}>
+            {t("summer2026.missions.finalWeek.mission4")} [3]
+          </EventMissionElement>
+          <EventMissionElement stars={6}>
+            {t("summer2026.missions.finalWeek.mission5")} [4]
+          </EventMissionElement>
+          <EventMissionElement stars={6}>
+            {t("summer2026.missions.finalWeek.mission6_start")}{" "}
+            <Link
+              to="/items?id=summer_lottery_ticket"
+              className="text-[#a0060a]"
+            >
+              Summer Lottery Ticket
+            </Link>{" "}
+            {t("summer2026.missions.finalWeek.mission6_end")}
+          </EventMissionElement>
           <span className="flex h-12 flex-row items-center justify-between border-t-2 bg-secondary/20 px-2 py-3 text-xs">
             <p>{t("summer2026.missions.weeklyRewards")}</p>
             <span>
               <p className="flex items-center gap-0.5 text-primary drop-shadow-[0_1px_0_#5d3a00]">
-                ???
+                <Link to="/items?id=beachgoer_backpack">
+                  <ItemImage itemId="beachgoer_backpack" className="size-6" />
+                </Link>
+                <Separator
+                  orientation="vertical"
+                  className="mx-1 h-4 bg-card"
+                />
+                10{" "}
+                <img
+                  src="/media/other/summer2026_shell.png"
+                  alt="Shell"
+                  className="inline-block size-5 [image-rendering:pixelated]"
+                />
               </p>
             </span>
           </span>
