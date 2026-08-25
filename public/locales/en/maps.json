@@ -102,5 +102,16 @@
   "maps.raids": "Raids",
   "maps.player_island_description": "Your own personal islands where you can build whatever you want and develop them",
   "maps.exploration_description": "Explore the islands, collect resources, and defeat the enemies you encounter",
-  "maps.raids_description": "Land, collect resources, defeat the boss, claim your rewards, escape, and repeat"
+  "maps.raids_description": "Land, collect resources, defeat the boss, claim your rewards, escape, and repeat",
+
+  "maps.raid_help_title": "Help us fill in all the details!",
+  "maps.raid_help_description": "If you know any: Spawn Points, Extraction Points, Puzzles, Code Locations, Gates with Puzzles, All Gate Locations, Insects, Bestiary (Mobs), let us know",
+  "maps.forum": "Forum",
+  "maps.gate_location": "Gate Location",
+  "maps.code_location": "Code Location",
+  "maps.coordinates": "Coordinates",
+  "maps.possible_solution_location": "Possible Solution Location {{index}}",
+  "maps.gate_names.extra_gate": "Example Gate Display Name",
+  "maps.puzzle_gate_solutions": "Puzzle Gate Solution"
+    
 }

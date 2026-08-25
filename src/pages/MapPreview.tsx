@@ -48,6 +48,13 @@ import { Button } from "@components/ui/button"
 import { Badge } from "@components/ui/badge"
 import { mapsConfig } from "@const/maps"
 import { EN_Flag, FR_Flag } from "@const/flags"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@components/ui/carousel"
 
 const REGION_COLORS = [
   "#4ade80",
@@ -59,6 +66,26 @@ const REGION_COLORS = [
   "#22d3ee",
   "#fb923c",
 ]
+
+// Icon source for a raid point category (spawnpoint, extraction,
+// gate_breakable, puzzle_codes_locations_1, ...). Falls back to
+// /media/missing.png via onError on the <img> elements that use this
+// (Leaflet's L.icon iconUrl itself has no onError hook, so that one just
+// shows a broken image until the real asset is dropped in).
+function raidPointIconSrc(cat: string) {
+  return `/media/missing/${cat}.png`
+}
+
+// Fallback label when no translation exists: "gate_breakable" -> "Gate Breakable"
+function formatRaidPointLabel(cat: string) {
+  return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+// "31;84;-90" -> "31, 84, -90"
+function formatCoords(coord: string | undefined | null) {
+  if (!coord) return "-"
+  return coord.split(";").join(", ")
+}
 
 // Shared CSS to strip Leaflet's default tooltip chrome (background, border,
 // forced nowrap sizing) so our own styled tooltip content controls layout,
@@ -268,6 +295,33 @@ export function MapPreview() {
     image: string
   }
 
+  // A "gate" puzzle entry (raids.json: points.gates.<gateId>): a single
+  // toggleable unit made of a physical gate location, a code location, and
+  // one or more possible solution locations for the code.
+  type RaidGateData = {
+    name: string
+    gate_location: string
+    code_location: string
+    solution_location: string[]
+  }
+
+  // --- Raid-specific data (raids.json: points + insect/bestiary ids) ---
+  // `points` is an open-ended map of category -> array of "x;y;z" strings,
+  // covering spawnpoint, extraction, gates, puzzle code locations, tumbstone,
+  // boss, and any future category without needing code changes here.
+  // The single "gates" key is special-cased: instead of a flat string[], it
+  // holds an object keyed by gate id, each describing a whole gate puzzle
+  // (gate/code/solution locations) that should be toggled as ONE unit.
+  type RaidPointsData = Record<string, string[] | Record<string, RaidGateData> | undefined> & {
+    gates?: Record<string, RaidGateData>
+  }
+
+  type RaidData = {
+    points: RaidPointsData
+    insects: string[]
+    bestiary: string[]
+  }
+
   const params = useParams()
   const mapId = params["*"] ?? ""
 
@@ -303,6 +357,11 @@ export function MapPreview() {
   // Draws a colored outline around every resource marker on the map,
   // shared between the general and the raid-specific preview settings.
   const [outlineResources, setOutlineResources] = useState(false)
+
+  // --- Raid points (raids.json) ---
+  const [raidsData, setRaidsData] = useState<Record<string, RaidData> | null>(
+    null
+  )
 
   const [zoom, setZoom] = useState<number | null>(null)
   const [baseZoom, setBaseZoom] = useState<number | null>(null)
@@ -346,6 +405,9 @@ export function MapPreview() {
   }
   const { image, width, height, referencePoint, zoneKey, mapZoom } = config
   const isRaid = config.group === "raids"
+  // Distinct from `isRaid` (which is based on the map's `group`): this flag
+  // specifically controls the raids.json-backed points/insects/bestiary data.
+  const isRaidZone = zoneKey === "raids"
 
   // We calculate the bounds once and for all
   const imageBounds: [number, number][] = [
@@ -383,6 +445,46 @@ export function MapPreview() {
       .catch((e) => console.error(t("maps.error.loadBestiaryZones"), e))
   }, [t])
 
+  // Raid points/insects/bestiary ids, only needed on raid zones.
+  useEffect(() => {
+    if (!isRaidZone) {
+      setRaidsData(null)
+      return
+    }
+    fetch("/assets/data/raids.json")
+      .then((r) => r.json())
+      .then((json) => setRaidsData(json))
+      .catch((e) => console.error(t("maps.error.loadRaids"), e))
+  }, [isRaidZone, t])
+
+  // Raid point categories start hidden by default (same as any other
+  // preview toggle), so they don't clutter the map until explicitly enabled.
+  // Each entry in `points.gates` counts as its own toggleable id here (one
+  // toggle per gate, covering all of that gate's marker types), while every
+  // other `points` key (spawnpoint, extraction, gate_breakable, ...) is
+  // toggled individually as before.
+  useEffect(() => {
+    if (!isRaidZone || !raidsData) return
+    const raidPoints = raidsData[mapId]?.points
+    if (!raidPoints) return
+    const flatCats = Object.keys(raidPoints).filter(
+      (k) => k !== "gates" && Array.isArray(raidPoints[k])
+    )
+    const gateIds = raidPoints.gates ? Object.keys(raidPoints.gates) : []
+    const cats = [...flatCats, ...gateIds]
+    setHiddenResources((prev) => {
+      const next = { ...prev }
+      let changed = false
+      cats.forEach((cat) => {
+        if (!(cat in next)) {
+          next[cat] = true
+          changed = true
+        }
+      })
+      return changed ? next : prev
+    })
+  }, [isRaidZone, raidsData, mapId])
+
   useEffect(() => {
     const controller = new AbortController()
 
@@ -415,6 +517,15 @@ export function MapPreview() {
   }, [t])
 
   useEffect(() => {
+    // Raid zones don't have entries in the regular bestiary API (it's keyed
+    // by server zone), so skip the fetch entirely and rely on raids.json.
+    if (isRaidZone) {
+      setBestiaryData(null)
+      setBestiaryError(null)
+      setIsBestiaryLoading(false)
+      return
+    }
+
     const controller = new AbortController()
     setIsBestiaryLoading(true)
     setBestiaryError(null)
@@ -446,7 +557,7 @@ export function MapPreview() {
     return () => {
       controller.abort()
     }
-  }, [mapId, t])
+  }, [mapId, isRaidZone, t])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -483,9 +594,15 @@ export function MapPreview() {
 
   const zoneFullKey = `mineboxadditions.strings.zones.${zoneKey}`
 
-  const insectsForZone = (insectsData ?? []).filter((insect) =>
-    insect.locations.some((loc) => loc.zone === zoneFullKey)
-  )
+  // Raid zones filter insects by explicit id list from raids.json instead of
+  // matching against a translated zone key.
+  const raidInsectIds = raidsData?.[mapId]?.insects ?? []
+
+  const insectsForZone = isRaidZone
+    ? (insectsData ?? []).filter((insect) => raidInsectIds.includes(insect.id))
+    : (insectsData ?? []).filter((insect) =>
+      insect.locations.some((loc) => loc.zone === zoneFullKey)
+    )
 
   const formatSubarea = (subarea: string) => {
     const last = subarea.split(".").pop() ?? subarea
@@ -540,7 +657,7 @@ export function MapPreview() {
       z: number
     }> = []
     Object.entries(serverData).forEach(([cat, arr]: any) => {
-      ;(arr as string[]).forEach((s) => {
+      ; (arr as string[]).forEach((s) => {
         const parts = s.split(";")
         // "servers" entries are prefixed with a map/world name
         // ("island_bamboo;-297;84;237;90.0;0.0"), while "raids" entries
@@ -619,6 +736,101 @@ export function MapPreview() {
     [resourceMarkers, mapsJsonMarkers]
   )
 
+  // Raid points (spawnpoint, extraction, gate_breakable, gate_channeling,
+  // gate_castle, tumbstone, boss, ...), converted to map pixel coordinates
+  // the same way as the other marker sets (offset from referencePoint, z
+  // inverted vertically). The nested `gates` object is handled separately
+  // below (see gateMarkers) since it isn't a flat string[].
+  // Rendered/toggled exactly like a resource category: `cat` here is the
+  // raids.json points key and doubles as the id used in hiddenResources.
+  const raidPointMarkers = useMemo(() => {
+    if (!isRaidZone || !raidsData) return []
+    const raidPoints = raidsData[mapId]?.points
+    if (!raidPoints) return []
+
+    const points: Array<{ cat: string; x: number; y: number; z: number }> = []
+    Object.entries(raidPoints).forEach(([cat, arr]) => {
+      if (cat === "gates" || !Array.isArray(arr)) return
+      ; (arr ?? []).forEach((s) => {
+        const [xs, ys, zs] = s.split(";")
+        const x = Number(xs)
+        const y = Number(ys)
+        const z = Number(zs)
+        if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
+          points.push({ cat, x, y, z })
+        }
+      })
+    })
+
+    return points.map((p) => ({
+      ...p,
+      px: referencePoint.x + p.x,
+      py: referencePoint.y - p.z,
+    }))
+  }, [isRaidZone, raidsData, mapId, referencePoint])
+
+  // Raid point category ids (spawnpoint, extraction, gate_breakable, ...),
+  // used to render the sidebar tile grid.
+  const raidPointCategoryIds = useMemo(
+    () => Array.from(new Set(raidPointMarkers.map((p) => p.cat))),
+    [raidPointMarkers]
+  )
+
+  // Data for every gate puzzle (raids.json points.gates), keyed by gate id.
+  const gatesData = useMemo(() => {
+    if (!isRaidZone || !raidsData) return {} as Record<string, RaidGateData>
+    const gates = raidsData[mapId]?.points?.gates
+    return (gates ?? {}) as Record<string, RaidGateData>
+  }, [isRaidZone, raidsData, mapId])
+
+  // One toggle id per gate ("boss_gate", "extra_gate", ...) - this is the
+  // "each gate is a single option in the resource toggles" id.
+  const gateCategoryIds = useMemo(
+    () => Object.keys(gatesData),
+    [gatesData]
+  )
+
+  // Markers belonging to every gate: its gate location, its code location,
+  // and every possible solution location. All markers for a given gate
+  // share the same `gateId`, so toggling that one id shows/hides every
+  // type of point for that gate at once.
+  const gateMarkers = useMemo(() => {
+    type GateMarkerType = "gate_location" | "code_location" | "solution_location"
+    const points: Array<{
+      gateId: string
+      gateName: string
+      markerType: GateMarkerType
+      x: number
+      y: number
+      z: number
+    }> = []
+
+    Object.entries(gatesData).forEach(([gateId, gate]) => {
+      const addPoint = (markerType: GateMarkerType, coord?: string) => {
+        if (!coord) return
+        const [xs, ys, zs] = coord.split(";")
+        const x = Number(xs)
+        const y = Number(ys)
+        const z = Number(zs)
+        if (!Number.isNaN(x) && !Number.isNaN(y) && !Number.isNaN(z)) {
+          points.push({ gateId, gateName: gate.name, markerType, x, y, z })
+        }
+      }
+
+      addPoint("gate_location", gate.gate_location)
+      addPoint("code_location", gate.code_location)
+      ; (gate.solution_location ?? []).forEach((coord) =>
+        addPoint("solution_location", coord)
+      )
+    })
+
+    return points.map((p) => ({
+      ...p,
+      px: referencePoint.x + p.x,
+      py: referencePoint.y - p.z,
+    }))
+  }, [gatesData, referencePoint])
+
   useEffect(() => {
     let canceled = false
     const uniqueCategories = Array.from(
@@ -630,7 +842,7 @@ export function MapPreview() {
       return
     }
 
-    ;(async () => {
+    ; (async () => {
       try {
         const resolvedEntries = await Promise.all(
           uniqueCategories.map(async (cat) => {
@@ -686,11 +898,19 @@ export function MapPreview() {
   const isFullyHidden = (ids: string[]) =>
     ids.length > 0 && ids.every((id) => hiddenResources[id])
 
-  // All item ids currently placed on the map (across every category/group),
-  // used by the global select-all / deselect-all controls.
+  // All item ids currently placed on the map (across every category/group,
+  // including raid points and gates), used by the global select-all /
+  // deselect-all controls.
   const allItemIds = useMemo(
-    () => Array.from(new Set(allMarkers.map((m) => m.cat as string))),
-    [allMarkers]
+    () =>
+      Array.from(
+        new Set([
+          ...allMarkers.map((m) => m.cat as string),
+          ...raidPointCategoryIds,
+          ...gateCategoryIds,
+        ])
+      ),
+    [allMarkers, raidPointCategoryIds, gateCategoryIds]
   )
 
   const allItemsHidden = isFullyHidden(allItemIds)
@@ -703,19 +923,17 @@ export function MapPreview() {
         <div className="flex w-full flex-row items-center gap-2 rounded-xl bg-linear-to-b from-card to-card-dark p-4 py-3 minebox-shadow">
           <span className="flex flex-col gap-0">
             <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
-              Help us fill in all the details!
+              {t("maps.raid_help_title")}
             </p>
             <p className="text-xs">
-              If you know any: Spawn Points, Extraction Points, Puzzles, Code
-              Locations, Gates with Puzzles, All Gate Locations, Insects,
-              Bestiary (Mobs), let us know
+              {t("maps.raid_help_description")}
             </p>
           </span>
           <Button size="lg" className="ml-auto">
-            <EN_Flag /> Forum
+            <EN_Flag /> {t("maps.forum")}
           </Button>
           <Button size="lg">
-            <FR_Flag /> Forum
+            <FR_Flag /> {t("maps.forum")}
           </Button>
         </div>
       )}
@@ -778,66 +996,169 @@ export function MapPreview() {
                                 defaultValue: FindItemName({ itemId: m.cat }),
                               })}
                             </p>
-                          <p className="flex flex-row gap-1 text-xs font-bold">
-                            <span className="font-normal text-muted-foreground">
-                              x:
-                            </span>{" "}
-                            {m.x}
-                            <span className="font-normal text-muted-foreground">
-                              y:
-                            </span>{" "}
-                            {m.y}
-                            <span className="font-normal text-muted-foreground">
-                              z:
-                            </span>{" "}
-                            {m.z}
-                          </p>
-                        </span>
-                      </div>
-                    </Tooltip>
-                  </Marker>
-                ))}
-              {showRegions &&
-                regionsData &&
-                (() => {
-                  const baseNames = Object.keys(regionsData).map((name) =>
-                    name.replace(/_\d+$/, "")
-                  )
-                  const uniqueBaseNames = [...new Set(baseNames)]
-                  const colorMap: Record<string, string> = {}
-                  uniqueBaseNames.forEach((base, i) => {
-                    colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
-                  })
-                  return Object.entries(regionsData).map(
-                    ([regionName, coords]) => {
-                      const baseName = regionName.replace(/_\d+$/, "")
-                      const color = colorMap[baseName]
-                      const positions: [number, number][] = coords.map(
-                        ([x, y]) => [y, x]
-                      )
-                      return (
-                        <RegionPolygon
-                          key={regionName}
-                          positions={positions}
-                          color={color}
-                          label={t(`maps.${baseName}`, {
-                            defaultValue: baseName,
-                          })}
-                        />
-                      )
-                    }
-                  )
-                })()}
-              {showBestiary &&
-                bestiaryZonesData &&
-                (() => {
-                  const mapZones = mapId ? bestiaryZonesData[mapId] : null
-                  if (!mapZones) return null
-                  return Object.entries(mapZones).flatMap(
-                    ([zoneName, zoneData]: any) =>
-                      (zoneData.zones as any[]).map((zone, idx) => {
-                        const positions: [number, number][] = zone.coords.map(
-                          ([x, y]: [number, number]) => [y, x]
+                            <p className="flex flex-row gap-1 text-xs font-bold">
+                              <span className="font-normal text-muted-foreground">
+                                x:
+                              </span>{" "}
+                              {m.x}
+                              <span className="font-normal text-muted-foreground">
+                                y:
+                              </span>{" "}
+                              {m.y}
+                              <span className="font-normal text-muted-foreground">
+                                z:
+                              </span>{" "}
+                              {m.z}
+                            </p>
+                          </span>
+                        </div>
+                      </Tooltip>
+                    </Marker>
+                  ))}
+
+                {/* Raid points (spawnpoint, extraction, gate_breakable,
+                    tumbstone, boss, ...) — rendered exactly like resource
+                    markers: own icon (looked up by category name), same
+                    scaling/outline behavior, visibility driven by the same
+                    hiddenResources map used for the sidebar toggle. */}
+                {raidPointMarkers
+                  .filter((p) => !hiddenResources[p.cat])
+                  .map((p, i) => (
+                    <Marker
+                      key={`raidpoint-${p.cat}-${i}`}
+                      position={[p.py, p.px]}
+                      icon={L.icon({
+                        iconUrl: raidPointIconSrc(p.cat),
+                        iconSize: [24 * markerScale, 24 * markerScale],
+                        iconAnchor: [12 * markerScale, 12 * markerScale],
+                        popupAnchor: [0, -16 * markerScale],
+                        className: outlineResources
+                          ? "marker-icon-outline"
+                          : "filter drop-shadow-[0_0_4px_#00000099]",
+                      })}
+                    >
+                      <Tooltip direction="top" offset={[0, -10]}>
+                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                          <img
+                            src={raidPointIconSrc(p.cat)}
+                            onError={(e) => {
+                              e.currentTarget.src = "/media/missing.png"
+                            }}
+                            alt={p.cat}
+                            className="aspect-square size-10"
+                          />
+                          <span className="flex flex-col items-start justify-center gap-0">
+                            <p className="font-bold text-primary">
+                              {t(`maps.raid_point_types.${p.cat}`, {
+                                defaultValue: formatRaidPointLabel(p.cat),
+                              })}
+                            </p>
+                            <p className="flex flex-row gap-1 text-xs font-bold">
+                              <span className="font-normal text-muted-foreground">
+                                x:
+                              </span>{" "}
+                              {p.x}
+                              <span className="font-normal text-muted-foreground">
+                                y:
+                              </span>{" "}
+                              {p.y}
+                              <span className="font-normal text-muted-foreground">
+                                z:
+                              </span>{" "}
+                              {p.z}
+                            </p>
+                          </span>
+                        </div>
+                      </Tooltip>
+                    </Marker>
+                  ))}
+
+                {/* Gate puzzle points (points.gates): each gate is toggled
+                    as ONE unit via hiddenResources[gateId], but shows every
+                    marker type belonging to that gate (gate location, code
+                    location, every possible solution location) once
+                    enabled. Icon differs per marker type so the three kinds
+                    stay visually distinct even though they share a toggle.
+                    The gate's display name is translated the same way as
+                    the sidebar tile and the puzzle card below, via
+                    maps.gate_names.<gateId>, falling back to the raw name
+                    coming from raids.json. */}
+                {gateMarkers
+                  .filter((p) => !hiddenResources[p.gateId])
+                  .map((p, i) => (
+                    <Marker
+                      key={`gate-${p.gateId}-${p.markerType}-${i}`}
+                      position={[p.py, p.px]}
+                      icon={L.icon({
+                        iconUrl: raidPointIconSrc(p.markerType),
+                        iconSize: [24 * markerScale, 24 * markerScale],
+                        iconAnchor: [12 * markerScale, 12 * markerScale],
+                        popupAnchor: [0, -16 * markerScale],
+                        className: outlineResources
+                          ? "marker-icon-outline"
+                          : "filter drop-shadow-[0_0_4px_#00000099]",
+                      })}
+                    >
+                      <Tooltip direction="top" offset={[0, -10]}>
+                        <div className="flex !w-max min-w-32 flex-row items-center gap-1 rounded-md bg-linear-to-b from-card to-card-dark px-2 py-1.5 text-xs minebox-shadow">
+                          <img
+                            src={raidPointIconSrc(p.markerType)}
+                            onError={(e) => {
+                              e.currentTarget.src = "/media/missing.png"
+                            }}
+                            alt={p.markerType}
+                            className="aspect-square size-10"
+                          />
+                          <span className="flex flex-col items-start justify-center gap-0">
+                            <p className="font-bold text-primary">
+                              {t(`maps.gate_names.${p.gateId}`, {
+                                defaultValue: p.gateName,
+                              })}
+                            </p>
+                            <p className="text-[0.65rem] text-muted-foreground">
+                              {t(`maps.raid_point_types.${p.markerType}`, {
+                                defaultValue: formatRaidPointLabel(
+                                  p.markerType
+                                ),
+                              })}
+                            </p>
+                            <p className="flex flex-row gap-1 text-xs font-bold">
+                              <span className="font-normal text-muted-foreground">
+                                x:
+                              </span>{" "}
+                              {p.x}
+                              <span className="font-normal text-muted-foreground">
+                                y:
+                              </span>{" "}
+                              {p.y}
+                              <span className="font-normal text-muted-foreground">
+                                z:
+                              </span>{" "}
+                              {p.z}
+                            </p>
+                          </span>
+                        </div>
+                      </Tooltip>
+                    </Marker>
+                  ))}
+
+                {showRegions &&
+                  regionsData &&
+                  (() => {
+                    const baseNames = Object.keys(regionsData).map((name) =>
+                      name.replace(/_\d+$/, "")
+                    )
+                    const uniqueBaseNames = [...new Set(baseNames)]
+                    const colorMap: Record<string, string> = {}
+                    uniqueBaseNames.forEach((base, i) => {
+                      colorMap[base] = REGION_COLORS[i % REGION_COLORS.length]
+                    })
+                    return Object.entries(regionsData).map(
+                      ([regionName, coords]) => {
+                        const baseName = regionName.replace(/_\d+$/, "")
+                        const color = colorMap[baseName]
+                        const positions: [number, number][] = coords.map(
+                          ([x, y]) => [y, x]
                         )
                         return (
                           <RegionPolygon
@@ -849,9 +1170,9 @@ export function MapPreview() {
                             })}
                           />
                         )
-                      })
+                      }
                     )
-                })()}
+                  })()}
                 {showBestiary &&
                   bestiaryZonesData &&
                   (() => {
@@ -1056,11 +1377,10 @@ export function MapPreview() {
                                   toggleResourceVisibility(id)
                                 }
                               }}
-                              className={`group relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded border-[3px] p-0.5 transition-colors ${
-                                isHidden
-                                  ? "border-card-dark/70 bg-card/70"
-                                  : "border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
-                              }`}
+                              className={`group relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded border-[3px] p-0.5 transition-colors ${isHidden
+                                ? "border-card-dark/70 bg-card/70"
+                                : "border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
+                                }`}
                             >
                               <ItemImage
                                 itemId={id}
@@ -1156,11 +1476,10 @@ export function MapPreview() {
                                 toggleResourceVisibility(id)
                               }
                             }}
-                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${
-                              isHidden
-                                ? "bg-red-500/40"
-                                : "bg-transparent hover:bg-accent/40"
-                            }`}
+                            className={`flex cursor-pointer flex-col items-center justify-start gap-2 rounded transition-colors ${isHidden
+                              ? "bg-red-500/40"
+                              : "bg-transparent hover:bg-accent/40"
+                              }`}
                           >
                             <ItemImage
                               itemId={id}
@@ -1182,6 +1501,197 @@ export function MapPreview() {
                   </span>
                 )
               })}
+
+            {/* Raid points (raids.json): spawnpoint, extraction,
+                gate_breakable, tumbstone, boss, ... — shown as its own
+                resource-style category, hidden on the map by default. */}
+            {isRaidZone && raidPointCategoryIds.length > 0 && (
+              (() => {
+                const pointsHidden = isFullyHidden(raidPointCategoryIds)
+                return (
+                  <span className="w-full px-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <p
+                        onClick={() =>
+                          setItemsVisibility(raidPointCategoryIds, pointsHidden)
+                        }
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault()
+                            setItemsVisibility(
+                              raidPointCategoryIds,
+                              pointsHidden
+                            )
+                          }
+                        }}
+                        className="cursor-pointer font-bold text-primary uppercase hover:underline"
+                      >
+                        {t("maps.raid_points", {
+                          defaultValue: "Raid Points",
+                        })}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setItemsVisibility(raidPointCategoryIds, pointsHidden)
+                        }
+                        className="text-[0.6rem] font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+                      >
+                        {pointsHidden ? (
+                          <span className="flex items-center gap-1">
+                            {t("maps.select_all")}
+                            <EyeClosedIcon className="size-4" />
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1">
+                            {t("maps.deselect_all")}
+                            <EyeIcon className="size-4" />
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {raidPointCategoryIds.map((cat) => {
+                        const isHidden = Boolean(hiddenResources[cat])
+                        return (
+                          <div
+                            key={cat}
+                            onClick={() => toggleResourceVisibility(cat)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault()
+                                toggleResourceVisibility(cat)
+                              }
+                            }}
+                            className={`group relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded border-[3px] p-0.5 transition-colors ${isHidden
+                              ? "border-card-dark/70 bg-card/70"
+                              : "border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
+                              }`}
+                          >
+                            <img
+                              src={raidPointIconSrc(cat)}
+                              onError={(e) => {
+                                e.currentTarget.src = "/media/missing.png"
+                              }}
+                              alt={cat}
+                              loading="lazy"
+                              className={`aspect-square w-4/5 transition-transform group-hover:scale-105 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                            />
+                            <p
+                              className={`-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none ${isHidden ? "opacity-50 saturate-50" : ""}`}
+                            >
+                              {t(`maps.raid_point_types.${cat}`, {
+                                defaultValue: formatRaidPointLabel(cat),
+                              })}
+                            </p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </span>
+                )
+              })()
+            )}
+
+            {/* Gate puzzles (points.gates): one toggle tile PER GATE
+                (e.g. "Boss Gate", "Extra Gate"), not per marker type.
+                Enabling a tile shows that gate's location, code location,
+                and every possible solution location together. Each gate's
+                display name is translatable via maps.gate_names.<gateId>,
+                falling back to the raw name stored in raids.json. */}
+            {isRaidZone && gateCategoryIds.length > 0 && (
+              (() => {
+                const gatesHidden = isFullyHidden(gateCategoryIds)
+                return (
+                  <span className="w-full px-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <p
+                        onClick={() =>
+                          setItemsVisibility(gateCategoryIds, gatesHidden)
+                        }
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault()
+                            setItemsVisibility(gateCategoryIds, gatesHidden)
+                          }
+                        }}
+                        className="cursor-pointer font-bold text-primary uppercase hover:underline"
+                      >
+                        {t("maps.raid_gates", {
+                          defaultValue: "Gates",
+                        })}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setItemsVisibility(gateCategoryIds, gatesHidden)
+                        }
+                        className="text-[0.6rem] font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+                      >
+                        {gatesHidden ? (
+                          <span className="flex items-center gap-1">
+                            {t("maps.select_all")}
+                            <EyeClosedIcon className="size-4" />
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1">
+                            {t("maps.deselect_all")}
+                            <EyeIcon className="size-4" />
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {gateCategoryIds.map((gateId) => {
+                        const gate = gatesData[gateId]
+                        const isHidden = Boolean(hiddenResources[gateId])
+                        return (
+                          <div
+                            key={gateId}
+                            onClick={() => toggleResourceVisibility(gateId)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault()
+                                toggleResourceVisibility(gateId)
+                              }
+                            }}
+                            className={`group relative flex cursor-pointer flex-col items-center justify-start gap-2 rounded border-[3px] p-0.5 transition-colors ${isHidden
+                              ? "border-card-dark/70 bg-card/70"
+                              : "border-card-dark bg-linear-to-b from-secondary-lighter/50 to-secondary/50"
+                              }`}
+                          >
+                            <img
+                              src={raidPointIconSrc(gateId)}
+                              onError={(e) => {
+                                e.currentTarget.src = "/media/missing.png"
+                              }}
+                              alt={gateId}
+                              loading="lazy"
+                              className={`aspect-square w-4/5 transition-transform group-hover:scale-105 ${isHidden ? "opacity-80 saturate-50" : ""}`}
+                            />
+                            <p
+                              className={`-mt-2 flex h-6 flex-col items-center justify-center px-1 text-center text-[0.6rem] leading-none ${isHidden ? "opacity-50 saturate-50" : ""}`}
+                            >
+                              {t(`maps.gate_names.${gateId}`, {
+                                defaultValue: gate?.name ?? formatRaidPointLabel(gateId),
+                              })}
+                            </p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </span>
+                )
+              })()
+            )}
           </div>
 
           {/* Settings */}
@@ -1218,7 +1728,7 @@ export function MapPreview() {
           </span>
         </Card>
       </div>
-{/*}
+      {/*}
       {isRaid && (
         <Card className="w-full gap-2 px-4 pt-3">
           <span className="flex flex-row items-center justify-between gap-0">
@@ -1312,6 +1822,121 @@ export function MapPreview() {
         })
       })()}
 
+
+
+
+      {/* RAID PUZZLE ELEMENT — one card per gate (points.gates) */}
+      {isRaidZone &&
+        gateCategoryIds.map((gateId) => {
+          const gate = gatesData[gateId]
+          if (!gate) return null
+          const gateLabel = t(`maps.gate_names.${gateId}`, {
+            defaultValue: gate.name,
+          })
+          const solutions = gate.solution_location ?? []
+
+          return (
+            <Card key={gateId} className="w-full gap-2 px-4 pt-3">
+              <p className="text-xl font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+                {gateLabel} — {t("maps.puzzle_gate_solutions")}
+              </p>
+              <span className="gap-2 grid grid-cols-3 items-center justify-center">
+                <span className="relative rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-0">
+                  <img
+                    src={`/media/raid/${mapId}/${gateId}_gate.png`}
+                    onError={(e) => {
+                      e.currentTarget.src = "/media/missing.png"
+                    }}
+                    className="aspect-auto w-full rounded"
+                  />
+
+                  <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-bottom bg-secondary opacity-70 w-full h-full"></div>
+                  <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-top bg-secondary opacity-70 w-full h-full"></div>
+
+                  <p className="text-center absolute top-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{gateLabel}</p>
+                  <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                    {t("maps.gate_location")}
+                  </p>
+                  <p className="text-center absolute bottom-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{formatCoords(gate.gate_location)}</p>
+                  <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                    {t("maps.coordinates")}
+                  </p>
+                </span>
+                <span className="relative rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-0">
+                  <img
+                    src={`/media/raid/${mapId}/${gateId}_solution.png`}
+                    onError={(e) => {
+                      e.currentTarget.src = "/media/missing.png"
+                    }}
+                    className="aspect-auto w-full rounded"
+                  />
+
+                  <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-bottom bg-secondary opacity-70 w-full h-full"></div>
+                  <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-top bg-secondary opacity-70 w-full h-full"></div>
+
+                  <p className="text-center absolute top-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{t("maps.code_location")}</p>
+                  <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                    {gateLabel}
+                  </p>
+                  <p className="text-center absolute bottom-2 left-0 right-0 text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">{formatCoords(gate.code_location)}</p>
+                  <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                    {t("maps.coordinates")}
+                  </p>
+                </span>
+                {solutions.length > 0 ? (
+                  <Carousel className="w-full">
+                    <CarouselContent className="w-full">
+                      {solutions.map((solutionCoord, index) => (
+                        <CarouselItem key={index} className="basis-full">
+                          <div className="relative w-full rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-0">
+
+                            <img
+                              src={`/media/raid/${mapId}/${gateId}_${index + 1}.png`}
+                              onError={(e) => {
+                                e.currentTarget.src = "/media/missing.png"
+                              }}
+                              className="w-full rounded r"
+                            />
+
+                            <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-bottom bg-secondary opacity-70 w-full h-full"></div>
+                            <div className="absolute  top-0 left-0 rounded mask-radial-from-0% mask-radial-to-40% mask-radial-at-top bg-secondary opacity-70 w-full h-full"></div>
+
+                            <p className="absolute top-2 left-0 right-0 text-center text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+                              {t("maps.possible_solution_location", {
+                                index: index + 1,
+                              })}
+                            </p>
+                            <p className="absolute top-8 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                              {gateLabel}
+                            </p>
+                            <p className="absolute bottom-2 left-0 right-0 text-center  text-center text-lg font-bold tracking-wider text-primary uppercase drop-shadow-[0_3px_0_#5d3a00]">
+                              {formatCoords(solutionCoord)}
+                            </p>
+                            <p className="absolute bottom-7 left-0 right-0 text-center text-[0.6rem] uppercase text-muted-foreground">
+                              {t("maps.coordinates")}
+                            </p>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+
+                    <CarouselPrevious className="left-2 rounded !bg-card" />
+                    <CarouselNext className="right-6 rounded !bg-card" />
+                  </Carousel>
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center rounded border-[3px] border-secondary bg-linear-to-b from-secondary-lighter/80 to-secondary/80 p-4 text-center text-xs text-muted-foreground">
+                    {t("maps.no_solution_locations", {
+                      defaultValue: "No solution locations known yet",
+                    })}
+                  </span>
+                )}
+              </span>
+            </Card>
+          )
+        })}
+
+
+
       {/* Insects */}
       <div className="flex w-full flex-col gap-2 pt-3">
         <span className="flex flex-row items-center justify-between gap-0">
@@ -1332,9 +1957,11 @@ export function MapPreview() {
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
             {insectsForZone.map((insect) => {
-              const subareas = insect.locations
-                .filter((loc) => loc.zone === zoneFullKey)
-                .map((loc) => formatSubarea(loc.subarea))
+              const subareas = isRaidZone
+                ? []
+                : insect.locations
+                  .filter((loc) => loc.zone === zoneFullKey)
+                  .map((loc) => formatSubarea(loc.subarea))
 
               return (
                 <Popover key={insect.id}>
@@ -1355,9 +1982,11 @@ export function MapPreview() {
                           defaultValue: FindItemName({ itemId: insect.id }),
                         })}
                       </p>
-                      <p className="cursor-pointer text-center text-[0.6rem] text-muted-foreground group-hover:text-primary group-hover:underline">
-                        {t("maps.view_conditions")}
-                      </p>
+                      {!isRaidZone && (
+                        <p className="cursor-pointer text-center text-[0.6rem] text-muted-foreground group-hover:text-primary group-hover:underline">
+                          {t("maps.view_conditions")}
+                        </p>
+                      )}
                     </RarityBorder>
                   </PopoverTrigger>
                   <PopoverContent className="gap-1">
@@ -1390,18 +2019,20 @@ export function MapPreview() {
                       <p className="text-[0.65rem]">{insect.weather}</p>
                     </span>
 
-                    <span className="flex w-full flex-row items-center justify-between gap-2">
-                      <p className="text-[0.65rem] text-muted-foreground">
-                        {t("insects:insects.spawnArea")}
-                      </p>
-                      <span>
-                        {subareas.map((area, index) => (
-                          <p key={index} className="text-right text-[0.65rem]">
-                            {area}
-                          </p>
-                        ))}
+                    {!isRaidZone && (
+                      <span className="flex w-full flex-row items-center justify-between gap-2">
+                        <p className="text-[0.65rem] text-muted-foreground">
+                          {t("insects:insects.spawnArea")}
+                        </p>
+                        <span>
+                          {subareas.map((area, index) => (
+                            <p key={index} className="text-right text-[0.65rem]">
+                              {area}
+                            </p>
+                          ))}
+                        </span>
                       </span>
-                    </span>
+                    )}
 
                     {insect.requires_moon && (
                       <span className="flex w-full flex-row items-center justify-between gap-2">
@@ -1430,7 +2061,29 @@ export function MapPreview() {
           <p className="text-xs text-muted-foreground">{t("maps.bestiary_description")}</p>
         </span>
 
-        {isBestiaryLoading ? (
+        {isRaidZone ? (
+          (raidsData?.[mapId]?.bestiary ?? []).length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              {t("maps.noCreatures")}
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-8">
+              {raidsData![mapId].bestiary.map((id) => (
+                <BestiaryItem
+                  key={id}
+                  id={id}
+                  name={mobNamesData[id]?.name ?? id}
+                  image={mobNamesData[id]?.image ?? ""}
+                  minLevel={0}
+                  maxLevel={0}
+                  minHealth={0}
+                  maxHealth={0}
+                  type=""
+                />
+              ))}
+            </div>
+          )
+        ) : isBestiaryLoading ? (
           <p className="text-xs text-muted-foreground">
             {t("maps.loadingCreatures")}
           </p>
